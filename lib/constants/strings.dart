@@ -1,0 +1,246 @@
+abstract class Strings {
+  static const emailRegex =
+      '^[A-Za-z0-9](\\.?[A-Za-z0-9_-]){0,}@[A-Za-z0-9-]+\\.([A-Za-z]{1,6}\\.)?[A-Za-z]{2,6}\$';
+
+  static const databaseName = 'exot_db';
+
+  static const locale = 'locale';
+  static const hiLocale = 'hi';
+  static const enLocale = 'en';
+  static const countryCodeKey = 'countryCode';
+  static const usCountryValue = 'US';
+  static const inCountryValue = 'IN';
+
+  static const password = 'Password';
+  static const emailAddress = 'Username or email';
+  static const scan = 'Scan';
+  static const signIn = 'Sign in';
+  static const next = 'Next';
+  static const signInContinue = 'to continue to Exto Platform';
+
+  static const projectName = 'exto';
+  static const version = 'version';
+  static const rememberMe = 'Remember me';
+  static const forgotPassword = 'Forgot password?';
+  static const forgotPasswordMessage = 'Fill the form to reset your password';
+  static const sendResetLink = 'Send link';
+  static const returnTo = 'Return to ';
+  static const sentSuccessfully = 'Link sent successfully';
+  static const checkInstruction =
+      'Please check your email and follow the instructions to reset your password.';
+
+  static const invalidUsernamePassword =
+      'Please enter valid username and password !';
+
+  static const platform = 'Platform';
+  static const extoSubTitle = 'Project Monitoring Tool';
+  static const point1 = 'Does not sell or trade your data';
+  static const point2 = 'Is certified for information security';
+  static const point3 = 'Encrypts and secures your data';
+
+  //Tenant screen
+  static const chooseCustomers = 'Choose customer';
+  static const multipleCustomersMsg =
+      'You are associated with multiple customers. Please select a customer to continue.';
+
+  // Errors
+  static const workflowRefIdError =
+      'Workflow Step and Forms are not linked. Contact system administrator';
+  static const formInvalid = 'Form is invalid';
+  static const noPermissionToAction =
+      'This user has no permission to do any action';
+  static const requiredFields = 'Please fill username and password';
+  static const invalidUrl = 'Invalid URL';
+  static const qrNotScanned = 'No QR Code scanned.';
+
+  static const logout = 'Logout';
+  static const home = 'Go to home screen';
+  static const dashboard = 'Dashboard';
+  static const progressAndChecklist = 'Progress & Checklist';
+  static const customForm = 'Custom Forms';
+  static const search = 'Search';
+
+  static const failedOperation = 'Operation Failed';
+  static const customersScreenTitle = 'Customers';
+  static const workspaceScreenTitle = 'Workspace';
+  static const projectsScreenTitle = 'Projects';
+  static const modulesScreenTitle = 'Modules';
+  static const recordsScreenTitle = 'Records';
+  static const formsScreenTitle = 'Forms';
+
+  static const styleHeightKey = 'height';
+  static const checkListTitleLabel = 'Sno : ';
+  static const checkListDescLabel = 'Description : ';
+  static const checkListNoteLabel = 'Note : ';
+  static const checkListAnswerLabel = 'Answers : ';
+  static const checkListAttachmentActionLabel = 'Attachment';
+  static const checkListIssueActionLabel = 'Issue';
+  static const checkListNewActionLabel = 'new';
+
+  static const customerSelection = 'Customer Selection';
+  static const customerSelectionMenuItem = 'Select Customer';
+  static const projectSelectionMenuItem = 'Select Project';
+
+  static const storageOperationsFailure = 'storage operation failed : ';
+  static const emptyData = 'No Data Available.';
+  static const requiredField = 'This field is required';
+  static const no = 'No';
+  static const yes = 'Yes';
+  static const confirmationTitle = 'Confirmation';
+  static const confirmMessage = 'Are you sure?';
+  static const exitApplication = 'Do you want to exit Exto?';
+  static const logoutApplication = 'Do you want to log out?';
+
+  //Workflow messages
+  static const workflowAccessNotFound = 'Workflow access not found';
+  static const lackOfPermission = 'You do not have permission to this module';
+  static const noWorkFlowId = 'No Workflow Id Found';
+  static const mandatoryIndicator = ' *';
+
+  //filter texts
+  static const filterCombinationAnd = 'Match All';
+  static const filterCombinationOr = 'Match Any';
+  static const filterApplyButtonText = 'Apply';
+  static const filterCancelButtonText = 'Cancel';
+  static const filterAddRuleButtonText = 'Add Rule';
+  static const filterRemoveRuleButtonText = 'Remove Rule';
+
+  static const attachFrom = 'Attach from';
+  static const gallery = 'Gallery';
+  static const camera = 'Camera';
+  static const widgets = 'Widgets';
+  static const wfComment = 'WF Comments';
+  static const generalAttachments = 'General Attachments';
+  static const checkListAttachments = 'Checklist attachments';
+  static const responsiblePerson = 'Responsible Person';
+  static const deleteButtonText = 'Delete';
+  static const scannerPlatformError = 'Failed to get platform version.';
+  static const downloadFileError =
+      'Error on downloading the file, please try again later.';
+  static const needPermissions = 'Need permissions to save file in the storage';
+  static const openSettings = 'Please enable permissions from app settings';
+  static const downloadBasePath = '/storage/emulated/0/Download/';
+  static const unknownError = 'Something went wrong';
+
+  // Map keys
+  static const dataKey = 'data';
+  static const isLocalKey = 'is_local';
+  static const idKey = '_id';
+  static const refIdKey = 'refID';
+  static const metaKey = 'meta';
+  static const createdAtKey = 'created_at';
+  static const createdByKey = 'created_by';
+  static const statusKey = 'status';
+  static const actionKey = 'action';
+  static const commentKey = 'comment';
+
+  // Parameters
+  static const formIdParam = 'form_id';
+  static const moduleNameParam = 'module_name';
+  static const draftRecord = 'Draft Record';
+
+  // Record status
+  static const inProcess = 'IN_PROCESS';
+  static const approved = 'Approved';
+  static const rejected = 'Rejected';
+  static const requestReview = 'REQUEST_FOR_REVIEW';
+
+  // Workflow actions
+  static const submit = 'Submit';
+  static const approve = 'Approve';
+  static const reject = 'Reject';
+  static const returnn = 'Return';
+  static const withdraw = 'Withdraw';
+  static const revoke = 'Revoke';
+
+  // Strings
+  static const workflowActionTitle = 'Workflow Action';
+  static const workflowDoneText = 'Done';
+  static const workflowCloseText = 'Close';
+  static const workflowSuccessMessage = 'Successfully Done';
+  static const searchHintText = 'Search..';
+  static const saveAsDraft = 'Save as Draft';
+
+  // Workspace & Projects
+  static const workspaceCaption =
+      'You are associated with multiple workspaces. Please select a workspace to continue!';
+  static const chooseWorkspace = 'Choose Workspace';
+  static const projectCaption =
+      'You are associated with multiple projects. Please select a project to continue!';
+
+  // DrawerMenuItems (menu options)
+  static const menuTitleHome = 'Home';
+  static const menuTitleMyTask = 'My Task';
+  static const menuTitleFavourites = 'Favourites';
+  static const menuTitleModules = 'Modules';
+  static const menuTitleMaster = 'Master';
+  static const menuTitleWorkspaces = 'Workspaces';
+  static const menuTitleProjects = 'Projects';
+  static const menuTitleSettings = 'Settings';
+
+  //profile
+  static const myAccount = 'My Account';
+  static const general = 'General';
+  static const usernameEmail = 'Username/Email';
+  static const accountSettings = 'Account Settings';
+  static const changePassword = 'Change Password';
+  static const other = 'Other';
+  static const experimentalFeatures = 'Experimental Features';
+  static const signOut = 'Sign Out';
+  static const profileInformation = 'Profile Information';
+  static const firstNameLastName = 'First Name & Last Name';
+  static const confirm = 'Confirm';
+  static const uploadPhoto = 'Upload Photo';
+  static const upload = 'Upload';
+  static const name = 'Name';
+  static const chooseDateFormat = 'Choose Date Format';
+
+  // Change password screen
+  static const currentPassword = 'Current Password';
+  static const currentPasswordHint = 'Enter Current Password';
+  static const newPassword = 'New Password';
+  static const newPasswordHint = 'Generate new password';
+  static const confirmPassword = 'Repeat Password';
+  static const confirmPasswordHint = 'Confirm Password';
+  static const passwordMismatch = 'Password do not match';
+
+  // Account settings screen
+  static const theme = 'Theme';
+  static const dateFormat = 'Date Format';
+  static const fontSize = 'Font Size';
+
+  static const lightTheme = 'Light';
+  static const mediumFontSize = 'Medium';
+
+  //Table Records Constants
+  static const tableData = 'subTableData';
+  static const recordsData = 'records';
+  static const deleteData = 'deleted';
+  static const filerText = 'Filter';
+  static const editTitle = 'Edit';
+  static const noString = 'No';
+  static const yesString = 'Yes';
+  static const yesFieldValue = 'Y';
+  static const noFieldValue = 'N';
+
+  //Table cases
+  static const tableString = 'STRING';
+  static const tableDigit = 'NUMBER';
+  static const tableDate = 'DATE';
+  static const tableCheckBox = 'CHECKBOX';
+  static const tableSelect = 'SELECT';
+
+  //Reference Table ID Constants.
+  static const referenceIDSubmitLabel = 'label';
+  static const referenceIDSubmitValue = 'value';
+  static const referenceIDSubmitRefId = 'refId';
+  static const referenceIDRecords = 'records';
+  static const referenceIDTitleName = 'Reference ID';
+
+  //Module Records constants
+  static const moduleName = 'moduleName';
+
+  static const pageKey = 'page';
+  static const pageSizeKey = 'pageSize';
+  static const pageSizeValue = '25';
+}
