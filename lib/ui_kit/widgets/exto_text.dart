@@ -6,7 +6,7 @@ import 'package:chef/theme/app_theme_widget.dart';
 class ExtoText extends StatelessWidget {
   const ExtoText(
     String text, {
-    FontFamily fontFamily = FontFamily.inter,
+    FontFamily fontFamily = FontFamily.poppins,
     TypographyFamily typography = TypographyFamily.body1,
     Color? color,
     TextStyle? style,

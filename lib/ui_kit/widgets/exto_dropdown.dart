@@ -84,6 +84,7 @@ class _ExtoDropdownState extends State<ExtoDropdown> {
               },
             )
           : DropdownSearch<String>(
+
               items: widget._items,
               popupProps: PopupProps.menu(
                 showSearchBox: widget._isSearchable,

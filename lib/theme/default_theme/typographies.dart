@@ -10,7 +10,7 @@ class _Typographies extends ITypographies {
     FontFamily? fontFamily,
   ]) {
     switch (fontFamily) {
-      case FontFamily.inter:
+      case FontFamily.poppins:
         return _interTypography;
       default:
         return _interTypography;
@@ -28,6 +28,7 @@ class _InterTypography extends ITypography {
   static const _size32 = 32.0;
   static const _size26 = 26.0;
   static const _size20 = 20.0;
+  static const _size21 = 21.0;
   static const _size18 = 18.0;
   static const _size16 = 16.0;
   static const _size14 = 14.0;
@@ -37,7 +38,7 @@ class _InterTypography extends ITypography {
 
   static const _defaultTextColor = _IColors.black;
 
-  TextStyle get _baseTextStyle => GoogleFonts.inter(
+  TextStyle get _baseTextStyle => GoogleFonts.poppins(
         color: _defaultTextColor,
         fontWeight: FontWeight.w400,
         fontSize: _size16,
@@ -215,7 +216,7 @@ class _InterTypography extends ITypography {
   @override
   TextStyle get button3 => _baseTextStyle.copyWith(
         fontWeight: FontWeight.w500,
-        fontSize: _size14,
+        fontSize: _size16,
         color: _IColors.grey09,
       );
 

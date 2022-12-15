@@ -30,7 +30,7 @@ enum TypographyFamily {
   alert2,
 }
 
-enum FontFamily { inter }
+enum FontFamily { poppins }
 
 abstract class ITypographies {
   const ITypographies();

@@ -75,7 +75,7 @@ abstract class IAppThemeData {
   Brightness get darkBrightness;
 
   TextStyle getTextStyle({
-    FontFamily fontFamily = FontFamily.inter,
+    FontFamily fontFamily = FontFamily.poppins,
     TypographyFamily typographyFamily = TypographyFamily.body1,
     Color? color,
   }) {

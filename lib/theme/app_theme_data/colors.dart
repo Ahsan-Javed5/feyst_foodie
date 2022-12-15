@@ -80,5 +80,8 @@ abstract class IColors {
   Color get defaultTrailingIcon;
   Color get platformTextColor;
   Color get mandatoryItemBackground;
+  Color get filledButtonColor;
+  Color get textFieldFilledColor;
+  Color get textFieldBorderColor;
   Color stringColor(String code);
 }

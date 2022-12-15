@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 
 import 'package:chef/constants/constants.dart';
 import 'package:chef/screens/screen.dart';
+import 'package:chef/screens/sign_up/get_started_screen_v.dart';
 
 import '../../screens/sign_up/sign_up_screen_v.dart';
 
@@ -32,6 +33,7 @@ abstract class Routes {
   static const profileInformation = '/profile_information';
   static const changePassword = '/change_password';
   static const accountSettings = '/account_settings';
+  static const getStartedScreen = '/get_started_screen';
 }
 
 @MaterialAutoRouter(
@@ -44,6 +46,10 @@ abstract class Routes {
     AutoRoute(
       page: LoginScreen,
       path: Routes.login,
+    ),
+    AutoRoute(
+      page: GetStartedScreen,
+      path: Routes.getStartedScreen,
     ),
     AutoRoute(
       page: SignUpScreen,

@@ -243,4 +243,31 @@ abstract class Strings {
   static const pageKey = 'page';
   static const pageSizeKey = 'pageSize';
   static const pageSizeValue = '25';
+
+
+  //get started texts
+static const getStartedTitle="Be Entertained by Our BistroKings & Queens";
+static const getStartedSubtitle="Have that perfect dish, made by theperfect chef, just as you like!";
+static const getStartedButtonTitle="Get Started";
+
+
+  static const letsGetTitle="Let's get you";
+  static const signUpTitle="Signed Up";
+  static const signFullNameLabel="Full Name";
+  static const signMobileNumberLabel="Mobile Number";
+  static const signGenderLabel="Gender";
+  static const signAgeLabel="Age";
+  static const signProfessionLabel="Profession";
+  static const signAlreadyUserLabel="Already a User";
+  static const signMaleLabel="Male";
+  static const signFemaleLabel="Female";
+
+  static const signInLabel="Sign in";
+  static const signInMobileNumberLabel="Mobile Number";
+  static const questionireLabel="Lets get to know you more";
+  static const questionireLabel2="What makes you unique foodie";
+  static const questionireLabel3="Your idea of perfect ambience";
+  static const questionireLabel4="Cuisine Taste";
+  static const questionireLabel5="Your Interests";
+
 }

@@ -25,7 +25,7 @@ class DefaultTheme extends IAppThemeData {
   static const _zeroPadding = EdgeInsets.zero;
   static const _buttonPadding = EdgeInsets.symmetric(
     vertical: 12.0,
-    horizontal: 16.0,
+    horizontal: 35.0,
   );
 
   @override
@@ -43,12 +43,12 @@ class DefaultTheme extends IAppThemeData {
   ButtonStyle get filledButtonStyle => ButtonStyle(
         foregroundColor: _materialStateColorBuilder(
           hoverColor: colors.secondaryText,
-          color: colors.secondaryText,
+           color: colors.secondaryText,
           disableColor: colors.disabledText,
         ),
         backgroundColor: _materialStateColorBuilder(
           hoverColor: colors.primaryBackground,
-          color: colors.primaryBackground,
+          color: colors.filledButtonColor,
           disableColor: colors.disabledPrimaryBackground,
         ),
         textStyle: _textStyleBuilder(
@@ -284,9 +284,9 @@ class DefaultTheme extends IAppThemeData {
 
   @override
   InputBorder get focusedBorder => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(10),
         borderSide: const BorderSide(
-          color: _IColors.grey22,
+          color: _IColors.textFieldBorderColor,
           width: 2,
         ),
       );

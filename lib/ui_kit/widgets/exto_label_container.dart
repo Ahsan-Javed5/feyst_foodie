@@ -72,7 +72,7 @@ class ExtoLabelContainer extends StatelessWidget {
                 TextSpan(
                   text: Strings.mandatoryIndicator,
                   style: appTheme.typographies
-                      .byFontFamily(FontFamily.inter)
+                      .byFontFamily(FontFamily.poppins)
                       .label2
                       .copyWith(color: appTheme.colors.errorBackground),
                 ),

@@ -1,3 +1,4 @@
+import 'package:chef/screens/sign_up/get_started_screen_v.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -20,6 +21,7 @@ class SplashScreen extends BaseView<SplashScreenViewModel> {
   }) {
     final _screenSize = screenSizeData.size;
     final _logoWidth = _screenSize.width * .3;
+    final _logoHeight = _screenSize.height * .1;
     final appTheme = AppTheme.of(context).theme;
     viewModel.fetchLoginDetails(context);
     return BlocBuilder<SplashScreenViewModel, SplashScreenState>(
@@ -28,9 +30,19 @@ class SplashScreen extends BaseView<SplashScreenViewModel> {
         return Scaffold(
           backgroundColor: appTheme.colors.primaryBackground,
           body: Center(
-            child: SvgPicture.asset(
-              Resources.chefLogo,
-              width: _logoWidth,
+            child: InkWell(
+              onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => GetStartedScreen()),
+                );
+
+              },
+              child: SvgPicture.asset(
+                Resources.chefLogo,
+                width: _logoWidth,
+                height: _logoHeight,
+              ),
             ),
           ),
         );
