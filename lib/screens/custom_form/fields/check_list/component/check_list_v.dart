@@ -5,7 +5,7 @@ import 'package:chef/base/base.dart';
 import 'package:chef/constants/strings.dart';
 import 'package:chef/models/models.dart';
 import 'package:chef/services/services.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:chef/ui_kit/helpers/dialog_helper.dart';
 import 'package:chef/screens/custom_form/fields/check_list/attachments/check_list_attachments_v.dart';
 import 'package:chef/screens/custom_form/fields/check_list/component/check_list_m.dart';
@@ -59,7 +59,7 @@ class CheckListView extends BaseView<CheckListViewModel> {
     );
   }
 
-  Widget _loading() => const SizedBox(height: 100, child: ExtoLoading());
+  Widget _loading() => const SizedBox(height: 100, child: GeneralLoading());
 
   Widget _error() => const SizedBox();
 

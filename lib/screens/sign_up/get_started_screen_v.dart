@@ -11,10 +11,8 @@ import 'package:chef/screens/splash/splash_screen_vm.dart';
 
 import '../../theme/app_theme_data/app_theme_data.dart';
 import '../../theme/app_theme_widget.dart';
-import '../../ui_kit/widgets/exto_button.dart';
-import '../../ui_kit/widgets/exto_text.dart';
-
-
+import '../../ui_kit/widgets/general_button.dart';
+import '../../ui_kit/widgets/general_text.dart';
 
 class GetStartedScreen extends StatefulWidget {
   @override
@@ -27,78 +25,72 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
     final appTheme = AppTheme.of(context).theme;
     return Scaffold(
       backgroundColor: appTheme.colors.primaryBackground,
-      body:
-      Container(
+      body: Container(
         width: double.infinity,
         height: double.infinity,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(   Resources.getStartedBgPng,),
+            image: AssetImage(
+              Resources.getStartedBgPng,
+            ),
             fit: BoxFit.cover,
           ),
         ),
-        child:  Column(
-           mainAxisAlignment: MainAxisAlignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-Spacer(),
+            Spacer(),
             _getStartedTitle(appTheme: appTheme),
-            SizedBox(height: 12,),
+            SizedBox(
+              height: 12,
+            ),
             _getStartedSubTitle(appTheme: appTheme),
-            SizedBox(height:230,),
+            SizedBox(
+              height: 230,
+            ),
             _getStartedButtonTitle(appTheme: appTheme),
-            SizedBox(height: 50,),
+            SizedBox(
+              height: 50,
+            ),
           ],
         ) /* add child content here */,
       ),
-
-
-
-
     );
   }
+
   Widget _getStartedTitle({required IAppThemeData appTheme}) {
-    return ExtoText(
+    return GeneralText(
       Strings.getStartedTitle,
       textAlign: TextAlign.center,
-
-      style: appTheme.typographies.interFontFamily.headline4.copyWith(
-        color: Colors.white,
-            fontSize: 21
-      ),
+      style: appTheme.typographies.interFontFamily.headline4
+          .copyWith(color: Colors.white, fontSize: 21),
     );
   }
+
   Widget _getStartedSubTitle({required IAppThemeData appTheme}) {
-    return ExtoText(
+    return GeneralText(
       Strings.getStartedSubtitle,
       textAlign: TextAlign.center,
-
-      style: appTheme.typographies.interFontFamily.headline6.copyWith(
-          color: Colors.white,
-        fontSize: 15
-      ),
+      style: appTheme.typographies.interFontFamily.headline6
+          .copyWith(color: Colors.white, fontSize: 15),
     );
   }
+
   Widget _getStartedButtonTitle({required IAppThemeData appTheme}) {
-    return
-      ExtoButton.button(
-        title: Strings.getStartedButtonTitle.toUpperCase(),
-
-        styleType: ButtonStyleType.fill,
-
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => SignUpScreen()),
-          );
-          //    viewModel.goToForgotPasswordScreen();
-        },
-      );
-    ExtoText(
+    return GeneralButton.button(
+      title: Strings.getStartedButtonTitle.toUpperCase(),
+      styleType: ButtonStyleType.fill,
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SignUpScreen()),
+        );
+        //    viewModel.goToForgotPasswordScreen();
+      },
+    );
+    GeneralText(
       Strings.getStartedButtonTitle,
       style: appTheme.typographies.interFontFamily.headline2,
     );
   }
 }
-
-
-

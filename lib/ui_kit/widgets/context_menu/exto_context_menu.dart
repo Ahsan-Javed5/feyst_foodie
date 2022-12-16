@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:chef/theme/theme.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 
 part 'exto_context_menu_divider.dart';
 part 'exto_context_menu_item.dart';

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:chef/constants/constants.dart';
 import 'package:chef/models/models.dart';
 import 'package:chef/helpers/enum_helper.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 
 class FitlerWidget extends StatefulWidget {
   const FitlerWidget({
@@ -65,7 +65,7 @@ class _FitlerWidgetState extends State<FitlerWidget> {
               Container(
                 color: Colors.grey[100],
                 margin: const EdgeInsets.only(bottom: 10),
-                child: ExtoDropdown(
+                child: GeneralDropdownWithSearch(
                   name: '',
                   margin: 8.0,
                   items: filterCombinations
@@ -86,13 +86,13 @@ class _FitlerWidgetState extends State<FitlerWidget> {
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: [
-                    ExtoButton.button(
+                    GeneralButton.button(
                       title: Strings.filterCancelButtonText,
                       styleType: ButtonStyleType.outline,
                       onTap: () => Navigator.maybePop(context),
                     ),
                     const Spacer(),
-                    ExtoButton.button(
+                    GeneralButton.button(
                       title: Strings.filterApplyButtonText,
                       styleType: ButtonStyleType.fill,
                       onTap: () {
@@ -132,7 +132,7 @@ class _FitlerWidgetState extends State<FitlerWidget> {
       _filterController = TextController(text: _secondFilter.value);
     }
     return [
-      ExtoDropdown(
+      GeneralDropdownWithSearch(
         name: '',
         margin: 8.0,
         items:
@@ -153,7 +153,7 @@ class _FitlerWidgetState extends State<FitlerWidget> {
           }
         },
       ),
-      ExtoTextInput(
+      GeneralTextInput(
         controller: _filterController,
         onChanged: (value) {
           _filterObjects.removeAt(index);
@@ -169,7 +169,7 @@ class _FitlerWidgetState extends State<FitlerWidget> {
           }
         },
       ),
-      ExtoButton.button(
+      GeneralButton.button(
         title: _buttonTitle,
         onTap: () {
           setState(() {
@@ -188,7 +188,7 @@ class _FitlerWidgetState extends State<FitlerWidget> {
       ),
       Visibility(
         visible: !(_filterObjects.length > 1),
-        child: const ExtoDivider(),
+        child: const GeneralDivider(),
       ),
     ];
   }

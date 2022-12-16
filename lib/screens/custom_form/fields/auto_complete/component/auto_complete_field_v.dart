@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:chef/theme/theme.dart';
 import 'package:chef/base/base.dart';
 import 'package:chef/services/services.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:chef/screens/custom_form/fields/auto_complete/component/auto_complete_field_vm.dart';
 import 'package:chef/screens/custom_form/fields/auto_complete/component/auto_complete_field_m.dart';
 import 'package:chef/models/custom_forms/external_fields/external_field.dart';
@@ -47,7 +47,7 @@ class AutoCompleteFieldView extends BaseView<AutoCompleteFieldViewModel> {
     const loadingIndicator = SizedBox(
       width: _defaultSize,
       height: _defaultSize,
-      child: ExtoLoading(),
+      child: GeneralLoading(),
     );
 
     final appTheme = AppTheme.of(context).theme;
@@ -73,7 +73,7 @@ class AutoCompleteFieldView extends BaseView<AutoCompleteFieldViewModel> {
     required AutoCompleteFieldState state,
     required BuildContext context,
   }) {
-    return ExtoDropdown(
+    return GeneralDropdownWithSearch(
       items: viewModel.getData(fields, _labelValue),
       isSearchable: true,
       name: Strings.referenceIDTitleName,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:chef/constants/constants.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:chef/services/navigation/navigation_service.dart';
 import 'package:chef/setup.dart';
 
@@ -20,7 +20,7 @@ abstract class DialogHelper {
     bool? isEnable,
     Alignment? alignment,
     bool Function()? canDismiss,
-    ExtoComponentStyle dialogType = ExtoComponentStyle.primary,
+    GeneralComponentStyle dialogType = GeneralComponentStyle.primary,
   }) {
     assert(
       !isDismissible || barrierLabel != null,
@@ -65,16 +65,16 @@ abstract class DialogHelper {
     return showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: const ExtoText(Strings.confirmationTitle),
-        content: ExtoText(confirmationMessage ?? Strings.confirmMessage),
+        title: const GeneralText(Strings.confirmationTitle),
+        content: GeneralText(confirmationMessage ?? Strings.confirmMessage),
         actions: <Widget>[
-          ExtoButton.button(
+          GeneralButton.button(
             title: Strings.no,
             height: 40,
             styleType: ButtonStyleType.outline,
             onTap: onDeny ?? locateService<INavigationService>().pop,
           ),
-          ExtoButton.button(
+          GeneralButton.button(
             title: Strings.yes,
             height: 40,
             onTap: onConfirm,

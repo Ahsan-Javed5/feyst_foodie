@@ -100,14 +100,14 @@ class _ExtoContextMenuItemState extends State<_ExtoContextMenuItem> {
               padding: const EdgeInsets.symmetric(
                 vertical: _ExtoContextMenuItem._titleVerticalPadding,
               ),
-              child: ExtoText(
+              child: GeneralText(
                 title,
                 typography: TypographyFamily.label2,
                 color: titleColor,
               ),
             ),
           if (subtitle != null)
-            ExtoText(
+            GeneralText(
               subtitle,
               typography: TypographyFamily.label2,
               color: subtitleColor,

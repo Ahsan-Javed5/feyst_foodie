@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 
 class RadioUi extends StatelessWidget {
   const RadioUi({
@@ -36,7 +36,7 @@ class RadioUi extends StatelessWidget {
       final option = _options[index];
       options.add(
         Expanded(
-          child: ExtoSelectable.radio(
+          child: GeneralSelectable.radio(
             onTap: (selectable) {
               _onOptionSelect(
                 optionValue: selectable.value,

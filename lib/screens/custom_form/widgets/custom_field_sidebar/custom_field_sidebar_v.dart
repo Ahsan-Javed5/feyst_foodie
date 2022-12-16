@@ -11,7 +11,7 @@ import 'package:chef/screens/custom_form/widgets/custom_field_sidebar/custom_fie
 import 'package:chef/services/services.dart';
 import 'package:chef/setup.dart';
 import 'package:chef/theme/theme.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/models/custom_forms/comment.dart';
 
@@ -93,7 +93,8 @@ class CustomFieldSideBar extends BaseView<CustomFieldSideBarViewModel> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const ExtoText(Strings.generalAttachments),
+                                    const GeneralText(
+                                        Strings.generalAttachments),
                                     IconButton(
                                       onPressed: () {
                                         viewModel.uploadAttachment(
@@ -120,7 +121,8 @@ class CustomFieldSideBar extends BaseView<CustomFieldSideBarViewModel> {
                                         ),
                                       ),
                                     ),
-                                    if (state is Loading) const ExtoLoading(),
+                                    if (state is Loading)
+                                      const GeneralLoading(),
                                   ],
                                 ),
                               ),
@@ -136,7 +138,7 @@ class CustomFieldSideBar extends BaseView<CustomFieldSideBarViewModel> {
                             children: [
                               const Padding(
                                 padding: EdgeInsets.only(bottom: _padding),
-                                child: ExtoText(Strings.responsiblePerson),
+                                child: GeneralText(Strings.responsiblePerson),
                               ),
                               Expanded(
                                 child: SingleChildScrollView(
@@ -293,8 +295,8 @@ class CommentTile extends StatelessWidget {
           children: [
             ListTile(
               contentPadding: const EdgeInsets.symmetric(),
-              title: ExtoText(_responsibleName),
-              subtitle: ExtoText(_dateTime),
+              title: GeneralText(_responsibleName),
+              subtitle: GeneralText(_dateTime),
               leading: Container(
                 decoration: const BoxDecoration(
                   color: Colors.amber,
@@ -304,7 +306,7 @@ class CommentTile extends StatelessWidget {
                 ),
                 child: const Padding(
                   padding: EdgeInsets.all(_padding),
-                  child: ExtoText('M'),
+                  child: GeneralText('M'),
                 ),
               ),
               trailing: Container(
@@ -320,7 +322,7 @@ class CommentTile extends StatelessWidget {
                     vertical: _smallPadding,
                     horizontal: _extraPadding,
                   ),
-                  child: ExtoText(_step),
+                  child: GeneralText(_step),
                 ),
               ),
             ),
@@ -330,7 +332,7 @@ class CommentTile extends StatelessWidget {
                 Flexible(
                   child: Padding(
                     padding: const EdgeInsets.only(right: _smallPadding),
-                    child: ExtoText(_description),
+                    child: GeneralText(_description),
                   ),
                 ),
                 Container(
@@ -346,7 +348,7 @@ class CommentTile extends StatelessWidget {
                       vertical: _smallPadding,
                       horizontal: _extraPadding,
                     ),
-                    child: ExtoText(
+                    child: GeneralText(
                       _status,
                       style: const TextStyle(color: Colors.white),
                     ),
@@ -379,8 +381,8 @@ class ResponsibleTile extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: _smallPadding),
       child: ListTile(
-        title: ExtoText(_title),
-        subtitle: _subTitle != null ? ExtoText(_subTitle!) : null,
+        title: GeneralText(_title),
+        subtitle: _subTitle != null ? GeneralText(_subTitle!) : null,
       ),
     );
   }
@@ -406,12 +408,12 @@ class AttachmentTile extends StatelessWidget {
       child: ListTile(
         visualDensity: VisualDensity.compact,
         leading: const Icon(CupertinoIcons.doc),
-        title: ExtoText(_attachment.name),
-        subtitle: ExtoText(
+        title: GeneralText(_attachment.name),
+        subtitle: GeneralText(
           _fileSize,
           typography: TypographyFamily.label4,
         ),
-        trailing: ExtoText(
+        trailing: GeneralText(
           _attachment.versions.isEmpty
               ? ''
               : _attachment.versions[0].name.split('_')[0],

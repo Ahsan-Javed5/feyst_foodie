@@ -4,7 +4,7 @@ import 'package:chef/models/models.dart';
 import 'package:chef/screens/custom_form/fields/external_field/component/external_field_v.dart';
 import 'package:chef/services/services.dart';
 import 'package:chef/theme/app_theme_widget.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:chef/ui_kit/helpers/dialog_helper.dart';
 
 class ExternalField extends StatefulWidget {
@@ -37,14 +37,14 @@ class _ExternalFieldState extends State<ExternalField> {
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context).theme;
 
-    return ExtoLabelContainer(
+    return GeneralLabelContainer(
       isReadOnly: widget._properties.isReadOnly,
       isMandatory: widget._properties.isMandatory,
       hideLabel: widget._properties.hideLabel,
       label: widget._properties.label,
       helpText: widget._properties.helpText,
       child: InkWell(
-        child: ExtoTextInput(
+        child: GeneralTextInput(
           isEnable: !widget._properties.isReadOnly,
           controller: TextController(text: selectedExtFieldValue),
           suffixIcon: Icons.search,

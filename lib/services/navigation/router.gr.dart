@@ -11,22 +11,23 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i3;
-import 'package:flutter/material.dart' as _i4;
+import 'package:auto_route/auto_route.dart' as _i4;
+import 'package:flutter/material.dart' as _i5;
 
 import '../../screens/screen.dart' as _i1;
-import '../../screens/sign_up/sign_up_screen_v.dart' as _i2;
+import '../../screens/sign_up/get_started_screen_v.dart' as _i2;
+import '../../screens/sign_up/sign_up_screen_v.dart' as _i3;
 
-class AppRouter extends _i3.RootStackRouter {
-  AppRouter([_i4.GlobalKey<_i4.NavigatorState>? navigatorKey])
+class AppRouter extends _i4.RootStackRouter {
+  AppRouter([_i5.GlobalKey<_i5.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
-  final Map<String, _i3.PageFactory> pagesMap = {
+  final Map<String, _i4.PageFactory> pagesMap = {
     SplashRoute.name: (routeData) {
       final args = routeData.argsAs<SplashRouteArgs>(
           orElse: () => const SplashRouteArgs());
-      return _i3.MaterialPageX<dynamic>(
+      return _i4.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i1.SplashScreen(key: args.key),
       );
@@ -34,22 +35,26 @@ class AppRouter extends _i3.RootStackRouter {
     LoginRoute.name: (routeData) {
       final args = routeData.argsAs<LoginRouteArgs>(
           orElse: () => const LoginRouteArgs());
-      return _i3.MaterialPageX<dynamic>(
+      return _i4.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i1.LoginScreen(key: args.key),
       );
     },
-    SignUpRoute.name: (routeData) {
-      final args = routeData.argsAs<SignUpRouteArgs>(
-          orElse: () => const SignUpRouteArgs());
-      return _i3.MaterialPageX<dynamic>(
+    GetStartedRoute.name: (routeData) {
+      return _i4.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i2.SignUpScreen(key: args.key),
+        child: _i2.GetStartedScreen(),
+      );
+    },
+    SignUpRoute.name: (routeData) {
+      return _i4.MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const _i3.SignUpScreen(),
       );
     },
     ForgotPasswordRoute.name: (routeData) {
       final args = routeData.argsAs<ForgotPasswordRouteArgs>();
-      return _i3.MaterialPageX<dynamic>(
+      return _i4.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i1.ForgotPasswordScreen(
           baseUrl: args.baseUrl,
@@ -60,7 +65,7 @@ class AppRouter extends _i3.RootStackRouter {
     HomeRoute.name: (routeData) {
       final args =
           routeData.argsAs<HomeRouteArgs>(orElse: () => const HomeRouteArgs());
-      return _i3.MaterialPageX<dynamic>(
+      return _i4.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i1.HomeScreen(key: args.key),
       );
@@ -68,28 +73,32 @@ class AppRouter extends _i3.RootStackRouter {
   };
 
   @override
-  List<_i3.RouteConfig> get routes => [
-        _i3.RouteConfig(
+  List<_i4.RouteConfig> get routes => [
+        _i4.RouteConfig(
           SplashRoute.name,
           path: '/',
         ),
-        _i3.RouteConfig(
+        _i4.RouteConfig(
           LoginRoute.name,
           path: '/login',
         ),
-        _i3.RouteConfig(
+        _i4.RouteConfig(
+          GetStartedRoute.name,
+          path: '/get_started_screen',
+        ),
+        _i4.RouteConfig(
           SignUpRoute.name,
           path: '/signUp',
         ),
-        _i3.RouteConfig(
+        _i4.RouteConfig(
           ForgotPasswordRoute.name,
           path: '/forgotPassword',
         ),
-        _i3.RouteConfig(
+        _i4.RouteConfig(
           HomeRoute.name,
           path: '/home',
         ),
-        _i3.RouteConfig(
+        _i4.RouteConfig(
           '*#redirect',
           path: '*',
           redirectTo: '/',
@@ -100,8 +109,8 @@ class AppRouter extends _i3.RootStackRouter {
 
 /// generated route for
 /// [_i1.SplashScreen]
-class SplashRoute extends _i3.PageRouteInfo<SplashRouteArgs> {
-  SplashRoute({_i4.Key? key})
+class SplashRoute extends _i4.PageRouteInfo<SplashRouteArgs> {
+  SplashRoute({_i5.Key? key})
       : super(
           SplashRoute.name,
           path: '/',
@@ -114,7 +123,7 @@ class SplashRoute extends _i3.PageRouteInfo<SplashRouteArgs> {
 class SplashRouteArgs {
   const SplashRouteArgs({this.key});
 
-  final _i4.Key? key;
+  final _i5.Key? key;
 
   @override
   String toString() {
@@ -124,8 +133,8 @@ class SplashRouteArgs {
 
 /// generated route for
 /// [_i1.LoginScreen]
-class LoginRoute extends _i3.PageRouteInfo<LoginRouteArgs> {
-  LoginRoute({_i4.Key? key})
+class LoginRoute extends _i4.PageRouteInfo<LoginRouteArgs> {
+  LoginRoute({_i5.Key? key})
       : super(
           LoginRoute.name,
           path: '/login',
@@ -138,7 +147,7 @@ class LoginRoute extends _i3.PageRouteInfo<LoginRouteArgs> {
 class LoginRouteArgs {
   const LoginRouteArgs({this.key});
 
-  final _i4.Key? key;
+  final _i5.Key? key;
 
   @override
   String toString() {
@@ -147,35 +156,35 @@ class LoginRouteArgs {
 }
 
 /// generated route for
-/// [_i2.SignUpScreen]
-class SignUpRoute extends _i3.PageRouteInfo<SignUpRouteArgs> {
-  SignUpRoute({_i4.Key? key})
+/// [_i2.GetStartedScreen]
+class GetStartedRoute extends _i4.PageRouteInfo<void> {
+  const GetStartedRoute()
+      : super(
+          GetStartedRoute.name,
+          path: '/get_started_screen',
+        );
+
+  static const String name = 'GetStartedRoute';
+}
+
+/// generated route for
+/// [_i3.SignUpScreen]
+class SignUpRoute extends _i4.PageRouteInfo<void> {
+  const SignUpRoute()
       : super(
           SignUpRoute.name,
           path: '/signUp',
-          args: SignUpRouteArgs(key: key),
         );
 
   static const String name = 'SignUpRoute';
 }
 
-class SignUpRouteArgs {
-  const SignUpRouteArgs({this.key});
-
-  final _i4.Key? key;
-
-  @override
-  String toString() {
-    return 'SignUpRouteArgs{key: $key}';
-  }
-}
-
 /// generated route for
 /// [_i1.ForgotPasswordScreen]
-class ForgotPasswordRoute extends _i3.PageRouteInfo<ForgotPasswordRouteArgs> {
+class ForgotPasswordRoute extends _i4.PageRouteInfo<ForgotPasswordRouteArgs> {
   ForgotPasswordRoute({
     required String baseUrl,
-    _i4.Key? key,
+    _i5.Key? key,
   }) : super(
           ForgotPasswordRoute.name,
           path: '/forgotPassword',
@@ -196,7 +205,7 @@ class ForgotPasswordRouteArgs {
 
   final String baseUrl;
 
-  final _i4.Key? key;
+  final _i5.Key? key;
 
   @override
   String toString() {
@@ -206,8 +215,8 @@ class ForgotPasswordRouteArgs {
 
 /// generated route for
 /// [_i1.HomeScreen]
-class HomeRoute extends _i3.PageRouteInfo<HomeRouteArgs> {
-  HomeRoute({_i4.Key? key})
+class HomeRoute extends _i4.PageRouteInfo<HomeRouteArgs> {
+  HomeRoute({_i5.Key? key})
       : super(
           HomeRoute.name,
           path: '/home',
@@ -220,7 +229,7 @@ class HomeRoute extends _i3.PageRouteInfo<HomeRouteArgs> {
 class HomeRouteArgs {
   const HomeRouteArgs({this.key});
 
-  final _i4.Key? key;
+  final _i5.Key? key;
 
   @override
   String toString() {

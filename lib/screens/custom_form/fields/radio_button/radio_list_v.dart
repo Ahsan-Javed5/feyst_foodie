@@ -6,7 +6,7 @@ import 'package:chef/constants/constants.dart';
 import 'package:chef/theme/app_theme_data/app_theme_data.dart';
 import 'package:chef/theme/app_theme_widget.dart';
 import 'package:chef/models/custom_forms/data_set.dart' as data_set;
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:chef/services/services.dart';
 import 'package:chef/screens/custom_form/fields/radio_button/radio_list_m.dart';
 import 'package:chef/screens/custom_form/fields/radio_button/radio_list_vm.dart';
@@ -58,7 +58,7 @@ class RadioListView extends BaseView<RadioListViewModel> {
     const loadingIndicator = SizedBox(
       width: _defaultSize,
       height: _defaultSize,
-      child: ExtoLoading(),
+      child: GeneralLoading(),
     );
     return BlocBuilder<RadioListViewModel, RadioListState>(
       bloc: viewModel,
@@ -89,7 +89,7 @@ class RadioListView extends BaseView<RadioListViewModel> {
             appTheme: appTheme,
             context: context,
           ),
-          ExtoRadioGroup<String>(
+          GeneralRadioGroup<String>(
             orientation: orientation,
             initialValue:
                 _selectedValue!.isNotEmpty ? _selectedValue![0] : null,

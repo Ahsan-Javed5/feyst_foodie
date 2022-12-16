@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import 'package:chef/ui_kit/widgets/exto_loading.dart';
+import 'package:chef/ui_kit/widgets/general_loading.dart';
 
 enum LoadingStatus {
   loading,
@@ -51,7 +51,7 @@ class _LazyLoaderState extends State<LazyLoader> {
             ),
           ),
         ),
-        if (isLoading) const ExtoLoading(isLazyLoader: true)
+        if (isLoading) const GeneralLoading(isLazyLoader: true)
       ],
     );
   }

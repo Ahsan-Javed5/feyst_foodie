@@ -8,7 +8,7 @@ import 'package:chef/helpers/enum_helper.dart';
 import 'package:chef/models/models.dart' as modelchecklist;
 import 'package:chef/models/check_list.dart';
 import 'package:chef/theme/theme.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:chef/services/services.dart';
 import 'package:chef/screens/custom_form/fields/check_list/widgets/inner_checklist_item.dart';
 import 'package:chef/screens/custom_form/widgets/exto_field_option.dart';
@@ -292,7 +292,7 @@ class CheckListItemState extends State<CheckListItem> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8),
-                  child: ExtoText(
+                  child: GeneralText(
                     option.label?.name.toUpperCase() ?? '',
                     style:
                         appTheme.typographies.interFontFamily.label2.copyWith(
@@ -323,7 +323,7 @@ class CheckListItemState extends State<CheckListItem> {
               children: [
                 Expanded(
                   flex: 10,
-                  child: ExtoRadioGroup<String>(
+                  child: GeneralRadioGroup<String>(
                     orientation: FieldOrientation.horizontal,
                     name: widget._id,
                     onChanged: (selectable) {
@@ -356,9 +356,9 @@ class CheckListItemState extends State<CheckListItem> {
                 Flexible(
                   child: Visibility(
                     visible: _changeLogIconVisibility,
-                    child: ExtoTooltip(
+                    child: GeneralTooltip(
                       message: _answerChangeLog,
-                      child: ExtoHero.smallIcon(
+                      child: GeneralHero.smallIcon(
                         icon: Icon(
                           Icons.info,
                           color: appTheme.colors.primaryBackground,
@@ -376,7 +376,7 @@ class CheckListItemState extends State<CheckListItem> {
       );
     } else if (widget._uiType!.toUpperCase() ==
         EnumHelpers.humanize(ItemUiType.text)) {
-      return ExtoTextInput(
+      return GeneralTextInput(
         controller: _optionController,
         onChanged: (value) {
           if (value.isNotEmpty) {

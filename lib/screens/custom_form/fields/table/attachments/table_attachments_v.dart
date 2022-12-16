@@ -6,7 +6,7 @@ import 'package:chef/constants/strings.dart';
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/models/models.dart';
 import 'package:chef/services/device/device_service.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:chef/screens/custom_form/widgets/custom_field_sidebar/custom_field_sidebar_v.dart';
 import 'package:chef/screens/custom_form/fields/table/attachments/table_attachments_m.dart';
 import 'package:chef/screens/custom_form/fields/table/attachments/table_attachments_vm.dart';
@@ -45,7 +45,7 @@ class TableAttachmentsView extends BaseView<TableAttachmentsViewModel> {
 
   Widget _loading(ScreenSizeData screenSizeData) => SizedBox(
         height: screenSizeData.size.height * 0.5,
-        child: const ExtoLoading(),
+        child: const GeneralLoading(),
       );
 
   Widget _buildSuccess({
@@ -72,7 +72,7 @@ class TableAttachmentsView extends BaseView<TableAttachmentsViewModel> {
           const SizedBox(
             height: _bottomPadding,
           ),
-          ExtoButton(
+          GeneralButton(
             title: Strings.upload,
             onTap: () => viewModel.uploadAttachment(
               context: context,

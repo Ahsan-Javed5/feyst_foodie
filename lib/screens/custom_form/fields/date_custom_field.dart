@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:chef/theme/theme.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:chef/models/models.dart';
 import 'package:chef/services/services.dart';
 
@@ -50,7 +50,7 @@ class _DateCustomFieldState extends State<DateCustomField> {
         Radius.circular(DateCustomField._padding),
       ),
     );
-    return ExtoLabelContainer(
+    return GeneralLabelContainer(
       isReadOnly: widget._properties.isReadOnly,
       isMandatory: widget._properties.isMandatory,
       hideLabel: widget._properties.hideLabel,
@@ -91,7 +91,7 @@ class _DateCustomFieldState extends State<DateCustomField> {
   }
 
   List<Widget> _buildDateDisplay() => [
-        ExtoText('${_selectedDate.toLocal()}'.split(' ')[0]),
+        GeneralText('${_selectedDate.toLocal()}'.split(' ')[0]),
         Icon(
           Icons.date_range_rounded,
           size: _dateIconSize,

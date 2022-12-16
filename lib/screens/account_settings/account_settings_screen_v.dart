@@ -6,7 +6,7 @@ import 'package:chef/constants/constants.dart';
 import 'package:chef/services/device/device_service.dart';
 import 'package:chef/theme/app_theme_data/app_theme_data.dart';
 import 'package:chef/theme/app_theme_widget.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:chef/ui_kit/helpers/dialog_helper.dart';
 import 'package:chef/screens/account_settings/account_settings_screen_m.dart';
 import 'package:chef/screens/account_settings/account_settings_screen_vm.dart';
@@ -74,7 +74,7 @@ class AccountSettingsScreen extends BaseView<AccountSettingsScreenViewModel> {
         const SizedBox(
           height: _appBarPadding,
         ),
-        ExtoProfileAppBar(
+        GeneralProfileAppBar(
           title: Strings.accountSettings,
           onClick: () => viewModel.pop(),
         ),
@@ -162,7 +162,7 @@ class AccountSettingsScreen extends BaseView<AccountSettingsScreenViewModel> {
       ),
       child: ListTile(
         contentPadding: EdgeInsets.zero,
-        title: ExtoText(
+        title: GeneralText(
           title,
           style: appTheme.typographies.interFontFamily.headline4
               .copyWith(color: appTheme.colors.searchBorder),
@@ -180,7 +180,7 @@ class AccountSettingsScreen extends BaseView<AccountSettingsScreenViewModel> {
       padding: isTablet
           ? const EdgeInsets.only(left: _tabPadding)
           : const EdgeInsets.symmetric(horizontal: _mobilePadding),
-      child: ExtoDivider(
+      child: GeneralDivider(
         color: appTheme.colors.primary.withOpacity(_colorOpacity),
       ),
     );
@@ -202,7 +202,7 @@ class AccountSettingsScreen extends BaseView<AccountSettingsScreenViewModel> {
           iconColor: appTheme.colors.primary,
           collapsedIconColor: appTheme.colors.defaultTrailingIcon,
           initiallyExpanded: true,
-          title: ExtoText(
+          title: GeneralText(
             title,
             style: appTheme.typographies.interFontFamily.headline4
                 .copyWith(color: appTheme.colors.searchBorder),
@@ -212,12 +212,12 @@ class AccountSettingsScreen extends BaseView<AccountSettingsScreenViewModel> {
               children: [
                 Row(
                   children: [
-                    ExtoText(
+                    GeneralText(
                       Strings.chooseDateFormat,
                       style: appTheme.typographies.interFontFamily.body2M,
                     ),
                     const Spacer(),
-                    ExtoText(
+                    GeneralText(
                       viewModel.getCurrentDate(),
                       style: appTheme.typographies.interFontFamily.body1,
                     ),
@@ -249,7 +249,7 @@ class AccountSettingsScreen extends BaseView<AccountSettingsScreenViewModel> {
                         child: ListTile(
                           onTap: () => viewModel
                               .updateDateFormat(_dateFormatOptions[index]),
-                          title: ExtoText(
+                          title: GeneralText(
                             _dateFormatOptions[index],
                             style:
                                 _isSelected ? _selectedStyle : _unselectedStyle,
@@ -279,12 +279,12 @@ class AccountSettingsScreen extends BaseView<AccountSettingsScreenViewModel> {
     required String value,
   }) {
     return ListTile(
-      title: ExtoText(
+      title: GeneralText(
         title,
         style: appTheme.typographies.interFontFamily.body2M
             .copyWith(color: appTheme.colors.mainBlack100),
       ),
-      trailing: ExtoRichText(
+      trailing: GeneralRichText(
         title: value,
         icon: Icon(
           Icons.chevron_right_sharp,
@@ -297,7 +297,7 @@ class AccountSettingsScreen extends BaseView<AccountSettingsScreenViewModel> {
   Future<dynamic> _showBottomSheet(BuildContext context) async {
     return DialogHelper.showBottomSheetDialog(
       context: context,
-      body: ExtoBottomSheet<String>(
+      body: GBottomSheet<String>(
         bottomSheetTitle: Strings.chooseDateFormat,
         list: _dateFormatOptions,
         selectedItem: viewModel.getSelectedFormat(),

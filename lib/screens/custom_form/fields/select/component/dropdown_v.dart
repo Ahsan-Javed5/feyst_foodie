@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:chef/base/base.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:chef/services/services.dart';
 import 'package:chef/models/models.dart';
 import 'package:chef/screens/custom_form/fields/select/component/dropdown_m.dart';
@@ -40,7 +40,7 @@ class DropdownView extends BaseView<DropdownViewModel> {
     const loadingIndicator = SizedBox(
       width: _defaultSize,
       height: _defaultSize,
-      child: ExtoLoading(),
+      child: GeneralLoading(),
     );
     return BlocBuilder<DropdownViewModel, DropdownState>(
       bloc: viewModel,
@@ -63,13 +63,13 @@ class DropdownView extends BaseView<DropdownViewModel> {
         dropdownItems.add(item.label);
       }
     }
-    return ExtoLabelContainer(
+    return GeneralLabelContainer(
       isReadOnly: _properties.isReadOnly,
       isMandatory: _properties.isMandatory,
       hideLabel: _properties.hideLabel,
       label: _properties.label,
       helpText: _properties.helpText,
-      child: ExtoDropdown(
+      child: GeneralDropdownWithSearch(
         items: dropdownItems,
         isMultiSelect: _properties.isMultiSelect,
         isSearchable: _properties.isSearchable,

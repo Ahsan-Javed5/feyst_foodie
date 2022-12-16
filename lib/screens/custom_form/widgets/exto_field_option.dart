@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:chef/ui_kit/widgets/exto_text.dart';
+import 'package:chef/ui_kit/widgets/general_text.dart';
 
 class ExtoFieldOption<T> extends StatelessWidget {
   const ExtoFieldOption({
@@ -16,7 +16,7 @@ class ExtoFieldOption<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return AbsorbPointer(
       absorbing: optionData.isDisable,
-      child: child ?? ExtoText(optionData.label),
+      child: child ?? GeneralText(optionData.label),
     );
   }
 }

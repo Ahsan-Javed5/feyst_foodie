@@ -17,7 +17,7 @@ class _ExtoContextMenuDividerState extends State<_ExtoContextMenuDivider> {
       padding: const EdgeInsets.symmetric(
         horizontal: _ExtoContextMenuDivider._menuDividerPadding,
       ),
-      child: ExtoDivider.horizontal(
+      child: GeneralDivider.horizontal(
         height: _ExtoContextMenuDivider._menuDividerHeight,
       ),
     );
