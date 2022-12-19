@@ -12,6 +12,12 @@ import '../../ui_kit/widgets/general_dropdown.dart';
 import '../../ui_kit/widgets/general_text.dart';
 import '../sign_in/sign_in_screen_v.dart';
 
+
+enum Gender{
+  male,
+  female,
+}
+
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
@@ -42,7 +48,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.initState();
   }
 
-  bool male = true;
+  Gender selectedGender=Gender.male;
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context).theme;
@@ -189,36 +195,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           Row(
                             children: [
-                              _genderWidget(appTheme),
+                              _genderWidget(appTheme,Gender.male,    Strings.signMaleLabel),
                               const SizedBox(
                                 width: 18,
                               ),
-                              Expanded(
-                                child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: 18,
-                                    ),
-                                    child: GeneralText(
-                                      Strings.signFemaleLabel,
-                                      textAlign: TextAlign.center,
-                                      style: appTheme.typographies
-                                          .interFontFamily.headline3
-                                          .copyWith(
-                                              color: Colors.white,
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold),
-                                    ),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        border: Border.all(
-                                            color: appTheme.colors
-                                                .textFieldBorderColor // green as background color
 
-                                            ), // radius of 10
-                                        color: appTheme.colors
-                                            .primaryBackground // green as background color
-                                        )),
-                              ),
+                              _genderWidget(appTheme,Gender.female,    Strings.signFemaleLabel),
+
                             ],
                           ),
                         ],
@@ -298,23 +281,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Expanded _genderWidget(IAppThemeData appTheme) {
+  Expanded _genderWidget(IAppThemeData appTheme,Gender gender, String text) {
     return Expanded(
-      child: Container(
-          padding: EdgeInsets.symmetric(vertical: 18),
-          child: GeneralText(
-            Strings.signMaleLabel,
-            textAlign: TextAlign.center,
-            style: appTheme.typographies.interFontFamily.headline2.copyWith(
-                color: male == true ? Colors.black : Colors.white,
-                fontSize: 15,
-                fontWeight: FontWeight.bold),
-          ),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8), // radius of 10
-              color: male == true
-                  ? appTheme.colors.textFieldBorderColor
-                  : appTheme.colors.primaryBackground)),
+      child: InkWell(
+        onTap: (){
+          changeGender(gender);
+        },
+        child: Container(
+            padding: EdgeInsets.symmetric(vertical: 18),
+            child: GeneralText(
+          text,
+              textAlign: TextAlign.center,
+              style: appTheme.typographies.interFontFamily.headline2.copyWith(
+                  color: selectedGender == gender ? Colors.black : Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold),
+            ),
+            decoration: BoxDecoration(
+                border: Border.all(
+                    color: appTheme.colors
+                        .textFieldBorderColor // green as background color
+
+                ),
+                borderRadius: BorderRadius.circular(8), // radius of 10
+                color: selectedGender == gender
+                    ? appTheme.colors.textFieldBorderColor
+                    : appTheme.colors.primaryBackground)),
+      ),
     );
   }
 
@@ -349,5 +342,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
       Strings.getStartedButtonTitle,
       style: appTheme.typographies.interFontFamily.headline2,
     );
+  }
+
+  void changeGender(Gender gender) {
+
+
+    setState(() {
+      selectedGender=gender;
+    });
   }
 }
