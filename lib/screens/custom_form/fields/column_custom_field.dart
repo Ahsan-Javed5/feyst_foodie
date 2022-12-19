@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:chef/helpers/enum_helper.dart';
 import 'package:chef/theme/theme.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:chef/models/models.dart';
 import 'package:chef/services/services.dart';
 
@@ -277,11 +277,11 @@ class ColumnCustomField extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ExtoText(
+            GeneralText(
               _title ?? '',
               typography: TypographyFamily.headline4,
             ),
-            ExtoText(
+            GeneralText(
               _shortDescription ?? '',
               typography: TypographyFamily.label4,
             ),

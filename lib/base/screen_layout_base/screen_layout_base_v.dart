@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:chef/screens/navdrawer/navdrawer_v.dart';
 import 'package:chef/services/device/device_service.dart';
 import 'package:chef/setup.dart';
-import 'package:chef/ui_kit/widgets/exto_search_bar.dart';
+import 'package:chef/ui_kit/widgets/general_search_bar.dart';
 import 'package:chef/base/screen_layout_base/screen_layout_base_m.dart';
 import 'package:chef/base/screen_layout_base/screen_layout_base_vm.dart';
 
@@ -113,7 +113,7 @@ mixin ScreenLayoutBase on StatelessWidget {
     required ScreenLayoutBaseViewModel viewModel,
     required ScreenLayoutBaseState state,
   }) {
-    return ExtoSearchBar(
+    return GeneralSearchBar(
       displayHintSearch: viewModel.getSearchVisiblity(),
       onChanged: (value) => onSearchChange(value),
       prefixIconOnTap: () {

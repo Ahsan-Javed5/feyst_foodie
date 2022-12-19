@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:chef/base/base.dart';
 import 'package:chef/theme/theme.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:chef/ui_kit/helpers/dialog_helper.dart';
 import 'package:chef/services/services.dart';
 import 'package:chef/constants/constants.dart';
@@ -82,7 +82,7 @@ class CustomFormScreen extends BaseView<CustomFormScreenViewModel> {
     );
   }
 
-  Widget _loading() => const SizedBox(height: 100, child: ExtoLoading());
+  Widget _loading() => const SizedBox(height: 100, child: GeneralLoading());
 
   ExtoForm _buildSuccess(List<Fields> _fields) {
     return ExtoForm(
@@ -100,7 +100,7 @@ class CustomFormScreen extends BaseView<CustomFormScreenViewModel> {
     required IAppThemeData appTheme,
   }) {
     return AppBar(
-      title: ExtoText(
+      title: GeneralText(
         _moduleName,
         typography: TypographyFamily.headline4,
         color: appTheme.colors.secondaryBackground,

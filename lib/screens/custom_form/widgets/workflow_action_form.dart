@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:chef/constants/constants.dart';
 import 'package:chef/services/services.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 
 class WorkflowActionForm extends StatelessWidget {
   WorkflowActionForm({
@@ -61,12 +61,12 @@ class WorkflowActionForm extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         child: Column(
           children: [
-            ExtoLabelContainer(
+            GeneralLabelContainer(
               label: Strings.workflowActionTitle,
               hideLabel: false,
               isMandatory: false,
               isReadOnly: false,
-              child: ExtoDropdown(
+              child: GeneralDropdownWithSearch(
                 name: '',
                 items: _wfActions,
                 isMandatory: true,
@@ -79,12 +79,12 @@ class WorkflowActionForm extends StatelessWidget {
             const SizedBox(
               height: 15,
             ),
-            ExtoLabelContainer(
+            GeneralLabelContainer(
               label: Strings.commentKey,
               hideLabel: false,
               isMandatory: true,
               isReadOnly: false,
-              child: ExtoTextInput(
+              child: GeneralTextInput(
                 controller: _commentController,
                 validator: FieldRendererHelpers.validatorFunction,
                 isMultiline: true,

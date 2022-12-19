@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:chef/theme/app_theme_data/app_theme_data.dart';
 import 'package:chef/theme/app_theme_widget.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 
 class BottomSheetItem extends StatelessWidget {
   const BottomSheetItem({
@@ -54,7 +54,7 @@ class BottomSheetItem extends StatelessWidget {
           const SizedBox(
             width: _iconBottomPadding,
           ),
-          ExtoText(
+          GeneralText(
             _title,
             typography: TypographyFamily.body2R,
             color: _isSelected
@@ -73,7 +73,7 @@ class BottomSheetItem extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: ExtoText(
+            child: GeneralText(
               _subtitle,
               typography: TypographyFamily.body2R,
               color: appTheme.colors.primaryText.withOpacity(_textOpacity),

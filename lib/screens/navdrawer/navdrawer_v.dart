@@ -6,7 +6,7 @@ import 'package:chef/constants/constants.dart';
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/services/services.dart';
 import 'package:chef/theme/app_theme_widget.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:chef/screens/navdrawer/navdrawer_m.dart';
 import 'package:chef/screens/navdrawer/navdrawer_vm.dart';
 
@@ -60,7 +60,7 @@ class NavDrawerView extends BaseView<NavDrawerViewModel> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        ExtoExpansionTile(
+                        GeneralExpansionTile(
                           title: state.selectedCustomer!.name,
                           subTitle: state.selectedCustomer!.description,
                           customers: state.customersList!,
@@ -82,7 +82,7 @@ class NavDrawerView extends BaseView<NavDrawerViewModel> {
                             return Column(
                               children: [
                                 Visibility(
-                                  child: ExtoDivider(
+                                  child: GeneralDivider(
                                     height: 1.0,
                                     color: appTheme.colors.defaultBackground,
                                   ),
@@ -98,7 +98,7 @@ class NavDrawerView extends BaseView<NavDrawerViewModel> {
                                             drawerItemsMap.keys.toList()[index]]
                                         ?.call();
                                   },
-                                  child: ExtoDrawerItem(
+                                  child: GeneralDrawerItem(
                                     drawerItem:
                                         drawerItemsMap.keys.toList()[index],
                                     isSelected: drawerItemsMap.keys
@@ -119,7 +119,7 @@ class NavDrawerView extends BaseView<NavDrawerViewModel> {
                   flex: 0,
                   child: Column(
                     children: [
-                      ExtoDivider(
+                      GeneralDivider(
                         height: 1.0,
                         color: appTheme.colors.defaultBackground,
                       ),
@@ -128,7 +128,7 @@ class NavDrawerView extends BaseView<NavDrawerViewModel> {
                           isMobile:
                               screenSizeData.screenType == ScreenType.small,
                         ),
-                        child: ExtoFooterItem(
+                        child: GeneralFooterItem(
                           title: state.user!.fullname,
                           subTitle: state.user!.email,
                         ),

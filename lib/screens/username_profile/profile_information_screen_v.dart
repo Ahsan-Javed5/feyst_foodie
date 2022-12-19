@@ -6,7 +6,7 @@ import 'package:chef/constants/constants.dart';
 import 'package:chef/services/device/device_service.dart';
 import 'package:chef/theme/app_theme_data/app_theme_data.dart';
 import 'package:chef/theme/app_theme_widget.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:chef/screens/username_profile/profile_information_screen_m.dart';
 import 'package:chef/screens/username_profile/profile_information_screen_vm.dart';
 
@@ -69,7 +69,7 @@ class ProfileInformationScreen
             const SizedBox(
               height: _titleTopPadding,
             ),
-            ExtoProfileAppBar(
+            GeneralProfileAppBar(
               title: Strings.name,
               onClick: () => viewModel.pop(),
             ),
@@ -121,7 +121,7 @@ class ProfileInformationScreen
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ExtoText(
+        GeneralText(
           Strings.firstNameLastName,
           color: appTheme.colors.mainBlack100,
           typography: TypographyFamily.label2,
@@ -129,7 +129,7 @@ class ProfileInformationScreen
         const SizedBox(
           height: _textFieldTopPadding,
         ),
-        ExtoTextInput(
+        GeneralTextInput(
           controller: _nameController,
           height: _textFieldHeight,
           contentPadding: const EdgeInsets.symmetric(
@@ -146,7 +146,7 @@ class ProfileInformationScreen
         const SizedBox(
           height: _secondarySize,
         ),
-        ExtoButton(
+        GeneralButton(
           width: screenSizeData.size.width,
           height: _primarySize,
           buttonType: ButtonType.button,

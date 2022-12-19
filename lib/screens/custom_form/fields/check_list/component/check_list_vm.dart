@@ -6,7 +6,7 @@ import 'package:chef/constants/api.dart';
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/models/models.dart';
 import 'package:chef/services/services.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:chef/screens/custom_form/fields/check_list/component/check_list_m.dart'
     as checklist;
 

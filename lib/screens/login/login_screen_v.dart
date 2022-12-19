@@ -6,7 +6,7 @@ import 'package:chef/base/base.dart';
 import 'package:chef/constants/constants.dart';
 import 'package:chef/services/services.dart';
 import 'package:chef/theme/theme.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:chef/screens/login/login_screen_m.dart';
 import 'package:chef/screens/login/login_screen_vm.dart';
 
@@ -63,7 +63,7 @@ class LoginScreen extends BaseView<LoginScreenViewModel> {
                           appTheme: appTheme,
                           size: size,
                         ),
-                  if (state.isBusy) const ExtoLoading()
+                  if (state.isBusy) const GeneralLoading()
                 ],
               ),
             ),
@@ -190,7 +190,7 @@ class LoginScreen extends BaseView<LoginScreenViewModel> {
     return Center(
       child: Column(
         children: [
-          ExtoText('${Strings.version} ${state.appVersion}'),
+          GeneralText('${Strings.version} ${state.appVersion}'),
           _buildVerticalSpace(
             size: size,
             portion: 0.04,
@@ -300,7 +300,7 @@ class LoginScreen extends BaseView<LoginScreenViewModel> {
               size: size,
               portion: 0.26,
             ),
-            const ExtoLogo(),
+            const GeneralLogo(),
           ],
         ),
         _buildVerticalSpace(
@@ -362,14 +362,14 @@ class LoginScreen extends BaseView<LoginScreenViewModel> {
       SizedBox(width: size.width * portion);
 
   Widget _loginText({required IAppThemeData appTheme}) {
-    return ExtoText(
+    return GeneralText(
       Strings.signIn,
       style: appTheme.typographies.interFontFamily.headline2,
     );
   }
 
   Widget _loginContinueText({required IAppThemeData appTheme}) {
-    return ExtoText(
+    return GeneralText(
       Strings.signInContinue,
       style: appTheme.typographies.interFontFamily.label9,
     );
@@ -518,7 +518,7 @@ class LoginScreen extends BaseView<LoginScreenViewModel> {
     String text, {
     required TextStyle style,
   }) {
-    return ExtoText(
+    return GeneralText(
       text,
       style: style,
     );
@@ -529,7 +529,7 @@ class LoginScreen extends BaseView<LoginScreenViewModel> {
     required TextStyle valueStyle,
     required TextStyle hintStyle,
   }) {
-    return ExtoTextInput(
+    return GeneralTextInput(
       controller: _emailController,
       hint: Strings.emailAddress,
       valueStyle: valueStyle,
@@ -549,7 +549,7 @@ class LoginScreen extends BaseView<LoginScreenViewModel> {
     required TextStyle valueStyle,
     required TextStyle hintStyle,
   }) {
-    return ExtoTextInput(
+    return GeneralTextInput(
       controller: _passwordController,
       inputType: InputType.password,
       hint: Strings.password,
@@ -579,12 +579,12 @@ class LoginScreen extends BaseView<LoginScreenViewModel> {
           shape: appTheme.checkboxShapeBorder,
           side: appTheme.checkboxBorderSide,
         ),
-        ExtoText(
+        GeneralText(
           Strings.rememberMe,
           style: rememberMeTextStyle,
         ),
         const Spacer(),
-        ExtoButton.button(
+        GeneralButton.button(
           title: Strings.forgotPassword,
           styleType: ButtonStyleType.plain,
           onTap: () {
@@ -596,7 +596,7 @@ class LoginScreen extends BaseView<LoginScreenViewModel> {
   }
 
   Widget _signInButton(BuildContext context, LoginScreenState state) {
-    return ExtoButton.button(
+    return GeneralButton.button(
       title: Strings.signIn,
       width: double.infinity,
       isEnable: _emailController.text.isNotEmpty &&
@@ -628,9 +628,7 @@ class LoginScreen extends BaseView<LoginScreenViewModel> {
           padding: EdgeInsets.only(right: padding),
           // padding: const EdgeInsets.all(10),
           child: InkWell(
-            onTap: () {
-
-            },
+            onTap: () {},
             // child: CircleAvatar(
             //   backgroundColor: appTheme.colors.defaultBackground,
             //   radius: radius,
@@ -742,7 +740,7 @@ class LoginScreen extends BaseView<LoginScreenViewModel> {
         const SizedBox(
           width: 10,
         ),
-        ExtoText(
+        GeneralText(
           point,
           style: style,
         )
@@ -766,7 +764,7 @@ class LoginScreen extends BaseView<LoginScreenViewModel> {
                 horizontal: _size16,
                 vertical: _size4,
               ),
-              child: ExtoText(
+              child: GeneralText(
                 viewModel.state.errorMessage,
                 maxLines: 2,
                 textAlign: TextAlign.start,

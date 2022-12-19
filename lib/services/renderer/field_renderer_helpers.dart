@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:chef/constants/constants.dart';
 import 'package:chef/helpers/enum_helper.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 
 enum FieldType {
   text,

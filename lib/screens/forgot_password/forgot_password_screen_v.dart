@@ -9,7 +9,7 @@ import 'package:chef/screens/forgot_password/forgot_password_screen_m.dart';
 import 'package:chef/screens/forgot_password/forgot_password_screen_vm.dart';
 import 'package:chef/services/services.dart';
 import 'package:chef/theme/theme.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ForgotPasswordScreen extends BaseView<ForgotPasswordScreenViewModel> {
@@ -55,7 +55,7 @@ class ForgotPasswordScreen extends BaseView<ForgotPasswordScreenViewModel> {
                           appTheme: appTheme,
                           size: size,
                         ),
-                  if (state.isBusy) const ExtoLoading(),
+                  if (state.isBusy) const GeneralLoading(),
                 ],
               ),
             ),
@@ -254,7 +254,7 @@ class ForgotPasswordScreen extends BaseView<ForgotPasswordScreenViewModel> {
               size: size,
               portion: 0.26,
             ),
-            const ExtoLogo(),
+            const GeneralLogo(),
           ],
         ),
         _buildVerticalSpace(
@@ -338,12 +338,12 @@ class ForgotPasswordScreen extends BaseView<ForgotPasswordScreenViewModel> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ExtoText(
+        GeneralText(
           Strings.forgotPassword,
           style: titleStyle,
         ),
         SizedBox(height: sizedBoxHeight),
-        ExtoText(
+        GeneralText(
           Strings.forgotPasswordMessage,
           style: bodyStyle,
         )
@@ -454,7 +454,7 @@ class ForgotPasswordScreen extends BaseView<ForgotPasswordScreenViewModel> {
     return Column(
       children: [
         SizedBox(height: lowSpace),
-        ExtoText(
+        GeneralText(
           state.errorMessage,
           style: style,
         ),
@@ -468,7 +468,7 @@ class ForgotPasswordScreen extends BaseView<ForgotPasswordScreenViewModel> {
     required TextStyle valueStyle,
     required TextStyle hintStyle,
   }) {
-    return ExtoTextInput(
+    return GeneralTextInput(
       controller: _emailController,
       hint: Strings.emailAddress,
       valueStyle: valueStyle,
@@ -527,7 +527,7 @@ class ForgotPasswordScreen extends BaseView<ForgotPasswordScreenViewModel> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: spacer),
-        ExtoButton.button(
+        GeneralButton.button(
           title: state.success
               ? (Strings.returnTo + Strings.signIn.toLowerCase())
               : Strings.sendResetLink,
@@ -620,12 +620,12 @@ class ForgotPasswordScreen extends BaseView<ForgotPasswordScreenViewModel> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ExtoText(
+        GeneralText(
           Strings.sentSuccessfully,
           style: titleStyle,
         ),
         SizedBox(height: spacer),
-        ExtoText(
+        GeneralText(
           Strings.checkInstruction,
           maxLines: 2,
           style: bodyStyle,
@@ -639,7 +639,7 @@ class ForgotPasswordScreen extends BaseView<ForgotPasswordScreenViewModel> {
     required IAppThemeData appTheme,
     required TextStyle style,
   }) {
-    return ExtoText(
+    return GeneralText(
       Strings.emailAddress,
       style: style,
     );

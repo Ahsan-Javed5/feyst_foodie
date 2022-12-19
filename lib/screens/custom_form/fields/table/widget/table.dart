@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:chef/theme/app_theme_data/app_theme_data.dart';
 import 'package:chef/theme/app_theme_widget.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:chef/ui_kit/helpers/dialog_helper.dart';
 import 'package:chef/models/models.dart';
 import 'package:chef/services/services.dart';
 import 'package:chef/screens/custom_form/fields/table/widget/filter_widget.dart';
 import 'package:chef/screens/custom_form/fields/table/widget/table_renderer_helpers.dart';
-import 'package:chef/ui_kit/widgets/exto_text_dialog.dart';
+import 'package:chef/ui_kit/widgets/general_text_dialog.dart';
 import 'package:chef/constants/strings.dart';
 
 enum SortOrder {
@@ -140,9 +140,9 @@ class _ExtoTableState extends State<ExtoTable> {
         DataColumn(
           label: Row(
             children: [
-              ExtoText(column.label),
+              GeneralText(column.label),
               const SizedBox(width: 8),
-              ExtoButton.icon(
+              GeneralButton.icon(
                 icon: Icons.sort_by_alpha_outlined,
                 onTap: () {
                   var val = sortOption[fields[index].properties!.id];
@@ -152,7 +152,7 @@ class _ExtoTableState extends State<ExtoTable> {
                   _sort(val, fields[index].properties!.id);
                 },
               ),
-              ExtoButton.icon(
+              GeneralButton.icon(
                 icon: Icons.filter_alt_sharp,
                 onTap: () async {
                   _showFilterDialog(
@@ -304,7 +304,7 @@ class _ExtoTableState extends State<ExtoTable> {
         Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 3),
-            child: ExtoTextInput(
+            child: GeneralTextInput(
               controller: searchTextController,
               height: 25,
               inputBorder: const OutlineInputBorder(
@@ -773,7 +773,7 @@ class _ExtoTableState extends State<ExtoTable> {
 
     return Row(
       children: [
-        const ExtoText(Strings.yesString),
+        const GeneralText(Strings.yesString),
         Checkbox(
           value: _yes,
           onChanged: (value) {
@@ -793,7 +793,7 @@ class _ExtoTableState extends State<ExtoTable> {
             });
           },
         ),
-        const ExtoText(Strings.noString),
+        const GeneralText(Strings.noString),
         Checkbox(
           value: _noData,
           onChanged: (value) {
@@ -858,7 +858,7 @@ class _ExtoTableState extends State<ExtoTable> {
             : Strings.noString.toLowerCase()
         : _selectedItem;
 
-    return ExtoDropdown(
+    return GeneralDropdownWithSearch(
       items: dropdownItems,
       onChange: ({
         required String key,

@@ -10,7 +10,7 @@ import 'package:chef/helpers/helpers.dart';
 import 'package:chef/models/login/login_request.dart';
 import 'package:chef/models/login/login_response.dart';
 import 'package:chef/services/services.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 @injectable

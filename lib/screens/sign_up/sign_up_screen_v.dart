@@ -1,5 +1,5 @@
 import 'package:chef/screens/sign_up/questionire/sign_up_questionire_screen_v.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -7,8 +7,9 @@ import '../../constants/resources.dart';
 import '../../constants/strings.dart';
 import '../../theme/app_theme_data/app_theme_data.dart';
 import '../../theme/app_theme_widget.dart';
-import '../../ui_kit/widgets/exto_button.dart';
-import '../../ui_kit/widgets/exto_text.dart';
+import '../../ui_kit/widgets/general_button.dart';
+import '../../ui_kit/widgets/general_dropdown.dart';
+import '../../ui_kit/widgets/general_text.dart';
 import '../sign_in/sign_in_screen_v.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -19,13 +20,27 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-
-
-
-  List<String> items=['Scientist','Mathematician'];
+  // List<String> items = ['Scientist', 'Mathematician'];
+  late List<DropdownMenuItem<String>> items = [];
   final TextController _nameController = TextController();
   final TextController _mobileNumberController = TextController();
   final TextController _ageController = TextController();
+
+  @override
+  void initState() {
+    // DropdownMenuItem obj = new DropdownMenuItem()
+    var newItem = const DropdownMenuItem(
+      child: Text('Scientist'),
+      value: 'Scientist',
+    );
+    var newItem2 = const DropdownMenuItem(
+      child: Text('Mathematician'),
+      value: 'Mathematician',
+    );
+    items.add(newItem);
+    items.add(newItem2);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +52,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: SafeArea(
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 30),
-            child:  Column(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -46,7 +61,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 _getStartedTitle(appTheme: appTheme),
                 Center(
-                  child: ExtoText(
+                  child: GeneralText(
                     Strings.signUpTitle,
                     textAlign: TextAlign.center,
                     style: appTheme.typographies.interFontFamily.headline4
@@ -59,178 +74,79 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(
                   height: 27,
                 ),
-                ExtoText(
+                GeneralText(
                   Strings.signFullNameLabel,
                   textAlign: TextAlign.center,
-                  style: appTheme.typographies.interFontFamily.headline4.copyWith(
-                      color: const Color(0xfffbeccb),
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold),
+                  style: appTheme.typographies.interFontFamily.headline4
+                      .copyWith(
+                          color: const Color(0xfffbeccb),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
                   height: 8,
                 ),
-                ExtoTextInput(
-                  controller: _nameController,
-                  inputType: InputType.text,
-                  backgroundColor: appTheme.colors.textFieldFilledColor,
-                  inputBorder:  appTheme.focusedBorder,
-                    valueStyle: const TextStyle(
-                        color: Colors.white
-                    ),
-                  hint: 'Enter name',
-                   hintStyle: const TextStyle(
-                     color: Colors.white,
-                     fontSize: 14
-                   ),
-                  // valueStyle: valueStyle,
-                  onChanged: (newValue){
-
-                  }
-
-                ),
-
+                GeneralTextInput(
+                    controller: _nameController,
+                    inputType: InputType.text,
+                    backgroundColor: appTheme.colors.textFieldFilledColor,
+                    inputBorder: appTheme.focusedBorder,
+                    valueStyle: const TextStyle(color: Colors.white),
+                    hint: 'Enter name',
+                    hintStyle:
+                        const TextStyle(color: Colors.white, fontSize: 14),
+                    // valueStyle: valueStyle,
+                    onChanged: (newValue) {}),
                 const SizedBox(
                   height: 27,
                 ),
-                ExtoText(
+                GeneralText(
                   Strings.signMobileNumberLabel,
                   textAlign: TextAlign.center,
-                  style: appTheme.typographies.interFontFamily.headline4.copyWith(
-                      color: const Color(0xfffbeccb),
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold),
+                  style: appTheme.typographies.interFontFamily.headline4
+                      .copyWith(
+                          color: const Color(0xfffbeccb),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
                   height: 8,
                 ),
-                ExtoTextInput(
+                GeneralTextInput(
                     controller: _mobileNumberController,
                     inputType: InputType.digit,
                     backgroundColor: appTheme.colors.textFieldFilledColor,
-                    inputBorder:  appTheme.focusedBorder,
-                    valueStyle: const TextStyle(
-                        color: Colors.white
-                    ),
+                    inputBorder: appTheme.focusedBorder,
+                    valueStyle: const TextStyle(color: Colors.white),
                     hint: 'Enter Mobile Number',
-                    hintStyle: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 14
-                    ),
+                    hintStyle:
+                        const TextStyle(color: Colors.white, fontSize: 14),
                     // valueStyle: valueStyle,
-                    onChanged: (newValue){
-
-                    }
-
-                ),
-
-
-               /* const SizedBox(
-                  height: 27,
-                ),
-
-
-                Row(
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        ExtoText(
-                          Strings.signAgeLabel,
-                          textAlign: TextAlign.center,
-                          style: appTheme.typographies.interFontFamily.headline4.copyWith(
-                              color: const Color(0xfffbeccb),
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        ),
-
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        ExtoTextInput(
-                             controller: _ageController,
-                            inputType: InputType.digit,
-                            backgroundColor: appTheme.colors.textFieldFilledColor,
-                            inputBorder:  appTheme.focusedBorder,
-
-                            hint: '12',
-                            hintStyle: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 14
-                            ),
-                            // valueStyle: valueStyle,
-                            onChanged: (newValue){
-
-                            }
-
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        ExtoText(
-                          Strings.signGenderLabel,
-                          textAlign: TextAlign.center,
-                          style: appTheme.typographies.interFontFamily.headline4.copyWith(
-                              color: const Color(0xfffbeccb),
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        ),
-
-                        const SizedBox(
-                          height: 8,
-                        ),
-                         Row(children: [
-                           Container(
-                               child:   ExtoText(
-                                 Strings.signMaleLabel,
-                                 textAlign: TextAlign.center,
-                                 style: appTheme.typographies.interFontFamily.headline4.copyWith(
-                                     color:  Colors.black,
-                                     fontSize: 15,
-                                     fontWeight: FontWeight.w500),
-                               ),
-                               decoration: BoxDecoration(
-                                   borderRadius: BorderRadius.circular(12), // radius of 10
-                                   color: appTheme.colors.textFieldBorderColor  // green as background color
-                               )
-                           ),
-                           const SizedBox(
-                             width: 5,
-                           ),
-                         ],)
-                      ],
-                    ),
-                  ],
-                ),*/
-
+                    onChanged: (newValue) {}),
                 const SizedBox(
                   height: 27,
                 ),
-                ExtoText(
+                GeneralText(
                   Strings.signProfessionLabel,
                   textAlign: TextAlign.center,
-                  style: appTheme.typographies.interFontFamily.headline4.copyWith(
-                      color: const Color(0xfffbeccb),
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold),
+                  style: appTheme.typographies.interFontFamily.headline4
+                      .copyWith(
+                          color: const Color(0xfffbeccb),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
                   height: 8,
                 ),
-
-
-                ExtoDropdown(
+                GeneralDropdown(
                   name: 'select',
-                   // margin: 22.0,
-                  items:items,
-
+                  // margin: 22.0,
+                  items: items,
+                  borderColor: appTheme.colors.textFieldBorderColor,
                   onChange: ({
                     required String key,
                     required dynamic value,
-                  }) {
-
-                  },
+                  }) {},
                 ),
                 const SizedBox(
                   height: 140,
@@ -238,42 +154,39 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                  InkWell(
-                    onTap: (){
-
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => SignInScreen()),
-                      );
-                    },
-                    child: ExtoText(
-
-                      Strings.signAlreadyUserLabel,
-                      textAlign: TextAlign.center,
-
-                      style: appTheme.typographies.interFontFamily.headline4.copyWith(
-                          color: const Color(0xfff7dc99),
-                          fontSize: 15,
-
-                          decoration: TextDecoration.underline,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ),
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => SignUpQuestionireScreen()),
+                          MaterialPageRoute(
+                              builder: (context) => SignInScreen()),
                         );
-
+                      },
+                      child: GeneralText(
+                        Strings.signAlreadyUserLabel,
+                        textAlign: TextAlign.center,
+                        style: appTheme.typographies.interFontFamily.headline4
+                            .copyWith(
+                                color: const Color(0xfff7dc99),
+                                fontSize: 15,
+                                decoration: TextDecoration.underline,
+                                fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignUpQuestionireScreen()),
+                        );
                       },
                       child: SvgPicture.asset(
                         Resources.getRightArrow,
-
                       ),
                     )
-                ],)
-
+                  ],
+                )
               ],
             ),
           ),
@@ -284,7 +197,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Widget _getStartedTitle({required IAppThemeData appTheme}) {
     return Center(
-      child: ExtoText(
+      child: GeneralText(
         Strings.letsGetTitle,
         textAlign: TextAlign.center,
         style: appTheme.typographies.interFontFamily.headline4.copyWith(
@@ -295,9 +208,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-
   Widget _getStartedButtonTitle({required IAppThemeData appTheme}) {
-    return ExtoButton.button(
+    return GeneralButton.button(
       title: Strings.getStartedButtonTitle.toUpperCase(),
       styleType: ButtonStyleType.fill,
       onTap: () {
@@ -308,7 +220,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         //    viewModel.goToForgotPasswordScreen();
       },
     );
-    ExtoText(
+    GeneralText(
       Strings.getStartedButtonTitle,
       style: appTheme.typographies.interFontFamily.headline2,
     );

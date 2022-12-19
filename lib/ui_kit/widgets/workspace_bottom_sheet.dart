@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:chef/constants/strings.dart';
 import 'package:chef/models/workspace.dart';
 import 'package:chef/theme/app_theme_widget.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:chef/ui_kit/widgets/bottom_sheet_item.dart';
 
 class WorkspaceBottomSheet extends StatefulWidget {
@@ -54,7 +54,7 @@ class _WorkspaceBottomSheetState extends State<WorkspaceBottomSheet> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ExtoText(
+                GeneralText(
                   Strings.chooseWorkspace,
                   color: appTheme.colors.defaultText,
                 ),

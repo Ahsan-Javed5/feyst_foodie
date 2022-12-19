@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:chef/helpers/enum_helper.dart';
 import 'package:chef/theme/theme.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 
 enum ToastType {
   basic,
@@ -168,7 +168,7 @@ class Toaster {
   }) {
     Widget divider = SizedBox(
       height: _dividerHeight,
-      child: ExtoDivider.vertical(
+      child: GeneralDivider.vertical(
         color: Colors.black,
         width: _dividerWidth,
       ),
@@ -180,9 +180,9 @@ class Toaster {
         Flexible(
           child: GestureDetector(
             onTap: action.onTap,
-            child: ExtoText(
+            child: GeneralText(
               action.title,
-              color: action.buttonType == ExtoComponentStyle.primary
+              color: action.buttonType == GeneralComponentStyle.primary
                   ? decorationData.primaryColor
                   : decorationData.secondaryColor,
             ),
@@ -394,7 +394,7 @@ class ToastAction {
 
   factory ToastAction.ok({
     required Function()? onTap,
-    ExtoComponentStyle buttonType = ExtoComponentStyle.primary,
+    GeneralComponentStyle buttonType = GeneralComponentStyle.primary,
   }) {
     const type = _ToastActionType.ok;
     return ToastAction(
@@ -407,7 +407,7 @@ class ToastAction {
 
   factory ToastAction.cancel({
     required Function()? onTap,
-    ExtoComponentStyle buttonType = ExtoComponentStyle.secondary,
+    GeneralComponentStyle buttonType = GeneralComponentStyle.secondary,
   }) {
     const type = _ToastActionType.cancel;
     return ToastAction(
@@ -420,7 +420,7 @@ class ToastAction {
 
   factory ToastAction.submit({
     required Function()? onTap,
-    ExtoComponentStyle buttonType = ExtoComponentStyle.primary,
+    GeneralComponentStyle buttonType = GeneralComponentStyle.primary,
   }) {
     const type = _ToastActionType.submit;
     return ToastAction(
@@ -433,7 +433,7 @@ class ToastAction {
 
   factory ToastAction.dismiss({
     required Function()? onTap,
-    ExtoComponentStyle buttonType = ExtoComponentStyle.secondary,
+    GeneralComponentStyle buttonType = GeneralComponentStyle.secondary,
   }) {
     const type = _ToastActionType.dismiss;
     return ToastAction(
@@ -447,5 +447,5 @@ class ToastAction {
   final String title;
   final _ToastActionType actionType;
   final Function()? onTap;
-  final ExtoComponentStyle buttonType;
+  final GeneralComponentStyle buttonType;
 }

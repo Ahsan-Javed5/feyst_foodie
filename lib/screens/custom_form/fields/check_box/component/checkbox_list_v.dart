@@ -6,7 +6,7 @@ import 'package:chef/base/base.dart';
 import 'package:chef/constants/constants.dart';
 import 'package:chef/theme/app_theme_data/app_theme_data.dart';
 import 'package:chef/theme/app_theme_widget.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:chef/services/services.dart';
 import 'package:chef/screens/custom_form/fields/check_box/component/checkbox_list_vm.dart';
 import 'package:chef/screens/custom_form/fields/check_box/component/checkbox_list_m.dart';
@@ -55,7 +55,7 @@ class CheckBoxListView extends BaseView<CheckBoxListViewModel> {
     const loadingIndicator = SizedBox(
       width: _defaultSize,
       height: _defaultSize,
-      child: ExtoLoading(),
+      child: GeneralLoading(),
     );
     return BlocBuilder<CheckBoxListViewModel, CheckBoxListState>(
       bloc: viewModel,
@@ -104,7 +104,7 @@ class CheckBoxListView extends BaseView<CheckBoxListViewModel> {
       itemCount: state.data.data.items.length,
       itemBuilder: (context, index) {
         final item = state.data.data.items[index];
-        return ExtoCheckbox(
+        return GeneralCheckbox(
           name: item.value,
           initialValue: _selectedIDs.contains(item.value),
           orientation: _orient,

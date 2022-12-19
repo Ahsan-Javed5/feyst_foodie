@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:chef/base/base.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:chef/services/services.dart';
 import 'package:chef/models/models.dart';
 import 'package:chef/screens/custom_form/fields/custom_fields.dart';
@@ -42,7 +42,7 @@ class TableView extends BaseView<TableViewModel> {
         ),
       builder: (_, state) {
         return (state is Loading)
-            ? const ExtoLoading()
+            ? const GeneralLoading()
             : ExtoTable(
                 properties: _properties,
                 onChange: _onChange,

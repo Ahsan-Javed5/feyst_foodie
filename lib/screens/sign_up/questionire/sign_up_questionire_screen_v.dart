@@ -1,5 +1,5 @@
 import 'package:chef/theme/app_theme_data/app_theme_data.dart';
-import 'package:chef/ui_kit/widgets/exto_text_input.dart';
+import 'package:chef/ui_kit/widgets/general_text_input.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,7 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../../constants/resources.dart';
 import '../../../constants/strings.dart';
 import '../../../theme/app_theme_widget.dart';
-import '../../../ui_kit/widgets/exto_text.dart';
+import '../../../ui_kit/widgets/general_text.dart';
 
 class SignUpQuestionireScreen extends StatefulWidget {
   @override
@@ -39,7 +39,7 @@ class _SignUpQuestionireScreenState extends State<SignUpQuestionireScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  ExtoText(
+                  GeneralText(
                     Strings.questionireLabel,
                     textAlign: TextAlign.center,
                     style: appTheme.typographies.interFontFamily.headline4
@@ -51,7 +51,7 @@ class _SignUpQuestionireScreenState extends State<SignUpQuestionireScreen> {
                   const SizedBox(
                     height: 27,
                   ),
-                  ExtoText(
+                  GeneralText(
                     Strings.questionireLabel2,
                     textAlign: TextAlign.center,
                     style: appTheme.typographies.interFontFamily.headline4
@@ -88,20 +88,17 @@ class _SignUpQuestionireScreenState extends State<SignUpQuestionireScreen> {
                       ),
                     ],
                   ),
-
-
-
                   const SizedBox(
                     height: 27,
                   ),
-                  ExtoText(
+                  GeneralText(
                     Strings.questionireLabel3,
                     textAlign: TextAlign.center,
                     style: appTheme.typographies.interFontFamily.headline4
                         .copyWith(
-                        color: const Color(0xfffbeccb),
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
+                            color: const Color(0xfffbeccb),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(
                     height: 15,
@@ -110,9 +107,7 @@ class _SignUpQuestionireScreenState extends State<SignUpQuestionireScreen> {
                     spacing: 12,
                     runSpacing: 12,
                     alignment: WrapAlignment.center,
-
                     crossAxisAlignment: WrapCrossAlignment.center,
-
                     children: [
                       ChipsWidget(
                         appTheme: appTheme,
@@ -131,29 +126,24 @@ class _SignUpQuestionireScreenState extends State<SignUpQuestionireScreen> {
                         appTheme: appTheme,
                         title: 'Garden',
                         selected: true,
-                      ), ChipsWidget(
+                      ),
+                      ChipsWidget(
                         appTheme: appTheme,
                         title: 'Historical Monument',
                       ),
                     ],
-                  )
-
-
-
-
-
-
-                  ,   const SizedBox(
+                  ),
+                  const SizedBox(
                     height: 27,
                   ),
-                  ExtoText(
+                  GeneralText(
                     Strings.questionireLabel4,
                     textAlign: TextAlign.center,
                     style: appTheme.typographies.interFontFamily.headline4
                         .copyWith(
-                        color: const Color(0xfffbeccb),
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
+                            color: const Color(0xfffbeccb),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(
                     height: 15,
@@ -162,9 +152,7 @@ class _SignUpQuestionireScreenState extends State<SignUpQuestionireScreen> {
                     spacing: 12,
                     runSpacing: 12,
                     alignment: WrapAlignment.center,
-
                     crossAxisAlignment: WrapCrossAlignment.center,
-
                     children: [
                       ChipsWidget(
                         appTheme: appTheme,
@@ -186,21 +174,17 @@ class _SignUpQuestionireScreenState extends State<SignUpQuestionireScreen> {
                       ),
                     ],
                   ),
-
-
-
-
                   const SizedBox(
                     height: 27,
                   ),
-                  ExtoText(
+                  GeneralText(
                     Strings.questionireLabel5,
                     textAlign: TextAlign.center,
                     style: appTheme.typographies.interFontFamily.headline4
                         .copyWith(
-                        color: const Color(0xfffbeccb),
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
+                            color: const Color(0xfffbeccb),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(
                     height: 15,
@@ -209,7 +193,6 @@ class _SignUpQuestionireScreenState extends State<SignUpQuestionireScreen> {
                     spacing: 12,
                     runSpacing: 12,
                     crossAxisAlignment: WrapCrossAlignment.center,
-
                     children: [
                       ChipsWidget(
                         appTheme: appTheme,
@@ -228,25 +211,28 @@ class _SignUpQuestionireScreenState extends State<SignUpQuestionireScreen> {
                         appTheme: appTheme,
                         title: 'Movies',
                         selected: true,
-                      ), ChipsWidget(
+                      ),
+                      ChipsWidget(
                         appTheme: appTheme,
                         title: 'Current Affairs',
                       ),
                     ],
-                  )
-
-                  ,SizedBox(height: 30,),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
                   Padding(
-                    
                     padding: EdgeInsets.only(right: 12),
                     child: Align(
                       alignment: Alignment.bottomRight,
                       child: SvgPicture.asset(
                         Resources.getSignInRightArrow,
-
                       ),
                     ),
-                  ) ,SizedBox(height: 30,),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
                 ],
               ),
             ),
@@ -262,7 +248,7 @@ class ChipsWidget extends StatelessWidget {
     Key? key,
     required this.appTheme,
     required this.title,
-      this.selected=false,
+    this.selected = false,
   }) : super(key: key);
 
   final IAppThemeData appTheme;
@@ -273,18 +259,15 @@ class ChipsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-        child: ExtoText(
+        child: GeneralText(
           title,
           textAlign: TextAlign.center,
           style: appTheme.typographies.interFontFamily.headline4.copyWith(
-              color:
-              selected?Colors.black:
-              Colors.white, fontSize: 15, fontWeight:
-          selected?FontWeight.bold:
-          FontWeight.w500),
+              color: selected ? Colors.black : Colors.white,
+              fontSize: 15,
+              fontWeight: selected ? FontWeight.bold : FontWeight.w500),
         ),
         decoration: BoxDecoration(
-
           border: Border.all(
             color: appTheme.colors.textFieldBorderColor,
             width: 2.5,
@@ -292,7 +275,9 @@ class ChipsWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(
             30,
           ),
-          color: selected?appTheme.colors.textFieldBorderColor:Colors.transparent,
+          color: selected
+              ? appTheme.colors.textFieldBorderColor
+              : Colors.transparent,
         ));
   }
 }

@@ -6,7 +6,7 @@ import 'package:chef/theme/theme.dart';
 import 'package:chef/ui_kit/widgets/scroll_edge_listener.dart';
 import 'package:chef/base/base.dart';
 import 'package:chef/services/services.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:chef/models/custom_forms/external_fields/external_field.dart';
 import 'package:chef/screens/custom_form/fields/external_field/component/external_field_m.dart';
 import 'package:chef/screens/custom_form/fields/external_field/component/external_field_vm.dart';
@@ -35,7 +35,7 @@ class ExternalFieldView extends BaseView<ExternalFieldViewModel> {
     const loadingIndicator = SizedBox(
       width: _defaultSize,
       height: _defaultSize,
-      child: ExtoLoading(),
+      child: GeneralLoading(),
     );
 
     final appTheme = AppTheme.of(context).theme;
@@ -85,7 +85,7 @@ class ExternalFieldView extends BaseView<ExternalFieldViewModel> {
                   );
                   viewModel.onExFieldSelection(selectedExtField);
                 },
-                child: ExtoCardItem(
+                child: GeneralCardItem(
                   title: fields.value[index],
                   subtitle: fields.subtitle[index],
                 ),

@@ -4,7 +4,7 @@ import 'package:chef/base/base_view.dart';
 import 'package:chef/constants/constants.dart';
 import 'package:chef/services/services.dart';
 import 'package:chef/theme/theme.dart';
-import 'package:chef/ui_kit/exto_ui_kit.dart';
+import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:chef/screens/change_password/change_password_screen_m.dart';
 import 'package:chef/screens/change_password/change_password_screen_vm.dart';
 
@@ -65,7 +65,7 @@ class ChangePasswordScreen extends BaseView<ChangePasswordScreenViewModel> {
         const SizedBox(
           height: _appBarPadding,
         ),
-        ExtoProfileAppBar(
+        GeneralProfileAppBar(
           title: Strings.changePassword,
           onClick: () => viewModel.pop(),
         ),
@@ -143,14 +143,14 @@ class ChangePasswordScreen extends BaseView<ChangePasswordScreenViewModel> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const ExtoText(
+        const GeneralText(
           Strings.currentPassword,
           typography: TypographyFamily.label2,
         ),
         SizedBox(
           height: _size8,
         ),
-        ExtoTextInput(
+        GeneralTextInput(
           controller: _passwordController,
           inputType: InputType.password,
           backgroundColor: appTheme.colors.tertiaryBackground,
@@ -176,18 +176,18 @@ class ChangePasswordScreen extends BaseView<ChangePasswordScreenViewModel> {
         SizedBox(
           height: _size24,
         ),
-        const ExtoDivider(),
+        const GeneralDivider(),
         SizedBox(
           height: _size20,
         ),
-        const ExtoText(
+        const GeneralText(
           Strings.newPassword,
           typography: TypographyFamily.label2,
         ),
         SizedBox(
           height: _size8,
         ),
-        ExtoTextInput(
+        GeneralTextInput(
           controller: _newPasswordController,
           inputType: InputType.password,
           backgroundColor: appTheme.colors.tertiaryBackground,
@@ -208,14 +208,14 @@ class ChangePasswordScreen extends BaseView<ChangePasswordScreenViewModel> {
         SizedBox(
           height: _mobilePadding,
         ),
-        const ExtoText(
+        const GeneralText(
           Strings.confirmPassword,
           typography: TypographyFamily.label2,
         ),
         SizedBox(
           height: _size8,
         ),
-        ExtoTextInput(
+        GeneralTextInput(
           controller: _confirmPasswordController,
           inputType: InputType.password,
           backgroundColor: appTheme.colors.tertiaryBackground,
@@ -266,7 +266,7 @@ class ChangePasswordScreen extends BaseView<ChangePasswordScreenViewModel> {
     return Column(
       children: [
         SizedBox(height: _size8),
-        ExtoText(
+        GeneralText(
           state.errorMessage,
           style: style,
         ),
@@ -278,7 +278,7 @@ class ChangePasswordScreen extends BaseView<ChangePasswordScreenViewModel> {
     required IAppThemeData appTheme,
     bool isTablet = false,
   }) {
-    return ExtoButton(
+    return GeneralButton(
       title: Strings.confirm,
       width: double.infinity,
       isEnable: _passwordController.text.isNotEmpty &&
