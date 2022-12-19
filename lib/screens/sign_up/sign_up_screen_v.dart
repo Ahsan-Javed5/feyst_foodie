@@ -1,4 +1,4 @@
-import 'package:chef/screens/sign_up/questionire/sign_up_questionire_screen_v.dart';
+import 'package:chef/screens/sign_up/questionire/sign_up_questionnaire_screen_v.dart';
 import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -12,8 +12,7 @@ import '../../ui_kit/widgets/general_dropdown.dart';
 import '../../ui_kit/widgets/general_text.dart';
 import '../sign_in/sign_in_screen_v.dart';
 
-
-enum Gender{
+enum Gender {
   male,
   female,
 }
@@ -48,7 +47,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.initState();
   }
 
-  Gender selectedGender=Gender.male;
+  Gender selectedGender = Gender.male;
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context).theme;
@@ -195,13 +194,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           Row(
                             children: [
-                              _genderWidget(appTheme,Gender.male,    Strings.signMaleLabel),
+                              _genderWidget(
+                                  appTheme, Gender.male, Strings.signMaleLabel),
                               const SizedBox(
                                 width: 18,
                               ),
-
-                              _genderWidget(appTheme,Gender.female,    Strings.signFemaleLabel),
-
+                              _genderWidget(appTheme, Gender.female,
+                                  Strings.signFemaleLabel),
                             ],
                           ),
                         ],
@@ -212,6 +211,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 // const SizedBox(
                 //   height: 27,
                 // ),
+
+                Text('hello man'),
                 GeneralText(
                   Strings.signProfessionLabel,
                   textAlign: TextAlign.center,
@@ -224,16 +225,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(
                   height: 8,
                 ),
-                GeneralDropdown(
-                  name: 'select',
-                  // margin: 22.0,
-                  items: items,
-                  borderColor: appTheme.colors.textFieldBorderColor,
-                  onChange: ({
-                    required String key,
-                    required dynamic value,
-                  }) {},
-                ),
+                // GeneralDropdown(
+                //   name: 'select',
+                //   // margin: 22.0,
+                //   items: items,
+                //   borderColor: appTheme.colors.textFieldBorderColor,
+                //   onChange: ({
+                //     required String key,
+                //     required dynamic value,
+                //   }) {},
+                // ),
                 const SizedBox(
                   height: 140,
                 ),
@@ -264,7 +265,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SignUpQuestionireScreen()),
+                              builder: (context) =>
+                                  SignUpQuestionnaireScreen()),
                         );
                       },
                       child: SvgPicture.asset(
@@ -281,16 +283,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Expanded _genderWidget(IAppThemeData appTheme,Gender gender, String text) {
+  Expanded _genderWidget(IAppThemeData appTheme, Gender gender, String text) {
     return Expanded(
       child: InkWell(
-        onTap: (){
+        onTap: () {
           changeGender(gender);
         },
         child: Container(
             padding: EdgeInsets.symmetric(vertical: 18),
             child: GeneralText(
-          text,
+              text,
               textAlign: TextAlign.center,
               style: appTheme.typographies.interFontFamily.headline2.copyWith(
                   color: selectedGender == gender ? Colors.black : Colors.white,
@@ -302,7 +304,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     color: appTheme.colors
                         .textFieldBorderColor // green as background color
 
-                ),
+                    ),
                 borderRadius: BorderRadius.circular(8), // radius of 10
                 color: selectedGender == gender
                     ? appTheme.colors.textFieldBorderColor
@@ -310,8 +312,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
-
-
 
   Widget _getStartedTitle({required IAppThemeData appTheme}) {
     return Center(
@@ -345,10 +345,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void changeGender(Gender gender) {
-
-
     setState(() {
-      selectedGender=gender;
+      selectedGender = gender;
     });
   }
 }
