@@ -38,6 +38,7 @@ class GeneralTextInput extends StatefulWidget {
     InputBorder? inputBorder,
     EdgeInsetsGeometry? contentPadding,
     double? height,
+    double? textFieldWidth,
     Key? key,
   })  : _onChanged = onChanged,
         _onEditingComplete = onEditingComplete,
@@ -58,7 +59,8 @@ class GeneralTextInput extends StatefulWidget {
         _onSuffixIconClick = onSuffixIconClick,
         _inputBorder = inputBorder,
         _contentPadding = contentPadding,
-        _height = height,
+        _textFieldHeight = height,
+        _textFieldWidth = textFieldWidth,
         super(key: key) {
     _selectInputType();
   }
@@ -82,7 +84,8 @@ class GeneralTextInput extends StatefulWidget {
   final ValueChanged<bool>? _onValidateChanged;
   final InputBorder? _inputBorder;
   final EdgeInsetsGeometry? _contentPadding;
-  final double? _height;
+  final double? _textFieldHeight;
+  final double? _textFieldWidth;
   late final TextInputType _keyboardType;
   late final bool _passwordMode;
 
@@ -141,7 +144,8 @@ class _GeneralTextInputState extends State<GeneralTextInput> {
     final appTheme = AppTheme.of(context).theme;
 
     return SizedBox(
-      height: widget._height,
+      height: widget._textFieldHeight,
+      width: widget._textFieldWidth ?? double.infinity,
       child: TextFormField(
         enabled: widget._isEnable,
         readOnly: !widget._isEnable,
@@ -171,7 +175,7 @@ class _GeneralTextInputState extends State<GeneralTextInput> {
           enabledBorder: widget._inputBorder ?? appTheme.inputBorder,
           prefixIcon:
               widget._prefixIcon != null ? Icon(widget._prefixIcon) : null,
-          suffixIcon: _buildSuffixIcon(appTheme),
+          //  suffixIcon: _buildSuffixIcon(appTheme),
           contentPadding: widget._contentPadding,
         ),
         validator: widget._validator,
