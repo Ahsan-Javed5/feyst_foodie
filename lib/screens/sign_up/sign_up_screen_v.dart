@@ -212,7 +212,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 //   height: 27,
                 // ),
 
-                Text('hello man'),
                 GeneralText(
                   Strings.signProfessionLabel,
                   textAlign: TextAlign.center,
