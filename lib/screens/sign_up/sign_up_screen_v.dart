@@ -42,6 +42,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.initState();
   }
 
+  bool male = true;
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context).theme;
@@ -126,6 +127,108 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(
                   height: 27,
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          GeneralText(
+                            Strings.signAgeLabel,
+                            textAlign: TextAlign.center,
+                            style: appTheme
+                                .typographies.interFontFamily.headline4
+                                .copyWith(
+                                    color: const Color(0xfffbeccb),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          GeneralTextInput(
+                              height: 200,
+                              textFieldWidth: 80,
+                              controller: _ageController,
+                              inputType: InputType.digit,
+                              backgroundColor:
+                                  appTheme.colors.textFieldFilledColor,
+                              inputBorder: appTheme.focusedBorder,
+                              valueStyle: const TextStyle(color: Colors.white),
+                              hint: '18',
+                              hintStyle: const TextStyle(
+                                  color: Colors.white, fontSize: 14),
+                              // valueStyle: valueStyle,
+                              onChanged: (newValue) {}),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          GeneralText(
+                            Strings.signGenderLabel,
+                            textAlign: TextAlign.center,
+                            style: appTheme
+                                .typographies.interFontFamily.headline4
+                                .copyWith(
+                                    color: const Color(0xfffbeccb),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            children: [
+                              _genderWidget(appTheme),
+                              const SizedBox(
+                                width: 18,
+                              ),
+                              Expanded(
+                                child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 18,
+                                    ),
+                                    child: GeneralText(
+                                      Strings.signFemaleLabel,
+                                      textAlign: TextAlign.center,
+                                      style: appTheme.typographies
+                                          .interFontFamily.headline3
+                                          .copyWith(
+                                              color: Colors.white,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold),
+                                    ),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        border: Border.all(
+                                            color: appTheme.colors
+                                                .textFieldBorderColor // green as background color
+
+                                            ), // radius of 10
+                                        color: appTheme.colors
+                                            .primaryBackground // green as background color
+                                        )),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                // const SizedBox(
+                //   height: 27,
+                // ),
                 GeneralText(
                   Strings.signProfessionLabel,
                   textAlign: TextAlign.center,
@@ -194,6 +297,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
+
+  Expanded _genderWidget(IAppThemeData appTheme) {
+    return Expanded(
+      child: Container(
+          padding: EdgeInsets.symmetric(vertical: 18),
+          child: GeneralText(
+            Strings.signMaleLabel,
+            textAlign: TextAlign.center,
+            style: appTheme.typographies.interFontFamily.headline2.copyWith(
+                color: male == true ? Colors.black : Colors.white,
+                fontSize: 15,
+                fontWeight: FontWeight.bold),
+          ),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8), // radius of 10
+              color: male == true
+                  ? appTheme.colors.textFieldBorderColor
+                  : appTheme.colors.primaryBackground)),
+    );
+  }
+
+
 
   Widget _getStartedTitle({required IAppThemeData appTheme}) {
     return Center(
