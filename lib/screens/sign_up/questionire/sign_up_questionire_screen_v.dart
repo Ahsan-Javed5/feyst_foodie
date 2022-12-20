@@ -8,6 +8,8 @@ import '../../../constants/resources.dart';
 import '../../../constants/strings.dart';
 import '../../../theme/app_theme_widget.dart';
 import '../../../ui_kit/widgets/general_text.dart';
+import '../../home/food_details_screen.dart';
+import '../lets_start_screen_v.dart';
 
 class SignUpQuestionireScreen extends StatefulWidget {
   @override
@@ -221,12 +223,20 @@ class _SignUpQuestionireScreenState extends State<SignUpQuestionireScreen> {
                   SizedBox(
                     height: 30,
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 12),
-                    child: Align(
-                      alignment: Alignment.bottomRight,
-                      child: SvgPicture.asset(
-                        Resources.getSignInRightArrow,
+                  InkWell(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SignUpLetsStartScreen()),
+                      );
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 12),
+                      child: Align(
+                        alignment: Alignment.bottomRight,
+                        child: SvgPicture.asset(
+                          Resources.getSignInRightArrow,
+                        ),
                       ),
                     ),
                   ),
