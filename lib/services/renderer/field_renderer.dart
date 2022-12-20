@@ -4,9 +4,9 @@ import 'package:injectable/injectable.dart';
 
 import 'package:chef/models/models.dart';
 import 'package:chef/screens/custom_form/fields/custom_fields.dart';
-import 'package:chef/screens/custom_form/fields/table/component/table_v.dart';
 import 'package:chef/services/services.dart';
-import 'package:chef/screens/custom_form/fields/auto_complete/auto_complete.dart';
+
+import 'field_renderer_helpers.dart';
 
 @lazySingleton
 class FieldRenderer implements IRendererService<Fields, dynamic> {
@@ -99,78 +99,6 @@ class FieldRenderer implements IRendererService<Fields, dynamic> {
           rendererService: this,
           recordId: recordId,
           onChange: onValueChange,
-        );
-      case FieldType.checkList:
-        return AbsorbPointer(
-          absorbing: fieldData.properties!.isReadOnly,
-          child: CheckListView(
-            onChange: onValueChange,
-            checkListID: fieldData.properties!.checkListId,
-            recordId: recordId!,
-            isInEditMode: isInEditMode!,
-            selectedValue: fieldValues == null || fieldValues.isEmpty
-                ? <List>[]
-                : [fieldValues],
-          ),
-        );
-      case FieldType.checkbox:
-        return CheckBoxListView(
-          name: fieldData.properties!.name,
-          label: fieldData.properties!.label,
-          orientation: fieldData.properties!.direction,
-          isMandatory: fieldData.properties!.isMandatory,
-          isReadonly: fieldData.properties!.isReadOnly,
-          hasLabel: !fieldData.properties!.hideLabel,
-          datasetId: fieldData.properties!.dataSetId,
-          onChange: onValueChange,
-          selectedIDs: fieldValues == null || fieldValues.isEmpty
-              ? <String>[]
-              : (fieldValues as List).map((e) => e.toString()).toList(),
-        );
-      case FieldType.radioButton:
-        return RadioListView(
-          name: fieldData.properties!.name,
-          label: fieldData.properties!.label,
-          orientation: fieldData.properties!.direction,
-          isMandatory: fieldData.properties!.isMandatory,
-          isReadonly: fieldData.properties!.isReadOnly,
-          hasLabel: !fieldData.properties!.hideLabel,
-          datasetId: fieldData.properties!.dataSetId,
-          onChange: onValueChange,
-          selectedValue: fieldValues == null || fieldValues.isEmpty
-              ? <String>[]
-              : [fieldValues],
-        );
-      case FieldType.select:
-        return DropdownView(
-          properties: fieldData.properties!,
-          onChange: onValueChange,
-          selectedItem: (recordId != null && recordId.isNotEmpty)
-              ? _fieldInputData[recordId][fieldData.properties!.name]
-              : (fieldValues == null || fieldValues.isEmpty ? '' : fieldValues),
-        );
-      case FieldType.table:
-        return TableView(
-          onChange: onValueChange,
-          properties: fieldData.properties!,
-          recordId: recordId!,
-          isInEditMode: isInEditMode!,
-        );
-      case FieldType.externalField:
-        return ExternalField(
-          properties: fieldData.properties!,
-          onChange: onValueChange,
-          initValue: fieldValues == null || fieldValues.isEmpty
-              ? ''
-              : fieldValues[fieldValues.keys.last],
-        );
-      case FieldType.autoComplete:
-        return AutoCompleteField(
-          properties: fieldData.properties!,
-          onChange: onValueChange,
-          initValue: fieldValues == null || fieldValues.isEmpty
-              ? ''
-              : fieldValues['value'],
         );
       default:
         return InputCustomField(

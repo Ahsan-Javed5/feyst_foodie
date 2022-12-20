@@ -5,6 +5,8 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:chef/services/services.dart';
 import 'package:chef/constants/constants.dart';
 
+import '../../../services/renderer/field_renderer_helpers.dart';
+
 class ParagraphCustomField extends StatelessWidget {
   const ParagraphCustomField({
     required String content,

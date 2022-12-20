@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:chef/screens/navdrawer/navdrawer_v.dart';
 import 'package:chef/services/device/device_service.dart';
 import 'package:chef/setup.dart';
 import 'package:chef/ui_kit/widgets/general_search_bar.dart';
@@ -33,7 +32,6 @@ mixin ScreenLayoutBase on StatelessWidget {
         return SafeArea(
           child: Scaffold(
             key: _scaffoldKey,
-            drawer: NavDrawerView(),
             body: screenSizeData.screenType == ScreenType.small
                 ? _buildMobileView(
                     context: context,

@@ -5,54 +5,31 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:flutter/material.dart' as _i11;
+import 'package:flutter/material.dart' as _i6;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
-import 'app.dart' as _i27;
-import 'base/screen_layout_base/screen_layout_base_vm.dart' as _i18;
-import 'helpers/helpers.dart' as _i19;
-import 'helpers/workspace_helper.dart' as _i25;
-import 'models/models.dart' as _i9;
-import 'screens/account_settings/account_settings_screen_vm.dart' as _i26;
-import 'screens/change_password/change_password_screen_vm.dart' as _i29;
-import 'screens/custom_form/custom_form_screen_vm.dart' as _i33;
-import 'screens/custom_form/fields/auto_complete/component/auto_complete_field_vm.dart'
-    as _i28;
-import 'screens/custom_form/fields/check_box/component/checkbox_list_vm.dart'
-    as _i30;
-import 'screens/custom_form/fields/check_list/attachments/check_list_attachments_vm.dart'
-    as _i4;
-import 'screens/custom_form/fields/check_list/component/check_list_vm.dart'
-    as _i31;
-import 'screens/custom_form/fields/check_list/widgets/check_list_item.dart'
-    as _i8;
-import 'screens/custom_form/fields/external_field/component/external_field_vm.dart'
-    as _i35;
-import 'screens/custom_form/fields/radio_button/radio_list_vm.dart' as _i17;
-import 'screens/custom_form/fields/select/component/dropdown_vm.dart' as _i34;
-import 'screens/custom_form/fields/table/attachments/table_attachments_vm.dart'
-    as _i23;
-import 'screens/custom_form/fields/table/component/table_vm.dart' as _i24;
+import 'app.dart' as _i18;
+import 'base/screen_layout_base/screen_layout_base_vm.dart' as _i9;
+import 'helpers/helpers.dart' as _i10;
+import 'helpers/workspace_helper.dart' as _i14;
+import 'screens/account_settings/account_settings_screen_vm.dart' as _i17;
+import 'screens/change_password/change_password_screen_vm.dart' as _i19;
 import 'screens/custom_form/widgets/custom_field_sidebar/custom_field_sidebar_vm.dart'
-    as _i32;
-import 'screens/forgot_password/forgot_password_screen_vm.dart' as _i36;
-import 'screens/home/home_screen_vm.dart' as _i37;
-import 'screens/login/login_screen_vm.dart' as _i14;
-import 'screens/navdrawer/navdrawer_vm.dart' as _i15;
-import 'screens/sign_up/get_started_screen_vm.dart' as _i20;
-import 'screens/sign_up/sign_up_screen_vm.dart' as _i21;
-import 'screens/splash/splash_screen_vm.dart' as _i22;
-import 'screens/username_profile/profile_information_screen_vm.dart' as _i16;
-import 'services/application_state.dart' as _i6;
-import 'services/network/network_service.dart' as _i5;
-import 'services/renderer/field_renderer.dart' as _i12;
+    as _i20;
+import 'screens/forgot_password/forgot_password_screen_vm.dart' as _i21;
+import 'screens/home/home_screen_vm.dart' as _i22;
+import 'screens/login/login_screen_vm.dart' as _i7;
+import 'screens/sign_up/get_started_screen_vm.dart' as _i11;
+import 'screens/sign_up/sign_up_screen_vm.dart' as _i12;
+import 'screens/splash/splash_screen_vm.dart' as _i13;
+import 'screens/username_profile/profile_information_screen_vm.dart' as _i8;
+import 'services/application_state.dart' as _i16;
+import 'services/renderer/field_renderer.dart' as _i4;
 import 'services/services.dart' as _i3;
-import 'services/storage/storage_service.dart' as _i7;
-import 'setup.dart' as _i38;
-import 'theme/theme.dart' as _i13;
-import 'ui_kit/general_ui_kit.dart'
-    as _i10; // ignore_for_file: unnecessary_lambdas
+import 'services/storage/storage_service.dart' as _i15;
+import 'setup.dart' as _i23;
+import 'theme/theme.dart' as _i5; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -72,31 +49,9 @@ Future<_i1.GetIt> $initGetIt(
     () => registerModule.appService,
     preResolve: true,
   );
-  gh.factory<_i4.CheckListAttachmentsViewModel>(
-      () => _i4.CheckListAttachmentsViewModel(
-            network: get<_i5.INetworkService<dynamic>>(),
-            appService: get<_i6.ApplicationService>(),
-            storageService: get<_i7.IStorageService>(),
-          ));
-  gh.factory<_i8.CheckListItem>(() => _i8.CheckListItem(
-        title: get<String>(),
-        id: get<String>(),
-        onChange: get<_i3.FieldOnChange>(),
-        isInnerItem: get<bool>(),
-        items: get<List<_i9.Item>>(),
-        subtitle: get<String>(),
-        uiType: get<String>(),
-        selectedIndex: get<int>(),
-        options: get<List<_i9.Option>>(),
-        actions: get<List<_i10.ContextMenuAction>>(),
-        innerItem: get<_i9.Item>(),
-        parentItem: get<_i9.CheckListItem>(),
-        itemAttachmentOnTap: get<_i8.ItemAttachmentOnTap>(),
-        key: get<_i11.Key>(),
-      ));
-  gh.lazySingleton<_i12.FieldRenderer>(
-      () => _i12.FieldRenderer(fieldInputData: get<Map<String, dynamic>>()));
-  gh.singleton<_i13.IAppThemeData>(registerModule.theme);
+  gh.lazySingleton<_i4.FieldRenderer>(
+      () => _i4.FieldRenderer(fieldInputData: get<Map<String, dynamic>>()));
+  gh.singleton<_i5.IAppThemeData>(registerModule.theme);
   gh.singleton<_i3.IDeviceService>(registerModule.deviceService);
   gh.singleton<_i3.INavigationService<dynamic>>(
       registerModule.navigationService);
@@ -110,116 +65,63 @@ Future<_i1.GetIt> $initGetIt(
     () => registerModule.sharedPreferences,
     preResolve: true,
   );
-  gh.factory<_i11.Key>(() => registerModule.key);
-  gh.factory<_i14.LoginScreenViewModel>(() => _i14.LoginScreenViewModel(
+  gh.factory<_i6.Key>(() => registerModule.key);
+  gh.factory<_i7.LoginScreenViewModel>(() => _i7.LoginScreenViewModel(
         navigation: get<_i3.INavigationService<dynamic>>(),
         network: get<_i3.INetworkService<dynamic>>(),
         storage: get<_i3.IStorageService>(),
         appService: get<_i3.ApplicationService>(),
       ));
-  gh.factory<_i15.NavDrawerViewModel>(() => _i15.NavDrawerViewModel(
-        navigation: get<_i3.INavigationService<dynamic>>(),
-        storage: get<_i3.IStorageService>(),
-        appService: get<_i3.ApplicationService>(),
-      ));
-  gh.factory<_i16.ProfileInformationScreenViewModel>(
-      () => _i16.ProfileInformationScreenViewModel(
+  gh.factory<_i8.ProfileInformationScreenViewModel>(
+      () => _i8.ProfileInformationScreenViewModel(
             navigation: get<_i3.INavigationService<dynamic>>(),
             appService: get<_i3.ApplicationService>(),
           ));
-  gh.factory<_i17.RadioListViewModel>(() => _i17.RadioListViewModel(
-        network: get<_i3.INetworkService<dynamic>>(),
+  gh.factory<_i9.ScreenLayoutBaseViewModel>(() => _i9.ScreenLayoutBaseViewModel(
         appService: get<_i3.ApplicationService>(),
+        storage: get<_i3.IStorageService>(),
+        workspaceHelper: get<_i10.WorkspaceHelper>(),
       ));
-  gh.factory<_i18.ScreenLayoutBaseViewModel>(
-      () => _i18.ScreenLayoutBaseViewModel(
-            appService: get<_i3.ApplicationService>(),
-            storage: get<_i3.IStorageService>(),
-            workspaceHelper: get<_i19.WorkspaceHelper>(),
-          ));
-  gh.factory<_i20.SignUpScreenViewModel>(() => _i20.SignUpScreenViewModel());
-  gh.factory<_i21.SignUpScreenViewModel>(() => _i21.SignUpScreenViewModel(
+  gh.factory<_i11.SignUpScreenViewModel>(() => _i11.SignUpScreenViewModel());
+  gh.factory<_i12.SignUpScreenViewModel>(() => _i12.SignUpScreenViewModel(
         navigation: get<_i3.INavigationService<dynamic>>(),
         network: get<_i3.INetworkService<dynamic>>(),
         storage: get<_i3.IStorageService>(),
         appService: get<_i3.ApplicationService>(),
       ));
-  gh.factory<_i22.SplashScreenViewModel>(() => _i22.SplashScreenViewModel(
+  gh.factory<_i13.SplashScreenViewModel>(() => _i13.SplashScreenViewModel(
         navigationService: get<_i3.INavigationService<dynamic>>(),
         storage: get<_i3.IStorageService>(),
         appService: get<_i3.ApplicationService>(),
       ));
-  gh.factory<_i23.TableAttachmentsViewModel>(
-      () => _i23.TableAttachmentsViewModel(
-            network: get<_i5.INetworkService<dynamic>>(),
-            appService: get<_i6.ApplicationService>(),
-            storageService: get<_i7.IStorageService>(),
-          ));
-  gh.factory<_i24.TableViewModel>(() => _i24.TableViewModel(
-        network: get<_i3.INetworkService<dynamic>>(),
-        renderer: get<_i3.IRendererService<dynamic, dynamic>>(),
-        storage: get<_i3.IStorageService>(),
-        appService: get<_i3.ApplicationService>(),
+  gh.factory<_i14.WorkspaceHelper>(() => _i14.WorkspaceHelper(
+        storage: get<_i15.IStorageService>(),
+        appService: get<_i16.ApplicationService>(),
       ));
-  gh.factory<_i25.WorkspaceHelper>(() => _i25.WorkspaceHelper(
-        storage: get<_i7.IStorageService>(),
-        appService: get<_i6.ApplicationService>(),
-      ));
-  gh.factory<_i26.AccountSettingsScreenViewModel>(
-      () => _i26.AccountSettingsScreenViewModel(
+  gh.factory<_i17.AccountSettingsScreenViewModel>(
+      () => _i17.AccountSettingsScreenViewModel(
             storage: get<_i3.IStorageService>(),
             navigation: get<_i3.INavigationService<dynamic>>(),
           ));
-  gh.singleton<_i27.App>(_i27.App(
-    appThemeData: get<_i13.IAppThemeData>(),
+  gh.singleton<_i18.App>(_i18.App(
+    appThemeData: get<_i5.IAppThemeData>(),
     appRouter: get<_i3.AppRouter>(),
-    key: get<_i11.Key>(),
+    key: get<_i6.Key>(),
   ));
-  gh.factory<_i28.AutoCompleteFieldViewModel>(
-      () => _i28.AutoCompleteFieldViewModel(
-            network: get<_i3.INetworkService<dynamic>>(),
-            navigation: get<_i3.INavigationService<dynamic>>(),
-            storage: get<_i3.IStorageService>(),
-          ));
-  gh.factory<_i29.ChangePasswordScreenViewModel>(() =>
-      _i29.ChangePasswordScreenViewModel(
+  gh.factory<_i19.ChangePasswordScreenViewModel>(() =>
+      _i19.ChangePasswordScreenViewModel(
           navigation: get<_i3.INavigationService<dynamic>>()));
-  gh.factory<_i30.CheckBoxListViewModel>(() => _i30.CheckBoxListViewModel(
-        network: get<_i3.INetworkService<dynamic>>(),
-        appService: get<_i3.ApplicationService>(),
-      ));
-  gh.factory<_i31.CheckListViewModel>(() => _i31.CheckListViewModel(
-        network: get<_i3.INetworkService<dynamic>>(),
-        renderer: get<_i3.IRendererService<dynamic, dynamic>>(),
-        appService: get<_i3.ApplicationService>(),
-      ));
-  gh.factory<_i32.CustomFieldSideBarViewModel>(
-      () => _i32.CustomFieldSideBarViewModel(
+  gh.factory<_i20.CustomFieldSideBarViewModel>(
+      () => _i20.CustomFieldSideBarViewModel(
             appState: get<_i3.ApplicationService>(),
             network: get<_i3.INetworkService<dynamic>>(),
             storageService: get<_i3.IStorageService>(),
             renderer: get<_i3.IRendererService<dynamic, dynamic>>(),
           ));
-  gh.factory<_i33.CustomFormScreenViewModel>(
-      () => _i33.CustomFormScreenViewModel(
-            network: get<_i3.INetworkService<dynamic>>(),
-            navigationService: get<_i3.INavigationService<dynamic>>(),
-            storage: get<_i3.IStorageService>(),
-            renderer: get<_i3.IRendererService<dynamic, dynamic>>(),
-            appService: get<_i3.ApplicationService>(),
-          ));
-  gh.factory<_i34.DropdownViewModel>(() => _i34.DropdownViewModel(
-        network: get<_i3.INetworkService<dynamic>>(),
-        appService: get<_i3.ApplicationService>(),
-      ));
-  gh.factory<_i35.ExternalFieldViewModel>(() => _i35.ExternalFieldViewModel(
-        network: get<_i3.INetworkService<dynamic>>(),
-        navigation: get<_i3.INavigationService<dynamic>>(),
-      ));
-  gh.factory<_i36.ForgotPasswordScreenViewModel>(() =>
-      _i36.ForgotPasswordScreenViewModel(
+  gh.factory<_i21.ForgotPasswordScreenViewModel>(() =>
+      _i21.ForgotPasswordScreenViewModel(
           navigation: get<_i3.INavigationService<dynamic>>()));
-  gh.factory<_i37.HomeScreenViewModel>(() => _i37.HomeScreenViewModel(
+  gh.factory<_i22.HomeScreenViewModel>(() => _i22.HomeScreenViewModel(
         navigation: get<_i3.INavigationService<dynamic>>(),
         storage: get<_i3.IStorageService>(),
         appService: get<_i3.ApplicationService>(),
@@ -227,7 +129,7 @@ Future<_i1.GetIt> $initGetIt(
   return get;
 }
 
-class _$RegisterModule extends _i38.RegisterModule {
+class _$RegisterModule extends _i23.RegisterModule {
   @override
-  _i11.UniqueKey get key => _i11.UniqueKey();
+  _i6.UniqueKey get key => _i6.UniqueKey();
 }

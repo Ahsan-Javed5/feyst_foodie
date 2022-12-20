@@ -29,8 +29,6 @@ export 'widgets/general_footer_item.dart';
 export 'widgets/general_bottom_sheet_date_format_item.dart';
 export 'widgets/general_bottom_sheet.dart';
 export 'widgets/general_rich_text.dart';
-export 'widgets/general_drawermenu_item.dart';
-export 'widgets/general_expansion_tile.dart';
 export 'widgets/general_expansion_tile_item.dart';
 
 enum GeneralComponentStyle {
