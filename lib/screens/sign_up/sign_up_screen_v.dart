@@ -15,7 +15,6 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  // List<String> items = ['Scientist', 'Mathematician'];
   late List<DropdownMenuItem<String>> items = [];
   final TextController _nameController = TextController();
   final TextController _mobileNumberController = TextController();
@@ -24,7 +23,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   void initState() {
-    // DropdownMenuItem obj = new DropdownMenuItem()
     var newItem = const DropdownMenuItem(
       child: Text('Scientist'),
       value: 'Scientist',
@@ -73,159 +71,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(
                   height: 27,
                 ),
-                GeneralText(
-                  Strings.signFullNameLabel,
-                  textAlign: TextAlign.center,
-                  style: appTheme.typographies.interFontFamily.headline4
-                      .copyWith(
-                          color: const Color(0xfffbeccb),
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                GeneralTextInput(
-                    controller: _nameController,
-                    inputType: InputType.text,
-                    backgroundColor: appTheme.colors.textFieldFilledColor,
-                    inputBorder: appTheme.focusedBorder,
-                    valueStyle: const TextStyle(color: Colors.white),
-                    hint: 'Enter name',
-                    hintStyle:
-                        const TextStyle(color: Colors.white, fontSize: 14),
-                    // valueStyle: valueStyle,
-                    onChanged: (newValue) {}),
                 const SizedBox(
                   height: 27,
                 ),
-                GeneralText(
-                  Strings.signMobileNumberLabel,
-                  textAlign: TextAlign.center,
-                  style: appTheme.typographies.interFontFamily.headline4
-                      .copyWith(
-                          color: const Color(0xfffbeccb),
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                GeneralTextInput(
-                    controller: _mobileNumberController,
-                    inputType: InputType.digit,
-                    backgroundColor: appTheme.colors.textFieldFilledColor,
-                    inputBorder: appTheme.focusedBorder,
-                    valueStyle: const TextStyle(color: Colors.white),
-                    hint: 'Enter Mobile Number',
-                    hintStyle:
-                        const TextStyle(color: Colors.white, fontSize: 14),
-                    // valueStyle: valueStyle,
-                    onChanged: (newValue) {}),
+                displayFullName(appTheme),
                 const SizedBox(
                   height: 27,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          GeneralText(
-                            Strings.signAgeLabel,
-                            textAlign: TextAlign.center,
-                            style: appTheme
-                                .typographies.interFontFamily.headline4
-                                .copyWith(
-                                    color: const Color(0xfffbeccb),
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          GeneralTextInput(
-                              height: 80,
-                              textFieldWidth: 80,
-                              controller: _ageController,
-                              inputType: InputType.digit,
-                              backgroundColor:
-                                  appTheme.colors.textFieldFilledColor,
-                              inputBorder: appTheme.focusedBorder,
-                              valueStyle: const TextStyle(color: Colors.white),
-                              hint: '18',
-                              hintStyle: const TextStyle(
-                                  color: Colors.white, fontSize: 14),
-                              // valueStyle: valueStyle,
-                              onChanged: (newValue) {}),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          GeneralText(
-                            Strings.signGenderLabel,
-                            textAlign: TextAlign.center,
-                            style: appTheme
-                                .typographies.interFontFamily.headline4
-                                .copyWith(
-                                    color: const Color(0xfffbeccb),
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          Row(
-                            children: [
-                              _genderWidget(
-                                  appTheme, Gender.male, Strings.signMaleLabel),
-                              const SizedBox(
-                                width: 18,
-                              ),
-                              _genderWidget(appTheme, Gender.female,
-                                  Strings.signFemaleLabel),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                displayMobileNumber(appTheme),
+                const SizedBox(
+                  height: 27,
                 ),
+                displayAgeGender(appTheme),
                 const SizedBox(
                   height: 10,
                 ),
-                GeneralText(
-                  Strings.signProfessionLabel,
-                  textAlign: TextAlign.center,
-                  style: appTheme.typographies.interFontFamily.headline4
-                      .copyWith(
-                          color: const Color(0xfffbeccb),
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                GeneralDropdown(
-                  name: 'Select',
-                  // margin: 22.0,
-                  items: items,
-                  borderColor: appTheme.colors.textFieldBorderColor,
-                  onChange: ({
-                    required String key,
-                    required dynamic value,
-                  }) {},
-                ),
+                displayProfession(appTheme),
                 const SizedBox(
                   height: 140,
                 ),
@@ -281,6 +142,168 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
+  Widget displayFullName(IAppThemeData appTheme) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GeneralText(
+          Strings.signFullNameLabel,
+          textAlign: TextAlign.center,
+          style: appTheme.typographies.interFontFamily.headline4.copyWith(
+              color: const Color(0xfffbeccb),
+              fontSize: 18,
+              fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(
+          height: 8,
+        ),
+        GeneralTextInput(
+            controller: _nameController,
+            inputType: InputType.text,
+            backgroundColor: appTheme.colors.textFieldFilledColor,
+            inputBorder: appTheme.focusedBorder,
+            valueStyle: const TextStyle(color: Colors.white),
+            hint: 'Enter name',
+            hintStyle: const TextStyle(color: Colors.white, fontSize: 14),
+            // valueStyle: valueStyle,
+            onChanged: (newValue) {}),
+      ],
+    );
+  }
+
+  Widget displayMobileNumber(IAppThemeData appTheme) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GeneralText(
+          Strings.signMobileNumberLabel,
+          textAlign: TextAlign.center,
+          style: appTheme.typographies.interFontFamily.headline4.copyWith(
+              color: const Color(0xfffbeccb),
+              fontSize: 18,
+              fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(
+          height: 8,
+        ),
+        GeneralTextInput(
+            controller: _mobileNumberController,
+            inputType: InputType.digit,
+            backgroundColor: appTheme.colors.textFieldFilledColor,
+            inputBorder: appTheme.focusedBorder,
+            valueStyle: const TextStyle(color: Colors.white),
+            hint: 'Enter Mobile Number',
+            hintStyle: const TextStyle(color: Colors.white, fontSize: 14),
+            // valueStyle: valueStyle,
+            onChanged: (newValue) {}),
+      ],
+    );
+  }
+
+  Widget displayAgeGender(IAppThemeData appTheme) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              GeneralText(
+                Strings.signAgeLabel,
+                textAlign: TextAlign.center,
+                style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                    color: const Color(0xfffbeccb),
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              GeneralTextInput(
+                  height: 80,
+                  textFieldWidth: 80,
+                  controller: _ageController,
+                  inputType: InputType.digit,
+                  backgroundColor: appTheme.colors.textFieldFilledColor,
+                  inputBorder: appTheme.focusedBorder,
+                  valueStyle: const TextStyle(color: Colors.white),
+                  hint: '18',
+                  hintStyle: const TextStyle(color: Colors.white, fontSize: 14),
+                  // valueStyle: valueStyle,
+                  onChanged: (newValue) {}),
+            ],
+          ),
+        ),
+        const SizedBox(
+          width: 5,
+        ),
+        Expanded(
+          flex: 2,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              GeneralText(
+                Strings.signGenderLabel,
+                textAlign: TextAlign.center,
+                style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                    color: const Color(0xfffbeccb),
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Row(
+                children: [
+                  _genderWidget(appTheme, Gender.male, Strings.signMaleLabel),
+                  const SizedBox(
+                    width: 18,
+                  ),
+                  _genderWidget(
+                      appTheme, Gender.female, Strings.signFemaleLabel),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget displayProfession(IAppThemeData appTheme) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GeneralText(
+          Strings.signProfessionLabel,
+          textAlign: TextAlign.center,
+          style: appTheme.typographies.interFontFamily.headline4.copyWith(
+              color: const Color(0xfffbeccb),
+              fontSize: 18,
+              fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        GeneralDropdown(
+          name: 'Select',
+          // margin: 22.0,
+          items: items,
+          borderColor: appTheme.colors.textFieldBorderColor,
+          onChange: ({
+            required String key,
+            required dynamic value,
+          }) {},
+        )
+      ],
+    );
+  }
+
   Expanded _genderWidget(IAppThemeData appTheme, Gender gender, String text) {
     return Expanded(
       child: InkWell(
@@ -317,7 +340,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         Strings.letsGetTitle,
         textAlign: TextAlign.center,
         style: appTheme.typographies.interFontFamily.headline4.copyWith(
-            color: Color(0xfff1c452),
+            color: const Color(0xfff1c452),
             fontSize: 28,
             fontWeight: FontWeight.w500),
       ),

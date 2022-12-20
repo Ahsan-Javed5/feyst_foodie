@@ -1,6 +1,8 @@
 import 'package:chef/helpers/helpers.dart';
 
 class SignUpLetsStartScreen extends StatefulWidget {
+  const SignUpLetsStartScreen({Key? key}) : super(key: key);
+
   @override
   _SignUpLetsStartScreenState createState() => _SignUpLetsStartScreenState();
 }
@@ -17,7 +19,7 @@ class _SignUpLetsStartScreenState extends State<SignUpLetsStartScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            SizedBox(
               height: 260,
               width: double.infinity,
               child: Image.asset(Resources.getSignUpLetsStartScreenBgPng),
@@ -26,7 +28,7 @@ class _SignUpLetsStartScreenState extends State<SignUpLetsStartScreen> {
               height: 20,
             ),
             Container(
-              margin: EdgeInsets.only(left: 25, right: 20),
+              margin: const EdgeInsets.only(left: 25, right: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -179,14 +181,10 @@ class _SignUpLetsStartScreenState extends State<SignUpLetsStartScreen> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => FoodDetailScreen()),
+          MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
         );
         //    viewModel.goToForgotPasswordScreen();
       },
-    );
-    GeneralText(
-      Strings.getStartedButtonTitle,
-      style: appTheme.typographies.interFontFamily.headline2,
     );
   }
 }

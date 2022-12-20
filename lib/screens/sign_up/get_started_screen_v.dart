@@ -1,6 +1,8 @@
 import 'package:chef/helpers/helpers.dart';
 
 class GetStartedScreen extends StatefulWidget {
+  const GetStartedScreen({Key? key}) : super(key: key);
+
   @override
   _GetStartedScreenState createState() => _GetStartedScreenState();
 }
@@ -25,17 +27,17 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Spacer(),
+            const Spacer(),
             _getStartedTitle(appTheme: appTheme),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
             _getStartedSubTitle(appTheme: appTheme),
-            SizedBox(
+            const SizedBox(
               height: 230,
             ),
             _getStartedButtonTitle(appTheme: appTheme),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
           ],
@@ -73,10 +75,6 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
         );
         //    viewModel.goToForgotPasswordScreen();
       },
-    );
-    GeneralText(
-      Strings.getStartedButtonTitle,
-      style: appTheme.typographies.interFontFamily.headline2,
     );
   }
 }
