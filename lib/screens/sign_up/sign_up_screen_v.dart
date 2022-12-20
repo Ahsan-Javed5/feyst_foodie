@@ -69,10 +69,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 const SizedBox(
-                  height: 27,
-                ),
-                const SizedBox(
-                  height: 27,
+                  height: 54,
                 ),
                 displayFullName(appTheme),
                 const SizedBox(
@@ -90,42 +87,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(
                   height: 140,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SignInScreen()),
-                        );
-                      },
-                      child: GeneralText(
-                        Strings.signAlreadyUserLabel,
-                        textAlign: TextAlign.center,
-                        style: appTheme.typographies.interFontFamily.headline4
-                            .copyWith(
-                                color: const Color(0xfff7dc99),
-                                fontSize: 15,
-                                decoration: TextDecoration.underline,
-                                fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SignUpQuestionireScreen()),
-                        );
-                      },
-                      child: SvgPicture.asset(
-                        Resources.getRightArrow,
-                      ),
-                    )
-                  ],
-                )
+                displayAlreadySignIn(appTheme),
               ],
             ),
           ),
@@ -292,13 +254,49 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
         GeneralDropdown(
           name: 'Select',
-          // margin: 22.0,
           items: items,
           borderColor: appTheme.colors.textFieldBorderColor,
           onChange: ({
             required String key,
             required dynamic value,
           }) {},
+        )
+      ],
+    );
+  }
+
+  Widget displayAlreadySignIn(IAppThemeData appTheme) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SignInScreen()),
+            );
+          },
+          child: GeneralText(
+            Strings.signAlreadyUserLabel,
+            textAlign: TextAlign.center,
+            style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                color: const Color(0xfff7dc99),
+                fontSize: 15,
+                decoration: TextDecoration.underline,
+                fontWeight: FontWeight.w500),
+          ),
+        ),
+        InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => SignUpQuestionireScreen()),
+            );
+          },
+          child: SvgPicture.asset(
+            Resources.getRightArrow,
+          ),
         )
       ],
     );
