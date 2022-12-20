@@ -272,7 +272,7 @@ class ApplicationService extends Cubit<ApplicationState> {
     clearUserInfo();
     await _storage.clear();
 
-    _navigation.replaceAll(route: [LoginRoute()]);
+    //_navigation.replaceAll(route: [LoginRoute()]);
   }
 
   Future<void> fetchWorkspaceList({

@@ -1,20 +1,8 @@
-import 'package:chef/screens/home/food_details_screen.dart';
-import 'package:chef/theme/app_theme_data/app_theme_data.dart';
-import 'package:chef/ui_kit/widgets/general_text_input.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:chef/helpers/helpers.dart';
 
-import '../../../constants/resources.dart';
-import '../../../constants/strings.dart';
-import '../../../theme/app_theme_widget.dart';
-import '../../../ui_kit/widgets/general_text.dart';
-import '../../ui_kit/widgets/general_button.dart';
- 
 class SignUpLetsStartScreen extends StatefulWidget {
   @override
-  _SignUpLetsStartScreenState createState() =>
-      _SignUpLetsStartScreenState();
+  _SignUpLetsStartScreenState createState() => _SignUpLetsStartScreenState();
 }
 
 class _SignUpLetsStartScreenState extends State<SignUpLetsStartScreen> {
@@ -38,7 +26,7 @@ class _SignUpLetsStartScreenState extends State<SignUpLetsStartScreen> {
               height: 20,
             ),
             Container(
-              margin: EdgeInsets.only(left: 25,right:20),
+              margin: EdgeInsets.only(left: 25, right: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -47,113 +35,130 @@ class _SignUpLetsStartScreenState extends State<SignUpLetsStartScreen> {
                     textAlign: TextAlign.start,
                     style: appTheme.typographies.interFontFamily.headline4
                         .copyWith(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold),
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(
                     height: 27,
                   ),
-
                   GeneralText(
                     Strings.letsStartScreenLabel1,
                     maxLines: 3,
                     textAlign: TextAlign.start,
                     style: appTheme.typographies.interFontFamily.headline4
                         .copyWith(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500),
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(
                     height: 15,
                   ),
-
-                  Row(children: [
-                    Image.asset(Resources.getSignUpLetsStartScreenTickPng,height: 15,),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: GeneralText(
-                        Strings.letsStartScreenLabel2,
-                        maxLines: 2,
-                        textAlign: TextAlign.start,
-                        style: appTheme.typographies.interFontFamily.headline4
-                            .copyWith(
-                            color: Color(0xfffee4a4),
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500),
+                  Row(
+                    children: [
+                      Image.asset(
+                        Resources.getSignUpLetsStartScreenTickPng,
+                        height: 15,
                       ),
-                    ),
-                  ],),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: GeneralText(
+                          Strings.letsStartScreenLabel2,
+                          maxLines: 2,
+                          textAlign: TextAlign.start,
+                          style: appTheme.typographies.interFontFamily.headline4
+                              .copyWith(
+                                  color: Color(0xfffee4a4),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ],
+                  ),
                   const SizedBox(
                     height: 25,
                   ),
-                  Row(children: [
-                    Image.asset(Resources.getSignUpLetsStartScreenTickPng,height: 15,),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: GeneralText(
-                        Strings.letsStartScreenLabel2,
-                        maxLines: 2,
-                        textAlign: TextAlign.start,
-                        style: appTheme.typographies.interFontFamily.headline4
-                            .copyWith(
-                            color: Color(0xfffee4a4),
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500),
+                  Row(
+                    children: [
+                      Image.asset(
+                        Resources.getSignUpLetsStartScreenTickPng,
+                        height: 15,
                       ),
-                    ),
-                  ],),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: GeneralText(
+                          Strings.letsStartScreenLabel2,
+                          maxLines: 2,
+                          textAlign: TextAlign.start,
+                          style: appTheme.typographies.interFontFamily.headline4
+                              .copyWith(
+                                  color: Color(0xfffee4a4),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ],
+                  ),
                   const SizedBox(
                     height: 25,
                   ),
-                  Row(children: [
-                    Image.asset(Resources.getSignUpLetsStartScreenTickPng,height: 15,),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: GeneralText(
-                        Strings.letsStartScreenLabel2,
-                        maxLines: 2,
-                        textAlign: TextAlign.start,
-                        style: appTheme.typographies.interFontFamily.headline4
-                            .copyWith(
-                            color: Color(0xfffee4a4),
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500),
+                  Row(
+                    children: [
+                      Image.asset(
+                        Resources.getSignUpLetsStartScreenTickPng,
+                        height: 15,
                       ),
-                    ),
-                  ],),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: GeneralText(
+                          Strings.letsStartScreenLabel2,
+                          maxLines: 2,
+                          textAlign: TextAlign.start,
+                          style: appTheme.typographies.interFontFamily.headline4
+                              .copyWith(
+                                  color: Color(0xfffee4a4),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ],
+                  ),
                   const SizedBox(
                     height: 25,
                   ),
-                  Row(children: [
-                    Image.asset(Resources.getSignUpLetsStartScreenTickPng,height: 15,),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: GeneralText(
-                        Strings.letsStartScreenLabel2,
-                        maxLines: 2,
-                        textAlign: TextAlign.start,
-                        style: appTheme.typographies.interFontFamily.headline4
-                            .copyWith(
-                            color: Color(0xfffee4a4),
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500),
+                  Row(
+                    children: [
+                      Image.asset(
+                        Resources.getSignUpLetsStartScreenTickPng,
+                        height: 15,
                       ),
-                    ),
-                  ],),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: GeneralText(
+                          Strings.letsStartScreenLabel2,
+                          maxLines: 2,
+                          textAlign: TextAlign.start,
+                          style: appTheme.typographies.interFontFamily.headline4
+                              .copyWith(
+                                  color: Color(0xfffee4a4),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ],
+                  ),
                   const SizedBox(
                     height: 80,
                   ),
-
                 ],
               ),
             ),
@@ -166,6 +171,7 @@ class _SignUpLetsStartScreenState extends State<SignUpLetsStartScreen> {
       ),
     );
   }
+
   Widget _letsStartedButtonTitle({required IAppThemeData appTheme}) {
     return GeneralButton.button(
       title: Strings.letsStartScreenBtnLabel.toUpperCase(),
@@ -184,4 +190,3 @@ class _SignUpLetsStartScreenState extends State<SignUpLetsStartScreen> {
     );
   }
 }
-

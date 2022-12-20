@@ -1,13 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
-
 import 'package:chef/helpers/helpers.dart';
-import 'package:chef/services/services.dart';
-import 'package:chef/base/base_viewmodel.dart';
-import 'package:chef/base/screen_layout_base/screen_layout_base_m.dart';
+
+import 'package:chef/base/screen_layout_base/screen_layout_base_m.dart'
+    as screenM;
 
 @injectable
-class ScreenLayoutBaseViewModel extends BaseViewModel<ScreenLayoutBaseState> {
+class ScreenLayoutBaseViewModel
+    extends BaseViewModel<screenM.ScreenLayoutBaseState> {
   ScreenLayoutBaseViewModel({
     required ApplicationService appService,
     required IStorageService storage,
@@ -15,7 +13,7 @@ class ScreenLayoutBaseViewModel extends BaseViewModel<ScreenLayoutBaseState> {
   })  : _appService = appService,
         _storage = storage,
         _workspaceHelper = workspaceHelper,
-        super(const Initialized());
+        super(const screenM.Initialized());
 
   final ApplicationService _appService;
   final IStorageService _storage;
@@ -31,7 +29,7 @@ class ScreenLayoutBaseViewModel extends BaseViewModel<ScreenLayoutBaseState> {
       context: context,
       storage: _storage,
     );
-    emit(Loaded(workspace));
+    emit(screenM.Loaded(workspace));
   }
 
   bool? getSearchVisiblity() => _appService.state.searchVisible;

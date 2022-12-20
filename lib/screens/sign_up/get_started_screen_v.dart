@@ -1,18 +1,4 @@
-import 'package:chef/screens/sign_up/sign_up_screen_v.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
-
-import 'package:chef/base/base.dart';
-import 'package:chef/constants/constants.dart';
-import 'package:chef/services/services.dart';
-import 'package:chef/screens/splash/splash_screen_m.dart';
-import 'package:chef/screens/splash/splash_screen_vm.dart';
-
-import '../../theme/app_theme_data/app_theme_data.dart';
-import '../../theme/app_theme_widget.dart';
-import '../../ui_kit/widgets/general_button.dart';
-import '../../ui_kit/widgets/general_text.dart';
+import 'package:chef/helpers/helpers.dart';
 
 class GetStartedScreen extends StatefulWidget {
   @override

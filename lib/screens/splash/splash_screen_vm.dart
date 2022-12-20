@@ -69,11 +69,11 @@ class SplashScreenViewModel extends BaseViewModel<SplashScreenState> {
     }
   }
 
-  void navigateToLogin() {
-    Future.delayed(const Duration(seconds: 2), () {
-      _navigationService.replace(route: LoginRoute());
-    });
-  }
+  // void navigateToLogin() {
+  //   Future.delayed(const Duration(seconds: 2), () {
+  //     _navigationService.replace(route: LoginRoute());
+  //   });
+  // }
 
   void navigateToSignUp() {
     Future.delayed(const Duration(seconds: 2), () {

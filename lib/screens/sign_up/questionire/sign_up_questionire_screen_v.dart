@@ -1,15 +1,4 @@
-import 'package:chef/theme/app_theme_data/app_theme_data.dart';
-import 'package:chef/ui_kit/widgets/general_text_input.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-
-import '../../../constants/resources.dart';
-import '../../../constants/strings.dart';
-import '../../../theme/app_theme_widget.dart';
-import '../../../ui_kit/widgets/general_text.dart';
-import '../../home/food_details_screen.dart';
-import '../lets_start_screen_v.dart';
+import 'package:chef/helpers/helpers.dart';
 
 class SignUpQuestionireScreen extends StatefulWidget {
   @override
@@ -224,10 +213,11 @@ class _SignUpQuestionireScreenState extends State<SignUpQuestionireScreen> {
                     height: 30,
                   ),
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => SignUpLetsStartScreen()),
+                        MaterialPageRoute(
+                            builder: (context) => SignUpLetsStartScreen()),
                       );
                     },
                     child: Padding(

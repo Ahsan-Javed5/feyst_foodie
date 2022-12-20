@@ -44,10 +44,6 @@ abstract class Routes {
       initial: true,
     ),
     AutoRoute(
-      page: LoginScreen,
-      path: Routes.login,
-    ),
-    AutoRoute(
       page: GetStartedScreen,
       path: Routes.getStartedScreen,
     ),

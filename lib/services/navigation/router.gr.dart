@@ -14,6 +14,7 @@
 import 'package:auto_route/auto_route.dart' as _i4;
 import 'package:flutter/material.dart' as _i5;
 
+import '../../helpers/helpers.dart' as _i6;
 import '../../screens/screen.dart' as _i1;
 import '../../screens/sign_up/get_started_screen_v.dart' as _i2;
 import '../../screens/sign_up/sign_up_screen_v.dart' as _i3;
@@ -30,14 +31,6 @@ class AppRouter extends _i4.RootStackRouter {
       return _i4.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i1.SplashScreen(key: args.key),
-      );
-    },
-    LoginRoute.name: (routeData) {
-      final args = routeData.argsAs<LoginRouteArgs>(
-          orElse: () => const LoginRouteArgs());
-      return _i4.MaterialPageX<dynamic>(
-        routeData: routeData,
-        child: _i1.LoginScreen(key: args.key),
       );
     },
     GetStartedRoute.name: (routeData) {
@@ -79,10 +72,6 @@ class AppRouter extends _i4.RootStackRouter {
           path: '/',
         ),
         _i4.RouteConfig(
-          LoginRoute.name,
-          path: '/login',
-        ),
-        _i4.RouteConfig(
           GetStartedRoute.name,
           path: '/get_started_screen',
         ),
@@ -110,7 +99,7 @@ class AppRouter extends _i4.RootStackRouter {
 /// generated route for
 /// [_i1.SplashScreen]
 class SplashRoute extends _i4.PageRouteInfo<SplashRouteArgs> {
-  SplashRoute({_i5.Key? key})
+  SplashRoute({_i6.Key? key})
       : super(
           SplashRoute.name,
           path: '/',
@@ -123,35 +112,11 @@ class SplashRoute extends _i4.PageRouteInfo<SplashRouteArgs> {
 class SplashRouteArgs {
   const SplashRouteArgs({this.key});
 
-  final _i5.Key? key;
+  final _i6.Key? key;
 
   @override
   String toString() {
     return 'SplashRouteArgs{key: $key}';
-  }
-}
-
-/// generated route for
-/// [_i1.LoginScreen]
-class LoginRoute extends _i4.PageRouteInfo<LoginRouteArgs> {
-  LoginRoute({_i5.Key? key})
-      : super(
-          LoginRoute.name,
-          path: '/login',
-          args: LoginRouteArgs(key: key),
-        );
-
-  static const String name = 'LoginRoute';
-}
-
-class LoginRouteArgs {
-  const LoginRouteArgs({this.key});
-
-  final _i5.Key? key;
-
-  @override
-  String toString() {
-    return 'LoginRouteArgs{key: $key}';
   }
 }
 
@@ -184,7 +149,7 @@ class SignUpRoute extends _i4.PageRouteInfo<void> {
 class ForgotPasswordRoute extends _i4.PageRouteInfo<ForgotPasswordRouteArgs> {
   ForgotPasswordRoute({
     required String baseUrl,
-    _i5.Key? key,
+    _i6.Key? key,
   }) : super(
           ForgotPasswordRoute.name,
           path: '/forgotPassword',
@@ -205,7 +170,7 @@ class ForgotPasswordRouteArgs {
 
   final String baseUrl;
 
-  final _i5.Key? key;
+  final _i6.Key? key;
 
   @override
   String toString() {
@@ -216,7 +181,7 @@ class ForgotPasswordRouteArgs {
 /// generated route for
 /// [_i1.HomeScreen]
 class HomeRoute extends _i4.PageRouteInfo<HomeRouteArgs> {
-  HomeRoute({_i5.Key? key})
+  HomeRoute({_i6.Key? key})
       : super(
           HomeRoute.name,
           path: '/home',
@@ -229,7 +194,7 @@ class HomeRoute extends _i4.PageRouteInfo<HomeRouteArgs> {
 class HomeRouteArgs {
   const HomeRouteArgs({this.key});
 
-  final _i5.Key? key;
+  final _i6.Key? key;
 
   @override
   String toString() {

@@ -1,18 +1,6 @@
-import 'package:chef/screens/sign_up/questionire/sign_up_questionire_screen_v.dart';
-import 'package:chef/ui_kit/general_ui_kit.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:chef/helpers/helpers.dart';
 
-import '../../constants/resources.dart';
-import '../../constants/strings.dart';
-import '../../theme/app_theme_data/app_theme_data.dart';
-import '../../theme/app_theme_widget.dart';
-import '../../ui_kit/widgets/general_button.dart';
-import '../../ui_kit/widgets/general_dropdown.dart';
-import '../../ui_kit/widgets/general_text.dart';
 import '../sign_in/sign_in_screen_v.dart';
-
-import 'dart:developer' as developer;
 
 enum Gender {
   male,
