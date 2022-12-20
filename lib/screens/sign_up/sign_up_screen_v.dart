@@ -1,4 +1,4 @@
-import 'package:chef/screens/sign_up/questionire/sign_up_questionnaire_screen_v.dart';
+import 'package:chef/screens/sign_up/questionire/sign_up_questionire_screen_v.dart';
 import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -11,6 +11,8 @@ import '../../ui_kit/widgets/general_button.dart';
 import '../../ui_kit/widgets/general_dropdown.dart';
 import '../../ui_kit/widgets/general_text.dart';
 import '../sign_in/sign_in_screen_v.dart';
+
+import 'dart:developer' as developer;
 
 enum Gender {
   male,
@@ -30,6 +32,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextController _nameController = TextController();
   final TextController _mobileNumberController = TextController();
   final TextController _ageController = TextController();
+  String _dropDownValue = 'Scientist';
 
   @override
   void initState() {
@@ -37,10 +40,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
     var newItem = const DropdownMenuItem(
       child: Text('Scientist'),
       value: 'Scientist',
+      alignment: Alignment.centerLeft,
     );
     var newItem2 = const DropdownMenuItem(
       child: Text('Mathematician'),
       value: 'Mathematician',
+      alignment: Alignment.centerLeft,
     );
     items.add(newItem);
     items.add(newItem2);
@@ -154,7 +159,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             height: 8,
                           ),
                           GeneralTextInput(
-                              height: 200,
+                              height: 80,
                               textFieldWidth: 80,
                               controller: _ageController,
                               inputType: InputType.digit,
@@ -170,7 +175,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     Expanded(
@@ -208,10 +213,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ],
                 ),
-                // const SizedBox(
-                //   height: 27,
-                // ),
-
+                const SizedBox(
+                  height: 10,
+                ),
                 GeneralText(
                   Strings.signProfessionLabel,
                   textAlign: TextAlign.center,
@@ -222,18 +226,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
-                  height: 8,
+                  height: 10,
                 ),
-                // GeneralDropdown(
-                //   name: 'select',
-                //   // margin: 22.0,
-                //   items: items,
-                //   borderColor: appTheme.colors.textFieldBorderColor,
-                //   onChange: ({
-                //     required String key,
-                //     required dynamic value,
-                //   }) {},
-                // ),
+                GeneralDropdown(
+                  name: 'Select',
+                  // margin: 22.0,
+                  items: items,
+                  borderColor: appTheme.colors.textFieldBorderColor,
+                  onChange: ({
+                    required String key,
+                    required dynamic value,
+                  }) {},
+                ),
                 const SizedBox(
                   height: 140,
                 ),
@@ -264,8 +268,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  SignUpQuestionnaireScreen()),
+                              builder: (context) => SignUpQuestionireScreen()),
                         );
                       },
                       child: SvgPicture.asset(
@@ -280,6 +283,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     );
+  }
+
+  void dropDownCallBack(String? selectedValue) {
+    if (selectedValue is String) {
+      setState(() {
+        _dropDownValue = selectedValue;
+      });
+    }
   }
 
   Expanded _genderWidget(IAppThemeData appTheme, Gender gender, String text) {

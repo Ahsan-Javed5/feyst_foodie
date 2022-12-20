@@ -67,114 +67,32 @@ class _GeneralDropdownState extends State<GeneralDropdown> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        // Container(
-        // height: 70.0,
-        //   width: 200.0,
-        child: DropdownButtonFormField(
-      decoration: InputDecoration(
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-              color: widget._borderColor ?? const Color.fromRGBO(0, 0, 0, 0.57),
-              width: 2),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        border: OutlineInputBorder(
-          borderSide: BorderSide(
-              color: widget._borderColor ?? const Color.fromRGBO(0, 0, 0, 0.57),
-              width: 2),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        filled: true,
-        fillColor: const Color.fromRGBO(0, 0, 0, 0.57) ??
-            const Color.fromRGBO(0, 0, 0, 0.57),
-      ),
-      validator: (value) => value == null ? "Select a country" : null,
-      dropdownColor: const Color.fromRGBO(0, 0, 0, 0.57),
-      onChanged: (value) {},
-      items: widget._items,
-      iconEnabledColor: Colors.white, //Icon color
-      style: const TextStyle(
-          //te
-          color: Colors.white, //Font color
-          fontSize: 20 //font size on dropdown button
+    return DecoratedBox(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: widget._borderColor ?? const Color.fromRGBO(0, 0, 0, 0.57),
+            width: 2,
           ),
-      icon: SvgPicture.asset(
-        Resources.downArrow,
-        height: 15,
-      ),
-    ));
-    // child: DecoratedBox(
-    //     decoration: BoxDecoration(
-    //       // gradient: LinearGradient(colors: [
-    //       //   Colors.redAccent,
-    //       //   Colors.blueAccent,
-    //       //   Colors.purpleAccent
-    //       //   //add more colors
-    //       // ]),
-    //       //  border: Border.all((widget._borderColor)!, width: 3),
-    //       border: Border.all(
-    //           color: widget._borderColor ??
-    //               const Color.fromRGBO(0, 0, 0, 0.57),
-    //           width: widget._borderWidth),
-    //       //backgroundColor: appTheme.colors.textFieldFilledColor,
-    //       borderRadius: BorderRadius.circular(10),
-    //
-    //       // boxShadow: <BoxShadow>[
-    //       //   BoxShadow(
-    //       //       color: Color.fromRGBO(0, 0, 0, 0.57), //shadow for button
-    //       //       blurRadius: 5) //blur radius of shadow
-    //       // ]
-    //     ),
-    //     child: Padding(
-    //       // padding: EdgeInsets.all(widget._margin),
-    //       padding: const EdgeInsets.only(left: 13, right: 30, top: 3),
-    //       child: widget._items.isNotEmpty
-    //           ? DropdownButton(
-    //               value: 'Scientist',
-    //               icon: SvgPicture.asset(
-    //                 Resources.downArrow,
-    //                 height: 50,
-    //               ),
-    //
-    //               //     iconSize: 200,
-    //               // autoValidateMode: AutovalidateMode.always,
-    //               items: widget._items,
-    //               // popupProps: PopupPropsMultiSelection.menu(
-    //               //   showSearchBox: widget._isSearchable,
-    //               // ),
-    //
-    //               //selectedItems: widget._selectedItems ?? <String>[],
-    //               // validator: widget._isMandatory
-    //               //     ? widget._validator ??
-    //               //         (List<String>? items) {
-    //               //           if (items == null || items.isEmpty) {
-    //               //             return Strings.requiredField;
-    //               //           } else {
-    //               //             return null;
-    //               //           }
-    //               //         }
-    //               //     : null,
-    //               onChanged: (values) {
-    //                 widget._onChange.call(
-    //                   key: widget._name,
-    //                   value: values.toString(),
-    //                 );
-    //               },
-    //               iconEnabledColor: Colors.white, //Icon color
-    //               style: const TextStyle(
-    //                   //te
-    //                   color: Colors.white, //Font color
-    //                   fontSize: 20 //font size on dropdown button
-    //                   ),
-    //               elevation: 2,
-    //               dropdownColor: Color.fromRGBO(
-    //                   0, 0, 0, 0.57), //dropdown background color
-    //               underline: Container(), //remove underline
-    //               isExpanded: widget._isExpanded,
-    //             )
-    //           : Container(),
-    //     )));
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: DropdownButton(
+            items: widget._items,
+            isExpanded: true,
+            value: 'Scientist',
+            focusColor: Colors.white,
+            iconSize: 36,
+            style: const TextStyle(
+              color: Colors.white, //Font color
+              fontSize: 20, //font size on dropdown button
+            ),
+            underline: Container(),
+            iconEnabledColor: widget._borderColor,
+            dropdownColor: const Color.fromRGBO(0, 0, 0, 0.57),
+            onChanged: (value) {},
+          ),
+        ));
   }
 
   String? validatorFunctionMultiple(List<String?>? str) {
