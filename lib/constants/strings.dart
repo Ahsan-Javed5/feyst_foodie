@@ -269,5 +269,26 @@ static const getStartedButtonTitle="Get Started";
   static const questionireLabel3="Your idea of perfect ambience";
   static const questionireLabel4="Cuisine Taste";
   static const questionireLabel5="Your Interests";
+  static const foodItemMainHeading="BBQ Appetizer";
+  static const foodItemMenu="Menu";
+  static const foodItemDetails="Details";
+  static const foodItemSchedule="Schedule";
+  static const foodDetailHeading="Appetizer";
+  static const foodProductTitle="Sindhi Biryani";
+  static const foodProductSubTitle="Biryani";
+  static const appCurrency="Rs";
+  static const foodProductItemPrice="280";
+  static const foodProductItemDescription="A spiced mix of meat and rice, traditionally cooked over an open fire.";
+
+  static const foodProductItemUsers="2";
+  static const foodProductItemQuantity="Quantity";
+
+  static const nextButtonTitle="NEXT";
+
+
+  static const letsStartScreenLabel="Last but not the least!";
+  static const letsStartScreenLabel1="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor";
+  static const letsStartScreenLabel2="Lorem ipsum dolor sit amet, consectetur adipiscing elit";
+  static const letsStartScreenBtnLabel="Let's Start";
 
 }

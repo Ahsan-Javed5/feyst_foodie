@@ -8,7 +8,10 @@ abstract class Resources {
   static const getStartedBg = 'assets/images/icons/get_started_bg.svg';
   static const getStartedBgPng = 'assets/images/icons/get_started_bg.png';
   static const getSignUpQuestionireBgPng = 'assets/images/icons/questionire_bg.png';
+  static const getSignUpLetsStartScreenBgPng = 'assets/images/icons/lets_start_screen_bg.png';
+  static const getSignUpLetsStartScreenTickPng = 'assets/images/icons/check.png';
 
+  static const userIcon = 'assets/images/icons/users.png';
 
 
 
