@@ -1,6 +1,7 @@
 import 'package:chef/helpers/helpers.dart';
 
 import '../sign_in/sign_in_screen_v.dart';
+import 'dart:developer' as developer;
 
 enum Gender {
   male,
@@ -35,6 +36,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
     items.add(newItem);
     items.add(newItem2);
+    developer.log(' hello');
     super.initState();
   }
 
