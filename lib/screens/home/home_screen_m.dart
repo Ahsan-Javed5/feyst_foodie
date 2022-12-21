@@ -9,4 +9,5 @@ class HomeScreenState extends BaseState with _$HomeScreenState {
   const factory HomeScreenState.initialized() = Initialized;
   const factory HomeScreenState.loading() = Loading;
   const factory HomeScreenState.loaded() = Loaded;
+  // const factory HomeScreenState.error() = Error;
 }

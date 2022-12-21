@@ -22,6 +22,7 @@ class HomeScreen extends BaseView<HomeScreenViewModel> with ScreenLayoutBase {
     return BlocBuilder<HomeScreenViewModel, HomeScreenState>(
       bloc: viewModel,
       builder: (_, state) {
+        // state.when(initialized: initialized, loading: loading, loaded: loaded)
         return WillPopScope(
           onWillPop: () => viewModel.logoutPopUp(context),
           child: Stack(
