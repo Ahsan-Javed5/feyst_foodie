@@ -17,6 +17,8 @@ abstract class Resources {
       'assets/images/icons/check.png';
 
   static const userIcon = 'assets/images/icons/users.png';
+  static const appBackIcon = 'assets/images/icons/app_back_icon.png';
+  static const appBackIconSVG = 'assets/images/icons/app_back_icon.svg';
 
   static const scanIcon = 'assets/images/scan.svg';
   static const shieldIcon = 'assets/images/shield.svg';
