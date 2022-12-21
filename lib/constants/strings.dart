@@ -291,4 +291,9 @@ static const getStartedButtonTitle="Get Started";
   static const letsStartScreenLabel2="Lorem ipsum dolor sit amet, consectetur adipiscing elit";
   static const letsStartScreenBtnLabel="Let's Start";
 
+  static const noOfPersonsHint = '0';
+  static const notesHint = 'Optional';
+  static const noOfPersonsLabel = 'Persons';
+  static const notesLabel = 'Notes';
+
 }
