@@ -296,4 +296,56 @@ static const getStartedButtonTitle="Get Started";
   static const noOfPersonsLabel = 'Persons';
   static const notesLabel = 'Notes';
 
+  static const userProfileName = 'Minnie\'s Kitchen';
+  static const userProfileReviews = '4.5 (5 Reviews)';
+  static const userProfileDetailsLabel = 'Profile Details';
+  static const userProfileFirstQuestioner = 'Why you want to become a host?';
+  static const userProfileFirstQuestionerAnswer =
+      'Lorem ipsum dolor sit amet, consectetur\nadipiscing elit, sed do eiusmod temp';
+  static const userProfileSecondQuestioner = 'Tell us about your journey';
+  static const userProfileSecondQuestionerAnswer =
+      'Lorem ipsum dolor sit amet, consectetur\nadipiscing elit, sed do eiusmod temp';
+  static const userProfileYourInterestLabel = 'Your Intrests';
+  static const userProfileSportsLabel = 'Sports';
+  static const userProfileTravellingLabel = 'Your Intrests';
+  static const userProfileSocialMediaLabel = 'Social Media handles';
+  static const userProfileSocialMediaHandle = 'sugarplum';
+  static const productDetailTitle = 'BBQ \nExperience';
+  static const productDetailSubTitle = 'by Zee Lounge';
+  static const productDetailReview = '4.2';
+  static const productDetailAboutTitle = 'About Experience';
+  static const productDetailAboutSubTitle =
+      'Lorem ipsum dolor sit amet,\n consectetur adipiscing elit.';
+  static const productDetailWowFactorTitle = 'WOW Factors';
+  static const productDetailWowFactorGarden = 'Garden';
+  static const productDetailWowFactorFireworks = 'Fireworks';
+  static const productDetailWowFactorPetFriendly = 'Pet Friendly';
+  static const productDetailWowFactorWifi= 'Wifi';
+  static const productDetailWowFactorMusic = 'Music';
+  static const productDetailWowFactorParking = 'Parking';
+  static const productDetailSelectionDate = 'MON, 10 Dec';
+  static const productDetailSelectionTime = '10PM';
+  static const productDetailSelectionType = 'Family';
+  static const productDetailSelectionTotalPersons = '05';
+  static const productDetailSelectionPersons = 'Persons';
+  static const productDetailSelectionNotesLabel = 'Notes';
+  static const productDetailSelectionNotes = 'Lorem Ipsum dolor sit';
+  static const productDetailSelectionMenuLabel = 'Menu';
+  static const productDetailSelectionMenuQuantity = '1x';
+  static const productDetailSelectionMenuAmount= 'Rs.195';
+  static const productDetailChefLabel= 'Chef\'s Info';
+  static const productDetailChefName= 'Zee Lounge';
+  static const productDetailChefLocation= 'Chef\'s Info';
+  static const productDetailChefSubHost= 'SUB HOST';
+  static const productDetailChefSubHostName= 'Zoya Faraz';
+  static const productDetailPriceLabel= 'Price';
+  static const productDetailPriceValue= 'Rs.5,000';
+  static const productDetailPriceTotal= 'Total Price';
+  static const productDetailPriceTax= 'Tax';
+  static const productDetailPriceTaxValue= 'Rs.255';
+  static const productDetailAdvancePayment= 'Advance Payment';
+  static const productDetailAdvancePaymentValue= 'Rs.1,000';
+  static const productDetailExtraNote= 'Note';
+  static const productDetailButtonTitle= 'Request to book';
+  static const productDetailExtraNoteValue= '20% Advance Payment will be required\nfor booking';
 }

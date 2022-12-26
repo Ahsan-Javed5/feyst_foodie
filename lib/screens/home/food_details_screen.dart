@@ -10,6 +10,7 @@ import '../../ui_kit/widgets/general_dropdown.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
 import '../../ui_kit/widgets/general_text_input.dart';
+import '../user_account/user_profile.dart';
 
 enum TabBars { Details, Menu, Schedule }
 
@@ -567,7 +568,14 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     return GeneralButton.button(
       title: Strings.nextButtonTitle.toUpperCase(),
       styleType: ButtonStyleType.fill,
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  UserProfile()),
+        );
+      },
     );
     // ExtoText(
     //   Strings.getStartedButtonTitle,

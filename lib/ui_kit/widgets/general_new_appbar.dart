@@ -8,7 +8,8 @@ import 'general_text.dart';
 class GeneraNewAppBar extends StatelessWidget {
   final String? title;
   final Color? titleColor;
-  const GeneraNewAppBar({Key? key, this.title, this.titleColor})
+  final String? rightIcon;
+  const GeneraNewAppBar({Key? key, this.title, this.titleColor, this.rightIcon})
       : super(key: key);
 
   @override
@@ -35,7 +36,16 @@ class GeneraNewAppBar extends StatelessWidget {
             style: appTheme.typographies.interFontFamily.headline5
                 .copyWith(color: titleColor),
           ),
-          Spacer()
+        ],
+        if (rightIcon != null) ...[
+          Spacer(),
+          SvgPicture.asset(
+            rightIcon!,
+            height: 25,
+          ),
+          SizedBox(
+            width: 26,
+          ),
         ]
       ],
     );

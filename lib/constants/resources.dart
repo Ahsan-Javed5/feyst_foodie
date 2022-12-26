@@ -16,6 +16,7 @@ abstract class Resources {
   static const getSignUpLetsStartScreenTickPng =
       'assets/images/icons/check.png';
 
+  static const homeIconSvg = 'assets/images/icons/home.svg';
   static const userIcon = 'assets/images/icons/users.png';
   static const appBackIcon = 'assets/images/icons/app_back_icon.png';
   static const appBackIconSVG = 'assets/images/icons/app_back_icon.svg';
