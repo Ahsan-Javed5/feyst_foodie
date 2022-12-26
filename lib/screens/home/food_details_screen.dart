@@ -17,9 +17,12 @@ enum TabBars { Details, Menu, Schedule }
 class FoodDetailScreen extends StatefulWidget {
   const FoodDetailScreen({Key? key}) : super(key: key);
 
+
+
   @override
   State<FoodDetailScreen> createState() => _FoodDetailScreenState();
 }
+
 
 class _FoodDetailScreenState extends State<FoodDetailScreen> {
   int foodItemQuantity = 0;
@@ -31,6 +34,13 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   final TextController notes = TextController();
   late List<DropdownMenuItem<String>> statusList = [];
   late List<DropdownMenuItem<String>> items = [];
+
+
+
+  List<CustomModel> wowFactorsList = [];
+  List<CustomModel> menuListItems = [];
+
+
   @override
   void initState() {
     var newItem = const DropdownMenuItem(
@@ -51,6 +61,35 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     items.add(newItem);
     items.add(newItem1);
     items.add(newItem2);
+
+    menuListItems.addAll([
+      CustomModel(name: "Sindhi Biryani"),
+      CustomModel(name: "Buritto"),
+      CustomModel(name: "Vegetable Salad"),
+      CustomModel(name: "Hyderabadi Rice"),
+      CustomModel(name: "Soft Drinks"),
+    ]);
+    wowFactorsList.addAll([
+      CustomModel(
+          icon: Strings.productDetailWowFactorGarden,
+          name: "assets/images/icons/garden.png"),
+      CustomModel(
+          icon: Strings.productDetailWowFactorFireworks,
+          name: "assets/images/icons/fireworks.png"),
+      CustomModel(
+          icon: Strings.productDetailWowFactorPetFriendly,
+          name: "assets/images/icons/pet_friendly.png"),
+      CustomModel(
+          icon: Strings.productDetailWowFactorWifi,
+          name: "assets/images/icons/wifi_2.png"),
+      CustomModel(
+          icon: Strings.productDetailWowFactorMusic,
+          name: "assets/images/icons/music.png"),
+      CustomModel(
+          icon: Strings.productDetailWowFactorParking,
+          name: "assets/images/icons/parking.png")
+    ]);
+
     super.initState();
   }
 
@@ -88,11 +127,12 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context).theme;
     return Scaffold(
+      backgroundColor: HexColor.fromHex('#212129'),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: getStartedButtonTitle(appTheme: appTheme),
       body: SingleChildScrollView(
         child: Stack(
-          clipBehavior: Clip.none,
+          // clipBehavior: Clip.none,
           children: [
             Column(
               children: [
@@ -101,6 +141,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
 
                 Container(
+
                   padding: EdgeInsetsDirectional.only(start: 24),
                   color: HexColor.fromHex('#212129'),
                   child: Column(
@@ -131,7 +172,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                         height: 15,
                       ),
                       if (selectedTab == TabBars.Details)
-                        scheduleTabViewForm(context, appTheme),
+                        detailsTabViewForm(context, appTheme),
                       if (selectedTab == TabBars.Menu)
                         menuTabView(context, appTheme),
                       if (selectedTab == TabBars.Schedule)
@@ -291,7 +332,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                             ),
                           ]),
                         )),
-                    if(selectedTab==TabBars.Menu)...[
+                    if(selectedTab==TabBars.Menu||selectedTab==TabBars.Details)...[
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -323,7 +364,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                 ),
               ),
             ),
-
+            if(selectedTab!=TabBars.Details)
             const Positioned.fill(
               top: 105,
               child: Align(
@@ -907,6 +948,125 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     );
   }
 
+
+   Widget detailsTabViewForm(BuildContext context, IAppThemeData appTheme) {
+    return
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                color: HexColor.fromHex('#f1c452'),
+                width: 16,
+                height: 1,
+              ),
+              const SizedBox(
+                width: 2,
+              ),
+              GeneralText(
+                Strings.foodDetailAboutTitle,
+                style: appTheme
+                    .typographies.interFontFamily.headline6
+                    .copyWith(
+                  fontSize: 20,
+                  color: HexColor.fromHex('#f1c452'),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 23),
+            child: GeneralText(
+              Strings.productDetailAboutSubTitle,
+              style: appTheme.typographies.interFontFamily.headline6
+                  .copyWith(
+                  fontSize: 14,
+                  color: HexColor.fromHex('#ffffff'),
+                  fontWeight: FontWeight.w400),
+            ),
+          ),
+          const SizedBox(
+            height: 27,
+          ),
+          Row(
+            children: [
+              Container(
+                color: HexColor.fromHex('#f1c452'),
+                width: 16,
+                height: 1,
+              ),
+              const SizedBox(
+                width: 2,
+              ),
+              GeneralText(
+                Strings.productDetailWowFactorTitle,
+                style: appTheme
+                    .typographies.interFontFamily.headline6
+                    .copyWith(
+                  fontSize: 20,
+                  color: HexColor.fromHex('#f1c452'),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 28,
+          ),
+          wowFactors(appTheme),
+         ],
+      );
+  }
+
+  Widget wowFactors(IAppThemeData appTheme) {
+    return  Wrap(
+      children: [
+        for (int i = 0; i < wowFactorsList.length; i++)
+          Padding(
+            padding: const EdgeInsets.only(right: 17, bottom: 7.7),
+            child: Column(
+              children: [
+                Container(
+                  width: 58,
+                  padding: const EdgeInsetsDirectional.all(10),
+                  decoration: BoxDecoration(
+                    image: const DecorationImage(
+                      image: AssetImage(
+                          'assets/images/icons/food_item_circle.png'),
+                      fit: BoxFit.fill,
+                    ),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Container(
+                    padding: const EdgeInsetsDirectional.all(10),
+                    decoration: BoxDecoration(
+                      color: HexColor.fromHex("#f1c452"),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Image.asset(wowFactorsList[i].name != null
+                        ? wowFactorsList[i].name ?? ""
+                        : ''),
+                  ),
+                ),
+                GeneralText(
+                  wowFactorsList[i].icon ?? "",
+                  style: appTheme.typographies.interFontFamily.headline6
+                      .copyWith(
+                    fontSize: 14,
+                    color: HexColor.fromHex('#ffffff'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+      ],
+    );
+  }
+
   Widget timeSelectorBox(IAppThemeData appTheme,
       {bool showSelectedTime = false}) {
     return Container(
@@ -978,3 +1138,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   }
 }
 
+class CustomModel {
+  String? name;
+  String? icon;
+
+  CustomModel({this.name, this.icon});
+}

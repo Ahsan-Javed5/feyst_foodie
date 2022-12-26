@@ -1,9 +1,13 @@
+import 'dart:ui';
+
 import 'package:chef/helpers/color_helper.dart';
 import 'package:flutter/material.dart';
 
+import '../../constants/resources.dart';
 import '../../constants/strings.dart';
 import '../../theme/app_theme_data/app_theme_data.dart';
 import '../../theme/app_theme_widget.dart';
+import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
 import '../food_product_experience_details/bbq_experience_details.dart';
 
@@ -40,76 +44,104 @@ class _UserProfileState extends State<UserProfile> {
 
   @override
   Widget build(BuildContext context) {
+    double _sigmaX = 8; // from 0-10
+    double _sigmaY = 8; // from 0-10
+    double _opacity = 1;
     final appTheme = AppTheme.of(context).theme;
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
           child: Column(children: [
+
+
             Container(
+                // decoration: BoxDecoration(
+                //   color: HexColor.fromHex("#212129").withOpacity(0.8),
+                // ),
                 decoration: BoxDecoration(
-                  color: HexColor.fromHex("#212129").withOpacity(0.8),
-                ),
-                child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      height: 49,
-                    ),
-                    Container(
-                      width: 129,
-                      child: Image.asset('assets/images/icons/userProfile.png',
-                          fit: BoxFit.fill),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  FoodProductExperienceDetails()),
-                        );
-                      },
-                      child: GeneralText(
-                        Strings.userProfileName,
-                        style: appTheme.typographies.interFontFamily.headline6
-                            .copyWith(
-                                fontSize: 25,
-                                color: HexColor.fromHex('#f1c452'),
-                                fontWeight: FontWeight.w400),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 38,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    image: DecorationImage(
+
+                        image: AssetImage(
+                            'assets/images/icons/user_blurred.jpeg'),fit: BoxFit.cover)),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: _sigmaX, sigmaY: _sigmaY),
+                  child: Container(
+                    color: HexColor.fromHex("#212129").withOpacity(0.96),
+                    child: Column(
+                      // mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+
+
+                        const SizedBox(
+                          height: 70,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 18.0),
+                          child: GeneraNewAppBar(
+                            rightIcon:  Resources.homeIconSvg,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 40,
+                        ),
                         Container(
-                          width: 18.9,
-                          child: Image.asset('assets/images/icons/star.png',
+                          width: 129,
+
+                          child: Image.asset('assets/images/icons/userProfile.png',
                               fit: BoxFit.fill),
                         ),
                         const SizedBox(
-                          width: 5,
+                          height: 10,
                         ),
-                        GeneralText(
-                          Strings.userProfileReviews,
-                          style: appTheme.typographies.interFontFamily.headline6
-                              .copyWith(
-                                  decoration: TextDecoration.underline,
-                                  fontSize: 12,
-                                  color: HexColor.fromHex('#8ea659')),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      FoodProductExperienceDetails()),
+                            );
+                          },
+                          child: GeneralText(
+                            Strings.userProfileName,
+                            style: appTheme.typographies.interFontFamily.headline6
+                                .copyWith(
+                                    fontSize: 25,
+                                    color: HexColor.fromHex('#f1c452'),
+                                    fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 38,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 18.9,
+                              child: Image.asset('assets/images/icons/star.png',
+                                  fit: BoxFit.fill),
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            GeneralText(
+                              Strings.userProfileReviews,
+                              style: appTheme.typographies.interFontFamily.headline6
+                                  .copyWith(
+                                      decoration: TextDecoration.underline,
+                                      fontSize: 12,
+                                      color: HexColor.fromHex('#8ea659')),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 17,
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 17,
-                    ),
-                  ],
+                  ),
                 )),
             Container(
               padding:

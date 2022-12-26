@@ -282,6 +282,7 @@ static const getStartedButtonTitle="Get Started";
 
   static const foodProductItemUsers="2";
   static const foodProductItemQuantity="Quantity";
+  static const foodDetailAboutTitle = 'Experience';
 
   static const nextButtonTitle="NEXT";
 
