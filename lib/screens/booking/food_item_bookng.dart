@@ -116,7 +116,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                               Row(
                                 children: [
                                   Image.asset(
-                                    "assets/images/icons/booking_user.png",
+                                   Resources.bookingUserPNG,
                                     width: 35,
                                   ),
                                   SizedBox(
@@ -140,7 +140,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                           Container(
                                             width: 13.9,
                                             child: Image.asset(
-                                                'assets/images/icons/star.png',
+                                                Resources.bookingStarPNG,
                                                 fit: BoxFit.fill),
                                           ),
                                           const SizedBox(
