@@ -7,6 +7,7 @@ import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/widgets/general_text.dart';
 import '../home/food_details_screen.dart';
 import '../home/home_screen_v.dart';
+import '../user_account/edit_profile.dart';
 import '../user_account/user_profile.dart';
 
 class BottomBar extends StatefulWidget {
@@ -21,9 +22,11 @@ class _BottomBarState extends State<BottomBar> with WidgetsBindingObserver {
   BottomBarType selectedType = BottomBarType.home;
   List<Widget> screens = [
     HomeScreen(),
-    UserProfile(),
+    // UserProfile(),
+
     FoodDetailScreen(),
     UserProfile(),
+    EditProfile(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -37,8 +40,8 @@ class _BottomBarState extends State<BottomBar> with WidgetsBindingObserver {
       // color: Color(0xff212129),
       color: Colors.black,
       width: double.infinity,
-  padding: EdgeInsets.symmetric(horizontal: 10),
-  height: 60,
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      height: 64,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -76,8 +79,6 @@ class _BottomBarState extends State<BottomBar> with WidgetsBindingObserver {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-
-
           SvgPicture.asset(
             imagePath,
             height: 18,
@@ -107,8 +108,8 @@ class _BottomBarState extends State<BottomBar> with WidgetsBindingObserver {
                       ? const Color(0xffb0c18b)
                       : Colors.transparent
 
-                // green as background color
-              )),
+                  // green as background color
+                  )),
         ],
       ),
     );

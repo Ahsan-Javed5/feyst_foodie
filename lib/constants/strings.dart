@@ -354,8 +354,8 @@ static const getStartedButtonTitle="Get Started";
   ///bottom bar
   static const homeTitle= 'HOME';
   static const bookingTitle= 'BOOKINGS';
-  static const profileTitle= 'HISTORY';
-  static const historyTitle= 'PROFILE';
+  static const profileTitle= 'PROFILE';//
+  static const historyTitle= 'HISTORY';
 
 
   ///home screen
@@ -365,8 +365,19 @@ static const getStartedButtonTitle="Get Started";
 
   static const labelSeaFoodExperience= 'SEAFOOD';
   static const labelSeaFood2Experience= 'EXPERIENCE';
+  static const labelPopularDishes= 'POPULAR DISHES';
 
 
+  static const labelHeaderAccount= 'Account';
+  static const labelHeaderOthers= 'Others';
+  static const labelPersonalDetails= 'Personal Details';
+  static const labelProfile= 'Profile';
+  static const labelReviews= 'Reviews';
+  static const labelPrivacyPolicy= 'Privacy Policy';
+  static const labelTermsCond= 'Terms & Conditions';
+
+
+  static const labelTitleProfile= 'Profile';
 
 
 }

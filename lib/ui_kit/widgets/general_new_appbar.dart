@@ -34,7 +34,10 @@ class GeneraNewAppBar extends StatelessWidget {
             title ?? '',
             textAlign: TextAlign.center,
             style: appTheme.typographies.interFontFamily.headline5
-                .copyWith(color: titleColor),
+                .copyWith(color: titleColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 23
+            ),
           ),
         ],
         if (rightIcon != null) ...[

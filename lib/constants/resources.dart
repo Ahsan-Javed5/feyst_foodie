@@ -42,4 +42,7 @@ abstract class Resources {
   static const arrowRT = 'assets/images/icons/arrowRT.svg';
   static const homeScreenBG = 'assets/images/icons/home_bg.png';
   static const seafoodPNG = 'assets/images/icons/seafood.png';
+
+
+  static const arrowProfileSVG = 'assets/images/icons/arrow_right_profile.svg';
 }
