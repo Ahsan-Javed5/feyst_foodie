@@ -375,10 +375,25 @@ static const getStartedButtonTitle="Get Started";
   static const labelReviews= 'Reviews';
   static const labelPrivacyPolicy= 'Privacy Policy';
   static const labelTermsCond= 'Terms & Conditions';
+  static const labelBookings= 'Bookings';
 
 
   static const labelTitleProfile= 'Profile';
 
   static const labelTitleReviews= 'Reviews';
-
+  static const foodItemBookingAmount = 'Rs. 790';
+  static const foodItemBookingDate = '26-09-22';
+  static const foodItemBookingUserName = 'Ali Raza';
+  static const foodItemBookingReviews = '4.2';
+  static const foodItemBookingName = 'BBQ Experience';
+  static const foodItemBookingNoPersons = '2 Persons';
+  static const foodItemBookingDateTime = '31 May @ 9 PM';
+  static const foodItemBookingType = 'Couple';
+  static const foodItemBookingApprovalPending = 'APPROVAL PENDING';
+  static const foodItemBookingAdvancePendingHeader = 'Advance Pending';
+  static const foodItemBookingAdvancePending = 'Advance Pending';
+  static const foodItemBookingInProgress = 'IN Process';
+  static const foodItemBookingBookingConfirmed = 'Booking Confirmed';
+  static const foodItemBookingAdvancePendingButton = 'Pay Advance';
+  static const foodItemAdvancePendingTermsCondition = 'Terms & Conditions';
 }
