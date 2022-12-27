@@ -15,8 +15,12 @@ abstract class Resources {
       'assets/images/icons/lets_start_screen_bg.png';
   static const getSignUpLetsStartScreenTickPng =
       'assets/images/icons/check.png';
-
+///bottom bar
   static const homeIconSvg = 'assets/images/icons/home.svg';
+  static const calenderIconSvg = 'assets/images/icons/calendar.svg';
+  static const historyRecentIconSvg = 'assets/images/icons/history_recent.svg';
+  static const peopleIconSvg = 'assets/images/icons/people.svg';
+  ///
   static const userIcon = 'assets/images/icons/users.png';
   static const appBackIcon = 'assets/images/icons/app_back_icon.png';
   static const appBackIconSVG = 'assets/images/icons/app_back_icon.svg';
@@ -35,4 +39,7 @@ abstract class Resources {
   static const downArrow = 'assets/images/down_arrow.svg';
 
   static const scanIconNew = 'assets/images_new/scan.svg';
+  static const arrowRT = 'assets/images/icons/arrowRT.svg';
+  static const homeScreenBG = 'assets/images/icons/home_bg.png';
+  static const seafoodPNG = 'assets/images/icons/seafood.png';
 }

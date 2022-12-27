@@ -349,4 +349,24 @@ static const getStartedButtonTitle="Get Started";
   static const productDetailExtraNote= 'Note';
   static const productDetailButtonTitle= 'Request to book';
   static const productDetailExtraNoteValue= '20% Advance Payment will be required\nfor booking';
+
+
+  ///bottom bar
+  static const homeTitle= 'HOME';
+  static const bookingTitle= 'BOOKINGS';
+  static const profileTitle= 'HISTORY';
+  static const historyTitle= 'PROFILE';
+
+
+  ///home screen
+  static const labelExplore= 'Explore';
+  static const labelFoodExperience= 'Food Experience';
+
+
+  static const labelSeaFoodExperience= 'SEAFOOD';
+  static const labelSeaFood2Experience= 'EXPERIENCE';
+
+
+
+
 }
