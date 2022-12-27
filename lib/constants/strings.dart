@@ -379,5 +379,6 @@ static const getStartedButtonTitle="Get Started";
 
   static const labelTitleProfile= 'Profile';
 
+  static const labelTitleReviews= 'Reviews';
 
 }

@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:chef/helpers/color_helper.dart';
 import 'package:chef/helpers/helpers.dart';
+import 'package:chef/screens/user_account/reviews.dart';
 import 'package:chef/screens/user_account/user_profile.dart';
 import 'package:flutter/material.dart';
 
@@ -65,7 +66,7 @@ class _EditProfileState extends State<EditProfile> {
                         Navigator.push(
                           context,
                           // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
-                          MaterialPageRoute(builder: (context) => const UserProfile()),
+                          MaterialPageRoute(builder: (context) => const ReviewsScreen()),
                         );
                       },
                       child: Row(

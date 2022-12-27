@@ -234,76 +234,85 @@ class _FoodContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-        borderRadius: BorderRadius.circular(20.0),
-        child: Stack(
-          children: [
-            Container(
-              height: 230,
-              padding: EdgeInsets.all(12),
-              child: Container(
-                  height: 200,
-                  child: Image.asset(
-                    Resources.seafoodPNG,
-                    fit: BoxFit.cover,
-                  )),
-            ),
-            Positioned.fill(
-              top: 70,
-              child: Align(
-                alignment: Alignment.centerLeft,
+    return InkWell(
+      onTap: (){
+        Navigator.push(
+          context,
+          // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
+          MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
+        );
+      },
+      child: ClipRRect(
+          borderRadius: BorderRadius.circular(20.0),
+          child: Stack(
+            children: [
+              Container(
+                height: 230,
+                padding: EdgeInsets.all(12),
                 child: Container(
-                  width: 150,
-                  height: 50,
-                  padding: EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                      color: const Color(0xffbb3127),
-                      borderRadius: BorderRadius.only(
-                        topLeft: const Radius.circular(12.0),
-                        topRight: const Radius.circular(12.0),
-                        bottomLeft: const Radius.circular(12.0),
-                      )),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          GeneralText(
-                            Strings.labelSeaFoodExperience,
-                            style: appTheme
-                                .typographies.interFontFamily.headline2
-                                .copyWith(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white,
+                    height: 200,
+                    child: Image.asset(
+                      Resources.seafoodPNG,
+                      fit: BoxFit.cover,
+                    )),
+              ),
+              Positioned.fill(
+                top: 70,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    width: 150,
+                    height: 50,
+                    padding: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                        color: const Color(0xffbb3127),
+                        borderRadius: BorderRadius.only(
+                          topLeft: const Radius.circular(12.0),
+                          topRight: const Radius.circular(12.0),
+                          bottomLeft: const Radius.circular(12.0),
+                        )),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            GeneralText(
+                              Strings.labelSeaFoodExperience,
+                              style: appTheme
+                                  .typographies.interFontFamily.headline2
+                                  .copyWith(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
-                          GeneralText(
-                            Strings.labelSeaFood2Experience,
-                            style: appTheme
-                                .typographies.interFontFamily.headline2
-                                .copyWith(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                            GeneralText(
+                              Strings.labelSeaFood2Experience,
+                              style: appTheme
+                                  .typographies.interFontFamily.headline2
+                                  .copyWith(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        width: 12,
-                      ),
-                      SvgPicture.asset(
-                        Resources.arrowRT,
-                        height: 15,
-                      )
-                    ],
+                          ],
+                        ),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        SvgPicture.asset(
+                          Resources.arrowRT,
+                          height: 15,
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            )
-          ],
-        ));
+              )
+            ],
+          )),
+    );
   }
 }
