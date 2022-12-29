@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import 'package:chef/constants/constants.dart';
@@ -39,17 +41,21 @@ abstract class DialogHelper {
               return Future.value(true);
             }
           },
-          child: ExtoDialog(
-            header: header,
-            title: title,
-            body: body,
-            actions: actions,
-            image: image,
-            maxHeight: maxHeight,
-            width: width,
-            isEnable: isEnable ?? true,
-            alignment: alignment ?? Alignment.center,
-            dialogStyle: dialogType,
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+
+            child: ExtoDialog(
+              header: header,
+              title: title,
+              body: body,
+              actions: actions,
+              image: image,
+              maxHeight: maxHeight,
+              width: width,
+              isEnable: isEnable ?? true,
+              alignment: alignment ?? Alignment.center,
+              dialogStyle: dialogType,
+            ),
           ),
         );
       },

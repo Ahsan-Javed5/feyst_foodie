@@ -34,10 +34,10 @@ class ExtoDialog extends StatelessWidget {
         _isEnable = isEnable,
         _alignment = alignment,
         _dialogStyle = dialogStyle,
-        assert(
-          header != null || (title != null && title.isNotEmpty),
-          'Either header or title must be provided',
-        ),
+        // assert(
+        //   header != null || (title != null && title.isNotEmpty),
+        //   'Either header or title must be provided',
+        // ),
         super(key: key);
 
   final String? _title;
@@ -75,6 +75,7 @@ class ExtoDialog extends StatelessWidget {
           shape: appTheme.dialogShapeBorder,
           child: Container(
             width: _width,
+            color: const Color(0xff212129),
             constraints:
                 _height != null ? BoxConstraints(maxHeight: _height!) : null,
             child: _buildDialog(
@@ -101,7 +102,7 @@ class ExtoDialog extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _buildHeader(appTheme),
+           // _buildHeader(appTheme),
             _buildBody(),
             if (_actions != null && _actions!.isNotEmpty) _buildFooter(),
           ],
