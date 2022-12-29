@@ -5,6 +5,8 @@ import '../../constants/resources.dart';
 import '../../constants/strings.dart';
 import '../../helpers/color_helper.dart';
 import '../../theme/app_theme_widget.dart';
+import '../../ui_kit/helpers/dialog_helper.dart';
+import '../../ui_kit/widgets/general_button.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
 import 'food_item_advance_booking.dart';
@@ -103,6 +105,9 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                         Navigator.push(context, MaterialPageRoute(builder: (context) {
                           return FoodProductAdvancePendingDetails();
                         }));
+                      }
+                      else{
+                        _showGeneralPopup(context);
                       }
                     },
                     child: Column(
@@ -550,6 +555,81 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
 
     return progressBar;
   }
+  Future<dynamic> _showGeneralPopup(BuildContext context) async {
+    final appTheme = AppTheme.of(context).theme;
+
+
+    return DialogHelper.show(
+      context: context,
+      // dialogType: GeneralComponentStyle.success,
+      isDismissible: true,
+      barrierLabel: '',
+      // title: 'Verification\nCode',
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+
+            Icon(Icons.info_outlined,
+              color: appTheme.colors.secondaryBackground,
+              size: 45,
+            ),
+            GeneralText(
+              Strings.generalPopupTitle,
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                  color: appTheme.colors.secondaryBackground,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 19,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: GeneralText(
+                Strings.generalSubTitle,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                    color: Color(0xfffee4a4),
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500),
+              ),
+            ),
+
+
+            SizedBox(
+              height: 31,
+            ),
+            GeneralButton.button(
+              title: Strings.generalButtonTitle.toUpperCase(),
+              styleType: ButtonStyleType.fill,
+              onTap: () {
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => SignUpScreen()),
+                // );
+                //    viewModel.goToForgotPasswordScreen();
+              },
+            ),
+            SizedBox(
+              height: 12,
+            ),
+          ],
+        ),
+      ),
+      // body: GBottomSheet<String>(
+      //   bottomSheetTitle: Strings.chooseDateFormat,
+      //   list: ['7878,87,876'],
+      //   selectedItem: viewModel.getSelectedFormat(),
+      //   bottomSheetType: BottomSheetType.dateFormat,
+      // ),
+    );
+  }
+
 }
 
 class BookingProgress {
