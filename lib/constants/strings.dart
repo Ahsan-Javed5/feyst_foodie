@@ -400,9 +400,19 @@ abstract class Strings {
   static const verificationPopupButton = "Verify";
   static const verificationPopupResendCode = "Resend Code";
 
-
   static const generalPopupTitle = "We are sorry";
-  static const generalSubTitle = "Your Experience has been canceled by our host";
+  static const generalSubTitle =
+      "Your Experience has been canceled by our host";
   static const generalButtonTitle = "okay";
-
+  static const popularFoodDetailTitle = 'BBQ \nExperience';
+  static const popularFoodDetailSubTitle = 'by Zee Lounge';
+  static const popularFoodDetailReview = '4.2';
+  static const popularFoodDetailWowFactorTitle = 'WOW Factors';
+  static const foodItemBookingConfirmedStatus = 'Booking Confirmed';
+  static const foodItemBookingConfirmedOrderNo = 'Order ID: 3345';
+  static const foodItemBookingConfirmedComment =
+      'Thank you for booking with Zee Lounge looking forward to you at';
+  static const foodItemBookingConfirmedCancelOrderButton = 'Cancel Order';
+  static const foodItemAdvancePaymentValue = 'Rs. -1,000';
+  static const bookingConfirmedDetailsLabel = 'Details';
 }
