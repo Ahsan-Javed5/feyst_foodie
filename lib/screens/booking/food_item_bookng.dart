@@ -57,7 +57,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
               ),
               Container(
                 padding: EdgeInsets.only(left: 12, top: 20, bottom: 20),
-                child: const GeneraNewAppBar(
+                child: const GeneralNewAppBar(
                   rightIcon: Resources.homeIconSvg,
                   title: Strings.labelBookings,
                   titleColor: Colors.white,

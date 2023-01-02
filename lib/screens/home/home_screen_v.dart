@@ -1,5 +1,6 @@
 import 'package:chef/constants/constants.dart';
 import 'package:chef/helpers/helpers.dart';
+import 'package:chef/screens/home/popular_food_detail.dart';
 import 'package:flutter/material.dart';
 
 import '../../helpers/color_helper.dart';
@@ -130,95 +131,104 @@ class _PopularDishes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // height: 170,
-      width: 170,
-      padding: EdgeInsets.only(left: 20),
-      decoration: BoxDecoration(
-        color: HexColor.fromHex("#4b4b52"),
-        borderRadius: const BorderRadius.only(
-          bottomRight: Radius.circular(40),
-          bottomLeft: Radius.circular(40),
-          topLeft: Radius.circular(40),
-          topRight: Radius.circular(40),
+    return InkWell(
+      onTap: (){
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const PopularFoodDetails()),
+        );
+      },
+      child: Container(
+        // height: 170,
+        width: 170,
+        padding: EdgeInsets.only(left: 20),
+        decoration: BoxDecoration(
+          color: HexColor.fromHex("#4b4b52"),
+          borderRadius: const BorderRadius.only(
+            bottomRight: Radius.circular(40),
+            bottomLeft: Radius.circular(40),
+            topLeft: Radius.circular(40),
+            topRight: Radius.circular(40),
+          ),
         ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Align(
-            alignment: Alignment.topRight,
-            child: Stack(
-              children: [
-                Positioned.fill(
-                  top: 12,
-                  child: Align(
-                    child: Container(
-                      child: Image.asset(
-                        'assets/images/icons/food_product_ring.png',
-                        height: 80,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Align(
+              alignment: Alignment.topRight,
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    top: 12,
+                    child: Align(
+                      child: Container(
+                        child: Image.asset(
+                          'assets/images/icons/food_product_ring.png',
+                          height: 80,
+                        ),
                       ),
+                      alignment: Alignment.bottomLeft,
                     ),
-                    alignment: Alignment.bottomLeft,
                   ),
-                ),
-                ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                    bottomRight: Radius.circular(120),
-                    bottomLeft: Radius.circular(120),
-                    topLeft: Radius.circular(120),
-                    topRight: Radius.circular(80),
+                  ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      bottomRight: Radius.circular(120),
+                      bottomLeft: Radius.circular(120),
+                      topLeft: Radius.circular(120),
+                      topRight: Radius.circular(80),
+                    ),
+                    child: Image.asset(
+                      'assets/images/icons/sample_food.jpeg',
+                      height: 130,
+                    ),
                   ),
-                  child: Image.asset(
-                    'assets/images/icons/sample_food.jpeg',
-                    height: 130,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
 
-          GeneralText(
-            'Sindhi\nBiryani',
-            textAlign: TextAlign.left,
-            style: appTheme.typographies.interFontFamily.headline2.copyWith(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
+            GeneralText(
+              'Sindhi\nBiryani',
+              textAlign: TextAlign.left,
+              style: appTheme.typographies.interFontFamily.headline2.copyWith(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+              ),
             ),
-          ),
-          GeneralText(
-            'by Zee Lounge',
-            style: appTheme.typographies.interFontFamily.headline2.copyWith(
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              color: Color(0xff909094),
+            GeneralText(
+              'by Zee Lounge',
+              style: appTheme.typographies.interFontFamily.headline2.copyWith(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: Color(0xff909094),
+              ),
             ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
+            SizedBox(
+              height: 20,
+            ),
 
-          // Positioned(
-          //   // right: -40,
-          //   // top: -20,
-          //   child: Container(
-          //     width: 173,
-          //     padding: const EdgeInsetsDirectional.all(20),
-          //     decoration: const BoxDecoration(
-          //       image: DecorationImage(
-          //         image: AssetImage(
-          //             'assets/images/icons/food_product_ring.png'),
-          //         fit: BoxFit.fill,
-          //       ),
-          //       shape: BoxShape.circle,
-          //     ),
-          //     child: Image.asset(
-          //       'assets/images/icons/food_product_experience.png',
-          //     ),
-          //   ),
-          // ),
-        ],
+            // Positioned(
+            //   // right: -40,
+            //   // top: -20,
+            //   child: Container(
+            //     width: 173,
+            //     padding: const EdgeInsetsDirectional.all(20),
+            //     decoration: const BoxDecoration(
+            //       image: DecorationImage(
+            //         image: AssetImage(
+            //             'assets/images/icons/food_product_ring.png'),
+            //         fit: BoxFit.fill,
+            //       ),
+            //       shape: BoxShape.circle,
+            //     ),
+            //     child: Image.asset(
+            //       'assets/images/icons/food_product_experience.png',
+            //     ),
+            //   ),
+            // ),
+          ],
+        ),
       ),
     );
   }

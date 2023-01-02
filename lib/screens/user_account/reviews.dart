@@ -36,7 +36,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
               children: [
             Container(
               padding: EdgeInsets.only(left: 12, top: 20, bottom: 20),
-              child: const GeneraNewAppBar(
+              child: const GeneralNewAppBar(
                 rightIcon: Resources.homeIconSvg,
                 title: Strings.labelTitleReviews,
                 titleColor: Colors.white,

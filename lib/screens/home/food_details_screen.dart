@@ -38,6 +38,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
 
   List<CustomModel> wowFactorsList = [];
+  List<CustomModel> preferencesList = [];
   List<CustomModel> menuListItems = [];
 
 
@@ -89,7 +90,18 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           icon: Strings.productDetailWowFactorParking,
           name: "assets/images/icons/parking.png")
     ]);
+    preferencesList.addAll([
+      CustomModel(
+          icon: Strings.foodDetailPreferenceCouple,
+          name: "assets/images/icons/couple.png"),
+      CustomModel(
+          icon: Strings.foodDetailPreferenceFamily,
+          name: "assets/images/icons/family.png"),
+      CustomModel(
+          icon: Strings.foodDetailPreferenceFnf,
+          name: "assets/images/icons/fnf.png"),
 
+    ]);
     super.initState();
   }
 
@@ -187,7 +199,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               left: 20,
               child: Align(
                   alignment: Alignment.topLeft,
-                  child: GeneraNewAppBar()),
+                  child: GeneralNewAppBar()),
             ),
 
 
@@ -963,7 +975,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                 height: 1,
               ),
               const SizedBox(
-                width: 2,
+                width: 5,
               ),
               GeneralText(
                 Strings.foodDetailAboutTitle,
@@ -1001,7 +1013,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                 height: 1,
               ),
               const SizedBox(
-                width: 2,
+                width: 5,
               ),
               GeneralText(
                 Strings.productDetailWowFactorTitle,
@@ -1017,15 +1029,81 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           const SizedBox(
             height: 28,
           ),
-          wowFactors(appTheme),
+          wowFactors(appTheme,wowFactorsList),
+          const SizedBox(
+            height: 12,
+          ),
+          Row(
+            children: [
+              Container(
+                color: HexColor.fromHex('#f1c452'),
+                width: 16,
+                height: 1,
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              GeneralText(
+                Strings.foodDetailPreferences,
+                style: appTheme
+                    .typographies.interFontFamily.headline6
+                    .copyWith(
+                  fontSize: 20,
+                  color: HexColor.fromHex('#f1c452'),
+                ),
+              ),
+              Spacer(),
+              Image.asset( Resources.userIconPNG,
+              height: 12,),
+              GeneralText(
+               '22',
+                style: appTheme
+                    .typographies.interFontFamily.headline6
+                    .copyWith(
+                  fontSize: 16,
+                  color: HexColor.fromHex('#f1c452'),
+                ),
+              ),
+              SizedBox(width: 12,),
+            ],
+          ),
+          const SizedBox(
+            height: 12,
+          ),
+          wowFactors(appTheme,preferencesList),
+
+          const SizedBox(
+            height: 12,
+          ),
+          Row(
+            children: [
+              Container(
+                color: HexColor.fromHex('#f1c452'),
+                width: 16,
+                height: 1,
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              GeneralText(
+                Strings.foodDetailLocation,
+                style: appTheme
+                    .typographies.interFontFamily.headline6
+                    .copyWith(
+                  fontSize: 20,
+                  color: HexColor.fromHex('#f1c452'),
+                ),
+              ),
+            ],
+          ),
          ],
       );
   }
 
-  Widget wowFactors(IAppThemeData appTheme) {
+  Widget wowFactors(IAppThemeData appTheme,List<CustomModel> items) {
     return  Wrap(
       children: [
-        for (int i = 0; i < wowFactorsList.length; i++)
+        for (int i = 0; i < items.length; i++)
           Padding(
             padding: const EdgeInsets.only(right: 17, bottom: 7.7),
             child: Column(
@@ -1042,18 +1120,19 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                     shape: BoxShape.circle,
                   ),
                   child: Container(
+                    height: 50,
                     padding: const EdgeInsetsDirectional.all(10),
                     decoration: BoxDecoration(
                       color: HexColor.fromHex("#f1c452"),
                       shape: BoxShape.circle,
                     ),
-                    child: Image.asset(wowFactorsList[i].name != null
-                        ? wowFactorsList[i].name ?? ""
+                    child: Image.asset(items[i].name != null
+                        ? items[i].name ?? ""
                         : ''),
                   ),
                 ),
                 GeneralText(
-                  wowFactorsList[i].icon ?? "",
+                  items[i].icon ?? "",
                   style: appTheme.typographies.interFontFamily.headline6
                       .copyWith(
                     fontSize: 14,

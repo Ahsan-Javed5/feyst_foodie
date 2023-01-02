@@ -415,4 +415,11 @@ abstract class Strings {
   static const foodItemBookingConfirmedCancelOrderButton = 'Cancel Order';
   static const foodItemAdvancePaymentValue = 'Rs. -1,000';
   static const bookingConfirmedDetailsLabel = 'Details';
+
+  static const popularFoodDetailAppBarTitle = 'Sindhi Biryani';
+  static const foodDetailPreferences = 'Preferences';
+  static const foodDetailLocation= 'Location';
+  static const foodDetailPreferenceCouple = 'Couple';
+  static const foodDetailPreferenceFamily = 'Family';
+  static const foodDetailPreferenceFnf = 'F&F';
 }

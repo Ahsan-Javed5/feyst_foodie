@@ -5,11 +5,11 @@ import 'package:flutter_svg/svg.dart';
 import '../../theme/app_theme_widget.dart';
 import 'general_text.dart';
 
-class GeneraNewAppBar extends StatelessWidget {
+class GeneralNewAppBar extends StatelessWidget {
   final String? title;
   final Color? titleColor;
   final String? rightIcon;
-  const GeneraNewAppBar({Key? key, this.title, this.titleColor, this.rightIcon})
+  const GeneralNewAppBar({Key? key, this.title, this.titleColor, this.rightIcon})
       : super(key: key);
 
   @override

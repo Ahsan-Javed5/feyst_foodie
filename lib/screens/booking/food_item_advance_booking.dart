@@ -181,7 +181,7 @@ class _FoodProductAdvancePendingDetailsState
 
                         child: Align(
                             alignment: Alignment.topLeft,
-                            child: GeneraNewAppBar(
+                            child: GeneralNewAppBar(
                               rightIcon:  Resources.homeIconSvg,
                             )),
                       ),

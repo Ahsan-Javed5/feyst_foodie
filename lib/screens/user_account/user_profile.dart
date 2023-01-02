@@ -78,7 +78,7 @@ class _UserProfileState extends State<UserProfile> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 18.0),
-                          child: GeneraNewAppBar(
+                          child: GeneralNewAppBar(
                             rightIcon:  Resources.homeIconSvg,
                           ),
                         ),
