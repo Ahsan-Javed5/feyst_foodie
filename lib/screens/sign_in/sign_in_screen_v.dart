@@ -1,10 +1,14 @@
 import 'package:chef/ui_kit/widgets/general_text_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../../constants/resources.dart';
 import '../../constants/strings.dart';
 import '../../theme/app_theme_widget.dart';
+import '../../ui_kit/general_ui_kit.dart';
+import '../../ui_kit/helpers/dialog_helper.dart';
+import '../../ui_kit/widgets/general_bottom_sheet.dart';
 import '../../ui_kit/widgets/general_text.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -78,8 +82,13 @@ class _SignInScreenState extends State<SignInScreen> {
                     SvgPicture.asset(
                       Resources.getSignInLeftArrow,
                     ),
-                    SvgPicture.asset(
-                      Resources.getSignInRightArrow,
+                    InkWell(
+                      onTap: () {
+                        _showVerificationPopup(context);
+                      },
+                      child: SvgPicture.asset(
+                        Resources.getSignInRightArrow,
+                      ),
                     )
                   ],
                 )
@@ -88,6 +97,127 @@ class _SignInScreenState extends State<SignInScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<dynamic> _showVerificationPopup(BuildContext context) async {
+    final appTheme = AppTheme.of(context).theme;
+    final TextController _otpController = TextController();
+
+    return DialogHelper.show(
+      context: context,
+      // dialogType: GeneralComponentStyle.success,
+      isDismissible: true,
+      barrierLabel: '',
+      // title: 'Verification\nCode',
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            GeneralText(
+              Strings.verificationPopupTitle,
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                  color: appTheme.colors.secondaryBackground,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 14,
+            ),
+            GeneralText(
+              Strings.verificationPopupSubtitle,
+              textAlign: TextAlign.center,
+              maxLines: 3,
+              style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                  color: appTheme.colors.secondaryBackground,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500),
+            ),
+            SizedBox(
+              height: 34,
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 12),
+              child: PinCodeTextField(
+                controller: _otpController,
+
+                length: 4,
+                cursorColor: appTheme.colors.secondaryBackground,
+
+                textStyle: TextStyle(
+                  color: appTheme.colors.secondaryBackground,
+                ),
+                pinTheme: PinTheme(
+                  shape: PinCodeFieldShape.box,
+                  selectedColor: Color(0xfff1c452),
+                  disabledColor: Color(0xfff1c452),
+                  inactiveColor: Color(0xfff1c452),
+                  inactiveFillColor: Color(0xff35353C),
+                  activeColor: Color(0xff35353C),
+                  borderRadius: BorderRadius.circular(8),
+                  fieldHeight: 58,
+                  fieldWidth: 65,
+                  selectedFillColor: Color(0xff35353C),
+                  activeFillColor: Color(0xff35353C),
+                ),
+                obscureText: false,
+                keyboardType: TextInputType.number,
+
+                enableActiveFill: true,
+                // validator: (value) {
+                //   String? validationText =getIt<Localization>().mtLocalized("otp_enterOTP");
+                //       "Fields cannot be empty";
+                //   if (value!.length == AppConstants.otpLength) {
+                //     validationText = null;
+                //   }
+                //   return validationText;
+                // },
+                animationType: AnimationType.fade,
+                animationDuration: const Duration(milliseconds: 300),
+                //errorAnimationController: errorController, // Pass it here
+                onChanged: (value) {},
+                onSubmitted: (value) {},
+                appContext: context,
+              ),
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            GeneralButton.button(
+              title: Strings.verificationPopupButton.toUpperCase(),
+              styleType: ButtonStyleType.fill,
+              onTap: () {
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => SignUpScreen()),
+                // );
+                //    viewModel.goToForgotPasswordScreen();
+              },
+            ),
+            SizedBox(
+              height: 22,
+            ),
+            GeneralText(
+              Strings.verificationPopupResendCode,
+              textAlign: TextAlign.center,
+              style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                  color: const Color(0xfff7dc99),
+                  fontSize: 15,
+                  decoration: TextDecoration.underline,
+                  fontWeight: FontWeight.w500),
+            ),
+          ],
+        ),
+      ),
+      // body: GBottomSheet<String>(
+      //   bottomSheetTitle: Strings.chooseDateFormat,
+      //   list: ['7878,87,876'],
+      //   selectedItem: viewModel.getSelectedFormat(),
+      //   bottomSheetType: BottomSheetType.dateFormat,
+      // ),
     );
   }
 }

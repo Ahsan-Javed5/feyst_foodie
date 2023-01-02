@@ -55,14 +55,14 @@ class AppRouter extends _i4.RootStackRouter {
         ),
       );
     },
-    HomeRoute.name: (routeData) {
-      final args =
-          routeData.argsAs<HomeRouteArgs>(orElse: () => const HomeRouteArgs());
-      return _i4.MaterialPageX<dynamic>(
-        routeData: routeData,
-        child: _i1.HomeScreen(key: args.key),
-      );
-    },
+    // HomeRoute.name: (routeData) {
+    //   final args =
+    //       routeData.argsAs<HomeRouteArgs>(orElse: () => const HomeRouteArgs());
+    //   return _i4.MaterialPageX<dynamic>(
+    //     routeData: routeData,
+    //     child: _i1.HomeScreen(key: args.key),
+    //   );
+    // },
   };
 
   @override

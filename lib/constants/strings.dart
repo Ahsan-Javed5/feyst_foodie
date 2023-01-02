@@ -244,56 +244,182 @@ abstract class Strings {
   static const pageSizeKey = 'pageSize';
   static const pageSizeValue = '25';
 
-
   //get started texts
-static const getStartedTitle="Be Entertained by Our BistroKings & Queens";
-static const getStartedSubtitle="Have that perfect dish, made by theperfect chef, just as you like!";
-static const getStartedButtonTitle="Get Started";
+  static const getStartedTitle = "Be Entertained by Our BistroKings & Queens";
+  static const getStartedSubtitle =
+      "Have that perfect dish, made by theperfect chef, just as you like!";
+  static const getStartedButtonTitle = "Get Started";
 
+  static const letsGetTitle = "Let's get you";
+  static const signUpTitle = "Signed Up";
+  static const signFullNameLabel = "Full Name";
+  static const signMobileNumberLabel = "Mobile Number";
+  static const signGenderLabel = "Gender";
+  static const signAgeLabel = "Age";
+  static const signProfessionLabel = "Profession";
+  static const signAlreadyUserLabel = "Already a User";
+  static const signMaleLabel = "Male";
+  static const signFemaleLabel = "Female";
 
-  static const letsGetTitle="Let's get you";
-  static const signUpTitle="Signed Up";
-  static const signFullNameLabel="Full Name";
-  static const signMobileNumberLabel="Mobile Number";
-  static const signGenderLabel="Gender";
-  static const signAgeLabel="Age";
-  static const signProfessionLabel="Profession";
-  static const signAlreadyUserLabel="Already a User";
-  static const signMaleLabel="Male";
-  static const signFemaleLabel="Female";
+  static const signInLabel = "Sign in";
+  static const signInMobileNumberLabel = "Mobile Number";
+  static const questionireLabel = "Lets get to know you more";
+  static const questionireLabel2 = "What makes you unique foodie";
+  static const questionireLabel3 = "Your idea of perfect ambience";
+  static const questionireLabel4 = "Cuisine Taste";
+  static const questionireLabel5 = "Your Interests";
+  static const foodItemMainHeading = "BBQ Appetizer";
+  static const foodItemMenu = "Menu";
+  static const foodItemDetails = "Details";
+  static const foodItemSchedule = "Schedule";
+  static const foodDetailHeading = "Appetizer";
+  static const foodProductTitle = "Sindhi Biryani";
+  static const foodProductSubTitle = "Biryani";
+  static const appCurrency = "Rs";
+  static const foodProductItemPrice = "280";
+  static const foodProductItemDescription =
+      "A spiced mix of meat and rice, traditionally cooked over an open fire.";
 
-  static const signInLabel="Sign in";
-  static const signInMobileNumberLabel="Mobile Number";
-  static const questionireLabel="Lets get to know you more";
-  static const questionireLabel2="What makes you unique foodie";
-  static const questionireLabel3="Your idea of perfect ambience";
-  static const questionireLabel4="Cuisine Taste";
-  static const questionireLabel5="Your Interests";
-  static const foodItemMainHeading="BBQ Appetizer";
-  static const foodItemMenu="Menu";
-  static const foodItemDetails="Details";
-  static const foodItemSchedule="Schedule";
-  static const foodDetailHeading="Appetizer";
-  static const foodProductTitle="Sindhi Biryani";
-  static const foodProductSubTitle="Biryani";
-  static const appCurrency="Rs";
-  static const foodProductItemPrice="280";
-  static const foodProductItemDescription="A spiced mix of meat and rice, traditionally cooked over an open fire.";
+  static const foodProductItemUsers = "2";
+  static const foodProductItemQuantity = "Quantity";
+  static const foodDetailAboutTitle = 'Experience';
 
-  static const foodProductItemUsers="2";
-  static const foodProductItemQuantity="Quantity";
+  static const nextButtonTitle = "NEXT";
 
-  static const nextButtonTitle="NEXT";
-
-
-  static const letsStartScreenLabel="Last but not the least!";
-  static const letsStartScreenLabel1="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor";
-  static const letsStartScreenLabel2="Lorem ipsum dolor sit amet, consectetur adipiscing elit";
-  static const letsStartScreenBtnLabel="Let's Start";
+  static const letsStartScreenLabel = "Last but not the least!";
+  static const letsStartScreenLabel1 =
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor";
+  static const letsStartScreenLabel2 =
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit";
+  static const letsStartScreenBtnLabel = "Let's Start";
 
   static const noOfPersonsHint = '0';
   static const notesHint = 'Optional';
   static const noOfPersonsLabel = 'Persons';
   static const notesLabel = 'Notes';
 
+  static const userProfileName = 'Minnie\'s Kitchen';
+  static const userProfileReviews = '4.5 (5 Reviews)';
+  static const userProfileDetailsLabel = 'Profile Details';
+  static const userProfileFirstQuestioner = 'Why you want to become a host?';
+  static const userProfileFirstQuestionerAnswer =
+      'Lorem ipsum dolor sit amet, consectetur\nadipiscing elit, sed do eiusmod temp';
+  static const userProfileSecondQuestioner = 'Tell us about your journey';
+  static const userProfileSecondQuestionerAnswer =
+      'Lorem ipsum dolor sit amet, consectetur\nadipiscing elit, sed do eiusmod temp';
+  static const userProfileYourInterestLabel = 'Your Intrests';
+  static const userProfileSportsLabel = 'Sports';
+  static const userProfileTravellingLabel = 'Your Intrests';
+  static const userProfileSocialMediaLabel = 'Social Media handles';
+  static const userProfileSocialMediaHandle = 'sugarplum';
+  static const productDetailTitle = 'BBQ \nExperience';
+  static const productDetailSubTitle = 'by Zee Lounge';
+  static const productDetailReview = '4.2';
+  static const productDetailAboutTitle = 'About Experience';
+  static const productDetailAboutSubTitle =
+      'Lorem ipsum dolor sit amet,\n consectetur adipiscing elit.';
+  static const productDetailWowFactorTitle = 'WOW Factors';
+  static const productDetailWowFactorGarden = 'Garden';
+  static const productDetailWowFactorFireworks = 'Fireworks';
+  static const productDetailWowFactorPetFriendly = 'Pet Friendly';
+  static const productDetailWowFactorWifi = 'Wifi';
+  static const productDetailWowFactorMusic = 'Music';
+  static const productDetailWowFactorParking = 'Parking';
+  static const productDetailSelectionDate = 'MON, 10 Dec';
+  static const productDetailSelectionTime = '10PM';
+  static const productDetailSelectionType = 'Family';
+  static const productDetailSelectionTotalPersons = '05';
+  static const productDetailSelectionPersons = 'Persons';
+  static const productDetailSelectionNotesLabel = 'Notes';
+  static const productDetailSelectionNotes = 'Lorem Ipsum dolor sit';
+  static const productDetailSelectionMenuLabel = 'Menu';
+  static const productDetailSelectionMenuQuantity = '1x';
+  static const productDetailSelectionMenuAmount = 'Rs.195';
+  static const productDetailChefLabel = 'Chef\'s Info';
+  static const productDetailChefName = 'Zee Lounge';
+  static const productDetailChefLocation = 'Chef\'s Info';
+  static const productDetailChefSubHost = 'SUB HOST';
+  static const productDetailChefSubHostName = 'Zoya Faraz';
+  static const productDetailPriceLabel = 'Price';
+  static const productDetailPriceValue = 'Rs.5,000';
+  static const productDetailPriceTotal = 'Total Price';
+  static const productDetailPriceTax = 'Tax';
+  static const productDetailPriceTaxValue = 'Rs.255';
+  static const productDetailAdvancePayment = 'Advance Payment';
+  static const productDetailAdvancePaymentValue = 'Rs.1,000';
+  static const productDetailExtraNote = 'Note';
+  static const productDetailButtonTitle = 'Request to book';
+  static const productDetailExtraNoteValue =
+      '20% Advance Payment will be required\nfor booking';
+
+  ///bottom bar
+  static const homeTitle = 'HOME';
+  static const bookingTitle = 'BOOKINGS';
+  static const profileTitle = 'PROFILE'; //
+  static const historyTitle = 'HISTORY';
+
+  ///home screen
+  static const labelExplore = 'Explore';
+  static const labelFoodExperience = 'Food Experience';
+
+  static const labelSeaFoodExperience = 'SEAFOOD';
+  static const labelSeaFood2Experience = 'EXPERIENCE';
+  static const labelPopularDishes = 'POPULAR DISHES';
+
+  static const labelHeaderAccount = 'Account';
+  static const labelHeaderOthers = 'Others';
+  static const labelPersonalDetails = 'Personal Details';
+  static const labelProfile = 'Profile';
+  static const labelReviews = 'Reviews';
+  static const labelPrivacyPolicy = 'Privacy Policy';
+  static const labelTermsCond = 'Terms & Conditions';
+  static const labelBookings = 'Bookings';
+
+  static const labelTitleProfile = 'Profile';
+
+  static const labelTitleReviews = 'Reviews';
+  static const foodItemBookingAmount = 'Rs. 790';
+  static const foodItemBookingDate = '26-09-22';
+  static const foodItemBookingUserName = 'Ali Raza';
+  static const foodItemBookingReviews = '4.2';
+  static const foodItemBookingName = 'BBQ Experience';
+  static const foodItemBookingNoPersons = '2 Persons';
+  static const foodItemBookingDateTime = '31 May @ 9 PM';
+  static const foodItemBookingType = 'Couple';
+  static const foodItemBookingApprovalPending = 'APPROVAL PENDING';
+  static const foodItemBookingAdvancePendingHeader = 'Advance Pending';
+  static const foodItemBookingAdvancePending = 'Advance Pending';
+  static const foodItemBookingInProgress = 'IN Process';
+  static const foodItemBookingBookingConfirmed = 'Booking Confirmed';
+  static const foodItemBookingAdvancePendingButton = 'Pay Advance';
+  static const foodItemAdvancePendingTermsCondition = 'Terms & Conditions';
+
+  static const verificationPopupTitle = "Verification\nCode";
+  static const verificationPopupSubtitle =
+      'We have sent you an SMS with a code to number +92 345 000 0000';
+  static const verificationPopupButton = "Verify";
+  static const verificationPopupResendCode = "Resend Code";
+
+  static const generalPopupTitle = "We are sorry";
+  static const generalSubTitle =
+      "Your Experience has been canceled by our host";
+  static const generalButtonTitle = "okay";
+  static const popularFoodDetailTitle = 'BBQ \nExperience';
+  static const popularFoodDetailSubTitle = 'by Zee Lounge';
+  static const popularFoodDetailReview = '4.2';
+  static const popularFoodDetailWowFactorTitle = 'WOW Factors';
+  static const foodItemBookingConfirmedStatus = 'Booking Confirmed';
+  static const foodItemBookingConfirmedOrderNo = 'Order ID: 3345';
+  static const foodItemBookingConfirmedComment =
+      'Thank you for booking with Zee Lounge looking forward to you at';
+  static const foodItemBookingConfirmedCancelOrderButton = 'Cancel Order';
+  static const foodItemAdvancePaymentValue = 'Rs. -1,000';
+  static const bookingConfirmedDetailsLabel = 'Details';
+
+  static const popularFoodDetailAppBarTitle = 'Sindhi Biryani';
+  static const foodDetailPreferences = 'Preferences';
+  static const foodDetailLocation= 'Location';
+  static const foodDetailPreferenceCouple = 'Couple';
+  static const foodDetailPreferenceFamily = 'Family';
+  static const foodDetailPreferenceFnf = 'F&F';
 }
