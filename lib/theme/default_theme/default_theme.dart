@@ -25,7 +25,7 @@ class DefaultTheme extends IAppThemeData {
   static const _zeroPadding = EdgeInsets.zero;
   static const _buttonPadding = EdgeInsets.symmetric(
     vertical: 12.0,
-    horizontal: 35.0,
+    horizontal: 60.0,
   );
 
   @override
@@ -373,7 +373,7 @@ class DefaultTheme extends IAppThemeData {
   @override
   ShapeBorder get dialogShapeBorder => const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
-          Radius.circular(_defaultBorderRadius),
+          Radius.circular(_mediumBorderRadius),
         ),
       );
 

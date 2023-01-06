@@ -48,7 +48,7 @@ class _InterTypography extends ITypography {
   TextStyle get headline1 => _baseTextStyle.copyWith(
         fontWeight: FontWeight.bold,
         fontSize: _size40,
-        color: _IColors.black,
+        color: _IColors.white,
       );
 
   @override
@@ -215,7 +215,7 @@ class _InterTypography extends ITypography {
 
   @override
   TextStyle get button3 => _baseTextStyle.copyWith(
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w600,
         fontSize: _size16,
         color: _IColors.grey09,
       );

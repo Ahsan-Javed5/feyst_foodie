@@ -73,9 +73,13 @@ class ExtoDialog extends StatelessWidget {
         alignment: _alignment,
         child: Material(
           shape: appTheme.dialogShapeBorder,
+          color: const Color(0xff212129),
           child: Container(
             width: _width,
-            color: const Color(0xff212129),
+             decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: const Color(0xff212129),
+            ),
             constraints:
                 _height != null ? BoxConstraints(maxHeight: _height!) : null,
             child: _buildDialog(

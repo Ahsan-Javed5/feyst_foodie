@@ -130,7 +130,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             inputBorder: appTheme.focusedBorder,
             valueStyle: const TextStyle(color: Colors.white),
             hint: 'Enter name',
-            hintStyle: const TextStyle(color: Colors.white, fontSize: 14),
+            hintStyle:   TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
             // valueStyle: valueStyle,
             onChanged: (newValue) {}),
       ],
@@ -145,7 +145,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
         GeneralText(
           Strings.signMobileNumberLabel,
           textAlign: TextAlign.center,
-          style: appTheme.typographies.interFontFamily.headline4.copyWith(
+          style: appTheme.typographies.interFontFamily.headline6
+              .
+          copyWith(
               color: const Color(0xfffbeccb),
               fontSize: 18,
               fontWeight: FontWeight.bold),
@@ -160,7 +162,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             inputBorder: appTheme.focusedBorder,
             valueStyle: const TextStyle(color: Colors.white),
             hint: 'Enter Mobile Number',
-            hintStyle: const TextStyle(color: Colors.white, fontSize: 14),
+            hintStyle:   TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
             // valueStyle: valueStyle,
             onChanged: (newValue) {}),
       ],
@@ -196,7 +198,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   inputBorder: appTheme.focusedBorder,
                   valueStyle: const TextStyle(color: Colors.white),
                   hint: '18',
-                  hintStyle: const TextStyle(color: Colors.white, fontSize: 14),
+                  hintStyle:   TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
                   // valueStyle: valueStyle,
                   onChanged: (newValue) {}),
             ],
@@ -226,7 +228,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 children: [
                   _genderWidget(appTheme, Gender.male, Strings.signMaleLabel),
                   const SizedBox(
-                    width: 18,
+                    width: 12,
                   ),
                   _genderWidget(
                       appTheme, Gender.female, Strings.signFemaleLabel),
@@ -312,7 +314,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           changeGender(gender);
         },
         child: Container(
-            padding: EdgeInsets.symmetric(vertical: 18),
+            padding: EdgeInsets.symmetric(vertical: 15),
             child: GeneralText(
               text,
               textAlign: TextAlign.center,
@@ -327,7 +329,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         .textFieldBorderColor // green as background color
 
                     ),
-                borderRadius: BorderRadius.circular(8), // radius of 10
+                borderRadius: BorderRadius.circular(10), // radius of 10
                 color: selectedGender == gender
                     ? appTheme.colors.textFieldBorderColor
                     : appTheme.colors.primaryBackground)),

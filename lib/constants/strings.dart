@@ -396,7 +396,7 @@ abstract class Strings {
 
   static const verificationPopupTitle = "Verification\nCode";
   static const verificationPopupSubtitle =
-      'We have sent you an SMS with a code to number +92 345 000 0000';
+      'We have sent you an SMS with a code to\n number +92 345 000 0000';
   static const verificationPopupButton = "Verify";
   static const verificationPopupResendCode = "Resend Code";
 

@@ -27,73 +27,89 @@ class _SignInScreenState extends State<SignInScreen> {
       backgroundColor: appTheme.colors.primaryBackground,
       body: SingleChildScrollView(
         child: SafeArea(
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 11,
-                ),
-                Center(
-                  child: GeneralText(
-                    Strings.signInLabel,
-                    textAlign: TextAlign.center,
-                    style: appTheme.typographies.interFontFamily.headline4
-                        .copyWith(
-                            color: Color(0xfff1c452),
-                            fontSize: 28,
-                            fontWeight: FontWeight.w500),
+          child: Stack(
+            children: [
+              Positioned(
+                top: 142,
+                left: 187,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Image.asset(
+                    'assets/images/icons/food_product_ring.png',
+                    height: 300,
+                    color: Color(0xfff1c452).withOpacity(0.1),
                   ),
                 ),
-                const SizedBox(
-                  height: 27,
-                ),
-                GeneralText(
-                  Strings.signInMobileNumberLabel,
-                  textAlign: TextAlign.center,
-                  style: appTheme.typographies.interFontFamily.headline4
-                      .copyWith(
-                          color: const Color(0xfffbeccb),
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                GeneralTextInput(
-                    controller: _mobileNumberController,
-                    inputType: InputType.digit,
-                    backgroundColor: appTheme.colors.textFieldFilledColor,
-                    valueStyle: const TextStyle(color: Colors.white),
-                    inputBorder: appTheme.focusedBorder,
-                    hint: '+92 345 000 0000',
-                    hintStyle:
-                        const TextStyle(color: Colors.white, fontSize: 14),
-                    // valueStyle: valueStyle,
-                    onChanged: (newValue) {}),
-                const SizedBox(
-                  height: 127,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SvgPicture.asset(
-                      Resources.getSignInLeftArrow,
+                    const SizedBox(
+                      height: 41,
                     ),
-                    InkWell(
-                      onTap: () {
-                        _showVerificationPopup(context);
-                      },
-                      child: SvgPicture.asset(
-                        Resources.getSignInRightArrow,
+                    Center(
+                      child: GeneralText(
+                        Strings.signInLabel,
+                        textAlign: TextAlign.center,
+                        style: appTheme.typographies.interFontFamily.headline4
+                            .copyWith(
+                                color: Color(0xfff1c452),
+                                fontSize: 28,
+                                fontWeight: FontWeight.w500),
                       ),
+                    ),
+                    const SizedBox(
+                      height: 127,
+                    ),
+                    GeneralText(
+                      Strings.signInMobileNumberLabel,
+                      textAlign: TextAlign.center,
+                      style: appTheme.typographies.interFontFamily.headline4
+                          .copyWith(
+                              color: const Color(0xfffbeccb),
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    GeneralTextInput(
+                        controller: _mobileNumberController,
+                        inputType: InputType.digit,
+                        backgroundColor: appTheme.colors.textFieldFilledColor,
+                        valueStyle: const TextStyle(color: Colors.white),
+                        inputBorder: appTheme.focusedBorder,
+                        hint: '+92 345 000 0000',
+                        hintStyle:
+                            const TextStyle(color: Colors.white, fontSize: 14),
+                        // valueStyle: valueStyle,
+                        onChanged: (newValue) {}),
+                    const SizedBox(
+                      height: 127,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SvgPicture.asset(
+                          Resources.getSignInLeftArrow,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            _showVerificationPopup(context);
+                          },
+                          child: SvgPicture.asset(
+                            Resources.getSignInRightArrow,
+                          ),
+                        )
+                      ],
                     )
                   ],
-                )
-              ],
-            ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -109,6 +125,7 @@ class _SignInScreenState extends State<SignInScreen> {
       // dialogType: GeneralComponentStyle.success,
       isDismissible: true,
       barrierLabel: '',
+
       // title: 'Verification\nCode',
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -188,6 +205,7 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
             GeneralButton.button(
               title: Strings.verificationPopupButton.toUpperCase(),
+
               styleType: ButtonStyleType.fill,
               onTap: () {
                 // Navigator.push(
