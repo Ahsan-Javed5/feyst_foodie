@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.infiniun.chef_app_new">
    <application
-        android:label="chef_app_new"
+        android:label="foodie"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
