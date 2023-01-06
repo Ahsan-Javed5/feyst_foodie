@@ -55,10 +55,10 @@ abstract class Routes {
       page: ForgotPasswordScreen,
       path: Routes.forgotPassword,
     ),
-    AutoRoute(
-      page: HomeScreen,
-      path: Routes.home,
-    ),
+    // AutoRoute(
+    //   page: HomeScreen,
+    //   path: Routes.home,
+    // ),
     RedirectRoute(
       path: '*',
       redirectTo: '/',

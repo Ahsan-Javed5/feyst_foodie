@@ -88,6 +88,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 140,
                 ),
                 displayAlreadySignIn(appTheme),
+                const SizedBox(
+                  height: 30,
+                ),
               ],
             ),
           ),

@@ -1,5 +1,7 @@
 import 'package:chef/helpers/helpers.dart';
 
+import '../bottom_bar/bottom_bar.dart';
+
 class SignUpLetsStartScreen extends StatefulWidget {
   const SignUpLetsStartScreen({Key? key}) : super(key: key);
 
@@ -181,7 +183,8 @@ class _SignUpLetsStartScreenState extends State<SignUpLetsStartScreen> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
+          // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
+          MaterialPageRoute(builder: (context) => const BottomBar()),
         );
         //    viewModel.goToForgotPasswordScreen();
       },
