@@ -35,7 +35,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   late List<DropdownMenuItem<String>> statusList = [];
   late List<DropdownMenuItem<String>> items = [];
 
-
+bool scheduleForm=false;
 
   List<CustomModel> wowFactorsList = [];
   List<CustomModel> preferencesList = [];
@@ -646,7 +646,252 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   ///Schedule tab view
   Widget scheduleTabView(BuildContext context, IAppThemeData appTheme) {
-    return Stack(
+
+    return
+
+      scheduleForm?
+      Padding(
+      padding: EdgeInsetsDirectional.only(start: 20),
+      child: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(children: [
+                GeneralText(selectedMonth,
+                    style: appTheme.typographies.interFontFamily.headline6
+                        .copyWith(
+                        color: HexColor.fromHex('#f1c452'),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700)),
+                GeneralText(selectedDate,
+                    style: appTheme.typographies.interFontFamily.headline6
+                        .copyWith(
+                        color: HexColor.fromHex('#909094'),
+                        fontSize: 40,
+                        fontWeight: FontWeight.w700))
+              ]),
+              SizedBox(
+                width: 27,
+              ),
+              Expanded(
+                child: Column(
+                  children: [
+                    Container(
+                        width: double.infinity,
+                        padding: EdgeInsetsDirectional.only(
+                            start: 14, top: 15, bottom: 15, end: 25),
+                        decoration: BoxDecoration(
+                            color: HexColor.fromHex('#2b2b33'),
+                            borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                bottomLeft: Radius.circular(20))),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GeneralText(selectedTime,
+                                style: appTheme
+                                    .typographies.interFontFamily.headline6
+                                    .copyWith(
+                                    color: HexColor.fromHex('#b0c18b'),
+                                    fontSize: 36,
+                                    fontWeight: FontWeight.w200)),
+                            GeneralText(selectedDay,
+                                style: appTheme
+                                    .typographies.interFontFamily.headline6
+                                    .copyWith(
+                                    color: HexColor.fromHex('#909094'),
+                                    fontSize: 36,
+                                    fontWeight: FontWeight.w200)),
+                          ],
+                        )),
+                    SizedBox(
+                      height: 14,
+                    ),
+                    Container(
+                        width: double.infinity,
+                        padding: EdgeInsetsDirectional.only(
+                            start: 14, top: 15, bottom: 15, end: 25),
+                        decoration: BoxDecoration(
+                            color: HexColor.fromHex('#2b2b33'),
+                            borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                bottomLeft: Radius.circular(20))),
+                        child: Wrap(
+                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                GeneralText(Strings.noOfPersonsLabel,
+                                    style: appTheme
+                                        .typographies.interFontFamily.headline6
+                                        .copyWith(
+                                        color: HexColor.fromHex('#fee4a4'),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w700)),
+                                SizedBox(
+                                  height: 9,
+                                ),
+                                Wrap(
+                                  children: [
+                                    Container(
+                                      width: 61,
+                                      decoration: BoxDecoration(
+                                          color: HexColor.fromHex('#2b2b33'),
+                                          border: Border.all(
+                                              color:
+                                              HexColor.fromHex('#f1c452')),
+                                          borderRadius:
+                                          BorderRadius.circular(10)),
+                                      // padding: EdgeInsetsDirectional.only(
+                                      //     top: 8, bottom: 8, start: 16, end: 16),
+                                      margin:
+                                      EdgeInsetsDirectional.only(bottom: 8),
+                                      child: noOfPersonsField(
+                                        appTheme: appTheme,
+                                        valueStyle: appTheme
+                                            .typographies.interFontFamily.body1
+                                            .copyWith(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                        hintStyle: appTheme
+                                            .typographies.interFontFamily.body1
+                                            .copyWith(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 12,
+                                    ),
+                                    Container(
+                                      width:
+                                      MediaQuery.of(context).size.width /
+                                          2.8,
+                                      decoration: BoxDecoration(
+                                          color: HexColor.fromHex('#2b2b33'),
+                                          border: Border.all(
+                                              color: HexColor.fromHex(
+                                                  '#f1c452')),
+                                          borderRadius:
+                                          BorderRadius.circular(10)),
+                                      margin: EdgeInsetsDirectional.only(
+                                          bottom: 8),
+                                      padding: EdgeInsetsDirectional.only(
+                                          top: 8,
+                                          bottom: 8,
+                                          start: 8,
+                                          end: 8),
+                                      child: /*ExtoDropdown(
+                                        name: _wfActions.first ?? "",
+                                        items: _wfActions,
+                                        // isMandatory: true,
+                                        onChange: ({required key, value}) {},
+                                      ),*/
+                                      GeneralDropdown(
+                                        borderColor: Colors.transparent,
+                                        name: 'Select',
+                                        // margin: 22.0,
+                                        items: items,
+                                        onChange: ({
+                                          required String key,
+                                          required dynamic value,
+                                        }) {},
+                                      ),
+                                      /*GeneralDropdown(
+                                          borderColor: Colors.transparent,
+                                          name: 'Select',
+                                          // margin: 22.0,
+                                          items: statusList,
+                                          onChange: ({
+                                            required String key,
+                                            required dynamic value,
+                                          }) {
+                                          },
+                                        )*/),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        )),
+                    SizedBox(
+                      height: 14,
+                    ),
+                    Container(
+                        width: double.infinity,
+                        padding: EdgeInsetsDirectional.only(
+                            start: 14, top: 15, bottom: 15, end: 25),
+                        decoration: BoxDecoration(
+                            color: HexColor.fromHex('#2b2b33'),
+                            borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                bottomLeft: Radius.circular(20))),
+                        child: Wrap(
+                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                GeneralText(Strings.notesLabel,
+                                    style: appTheme
+                                        .typographies.interFontFamily.headline6
+                                        .copyWith(
+                                        color: HexColor.fromHex('#fee4a4'),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w700)),
+                                SizedBox(
+                                  height: 9,
+                                ),
+                                Container(
+                                  // width: 61,
+                                  decoration: BoxDecoration(
+                                      color: HexColor.fromHex('#2b2b33'),
+                                      border: Border.all(
+                                          color: HexColor.fromHex('#f1c452')),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  // padding: EdgeInsetsDirectional.only(
+                                  //     top: 8, bottom: 8, start: 16, end: 16),
+                                  margin: EdgeInsetsDirectional.only(bottom: 8),
+                                  child: notesField(
+                                    appTheme: appTheme,
+                                    valueStyle: appTheme
+                                        .typographies.interFontFamily.body1
+                                        .copyWith(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                    hintStyle: appTheme
+                                        .typographies.interFontFamily.body1
+                                        .copyWith(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        )),
+                  ],
+                ),
+              )
+            ],
+          ),
+          SizedBox(
+            height: 27,
+          ),
+        ],
+      ),
+    ):
+      Stack(
       children: [
         Padding(
           padding: EdgeInsetsDirectional.only(start: 20),
@@ -659,56 +904,65 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Column(children: [
-                          GeneralText(selectedDay,
-                              style: appTheme.typographies.interFontFamily.headline6
-                                  .copyWith(
-                                      color: HexColor.fromHex('#f1c452'),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700)),
-                          GeneralText(selectedDate,
-                              style: appTheme.typographies.interFontFamily.headline2
-                                  .copyWith(
-                                      color: HexColor.fromHex('#909094'),
-                                      fontSize: 40, ))
-                        ]),
-                        SizedBox(
-                          width: 27,
-                        ),
-                        Expanded(
-                          child: Container(
-                            width: double.infinity,
-                            padding: EdgeInsetsDirectional.only(
-                                start: 14, top: 15, bottom: 15, end: 25),
-                            decoration: BoxDecoration(
-                                color: HexColor.fromHex('#2b2b33'),
-                                borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(20),
-                                    bottomLeft: Radius.circular(20))),
-                            child: Wrap(children: [
-                              timeSelectorBox(appTheme, showSelectedTime: true),
-                              SizedBox(
-                                width: 7,
-                              ),
-                              timeSelectorBox(appTheme, showSelectedTime: false),
-                              SizedBox(
-                                width: 7,
-                              ),
-                              timeSelectorBox(appTheme, showSelectedTime: false),
-                              SizedBox(
-                                width: 7,
-                              ),
-                              timeSelectorBox(appTheme, showSelectedTime: false),
-                              SizedBox(
-                                width: 7,
-                              ),
-                            ]),
+                    InkWell(
+                      onTap:(){
+                        setState(() {
+
+                          scheduleForm=!scheduleForm;
+                        });
+
+                },
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(children: [
+                            GeneralText(selectedDay,
+                                style: appTheme.typographies.interFontFamily.headline6
+                                    .copyWith(
+                                        color: HexColor.fromHex('#f1c452'),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w700)),
+                            GeneralText(selectedDate,
+                                style: appTheme.typographies.interFontFamily.headline2
+                                    .copyWith(
+                                        color: HexColor.fromHex('#909094'),
+                                        fontSize: 40, ))
+                          ]),
+                          SizedBox(
+                            width: 27,
                           ),
-                        )
-                      ],
+                          Expanded(
+                            child: Container(
+                              width: double.infinity,
+                              padding: EdgeInsetsDirectional.only(
+                                  start: 14, top: 15, bottom: 15, end: 25),
+                              decoration: BoxDecoration(
+                                  color: HexColor.fromHex('#2b2b33'),
+                                  borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      bottomLeft: Radius.circular(20))),
+                              child: Wrap(children: [
+                                timeSelectorBox(appTheme, showSelectedTime: true),
+                                SizedBox(
+                                  width: 7,
+                                ),
+                                timeSelectorBox(appTheme, showSelectedTime: false),
+                                SizedBox(
+                                  width: 7,
+                                ),
+                                timeSelectorBox(appTheme, showSelectedTime: false),
+                                SizedBox(
+                                  width: 7,
+                                ),
+                                timeSelectorBox(appTheme, showSelectedTime: false),
+                                SizedBox(
+                                  width: 7,
+                                ),
+                              ]),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                     SizedBox(
                       height: 27,
