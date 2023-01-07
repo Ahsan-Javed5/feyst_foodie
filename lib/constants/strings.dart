@@ -400,6 +400,9 @@ abstract class Strings {
   static const verificationPopupButton = "Verify";
   static const verificationPopupResendCode = "Resend Code";
 
+  static const ratingPopupTitle = "Order Completed!";
+  static const ratingPopupBtnTitle = "Submit";
+  static const ratingPopupSubTitle = "Kindly review your experience with Spicy Bites Bistro";
   static const generalPopupTitle = "We are sorry";
   static const generalSubTitle =
       "Your Experience has been canceled by our host";
