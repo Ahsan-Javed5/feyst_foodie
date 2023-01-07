@@ -189,6 +189,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                         menuTabView(context, appTheme),
                       if (selectedTab == TabBars.Schedule)
                         scheduleTabView(context, appTheme)
+
                     ],
                   ),
                 ),
@@ -645,75 +646,122 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   ///Schedule tab view
   Widget scheduleTabView(BuildContext context, IAppThemeData appTheme) {
-    return Padding(
-      padding: EdgeInsetsDirectional.only(start: 20),
-      child: ListView.builder(
-          physics: NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: 4,
-          itemBuilder: (BuildContext context, int index) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+    return Stack(
+      children: [
+        Padding(
+          padding: EdgeInsetsDirectional.only(start: 20),
+          child: ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: 4,
+              itemBuilder: (BuildContext context, int index) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Column(children: [
-                      GeneralText(selectedDay,
-                          style: appTheme.typographies.interFontFamily.headline6
-                              .copyWith(
-                                  color: HexColor.fromHex('#f1c452'),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700)),
-                      GeneralText(selectedDate,
-                          style: appTheme.typographies.interFontFamily.headline2
-                              .copyWith(
-                                  color: HexColor.fromHex('#909094'),
-                                  fontSize: 40, ))
-                    ]),
-                    SizedBox(
-                      width: 27,
-                    ),
-                    Expanded(
-                      child: Container(
-                        width: double.infinity,
-                        padding: EdgeInsetsDirectional.only(
-                            start: 14, top: 15, bottom: 15, end: 25),
-                        decoration: BoxDecoration(
-                            color: HexColor.fromHex('#2b2b33'),
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                bottomLeft: Radius.circular(20))),
-                        child: Wrap(children: [
-                          timeSelectorBox(appTheme, showSelectedTime: true),
-                          SizedBox(
-                            width: 7,
-                          ),
-                          timeSelectorBox(appTheme, showSelectedTime: false),
-                          SizedBox(
-                            width: 7,
-                          ),
-                          timeSelectorBox(appTheme, showSelectedTime: false),
-                          SizedBox(
-                            width: 7,
-                          ),
-                          timeSelectorBox(appTheme, showSelectedTime: false),
-                          SizedBox(
-                            width: 7,
-                          ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(children: [
+                          GeneralText(selectedDay,
+                              style: appTheme.typographies.interFontFamily.headline6
+                                  .copyWith(
+                                      color: HexColor.fromHex('#f1c452'),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w700)),
+                          GeneralText(selectedDate,
+                              style: appTheme.typographies.interFontFamily.headline2
+                                  .copyWith(
+                                      color: HexColor.fromHex('#909094'),
+                                      fontSize: 40, ))
                         ]),
-                      ),
-                    )
+                        SizedBox(
+                          width: 27,
+                        ),
+                        Expanded(
+                          child: Container(
+                            width: double.infinity,
+                            padding: EdgeInsetsDirectional.only(
+                                start: 14, top: 15, bottom: 15, end: 25),
+                            decoration: BoxDecoration(
+                                color: HexColor.fromHex('#2b2b33'),
+                                borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    bottomLeft: Radius.circular(20))),
+                            child: Wrap(children: [
+                              timeSelectorBox(appTheme, showSelectedTime: true),
+                              SizedBox(
+                                width: 7,
+                              ),
+                              timeSelectorBox(appTheme, showSelectedTime: false),
+                              SizedBox(
+                                width: 7,
+                              ),
+                              timeSelectorBox(appTheme, showSelectedTime: false),
+                              SizedBox(
+                                width: 7,
+                              ),
+                              timeSelectorBox(appTheme, showSelectedTime: false),
+                              SizedBox(
+                                width: 7,
+                              ),
+                            ]),
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 27,
+                    ),
                   ],
-                ),
-                SizedBox(
-                  height: 27,
-                ),
-              ],
-            );
-          }),
+                );
+              }),
+        ),
+
+        Positioned.fill(
+          right: 20,
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: FloatingActionButton(
+              elevation: 6,
+              onPressed: () {
+                selectStartDate(context,appTheme);
+              },
+              child: Image.asset(Resources.calendarPNG,height: 23,),
+              backgroundColor: appTheme.colors.filledButtonColor,
+            ),
+          ),
+        ),
+      ],
     );
+  }
+  Future<void> selectStartDate(BuildContext context, IAppThemeData appTheme) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: appTheme.colors.primaryBackground // <-- SEE HERE
+
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                primary: Colors.red, // button text color
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2015, 8),
+      //lastDate: DateTime(2101),
+      lastDate: DateTime.now(),
+    );
+
+
   }
 
   Widget scheduleTabViewForm(BuildContext context, IAppThemeData appTheme) {

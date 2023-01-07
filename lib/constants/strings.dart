@@ -426,4 +426,9 @@ abstract class Strings {
   static const foodDetailPreferenceFamily = 'Family';
   static const foodDetailPreferenceFnf = 'F&F';
   static const labelProfilePicture = 'Profile Picture';
+
+  static const productDetailChefLocations = 'Bahria Town, Rawalpindi';
+  static const bookingInProcessStatus = 'IN PROCESS';
+  static const bookingInProcessPayAdvance = 'Pay Digital';
+  static const bookingInProcessPayCash = 'Pay Cash';
 }

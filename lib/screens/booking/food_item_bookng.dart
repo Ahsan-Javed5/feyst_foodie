@@ -9,6 +9,8 @@ import '../../ui_kit/helpers/dialog_helper.dart';
 import '../../ui_kit/widgets/general_button.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
+import '../home/food_item_booking_confirmed.dart';
+import 'booking_in_process_screen.dart';
 import 'food_item_advance_booking.dart';
 
 class FoodItemBooking extends StatefulWidget {
@@ -51,7 +53,6 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start,
             // mainAxisAlignment: MainAxisAlignment.start,
             children: [
-
               SizedBox(
                 height: 40,
               ),
@@ -63,7 +64,6 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                   titleColor: Colors.white,
                 ),
               ),
-
               Expanded(child: bookingDetails(appTheme)),
             ]),
       ),
@@ -86,9 +86,9 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                   Strings.foodItemBookingDate,
                   style: appTheme.typographies.interFontFamily.headline6
                       .copyWith(
-                      fontSize: 12,
-                      color: HexColor.fromHex('#fee4a4'),
-                      fontWeight: FontWeight.w400),
+                          fontSize: 12,
+                          color: HexColor.fromHex('#fee4a4'),
+                          fontWeight: FontWeight.w400),
                 ),
                 SizedBox(
                   height: 8,
@@ -101,42 +101,54 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                       color: HexColor.fromHex("#4b4b52")),
                   child: InkWell(
                     onTap: () {
-                      if(index==1) {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      if (index == 1) {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
                           return FoodProductAdvancePendingDetails();
                         }));
+                      } else if (index == 2) {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return FoodItemInProcessBooking();
+                        }));
+                      } else if (index == 3) {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return FoodProductBookingConfirmedDetails();
+                        }));
                       }
-                      else{
-                        _showGeneralPopup(context);
-                      }
+                      // else{
+                      //   _showGeneralPopup(context);
+                      // }
                     },
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Row(
                                 children: [
                                   Image.asset(
-                                   Resources.bookingUserPNG,
+                                    Resources.bookingUserPNG,
                                     width: 35,
                                   ),
                                   SizedBox(
                                     width: 7.2,
                                   ),
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       GeneralText(
                                         Strings.foodItemBookingUserName,
-                                        style: appTheme
-                                            .typographies.interFontFamily.headline6
+                                        style: appTheme.typographies
+                                            .interFontFamily.headline6
                                             .copyWith(
                                                 fontSize: 15,
-                                                color: HexColor.fromHex('#ffffff'),
+                                                color:
+                                                    HexColor.fromHex('#ffffff'),
                                                 fontWeight: FontWeight.bold),
                                       ),
                                       Row(
@@ -157,8 +169,8 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                                 .interFontFamily.headline6
                                                 .copyWith(
                                                     fontSize: 14,
-                                                    color:
-                                                        HexColor.fromHex('#b0c18b')),
+                                                    color: HexColor.fromHex(
+                                                        '#b0c18b')),
                                           ),
                                         ],
                                       ),
@@ -171,10 +183,8 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                 decoration: BoxDecoration(
                                   color: HexColor.fromHex("#bb3127"),
                                   borderRadius: const BorderRadius.only(
-                                      bottomLeft: Radius.circular(50),
-                                      topRight: Radius.circular(10),
-
-
+                                    bottomLeft: Radius.circular(50),
+                                    topRight: Radius.circular(10),
                                   ),
                                 ),
                                 child: GeneralText(
@@ -196,7 +206,8 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                             padding: EdgeInsets.only(right: 22),
                             child: Column(children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   GeneralText(
                                     Strings.foodItemBookingName,
@@ -219,7 +230,8 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                 ],
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   GeneralText(
                                     Strings.foodItemBookingDateTime,
@@ -252,7 +264,8 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   GeneralText(
-                                    bookingProgressStatus[index].statusName ?? "",
+                                    bookingProgressStatus[index].statusName ??
+                                        "",
                                     style: appTheme
                                         .typographies.interFontFamily.headline1
                                         .copyWith(
@@ -555,9 +568,9 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
 
     return progressBar;
   }
+
   Future<dynamic> _showGeneralPopup(BuildContext context) async {
     final appTheme = AppTheme.of(context).theme;
-
 
     return DialogHelper.show(
       context: context,
@@ -570,8 +583,8 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-
-            Icon(Icons.info_outlined,
+            Icon(
+              Icons.info_outlined,
               color: appTheme.colors.secondaryBackground,
               size: 45,
             ),
@@ -599,8 +612,6 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                     fontWeight: FontWeight.w500),
               ),
             ),
-
-
             SizedBox(
               height: 31,
             ),
@@ -629,7 +640,6 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
       // ),
     );
   }
-
 }
 
 class BookingProgress {

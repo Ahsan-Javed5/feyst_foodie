@@ -132,11 +132,10 @@ class _PopularDishes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
-              builder: (context) => const PopularFoodDetails()),
+          MaterialPageRoute(builder: (context) => const PopularFoodDetails()),
         );
       },
       child: Container(
@@ -152,82 +151,61 @@ class _PopularDishes extends StatelessWidget {
             topRight: Radius.circular(40),
           ),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Align(
-              alignment: Alignment.topRight,
-              child: Stack(
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(40),
+          child: Stack(
+            children: [
+              Positioned(
+                right: -50,
+                top: -20,
+                child: Container(
+                  height: 170,
+                  width: 170,
+                  padding: const EdgeInsetsDirectional.only(bottom: 20),
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                          'assets/images/icons/ring_placeholder_dashboard.png'),
+                      fit: BoxFit.fill,
+                    ),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Image.asset(
+                    'assets/images/icons/food_product_experience.png',
+                    // height: 130,
+                  ),
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Positioned.fill(
-                    top: 12,
-                    child: Align(
-                      child: Container(
-                        child: Image.asset(
-                          'assets/images/icons/food_product_ring.png',
-                          height: 80,
-                        ),
-                      ),
-                      alignment: Alignment.bottomLeft,
+                  GeneralText(
+                    'Sindhi\nBiryani',
+                    textAlign: TextAlign.left,
+                    style:
+                        appTheme.typographies.interFontFamily.headline2.copyWith(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
                     ),
                   ),
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      bottomRight: Radius.circular(120),
-                      bottomLeft: Radius.circular(120),
-                      topLeft: Radius.circular(120),
-                      topRight: Radius.circular(80),
+                  GeneralText(
+                    'by Zee Lounge',
+                    style:
+                        appTheme.typographies.interFontFamily.headline2.copyWith(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xff909094),
                     ),
-                    child: Image.asset(
-                      'assets/images/icons/sample_food.jpeg',
-                      height: 130,
-                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
                   ),
                 ],
-              ),
-            ),
-
-            GeneralText(
-              'Sindhi\nBiryani',
-              textAlign: TextAlign.left,
-              style: appTheme.typographies.interFontFamily.headline2.copyWith(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: Colors.white,
-              ),
-            ),
-            GeneralText(
-              'by Zee Lounge',
-              style: appTheme.typographies.interFontFamily.headline2.copyWith(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: Color(0xff909094),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-
-            // Positioned(
-            //   // right: -40,
-            //   // top: -20,
-            //   child: Container(
-            //     width: 173,
-            //     padding: const EdgeInsetsDirectional.all(20),
-            //     decoration: const BoxDecoration(
-            //       image: DecorationImage(
-            //         image: AssetImage(
-            //             'assets/images/icons/food_product_ring.png'),
-            //         fit: BoxFit.fill,
-            //       ),
-            //       shape: BoxShape.circle,
-            //     ),
-            //     child: Image.asset(
-            //       'assets/images/icons/food_product_experience.png',
-            //     ),
-            //   ),
-            // ),
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -245,7 +223,7 @@ class _FoodContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         Navigator.push(
           context,
           // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),

@@ -25,7 +25,7 @@ class DefaultTheme extends IAppThemeData {
   static const _zeroPadding = EdgeInsets.zero;
   static const _buttonPadding = EdgeInsets.symmetric(
     vertical: 12.0,
-    horizontal: 40.0,
+    horizontal: 30.0,
   );
 
   @override

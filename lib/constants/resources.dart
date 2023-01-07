@@ -50,4 +50,5 @@ abstract class Resources {
 
   static const arrowProfileSVG = 'assets/images/icons/arrow_right_profile.svg';
   static const userRoundIconPNG = 'assets/images/icons/user_round_icon.png';
+  static const calendarPNG = 'assets/images/icons/calendar.png';
 }
