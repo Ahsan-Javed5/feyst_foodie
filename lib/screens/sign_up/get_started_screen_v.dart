@@ -50,8 +50,17 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
     return GeneralText(
       Strings.getStartedTitle,
       textAlign: TextAlign.center,
-      style: appTheme.typographies.interFontFamily.headline4
-          .copyWith(color: Colors.white, fontSize: 21),
+      style: appTheme.typographies.interFontFamily.headline4.copyWith(
+        color: Colors.white,
+        fontSize: 21,
+        shadows: <Shadow>[
+          Shadow(
+            offset: Offset(10.0, 5.0),
+            blurRadius: 10.0,
+            color: Colors.black.withOpacity(0.4),
+          ),
+        ],
+      ),
     );
   }
 
@@ -59,8 +68,17 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
     return GeneralText(
       Strings.getStartedSubtitle,
       textAlign: TextAlign.center,
-      style: appTheme.typographies.interFontFamily.headline6
-          .copyWith(color: Colors.white, fontSize: 15),
+      style: appTheme.typographies.interFontFamily.headline6.copyWith(
+        color: Colors.white,
+        fontSize: 15,
+        shadows: <Shadow>[
+          Shadow(
+            offset: Offset(10.0, 5.0),
+            blurRadius: 10.0,
+            color: Colors.black.withOpacity(0.4),
+          ),
+        ],
+      ),
     );
   }
 
@@ -68,6 +86,7 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
     return GeneralButton.button(
       title: Strings.getStartedButtonTitle.toUpperCase(),
       styleType: ButtonStyleType.fill,
+
       onTap: () {
         Navigator.push(
           context,

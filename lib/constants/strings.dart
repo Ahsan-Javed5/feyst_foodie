@@ -422,4 +422,5 @@ abstract class Strings {
   static const foodDetailPreferenceCouple = 'Couple';
   static const foodDetailPreferenceFamily = 'Family';
   static const foodDetailPreferenceFnf = 'F&F';
+  static const labelProfilePicture = 'Profile Picture';
 }

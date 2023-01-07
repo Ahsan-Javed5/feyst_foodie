@@ -49,4 +49,5 @@ abstract class Resources {
   static const bookingStarPNG = 'assets/images/icons/star.png';
 
   static const arrowProfileSVG = 'assets/images/icons/arrow_right_profile.svg';
+  static const userRoundIconPNG = 'assets/images/icons/user_round_icon.png';
 }

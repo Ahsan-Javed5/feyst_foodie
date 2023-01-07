@@ -25,7 +25,7 @@ class DefaultTheme extends IAppThemeData {
   static const _zeroPadding = EdgeInsets.zero;
   static const _buttonPadding = EdgeInsets.symmetric(
     vertical: 12.0,
-    horizontal: 60.0,
+    horizontal: 40.0,
   );
 
   @override
@@ -55,7 +55,7 @@ class DefaultTheme extends IAppThemeData {
           typographies.interFontFamily.button3,
         ),
         padding: _buttonPaddingBuilder(_buttonPadding),
-        shape: _filledButtonShapeBuilder(_defaultBorderRadius),
+        shape: _filledButtonShapeBuilder(_mediumBorderRadius),
         mouseCursor: _disabledButtonsMouseCursorBuilder(),
         elevation: _buttonElevationBuilder(_filledButtonElevation),
       );
