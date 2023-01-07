@@ -27,7 +27,7 @@ class FoodDetailScreen extends StatefulWidget {
 class _FoodDetailScreenState extends State<FoodDetailScreen> {
   int foodItemQuantity = 0;
   String selectedDate = "13";
-  String selectedDay = "Mon";
+  String selectedDay = "MON";
   String selectedMonth = "OCT";
   String selectedTime = "10 AM";
   final TextController nOfPersons = TextController();
@@ -404,7 +404,7 @@ bool scheduleForm=false;
       padding: EdgeInsetsDirectional.only(end: 12),
       child: Container(
           padding: const EdgeInsetsDirectional.only(
-              start: 9.9, end: 18.3, bottom: 23),
+              start: 9.9, end: 18.3, bottom: 93),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               border: Border.all(color: HexColor.fromHex('#f1c452'))),
@@ -424,7 +424,7 @@ bool scheduleForm=false;
                           Expanded(
                             flex: 2,
                             child: Container(
-                              padding: const EdgeInsetsDirectional.all(10),
+                              padding: const EdgeInsetsDirectional.all(16),
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
                                   image: AssetImage(
@@ -435,6 +435,7 @@ bool scheduleForm=false;
                               ),
                               child: Image.asset(
                                 'assets/images/icons/food_item_sample.png',
+                                height: 50,
                               ),
                             ),
                           ),
@@ -614,7 +615,12 @@ bool scheduleForm=false;
           ? "0" + foodItemQuantity.toString()
           : foodItemQuantity.toString(),
       style: appTheme.typographies.interFontFamily.headline6
-          .copyWith(fontSize: 15, color: HexColor.fromHex('#212129')),
+          .copyWith(fontSize: 15, color:
+      foodItemQuantity.toString()=="0"?
+      HexColor.fromHex('#212129').withOpacity(0.4):
+      HexColor.fromHex('#212129')
+      
+      ),
     );
   }
 
@@ -916,7 +922,7 @@ bool scheduleForm=false;
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Column(children: [
-                            GeneralText(selectedDay,
+                            GeneralText(selectedDay.toUpperCase(),
                                 style: appTheme.typographies.interFontFamily.headline6
                                     .copyWith(
                                         color: HexColor.fromHex('#f1c452'),
@@ -935,7 +941,7 @@ bool scheduleForm=false;
                             child: Container(
                               width: double.infinity,
                               padding: EdgeInsetsDirectional.only(
-                                  start: 14, top: 15, bottom: 15, end: 25),
+                                  start: 14, top: 15, bottom: 15, end: 2),
                               decoration: BoxDecoration(
                                   color: HexColor.fromHex('#2b2b33'),
                                   borderRadius: const BorderRadius.only(

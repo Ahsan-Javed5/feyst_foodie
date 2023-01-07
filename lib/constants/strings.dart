@@ -431,4 +431,6 @@ abstract class Strings {
   static const bookingInProcessStatus = 'IN PROCESS';
   static const bookingInProcessPayAdvance = 'Pay Digital';
   static const bookingInProcessPayCash = 'Pay Cash';
+  static const bottomSheetTellUsWhyTitle = "Tell us why you want to cancel order";
+  static const bottomSheetTellUsWhyRadioHint = "Lorem ipsum dolor sit amet, consectetur";
 }
