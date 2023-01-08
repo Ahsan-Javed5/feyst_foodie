@@ -17,12 +17,9 @@ enum TabBars { Details, Menu, Schedule }
 class FoodDetailScreen extends StatefulWidget {
   const FoodDetailScreen({Key? key}) : super(key: key);
 
-
-
   @override
   State<FoodDetailScreen> createState() => _FoodDetailScreenState();
 }
-
 
 class _FoodDetailScreenState extends State<FoodDetailScreen> {
   int foodItemQuantity = 0;
@@ -33,14 +30,15 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   final TextController nOfPersons = TextController();
   final TextController notes = TextController();
   late List<DropdownMenuItem<String>> statusList = [];
-  late List<DropdownMenuItem<String>> items = [];
+  // late List<DropdownMenuItem<String>> items = [];
 
-bool scheduleForm=false;
+  final items = <String>[];
+
+  bool scheduleForm = false;
 
   List<CustomModel> wowFactorsList = [];
   List<CustomModel> preferencesList = [];
   List<CustomModel> menuListItems = [];
-
 
   @override
   void initState() {
@@ -59,9 +57,13 @@ bool scheduleForm=false;
       value: 'Single',
       alignment: Alignment.centerLeft,
     );
-    items.add(newItem);
-    items.add(newItem1);
-    items.add(newItem2);
+    // items.add(newItem);
+    // items.add(newItem1);
+    // items.add(newItem2);
+
+    items.add('Scientist');
+    items.add('Couple');
+    items.add('Single');
 
     menuListItems.addAll([
       CustomModel(name: "Sindhi Biryani"),
@@ -100,7 +102,6 @@ bool scheduleForm=false;
       CustomModel(
           icon: Strings.foodDetailPreferenceFnf,
           name: "assets/images/icons/fnf.png"),
-
     ]);
     super.initState();
   }
@@ -150,10 +151,7 @@ bool scheduleForm=false;
               children: [
                 Image.asset('assets/images/icons/food_detail_bg.png',
                     fit: BoxFit.fill),
-
-
                 Container(
-
                   padding: EdgeInsetsDirectional.only(start: 24),
                   color: HexColor.fromHex('#212129'),
                   child: Column(
@@ -189,7 +187,6 @@ bool scheduleForm=false;
                         menuTabView(context, appTheme),
                       if (selectedTab == TabBars.Schedule)
                         scheduleTabView(context, appTheme)
-
                     ],
                   ),
                 ),
@@ -199,11 +196,8 @@ bool scheduleForm=false;
               top: 70,
               left: 20,
               child: Align(
-                  alignment: Alignment.topLeft,
-                  child: GeneralNewAppBar()),
+                  alignment: Alignment.topLeft, child: GeneralNewAppBar()),
             ),
-
-
             Positioned(
               top: 140,
               width: MediaQuery.of(context).size.width,
@@ -220,8 +214,7 @@ bool scheduleForm=false;
                         height: 118,
                         padding: EdgeInsetsDirectional.only(bottom: 0),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.only(
-                              end: 14, top: 30),
+                          padding: EdgeInsetsDirectional.only(end: 14, top: 30),
                           child: Column(children: [
                             getFoodMainHeading(appTheme: appTheme),
                             SizedBox(
@@ -243,9 +236,10 @@ bool scheduleForm=false;
                                               .interFontFamily.headline6
                                               .copyWith(
                                                   fontSize: 14,
-                                             fontWeight: selectedTab==TabBars.Details?
-                                              FontWeight.bold:
-                                              FontWeight.w500,
+                                                  fontWeight: selectedTab ==
+                                                          TabBars.Details
+                                                      ? FontWeight.bold
+                                                      : FontWeight.w500,
                                                   color: HexColor.fromHex(
                                                       '#f1c452')),
                                         ),
@@ -258,8 +252,7 @@ bool scheduleForm=false;
                                           decoration: BoxDecoration(
                                               color: selectedTab ==
                                                       TabBars.Details
-                                                  ? HexColor.fromHex(
-                                                      '#f1c452')
+                                                  ? HexColor.fromHex('#f1c452')
                                                   : Colors.transparent,
                                               shape: BoxShape.circle),
                                         ),
@@ -281,10 +274,10 @@ bool scheduleForm=false;
                                               .interFontFamily.headline6
                                               .copyWith(
                                                   fontSize: 14,
-                                                  fontWeight:
-                                                  selectedTab==TabBars.Menu?
-                                                  FontWeight.bold:
-                                                  FontWeight.w500,
+                                                  fontWeight: selectedTab ==
+                                                          TabBars.Menu
+                                                      ? FontWeight.bold
+                                                      : FontWeight.w500,
                                                   color: HexColor.fromHex(
                                                       '#f1c452')),
                                         ),
@@ -295,10 +288,8 @@ bool scheduleForm=false;
                                           height: 9,
                                           width: 9,
                                           decoration: BoxDecoration(
-                                              color: selectedTab ==
-                                                      TabBars.Menu
-                                                  ? HexColor.fromHex(
-                                                      '#f1c452')
+                                              color: selectedTab == TabBars.Menu
+                                                  ? HexColor.fromHex('#f1c452')
                                                   : Colors.transparent,
                                               shape: BoxShape.circle),
                                         )
@@ -317,26 +308,26 @@ bool scheduleForm=false;
                                               .interFontFamily.headline6
                                               .copyWith(
                                                   fontSize: 14,
-                                              fontWeight: selectedTab==TabBars.Schedule?
-                                              FontWeight.bold:
-                                              FontWeight.w500,
+                                                  fontWeight: selectedTab ==
+                                                          TabBars.Schedule
+                                                      ? FontWeight.bold
+                                                      : FontWeight.w500,
                                                   color: HexColor.fromHex(
                                                       '#f1c452')),
                                         ),
                                         SizedBox(
                                           height: 10,
                                         ),
-                                          Container(
-                                            height: 9,
-                                            width: 9,
-                                            decoration: BoxDecoration(
-                                                color: selectedTab ==
-                                                        TabBars.Schedule
-                                                    ? HexColor.fromHex(
-                                                        '#f1c452')
-                                                    : Colors.transparent,
-                                                shape: BoxShape.circle),
-                                          ),
+                                        Container(
+                                          height: 9,
+                                          width: 9,
+                                          decoration: BoxDecoration(
+                                              color: selectedTab ==
+                                                      TabBars.Schedule
+                                                  ? HexColor.fromHex('#f1c452')
+                                                  : Colors.transparent,
+                                              shape: BoxShape.circle),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -345,7 +336,8 @@ bool scheduleForm=false;
                             ),
                           ]),
                         )),
-                    if(selectedTab==TabBars.Menu||selectedTab==TabBars.Details)...[
+                    if (selectedTab == TabBars.Menu ||
+                        selectedTab == TabBars.Details) ...[
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -364,35 +356,34 @@ bool scheduleForm=false;
                               style: appTheme
                                   .typographies.interFontFamily.headline4
                                   .copyWith(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: HexColor.fromHex('#ffffff')),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: HexColor.fromHex('#ffffff')),
                             ),
                           ),
                         ],
                       ),
                     ]
-
                   ],
                 ),
               ),
             ),
-            if(selectedTab!=TabBars.Details)
-            const Positioned.fill(
-              top: 105,
-              child: Align(
-                alignment: Alignment.topRight,
-                child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 32,
+            if (selectedTab != TabBars.Details)
+              const Positioned.fill(
+                top: 105,
+                child: Align(
+                  alignment: Alignment.topRight,
                   child: CircleAvatar(
-                    radius: 30,
-                    backgroundImage: AssetImage(
-                        "assets/images/icons/user_image.png"),
+                    backgroundColor: Colors.white,
+                    radius: 32,
+                    child: CircleAvatar(
+                      radius: 30,
+                      backgroundImage:
+                          AssetImage("assets/images/icons/user_image.png"),
+                    ),
                   ),
                 ),
               ),
-            ),
           ],
         ),
       ),
@@ -614,13 +605,11 @@ bool scheduleForm=false;
       (foodItemQuantity <= 9 && foodItemQuantity > 0)
           ? "0" + foodItemQuantity.toString()
           : foodItemQuantity.toString(),
-      style: appTheme.typographies.interFontFamily.headline6
-          .copyWith(fontSize: 15, color:
-      foodItemQuantity.toString()=="0"?
-      HexColor.fromHex('#212129').withOpacity(0.4):
-      HexColor.fromHex('#212129')
-      
-      ),
+      style: appTheme.typographies.interFontFamily.headline6.copyWith(
+          fontSize: 15,
+          color: foodItemQuantity.toString() == "0"
+              ? HexColor.fromHex('#212129').withOpacity(0.4)
+              : HexColor.fromHex('#212129')),
     );
   }
 
@@ -631,9 +620,7 @@ bool scheduleForm=false;
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  UserProfile()),
+          MaterialPageRoute(builder: (context) => UserProfile()),
         );
       },
     );
@@ -652,164 +639,169 @@ bool scheduleForm=false;
 
   ///Schedule tab view
   Widget scheduleTabView(BuildContext context, IAppThemeData appTheme) {
-
-    return
-
-      scheduleForm?
-      Padding(
-      padding: EdgeInsetsDirectional.only(start: 20),
-      child: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(children: [
-                GeneralText(selectedMonth,
-                    style: appTheme.typographies.interFontFamily.headline6
-                        .copyWith(
-                        color: HexColor.fromHex('#f1c452'),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700)),
-                GeneralText(selectedDate,
-                    style: appTheme.typographies.interFontFamily.headline6
-                        .copyWith(
-                        color: HexColor.fromHex('#909094'),
-                        fontSize: 40,
-                        fontWeight: FontWeight.w700))
-              ]),
-              SizedBox(
-                width: 27,
-              ),
-              Expanded(
-                child: Column(
+    return scheduleForm
+        ? Padding(
+            padding: EdgeInsetsDirectional.only(start: 20),
+            child: Column(
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                        width: double.infinity,
-                        padding: EdgeInsetsDirectional.only(
-                            start: 14, top: 15, bottom: 15, end: 25),
-                        decoration: BoxDecoration(
-                            color: HexColor.fromHex('#2b2b33'),
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                bottomLeft: Radius.circular(20))),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            GeneralText(selectedTime,
-                                style: appTheme
-                                    .typographies.interFontFamily.headline6
-                                    .copyWith(
-                                    color: HexColor.fromHex('#b0c18b'),
-                                    fontSize: 36,
-                                    fontWeight: FontWeight.w200)),
-                            GeneralText(selectedDay,
-                                style: appTheme
-                                    .typographies.interFontFamily.headline6
-                                    .copyWith(
-                                    color: HexColor.fromHex('#909094'),
-                                    fontSize: 36,
-                                    fontWeight: FontWeight.w200)),
-                          ],
-                        )),
+                    Column(children: [
+                      GeneralText(selectedMonth,
+                          style: appTheme.typographies.interFontFamily.headline6
+                              .copyWith(
+                                  color: HexColor.fromHex('#f1c452'),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700)),
+                      GeneralText(selectedDate,
+                          style: appTheme.typographies.interFontFamily.headline6
+                              .copyWith(
+                                  color: HexColor.fromHex('#909094'),
+                                  fontSize: 40,
+                                  fontWeight: FontWeight.w700))
+                    ]),
                     SizedBox(
-                      height: 14,
+                      width: 27,
                     ),
-                    Container(
-                        width: double.infinity,
-                        padding: EdgeInsetsDirectional.only(
-                            start: 14, top: 15, bottom: 15, end: 25),
-                        decoration: BoxDecoration(
-                            color: HexColor.fromHex('#2b2b33'),
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                bottomLeft: Radius.circular(20))),
-                        child: Wrap(
-                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                GeneralText(Strings.noOfPersonsLabel,
-                                    style: appTheme
-                                        .typographies.interFontFamily.headline6
-                                        .copyWith(
-                                        color: HexColor.fromHex('#fee4a4'),
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w700)),
-                                SizedBox(
-                                  height: 9,
-                                ),
-                                Wrap(
-                                  children: [
-                                    Container(
-                                      width: 61,
-                                      decoration: BoxDecoration(
-                                          color: HexColor.fromHex('#2b2b33'),
-                                          border: Border.all(
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Container(
+                              width: double.infinity,
+                              padding: EdgeInsetsDirectional.only(
+                                  start: 14, top: 15, bottom: 15, end: 25),
+                              decoration: BoxDecoration(
+                                  color: HexColor.fromHex('#2b2b33'),
+                                  borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      bottomLeft: Radius.circular(20))),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  GeneralText(selectedTime,
+                                      style: appTheme.typographies
+                                          .interFontFamily.headline6
+                                          .copyWith(
                                               color:
-                                              HexColor.fromHex('#f1c452')),
-                                          borderRadius:
-                                          BorderRadius.circular(10)),
-                                      // padding: EdgeInsetsDirectional.only(
-                                      //     top: 8, bottom: 8, start: 16, end: 16),
-                                      margin:
-                                      EdgeInsetsDirectional.only(bottom: 8),
-                                      child: noOfPersonsField(
-                                        appTheme: appTheme,
-                                        valueStyle: appTheme
-                                            .typographies.interFontFamily.body1
-                                            .copyWith(
-                                          color: Colors.white,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                        hintStyle: appTheme
-                                            .typographies.interFontFamily.body1
-                                            .copyWith(
-                                          color: Colors.white,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                        ),
+                                                  HexColor.fromHex('#b0c18b'),
+                                              fontSize: 36,
+                                              fontWeight: FontWeight.w200)),
+                                  GeneralText(selectedDay,
+                                      style: appTheme.typographies
+                                          .interFontFamily.headline6
+                                          .copyWith(
+                                              color:
+                                                  HexColor.fromHex('#909094'),
+                                              fontSize: 36,
+                                              fontWeight: FontWeight.w200)),
+                                ],
+                              )),
+                          SizedBox(
+                            height: 14,
+                          ),
+                          Container(
+                              width: double.infinity,
+                              padding: EdgeInsetsDirectional.only(
+                                  start: 14, top: 15, bottom: 15, end: 25),
+                              decoration: BoxDecoration(
+                                  color: HexColor.fromHex('#2b2b33'),
+                                  borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      bottomLeft: Radius.circular(20))),
+                              child: Wrap(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      GeneralText(Strings.noOfPersonsLabel,
+                                          style: appTheme.typographies
+                                              .interFontFamily.headline6
+                                              .copyWith(
+                                                  color: HexColor.fromHex(
+                                                      '#fee4a4'),
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w700)),
+                                      SizedBox(
+                                        height: 9,
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: 12,
-                                    ),
-                                    Container(
-                                      width:
-                                      MediaQuery.of(context).size.width /
-                                          2.8,
-                                      decoration: BoxDecoration(
-                                          color: HexColor.fromHex('#2b2b33'),
-                                          border: Border.all(
-                                              color: HexColor.fromHex(
-                                                  '#f1c452')),
-                                          borderRadius:
-                                          BorderRadius.circular(10)),
-                                      margin: EdgeInsetsDirectional.only(
-                                          bottom: 8),
-                                      padding: EdgeInsetsDirectional.only(
-                                          top: 8,
-                                          bottom: 8,
-                                          start: 8,
-                                          end: 8),
-                                      child: /*ExtoDropdown(
+                                      Wrap(
+                                        children: [
+                                          Container(
+                                            width: 61,
+                                            decoration: BoxDecoration(
+                                                color:
+                                                    HexColor.fromHex('#2b2b33'),
+                                                border: Border.all(
+                                                    color: HexColor.fromHex(
+                                                        '#f1c452')),
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            // padding: EdgeInsetsDirectional.only(
+                                            //     top: 8, bottom: 8, start: 16, end: 16),
+                                            margin: EdgeInsetsDirectional.only(
+                                                bottom: 8),
+                                            child: noOfPersonsField(
+                                              appTheme: appTheme,
+                                              valueStyle: appTheme.typographies
+                                                  .interFontFamily.body1
+                                                  .copyWith(
+                                                color: Colors.white,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                              hintStyle: appTheme.typographies
+                                                  .interFontFamily.body1
+                                                  .copyWith(
+                                                color: Colors.white,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 12,
+                                          ),
+                                          Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                2.8,
+                                            decoration: BoxDecoration(
+                                                color:
+                                                    HexColor.fromHex('#2b2b33'),
+                                                border: Border.all(
+                                                    color: HexColor.fromHex(
+                                                        '#f1c452')),
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            margin: EdgeInsetsDirectional.only(
+                                                bottom: 8),
+                                            padding: EdgeInsetsDirectional.only(
+                                                top: 8,
+                                                bottom: 8,
+                                                start: 8,
+                                                end: 8),
+                                            child: /*ExtoDropdown(
                                         name: _wfActions.first ?? "",
                                         items: _wfActions,
                                         // isMandatory: true,
                                         onChange: ({required key, value}) {},
                                       ),*/
-                                      GeneralDropdown(
-                                        borderColor: Colors.transparent,
-                                        name: 'Select',
-                                        // margin: 22.0,
-                                        items: items,
-                                        onChange: ({
-                                          required String key,
-                                          required dynamic value,
-                                        }) {},
-                                      ),
-                                      /*GeneralDropdown(
+                                                GeneralDropdown(
+                                              borderColor: Colors.transparent,
+                                              name: 'Select',
+                                              // margin: 22.0,
+                                              items: items,
+                                              onChange: ({
+                                                required String key,
+                                                required dynamic value,
+                                              }) {},
+                                            ),
+                                            /*GeneralDropdown(
                                           borderColor: Colors.transparent,
                                           name: 'Select',
                                           // margin: 22.0,
@@ -819,183 +811,199 @@ bool scheduleForm=false;
                                             required dynamic value,
                                           }) {
                                           },
-                                        )*/),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        )),
-                    SizedBox(
-                      height: 14,
-                    ),
-                    Container(
-                        width: double.infinity,
-                        padding: EdgeInsetsDirectional.only(
-                            start: 14, top: 15, bottom: 15, end: 25),
-                        decoration: BoxDecoration(
-                            color: HexColor.fromHex('#2b2b33'),
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                bottomLeft: Radius.circular(20))),
-                        child: Wrap(
-                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                GeneralText(Strings.notesLabel,
-                                    style: appTheme
-                                        .typographies.interFontFamily.headline6
-                                        .copyWith(
-                                        color: HexColor.fromHex('#fee4a4'),
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w700)),
-                                SizedBox(
-                                  height: 9,
-                                ),
-                                Container(
-                                  // width: 61,
-                                  decoration: BoxDecoration(
-                                      color: HexColor.fromHex('#2b2b33'),
-                                      border: Border.all(
-                                          color: HexColor.fromHex('#f1c452')),
-                                      borderRadius: BorderRadius.circular(10)),
-                                  // padding: EdgeInsetsDirectional.only(
-                                  //     top: 8, bottom: 8, start: 16, end: 16),
-                                  margin: EdgeInsetsDirectional.only(bottom: 8),
-                                  child: notesField(
-                                    appTheme: appTheme,
-                                    valueStyle: appTheme
-                                        .typographies.interFontFamily.body1
-                                        .copyWith(
-                                      color: Colors.white,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                    hintStyle: appTheme
-                                        .typographies.interFontFamily.body1
-                                        .copyWith(
-                                      color: Colors.white,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                    ),
+                                        )*/
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        )),
-                  ],
-                ),
-              )
-            ],
-          ),
-          SizedBox(
-            height: 27,
-          ),
-        ],
-      ),
-    ):
-      Stack(
-      children: [
-        Padding(
-          padding: EdgeInsetsDirectional.only(start: 20),
-          child: ListView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: 4,
-              itemBuilder: (BuildContext context, int index) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    InkWell(
-                      onTap:(){
-                        setState(() {
-
-                          scheduleForm=!scheduleForm;
-                        });
-
-                },
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Column(children: [
-                            GeneralText(selectedDay.toUpperCase(),
-                                style: appTheme.typographies.interFontFamily.headline6
-                                    .copyWith(
-                                        color: HexColor.fromHex('#f1c452'),
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w700)),
-                            GeneralText(selectedDate,
-                                style: appTheme.typographies.interFontFamily.headline2
-                                    .copyWith(
-                                        color: HexColor.fromHex('#909094'),
-                                        fontSize: 40, ))
-                          ]),
+                                ],
+                              )),
                           SizedBox(
-                            width: 27,
+                            height: 14,
                           ),
-                          Expanded(
-                            child: Container(
+                          Container(
                               width: double.infinity,
                               padding: EdgeInsetsDirectional.only(
-                                  start: 14, top: 15, bottom: 15, end: 2),
+                                  start: 14, top: 15, bottom: 15, end: 25),
                               decoration: BoxDecoration(
                                   color: HexColor.fromHex('#2b2b33'),
                                   borderRadius: const BorderRadius.only(
                                       topLeft: Radius.circular(20),
                                       bottomLeft: Radius.circular(20))),
-                              child: Wrap(children: [
-                                timeSelectorBox(appTheme, showSelectedTime: true),
-                                SizedBox(
-                                  width: 7,
-                                ),
-                                timeSelectorBox(appTheme, showSelectedTime: false),
-                                SizedBox(
-                                  width: 7,
-                                ),
-                                timeSelectorBox(appTheme, showSelectedTime: false),
-                                SizedBox(
-                                  width: 7,
-                                ),
-                                timeSelectorBox(appTheme, showSelectedTime: false),
-                                SizedBox(
-                                  width: 7,
-                                ),
-                              ]),
-                            ),
-                          )
+                              child: Wrap(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      GeneralText(Strings.notesLabel,
+                                          style: appTheme.typographies
+                                              .interFontFamily.headline6
+                                              .copyWith(
+                                                  color: HexColor.fromHex(
+                                                      '#fee4a4'),
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w700)),
+                                      SizedBox(
+                                        height: 9,
+                                      ),
+                                      Container(
+                                        // width: 61,
+                                        decoration: BoxDecoration(
+                                            color: HexColor.fromHex('#2b2b33'),
+                                            border: Border.all(
+                                                color: HexColor.fromHex(
+                                                    '#f1c452')),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        // padding: EdgeInsetsDirectional.only(
+                                        //     top: 8, bottom: 8, start: 16, end: 16),
+                                        margin: EdgeInsetsDirectional.only(
+                                            bottom: 8),
+                                        child: notesField(
+                                          appTheme: appTheme,
+                                          valueStyle: appTheme.typographies
+                                              .interFontFamily.body1
+                                              .copyWith(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                          hintStyle: appTheme.typographies
+                                              .interFontFamily.body1
+                                              .copyWith(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )),
                         ],
                       ),
-                    ),
-                    SizedBox(
-                      height: 27,
-                    ),
+                    )
                   ],
-                );
-              }),
-        ),
-
-        Positioned.fill(
-          right: 20,
-          child: Align(
-            alignment: Alignment.centerRight,
-            child: FloatingActionButton(
-              elevation: 6,
-              onPressed: () {
-                selectStartDate(context,appTheme);
-              },
-              child: Image.asset(Resources.calendarPNG,height: 23,),
-              backgroundColor: appTheme.colors.filledButtonColor,
+                ),
+                SizedBox(
+                  height: 27,
+                ),
+              ],
             ),
-          ),
-        ),
-      ],
-    );
+          )
+        : Stack(
+            children: [
+              Padding(
+                padding: EdgeInsetsDirectional.only(start: 20),
+                child: ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: 4,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                scheduleForm = !scheduleForm;
+                              });
+                            },
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Column(children: [
+                                  GeneralText(selectedDay.toUpperCase(),
+                                      style: appTheme.typographies
+                                          .interFontFamily.headline6
+                                          .copyWith(
+                                              color:
+                                                  HexColor.fromHex('#f1c452'),
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w700)),
+                                  GeneralText(selectedDate,
+                                      style: appTheme.typographies
+                                          .interFontFamily.headline2
+                                          .copyWith(
+                                        color: HexColor.fromHex('#909094'),
+                                        fontSize: 40,
+                                      ))
+                                ]),
+                                SizedBox(
+                                  width: 27,
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    width: double.infinity,
+                                    padding: EdgeInsetsDirectional.only(
+                                        start: 14, top: 15, bottom: 15, end: 2),
+                                    decoration: BoxDecoration(
+                                        color: HexColor.fromHex('#2b2b33'),
+                                        borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(20),
+                                            bottomLeft: Radius.circular(20))),
+                                    child: Wrap(children: [
+                                      timeSelectorBox(appTheme,
+                                          showSelectedTime: true),
+                                      SizedBox(
+                                        width: 7,
+                                      ),
+                                      timeSelectorBox(appTheme,
+                                          showSelectedTime: false),
+                                      SizedBox(
+                                        width: 7,
+                                      ),
+                                      timeSelectorBox(appTheme,
+                                          showSelectedTime: false),
+                                      SizedBox(
+                                        width: 7,
+                                      ),
+                                      timeSelectorBox(appTheme,
+                                          showSelectedTime: false),
+                                      SizedBox(
+                                        width: 7,
+                                      ),
+                                    ]),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 27,
+                          ),
+                        ],
+                      );
+                    }),
+              ),
+              Positioned.fill(
+                right: 20,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: FloatingActionButton(
+                    elevation: 6,
+                    onPressed: () {
+                      selectStartDate(context, appTheme);
+                    },
+                    child: Image.asset(
+                      Resources.calendarPNG,
+                      height: 23,
+                    ),
+                    backgroundColor: appTheme.colors.filledButtonColor,
+                  ),
+                ),
+              ),
+            ],
+          );
   }
-  Future<void> selectStartDate(BuildContext context, IAppThemeData appTheme) async {
+
+  Future<void> selectStartDate(
+      BuildContext context, IAppThemeData appTheme) async {
     final DateTime? picked = await showDatePicker(
       context: context,
 
@@ -1003,9 +1011,9 @@ bool scheduleForm=false;
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: ColorScheme.light(
-              primary: appTheme.colors.primaryBackground // <-- SEE HERE
+                primary: appTheme.colors.primaryBackground // <-- SEE HERE
 
-            ),
+                ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
                 primary: Colors.red, // button text color
@@ -1020,8 +1028,6 @@ bool scheduleForm=false;
       //lastDate: DateTime(2101),
       lastDate: DateTime.now(),
     );
-
-
   }
 
   Widget scheduleTabViewForm(BuildContext context, IAppThemeData appTheme) {
@@ -1145,40 +1151,36 @@ bool scheduleForm=false;
                                       width: 12,
                                     ),
                                     Container(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                2.8,
-                                        decoration: BoxDecoration(
-                                            color: HexColor.fromHex('#2b2b33'),
-                                            border: Border.all(
-                                                color: HexColor.fromHex(
-                                                    '#f1c452')),
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        margin: EdgeInsetsDirectional.only(
-                                            bottom: 8),
-                                        padding: EdgeInsetsDirectional.only(
-                                            top: 8,
-                                            bottom: 8,
-                                            start: 8,
-                                            end: 8),
-                                        child: /*ExtoDropdown(
+                                      width: MediaQuery.of(context).size.width /
+                                          2.8,
+                                      decoration: BoxDecoration(
+                                          color: HexColor.fromHex('#2b2b33'),
+                                          border: Border.all(
+                                              color:
+                                                  HexColor.fromHex('#f1c452')),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      margin:
+                                          EdgeInsetsDirectional.only(bottom: 8),
+                                      padding: EdgeInsetsDirectional.only(
+                                          top: 8, bottom: 8, start: 8, end: 8),
+                                      child: /*ExtoDropdown(
                                         name: _wfActions.first ?? "",
                                         items: _wfActions,
                                         // isMandatory: true,
                                         onChange: ({required key, value}) {},
                                       ),*/
-                                        GeneralDropdown(
-                                          borderColor: Colors.transparent,
-                                          name: 'Select',
-                                          // margin: 22.0,
-                                          items: items,
-                                         onChange: ({
-                                            required String key,
-                                            required dynamic value,
-                                          }) {},
-                                        ),
-                                            /*GeneralDropdown(
+                                          GeneralDropdown(
+                                        borderColor: Colors.transparent,
+                                        name: 'Select',
+                                        // margin: 22.0,
+                                        items: items,
+                                        onChange: ({
+                                          required String key,
+                                          required dynamic value,
+                                        }) {},
+                                      ),
+                                      /*GeneralDropdown(
                                           borderColor: Colors.transparent,
                                           name: 'Select',
                                           // margin: 22.0,
@@ -1188,7 +1190,8 @@ bool scheduleForm=false;
                                             required dynamic value,
                                           }) {
                                           },
-                                        )*/),
+                                        )*/
+                                    ),
                                   ],
                                 ),
                               ],
@@ -1268,148 +1271,138 @@ bool scheduleForm=false;
     );
   }
 
-
-   Widget detailsTabViewForm(BuildContext context, IAppThemeData appTheme) {
-    return
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                color: HexColor.fromHex('#f1c452'),
-                width: 16,
-                height: 1,
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              GeneralText(
-                Strings.foodDetailAboutTitle,
-                style: appTheme
-                    .typographies.interFontFamily.headline6
-                    .copyWith(
-                  fontSize: 20,
-                  color: HexColor.fromHex('#f1c452'),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 23),
-            child: GeneralText(
-              Strings.productDetailAboutSubTitle,
-              style: appTheme.typographies.interFontFamily.headline6
-                  .copyWith(
-                  fontSize: 14,
-                  color: HexColor.fromHex('#ffffff'),
-                  fontWeight: FontWeight.w400),
+  Widget detailsTabViewForm(BuildContext context, IAppThemeData appTheme) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Container(
+              color: HexColor.fromHex('#f1c452'),
+              width: 16,
+              height: 1,
             ),
-          ),
-          const SizedBox(
-            height: 27,
-          ),
-          Row(
-            children: [
-              Container(
+            const SizedBox(
+              width: 5,
+            ),
+            GeneralText(
+              Strings.foodDetailAboutTitle,
+              style: appTheme.typographies.interFontFamily.headline6.copyWith(
+                fontSize: 20,
                 color: HexColor.fromHex('#f1c452'),
-                width: 16,
-                height: 1,
               ),
-              const SizedBox(
-                width: 5,
-              ),
-              GeneralText(
-                Strings.productDetailWowFactorTitle,
-                style: appTheme
-                    .typographies.interFontFamily.headline6
-                    .copyWith(
-                  fontSize: 20,
-                  color: HexColor.fromHex('#f1c452'),
-                ),
-              ),
-            ],
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 23),
+          child: GeneralText(
+            Strings.productDetailAboutSubTitle,
+            style: appTheme.typographies.interFontFamily.headline6.copyWith(
+                fontSize: 14,
+                color: HexColor.fromHex('#ffffff'),
+                fontWeight: FontWeight.w400),
           ),
-          const SizedBox(
-            height: 28,
-          ),
-          wowFactors(appTheme,wowFactorsList),
-          const SizedBox(
-            height: 12,
-          ),
-          Row(
-            children: [
-              Container(
+        ),
+        const SizedBox(
+          height: 27,
+        ),
+        Row(
+          children: [
+            Container(
+              color: HexColor.fromHex('#f1c452'),
+              width: 16,
+              height: 1,
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            GeneralText(
+              Strings.productDetailWowFactorTitle,
+              style: appTheme.typographies.interFontFamily.headline6.copyWith(
+                fontSize: 20,
                 color: HexColor.fromHex('#f1c452'),
-                width: 16,
-                height: 1,
               ),
-              const SizedBox(
-                width: 5,
-              ),
-              GeneralText(
-                Strings.foodDetailPreferences,
-                style: appTheme
-                    .typographies.interFontFamily.headline6
-                    .copyWith(
-                  fontSize: 20,
-                  color: HexColor.fromHex('#f1c452'),
-                ),
-              ),
-              Spacer(),
-              Image.asset( Resources.userIconPNG,
-              height: 12,),
-              GeneralText(
-               '22',
-                style: appTheme
-                    .typographies.interFontFamily.headline6
-                    .copyWith(
-                  fontSize: 16,
-                  color: HexColor.fromHex('#f1c452'),
-                ),
-              ),
-              SizedBox(width: 12,),
-            ],
-          ),
-          const SizedBox(
-            height: 12,
-          ),
-          wowFactors(appTheme,preferencesList),
-
-          const SizedBox(
-            height: 12,
-          ),
-          Row(
-            children: [
-              Container(
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 28,
+        ),
+        wowFactors(appTheme, wowFactorsList),
+        const SizedBox(
+          height: 12,
+        ),
+        Row(
+          children: [
+            Container(
+              color: HexColor.fromHex('#f1c452'),
+              width: 16,
+              height: 1,
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            GeneralText(
+              Strings.foodDetailPreferences,
+              style: appTheme.typographies.interFontFamily.headline6.copyWith(
+                fontSize: 20,
                 color: HexColor.fromHex('#f1c452'),
-                width: 16,
-                height: 1,
               ),
-              const SizedBox(
-                width: 5,
+            ),
+            Spacer(),
+            Image.asset(
+              Resources.userIconPNG,
+              height: 12,
+            ),
+            GeneralText(
+              '22',
+              style: appTheme.typographies.interFontFamily.headline6.copyWith(
+                fontSize: 16,
+                color: HexColor.fromHex('#f1c452'),
               ),
-              GeneralText(
-                Strings.foodDetailLocation,
-                style: appTheme
-                    .typographies.interFontFamily.headline6
-                    .copyWith(
-                  fontSize: 20,
-                  color: HexColor.fromHex('#f1c452'),
-                ),
+            ),
+            SizedBox(
+              width: 12,
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 12,
+        ),
+        wowFactors(appTheme, preferencesList),
+        const SizedBox(
+          height: 12,
+        ),
+        Row(
+          children: [
+            Container(
+              color: HexColor.fromHex('#f1c452'),
+              width: 16,
+              height: 1,
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            GeneralText(
+              Strings.foodDetailLocation,
+              style: appTheme.typographies.interFontFamily.headline6.copyWith(
+                fontSize: 20,
+                color: HexColor.fromHex('#f1c452'),
               ),
-            ],
-          ),
-         ],
-      );
+            ),
+          ],
+        ),
+      ],
+    );
   }
 
-  Widget wowFactors(IAppThemeData appTheme,List<CustomModel> items) {
-    return  Wrap(
+  Widget wowFactors(IAppThemeData appTheme, List<CustomModel> items) {
+    return Wrap(
       children: [
         for (int i = 0; i < items.length; i++)
           Padding(
@@ -1434,15 +1427,14 @@ bool scheduleForm=false;
                       color: HexColor.fromHex("#f1c452"),
                       shape: BoxShape.circle,
                     ),
-                    child: Image.asset(items[i].name != null
-                        ? items[i].name ?? ""
-                        : ''),
+                    child: Image.asset(
+                        items[i].name != null ? items[i].name ?? "" : ''),
                   ),
                 ),
                 GeneralText(
                   items[i].icon ?? "",
-                  style: appTheme.typographies.interFontFamily.headline6
-                      .copyWith(
+                  style:
+                      appTheme.typographies.interFontFamily.headline6.copyWith(
                     fontSize: 14,
                     color: HexColor.fromHex('#ffffff'),
                   ),

@@ -8,9 +8,10 @@ import 'package:flutter_svg/svg.dart';
 
 class GeneralDropdown<T> extends StatefulWidget {
   const GeneralDropdown({
-    required List<DropdownMenuItem<String>> items,
+    required List<String> items,
     required String name,
     required FieldOnChange onChange,
+    TextStyle? style,
     Color? borderColor,
     List<String>? selectedItems,
     String? selectedItem,
@@ -35,11 +36,12 @@ class GeneralDropdown<T> extends StatefulWidget {
         _selectedItem = selectedItem,
         _validator = validator,
         _borderWidth = borderWidth,
+        _style = style,
         super(key: key);
 
   final String _name;
   // final List<dynamic> _items;
-  final List<DropdownMenuItem<String>> _items;
+  final List<String> _items;
   final bool _isSearchable;
   final bool _isMultiSelect;
   final bool _isMandatory;
@@ -51,6 +53,7 @@ class GeneralDropdown<T> extends StatefulWidget {
   final String? _selectedItem;
   final String? Function(List<String>?)? _validator;
   final double _borderWidth;
+  final TextStyle? _style;
 
   @override
   _GeneralDropdownState createState() => _GeneralDropdownState();
@@ -58,41 +61,74 @@ class GeneralDropdown<T> extends StatefulWidget {
 
 class _GeneralDropdownState extends State<GeneralDropdown> {
   late String selectedValue;
+  late String currentChoice;
 
   @override
   void initState() {
     selectedValue = widget._selectedItem ?? '';
+    currentChoice = widget._items[0];
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: widget._borderColor ?? const Color.fromRGBO(0, 0, 0, 0.57),
-            width: 2,
-          ),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: DropdownButton(
-            items: widget._items,
-            isExpanded: true,
-            value: 'Scientist',
-            focusColor: Colors.white,
-            iconSize: 36,
-            style: const TextStyle(
-              color: Colors.white, //Font color
-              fontSize: 20, //font size on dropdown button
-            ),
-            underline: Container(),
-            iconEnabledColor: widget._borderColor,
-            dropdownColor: const Color.fromRGBO(0, 0, 0, 0.57),
-            onChanged: (value) {},
-          ),
-        ));
+    return Padding(
+        padding: EdgeInsets.all(widget._margin),
+        child: widget._isMultiSelect
+            ? DropdownSearch<String>.multiSelection(
+                autoValidateMode: AutovalidateMode.always,
+                items: widget._items,
+                popupProps: PopupPropsMultiSelection.menu(
+                  showSearchBox: widget._isSearchable,
+                ),
+                selectedItems: widget._selectedItems ?? <String>[],
+                validator: widget._isMandatory
+                    ? widget._validator ??
+                        (List<String>? items) {
+                          if (items == null || items.isEmpty) {
+                            return Strings.requiredField;
+                          } else {
+                            return null;
+                          }
+                        }
+                    : null,
+                onChanged: (values) {
+                  widget._onChange.call(
+                    key: widget._name,
+                    value: values.toString(),
+                  );
+                },
+              )
+            : SizedBox(
+                height: 53,
+                child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: widget._borderColor ??
+                            const Color.fromRGBO(0, 0, 0, 0.57),
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: DropdownButton<String>(
+                          isExpanded: true,
+                          dropdownColor: Colors.grey,
+                          style: widget._style,
+                          value: currentChoice,
+                          iconEnabledColor: widget._borderColor,
+                          underline: Container(),
+                          onChanged: (value) =>
+                              setState(() => currentChoice = value!),
+                          items: widget._items
+                              .map((data) => DropdownMenuItem(
+                                  value: data,
+                                  child: Text(
+                                    data,
+                                  )))
+                              .toList(),
+                        )))));
   }
 
   String? validatorFunctionMultiple(List<String?>? str) {

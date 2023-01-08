@@ -312,10 +312,8 @@ class _Colors implements IColors {
   @override
   Color get platformTextColor => _IColors.blue00;
 
-
   @override
   Color get filledButtonColor => _IColors.buttonColor;
-
 
   @override
   Color stringColor(String strCode) {
@@ -330,6 +328,7 @@ class _Colors implements IColors {
 
   @override
   Color get textFieldFilledColor => _IColors.textFieldColor;
+
   @override
   Color get textFieldBorderColor => _IColors.textFieldBorderColor;
 }

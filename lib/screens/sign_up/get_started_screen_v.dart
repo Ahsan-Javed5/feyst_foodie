@@ -85,7 +85,7 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
         // fontWeight:
         shadows: <Shadow>[
           Shadow(
-            offset: Offset(10.0, 5.0),
+            offset: const Offset(10.0, 5.0),
             blurRadius: 10.0,
             color: Colors.black.withOpacity(0.4),
           ),

@@ -20,6 +20,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextController _mobileNumberController = TextController();
   final TextController _ageController = TextController();
   String _dropDownValue = 'Scientist';
+  final dropdownItems = <String>[];
 
   @override
   void initState() {
@@ -35,6 +36,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
     items.add(newItem);
     items.add(newItem2);
+    dropdownItems.add('Student');
+    dropdownItems.add('Mathematician');
+    dropdownItems.add('Professor');
     super.initState();
   }
 
@@ -260,8 +264,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
         GeneralDropdown(
           name: 'Select',
-          items: items,
+          items: dropdownItems,
           borderColor: appTheme.colors.textFieldBorderColor,
+          style: appTheme.typographies.interFontFamily.headline6.copyWith(
+              color: Colors.white, fontSize: 15, fontWeight: FontWeight.w400),
           onChange: ({
             required String key,
             required dynamic value,
