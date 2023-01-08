@@ -54,7 +54,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(
-                  height: 11,
+                  height: 41,
                 ),
                 _getStartedTitle(appTheme: appTheme),
                 Center(
@@ -69,7 +69,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 const SizedBox(
-                  height: 54,
+                  height: 27,
                 ),
                 displayFullName(appTheme),
                 const SizedBox(
@@ -130,7 +130,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
             inputBorder: appTheme.focusedBorder,
             valueStyle: const TextStyle(color: Colors.white),
             hint: 'Enter name',
-            hintStyle:   TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
+            hintStyle:
+                TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
             // valueStyle: valueStyle,
             onChanged: (newValue) {}),
       ],
@@ -145,9 +146,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         GeneralText(
           Strings.signMobileNumberLabel,
           textAlign: TextAlign.center,
-          style: appTheme.typographies.interFontFamily.headline6
-              .
-          copyWith(
+          style: appTheme.typographies.interFontFamily.headline6.copyWith(
               color: const Color(0xfffbeccb),
               fontSize: 18,
               fontWeight: FontWeight.bold),
@@ -162,7 +161,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
             inputBorder: appTheme.focusedBorder,
             valueStyle: const TextStyle(color: Colors.white),
             hint: 'Enter Mobile Number',
-            hintStyle:   TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
+            hintStyle:
+                TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
             // valueStyle: valueStyle,
             onChanged: (newValue) {}),
       ],
@@ -198,7 +198,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   inputBorder: appTheme.focusedBorder,
                   valueStyle: const TextStyle(color: Colors.white),
                   hint: '18',
-                  hintStyle:   TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
+                  hintStyle: TextStyle(
+                      color: Colors.white.withOpacity(0.4), fontSize: 14),
                   // valueStyle: valueStyle,
                   onChanged: (newValue) {}),
             ],

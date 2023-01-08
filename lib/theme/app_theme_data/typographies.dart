@@ -51,6 +51,7 @@ abstract class ITypography {
   TextStyle get headline4;
   TextStyle get headline5;
   TextStyle get headline6;
+  TextStyle get headline7;
   TextStyle get label1;
   TextStyle get label2;
   TextStyle get label3;

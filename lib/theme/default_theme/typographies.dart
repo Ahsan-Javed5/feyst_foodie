@@ -38,11 +38,17 @@ class _InterTypography extends ITypography {
 
   static const _defaultTextColor = _IColors.black;
 
-  TextStyle get _baseTextStyle => GoogleFonts.poppins(
-        color: _defaultTextColor,
-        fontWeight: FontWeight.w400,
-        fontSize: _size16,
-      );
+  // TextStyle get _baseTextStyle => GoogleFonts.poppins(
+  //       color: _defaultTextColor,
+  //       fontWeight: FontWeight.w400,
+  //       fontSize: _size16,
+  //     );
+
+  TextStyle get _baseTextStyle => const TextStyle(
+      color: _defaultTextColor,
+      fontWeight: FontWeight.w400,
+      fontSize: _size16,
+      fontFamily: 'Poppins');
 
   @override
   TextStyle get headline1 => _baseTextStyle.copyWith(
@@ -84,6 +90,13 @@ class _InterTypography extends ITypography {
         fontWeight: FontWeight.w500,
         fontSize: _size20,
         color: _IColors.black01,
+      );
+
+  @override
+  TextStyle get headline7 => _baseTextStyle.copyWith(
+        fontWeight: FontWeight.bold,
+        fontSize: _size21,
+        color: _IColors.white,
       );
 
   @override
