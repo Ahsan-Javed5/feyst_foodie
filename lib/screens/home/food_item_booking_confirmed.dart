@@ -352,8 +352,8 @@ class _FoodProductBookingConfirmedDetailsState
                         color: HexColor.fromHex("#f1c452"),
                         shape: BoxShape.circle,
                       ),
-                      child: Image.asset(wowFactorsList[i].name != null
-                          ? wowFactorsList[i].name ?? ""
+                      child: Image.asset(wowFactorsList[i].icon != null
+                          ? wowFactorsList[i].icon ?? ""
                           : ''),
                     ),
                   ),
@@ -361,7 +361,7 @@ class _FoodProductBookingConfirmedDetailsState
                     height: 2.5,
                   ),
                   GeneralText(
-                    wowFactorsList[i].icon ?? "",
+                    wowFactorsList[i].name ?? "",
                     style: appTheme.typographies.interFontFamily.headline6
                         .copyWith(
                       fontSize: 14,
