@@ -136,10 +136,10 @@ class _SignInScreenState extends State<SignInScreen> {
               Strings.verificationPopupTitle,
               maxLines: 2,
               textAlign: TextAlign.center,
-              style: appTheme.typographies.interFontFamily.headline4.copyWith(
+              style: appTheme.typographies.interFontFamily.headline6.copyWith(
                   color: appTheme.colors.secondaryBackground,
                   fontSize: 24,
-                  fontWeight: FontWeight.bold),
+                  fontWeight: FontWeight.w500),
             ),
             SizedBox(
               height: 14,
@@ -205,8 +205,8 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
             GeneralButton.button(
               title: Strings.verificationPopupButton.toUpperCase(),
-
               styleType: ButtonStyleType.fill,
+              width: 181,
               onTap: () {
                 // Navigator.push(
                 //   context,
