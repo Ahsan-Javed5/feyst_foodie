@@ -49,6 +49,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     return Scaffold(
       backgroundColor: appTheme.colors.primaryBackground,
+      bottomNavigationBar:
+      displayAlreadySignIn(appTheme),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Container(
@@ -91,10 +93,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(
                   height: 140,
                 ),
-                displayAlreadySignIn(appTheme),
-                const SizedBox(
-                  height: 30,
-                ),
+
+
               ],
             ),
           ),
@@ -278,39 +278,42 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Widget displayAlreadySignIn(IAppThemeData appTheme) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SignInScreen()),
-            );
-          },
-          child: GeneralText(
-            Strings.signAlreadyUserLabel,
-            textAlign: TextAlign.center,
-            style: appTheme.typographies.interFontFamily.headline4.copyWith(
-                color: const Color(0xfff7dc99),
-                fontSize: 15,
-                decoration: TextDecoration.underline,
-                fontWeight: FontWeight.w500),
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 20,vertical: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SignInScreen()),
+              );
+            },
+            child: GeneralText(
+              Strings.signAlreadyUserLabel,
+              textAlign: TextAlign.center,
+              style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                  color: const Color(0xfff7dc99),
+                  fontSize: 15,
+                  decoration: TextDecoration.underline,
+                  fontWeight: FontWeight.w500),
+            ),
           ),
-        ),
-        InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => SignUpQuestionireScreen()),
-            );
-          },
-          child: SvgPicture.asset(
-            Resources.getRightArrow,
-          ),
-        )
-      ],
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => SignUpQuestionireScreen()),
+              );
+            },
+            child: SvgPicture.asset(
+              Resources.getRightArrow,
+            ),
+          )
+        ],
+      ),
     );
   }
 

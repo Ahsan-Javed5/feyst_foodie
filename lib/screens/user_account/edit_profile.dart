@@ -50,6 +50,7 @@ class _EditProfileState extends State<EditProfile> {
                 titleColor: Colors.white,
               ),
             ),
+            SizedBox(height: 8,),
 
             _Header(
               appTheme: appTheme,
@@ -87,7 +88,7 @@ class _EditProfileState extends State<EditProfile> {
                   );
                 }, separatorBuilder: (BuildContext context, int index) {
                   return Divider(
-                    color: Color(0xfff1c452),
+                    color: Color(0xfff1c452).withOpacity(0.3),
                   );
 
             },),
@@ -118,7 +119,7 @@ class _EditProfileState extends State<EditProfile> {
                 );
               }, separatorBuilder: (BuildContext context, int index) {
               return Divider(
-                color: Color(0xfff1c452),
+                color: Color(0xfff1c452).withOpacity(0.3),
               );
 
             },),

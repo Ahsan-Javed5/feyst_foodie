@@ -63,7 +63,16 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
       // ),
 
       style:
-          appTheme.typographies.interFontFamily.headline7.copyWith(height: 1.5),
+          appTheme.typographies.interFontFamily.headline7.copyWith(height: 1.5,
+              shadows: <Shadow>[
+                Shadow(
+                  offset: Offset(10.0, 5.0),
+                  blurRadius: 10.0,
+                  color: Colors.black.withOpacity(0.4),
+                ),
+              ],
+
+          ),
     );
   }
 

@@ -48,22 +48,26 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: EdgeInsets.only(left: 31),
                     child: GeneralText(
                       Strings.labelExplore,
-                      style: appTheme.typographies.interFontFamily.headline2
+                      style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
-                        fontSize: 29,
+                        fontSize: 35,
+                        // fontFamily: 'Poppins-Medium',
                         fontWeight: FontWeight.w500,
                         color: Colors.white,
                       ),
                     ),
                   ),
+                  SizedBox(height: 8,),
                   Container(
                     padding: EdgeInsets.only(left: 31),
                     child: GeneralText(
                       Strings.labelFoodExperience,
-                      style: appTheme.typographies.interFontFamily.headline2
+                      style: appTheme.typographies.interFontFamily.headline4
                           .copyWith(
                         fontSize: 29,
-                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Poppins-Medium',
+
+                        fontWeight: FontWeight.w500,
                         color: Colors.white,
                       ),
                     ),
@@ -83,20 +87,21 @@ class _HomeScreenState extends State<HomeScreen> {
                         }),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 31),
+                    padding: EdgeInsets.only(left: 31,bottom: 0),
                     child: GeneralText(
                       Strings.labelPopularDishes,
                       style: appTheme.typographies.interFontFamily.headline2
                           .copyWith(
                         fontSize: 18,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w500,
                         color: Color(0xfff1c452),
                       ),
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(right: 20, left: 20),
+                    margin: EdgeInsets.only(right: 20, left: 20,top: 4),
                     child: GridView.builder(
+                      padding: EdgeInsets.zero,
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -141,7 +146,7 @@ class _PopularDishes extends StatelessWidget {
       child: Container(
         // height: 170,
         width: 170,
-        padding: EdgeInsets.only(left: 20),
+        padding: EdgeInsets.only(left: 13),
         decoration: BoxDecoration(
           color: HexColor.fromHex("#4b4b52"),
           borderRadius: const BorderRadius.only(

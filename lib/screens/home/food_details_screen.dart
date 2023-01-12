@@ -496,9 +496,12 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                 ),
                               ),
                               Container(
+
                                   decoration: BoxDecoration(
                                       color: Colors.white,
-                                      borderRadius: BorderRadius.circular(8)),
+                                      borderRadius: BorderRadius.circular(8)
+
+                                  ),
                                   padding: const EdgeInsetsDirectional.only(
                                       start: 21, end: 21, top: 5, bottom: 5),
                                   child: getFoodItemQuantityValue(
@@ -615,6 +618,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   Widget getStartedButtonTitle({required IAppThemeData appTheme}) {
     return GeneralButton.button(
+      width: 151,
       title: Strings.nextButtonTitle.toUpperCase(),
       styleType: ButtonStyleType.fill,
       onTap: () {
@@ -898,7 +902,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
         : Stack(
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.only(start: 20),
+                padding: EdgeInsetsDirectional.only(start: 20,bottom: 50),
                 child: ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
@@ -940,14 +944,16 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                 Expanded(
                                   child: Container(
                                     width: double.infinity,
-                                    padding: EdgeInsetsDirectional.only(
-                                        start: 14, top: 15, bottom: 15, end: 2),
+                                   
+                                    padding: EdgeInsets.only(left: 8,top: 10,bottom:10 ),
                                     decoration: BoxDecoration(
                                         color: HexColor.fromHex('#2b2b33'),
                                         borderRadius: const BorderRadius.only(
                                             topLeft: Radius.circular(20),
                                             bottomLeft: Radius.circular(20))),
-                                    child: Wrap(children: [
+                                    child: Wrap(
+
+                                        children: [
                                       timeSelectorBox(appTheme,
                                           showSelectedTime: true),
                                       SizedBox(
@@ -982,9 +988,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                     }),
               ),
               Positioned.fill(
-                right: 20,
+                right: 20,bottom: 40,
                 child: Align(
-                  alignment: Alignment.centerRight,
+                  alignment: Alignment.bottomRight,
                   child: FloatingActionButton(
                     elevation: 6,
                     onPressed: () {
