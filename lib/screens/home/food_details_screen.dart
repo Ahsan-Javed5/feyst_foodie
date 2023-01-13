@@ -239,13 +239,11 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                                   fontWeight: selectedTab ==
                                                           TabBars.Details
                                                       ? FontWeight.bold
-                                                      : FontWeight.w500,
+                                                      : FontWeight.w400,
                                                   color: HexColor.fromHex(
                                                       '#f1c452')),
                                         ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
+
                                         Container(
                                           height: 9,
                                           width: 9,
@@ -277,13 +275,11 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                                   fontWeight: selectedTab ==
                                                           TabBars.Menu
                                                       ? FontWeight.bold
-                                                      : FontWeight.w500,
+                                                      : FontWeight.w400,
                                                   color: HexColor.fromHex(
                                                       '#f1c452')),
                                         ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
+
                                         Container(
                                           height: 9,
                                           width: 9,
@@ -311,13 +307,11 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                                   fontWeight: selectedTab ==
                                                           TabBars.Schedule
                                                       ? FontWeight.bold
-                                                      : FontWeight.w500,
+                                                      : FontWeight.w400,
                                                   color: HexColor.fromHex(
                                                       '#f1c452')),
                                         ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
+
                                         Container(
                                           height: 9,
                                           width: 9,
@@ -368,7 +362,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                 ),
               ),
             ),
-            if (selectedTab != TabBars.Details)
+            // if (selectedTab != TabBars.Details)
               const Positioned.fill(
                 top: 105,
                 child: Align(
@@ -652,18 +646,20 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Column(children: [
-                      GeneralText(selectedMonth,
+                      GeneralText(
+                          selectedMonth,
                           style: appTheme.typographies.interFontFamily.headline6
                               .copyWith(
                                   color: HexColor.fromHex('#f1c452'),
                                   fontSize: 14,
+                                  height: 0,
                                   fontWeight: FontWeight.w700)),
                       GeneralText(selectedDate,
                           style: appTheme.typographies.interFontFamily.headline6
                               .copyWith(
                                   color: HexColor.fromHex('#909094'),
                                   fontSize: 40,
-                                  fontWeight: FontWeight.w700))
+                                   fontWeight: FontWeight.w700))
                     ]),
                     SizedBox(
                       width: 27,
@@ -691,7 +687,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                               color:
                                                   HexColor.fromHex('#b0c18b'),
                                               fontSize: 36,
-                                              fontWeight: FontWeight.w200)),
+                                              fontWeight: FontWeight.normal)),
                                   GeneralText(selectedDay,
                                       style: appTheme.typographies
                                           .interFontFamily.headline6
@@ -699,7 +695,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                               color:
                                                   HexColor.fromHex('#909094'),
                                               fontSize: 36,
-                                              fontWeight: FontWeight.w200)),
+                                              fontWeight: FontWeight.normal)),
                                 ],
                               )),
                           SizedBox(
@@ -878,7 +874,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                           hintStyle: appTheme.typographies
                                               .interFontFamily.body1
                                               .copyWith(
-                                            color: Colors.white,
+                                            color: Colors.white.withOpacity(0.4),
                                             fontSize: 14,
                                             fontWeight: FontWeight.w400,
                                           ),
@@ -894,7 +890,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                   ],
                 ),
                 SizedBox(
-                  height: 27,
+                  height: 160,
                 ),
               ],
             ),

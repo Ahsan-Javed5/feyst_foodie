@@ -295,8 +295,8 @@ abstract class Strings {
 
   static const noOfPersonsHint = '0';
   static const notesHint = 'Optional';
-  static const noOfPersonsLabel = 'Persons';
-  static const notesLabel = 'Notes';
+  static const noOfPersonsLabel = 'PERSONS';
+  static const notesLabel = 'NOTES';
 
   static const userProfileName = 'Minnie\'s Kitchen';
   static const userProfileReviews = '4.5 (5 Reviews)';
@@ -317,7 +317,7 @@ abstract class Strings {
   static const productDetailReview = '4.2';
   static const productDetailAboutTitle = 'About Experience';
   static const productDetailAboutSubTitle =
-      'Lorem ipsum dolor sit amet,\n consectetur adipiscing elit.';
+      'Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit.';
   static const productDetailWowFactorTitle = 'WOW Factors';
   static const productDetailWowFactorGarden = 'Garden';
   static const productDetailWowFactorFireworks = 'Fireworks';
@@ -387,10 +387,10 @@ abstract class Strings {
   static const foodItemBookingDateTime = '31 May @ 9 PM';
   static const foodItemBookingType = 'Couple';
   static const foodItemBookingApprovalPending = 'APPROVAL PENDING';
-  static const foodItemBookingAdvancePendingHeader = 'Advance Pending';
-  static const foodItemBookingAdvancePending = 'Advance Pending';
-  static const foodItemBookingInProgress = 'IN Process';
-  static const foodItemBookingBookingConfirmed = 'Booking Confirmed';
+  static const foodItemBookingAdvancePendingHeader = 'ADVANCE PENDING';
+  static const foodItemBookingAdvancePending =  'ADVANCE PENDING';
+  static const foodItemBookingInProgress = 'IN PROCESS';
+  static const foodItemBookingBookingConfirmed = 'BOOKING CONFIRMED';
   static const foodItemBookingAdvancePendingButton = 'Pay Advance';
   static const foodItemAdvancePendingTermsCondition = 'Terms & Conditions';
 
@@ -410,7 +410,7 @@ abstract class Strings {
   static const popularFoodDetailTitle = 'BBQ \nExperience';
   static const popularFoodDetailSubTitle = 'by Zee Lounge';
   static const popularFoodDetailReview = '4.2';
-  static const popularFoodDetailWowFactorTitle = 'WOW Factors';
+  static const popularFoodDetailWowFactorTitle = 'Wow Factors';
   static const foodItemBookingConfirmedStatus = 'Booking Confirmed';
   static const foodItemBookingConfirmedOrderNo = 'Order ID: 3345';
   static const foodItemBookingConfirmedComment =

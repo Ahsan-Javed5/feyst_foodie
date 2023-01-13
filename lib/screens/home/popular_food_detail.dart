@@ -94,6 +94,9 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
                       ),
                       child: Image.asset(
                         'assets/images/icons/food_product_experience.png',
+                        fit: BoxFit.fill,
+                        height: 150,
+
                       ),
                     ),
                   ),
@@ -104,10 +107,12 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
                         height: 32.2,
                       ),
                       GeneralText(
+
                         Strings.popularFoodDetailTitle,
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
                           fontSize: 18,
+                          height: 0,
                           color: HexColor.fromHex('#f1c452'),
                         ),
                       ),
@@ -118,7 +123,7 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
                         Strings.popularFoodDetailSubTitle,
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
-                          fontSize: 14,
+                          fontSize: 12,
                           color: HexColor.fromHex('#909094'),
                         ),
                       ),
@@ -156,7 +161,7 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
                                 color: HexColor.fromHex(
                                   '#ffffff',
                                 ),
-                                fontWeight: FontWeight.w600),
+                                fontWeight: FontWeight.w400),
                       ),
                       const SizedBox(
                         height: 11.7,
