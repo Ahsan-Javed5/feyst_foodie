@@ -13,4 +13,8 @@ extension StringHelper on String {
   String lastNDigits({int n = 6}) {
     return substring(length - n);
   }
+
+  String capitalize() {
+    return '${this[0].toUpperCase()}${substring(1).toLowerCase()}';
+  }
 }
