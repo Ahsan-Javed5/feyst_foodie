@@ -147,7 +147,7 @@ class _PopularDishes extends StatelessWidget {
       child: Container(
         // height: 170,
         width: 170,
-        padding: EdgeInsets.only(left: 13),
+        padding: const EdgeInsets.only(left: 13),
         decoration: BoxDecoration(
           color: HexColor.fromHex("#4b4b52"),
           borderRadius: const BorderRadius.only(

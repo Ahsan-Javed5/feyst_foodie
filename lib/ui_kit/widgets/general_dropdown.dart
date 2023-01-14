@@ -22,6 +22,7 @@ class GeneralDropdown<T> extends StatefulWidget {
     double margin = 0.0,
     String? Function(List<String>?)? validator,
     double borderWidth = 2.0,
+    double dropDownHeight = 53.0,
     Key? key,
   })  : _items = items,
         _name = name,
@@ -37,6 +38,7 @@ class GeneralDropdown<T> extends StatefulWidget {
         _validator = validator,
         _borderWidth = borderWidth,
         _style = style,
+        _dropDownHeight = dropDownHeight,
         super(key: key);
 
   final String _name;
@@ -54,6 +56,7 @@ class GeneralDropdown<T> extends StatefulWidget {
   final String? Function(List<String>?)? _validator;
   final double _borderWidth;
   final TextStyle? _style;
+  final double _dropDownHeight;
 
   @override
   _GeneralDropdownState createState() => _GeneralDropdownState();
@@ -100,7 +103,7 @@ class _GeneralDropdownState extends State<GeneralDropdown> {
                 },
               )
             : SizedBox(
-                height: 53,
+                height: widget._dropDownHeight,
                 child: DecoratedBox(
                     decoration: BoxDecoration(
                       border: Border.all(

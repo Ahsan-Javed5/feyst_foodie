@@ -243,7 +243,6 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                                   color: HexColor.fromHex(
                                                       '#f1c452')),
                                         ),
-
                                         Container(
                                           height: 9,
                                           width: 9,
@@ -279,7 +278,6 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                                   color: HexColor.fromHex(
                                                       '#f1c452')),
                                         ),
-
                                         Container(
                                           height: 9,
                                           width: 9,
@@ -311,7 +309,6 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                                   color: HexColor.fromHex(
                                                       '#f1c452')),
                                         ),
-
                                         Container(
                                           height: 9,
                                           width: 9,
@@ -363,21 +360,21 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               ),
             ),
             // if (selectedTab != TabBars.Details)
-              const Positioned.fill(
-                top: 105,
-                child: Align(
-                  alignment: Alignment.topRight,
+            const Positioned.fill(
+              top: 105,
+              child: Align(
+                alignment: Alignment.topRight,
+                child: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 32,
                   child: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: 32,
-                    child: CircleAvatar(
-                      radius: 30,
-                      backgroundImage:
-                          AssetImage("assets/images/icons/user_image.png"),
-                    ),
+                    radius: 30,
+                    backgroundImage:
+                        AssetImage("assets/images/icons/user_image.png"),
                   ),
                 ),
               ),
+            ),
           ],
         ),
       ),
@@ -490,12 +487,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                 ),
                               ),
                               Container(
-
                                   decoration: BoxDecoration(
                                       color: Colors.white,
-                                      borderRadius: BorderRadius.circular(8)
-
-                                  ),
+                                      borderRadius: BorderRadius.circular(8)),
                                   padding: const EdgeInsetsDirectional.only(
                                       start: 21, end: 21, top: 5, bottom: 5),
                                   child: getFoodItemQuantityValue(
@@ -592,8 +586,11 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   Widget getFoodItemQuantityLabel({required IAppThemeData appTheme}) {
     return GeneralText(
       Strings.foodProductItemQuantity + ":",
-      style: appTheme.typographies.interFontFamily.headline6
-          .copyWith(fontSize: 12, color: HexColor.fromHex('#f1c452')),
+      style: appTheme.typographies.interFontFamily.headline6.copyWith(
+        fontSize: 12,
+        fontWeight: FontWeight.w500,
+        color: HexColor.fromHex('#f1c452'),
+      ),
     );
   }
 
@@ -646,8 +643,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Column(children: [
-                      GeneralText(
-                          selectedMonth,
+                      GeneralText(selectedMonth,
                           style: appTheme.typographies.interFontFamily.headline6
                               .copyWith(
                                   color: HexColor.fromHex('#f1c452'),
@@ -659,7 +655,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                               .copyWith(
                                   color: HexColor.fromHex('#909094'),
                                   fontSize: 40,
-                                   fontWeight: FontWeight.w700))
+                                  fontWeight: FontWeight.w700))
                     ]),
                     SizedBox(
                       width: 27,
@@ -728,10 +724,11 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                       SizedBox(
                                         height: 9,
                                       ),
-                                      Wrap(
+                                      Row(
                                         children: [
                                           Container(
                                             width: 61,
+                                            height: 51,
                                             decoration: BoxDecoration(
                                                 color:
                                                     HexColor.fromHex('#2b2b33'),
@@ -770,6 +767,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                                     .size
                                                     .width /
                                                 2.8,
+                                            height: 51,
                                             decoration: BoxDecoration(
                                                 color:
                                                     HexColor.fromHex('#2b2b33'),
@@ -794,6 +792,16 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                                 GeneralDropdown(
                                               borderColor: Colors.transparent,
                                               name: 'Select',
+                                              //     dropDownHeight: 51.0,
+
+                                              // borderColor: appTheme.colors.textFieldBorderColor,
+                                              style: appTheme.typographies
+                                                  .interFontFamily.headline6
+                                                  .copyWith(
+                                                      color: Colors.white,
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.w400),
                                               // margin: 22.0,
                                               items: items,
                                               onChange: ({
@@ -874,7 +882,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                           hintStyle: appTheme.typographies
                                               .interFontFamily.body1
                                               .copyWith(
-                                            color: Colors.white.withOpacity(0.4),
+                                            color:
+                                                Colors.white.withOpacity(0.4),
                                             fontSize: 14,
                                             fontWeight: FontWeight.w400,
                                           ),
@@ -898,7 +907,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
         : Stack(
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.only(start: 20,bottom: 50),
+                padding: EdgeInsetsDirectional.only(start: 20, bottom: 50),
                 child: ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
@@ -940,16 +949,14 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                 Expanded(
                                   child: Container(
                                     width: double.infinity,
-                                   
-                                    padding: EdgeInsets.only(left: 8,top: 10,bottom:10 ),
+                                    padding: EdgeInsets.only(
+                                        left: 8, top: 10, bottom: 10),
                                     decoration: BoxDecoration(
                                         color: HexColor.fromHex('#2b2b33'),
                                         borderRadius: const BorderRadius.only(
                                             topLeft: Radius.circular(20),
                                             bottomLeft: Radius.circular(20))),
-                                    child: Wrap(
-
-                                        children: [
+                                    child: Wrap(children: [
                                       timeSelectorBox(appTheme,
                                           showSelectedTime: true),
                                       SizedBox(
@@ -984,7 +991,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                     }),
               ),
               Positioned.fill(
-                right: 20,bottom: 40,
+                right: 20,
+                bottom: 40,
                 child: Align(
                   alignment: Alignment.bottomRight,
                   child: FloatingActionButton(
