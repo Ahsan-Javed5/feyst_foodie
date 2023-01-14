@@ -388,7 +388,7 @@ abstract class Strings {
   static const foodItemBookingType = 'Couple';
   static const foodItemBookingApprovalPending = 'APPROVAL PENDING';
   static const foodItemBookingAdvancePendingHeader = 'ADVANCE PENDING';
-  static const foodItemBookingAdvancePending =  'ADVANCE PENDING';
+  static const foodItemBookingAdvancePending = 'ADVANCE PENDING';
   static const foodItemBookingInProgress = 'IN PROCESS';
   static const foodItemBookingBookingConfirmed = 'BOOKING CONFIRMED';
   static const foodItemBookingAdvancePendingButton = 'Pay Advance';
@@ -402,12 +402,13 @@ abstract class Strings {
 
   static const ratingPopupTitle = "Order Completed!";
   static const ratingPopupBtnTitle = "Submit";
-  static const ratingPopupSubTitle = "Kindly review your experience with Spicy Bites Bistro";
+  static const ratingPopupSubTitle =
+      "Kindly review your experience with Spicy Bites Bistro";
   static const generalPopupTitle = "We are sorry";
   static const generalSubTitle =
       "Your Experience has been canceled by our host";
   static const generalButtonTitle = "okay";
-  static const popularFoodDetailTitle = 'BBQ \nExperience';
+  static const popularFoodDetailTitle = 'BBQ\nExperience';
   static const popularFoodDetailSubTitle = 'by Zee Lounge';
   static const popularFoodDetailReview = '4.2';
   static const popularFoodDetailWowFactorTitle = 'Wow Factors';
@@ -421,7 +422,7 @@ abstract class Strings {
 
   static const popularFoodDetailAppBarTitle = 'Sindhi Biryani';
   static const foodDetailPreferences = 'Preferences';
-  static const foodDetailLocation= 'Location';
+  static const foodDetailLocation = 'Location';
   static const foodDetailPreferenceCouple = 'Couple';
   static const foodDetailPreferenceFamily = 'Family';
   static const foodDetailPreferenceFnf = 'F&F';
@@ -431,6 +432,8 @@ abstract class Strings {
   static const bookingInProcessStatus = 'IN PROCESS';
   static const bookingInProcessPayAdvance = 'Pay Digital';
   static const bookingInProcessPayCash = 'Pay Cash';
-  static const bottomSheetTellUsWhyTitle = "Tell us why you want to cancel order";
-  static const bottomSheetTellUsWhyRadioHint = "Lorem ipsum dolor sit amet, consectetur";
+  static const bottomSheetTellUsWhyTitle =
+      "Tell us why you want to cancel order";
+  static const bottomSheetTellUsWhyRadioHint =
+      "Lorem ipsum dolor sit amet, consectetur";
 }

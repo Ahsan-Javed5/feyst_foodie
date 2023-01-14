@@ -27,6 +27,7 @@ class _InterTypography extends ITypography {
   static const _size40 = 40.0;
   static const _size32 = 32.0;
   static const _size26 = 26.0;
+  static const _size22 = 22.0;
   static const _size20 = 20.0;
   static const _size21 = 21.0;
   static const _size18 = 18.0;
@@ -166,6 +167,22 @@ class _InterTypography extends ITypography {
         fontWeight: FontWeight.w400,
         fontSize: _size12,
         color: _IColors.grey21,
+      );
+
+  @override
+  TextStyle get label11 => _baseTextStyle.copyWith(
+        fontWeight: FontWeight.w500,
+        fontSize: _size18,
+        color: _IColors.textFieldBorderColor,
+        height: 1.2,
+      );
+
+  @override
+  TextStyle get label12 => _baseTextStyle.copyWith(
+        fontWeight: FontWeight.w500,
+        fontSize: _size40,
+        color: _IColors.greyDark,
+        height: 1.1,
       );
 
   @override

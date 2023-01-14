@@ -1,3 +1,4 @@
+import 'package:chef/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/resources.dart';
@@ -643,23 +644,33 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          GeneralText(selectedMonth,
-                              style: appTheme
-                                  .typographies.interFontFamily.headline6
-                                  .copyWith(
-                                      color: HexColor.fromHex('#f1c452'),
-                                      fontSize: 14,
-                                      //  height: 0,
-                                      fontWeight: FontWeight.w800)),
-                          GeneralText(selectedDate,
-                              style: appTheme
-                                  .typographies.interFontFamily.headline6
-                                  .copyWith(
-                                      color: HexColor.fromHex('#909094'),
-                                      fontSize: 40,
-                                      fontWeight: FontWeight.w500))
+                          // GeneralRichText(title: 'Oct\n 13'),
+                          GeneralText(
+                            selectedMonth,
+                            // style: appTheme
+                            //     .typographies.interFontFamily.headline6
+                            //     .copyWith(
+                            //         color: HexColor.fromHex('#f1c452'),
+                            //         fontSize: 14,
+                            //         //  height: 0,
+                            //         fontWeight: FontWeight.w800),
+                            style:
+                                appTheme.typographies.interFontFamily.label11,
+                          ),
+                          GeneralText(
+                            selectedDate,
+                            // style: appTheme
+                            //     .typographies.interFontFamily.headline6
+                            //     .copyWith(
+                            //         color: HexColor.fromHex('#909094'),
+                            //         fontSize: 40,
+                            //         fontWeight: FontWeight.w500),
+
+                            style:
+                                appTheme.typographies.interFontFamily.label12,
+                          )
                         ]),
                     SizedBox(
                       width: 27,

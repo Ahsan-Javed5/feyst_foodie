@@ -5,6 +5,7 @@ import '../../constants/resources.dart';
 import '../../constants/strings.dart';
 import '../../helpers/color_helper.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
+import '../../ui_kit/widgets/general_rich_text.dart';
 import '../../ui_kit/widgets/general_text.dart';
 
 class PopularFoodDetails extends StatefulWidget {
@@ -47,11 +48,11 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
             height: 50,
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 15.0,bottom: 12),
+            padding: const EdgeInsets.only(left: 15.0, bottom: 12),
             child: GeneralNewAppBar(
               title: Strings.popularFoodDetailAppBarTitle,
               titleColor: Colors.white,
-              rightIcon:  Resources.homeIconSvg,
+              rightIcon: Resources.homeIconSvg,
             ),
           ),
           Expanded(child: allPopularFoodItemList(appTheme)),
@@ -83,8 +84,7 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
                     child: Container(
                       width: 173,
                       padding: const EdgeInsetsDirectional.all(20),
-                      decoration:   BoxDecoration(
-
+                      decoration: BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage(
                               'assets/images/icons/food_product_ring.png'),
@@ -96,7 +96,6 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
                         'assets/images/icons/food_product_experience.png',
                         fit: BoxFit.fill,
                         height: 150,
-
                       ),
                     ),
                   ),
@@ -106,15 +105,10 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
                       SizedBox(
                         height: 32.2,
                       ),
-                      GeneralText(
-
-                        Strings.popularFoodDetailTitle,
-                        style: appTheme.typographies.interFontFamily.headline6
-                            .copyWith(
-                          fontSize: 18,
-                          height: 0,
-                          color: HexColor.fromHex('#f1c452'),
-                        ),
+                      GeneralRichText(
+                        title: Strings.popularFoodDetailTitle,
+                        titleStyle:
+                            appTheme.typographies.interFontFamily.label11,
                       ),
                       SizedBox(
                         height: 4,
@@ -143,7 +137,8 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
                           ),
                           GeneralText(
                             Strings.popularFoodDetailReview,
-                            style: appTheme.typographies.interFontFamily.headline6
+                            style: appTheme
+                                .typographies.interFontFamily.headline6
                                 .copyWith(
                                     fontSize: 14,
                                     color: HexColor.fromHex('#8ea659')),
