@@ -233,7 +233,7 @@ class _SignUpQuestionireScreenState extends State<SignUpQuestionireScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   Container(
@@ -262,7 +262,7 @@ class _SignUpQuestionireScreenState extends State<SignUpQuestionireScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 60,
                   ),
                   InkWell(
@@ -270,7 +270,8 @@ class _SignUpQuestionireScreenState extends State<SignUpQuestionireScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => SignUpLetsStartScreen()),
+                            builder: (context) =>
+                                const SignUpLetsStartScreen()),
                       );
                     },
                     child: Padding(
@@ -279,12 +280,11 @@ class _SignUpQuestionireScreenState extends State<SignUpQuestionireScreen> {
                         alignment: Alignment.bottomRight,
                         child: SvgPicture.asset(
                           Resources.getSignInRightArrow,
-                          color: Colors.grey,
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                 ],
