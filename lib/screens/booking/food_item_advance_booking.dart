@@ -108,6 +108,7 @@ class _FoodProductAdvancePendingDetailsState
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
+
                             GeneralText(
                               Strings.productDetailTitle,
                               style: appTheme
@@ -118,7 +119,7 @@ class _FoodProductAdvancePendingDetailsState
                               ),
                             ),
                             SizedBox(
-                              height: 19,
+                              height: 3,
                             ),
                             GeneralText(
                               Strings.productDetailSubTitle,

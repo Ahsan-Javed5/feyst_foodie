@@ -1,14 +1,17 @@
 import 'dart:ui';
 
+import 'package:chef/helpers/helpers.dart';
 import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:flutter/material.dart';
 
+import '../../constants/resources.dart';
 import '../../constants/strings.dart';
 import '../../helpers/color_helper.dart';
 import '../../theme/app_theme_data/app_theme_data.dart';
 import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/helpers/dialog_helper.dart';
 import '../../ui_kit/widgets/general_button.dart';
+import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
 import '../booking/food_item_bookng.dart';
 import '../custom_form/widgets/exto_field_option.dart';
@@ -127,7 +130,7 @@ class _FoodProductBookingConfirmedDetailsState
                                 ),
                               ),
                               SizedBox(
-                                height: 19,
+                                height: 3,
                               ),
                               GeneralText(
                                 Strings.productDetailSubTitle,
@@ -183,12 +186,23 @@ class _FoodProductBookingConfirmedDetailsState
                                   .copyWith(
                                 fontSize: 12,
                                 color: HexColor.fromHex('#212129'),
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                           ),
                         ),
-                      )
+                      ),
+                        Positioned.fill(
+                        top: 40,
+                        child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Container(
+                              margin: EdgeInsets.only(left: 29),
+                              child: GeneralNewAppBar(
+                                rightIcon: Resources.homeIconSvg,
+                              ),
+                            )),
+                      ),
                     ],
                   ),
                 ),
@@ -256,7 +270,7 @@ class _FoodProductBookingConfirmedDetailsState
                 GeneralText(
                   Strings.foodItemBookingConfirmedComment,
                   style:
-                      appTheme.typographies.interFontFamily.headline2.copyWith(
+                      appTheme.typographies.interFontFamily.headline6.copyWith(
                     fontSize: 16,
                     color: HexColor.fromHex('#ffffff'),
                   ),
@@ -321,14 +335,68 @@ class _FoodProductBookingConfirmedDetailsState
   }
 
   Widget wowFactors(IAppThemeData appTheme) {
-    return Container(
+    return  Container(
+      margin: EdgeInsets.only(left: 12),
+      child: Wrap(
+
+        children: [
+          for (int i = 0; i < wowFactorsList.length; i++)
+            Padding(
+              padding: const EdgeInsets.only(right: 17, bottom: 7.7),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 58,
+                    height: 52,
+                    padding: const EdgeInsetsDirectional.all(10),
+                    decoration: BoxDecoration(
+                      image: const DecorationImage(
+                        image: AssetImage(
+                            'assets/images/icons/food_item_circle.png'),
+                        fit: BoxFit.fill,
+                      ),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Container(
+                      padding: const EdgeInsetsDirectional.all(10),
+                      decoration: BoxDecoration(
+                        color: HexColor.fromHex("#f1c452"),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Image.asset(wowFactorsList[i].icon != null
+                          ? wowFactorsList[i].icon ?? ""
+                          : ''),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 2.5,
+                  ),
+                  GeneralText(
+                    wowFactorsList[i].name ?? "",
+                    style: appTheme.typographies.interFontFamily.headline6
+                        .copyWith(
+                      fontSize: 14,
+                      color: HexColor.fromHex('#ffffff'),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+        ],
+      ),
+    );
+
+
+      Container(
       width: double.infinity,
       padding: EdgeInsetsDirectional.only(
           top: 20, bottom: 20, start: 11.8, end: 11.8),
       decoration: BoxDecoration(
           color: HexColor.fromHex("#4b4b52"),
           borderRadius: BorderRadius.circular(15)),
-      child: Wrap(
+      child:
+      Wrap(
         children: [
           for (int i = 0; i < wowFactorsList.length; i++)
             Padding(
@@ -396,6 +464,7 @@ class _FoodProductBookingConfirmedDetailsState
                     borderRadius: BorderRadius.circular(11)),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Column(
                         children: [
@@ -648,7 +717,7 @@ class _FoodProductBookingConfirmedDetailsState
                 height: 1,
               ),
               const SizedBox(
-                width: 2,
+                width: 7.2,
               ),
               GeneralText(
                 Strings.productDetailChefLabel,
@@ -708,7 +777,7 @@ class _FoodProductBookingConfirmedDetailsState
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
                                     fontSize: 14,
-                                    color: HexColor.fromHex('#f1c452'),
+                                    color: Colors.white,
                                     decoration: TextDecoration.underline),
                           ),
                         ],
@@ -764,7 +833,7 @@ class _FoodProductBookingConfirmedDetailsState
                 height: 1,
               ),
               const SizedBox(
-                width: 2,
+                width: 7.5,
               ),
               GeneralText(
                 Strings.productDetailPriceLabel,
@@ -834,6 +903,7 @@ class _FoodProductBookingConfirmedDetailsState
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
+                        fontWeight: FontWeight.w800,
                         color: HexColor.fromHex('#ffffff'),
                       ),
                     ),
@@ -880,7 +950,8 @@ class _FoodProductBookingConfirmedDetailsState
                           .copyWith(
                         fontSize: 15,
                         color: HexColor.fromHex('#8ea659'),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w800,
+
                       ),
                     ),
                   ],
@@ -924,7 +995,7 @@ class _FoodProductBookingConfirmedDetailsState
                           height: 1,
                         ),
                         const SizedBox(
-                          width: 2,
+                          width: 7.2,
                         ),
                         GeneralText(
                           Strings.productDetailAboutTitle,
@@ -961,7 +1032,7 @@ class _FoodProductBookingConfirmedDetailsState
                           height: 1,
                         ),
                         const SizedBox(
-                          width: 2,
+                          width: 7.2,
                         ),
                         GeneralText(
                           Strings.productDetailWowFactorTitle,

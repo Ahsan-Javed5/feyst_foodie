@@ -325,9 +325,9 @@ abstract class Strings {
   static const productDetailWowFactorWifi = 'Wifi';
   static const productDetailWowFactorMusic = 'Music';
   static const productDetailWowFactorParking = 'Parking';
-  static const productDetailSelectionDate = 'MON, 10 Dec';
+  static const productDetailSelectionDate = 'MON, 10 DEC';
   static const productDetailSelectionTime = '10PM';
-  static const productDetailSelectionType = 'Family';
+  static const productDetailSelectionType = 'FAMILY';
   static const productDetailSelectionTotalPersons = '05';
   static const productDetailSelectionPersons = 'Persons';
   static const productDetailSelectionNotesLabel = 'Notes';
@@ -337,7 +337,7 @@ abstract class Strings {
   static const productDetailSelectionMenuAmount = 'Rs.195';
   static const productDetailChefLabel = 'Chef\'s Info';
   static const productDetailChefName = 'Zee Lounge';
-  static const productDetailChefLocation = 'Chef\'s Info';
+  static const productDetailChefLocation = 'H#25, St#43, Islamabad';
   static const productDetailChefSubHost = 'SUB HOST';
   static const productDetailChefSubHostName = 'Zoya Faraz';
   static const productDetailPriceLabel = 'Price';
