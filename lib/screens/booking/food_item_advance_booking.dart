@@ -173,7 +173,7 @@ class _FoodProductAdvancePendingDetailsState
                                   .copyWith(
                                 fontSize: 12,
                                 color: HexColor.fromHex('#212129'),
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                           ),
@@ -206,7 +206,7 @@ class _FoodProductAdvancePendingDetailsState
                             height: 1,
                           ),
                           const SizedBox(
-                            width: 2,
+                            width: 7.2,
                           ),
                           GeneralText(
                             Strings.productDetailAboutTitle,
@@ -244,7 +244,7 @@ class _FoodProductAdvancePendingDetailsState
                             height: 1,
                           ),
                           const SizedBox(
-                            width: 2,
+                            width: 7.2,
                           ),
                           GeneralText(
                             Strings.productDetailWowFactorTitle,
@@ -621,7 +621,7 @@ class _FoodProductAdvancePendingDetailsState
                 height: 1,
               ),
               const SizedBox(
-                width: 2,
+                width: 7.2,
               ),
               GeneralText(
                 Strings.productDetailChefLabel,
@@ -742,7 +742,7 @@ class _FoodProductAdvancePendingDetailsState
                 height: 1,
               ),
               const SizedBox(
-                width: 2,
+                width: 7.2,
               ),
               GeneralText(
                 Strings.productDetailPriceLabel,

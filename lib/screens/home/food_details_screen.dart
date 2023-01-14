@@ -642,21 +642,25 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(children: [
-                      GeneralText(selectedMonth,
-                          style: appTheme.typographies.interFontFamily.headline6
-                              .copyWith(
-                                  color: HexColor.fromHex('#f1c452'),
-                                  fontSize: 14,
-                                  height: 0,
-                                  fontWeight: FontWeight.w700)),
-                      GeneralText(selectedDate,
-                          style: appTheme.typographies.interFontFamily.headline6
-                              .copyWith(
-                                  color: HexColor.fromHex('#909094'),
-                                  fontSize: 40,
-                                  fontWeight: FontWeight.w700))
-                    ]),
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          GeneralText(selectedMonth,
+                              style: appTheme
+                                  .typographies.interFontFamily.headline6
+                                  .copyWith(
+                                      color: HexColor.fromHex('#f1c452'),
+                                      fontSize: 14,
+                                      //  height: 0,
+                                      fontWeight: FontWeight.w800)),
+                          GeneralText(selectedDate,
+                              style: appTheme
+                                  .typographies.interFontFamily.headline6
+                                  .copyWith(
+                                      color: HexColor.fromHex('#909094'),
+                                      fontSize: 40,
+                                      fontWeight: FontWeight.w500))
+                        ]),
                     SizedBox(
                       width: 27,
                     ),
