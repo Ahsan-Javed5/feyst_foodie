@@ -96,7 +96,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                         InkWell(
                           onTap: () {
-                            _showVerificationPopup(context);
+                           // _showVerificationPopup(context);
                           },
                           child: SvgPicture.asset(
                             Resources.getSignInRightArrow,
