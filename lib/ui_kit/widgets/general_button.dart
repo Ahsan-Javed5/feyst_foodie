@@ -159,7 +159,7 @@ class GeneralButton extends StatelessWidget {
   static const _defaultHeight = 48.0;
   static const _iconSize = 16.0;
 
-  late final ScreenType _screenType;
+  late ScreenType _screenType;
 
   @override
   Widget build(BuildContext context) {

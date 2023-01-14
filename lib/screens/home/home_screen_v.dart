@@ -52,12 +52,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           .copyWith(
                         fontSize: 35,
                         // fontFamily: 'Poppins-Medium',
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w400,
                         color: Colors.white,
                       ),
                     ),
                   ),
-                  SizedBox(height: 8,),
+                  SizedBox(
+                    height: 8,
+                  ),
                   Container(
                     padding: EdgeInsets.only(left: 31),
                     child: GeneralText(
@@ -66,7 +68,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           .copyWith(
                         fontSize: 29,
                         fontFamily: 'Poppins-Medium',
-
                         fontWeight: FontWeight.w500,
                         color: Colors.white,
                       ),
@@ -87,19 +88,19 @@ class _HomeScreenState extends State<HomeScreen> {
                         }),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 31,bottom: 0),
+                    padding: EdgeInsets.only(left: 31, bottom: 0),
                     child: GeneralText(
                       Strings.labelPopularDishes,
-                      style: appTheme.typographies.interFontFamily.headline2
+                      style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 18,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w700,
                         color: Color(0xfff1c452),
                       ),
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(right: 20, left: 20,top: 4),
+                    margin: EdgeInsets.only(right: 20, left: 20, top: 4),
                     child: GridView.builder(
                       padding: EdgeInsets.zero,
                       physics: NeverScrollableScrollPhysics(),
@@ -188,8 +189,8 @@ class _PopularDishes extends StatelessWidget {
                   GeneralText(
                     'Sindhi\nBiryani',
                     textAlign: TextAlign.left,
-                    style:
-                        appTheme.typographies.interFontFamily.headline2.copyWith(
+                    style: appTheme.typographies.interFontFamily.headline2
+                        .copyWith(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
                       color: Colors.white,
@@ -197,10 +198,10 @@ class _PopularDishes extends StatelessWidget {
                   ),
                   GeneralText(
                     'by Zee Lounge',
-                    style:
-                        appTheme.typographies.interFontFamily.headline2.copyWith(
+                    style: appTheme.typographies.interFontFamily.headline2
+                        .copyWith(
                       fontSize: 14,
-                      fontWeight: FontWeight.w400,
+                      fontWeight: FontWeight.w500,
                       color: Color(0xff909094),
                     ),
                   ),
