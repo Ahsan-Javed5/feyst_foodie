@@ -119,7 +119,7 @@ class _FoodItemInProcessBookingState extends State<FoodItemInProcessBooking> {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 19,
+                                  height: 3,
                                 ),
                                 GeneralText(
                                   Strings.productDetailSubTitle,
@@ -173,7 +173,7 @@ class _FoodItemInProcessBookingState extends State<FoodItemInProcessBooking> {
                                       .copyWith(
                                     fontSize: 12,
                                     color: HexColor.fromHex('#212129'),
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.w700,
                                   ),
                                 ),
                               ),
@@ -208,7 +208,7 @@ class _FoodItemInProcessBookingState extends State<FoodItemInProcessBooking> {
                                 height: 1,
                               ),
                               const SizedBox(
-                                width: 2,
+                                width: 7.5,
                               ),
                               GeneralText(
                                 Strings.productDetailAboutTitle,
@@ -246,7 +246,7 @@ class _FoodItemInProcessBookingState extends State<FoodItemInProcessBooking> {
                                 height: 1,
                               ),
                               const SizedBox(
-                                width: 2,
+                                width: 7.5,
                               ),
                               GeneralText(
                                 Strings.productDetailWowFactorTitle,
@@ -278,14 +278,7 @@ class _FoodItemInProcessBookingState extends State<FoodItemInProcessBooking> {
                       height: 47.9,
                     ),
                     productPriceInformation(appTheme),
-                    const SizedBox(
-                      height: 32.9,
-                    ),
-                    extraPaymentNotes(appTheme),
-                    SizedBox(
-                      height: 42,
-                    ),
-                    checkTermsConditions(appTheme),
+
                     SizedBox(
                       height: 209.1,
                     ),
@@ -387,6 +380,7 @@ class _FoodItemInProcessBookingState extends State<FoodItemInProcessBooking> {
                     borderRadius: BorderRadius.circular(11)),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Column(
                         children: [
@@ -440,9 +434,9 @@ class _FoodItemInProcessBookingState extends State<FoodItemInProcessBooking> {
                             style: appTheme
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
-                                    fontSize: 12,
-                                    color: HexColor.fromHex('#909094'),
-                                    fontWeight: FontWeight.w400),
+                                fontSize: 12,
+                                color: HexColor.fromHex('#909094'),
+                                fontWeight: FontWeight.w400),
                           ),
                         ],
                       ),
@@ -703,7 +697,7 @@ class _FoodItemInProcessBookingState extends State<FoodItemInProcessBooking> {
                                     .typographies.interFontFamily.headline6
                                     .copyWith(
                                         fontSize: 14,
-                                        color: HexColor.fromHex('#f1c452'),
+                                        color: Colors.white,
                                         decoration: TextDecoration.underline),
                                 maxLines: 2,
                               ),
@@ -762,7 +756,7 @@ class _FoodItemInProcessBookingState extends State<FoodItemInProcessBooking> {
                 height: 1,
               ),
               const SizedBox(
-                width: 2,
+                width: 7.5,
               ),
               GeneralText(
                 Strings.productDetailPriceLabel,
@@ -774,7 +768,7 @@ class _FoodItemInProcessBookingState extends State<FoodItemInProcessBooking> {
             ],
           ),
           SizedBox(
-            height: 12.1,
+            height: 13.1,
           ),
           Container(
             width: double.infinity,
@@ -782,7 +776,7 @@ class _FoodItemInProcessBookingState extends State<FoodItemInProcessBooking> {
                 top: 22, bottom: 22, start: 23, end: 23),
             decoration: BoxDecoration(
                 color: HexColor.fromHex("#4b4b52"),
-                borderRadius: BorderRadius.circular(10)),
+                borderRadius: BorderRadius.circular(15)),
             child: Column(
               children: [
                 Column(
@@ -792,9 +786,9 @@ class _FoodItemInProcessBookingState extends State<FoodItemInProcessBooking> {
                         Strings.productDetailPriceValue,
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
-                                fontSize: 36,
-                                color: HexColor.fromHex('#f89f84'),
-                                fontWeight: FontWeight.w300),
+                            fontSize: 36,
+                            color: HexColor.fromHex('#f89f84'),
+                            fontWeight: FontWeight.w300),
                       ),
                       GeneralText(
                         Strings.productDetailPriceTotal,
@@ -832,6 +826,7 @@ class _FoodItemInProcessBookingState extends State<FoodItemInProcessBooking> {
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
+                        fontWeight: FontWeight.w800,
                         color: HexColor.fromHex('#ffffff'),
                       ),
                     ),
@@ -840,20 +835,46 @@ class _FoodItemInProcessBookingState extends State<FoodItemInProcessBooking> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    GeneralText(
-                      Strings.productDetailAdvancePayment,
-                      style: appTheme.typographies.interFontFamily.headline6
-                          .copyWith(
-                        fontSize: 15,
-                        color: HexColor.fromHex('#ffffff'),
-                      ),
+                    Row(
+                      children: [
+                        GeneralText(
+                          Strings.productDetailAdvancePayment,
+                          style: appTheme.typographies.interFontFamily.headline6
+                              .copyWith(
+                            fontSize: 15,
+                            color: HexColor.fromHex('#8ea659'),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Container(
+                          // padding: const EdgeInsets.all(5.0),
+                          alignment: Alignment.center,
+                          width: 16,
+                          height: 16,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: HexColor.fromHex('#8ea659'),
+                          ),
+                          child: Center(
+                            child: Icon(
+                              Icons.check,
+                              size: 10,
+                              color: Colors.white,
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                     GeneralText(
-                      Strings.productDetailAdvancePaymentValue,
+                      Strings.foodItemAdvancePaymentValue,
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
-                        color: HexColor.fromHex('#ffffff'),
+                        color: HexColor.fromHex('#8ea659'),
+                        fontWeight: FontWeight.w800,
+
                       ),
                     ),
                   ],
@@ -996,7 +1017,7 @@ class _FoodItemInProcessBookingState extends State<FoodItemInProcessBooking> {
 
   Widget getPayAdvanceButton({required IAppThemeData appTheme}) {
     return GeneralButton.button(
-      width: 151,
+      width: 159,
       title: Strings.bookingInProcessPayAdvance.toUpperCase(),
       styleType: ButtonStyleType.fill,
 
@@ -1013,8 +1034,10 @@ class _FoodItemInProcessBookingState extends State<FoodItemInProcessBooking> {
 
   Widget getPayAdvanceCash({required IAppThemeData appTheme}) {
     return GeneralButton.button(
-      // width: 151,
+       width: 150,
+
       title: Strings.bookingInProcessPayCash.toUpperCase(),
+
       styleType: ButtonStyleType.fill,
       onTap: () {
         Navigator.push(context,
