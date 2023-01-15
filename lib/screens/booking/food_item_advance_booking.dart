@@ -368,6 +368,7 @@ class _FoodProductAdvancePendingDetailsState
                     borderRadius: BorderRadius.circular(11)),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Column(
                         children: [
@@ -421,9 +422,9 @@ class _FoodProductAdvancePendingDetailsState
                             style: appTheme
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
-                                    fontSize: 12,
-                                    color: HexColor.fromHex('#909094'),
-                                    fontWeight: FontWeight.w400),
+                                fontSize: 12,
+                                color: HexColor.fromHex('#909094'),
+                                fontWeight: FontWeight.w400),
                           ),
                         ],
                       ),
@@ -684,7 +685,7 @@ class _FoodProductAdvancePendingDetailsState
                                     .typographies.interFontFamily.headline6
                                     .copyWith(
                                         fontSize: 14,
-                                        color: HexColor.fromHex('#f1c452'),
+                                        color: Colors.white,
                                         decoration: TextDecoration.underline),
                                 maxLines: 2,
                               ),
@@ -860,7 +861,7 @@ class _FoodProductAdvancePendingDetailsState
                 height: 1,
               ),
               const SizedBox(
-                width: 2,
+                width: 7.5,
               ),
               GeneralText(
                 Strings.productDetailExtraNote,

@@ -392,7 +392,7 @@ abstract class Strings {
   static const foodItemBookingInProgress = 'IN PROCESS';
   static const foodItemBookingBookingConfirmed = 'BOOKING CONFIRMED';
   static const foodItemBookingAdvancePendingButton = 'Pay Advance';
-  static const foodItemAdvancePendingTermsCondition = 'Terms & Conditions';
+  static const foodItemAdvancePendingTermsCondition = 'Terms & Condition';
 
   static const verificationPopupTitle = "Verification\nCode";
   static const verificationPopupSubtitle =
