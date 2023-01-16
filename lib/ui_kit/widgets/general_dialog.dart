@@ -73,10 +73,10 @@ class ExtoDialog extends StatelessWidget {
         alignment: _alignment,
         child: Material(
           shape: appTheme.dialogShapeBorder,
-          color: const Color(0xff212129),
+          color: appTheme.colors.verificationBackGround,
           child: Container(
             width: _width,
-             decoration: BoxDecoration(
+            decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: const Color(0xff212129),
             ),
@@ -106,7 +106,7 @@ class ExtoDialog extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-           // _buildHeader(appTheme),
+            // _buildHeader(appTheme),
             _buildBody(),
             if (_actions != null && _actions!.isNotEmpty) _buildFooter(),
           ],

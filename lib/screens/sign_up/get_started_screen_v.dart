@@ -8,6 +8,27 @@ class GetStartedScreen extends StatefulWidget {
 }
 
 class _GetStartedScreenState extends State<GetStartedScreen> {
+  PackageInfo _packageInfo = PackageInfo(
+    appName: 'Unknown',
+    packageName: 'Unknown',
+    version: 'Unknown',
+    buildNumber: 'Unknown',
+    buildSignature: 'Unknown',
+  );
+
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() async {
+    await PackageInfo.fromPlatform().then((value) {
+      _packageInfo = value;
+      setState(() {});
+    });
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context).theme;
@@ -40,6 +61,12 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
             const SizedBox(
               height: 50,
             ),
+            Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Text(
+                  ' Version ' + '${_packageInfo.version}',
+                  style: appTheme.typographies.interFontFamily.headline6,
+                )),
           ],
         ) /* add child content here */,
       ),
@@ -62,17 +89,16 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
       //   ],
       // ),
 
-      style:
-          appTheme.typographies.interFontFamily.headline7.copyWith(height: 1.5,
-              shadows: <Shadow>[
-                Shadow(
-                  offset: Offset(10.0, 5.0),
-                  blurRadius: 10.0,
-                  color: Colors.black.withOpacity(0.4),
-                ),
-              ],
-
+      style: appTheme.typographies.interFontFamily.headline7.copyWith(
+        height: 1.5,
+        shadows: <Shadow>[
+          Shadow(
+            offset: Offset(10.0, 5.0),
+            blurRadius: 10.0,
+            color: Colors.black.withOpacity(0.4),
           ),
+        ],
+      ),
     );
   }
 

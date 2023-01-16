@@ -75,6 +75,8 @@ abstract class _IColors {
 
   static const greyDark = Color.fromRGBO(144, 144, 148, 1);
 
+  static const blackBrightness = Color.fromRGBO(33, 33, 41, 1);
+
   // static const black00= Color.fromRGBO(33, 33, 41, 1);
   static const buttonColor = Color(0xffbb3127);
   static const textFieldColor = Color(0xff35353c);
@@ -317,6 +319,9 @@ class _Colors implements IColors {
 
   @override
   Color get filledButtonColor => _IColors.buttonColor;
+
+  @override
+  Color get verificationBackGround => _IColors.blackBrightness;
 
   @override
   Color stringColor(String strCode) {
