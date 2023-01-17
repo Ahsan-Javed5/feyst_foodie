@@ -28,16 +28,16 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
     // TODO: implement initState
     bookingProgressStatus.addAll([
       BookingProgress(
-          bookingStatusIcon: "timelapse.png",
+          bookingStatusIcon: Resources.timeLapsePNG,
           statusName: Strings.foodItemBookingApprovalPending),
       BookingProgress(
-          bookingStatusIcon: "timelapse.png",
+          bookingStatusIcon: Resources.hourglassPNG,
           statusName: Strings.foodItemBookingAdvancePending),
       BookingProgress(
-          bookingStatusIcon: "timelapse.png",
+          bookingStatusIcon: Resources.confirmUserPNG,
           statusName: Strings.foodItemBookingInProgress),
       BookingProgress(
-          bookingStatusIcon: "timelapse.png",
+          bookingStatusIcon: Resources.paymentPNG,
           statusName: Strings.foodItemBookingBookingConfirmed),
     ]);
     super.initState();
@@ -297,7 +297,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
             decoration: BoxDecoration(
                 color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
             child: Image.asset(
-              'assets/images/icons/${bookingProgressStatus[index].bookingStatusIcon}',
+              bookingProgressStatus[index].bookingStatusIcon!,
               width: 18.5,
               height: 18.5,
             ),
@@ -384,7 +384,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
             decoration: BoxDecoration(
                 color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
             child: Image.asset(
-              'assets/images/icons/${bookingProgressStatus[index].bookingStatusIcon}',
+              bookingProgressStatus[index].bookingStatusIcon!,
               width: 18.5,
               height: 18.5,
             ),
@@ -470,7 +470,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
             decoration: BoxDecoration(
                 color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
             child: Image.asset(
-              'assets/images/icons/${bookingProgressStatus[index].bookingStatusIcon}',
+              bookingProgressStatus[index].bookingStatusIcon!,
               width: 18.5,
               height: 18.5,
             ),
@@ -557,7 +557,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
             decoration: BoxDecoration(
                 color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
             child: Image.asset(
-              'assets/images/icons/${bookingProgressStatus[index].bookingStatusIcon}',
+              bookingProgressStatus[index].bookingStatusIcon!,
               width: 18.5,
               height: 18.5,
             ),

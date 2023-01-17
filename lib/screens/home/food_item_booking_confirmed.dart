@@ -75,262 +75,283 @@ class _FoodProductBookingConfirmedDetailsState
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: getStartedButtonTitle(appTheme: appTheme),
-      body: SingleChildScrollView(
-        child: Container(
-            color: HexColor.fromHex("#212129"),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 18,
+      body: Container(
+          color: HexColor.fromHex("#212129"),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 18,
+              ),
+              Container(
+                height: 217,
+                padding: EdgeInsets.only(bottom: 17),
+                decoration: BoxDecoration(
+                  color: HexColor.fromHex("#4b4b52"),
+                  borderRadius: const BorderRadius.only(
+                      bottomRight: Radius.circular(50),
+                      bottomLeft: Radius.circular(50)),
                 ),
-                Container(
-                  height: 217,
-                  padding: EdgeInsets.only(bottom: 17),
-                  decoration: BoxDecoration(
-                    color: HexColor.fromHex("#4b4b52"),
-                    borderRadius: const BorderRadius.only(
-                        bottomRight: Radius.circular(50),
-                        bottomLeft: Radius.circular(50)),
-                  ),
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Positioned(
-                        right: -40,
-                        top: -20,
-                        child: Container(
-                          width: 200,
-                          padding: const EdgeInsetsDirectional.all(20),
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(
-                                  'assets/images/icons/food_product_ring.png'),
-                              fit: BoxFit.fill,
-                            ),
-                            shape: BoxShape.circle,
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Positioned(
+                      right: -40,
+                      top: -20,
+                      child: Container(
+                        width: 200,
+                        padding: const EdgeInsetsDirectional.all(20),
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                                'assets/images/icons/food_product_ring.png'),
+                            fit: BoxFit.fill,
                           ),
-                          child: Image.asset(
-                            'assets/images/icons/food_product_experience.png',
-                          ),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Image.asset(
+                          'assets/images/icons/food_product_experience.png',
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 33),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              GeneralText(
-                                Strings.productDetailTitle,
-                                style: appTheme
-                                    .typographies.interFontFamily.headline6
-                                    .copyWith(
-                                  fontSize: 22,
-                                  color: HexColor.fromHex('#f1c452'),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 3,
-                              ),
-                              GeneralText(
-                                Strings.productDetailSubTitle,
-                                style: appTheme
-                                    .typographies.interFontFamily.headline6
-                                    .copyWith(
-                                  fontSize: 14,
-                                  color: HexColor.fromHex('#909094'),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 5.8,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    width: 13.9,
-                                    child: Image.asset(
-                                        'assets/images/icons/star.png',
-                                        fit: BoxFit.fill),
-                                  ),
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-                                  GeneralText(
-                                    Strings.productDetailReview,
-                                    style: appTheme
-                                        .typographies.interFontFamily.headline6
-                                        .copyWith(
-                                            fontSize: 12,
-                                            color: HexColor.fromHex('#8ea659')),
-                                  ),
-                                ],
-                              ),
-                            ]),
-                      ),
-                      Positioned.fill(
-                        bottom: -30,
-                        child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Container(
-                            padding: EdgeInsetsDirectional.only(
-                                start: 19.5, end: 19.5, top: 7, bottom: 7),
-                            decoration: BoxDecoration(
-                                color: HexColor.fromHex("#b0c18b"),
-                                borderRadius: BorderRadius.circular(20)),
-                            child: GeneralText(
-                              Strings.foodItemBookingConfirmedStatus
-                                  .toUpperCase(),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 33),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            GeneralText(
+                              Strings.productDetailTitle,
                               style: appTheme
                                   .typographies.interFontFamily.headline6
                                   .copyWith(
-                                fontSize: 12,
-                                color: HexColor.fromHex('#212129'),
-                                fontWeight: FontWeight.w700,
+                                fontSize: 22,
+                                color: HexColor.fromHex('#f1c452'),
                               ),
+                            ),
+                            SizedBox(
+                              height: 3,
+                            ),
+                            GeneralText(
+                              Strings.productDetailSubTitle,
+                              style: appTheme
+                                  .typographies.interFontFamily.headline6
+                                  .copyWith(
+                                fontSize: 14,
+                                color: HexColor.fromHex('#909094'),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 5.8,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 13.9,
+                                  child: Image.asset(
+                                      'assets/images/icons/star.png',
+                                      fit: BoxFit.fill),
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                GeneralText(
+                                  Strings.productDetailReview,
+                                  style: appTheme
+                                      .typographies.interFontFamily.headline6
+                                      .copyWith(
+                                          fontSize: 12,
+                                          color: HexColor.fromHex('#8ea659')),
+                                ),
+                              ],
+                            ),
+                          ]),
+                    ),
+                    Positioned.fill(
+                      bottom: -30,
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          padding: EdgeInsetsDirectional.only(
+                              start: 19.5, end: 19.5, top: 7, bottom: 7),
+                          decoration: BoxDecoration(
+                              color: HexColor.fromHex("#b0c18b"),
+                              borderRadius: BorderRadius.circular(20)),
+                          child: GeneralText(
+                            Strings.foodItemBookingConfirmedStatus
+                                .toUpperCase(),
+                            style: appTheme
+                                .typographies.interFontFamily.headline6
+                                .copyWith(
+                              fontSize: 12,
+                              color: HexColor.fromHex('#212129'),
+                              fontWeight: FontWeight.w700,
                             ),
                           ),
                         ),
                       ),
-                        Positioned.fill(
-                        top: 40,
-                        child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Container(
-                              margin: EdgeInsets.only(left: 29),
-                              child: GeneralNewAppBar(
-                                rightIcon: Resources.homeIconSvg,
-                              ),
-                            )),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                GeneralText(
-                  Strings.foodItemBookingConfirmedOrderNo,
-                  style:
-                      appTheme.typographies.interFontFamily.headline2.copyWith(
-                    fontSize: 17,
-                    color: HexColor.fromHex('#f1c452'),
-                  ),
-                ),
-                SizedBox(
-                  height: 14,
-                ),
-                GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        if (qr_code_scanned) {
-                          qr_code_scanned = false;
-                        } else {
-                          qr_code_scanned = true;
-                        }
-                      });
-                    },
-                    child: Container(
-                        decoration: BoxDecoration(
-                          border: qr_code_scanned
-                              ? Border.all(
-                                  color: HexColor.fromHex("#8ea659"), width: 10)
-                              : Border.all(color: Colors.white, width: 10),
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white,
-                        ),
-                        padding: EdgeInsets.all(5),
-                        child: Stack(
-                          children: [
-                            Image.asset(
-                              "assets/images/icons/qr_code_sample.jpeg",
-                              width: 181,
-                              height: 185,
+                    ),
+                      Positioned.fill(
+                      top: 40,
+                      child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Container(
+                            margin: EdgeInsets.only(left: 29),
+                            child: GeneralNewAppBar(
+                              rightIcon: Resources.homeIconSvg,
                             ),
-                            // Positioned.fill(
-                            //     top: 10,
-                            //     right: 20,
-                            //     child: Container(
-                            //         width: 24,
-                            //         height: 24,
-                            //         decoration: BoxDecoration(
-                            //           shape: BoxShape.circle,
-                            //           color: HexColor.fromHex("#8ea659"),
-                            //         ),
-                            //         child: Icon(
-                            //           Icons.check,
-                            //           color: Colors.white,
-                            //           size: 23,
-                            //         ))),
-                          ],
-                        ))),
-                const SizedBox(
-                  height: 18,
+                          )),
+                    ),
+                  ],
                 ),
-                GeneralText(
-                  Strings.foodItemBookingConfirmedComment,
-                  style:
-                      appTheme.typographies.interFontFamily.headline6.copyWith(
-                    fontSize: 16,
-                    color: HexColor.fromHex('#ffffff'),
-                  ),
-                  textAlign: TextAlign.center,
-                  maxLines: 3,
-                ),
-                const SizedBox(
-                  height: 28,
-                ),
-                chefInformation(appTheme),
-                const SizedBox(
-                  height: 33.9,
-                ),
-                Container(
-                  padding: EdgeInsetsDirectional.only(start: 25, end: 25),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      GeneralText(
-                        Strings.bookingConfirmedDetailsLabel,
-                        style: appTheme.typographies.interFontFamily.headline2
-                            .copyWith(
-                          fontSize: 20,
-                          color: HexColor.fromHex('#f1c452'),
-                        ),
+              ),
+
+
+
+              const SizedBox(
+                height: 20,
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(children: [
+                    GeneralText(
+                      Strings.foodItemBookingConfirmedOrderNo,
+                      style:
+                      appTheme.typographies.interFontFamily.headline2.copyWith(
+                        fontSize: 17,
+                        color: HexColor.fromHex('#f1c452'),
                       ),
-                      InkWell(
+                    ),
+                    SizedBox(
+                      height: 14,
+                    ),
+                    GestureDetector(
                         onTap: () {
                           setState(() {
-                            if (showDetailsView) {
-                              showDetailsView = false;
+                            if (qr_code_scanned) {
+                              qr_code_scanned = false;
                             } else {
-                              showDetailsView = true;
+                              qr_code_scanned = true;
                             }
                           });
                         },
-                        child: showDetailsView
-                            ? Container(
-                                width: 26,
-                                child: Image.asset(
-                                  "assets/images/icons/showData.png",
+                        child: Stack(
+                          children: [
+                            Container(
+                                decoration: BoxDecoration(
+                                  border: qr_code_scanned
+                                      ? Border.all(
+                                      color: HexColor.fromHex("#8ea659"), width: 10)
+                                      : Border.all(color: Colors.white, width: 10),
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.white,
                                 ),
-                              )
-                            : Container(
-                                width: 26,
-                                child: Image.asset(
-                                  "assets/images/icons/hideData.png",
-                                ),
+                                padding: EdgeInsets.all(5),
+                                child: Stack(
+                                  children: [
+                                    Image.asset(
+                                      "assets/images/icons/qr_code_sample.jpeg",
+                                      width: 181,
+                                      height: 185,
+                                    ),
+
+
+                                    // Positioned.fill(
+                                    //     top: 10,
+                                    //     right: 20,
+                                    //     child: Container(
+                                    //         width: 24,
+                                    //         height: 24,
+                                    //         decoration: BoxDecoration(
+                                    //           shape: BoxShape.circle,
+                                    //           color: HexColor.fromHex("#8ea659"),
+                                    //         ),
+                                    //         child: Icon(
+                                    //           Icons.check,
+                                    //           color: Colors.white,
+                                    //           size: 23,
+                                    //         ))),
+                                  ],
+                                )),
+                            if( qr_code_scanned)
+                            Positioned.fill(
+                              child: Align(
+                                  alignment: Alignment.topRight,
+                                  child: Image.asset(Resources.bookingCheckboxPNG,height: 24,)),
+                            ),
+                          ],
+                        )),
+                    const SizedBox(
+                      height: 18,
+                    ),
+                    GeneralText(
+                      Strings.foodItemBookingConfirmedComment,
+                      style:
+                      appTheme.typographies.interFontFamily.headline6.copyWith(
+                        fontSize: 16,
+                        color: HexColor.fromHex('#ffffff'),
+                      ),
+                      textAlign: TextAlign.center,
+                      maxLines: 3,
+                    ),
+                    const SizedBox(
+                      height: 28,
+                    ),
+                    chefInformation(appTheme),
+                    const SizedBox(
+                      height: 33.9,
+                    ),
+                    Container(
+                      padding: EdgeInsetsDirectional.only(start: 25, end: 25),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GeneralText(
+                            Strings.bookingConfirmedDetailsLabel,
+                            style: appTheme.typographies.interFontFamily.headline2
+                                .copyWith(
+                              fontSize: 20,
+                              color: HexColor.fromHex('#f1c452'),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                if (showDetailsView) {
+                                  showDetailsView = false;
+                                } else {
+                                  showDetailsView = true;
+                                }
+                              });
+                            },
+                            child: showDetailsView
+                                ? Container(
+                              width: 26,
+                              child: Image.asset(
+                                "assets/images/icons/showData.png",
                               ),
-                      )
-                    ],
-                  ),
+                            )
+                                : Container(
+                              width: 26,
+                              child: Image.asset(
+                                "assets/images/icons/hideData.png",
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 32.3,
+                    ),
+                    showDetails(appTheme),
+                  ],),
                 ),
-                SizedBox(
-                  height: 32.3,
-                ),
-                showDetails(appTheme),
-              ],
-            )),
-      ),
+              )
+
+
+            ],
+          )),
     );
   }
 

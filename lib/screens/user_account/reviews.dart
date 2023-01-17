@@ -184,10 +184,12 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(
-              Icons.info_outlined,
-              color: appTheme.colors.secondaryBackground,
-              size: 45,
+            SizedBox(
+              height: 20,
+            ),
+            Image.asset(Resources.reviewCheckPNG,height: 63,),
+            SizedBox(
+              height: 16,
             ),
             GeneralText(
               Strings.ratingPopupTitle,

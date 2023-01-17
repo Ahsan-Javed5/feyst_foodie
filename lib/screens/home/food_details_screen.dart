@@ -144,240 +144,244 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       backgroundColor: HexColor.fromHex('#212129'),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: getStartedButtonTitle(appTheme: appTheme),
-      body: SingleChildScrollView(
-        child: Stack(
-          // clipBehavior: Clip.none,
-          children: [
-            Column(
-              children: [
-                Image.asset('assets/images/icons/food_detail_bg.png',
-                    fit: BoxFit.fill),
-                Container(
-                  padding: EdgeInsetsDirectional.only(start: 24),
-                  color: HexColor.fromHex('#212129'),
-                  child: Column(
-                    children: [
-                      if (selectedTab != TabBars.Schedule)
+      body: Stack(
+        // clipBehavior: Clip.none,
+        children: [
+          Column(
+            children: [
+              Image.asset('assets/images/icons/food_detail_bg.png',
+                  fit: BoxFit.fill),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Container(
+                    padding: EdgeInsetsDirectional.only(start: 24),
+                    color: HexColor.fromHex('#212129'),
+                    child: Column(
+                      children: [
+                        if (selectedTab != TabBars.Schedule)
+                          const SizedBox(
+                            height: 60,
+                          ),
+                        if (selectedTab == TabBars.Schedule)
+                          const SizedBox(
+                            height: 40,
+                          ),
+                        if (selectedTab == TabBars.Menu)
+                          Row(
+                            children: [
+                              Container(
+                                color: HexColor.fromHex('#f1c452'),
+                                width: 16,
+                                height: 1,
+                              ),
+                              const SizedBox(
+                                width: 2,
+                              ),
+                              getFoodItemHeading(appTheme: appTheme),
+                            ],
+                          ),
                         const SizedBox(
-                          height: 60,
+                          height: 15,
                         ),
-                      if (selectedTab == TabBars.Schedule)
-                        const SizedBox(
-                          height: 40,
-                        ),
-                      if (selectedTab == TabBars.Menu)
-                        Row(
-                          children: [
-                            Container(
-                              color: HexColor.fromHex('#f1c452'),
-                              width: 16,
-                              height: 1,
-                            ),
-                            const SizedBox(
-                              width: 2,
-                            ),
-                            getFoodItemHeading(appTheme: appTheme),
-                          ],
-                        ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      if (selectedTab == TabBars.Details)
-                        detailsTabViewForm(context, appTheme),
-                      if (selectedTab == TabBars.Menu)
-                        menuTabView(context, appTheme),
-                      if (selectedTab == TabBars.Schedule)
-                        scheduleTabView(context, appTheme)
-                    ],
+
+                        
+                        if (selectedTab == TabBars.Details)
+                          detailsTabViewForm(context, appTheme),
+                        if (selectedTab == TabBars.Menu)
+                          menuTabView(context, appTheme),
+                        if (selectedTab == TabBars.Schedule)
+                          scheduleTabView(context, appTheme)
+                      ],
+                    ),
                   ),
                 ),
-              ],
-            ),
-            const Positioned.fill(
-              top: 70,
-              left: 20,
-              child: Align(
-                  alignment: Alignment.topLeft, child: GeneralNewAppBar()),
-            ),
-            Positioned(
-              top: 140,
-              width: MediaQuery.of(context).size.width,
-              child: Padding(
-                padding: EdgeInsetsDirectional.only(start: 25),
-                child: Column(
-                  children: [
-                    Container(
-                        decoration: BoxDecoration(
-                            color: HexColor.fromHex("#4b4b52"),
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(30),
-                                bottomLeft: Radius.circular(30))),
-                        height: 118,
-                        padding: EdgeInsetsDirectional.only(bottom: 0),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.only(end: 14, top: 30),
-                          child: Column(children: [
-                            getFoodMainHeading(appTheme: appTheme),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.only(
-                                  start: 36, end: 36),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  InkWell(
-                                    child: Column(
-                                      children: [
-                                        GeneralText(
-                                          Strings.foodItemDetails,
-                                          style: appTheme.typographies
-                                              .interFontFamily.headline6
-                                              .copyWith(
-                                                  fontSize: 14,
-                                                  fontWeight: selectedTab ==
-                                                          TabBars.Details
-                                                      ? FontWeight.bold
-                                                      : FontWeight.w400,
-                                                  color: HexColor.fromHex(
-                                                      '#f1c452')),
-                                        ),
-                                        Container(
-                                          height: 9,
-                                          width: 9,
-                                          decoration: BoxDecoration(
-                                              color: selectedTab ==
-                                                      TabBars.Details
-                                                  ? HexColor.fromHex('#f1c452')
-                                                  : Colors.transparent,
-                                              shape: BoxShape.circle),
-                                        ),
-                                      ],
-                                    ),
-                                    onTap: () {
-                                      updateTabView(TabBars.Details);
-                                    },
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      updateTabView(TabBars.Menu);
-                                    },
-                                    child: Column(
-                                      children: [
-                                        GeneralText(
-                                          Strings.foodItemMenu,
-                                          style: appTheme.typographies
-                                              .interFontFamily.headline6
-                                              .copyWith(
-                                                  fontSize: 14,
-                                                  fontWeight: selectedTab ==
-                                                          TabBars.Menu
-                                                      ? FontWeight.bold
-                                                      : FontWeight.w400,
-                                                  color: HexColor.fromHex(
-                                                      '#f1c452')),
-                                        ),
-                                        Container(
-                                          height: 9,
-                                          width: 9,
-                                          decoration: BoxDecoration(
-                                              color: selectedTab == TabBars.Menu
-                                                  ? HexColor.fromHex('#f1c452')
-                                                  : Colors.transparent,
-                                              shape: BoxShape.circle),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      updateTabView(TabBars.Schedule);
-                                    },
-                                    child: Column(
-                                      children: [
-                                        GeneralText(
-                                          Strings.foodItemSchedule,
-                                          style: appTheme.typographies
-                                              .interFontFamily.headline6
-                                              .copyWith(
-                                                  fontSize: 14,
-                                                  fontWeight: selectedTab ==
-                                                          TabBars.Schedule
-                                                      ? FontWeight.bold
-                                                      : FontWeight.w400,
-                                                  color: HexColor.fromHex(
-                                                      '#f1c452')),
-                                        ),
-                                        Container(
-                                          height: 9,
-                                          width: 9,
-                                          decoration: BoxDecoration(
-                                              color: selectedTab ==
-                                                      TabBars.Schedule
-                                                  ? HexColor.fromHex('#f1c452')
-                                                  : Colors.transparent,
-                                              shape: BoxShape.circle),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ]),
-                        )),
-                    if (selectedTab == TabBars.Menu ||
-                        selectedTab == TabBars.Details) ...[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Container(
+              ),
+            ],
+          ),
+          const Positioned.fill(
+            top: 70,
+            left: 20,
+            child: Align(
+                alignment: Alignment.topLeft, child: GeneralNewAppBar()),
+          ),
+          Positioned(
+            top: 140,
+            width: MediaQuery.of(context).size.width,
+            child: Padding(
+              padding: EdgeInsetsDirectional.only(start: 25),
+              child: Column(
+                children: [
+                  Container(
+                      decoration: BoxDecoration(
+                          color: HexColor.fromHex("#4b4b52"),
+                          borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              bottomLeft: Radius.circular(30))),
+                      height: 118,
+                      padding: EdgeInsetsDirectional.only(bottom: 0),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.only(end: 14, top: 30),
+                        child: Column(children: [
+                          getFoodMainHeading(appTheme: appTheme),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Padding(
                             padding: EdgeInsetsDirectional.only(
-                                start: 25, end: 25, bottom: 15, top: 15),
-                            decoration: BoxDecoration(
-                                color: HexColor.fromHex("#8ea659"),
-                                borderRadius: const BorderRadius.only(
-                                    bottomLeft: Radius.circular(40))),
-                            child: GeneralText(
-                              Strings.appCurrency +
-                                  "." +
-                                  " " +
-                                  Strings.foodProductItemPrice,
-                              style: appTheme
-                                  .typographies.interFontFamily.headline4
-                                  .copyWith(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: HexColor.fromHex('#ffffff')),
+                                start: 36, end: 36),
+                            child: Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                              children: [
+                                InkWell(
+                                  child: Column(
+                                    children: [
+                                      GeneralText(
+                                        Strings.foodItemDetails,
+                                        style: appTheme.typographies
+                                            .interFontFamily.headline6
+                                            .copyWith(
+                                                fontSize: 14,
+                                                fontWeight: selectedTab ==
+                                                        TabBars.Details
+                                                    ? FontWeight.bold
+                                                    : FontWeight.w400,
+                                                color: HexColor.fromHex(
+                                                    '#f1c452')),
+                                      ),
+                                      Container(
+                                        height: 9,
+                                        width: 9,
+                                        decoration: BoxDecoration(
+                                            color: selectedTab ==
+                                                    TabBars.Details
+                                                ? HexColor.fromHex('#f1c452')
+                                                : Colors.transparent,
+                                            shape: BoxShape.circle),
+                                      ),
+                                    ],
+                                  ),
+                                  onTap: () {
+                                    updateTabView(TabBars.Details);
+                                  },
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    updateTabView(TabBars.Menu);
+                                  },
+                                  child: Column(
+                                    children: [
+                                      GeneralText(
+                                        Strings.foodItemMenu,
+                                        style: appTheme.typographies
+                                            .interFontFamily.headline6
+                                            .copyWith(
+                                                fontSize: 14,
+                                                fontWeight: selectedTab ==
+                                                        TabBars.Menu
+                                                    ? FontWeight.bold
+                                                    : FontWeight.w400,
+                                                color: HexColor.fromHex(
+                                                    '#f1c452')),
+                                      ),
+                                      Container(
+                                        height: 9,
+                                        width: 9,
+                                        decoration: BoxDecoration(
+                                            color: selectedTab == TabBars.Menu
+                                                ? HexColor.fromHex('#f1c452')
+                                                : Colors.transparent,
+                                            shape: BoxShape.circle),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    updateTabView(TabBars.Schedule);
+                                  },
+                                  child: Column(
+                                    children: [
+                                      GeneralText(
+                                        Strings.foodItemSchedule,
+                                        style: appTheme.typographies
+                                            .interFontFamily.headline6
+                                            .copyWith(
+                                                fontSize: 14,
+                                                fontWeight: selectedTab ==
+                                                        TabBars.Schedule
+                                                    ? FontWeight.bold
+                                                    : FontWeight.w400,
+                                                color: HexColor.fromHex(
+                                                    '#f1c452')),
+                                      ),
+                                      Container(
+                                        height: 9,
+                                        width: 9,
+                                        decoration: BoxDecoration(
+                                            color: selectedTab ==
+                                                    TabBars.Schedule
+                                                ? HexColor.fromHex('#f1c452')
+                                                : Colors.transparent,
+                                            shape: BoxShape.circle),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                    ]
-                  ],
-                ),
+                        ]),
+                      )),
+                  if (selectedTab == TabBars.Menu ||
+                      selectedTab == TabBars.Details) ...[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                          padding: EdgeInsetsDirectional.only(
+                              start: 25, end: 25, bottom: 15, top: 15),
+                          decoration: BoxDecoration(
+                              color: HexColor.fromHex("#8ea659"),
+                              borderRadius: const BorderRadius.only(
+                                  bottomLeft: Radius.circular(40))),
+                          child: GeneralText(
+                            Strings.appCurrency +
+                                "." +
+                                " " +
+                                Strings.foodProductItemPrice,
+                            style: appTheme
+                                .typographies.interFontFamily.headline4
+                                .copyWith(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: HexColor.fromHex('#ffffff')),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ]
+                ],
               ),
             ),
-            // if (selectedTab != TabBars.Details)
-            const Positioned.fill(
-              top: 105,
-              child: Align(
-                alignment: Alignment.topRight,
+          ),
+          // if (selectedTab != TabBars.Details)
+          const Positioned.fill(
+            top: 105,
+            child: Align(
+              alignment: Alignment.topRight,
+              child: CircleAvatar(
+                backgroundColor: Colors.white,
+                radius: 32,
                 child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 32,
-                  child: CircleAvatar(
-                    radius: 30,
-                    backgroundImage:
-                        AssetImage("assets/images/icons/user_image.png"),
-                  ),
+                  radius: 30,
+                  backgroundImage:
+                      AssetImage("assets/images/icons/user_image.png"),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -464,57 +468,70 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                               getFoodItemUsers(appTheme: appTheme),
                             ],
                           ),
-                          Row(
+                          Stack(
                             children: [
-                              getFoodItemQuantityLabel(appTheme: appTheme),
-                              const SizedBox(
-                                width: 4,
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  removeQuantity();
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: HexColor.fromHex("#f7dc99"),
-                                    borderRadius: const BorderRadius.only(
-                                        bottomLeft: Radius.circular(8),
-                                        topLeft: Radius.circular(8)),
+                              Row(
+                                children: [
+                                  getFoodItemQuantityLabel(appTheme: appTheme),
+                                  const SizedBox(
+                                    width: 4,
                                   ),
-                                  padding: const EdgeInsetsDirectional.only(
-                                      start: 8, end: 8, top: 6, bottom: 6),
-                                  child: const Icon(Icons.remove,
-                                      color: Colors.black, size: 18),
+                                  InkWell(
+                                    onTap: () {
+                                      removeQuantity();
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: HexColor.fromHex("#f7dc99"),
+                                        borderRadius: const BorderRadius.only(
+                                            bottomLeft: Radius.circular(8),
+                                            topLeft: Radius.circular(8)),
+                                      ),
+                                      padding: const EdgeInsetsDirectional.only(
+                                          start: 8, end: 8, top: 6, bottom: 6),
+                                      child: const Icon(Icons.remove,
+                                          color: Colors.black, size: 18),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width:44,
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      addQuantity();
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: HexColor.fromHex("#f7dc99"),
+                                        borderRadius: const BorderRadius.only(
+                                            topRight: Radius.circular(8),
+                                            bottomRight: Radius.circular(8)),
+                                      ),
+                                      padding: const EdgeInsetsDirectional.only(
+                                          start: 8, end: 8, top: 6, bottom: 6),
+                                      child: Icon(
+                                        Icons.add,
+                                        color: Colors.black,
+                                        size: 18,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              Positioned.fill(
+                                left: 60,
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(8)),
+                                      padding: const EdgeInsetsDirectional.only(
+                                          start: 21, end: 21, top: 5, bottom: 5),
+                                      child: getFoodItemQuantityValue(
+                                          appTheme: appTheme)),
                                 ),
                               ),
-                              Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(8)),
-                                  padding: const EdgeInsetsDirectional.only(
-                                      start: 21, end: 21, top: 5, bottom: 5),
-                                  child: getFoodItemQuantityValue(
-                                      appTheme: appTheme)),
-                              InkWell(
-                                onTap: () {
-                                  addQuantity();
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: HexColor.fromHex("#f7dc99"),
-                                    borderRadius: const BorderRadius.only(
-                                        topRight: Radius.circular(8),
-                                        bottomRight: Radius.circular(8)),
-                                  ),
-                                  padding: const EdgeInsetsDirectional.only(
-                                      start: 8, end: 8, top: 6, bottom: 6),
-                                  child: Icon(
-                                    Icons.add,
-                                    color: Colors.black,
-                                    size: 18,
-                                  ),
-                                ),
-                              )
                             ],
                           )
                         ],

@@ -13,6 +13,48 @@ class _SignUpQuestionireScreenState extends State<SignUpQuestionireScreen> {
 
     return Scaffold(
       backgroundColor: appTheme.colors.primaryBackground,
+      floatingActionButton:
+      Padding(
+        padding: const EdgeInsets.only(right: 18.0,bottom: 12),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            InkWell(
+              onTap: (){
+                Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                              const SignUpLetsStartScreen()),
+                        );
+              },
+              child: SvgPicture.asset(
+                Resources.getSignInRightArrow,
+              ),
+            ),
+          ],
+        ),
+      ),
+
+      // InkWell(
+      //   onTap: () {
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //           builder: (context) =>
+      //           const SignUpLetsStartScreen()),
+      //     );
+      //   },
+      //   child: Padding(
+      //     padding: EdgeInsets.only(right: 32),
+      //     child: Align(
+      //       alignment: Alignment.bottomRight,
+      //       child: SvgPicture.asset(
+      //         Resources.getSignInRightArrow,
+      //       ),
+      //     ),
+      //   ),
+      // ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -265,25 +307,7 @@ class _SignUpQuestionireScreenState extends State<SignUpQuestionireScreen> {
                   const SizedBox(
                     height: 60,
                   ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                const SignUpLetsStartScreen()),
-                      );
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.only(right: 32),
-                      child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: SvgPicture.asset(
-                          Resources.getSignInRightArrow,
-                        ),
-                      ),
-                    ),
-                  ),
+
                   const SizedBox(
                     height: 30,
                   ),

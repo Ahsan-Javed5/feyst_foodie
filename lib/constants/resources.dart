@@ -52,4 +52,11 @@ abstract class Resources {
   static const userRoundIconPNG = 'assets/images/icons/user_round_icon.png';
   static const userProfilePicPng = 'assets/images/icons/profile.png';
   static const calendarPNG = 'assets/images/icons/calendar.png';
+  static const confirmUserPNG = 'assets/images/icons/confirm_user.png';
+  static const paymentPNG = 'assets/images/icons/payment_1.png';
+  static const hourglassPNG = 'assets/images/icons/hourglass.png';
+  static const timeLapsePNG = 'assets/images/icons/timelapse.png';
+  static const reviewCheckPNG = 'assets/images/icons/review_check.png';
+  static const infoPNG = 'assets/images/icons/info.png';
+  static const bookingCheckboxPNG = 'assets/images/icons/booking_checkbox.png';
 }

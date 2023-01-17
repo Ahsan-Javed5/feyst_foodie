@@ -107,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       shrinkWrap: true,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        childAspectRatio: 0.65,
+                        childAspectRatio: 0.61,
                         crossAxisSpacing: 20.0,
                         mainAxisSpacing: 20.0,
                       ),
@@ -182,33 +182,36 @@ class _PopularDishes extends StatelessWidget {
                   ),
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  GeneralText(
-                    'Sindhi\nBiryani',
-                    textAlign: TextAlign.left,
-                    style: appTheme.typographies.interFontFamily.headline2
-                        .copyWith(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white,
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    GeneralText(
+                      'Sindhi\nBiryani',
+                      textAlign: TextAlign.left,
+                      style: appTheme.typographies.interFontFamily.headline2
+                          .copyWith(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                  GeneralText(
-                    'by Zee Lounge',
-                    style: appTheme.typographies.interFontFamily.headline2
-                        .copyWith(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xff909094),
+                    GeneralText(
+                      'by Zee Lounge',
+                      style: appTheme.typographies.interFontFamily.headline2
+                          .copyWith(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xff909094),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                ],
+                    SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
               )
             ],
           ),
