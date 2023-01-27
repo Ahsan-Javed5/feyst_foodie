@@ -1,115 +1,185 @@
 import 'package:chef/helpers/helpers.dart';
+import 'package:chef/screens/sign_up/sign_up_screen_vm.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
+import '../../models/signup/profession_response.dart';
 import '../../ui_kit/helpers/dialog_helper.dart';
 import '../sign_in/sign_in_screen_v.dart';
+import 'get_started_screen_vm.dart';
 
 enum Gender {
   male,
   female,
 }
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+class SignUpScreen extends BaseView<SignUpScreenViewModel> {
+  SignUpScreen({Key? key}) : super(key: key);
 
-  @override
-  _SignUpScreenState createState() => _SignUpScreenState();
-}
+  final baseURLs = [
+    // Api.prodURL,
+    Api.baseURL,
+    Api.devBaseURL,
+  ];
 
-class _SignUpScreenState extends State<SignUpScreen> {
   late List<DropdownMenuItem<String>> items = [];
   final TextController _nameController = TextController();
   final TextController _mobileNumberController = TextController();
   final TextController _ageController = TextController();
   String _dropDownValue = 'Scientist';
   final dropdownItems = <String>[];
+  Gender selectedGender = Gender.male;
 
-  @override
-  void initState() {
-    var newItem = const DropdownMenuItem(
-      child: Text('Scientist'),
-      value: 'Scientist',
-      alignment: Alignment.centerLeft,
-    );
-    var newItem2 = const DropdownMenuItem(
-      child: Text('Mathematician'),
-      value: 'Mathematician',
-      alignment: Alignment.centerLeft,
-    );
-    items.add(newItem);
-    items.add(newItem2);
-    dropdownItems.add('Student');
-    dropdownItems.add('Mathematician');
-    dropdownItems.add('Professor');
-    super.initState();
+  // void initState() {
+  //   var newItem = const DropdownMenuItem(
+  //     child: Text('Scientist'),
+  //     value: 'Scientist',
+  //     alignment: Alignment.centerLeft,
+  //   );
+  //   var newItem2 = const DropdownMenuItem(
+  //     child: Text('Mathematician'),
+  //     value: 'Mathematician',
+  //     alignment: Alignment.centerLeft,
+  //   );
+  //   items.add(newItem);
+  //   items.add(newItem2);
+  //   dropdownItems.add('Student');
+  //   dropdownItems.add('Mathematician');
+  //   dropdownItems.add('Professor');
+  //   // super.initState();
+  // }
+
+  void loadProfessionList(
+    List<ProfessionData> professionList,
+  ) {
+    for (int i = 0; i < professionList.length; i++) {
+      dropdownItems.add(professionList[i].name);
+    }
   }
 
-  Gender selectedGender = Gender.male;
   @override
-  Widget build(BuildContext context) {
+  Widget buildScreen({
+    required BuildContext context,
+    required ScreenSizeData screenSizeData,
+  }) {
     final appTheme = AppTheme.of(context).theme;
 
+    viewModel.loadProfessions(baseUrl: baseURLs[0], context: context);
+    return BlocBuilder<SignUpScreenViewModel, SignUpScreenState>(
+        bloc: viewModel,
+        builder: (_, state) => state.when(
+            loading: _loading,
+            loaded: (professionList) => _displayLoadedData(
+                state: state,
+                appTheme: appTheme,
+                context: context,
+                professionList: professionList,
+                screenSizeData: screenSizeData)));
+  }
+
+  Widget _loading() => const GeneralLoading();
+
+  Widget _displayLoadedData({
+    state,
+    appTheme,
+    required BuildContext context,
+    required List<ProfessionData> professionList,
+    required ScreenSizeData screenSizeData,
+  }) {
+    final size = screenSizeData.size;
     return Scaffold(
       backgroundColor: appTheme.colors.primaryBackground,
-      bottomNavigationBar:
-      displayAlreadySignIn(appTheme),
+      bottomNavigationBar: displayAlreadySignIn(appTheme, context),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 41,
-                ),
-                _getStartedTitle(appTheme: appTheme),
-                Center(
-                  child: GeneralText(
-                    Strings.signUpTitle,
-                    textAlign: TextAlign.center,
-                    style: appTheme.typographies.interFontFamily.headline4
-                        .copyWith(
-                            color: Colors.white,
-                            fontSize: 28,
-                            fontWeight: FontWeight.w500),
-                  ),
-                ),
-                const SizedBox(
-                  height: 27,
-                ),
-                displayFullName(appTheme),
-                const SizedBox(
-                  height: 27,
-                ),
-                displayMobileNumber(appTheme),
-                const SizedBox(
-                  height: 27,
-                ),
-                displayAgeGender(appTheme),
-                const SizedBox(
-                  height: 10,
-                ),
-                displayProfession(appTheme),
-                const SizedBox(
-                  height: 140,
-                ),
-
-
-              ],
-            ),
-          ),
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Stack(
+                children: [
+                  screenSizeData.screenType == ScreenType.small
+                      ? _buildMobileView(
+                          context: context,
+                          state: state,
+                          appTheme: appTheme,
+                          size: size,
+                          professionList: professionList,
+                        )
+                      : _buildTabletView(
+                          context: context,
+                          state: state,
+                          appTheme: appTheme,
+                          size: size,
+                        ),
+                ],
+              )
+              // child:
+              ),
         ),
       ),
     );
   }
 
+  Widget _buildMobileView({
+    required BuildContext context,
+    required SignUpScreenState state,
+    required IAppThemeData appTheme,
+    required Size size,
+    required List<ProfessionData> professionList,
+  }) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(
+          height: 41,
+        ),
+        _getStartedTitle(appTheme: appTheme),
+        Center(
+          child: GeneralText(
+            Strings.signUpTitle,
+            textAlign: TextAlign.center,
+            style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                color: Colors.white, fontSize: 28, fontWeight: FontWeight.w500),
+          ),
+        ),
+        const SizedBox(
+          height: 27,
+        ),
+        displayFullName(appTheme),
+        const SizedBox(
+          height: 27,
+        ),
+        displayMobileNumber(appTheme),
+        const SizedBox(
+          height: 27,
+        ),
+        displayAgeGender(appTheme),
+        const SizedBox(
+          height: 10,
+        ),
+        // state.when(initialized: initialized, loaded: loaded)
+        displayProfession(appTheme, professionList),
+        const SizedBox(
+          height: 140,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTabletView({
+    required BuildContext context,
+    required SignUpScreenState state,
+    required IAppThemeData appTheme,
+    required Size size,
+  }) {
+    return Container();
+  }
+
   void dropDownCallBack(String? selectedValue) {
     if (selectedValue is String) {
-      setState(() {
-        _dropDownValue = selectedValue;
-      });
+      //  setState(() {
+      _dropDownValue = selectedValue;
+      //     });
     }
   }
 
@@ -248,7 +318,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Widget displayProfession(IAppThemeData appTheme) {
+  Widget displayProfession(
+    IAppThemeData appTheme,
+    List<ProfessionData> professionList,
+  ) {
+    loadProfessionList(professionList);
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -274,14 +348,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
             required String key,
             required dynamic value,
           }) {},
-        )
+        ),
       ],
     );
   }
 
-  Widget displayAlreadySignIn(IAppThemeData appTheme) {
+  Widget displayAlreadySignIn(
+    IAppThemeData appTheme,
+    BuildContext context,
+  ) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20,vertical: 20),
+      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -305,7 +382,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           InkWell(
             onTap: () {
               _showVerificationPopup(context);
-
             },
             child: SvgPicture.asset(
               Resources.getRightArrow,
@@ -376,6 +452,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       style: appTheme.typographies.interFontFamily.headline2,
     );
   }
+
   Future<dynamic> _showVerificationPopup(BuildContext context) async {
     final appTheme = AppTheme.of(context).theme;
     final TextController _otpController = TextController();
@@ -506,8 +583,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void changeGender(Gender gender) {
-    setState(() {
-      selectedGender = gender;
-    });
+    //setState(() {
+    selectedGender = gender;
+    //});
   }
 }

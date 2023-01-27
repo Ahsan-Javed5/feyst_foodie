@@ -1,4 +1,8 @@
 import 'package:chef/helpers/helpers.dart';
+import 'package:chef/models/signup/profession_request.dart' as prorequest;
+
+import '../../models/signup/profession_response.dart';
+import 'dart:developer' as developer;
 
 @injectable
 class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
@@ -11,39 +15,49 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
         _network = network,
         _storage = storage,
         _appService = appService,
-        super(
-          const Initialized(
-            appVersion: '',
-            baseURL: '',
-            email: '',
-            password: '',
-            baseUrlIndex: 0,
-            isBusy: false,
-          ),
-        );
+        super(const Loading());
 
   final INavigationService _navigation;
   final INetworkService _network;
   final IStorageService _storage;
   final ApplicationService _appService;
 
-  Future<void> loadAppVersion() async {
-    final packageInfo = await PackageInfo.fromPlatform();
-    emit(state.copyWith(appVersion: packageInfo.version));
+  Future<void> loadProfessions({
+    required String baseUrl,
+    required BuildContext context,
+  }) async {
+    final url = ExtoURLHelpers.getRestApiURL(baseUrl + Api.professionalList);
+    final professionDataRequest = prorequest.ProfessionRequest(
+      builderId: 0,
+      currentPage: 0,
+      totalRecords: 0,
+      userId: 0,
+      userName: "",
+      t: prorequest.T(),
+    ).toJson();
+    final response = await _network.post(
+      path: url,
+      data: professionDataRequest,
+    );
+
+    final currentProfessionData = professionFromJson(response.body);
+    List<ProfessionData> data = currentProfessionData.t;
+    developer.log(' Current Data is ' + '${currentProfessionData.t[0].name}');
+    emit(Loaded(currentProfessionData.t));
   }
 
-  void updateBaseUrl({
-    required int selectedUrlIndex,
-    required String baseURL,
-  }) =>
-      emit(
-        state.copyWith(
-          baseUrlIndex: selectedUrlIndex,
-          baseURL: baseURL,
-        ),
-      );
+  // void updateBaseUrl({
+  //   required int selectedUrlIndex,
+  //   required String baseURL,
+  // }) =>
+  //     emit(
+  //       state.copyWith(
+  //         baseUrlIndex: selectedUrlIndex,
+  //         baseURL: baseURL,
+  //       ),
+  //     );
 
-  void loading({required bool isBusy}) => emit(state.copyWith(isBusy: isBusy));
+  // void loading({required bool isBusy}) => emit(state.copyWith(isBusy: isBusy));
 
   bool isValidUrl(String url) => Uri.tryParse(url)?.hasAbsolutePath ?? false;
 
@@ -57,68 +71,6 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     return url;
   }
 
-  void onFormValuesChange({
-    String? email,
-    String? password,
-  }) =>
-      emit(
-        state.copyWith(
-          email: email ?? state.email,
-          password: password ?? state.password,
-        ),
-      );
-
-  void onCheckRememberMe({required bool value}) =>
-      emit(state.copyWith(rememberMe: value));
-
-  void login({
-    required String email,
-    required String password,
-    required String baseUrl,
-    required BuildContext context,
-  }) async {
-    final isInputValid = _validateInput(
-      email: email,
-      password: password,
-    );
-    if (isInputValid) {
-      loading(isBusy: true);
-      try {
-        final url = ExtoURLHelpers.getRestApiURL(baseUrl + Api.login);
-        final loginCredentials = LoginRequest(
-          username: email.trim(),
-          password: password.trim(),
-        ).toJson();
-        final response = await _network.post(
-          path: url,
-          data: loginCredentials,
-        );
-        await _cacheData(
-          context: context,
-          loginData: response.body,
-          baseUrl: baseUrl,
-        );
-
-        loading(isBusy: false);
-        //   _navigation.replace(route: CustomerRoute());
-      } catch (error) {
-        emit(
-          state.copyWith(
-            isBusy: false,
-            errorMessage: error.toString().contains(Api.unauthorizedRequest)
-                ? Strings.invalidUsernamePassword
-                : error.toString(),
-          ),
-        );
-      }
-    } else {
-      Toaster.errorToast(
-        context: context,
-        message: Strings.requiredFields,
-      );
-    }
-  }
-
   bool _validateInput({
     required String email,
     required String password,
@@ -130,10 +82,11 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     required loginData,
     required String baseUrl,
   }) async {
-    await _storage.writeBool(
-      key: PreferencesKeys.sRememberUser,
-      data: state.rememberMe,
-    );
+    // await _storage.writeBool(
+    //   key: PreferencesKeys.sRememberUser,
+    //   // data:  state.rememberMe,
+    //   data: state.when(initialized: , loaded: loaded),
+    // );
     await _storage.writeString(
       key: PreferencesKeys.sLoginData,
       data: loginData.toString(),
@@ -150,8 +103,4 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     );
     await _appService.loadPrefData();
   }
-
-  void goToForgotPasswordScreen() => _navigation.navigateTo(
-        route: ForgotPasswordRoute(baseUrl: state.baseURL),
-      );
 }

@@ -36,13 +36,15 @@ class AppRouter extends _i4.RootStackRouter {
     GetStartedRoute.name: (routeData) {
       return _i4.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i2.GetStartedScreen(),
+        child: const _i2.GetStartedScreen(),
       );
     },
     SignUpRoute.name: (routeData) {
+      final args = routeData.argsAs<SignUpRouteArgs>(
+          orElse: () => const SignUpRouteArgs());
       return _i4.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i3.SignUpScreen(),
+        child: _i3.SignUpScreen(key: args.key),
       );
     },
     ForgotPasswordRoute.name: (routeData) {
@@ -55,14 +57,6 @@ class AppRouter extends _i4.RootStackRouter {
         ),
       );
     },
-    // HomeRoute.name: (routeData) {
-    //   final args =
-    //       routeData.argsAs<HomeRouteArgs>(orElse: () => const HomeRouteArgs());
-    //   return _i4.MaterialPageX<dynamic>(
-    //     routeData: routeData,
-    //     child: _i1.HomeScreen(key: args.key),
-    //   );
-    // },
   };
 
   @override
@@ -82,10 +76,6 @@ class AppRouter extends _i4.RootStackRouter {
         _i4.RouteConfig(
           ForgotPasswordRoute.name,
           path: '/forgotPassword',
-        ),
-        _i4.RouteConfig(
-          HomeRoute.name,
-          path: '/home',
         ),
         _i4.RouteConfig(
           '*#redirect',
@@ -134,14 +124,26 @@ class GetStartedRoute extends _i4.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.SignUpScreen]
-class SignUpRoute extends _i4.PageRouteInfo<void> {
-  const SignUpRoute()
+class SignUpRoute extends _i4.PageRouteInfo<SignUpRouteArgs> {
+  SignUpRoute({_i6.Key? key})
       : super(
           SignUpRoute.name,
           path: '/signUp',
+          args: SignUpRouteArgs(key: key),
         );
 
   static const String name = 'SignUpRoute';
+}
+
+class SignUpRouteArgs {
+  const SignUpRouteArgs({this.key});
+
+  final _i6.Key? key;
+
+  @override
+  String toString() {
+    return 'SignUpRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for
@@ -175,29 +177,5 @@ class ForgotPasswordRouteArgs {
   @override
   String toString() {
     return 'ForgotPasswordRouteArgs{baseUrl: $baseUrl, key: $key}';
-  }
-}
-
-/// generated route for
-/// [_i1.HomeScreen]
-class HomeRoute extends _i4.PageRouteInfo<HomeRouteArgs> {
-  HomeRoute({_i6.Key? key})
-      : super(
-          HomeRoute.name,
-          path: '/home',
-          args: HomeRouteArgs(key: key),
-        );
-
-  static const String name = 'HomeRoute';
-}
-
-class HomeRouteArgs {
-  const HomeRouteArgs({this.key});
-
-  final _i6.Key? key;
-
-  @override
-  String toString() {
-    return 'HomeRouteArgs{key: $key}';
   }
 }
