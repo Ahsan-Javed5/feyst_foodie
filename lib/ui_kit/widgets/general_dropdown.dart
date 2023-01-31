@@ -122,8 +122,13 @@ class _GeneralDropdownState extends State<GeneralDropdown> {
                           value: currentChoice,
                           iconEnabledColor: widget._borderColor,
                           underline: Container(),
-                          onChanged: (value) =>
-                              setState(() => currentChoice = value!),
+                          onChanged: (value) {
+                            setState(() => currentChoice = value!);
+                            widget._onChange.call(
+                              key: widget._name,
+                              value: value.toString(),
+                            );
+                          },
                           items: widget._items
                               .map((data) => DropdownMenuItem(
                                   value: data,

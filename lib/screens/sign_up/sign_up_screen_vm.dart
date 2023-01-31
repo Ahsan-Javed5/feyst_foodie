@@ -4,6 +4,8 @@ import 'package:chef/models/signup/profession_request.dart' as prorequest;
 import '../../models/signup/profession_response.dart';
 import 'dart:developer' as developer;
 
+import '../../models/signup/signup_request.dart';
+
 @injectable
 class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   SignUpScreenViewModel({
@@ -15,7 +17,16 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
         _network = network,
         _storage = storage,
         _appService = appService,
-        super(const Loading());
+        super(
+          const Initialized(
+            fullName: '',
+            mobileNumber: '',
+            age: 18,
+            gender: 'Male',
+            isBusy: false,
+            profession: '',
+          ),
+        );
 
   final INavigationService _navigation;
   final INetworkService _network;
@@ -26,7 +37,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     required String baseUrl,
     required BuildContext context,
   }) async {
-    final url = ExtoURLHelpers.getRestApiURL(baseUrl + Api.professionalList);
+    final url = InfininURLHelpers.getRestApiURL(baseUrl + Api.professionalList);
     final professionDataRequest = prorequest.ProfessionRequest(
       builderId: 0,
       currentPage: 0,
@@ -42,22 +53,8 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
 
     final currentProfessionData = professionFromJson(response.body);
     List<ProfessionData> data = currentProfessionData.t;
-    developer.log(' Current Data is ' + '${currentProfessionData.t[0].name}');
     emit(Loaded(currentProfessionData.t));
   }
-
-  // void updateBaseUrl({
-  //   required int selectedUrlIndex,
-  //   required String baseURL,
-  // }) =>
-  //     emit(
-  //       state.copyWith(
-  //         baseUrlIndex: selectedUrlIndex,
-  //         baseURL: baseURL,
-  //       ),
-  //     );
-
-  // void loading({required bool isBusy}) => emit(state.copyWith(isBusy: isBusy));
 
   bool isValidUrl(String url) => Uri.tryParse(url)?.hasAbsolutePath ?? false;
 
@@ -71,11 +68,43 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     return url;
   }
 
-  bool _validateInput({
-    required String email,
-    required String password,
+  void onFormValuesChange({
+    String? fullName,
+    String? mobileNumber,
+    int? age,
+    String? gender,
+    String? profession,
   }) =>
-      email.trim().isNotEmpty && password.trim().isNotEmpty;
+      emit(Initialized(
+              fullName: fullName ?? '',
+              mobileNumber: mobileNumber ?? '',
+              age: age ?? 18,
+              gender: gender ?? 'male',
+              profession: profession ?? '',
+              isBusy: false)
+          .copyWith());
+  // emit(
+  //   state.state.copyWith(
+  //     fullName: fullName ?? state.fullName,
+  //     mobileNumber: mobileNumber ?? state.mobileNumber,
+  //     age: age ?? state.age,
+  //     gender: gender ?? state.gender,
+  //     profession: profession ?? state.profession,
+  //   ),
+  // );
+
+  bool _validateInput({
+    required String name,
+    required String mobileNumber,
+    required int age,
+    required String gender,
+    required int professionId,
+  }) =>
+      name.trim().isNotEmpty &&
+      mobileNumber.trim().isNotEmpty &&
+      age > 5 &&
+      gender.isNotEmpty &&
+      professionId != 0;
 
   Future<void> _cacheData({
     required BuildContext context,
@@ -103,4 +132,70 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     );
     await _appService.loadPrefData();
   }
+
+  void saveFoodie({
+    required String name,
+    required String mobileNumber,
+    required int age,
+    required String gender,
+    required int professionId,
+    required BuildContext context,
+  }) async {
+    final isInputValid = _validateInput(
+      name: name,
+      mobileNumber: mobileNumber,
+      age: age,
+      gender: gender,
+      professionId: professionId,
+    );
+    if (isInputValid) {
+      loading(isBusy: true);
+      try {
+        final url =
+            InfininURLHelpers.getRestApiURL(Api.baseURL + Api.foodieSignUp);
+        T t = T(
+          age: age.toString(),
+          name: name,
+          gender: gender,
+          mobileNo: mobileNumber,
+          professionalId: professionId,
+          profileImageUrl: "",
+        );
+
+        final loginCredentials = SignupRequest(
+          t: t,
+        ).toJson();
+        final response = await _network
+            .post(
+              path: url,
+              data: loginCredentials,
+            )
+            .then((res) {});
+        // await _cacheData(
+        //   context: context,
+        //   loginData: response.body,
+        //   baseUrl: baseUrl,
+        // );
+
+        loading(isBusy: false);
+        //   _navigation.replace(route: CustomerRoute());
+      } catch (error) {
+        // emit(
+        //   // state.copyWith(
+        //   //   isBusy: false,
+        //   //   errorMessage: error.toString().contains(Api.unauthorizedRequest)
+        //   //       ? Strings.invalidUsernamePassword
+        //   //       : error.toString(),
+        //   // ),
+        // );
+      }
+    } else {
+      Toaster.errorToast(
+        context: context,
+        message: Strings.requiredFields,
+      );
+    }
+  }
+
+  void loading({required bool isBusy}) => emit(const Loading());
 }

@@ -5,13 +5,11 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../../models/signup/profession_response.dart';
 import '../../ui_kit/helpers/dialog_helper.dart';
+import '../../ui_kit/widgets/general_gender.dart';
 import '../sign_in/sign_in_screen_v.dart';
 import 'get_started_screen_vm.dart';
 
-enum Gender {
-  male,
-  female,
-}
+import 'dart:developer' as developer;
 
 class SignUpScreen extends BaseView<SignUpScreenViewModel> {
   SignUpScreen({Key? key}) : super(key: key);
@@ -26,10 +24,14 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
   final TextController _nameController = TextController();
   final TextController _mobileNumberController = TextController();
   final TextController _ageController = TextController();
+  final TextController _genderController = TextController(text: 'male');
   String _dropDownValue = 'Scientist';
   final dropdownItems = <String>[];
   Gender selectedGender = Gender.male;
+  Map<dynamic, dynamic> dropdownDetails = {};
 
+  // final TextController _professionID = TextController();
+  int _professionID = 0;
   // void initState() {
   //   var newItem = const DropdownMenuItem(
   //     child: Text('Scientist'),
@@ -53,8 +55,13 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     List<ProfessionData> professionList,
   ) {
     for (int i = 0; i < professionList.length; i++) {
+      developer.log(' ProfessionList id is ' + '${professionList[i].id}');
+      dropdownDetails[professionList[i].name] = professionList[i].id;
+
       dropdownItems.add(professionList[i].name);
     }
+
+    _professionID = dropdownDetails[dropdownItems[0]];
   }
 
   @override
@@ -68,6 +75,9 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     return BlocBuilder<SignUpScreenViewModel, SignUpScreenState>(
         bloc: viewModel,
         builder: (_, state) => state.when(
+            initialized:
+                (fullName, mobileNumber, age, gender, profession, isBusy) =>
+                    _initialized(),
             loading: _loading,
             loaded: (professionList) => _displayLoadedData(
                 state: state,
@@ -75,6 +85,10 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                 context: context,
                 professionList: professionList,
                 screenSizeData: screenSizeData)));
+  }
+
+  Widget _initialized() {
+    return Container();
   }
 
   Widget _loading() => const GeneralLoading();
@@ -175,14 +189,6 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     return Container();
   }
 
-  void dropDownCallBack(String? selectedValue) {
-    if (selectedValue is String) {
-      //  setState(() {
-      _dropDownValue = selectedValue;
-      //     });
-    }
-  }
-
   Widget displayFullName(IAppThemeData appTheme) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -209,7 +215,10 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             hintStyle:
                 TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
             // valueStyle: valueStyle,
-            onChanged: (newValue) {}),
+            onChanged: (value) {
+              // viewModel.onFormValuesChange(
+              //     fullName: _nameController.text.trim());
+            }),
       ],
     );
   }
@@ -240,7 +249,10 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             hintStyle:
                 TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
             // valueStyle: valueStyle,
-            onChanged: (newValue) {}),
+            onChanged: (newValue) {
+              // viewModel.onFormValuesChange(
+              //     mobileNumber: _mobileNumberController.text.trim());
+            }),
       ],
     );
   }
@@ -277,7 +289,10 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                   hintStyle: TextStyle(
                       color: Colors.white.withOpacity(0.4), fontSize: 14),
                   // valueStyle: valueStyle,
-                  onChanged: (newValue) {}),
+                  onChanged: (newValue) {
+                    // viewModel.onFormValuesChange(
+                    //     age: int.parse(_ageController.text.trim()));
+                  }),
             ],
           ),
         ),
@@ -342,12 +357,17 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
           name: 'Select',
           items: dropdownItems,
           borderColor: appTheme.colors.textFieldBorderColor,
+          // selectedItem: dropdownItems.first,
           style: appTheme.typographies.interFontFamily.headline6.copyWith(
               color: Colors.white, fontSize: 15, fontWeight: FontWeight.w400),
           onChange: ({
             required String key,
             required dynamic value,
-          }) {},
+          }) {
+            developer.log(' Key data is drop down ' + key);
+            developer.log(' value data is drop down ' + '$value');
+            _professionID = dropdownDetails[value];
+          },
         ),
       ],
     );
@@ -358,7 +378,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     BuildContext context,
   ) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -394,32 +414,43 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
 
   Expanded _genderWidget(IAppThemeData appTheme, Gender gender, String text) {
     return Expanded(
-      child: InkWell(
-        onTap: () {
-          changeGender(gender);
+      child: GeneralGender(
+        gender: gender,
+        text: text,
+        selectedItem: gender,
+        onTap: (value) {
+          _genderController.text = value;
+          developer.log(' Here Gender clicked ' + '$value');
         },
-        child: Container(
-            padding: EdgeInsets.symmetric(vertical: 15),
-            child: GeneralText(
-              text,
-              textAlign: TextAlign.center,
-              style: appTheme.typographies.interFontFamily.headline2.copyWith(
-                  color: selectedGender == gender ? Colors.black : Colors.white,
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold),
-            ),
-            decoration: BoxDecoration(
-                border: Border.all(
-                    color: appTheme.colors
-                        .textFieldBorderColor // green as background color
-
-                    ),
-                borderRadius: BorderRadius.circular(10), // radius of 10
-                color: selectedGender == gender
-                    ? appTheme.colors.textFieldBorderColor
-                    : appTheme.colors.primaryBackground)),
       ),
     );
+    // return Expanded(
+    //   child: InkWell(
+    //     onTap: () {
+    //       changeGender(gender);
+    //     },
+    //     child: Container(
+    //         padding: const EdgeInsets.symmetric(vertical: 15),
+    //         child: GeneralText(
+    //           text,
+    //           textAlign: TextAlign.center,
+    //           style: appTheme.typographies.interFontFamily.headline2.copyWith(
+    //               color: selectedGender == gender ? Colors.black : Colors.white,
+    //               fontSize: 15,
+    //               fontWeight: FontWeight.bold),
+    //         ),
+    //         decoration: BoxDecoration(
+    //             border: Border.all(
+    //                 color: appTheme.colors
+    //                     .textFieldBorderColor // green as background color
+    //
+    //                 ),
+    //             borderRadius: BorderRadius.circular(10), // radius of 10
+    //             color: selectedGender == gender
+    //                 ? appTheme.colors.textFieldBorderColor
+    //                 : appTheme.colors.primaryBackground)),
+    //   ),
+    // );
   }
 
   Widget _getStartedTitle({required IAppThemeData appTheme}) {
@@ -446,10 +477,6 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
         // );
         //    viewModel.goToForgotPasswordScreen();
       },
-    );
-    GeneralText(
-      Strings.getStartedButtonTitle,
-      style: appTheme.typographies.interFontFamily.headline2,
     );
   }
 
@@ -538,7 +565,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                 appContext: context,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             GeneralButton.button(
@@ -546,11 +573,30 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               styleType: ButtonStyleType.fill,
               width: 170,
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => SignUpQuestionireScreen()),
+                developer.log(
+                    ' Here Collected data is ' + '${_nameController.text}');
+                developer.log(
+                    'Mobile Controller  ' + '${_mobileNumberController.text}');
+
+                developer.log(' Age Controller  ' + '${_ageController.text}');
+                developer.log(' Profession ID   ' + '${_professionID}');
+
+                developer
+                    .log(' Gender selected is    ' + _genderController.text);
+                viewModel.saveFoodie(
+                  name: _nameController.text,
+                  mobileNumber: _mobileNumberController.text,
+                  age: int.parse(_ageController.text),
+                  professionId: _professionID,
+                  gender: _genderController.text,
+                  context: context,
                 );
+                // viewModel.v
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //       builder: (context) => SignUpQuestionireScreen()),
+                // );
                 // Navigator.push(
                 //   context,
                 //   MaterialPageRoute(builder: (context) => SignUpScreen()),
@@ -573,18 +619,6 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
           ],
         ),
       ),
-      // body: GBottomSheet<String>(
-      //   bottomSheetTitle: Strings.chooseDateFormat,
-      //   list: ['7878,87,876'],
-      //   selectedItem: viewModel.getSelectedFormat(),
-      //   bottomSheetType: BottomSheetType.dateFormat,
-      // ),
     );
-  }
-
-  void changeGender(Gender gender) {
-    //setState(() {
-    selectedGender = gender;
-    //});
   }
 }
