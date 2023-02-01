@@ -27,6 +27,7 @@ class _InterTypography extends ITypography {
   static const _size40 = 40.0;
   static const _size32 = 32.0;
   static const _size26 = 26.0;
+  static const _size22 = 22.0;
   static const _size20 = 20.0;
   static const _size21 = 21.0;
   static const _size18 = 18.0;
@@ -38,17 +39,23 @@ class _InterTypography extends ITypography {
 
   static const _defaultTextColor = _IColors.black;
 
-  TextStyle get _baseTextStyle => GoogleFonts.poppins(
-        color: _defaultTextColor,
-        fontWeight: FontWeight.w400,
-        fontSize: _size16,
-      );
+  // TextStyle get _baseTextStyle => GoogleFonts.poppins(
+  //       color: _defaultTextColor,
+  //       fontWeight: FontWeight.w400,
+  //       fontSize: _size16,
+  //     );
+
+  TextStyle get _baseTextStyle => const TextStyle(
+      color: _defaultTextColor,
+      fontWeight: FontWeight.w400,
+      fontSize: _size16,
+      fontFamily: 'Poppins');
 
   @override
   TextStyle get headline1 => _baseTextStyle.copyWith(
         fontWeight: FontWeight.bold,
         fontSize: _size40,
-        color: _IColors.black,
+        color: _IColors.white,
       );
 
   @override
@@ -84,6 +91,13 @@ class _InterTypography extends ITypography {
         fontWeight: FontWeight.w500,
         fontSize: _size20,
         color: _IColors.black01,
+      );
+
+  @override
+  TextStyle get headline7 => _baseTextStyle.copyWith(
+        fontWeight: FontWeight.bold,
+        fontSize: _size21,
+        color: _IColors.white,
       );
 
   @override
@@ -156,6 +170,22 @@ class _InterTypography extends ITypography {
       );
 
   @override
+  TextStyle get label11 => _baseTextStyle.copyWith(
+        fontWeight: FontWeight.w500,
+        fontSize: _size18,
+        color: _IColors.textFieldBorderColor,
+        height: 1.2,
+      );
+
+  @override
+  TextStyle get label12 => _baseTextStyle.copyWith(
+        fontWeight: FontWeight.w500,
+        fontSize: _size40,
+        color: _IColors.greyDark,
+        height: 1.1,
+      );
+
+  @override
   TextStyle get errorLabel3 => caption3.copyWith(
         color: _IColors.red0,
       );
@@ -215,7 +245,7 @@ class _InterTypography extends ITypography {
 
   @override
   TextStyle get button3 => _baseTextStyle.copyWith(
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w600,
         fontSize: _size16,
         color: _IColors.grey09,
       );

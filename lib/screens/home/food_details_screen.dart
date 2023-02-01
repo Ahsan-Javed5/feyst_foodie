@@ -1,3 +1,4 @@
+import 'package:chef/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/resources.dart';
@@ -17,30 +18,28 @@ enum TabBars { Details, Menu, Schedule }
 class FoodDetailScreen extends StatefulWidget {
   const FoodDetailScreen({Key? key}) : super(key: key);
 
-
-
   @override
   State<FoodDetailScreen> createState() => _FoodDetailScreenState();
 }
 
-
 class _FoodDetailScreenState extends State<FoodDetailScreen> {
   int foodItemQuantity = 0;
   String selectedDate = "13";
-  String selectedDay = "Mon";
+  String selectedDay = "MON";
   String selectedMonth = "OCT";
   String selectedTime = "10 AM";
   final TextController nOfPersons = TextController();
   final TextController notes = TextController();
   late List<DropdownMenuItem<String>> statusList = [];
-  late List<DropdownMenuItem<String>> items = [];
+  // late List<DropdownMenuItem<String>> items = [];
 
+  final items = <String>[];
 
+  bool scheduleForm = false;
 
   List<CustomModel> wowFactorsList = [];
   List<CustomModel> preferencesList = [];
   List<CustomModel> menuListItems = [];
-
 
   @override
   void initState() {
@@ -59,9 +58,13 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       value: 'Single',
       alignment: Alignment.centerLeft,
     );
-    items.add(newItem);
-    items.add(newItem1);
-    items.add(newItem2);
+    // items.add(newItem);
+    // items.add(newItem1);
+    // items.add(newItem2);
+
+    items.add('Scientist');
+    items.add('Couple');
+    items.add('Single');
 
     menuListItems.addAll([
       CustomModel(name: "Sindhi Biryani"),
@@ -100,7 +103,6 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       CustomModel(
           icon: Strings.foodDetailPreferenceFnf,
           name: "assets/images/icons/fnf.png"),
-
     ]);
     super.initState();
   }
@@ -142,258 +144,244 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       backgroundColor: HexColor.fromHex('#212129'),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: getStartedButtonTitle(appTheme: appTheme),
-      body: SingleChildScrollView(
-        child: Stack(
-          // clipBehavior: Clip.none,
-          children: [
-            Column(
-              children: [
-                Image.asset('assets/images/icons/food_detail_bg.png',
-                    fit: BoxFit.fill),
-
-
-                Container(
-
-                  padding: EdgeInsetsDirectional.only(start: 24),
-                  color: HexColor.fromHex('#212129'),
-                  child: Column(
-                    children: [
-                      if (selectedTab != TabBars.Schedule)
+      body: Stack(
+        // clipBehavior: Clip.none,
+        children: [
+          Column(
+            children: [
+              Image.asset('assets/images/icons/food_detail_bg.png',
+                  fit: BoxFit.fill),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Container(
+                    padding: EdgeInsetsDirectional.only(start: 24),
+                    color: HexColor.fromHex('#212129'),
+                    child: Column(
+                      children: [
+                        if (selectedTab != TabBars.Schedule)
+                          const SizedBox(
+                            height: 60,
+                          ),
+                        if (selectedTab == TabBars.Schedule)
+                          const SizedBox(
+                            height: 40,
+                          ),
+                        if (selectedTab == TabBars.Menu)
+                          Row(
+                            children: [
+                              Container(
+                                color: HexColor.fromHex('#f1c452'),
+                                width: 16,
+                                height: 1,
+                              ),
+                              const SizedBox(
+                                width: 2,
+                              ),
+                              getFoodItemHeading(appTheme: appTheme),
+                            ],
+                          ),
                         const SizedBox(
-                          height: 60,
+                          height: 15,
                         ),
-                      if (selectedTab == TabBars.Schedule)
-                        const SizedBox(
-                          height: 40,
-                        ),
-                      if (selectedTab == TabBars.Menu)
-                        Row(
-                          children: [
-                            Container(
-                              color: HexColor.fromHex('#f1c452'),
-                              width: 16,
-                              height: 1,
-                            ),
-                            const SizedBox(
-                              width: 2,
-                            ),
-                            getFoodItemHeading(appTheme: appTheme),
-                          ],
-                        ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      if (selectedTab == TabBars.Details)
-                        detailsTabViewForm(context, appTheme),
-                      if (selectedTab == TabBars.Menu)
-                        menuTabView(context, appTheme),
-                      if (selectedTab == TabBars.Schedule)
-                        scheduleTabView(context, appTheme)
-                    ],
+
+                        
+                        if (selectedTab == TabBars.Details)
+                          detailsTabViewForm(context, appTheme),
+                        if (selectedTab == TabBars.Menu)
+                          menuTabView(context, appTheme),
+                        if (selectedTab == TabBars.Schedule)
+                          scheduleTabView(context, appTheme)
+                      ],
+                    ),
                   ),
                 ),
-              ],
-            ),
-            const Positioned.fill(
-              top: 70,
-              left: 20,
-              child: Align(
-                  alignment: Alignment.topLeft,
-                  child: GeneralNewAppBar()),
-            ),
-
-
-            Positioned(
-              top: 140,
-              width: MediaQuery.of(context).size.width,
-              child: Padding(
-                padding: EdgeInsetsDirectional.only(start: 25),
-                child: Column(
-                  children: [
-                    Container(
-                        decoration: BoxDecoration(
-                            color: HexColor.fromHex("#4b4b52"),
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(30),
-                                bottomLeft: Radius.circular(30))),
-                        height: 118,
-                        padding: EdgeInsetsDirectional.only(bottom: 0),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.only(
-                              end: 14, top: 30),
-                          child: Column(children: [
-                            getFoodMainHeading(appTheme: appTheme),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.only(
-                                  start: 36, end: 36),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  InkWell(
-                                    child: Column(
-                                      children: [
-                                        GeneralText(
-                                          Strings.foodItemDetails,
-                                          style: appTheme.typographies
-                                              .interFontFamily.headline6
-                                              .copyWith(
-                                                  fontSize: 14,
-                                             fontWeight: selectedTab==TabBars.Details?
-                                              FontWeight.bold:
-                                              FontWeight.w500,
-                                                  color: HexColor.fromHex(
-                                                      '#f1c452')),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Container(
-                                          height: 9,
-                                          width: 9,
-                                          decoration: BoxDecoration(
-                                              color: selectedTab ==
-                                                      TabBars.Details
-                                                  ? HexColor.fromHex(
-                                                      '#f1c452')
-                                                  : Colors.transparent,
-                                              shape: BoxShape.circle),
-                                        ),
-                                      ],
-                                    ),
-                                    onTap: () {
-                                      updateTabView(TabBars.Details);
-                                    },
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      updateTabView(TabBars.Menu);
-                                    },
-                                    child: Column(
-                                      children: [
-                                        GeneralText(
-                                          Strings.foodItemMenu,
-                                          style: appTheme.typographies
-                                              .interFontFamily.headline6
-                                              .copyWith(
-                                                  fontSize: 14,
-                                                  fontWeight:
-                                                  selectedTab==TabBars.Menu?
-                                                  FontWeight.bold:
-                                                  FontWeight.w500,
-                                                  color: HexColor.fromHex(
-                                                      '#f1c452')),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Container(
-                                          height: 9,
-                                          width: 9,
-                                          decoration: BoxDecoration(
-                                              color: selectedTab ==
-                                                      TabBars.Menu
-                                                  ? HexColor.fromHex(
-                                                      '#f1c452')
-                                                  : Colors.transparent,
-                                              shape: BoxShape.circle),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      updateTabView(TabBars.Schedule);
-                                    },
-                                    child: Column(
-                                      children: [
-                                        GeneralText(
-                                          Strings.foodItemSchedule,
-                                          style: appTheme.typographies
-                                              .interFontFamily.headline6
-                                              .copyWith(
-                                                  fontSize: 14,
-                                              fontWeight: selectedTab==TabBars.Schedule?
-                                              FontWeight.bold:
-                                              FontWeight.w500,
-                                                  color: HexColor.fromHex(
-                                                      '#f1c452')),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                          Container(
-                                            height: 9,
-                                            width: 9,
-                                            decoration: BoxDecoration(
-                                                color: selectedTab ==
-                                                        TabBars.Schedule
-                                                    ? HexColor.fromHex(
-                                                        '#f1c452')
-                                                    : Colors.transparent,
-                                                shape: BoxShape.circle),
-                                          ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ]),
-                        )),
-                    if(selectedTab==TabBars.Menu||selectedTab==TabBars.Details)...[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Container(
+              ),
+            ],
+          ),
+          const Positioned.fill(
+            top: 70,
+            left: 20,
+            child: Align(
+                alignment: Alignment.topLeft, child: GeneralNewAppBar()),
+          ),
+          Positioned(
+            top: 140,
+            width: MediaQuery.of(context).size.width,
+            child: Padding(
+              padding: EdgeInsetsDirectional.only(start: 25),
+              child: Column(
+                children: [
+                  Container(
+                      decoration: BoxDecoration(
+                          color: HexColor.fromHex("#4b4b52"),
+                          borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              bottomLeft: Radius.circular(30))),
+                      height: 118,
+                      padding: EdgeInsetsDirectional.only(bottom: 0),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.only(end: 14, top: 30),
+                        child: Column(children: [
+                          getFoodMainHeading(appTheme: appTheme),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Padding(
                             padding: EdgeInsetsDirectional.only(
-                                start: 25, end: 25, bottom: 15, top: 15),
-                            decoration: BoxDecoration(
-                                color: HexColor.fromHex("#8ea659"),
-                                borderRadius: const BorderRadius.only(
-                                    bottomLeft: Radius.circular(40))),
-                            child: GeneralText(
-                              Strings.appCurrency +
-                                  "." +
-                                  " " +
-                                  Strings.foodProductItemPrice,
-                              style: appTheme
-                                  .typographies.interFontFamily.headline4
-                                  .copyWith(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: HexColor.fromHex('#ffffff')),
+                                start: 36, end: 36),
+                            child: Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                              children: [
+                                InkWell(
+                                  child: Column(
+                                    children: [
+                                      GeneralText(
+                                        Strings.foodItemDetails,
+                                        style: appTheme.typographies
+                                            .interFontFamily.headline6
+                                            .copyWith(
+                                                fontSize: 14,
+                                                fontWeight: selectedTab ==
+                                                        TabBars.Details
+                                                    ? FontWeight.bold
+                                                    : FontWeight.w400,
+                                                color: HexColor.fromHex(
+                                                    '#f1c452')),
+                                      ),
+                                      Container(
+                                        height: 9,
+                                        width: 9,
+                                        decoration: BoxDecoration(
+                                            color: selectedTab ==
+                                                    TabBars.Details
+                                                ? HexColor.fromHex('#f1c452')
+                                                : Colors.transparent,
+                                            shape: BoxShape.circle),
+                                      ),
+                                    ],
+                                  ),
+                                  onTap: () {
+                                    updateTabView(TabBars.Details);
+                                  },
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    updateTabView(TabBars.Menu);
+                                  },
+                                  child: Column(
+                                    children: [
+                                      GeneralText(
+                                        Strings.foodItemMenu,
+                                        style: appTheme.typographies
+                                            .interFontFamily.headline6
+                                            .copyWith(
+                                                fontSize: 14,
+                                                fontWeight: selectedTab ==
+                                                        TabBars.Menu
+                                                    ? FontWeight.bold
+                                                    : FontWeight.w400,
+                                                color: HexColor.fromHex(
+                                                    '#f1c452')),
+                                      ),
+                                      Container(
+                                        height: 9,
+                                        width: 9,
+                                        decoration: BoxDecoration(
+                                            color: selectedTab == TabBars.Menu
+                                                ? HexColor.fromHex('#f1c452')
+                                                : Colors.transparent,
+                                            shape: BoxShape.circle),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    updateTabView(TabBars.Schedule);
+                                  },
+                                  child: Column(
+                                    children: [
+                                      GeneralText(
+                                        Strings.foodItemSchedule,
+                                        style: appTheme.typographies
+                                            .interFontFamily.headline6
+                                            .copyWith(
+                                                fontSize: 14,
+                                                fontWeight: selectedTab ==
+                                                        TabBars.Schedule
+                                                    ? FontWeight.bold
+                                                    : FontWeight.w400,
+                                                color: HexColor.fromHex(
+                                                    '#f1c452')),
+                                      ),
+                                      Container(
+                                        height: 9,
+                                        width: 9,
+                                        decoration: BoxDecoration(
+                                            color: selectedTab ==
+                                                    TabBars.Schedule
+                                                ? HexColor.fromHex('#f1c452')
+                                                : Colors.transparent,
+                                            shape: BoxShape.circle),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                    ]
-
-                  ],
-                ),
+                        ]),
+                      )),
+                  if (selectedTab == TabBars.Menu ||
+                      selectedTab == TabBars.Details) ...[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                          padding: EdgeInsetsDirectional.only(
+                              start: 25, end: 25, bottom: 15, top: 15),
+                          decoration: BoxDecoration(
+                              color: HexColor.fromHex("#8ea659"),
+                              borderRadius: const BorderRadius.only(
+                                  bottomLeft: Radius.circular(40))),
+                          child: GeneralText(
+                            Strings.appCurrency +
+                                "." +
+                                " " +
+                                Strings.foodProductItemPrice,
+                            style: appTheme
+                                .typographies.interFontFamily.headline4
+                                .copyWith(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: HexColor.fromHex('#ffffff')),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ]
+                ],
               ),
             ),
-            if(selectedTab!=TabBars.Details)
-            const Positioned.fill(
-              top: 105,
-              child: Align(
-                alignment: Alignment.topRight,
+          ),
+          // if (selectedTab != TabBars.Details)
+          const Positioned.fill(
+            top: 105,
+            child: Align(
+              alignment: Alignment.topRight,
+              child: CircleAvatar(
+                backgroundColor: Colors.white,
+                radius: 32,
                 child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 32,
-                  child: CircleAvatar(
-                    radius: 30,
-                    backgroundImage: AssetImage(
-                        "assets/images/icons/user_image.png"),
-                  ),
+                  radius: 30,
+                  backgroundImage:
+                      AssetImage("assets/images/icons/user_image.png"),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -403,7 +391,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       padding: EdgeInsetsDirectional.only(end: 12),
       child: Container(
           padding: const EdgeInsetsDirectional.only(
-              start: 9.9, end: 18.3, bottom: 23),
+              start: 9.9, end: 18.3, bottom: 93),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               border: Border.all(color: HexColor.fromHex('#f1c452'))),
@@ -423,7 +411,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                           Expanded(
                             flex: 2,
                             child: Container(
-                              padding: const EdgeInsetsDirectional.all(10),
+                              padding: const EdgeInsetsDirectional.all(16),
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
                                   image: AssetImage(
@@ -434,6 +422,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                               ),
                               child: Image.asset(
                                 'assets/images/icons/food_item_sample.png',
+                                height: 50,
                               ),
                             ),
                           ),
@@ -479,57 +468,70 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                               getFoodItemUsers(appTheme: appTheme),
                             ],
                           ),
-                          Row(
+                          Stack(
                             children: [
-                              getFoodItemQuantityLabel(appTheme: appTheme),
-                              const SizedBox(
-                                width: 4,
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  removeQuantity();
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: HexColor.fromHex("#f7dc99"),
-                                    borderRadius: const BorderRadius.only(
-                                        bottomLeft: Radius.circular(8),
-                                        topLeft: Radius.circular(8)),
+                              Row(
+                                children: [
+                                  getFoodItemQuantityLabel(appTheme: appTheme),
+                                  const SizedBox(
+                                    width: 4,
                                   ),
-                                  padding: const EdgeInsetsDirectional.only(
-                                      start: 8, end: 8, top: 6, bottom: 6),
-                                  child: const Icon(Icons.remove,
-                                      color: Colors.black, size: 18),
+                                  InkWell(
+                                    onTap: () {
+                                      removeQuantity();
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: HexColor.fromHex("#f7dc99"),
+                                        borderRadius: const BorderRadius.only(
+                                            bottomLeft: Radius.circular(8),
+                                            topLeft: Radius.circular(8)),
+                                      ),
+                                      padding: const EdgeInsetsDirectional.only(
+                                          start: 8, end: 8, top: 6, bottom: 6),
+                                      child: const Icon(Icons.remove,
+                                          color: Colors.black, size: 18),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width:44,
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      addQuantity();
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: HexColor.fromHex("#f7dc99"),
+                                        borderRadius: const BorderRadius.only(
+                                            topRight: Radius.circular(8),
+                                            bottomRight: Radius.circular(8)),
+                                      ),
+                                      padding: const EdgeInsetsDirectional.only(
+                                          start: 8, end: 8, top: 6, bottom: 6),
+                                      child: Icon(
+                                        Icons.add,
+                                        color: Colors.black,
+                                        size: 18,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              Positioned.fill(
+                                left: 60,
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(8)),
+                                      padding: const EdgeInsetsDirectional.only(
+                                          start: 21, end: 21, top: 5, bottom: 5),
+                                      child: getFoodItemQuantityValue(
+                                          appTheme: appTheme)),
                                 ),
                               ),
-                              Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(8)),
-                                  padding: const EdgeInsetsDirectional.only(
-                                      start: 21, end: 21, top: 5, bottom: 5),
-                                  child: getFoodItemQuantityValue(
-                                      appTheme: appTheme)),
-                              InkWell(
-                                onTap: () {
-                                  addQuantity();
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: HexColor.fromHex("#f7dc99"),
-                                    borderRadius: const BorderRadius.only(
-                                        topRight: Radius.circular(8),
-                                        bottomRight: Radius.circular(8)),
-                                  ),
-                                  padding: const EdgeInsetsDirectional.only(
-                                      start: 8, end: 8, top: 6, bottom: 6),
-                                  child: Icon(
-                                    Icons.add,
-                                    color: Colors.black,
-                                    size: 18,
-                                  ),
-                                ),
-                              )
                             ],
                           )
                         ],
@@ -602,8 +604,11 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   Widget getFoodItemQuantityLabel({required IAppThemeData appTheme}) {
     return GeneralText(
       Strings.foodProductItemQuantity + ":",
-      style: appTheme.typographies.interFontFamily.headline6
-          .copyWith(fontSize: 12, color: HexColor.fromHex('#f1c452')),
+      style: appTheme.typographies.interFontFamily.headline6.copyWith(
+        fontSize: 12,
+        fontWeight: FontWeight.w500,
+        color: HexColor.fromHex('#f1c452'),
+      ),
     );
   }
 
@@ -612,21 +617,23 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       (foodItemQuantity <= 9 && foodItemQuantity > 0)
           ? "0" + foodItemQuantity.toString()
           : foodItemQuantity.toString(),
-      style: appTheme.typographies.interFontFamily.headline6
-          .copyWith(fontSize: 15, color: HexColor.fromHex('#212129')),
+      style: appTheme.typographies.interFontFamily.headline6.copyWith(
+          fontSize: 15,
+          color: foodItemQuantity.toString() == "0"
+              ? HexColor.fromHex('#212129').withOpacity(0.4)
+              : HexColor.fromHex('#212129')),
     );
   }
 
   Widget getStartedButtonTitle({required IAppThemeData appTheme}) {
     return GeneralButton.button(
+      width: 151,
       title: Strings.nextButtonTitle.toUpperCase(),
       styleType: ButtonStyleType.fill,
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  UserProfile()),
+          MaterialPageRoute(builder: (context) => UserProfile()),
         );
       },
     );
@@ -645,74 +652,423 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   ///Schedule tab view
   Widget scheduleTabView(BuildContext context, IAppThemeData appTheme) {
-    return Padding(
-      padding: EdgeInsetsDirectional.only(start: 20),
-      child: ListView.builder(
-          physics: NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: 4,
-          itemBuilder: (BuildContext context, int index) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.start,
+    return scheduleForm
+        ? Padding(
+            padding: EdgeInsetsDirectional.only(start: 20),
+            child: Column(
               children: [
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(children: [
-                      GeneralText(selectedDay,
-                          style: appTheme.typographies.interFontFamily.headline6
-                              .copyWith(
-                                  color: HexColor.fromHex('#f1c452'),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700)),
-                      GeneralText(selectedDate,
-                          style: appTheme.typographies.interFontFamily.headline2
-                              .copyWith(
-                                  color: HexColor.fromHex('#909094'),
-                                  fontSize: 40, ))
-                    ]),
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          // GeneralRichText(title: 'Oct\n 13'),
+                          GeneralText(
+                            selectedMonth,
+                            // style: appTheme
+                            //     .typographies.interFontFamily.headline6
+                            //     .copyWith(
+                            //         color: HexColor.fromHex('#f1c452'),
+                            //         fontSize: 14,
+                            //         //  height: 0,
+                            //         fontWeight: FontWeight.w800),
+                            style:
+                                appTheme.typographies.interFontFamily.label11,
+                          ),
+                          GeneralText(
+                            selectedDate,
+                            // style: appTheme
+                            //     .typographies.interFontFamily.headline6
+                            //     .copyWith(
+                            //         color: HexColor.fromHex('#909094'),
+                            //         fontSize: 40,
+                            //         fontWeight: FontWeight.w500),
+
+                            style:
+                                appTheme.typographies.interFontFamily.label12,
+                          )
+                        ]),
                     SizedBox(
                       width: 27,
                     ),
                     Expanded(
-                      child: Container(
-                        width: double.infinity,
-                        padding: EdgeInsetsDirectional.only(
-                            start: 14, top: 15, bottom: 15, end: 25),
-                        decoration: BoxDecoration(
-                            color: HexColor.fromHex('#2b2b33'),
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                bottomLeft: Radius.circular(20))),
-                        child: Wrap(children: [
-                          timeSelectorBox(appTheme, showSelectedTime: true),
+                      child: Column(
+                        children: [
+                          Container(
+                              width: double.infinity,
+                              padding: EdgeInsetsDirectional.only(
+                                  start: 14, top: 15, bottom: 15, end: 25),
+                              decoration: BoxDecoration(
+                                  color: HexColor.fromHex('#2b2b33'),
+                                  borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      bottomLeft: Radius.circular(20))),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  GeneralText(selectedTime,
+                                      style: appTheme.typographies
+                                          .interFontFamily.headline6
+                                          .copyWith(
+                                              color:
+                                                  HexColor.fromHex('#b0c18b'),
+                                              fontSize: 36,
+                                              fontWeight: FontWeight.normal)),
+                                  GeneralText(selectedDay,
+                                      style: appTheme.typographies
+                                          .interFontFamily.headline6
+                                          .copyWith(
+                                              color:
+                                                  HexColor.fromHex('#909094'),
+                                              fontSize: 36,
+                                              fontWeight: FontWeight.normal)),
+                                ],
+                              )),
                           SizedBox(
-                            width: 7,
+                            height: 14,
                           ),
-                          timeSelectorBox(appTheme, showSelectedTime: false),
+                          Container(
+                              width: double.infinity,
+                              padding: EdgeInsetsDirectional.only(
+                                  start: 14, top: 15, bottom: 15, end: 25),
+                              decoration: BoxDecoration(
+                                  color: HexColor.fromHex('#2b2b33'),
+                                  borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      bottomLeft: Radius.circular(20))),
+                              child: Wrap(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      GeneralText(Strings.noOfPersonsLabel,
+                                          style: appTheme.typographies
+                                              .interFontFamily.headline6
+                                              .copyWith(
+                                                  color: HexColor.fromHex(
+                                                      '#fee4a4'),
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w700)),
+                                      SizedBox(
+                                        height: 9,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Container(
+                                            width: 61,
+                                            height: 51,
+                                            decoration: BoxDecoration(
+                                                color:
+                                                    HexColor.fromHex('#2b2b33'),
+                                                border: Border.all(
+                                                    color: HexColor.fromHex(
+                                                        '#f1c452')),
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            // padding: EdgeInsetsDirectional.only(
+                                            //     top: 8, bottom: 8, start: 16, end: 16),
+                                            margin: EdgeInsetsDirectional.only(
+                                                bottom: 8),
+                                            child: noOfPersonsField(
+                                              appTheme: appTheme,
+                                              valueStyle: appTheme.typographies
+                                                  .interFontFamily.body1
+                                                  .copyWith(
+                                                color: Colors.white,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                              hintStyle: appTheme.typographies
+                                                  .interFontFamily.body1
+                                                  .copyWith(
+                                                color: Colors.white,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 12,
+                                          ),
+                                          Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                2.8,
+                                            height: 51,
+                                            decoration: BoxDecoration(
+                                                color:
+                                                    HexColor.fromHex('#2b2b33'),
+                                                border: Border.all(
+                                                    color: HexColor.fromHex(
+                                                        '#f1c452')),
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            margin: EdgeInsetsDirectional.only(
+                                                bottom: 8),
+                                            padding: EdgeInsetsDirectional.only(
+                                                top: 8,
+                                                bottom: 8,
+                                                start: 8,
+                                                end: 8),
+                                            child: /*ExtoDropdown(
+                                        name: _wfActions.first ?? "",
+                                        items: _wfActions,
+                                        // isMandatory: true,
+                                        onChange: ({required key, value}) {},
+                                      ),*/
+                                                GeneralDropdown(
+                                              borderColor: Colors.transparent,
+                                              name: 'Select',
+                                              //     dropDownHeight: 51.0,
+
+                                              // borderColor: appTheme.colors.textFieldBorderColor,
+                                              style: appTheme.typographies
+                                                  .interFontFamily.headline6
+                                                  .copyWith(
+                                                      color: Colors.white,
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                              // margin: 22.0,
+                                              items: items,
+                                              onChange: ({
+                                                required String key,
+                                                required dynamic value,
+                                              }) {},
+                                            ),
+                                            /*GeneralDropdown(
+                                          borderColor: Colors.transparent,
+                                          name: 'Select',
+                                          // margin: 22.0,
+                                          items: statusList,
+                                          onChange: ({
+                                            required String key,
+                                            required dynamic value,
+                                          }) {
+                                          },
+                                        )*/
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )),
                           SizedBox(
-                            width: 7,
+                            height: 14,
                           ),
-                          timeSelectorBox(appTheme, showSelectedTime: false),
-                          SizedBox(
-                            width: 7,
-                          ),
-                          timeSelectorBox(appTheme, showSelectedTime: false),
-                          SizedBox(
-                            width: 7,
-                          ),
-                        ]),
+                          Container(
+                              width: double.infinity,
+                              padding: EdgeInsetsDirectional.only(
+                                  start: 14, top: 15, bottom: 15, end: 25),
+                              decoration: BoxDecoration(
+                                  color: HexColor.fromHex('#2b2b33'),
+                                  borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      bottomLeft: Radius.circular(20))),
+                              child: Wrap(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      GeneralText(Strings.notesLabel,
+                                          style: appTheme.typographies
+                                              .interFontFamily.headline6
+                                              .copyWith(
+                                                  color: HexColor.fromHex(
+                                                      '#fee4a4'),
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w700)),
+                                      SizedBox(
+                                        height: 9,
+                                      ),
+                                      Container(
+                                        // width: 61,
+                                        decoration: BoxDecoration(
+                                            color: HexColor.fromHex('#2b2b33'),
+                                            border: Border.all(
+                                                color: HexColor.fromHex(
+                                                    '#f1c452')),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        // padding: EdgeInsetsDirectional.only(
+                                        //     top: 8, bottom: 8, start: 16, end: 16),
+                                        margin: EdgeInsetsDirectional.only(
+                                            bottom: 8),
+                                        child: notesField(
+                                          appTheme: appTheme,
+                                          valueStyle: appTheme.typographies
+                                              .interFontFamily.body1
+                                              .copyWith(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                          hintStyle: appTheme.typographies
+                                              .interFontFamily.body1
+                                              .copyWith(
+                                            color:
+                                                Colors.white.withOpacity(0.4),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )),
+                        ],
                       ),
                     )
                   ],
                 ),
                 SizedBox(
-                  height: 27,
+                  height: 160,
                 ),
               ],
-            );
-          }),
+            ),
+          )
+        : Stack(
+            children: [
+              Padding(
+                padding: EdgeInsetsDirectional.only(start: 20, bottom: 50),
+                child: ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: 4,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                scheduleForm = !scheduleForm;
+                              });
+                            },
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Column(children: [
+                                  GeneralText(selectedDay.toUpperCase(),
+                                      style: appTheme.typographies
+                                          .interFontFamily.headline6
+                                          .copyWith(
+                                              color:
+                                                  HexColor.fromHex('#f1c452'),
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w700)),
+                                  GeneralText(selectedDate,
+                                      style: appTheme.typographies
+                                          .interFontFamily.headline2
+                                          .copyWith(
+                                        color: HexColor.fromHex('#909094'),
+                                        fontSize: 40,
+                                      ))
+                                ]),
+                                SizedBox(
+                                  width: 27,
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    width: double.infinity,
+                                    padding: EdgeInsets.only(
+                                        left: 8, top: 10, bottom: 10),
+                                    decoration: BoxDecoration(
+                                        color: HexColor.fromHex('#2b2b33'),
+                                        borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(20),
+                                            bottomLeft: Radius.circular(20))),
+                                    child: Wrap(children: [
+                                      timeSelectorBox(appTheme,
+                                          showSelectedTime: true),
+                                      SizedBox(
+                                        width: 7,
+                                      ),
+                                      timeSelectorBox(appTheme,
+                                          showSelectedTime: false),
+                                      SizedBox(
+                                        width: 7,
+                                      ),
+                                      timeSelectorBox(appTheme,
+                                          showSelectedTime: false),
+                                      SizedBox(
+                                        width: 7,
+                                      ),
+                                      timeSelectorBox(appTheme,
+                                          showSelectedTime: false),
+                                      SizedBox(
+                                        width: 7,
+                                      ),
+                                    ]),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 27,
+                          ),
+                        ],
+                      );
+                    }),
+              ),
+              Positioned.fill(
+                right: 20,
+                bottom: 40,
+                child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: FloatingActionButton(
+                    elevation: 6,
+                    onPressed: () {
+                      selectStartDate(context, appTheme);
+                    },
+                    child: Image.asset(
+                      Resources.calendarPNG,
+                      height: 23,
+                    ),
+                    backgroundColor: appTheme.colors.filledButtonColor,
+                  ),
+                ),
+              ),
+            ],
+          );
+  }
+
+  Future<void> selectStartDate(
+      BuildContext context, IAppThemeData appTheme) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+                primary: appTheme.colors.primaryBackground // <-- SEE HERE
+
+                ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                primary: Colors.red, // button text color
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2015, 8),
+      //lastDate: DateTime(2101),
+      lastDate: DateTime.now(),
     );
   }
 
@@ -837,40 +1193,36 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                       width: 12,
                                     ),
                                     Container(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                2.8,
-                                        decoration: BoxDecoration(
-                                            color: HexColor.fromHex('#2b2b33'),
-                                            border: Border.all(
-                                                color: HexColor.fromHex(
-                                                    '#f1c452')),
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        margin: EdgeInsetsDirectional.only(
-                                            bottom: 8),
-                                        padding: EdgeInsetsDirectional.only(
-                                            top: 8,
-                                            bottom: 8,
-                                            start: 8,
-                                            end: 8),
-                                        child: /*ExtoDropdown(
+                                      width: MediaQuery.of(context).size.width /
+                                          2.8,
+                                      decoration: BoxDecoration(
+                                          color: HexColor.fromHex('#2b2b33'),
+                                          border: Border.all(
+                                              color:
+                                                  HexColor.fromHex('#f1c452')),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      margin:
+                                          EdgeInsetsDirectional.only(bottom: 8),
+                                      padding: EdgeInsetsDirectional.only(
+                                          top: 8, bottom: 8, start: 8, end: 8),
+                                      child: /*ExtoDropdown(
                                         name: _wfActions.first ?? "",
                                         items: _wfActions,
                                         // isMandatory: true,
                                         onChange: ({required key, value}) {},
                                       ),*/
-                                        GeneralDropdown(
-                                          borderColor: Colors.transparent,
-                                          name: 'Select',
-                                          // margin: 22.0,
-                                          items: items,
-                                         onChange: ({
-                                            required String key,
-                                            required dynamic value,
-                                          }) {},
-                                        ),
-                                            /*GeneralDropdown(
+                                          GeneralDropdown(
+                                        borderColor: Colors.transparent,
+                                        name: 'Select',
+                                        // margin: 22.0,
+                                        items: items,
+                                        onChange: ({
+                                          required String key,
+                                          required dynamic value,
+                                        }) {},
+                                      ),
+                                      /*GeneralDropdown(
                                           borderColor: Colors.transparent,
                                           name: 'Select',
                                           // margin: 22.0,
@@ -880,7 +1232,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                             required dynamic value,
                                           }) {
                                           },
-                                        )*/),
+                                        )*/
+                                    ),
                                   ],
                                 ),
                               ],
@@ -960,148 +1313,138 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     );
   }
 
-
-   Widget detailsTabViewForm(BuildContext context, IAppThemeData appTheme) {
-    return
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                color: HexColor.fromHex('#f1c452'),
-                width: 16,
-                height: 1,
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              GeneralText(
-                Strings.foodDetailAboutTitle,
-                style: appTheme
-                    .typographies.interFontFamily.headline6
-                    .copyWith(
-                  fontSize: 20,
-                  color: HexColor.fromHex('#f1c452'),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 23),
-            child: GeneralText(
-              Strings.productDetailAboutSubTitle,
-              style: appTheme.typographies.interFontFamily.headline6
-                  .copyWith(
-                  fontSize: 14,
-                  color: HexColor.fromHex('#ffffff'),
-                  fontWeight: FontWeight.w400),
+  Widget detailsTabViewForm(BuildContext context, IAppThemeData appTheme) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Container(
+              color: HexColor.fromHex('#f1c452'),
+              width: 16,
+              height: 1,
             ),
-          ),
-          const SizedBox(
-            height: 27,
-          ),
-          Row(
-            children: [
-              Container(
+            const SizedBox(
+              width: 5,
+            ),
+            GeneralText(
+              Strings.foodDetailAboutTitle,
+              style: appTheme.typographies.interFontFamily.headline6.copyWith(
+                fontSize: 20,
                 color: HexColor.fromHex('#f1c452'),
-                width: 16,
-                height: 1,
               ),
-              const SizedBox(
-                width: 5,
-              ),
-              GeneralText(
-                Strings.productDetailWowFactorTitle,
-                style: appTheme
-                    .typographies.interFontFamily.headline6
-                    .copyWith(
-                  fontSize: 20,
-                  color: HexColor.fromHex('#f1c452'),
-                ),
-              ),
-            ],
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 23),
+          child: GeneralText(
+            Strings.productDetailAboutSubTitle,
+            style: appTheme.typographies.interFontFamily.headline6.copyWith(
+                fontSize: 14,
+                color: HexColor.fromHex('#ffffff'),
+                fontWeight: FontWeight.w400),
           ),
-          const SizedBox(
-            height: 28,
-          ),
-          wowFactors(appTheme,wowFactorsList),
-          const SizedBox(
-            height: 12,
-          ),
-          Row(
-            children: [
-              Container(
+        ),
+        const SizedBox(
+          height: 27,
+        ),
+        Row(
+          children: [
+            Container(
+              color: HexColor.fromHex('#f1c452'),
+              width: 16,
+              height: 1,
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            GeneralText(
+              Strings.productDetailWowFactorTitle,
+              style: appTheme.typographies.interFontFamily.headline6.copyWith(
+                fontSize: 20,
                 color: HexColor.fromHex('#f1c452'),
-                width: 16,
-                height: 1,
               ),
-              const SizedBox(
-                width: 5,
-              ),
-              GeneralText(
-                Strings.foodDetailPreferences,
-                style: appTheme
-                    .typographies.interFontFamily.headline6
-                    .copyWith(
-                  fontSize: 20,
-                  color: HexColor.fromHex('#f1c452'),
-                ),
-              ),
-              Spacer(),
-              Image.asset( Resources.userIconPNG,
-              height: 12,),
-              GeneralText(
-               '22',
-                style: appTheme
-                    .typographies.interFontFamily.headline6
-                    .copyWith(
-                  fontSize: 16,
-                  color: HexColor.fromHex('#f1c452'),
-                ),
-              ),
-              SizedBox(width: 12,),
-            ],
-          ),
-          const SizedBox(
-            height: 12,
-          ),
-          wowFactors(appTheme,preferencesList),
-
-          const SizedBox(
-            height: 12,
-          ),
-          Row(
-            children: [
-              Container(
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 28,
+        ),
+        wowFactors(appTheme, wowFactorsList),
+        const SizedBox(
+          height: 12,
+        ),
+        Row(
+          children: [
+            Container(
+              color: HexColor.fromHex('#f1c452'),
+              width: 16,
+              height: 1,
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            GeneralText(
+              Strings.foodDetailPreferences,
+              style: appTheme.typographies.interFontFamily.headline6.copyWith(
+                fontSize: 20,
                 color: HexColor.fromHex('#f1c452'),
-                width: 16,
-                height: 1,
               ),
-              const SizedBox(
-                width: 5,
+            ),
+            Spacer(),
+            Image.asset(
+              Resources.userIconPNG,
+              height: 12,
+            ),
+            GeneralText(
+              '22',
+              style: appTheme.typographies.interFontFamily.headline6.copyWith(
+                fontSize: 16,
+                color: HexColor.fromHex('#f1c452'),
               ),
-              GeneralText(
-                Strings.foodDetailLocation,
-                style: appTheme
-                    .typographies.interFontFamily.headline6
-                    .copyWith(
-                  fontSize: 20,
-                  color: HexColor.fromHex('#f1c452'),
-                ),
+            ),
+            SizedBox(
+              width: 12,
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 12,
+        ),
+        wowFactors(appTheme, preferencesList),
+        const SizedBox(
+          height: 12,
+        ),
+        Row(
+          children: [
+            Container(
+              color: HexColor.fromHex('#f1c452'),
+              width: 16,
+              height: 1,
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            GeneralText(
+              Strings.foodDetailLocation,
+              style: appTheme.typographies.interFontFamily.headline6.copyWith(
+                fontSize: 20,
+                color: HexColor.fromHex('#f1c452'),
               ),
-            ],
-          ),
-         ],
-      );
+            ),
+          ],
+        ),
+      ],
+    );
   }
 
-  Widget wowFactors(IAppThemeData appTheme,List<CustomModel> items) {
-    return  Wrap(
+  Widget wowFactors(IAppThemeData appTheme, List<CustomModel> items) {
+    return Wrap(
       children: [
         for (int i = 0; i < items.length; i++)
           Padding(
@@ -1126,15 +1469,14 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                       color: HexColor.fromHex("#f1c452"),
                       shape: BoxShape.circle,
                     ),
-                    child: Image.asset(items[i].name != null
-                        ? items[i].name ?? ""
-                        : ''),
+                    child: Image.asset(
+                        items[i].name != null ? items[i].name ?? "" : ''),
                   ),
                 ),
                 GeneralText(
                   items[i].icon ?? "",
-                  style: appTheme.typographies.interFontFamily.headline6
-                      .copyWith(
+                  style:
+                      appTheme.typographies.interFontFamily.headline6.copyWith(
                     fontSize: 14,
                     color: HexColor.fromHex('#ffffff'),
                   ),

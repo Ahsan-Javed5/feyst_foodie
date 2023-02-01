@@ -1,4 +1,4 @@
-class ExtoURLHelpers {
+class InfininURLHelpers {
   static String getRestApiURL(String url) {
     final parts = url.toString().split('//');
     return [parts.first, ''].join('//') + parts.last;

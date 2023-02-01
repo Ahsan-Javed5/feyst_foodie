@@ -16,76 +16,55 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SignUpScreenState {
-  String get appVersion => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
-  String get password => throw _privateConstructorUsedError;
-  String get baseURL => throw _privateConstructorUsedError;
-  int get baseUrlIndex => throw _privateConstructorUsedError;
-  bool get isBusy => throw _privateConstructorUsedError;
-  bool get rememberMe => throw _privateConstructorUsedError;
-  String get errorMessage => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            String appVersion,
-            String email,
-            String password,
-            String baseURL,
-            int baseUrlIndex,
-            bool isBusy,
-            bool rememberMe,
-            String errorMessage)
+    required TResult Function(String fullName, String mobileNumber, int age,
+            String gender, String profession, bool isBusy)
         initialized,
+    required TResult Function() loading,
+    required TResult Function(List<ProfessionData> data) loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
-            String appVersion,
-            String email,
-            String password,
-            String baseURL,
-            int baseUrlIndex,
-            bool isBusy,
-            bool rememberMe,
-            String errorMessage)?
+    TResult Function(String fullName, String mobileNumber, int age,
+            String gender, String profession, bool isBusy)?
         initialized,
+    TResult Function()? loading,
+    TResult Function(List<ProfessionData> data)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            String appVersion,
-            String email,
-            String password,
-            String baseURL,
-            int baseUrlIndex,
-            bool isBusy,
-            bool rememberMe,
-            String errorMessage)?
+    TResult Function(String fullName, String mobileNumber, int age,
+            String gender, String profession, bool isBusy)?
         initialized,
+    TResult Function()? loading,
+    TResult Function(List<ProfessionData> data)? loaded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Initialized value) initialized,
+    required TResult Function(Loading value) loading,
+    required TResult Function(Loaded value) loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(Initialized value)? initialized,
+    TResult Function(Loading value)? loading,
+    TResult Function(Loaded value)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Initialized value)? initialized,
+    TResult Function(Loading value)? loading,
+    TResult Function(Loaded value)? loaded,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $SignUpScreenStateCopyWith<SignUpScreenState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -94,15 +73,6 @@ abstract class $SignUpScreenStateCopyWith<$Res> {
   factory $SignUpScreenStateCopyWith(
           SignUpScreenState value, $Res Function(SignUpScreenState) then) =
       _$SignUpScreenStateCopyWithImpl<$Res>;
-  $Res call(
-      {String appVersion,
-      String email,
-      String password,
-      String baseURL,
-      int baseUrlIndex,
-      bool isBusy,
-      bool rememberMe,
-      String errorMessage});
 }
 
 /// @nodoc
@@ -113,71 +83,20 @@ class _$SignUpScreenStateCopyWithImpl<$Res>
   final SignUpScreenState _value;
   // ignore: unused_field
   final $Res Function(SignUpScreenState) _then;
-
-  @override
-  $Res call({
-    Object? appVersion = freezed,
-    Object? email = freezed,
-    Object? password = freezed,
-    Object? baseURL = freezed,
-    Object? baseUrlIndex = freezed,
-    Object? isBusy = freezed,
-    Object? rememberMe = freezed,
-    Object? errorMessage = freezed,
-  }) {
-    return _then(_value.copyWith(
-      appVersion: appVersion == freezed
-          ? _value.appVersion
-          : appVersion // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: email == freezed
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: password == freezed
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-      baseURL: baseURL == freezed
-          ? _value.baseURL
-          : baseURL // ignore: cast_nullable_to_non_nullable
-              as String,
-      baseUrlIndex: baseUrlIndex == freezed
-          ? _value.baseUrlIndex
-          : baseUrlIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      isBusy: isBusy == freezed
-          ? _value.isBusy
-          : isBusy // ignore: cast_nullable_to_non_nullable
-              as bool,
-      rememberMe: rememberMe == freezed
-          ? _value.rememberMe
-          : rememberMe // ignore: cast_nullable_to_non_nullable
-              as bool,
-      errorMessage: errorMessage == freezed
-          ? _value.errorMessage
-          : errorMessage // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
 }
 
 /// @nodoc
-abstract class _$$InitializedCopyWith<$Res>
-    implements $SignUpScreenStateCopyWith<$Res> {
+abstract class _$$InitializedCopyWith<$Res> {
   factory _$$InitializedCopyWith(
           _$Initialized value, $Res Function(_$Initialized) then) =
       __$$InitializedCopyWithImpl<$Res>;
-  @override
   $Res call(
-      {String appVersion,
-      String email,
-      String password,
-      String baseURL,
-      int baseUrlIndex,
-      bool isBusy,
-      bool rememberMe,
-      String errorMessage});
+      {String fullName,
+      String mobileNumber,
+      int age,
+      String gender,
+      String profession,
+      bool isBusy});
 }
 
 /// @nodoc
@@ -193,48 +112,38 @@ class __$$InitializedCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? appVersion = freezed,
-    Object? email = freezed,
-    Object? password = freezed,
-    Object? baseURL = freezed,
-    Object? baseUrlIndex = freezed,
+    Object? fullName = freezed,
+    Object? mobileNumber = freezed,
+    Object? age = freezed,
+    Object? gender = freezed,
+    Object? profession = freezed,
     Object? isBusy = freezed,
-    Object? rememberMe = freezed,
-    Object? errorMessage = freezed,
   }) {
     return _then(_$Initialized(
-      appVersion: appVersion == freezed
-          ? _value.appVersion
-          : appVersion // ignore: cast_nullable_to_non_nullable
+      fullName: fullName == freezed
+          ? _value.fullName
+          : fullName // ignore: cast_nullable_to_non_nullable
               as String,
-      email: email == freezed
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
+      mobileNumber: mobileNumber == freezed
+          ? _value.mobileNumber
+          : mobileNumber // ignore: cast_nullable_to_non_nullable
               as String,
-      password: password == freezed
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-      baseURL: baseURL == freezed
-          ? _value.baseURL
-          : baseURL // ignore: cast_nullable_to_non_nullable
-              as String,
-      baseUrlIndex: baseUrlIndex == freezed
-          ? _value.baseUrlIndex
-          : baseUrlIndex // ignore: cast_nullable_to_non_nullable
+      age: age == freezed
+          ? _value.age
+          : age // ignore: cast_nullable_to_non_nullable
               as int,
+      gender: gender == freezed
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as String,
+      profession: profession == freezed
+          ? _value.profession
+          : profession // ignore: cast_nullable_to_non_nullable
+              as String,
       isBusy: isBusy == freezed
           ? _value.isBusy
           : isBusy // ignore: cast_nullable_to_non_nullable
               as bool,
-      rememberMe: rememberMe == freezed
-          ? _value.rememberMe
-          : rememberMe // ignore: cast_nullable_to_non_nullable
-              as bool,
-      errorMessage: errorMessage == freezed
-          ? _value.errorMessage
-          : errorMessage // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -243,37 +152,29 @@ class __$$InitializedCopyWithImpl<$Res>
 
 class _$Initialized implements Initialized {
   const _$Initialized(
-      {required this.appVersion,
-      required this.email,
-      required this.password,
-      required this.baseURL,
-      required this.baseUrlIndex,
-      required this.isBusy,
-      this.rememberMe = false,
-      this.errorMessage = ''});
+      {required this.fullName,
+      required this.mobileNumber,
+      required this.age,
+      required this.gender,
+      required this.profession,
+      required this.isBusy});
 
   @override
-  final String appVersion;
+  final String fullName;
   @override
-  final String email;
+  final String mobileNumber;
   @override
-  final String password;
+  final int age;
   @override
-  final String baseURL;
+  final String gender;
   @override
-  final int baseUrlIndex;
+  final String profession;
   @override
   final bool isBusy;
-  @override
-  @JsonKey()
-  final bool rememberMe;
-  @override
-  @JsonKey()
-  final String errorMessage;
 
   @override
   String toString() {
-    return 'SignUpScreenState.initialized(appVersion: $appVersion, email: $email, password: $password, baseURL: $baseURL, baseUrlIndex: $baseUrlIndex, isBusy: $isBusy, rememberMe: $rememberMe, errorMessage: $errorMessage)';
+    return 'SignUpScreenState.initialized(fullName: $fullName, mobileNumber: $mobileNumber, age: $age, gender: $gender, profession: $profession, isBusy: $isBusy)';
   }
 
   @override
@@ -281,31 +182,25 @@ class _$Initialized implements Initialized {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$Initialized &&
+            const DeepCollectionEquality().equals(other.fullName, fullName) &&
             const DeepCollectionEquality()
-                .equals(other.appVersion, appVersion) &&
-            const DeepCollectionEquality().equals(other.email, email) &&
-            const DeepCollectionEquality().equals(other.password, password) &&
-            const DeepCollectionEquality().equals(other.baseURL, baseURL) &&
+                .equals(other.mobileNumber, mobileNumber) &&
+            const DeepCollectionEquality().equals(other.age, age) &&
+            const DeepCollectionEquality().equals(other.gender, gender) &&
             const DeepCollectionEquality()
-                .equals(other.baseUrlIndex, baseUrlIndex) &&
-            const DeepCollectionEquality().equals(other.isBusy, isBusy) &&
-            const DeepCollectionEquality()
-                .equals(other.rememberMe, rememberMe) &&
-            const DeepCollectionEquality()
-                .equals(other.errorMessage, errorMessage));
+                .equals(other.profession, profession) &&
+            const DeepCollectionEquality().equals(other.isBusy, isBusy));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(appVersion),
-      const DeepCollectionEquality().hash(email),
-      const DeepCollectionEquality().hash(password),
-      const DeepCollectionEquality().hash(baseURL),
-      const DeepCollectionEquality().hash(baseUrlIndex),
-      const DeepCollectionEquality().hash(isBusy),
-      const DeepCollectionEquality().hash(rememberMe),
-      const DeepCollectionEquality().hash(errorMessage));
+      const DeepCollectionEquality().hash(fullName),
+      const DeepCollectionEquality().hash(mobileNumber),
+      const DeepCollectionEquality().hash(age),
+      const DeepCollectionEquality().hash(gender),
+      const DeepCollectionEquality().hash(profession),
+      const DeepCollectionEquality().hash(isBusy));
 
   @JsonKey(ignore: true)
   @override
@@ -315,57 +210,41 @@ class _$Initialized implements Initialized {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            String appVersion,
-            String email,
-            String password,
-            String baseURL,
-            int baseUrlIndex,
-            bool isBusy,
-            bool rememberMe,
-            String errorMessage)
+    required TResult Function(String fullName, String mobileNumber, int age,
+            String gender, String profession, bool isBusy)
         initialized,
+    required TResult Function() loading,
+    required TResult Function(List<ProfessionData> data) loaded,
   }) {
-    return initialized(appVersion, email, password, baseURL, baseUrlIndex,
-        isBusy, rememberMe, errorMessage);
+    return initialized(fullName, mobileNumber, age, gender, profession, isBusy);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
-            String appVersion,
-            String email,
-            String password,
-            String baseURL,
-            int baseUrlIndex,
-            bool isBusy,
-            bool rememberMe,
-            String errorMessage)?
+    TResult Function(String fullName, String mobileNumber, int age,
+            String gender, String profession, bool isBusy)?
         initialized,
+    TResult Function()? loading,
+    TResult Function(List<ProfessionData> data)? loaded,
   }) {
-    return initialized?.call(appVersion, email, password, baseURL, baseUrlIndex,
-        isBusy, rememberMe, errorMessage);
+    return initialized?.call(
+        fullName, mobileNumber, age, gender, profession, isBusy);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            String appVersion,
-            String email,
-            String password,
-            String baseURL,
-            int baseUrlIndex,
-            bool isBusy,
-            bool rememberMe,
-            String errorMessage)?
+    TResult Function(String fullName, String mobileNumber, int age,
+            String gender, String profession, bool isBusy)?
         initialized,
+    TResult Function()? loading,
+    TResult Function(List<ProfessionData> data)? loaded,
     required TResult orElse(),
   }) {
     if (initialized != null) {
-      return initialized(appVersion, email, password, baseURL, baseUrlIndex,
-          isBusy, rememberMe, errorMessage);
+      return initialized(
+          fullName, mobileNumber, age, gender, profession, isBusy);
     }
     return orElse();
   }
@@ -374,6 +253,8 @@ class _$Initialized implements Initialized {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Initialized value) initialized,
+    required TResult Function(Loading value) loading,
+    required TResult Function(Loaded value) loaded,
   }) {
     return initialized(this);
   }
@@ -382,6 +263,8 @@ class _$Initialized implements Initialized {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(Initialized value)? initialized,
+    TResult Function(Loading value)? loading,
+    TResult Function(Loaded value)? loaded,
   }) {
     return initialized?.call(this);
   }
@@ -390,6 +273,8 @@ class _$Initialized implements Initialized {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Initialized value)? initialized,
+    TResult Function(Loading value)? loading,
+    TResult Function(Loaded value)? loaded,
     required TResult orElse(),
   }) {
     if (initialized != null) {
@@ -401,33 +286,282 @@ class _$Initialized implements Initialized {
 
 abstract class Initialized implements SignUpScreenState {
   const factory Initialized(
-      {required final String appVersion,
-      required final String email,
-      required final String password,
-      required final String baseURL,
-      required final int baseUrlIndex,
-      required final bool isBusy,
-      final bool rememberMe,
-      final String errorMessage}) = _$Initialized;
+      {required final String fullName,
+      required final String mobileNumber,
+      required final int age,
+      required final String gender,
+      required final String profession,
+      required final bool isBusy}) = _$Initialized;
 
-  @override
-  String get appVersion;
-  @override
-  String get email;
-  @override
-  String get password;
-  @override
-  String get baseURL;
-  @override
-  int get baseUrlIndex;
-  @override
+  String get fullName;
+  String get mobileNumber;
+  int get age;
+  String get gender;
+  String get profession;
   bool get isBusy;
-  @override
-  bool get rememberMe;
-  @override
-  String get errorMessage;
-  @override
   @JsonKey(ignore: true)
   _$$InitializedCopyWith<_$Initialized> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$LoadingCopyWith<$Res> {
+  factory _$$LoadingCopyWith(_$Loading value, $Res Function(_$Loading) then) =
+      __$$LoadingCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$LoadingCopyWithImpl<$Res>
+    extends _$SignUpScreenStateCopyWithImpl<$Res>
+    implements _$$LoadingCopyWith<$Res> {
+  __$$LoadingCopyWithImpl(_$Loading _value, $Res Function(_$Loading) _then)
+      : super(_value, (v) => _then(v as _$Loading));
+
+  @override
+  _$Loading get _value => super._value as _$Loading;
+}
+
+/// @nodoc
+
+class _$Loading implements Loading {
+  const _$Loading();
+
+  @override
+  String toString() {
+    return 'SignUpScreenState.loading()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$Loading);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String fullName, String mobileNumber, int age,
+            String gender, String profession, bool isBusy)
+        initialized,
+    required TResult Function() loading,
+    required TResult Function(List<ProfessionData> data) loaded,
+  }) {
+    return loading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String fullName, String mobileNumber, int age,
+            String gender, String profession, bool isBusy)?
+        initialized,
+    TResult Function()? loading,
+    TResult Function(List<ProfessionData> data)? loaded,
+  }) {
+    return loading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String fullName, String mobileNumber, int age,
+            String gender, String profession, bool isBusy)?
+        initialized,
+    TResult Function()? loading,
+    TResult Function(List<ProfessionData> data)? loaded,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Initialized value) initialized,
+    required TResult Function(Loading value) loading,
+    required TResult Function(Loaded value) loaded,
+  }) {
+    return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(Initialized value)? initialized,
+    TResult Function(Loading value)? loading,
+    TResult Function(Loaded value)? loaded,
+  }) {
+    return loading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Initialized value)? initialized,
+    TResult Function(Loading value)? loading,
+    TResult Function(Loaded value)? loaded,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class Loading implements SignUpScreenState {
+  const factory Loading() = _$Loading;
+}
+
+/// @nodoc
+abstract class _$$LoadedCopyWith<$Res> {
+  factory _$$LoadedCopyWith(_$Loaded value, $Res Function(_$Loaded) then) =
+      __$$LoadedCopyWithImpl<$Res>;
+  $Res call({List<ProfessionData> data});
+}
+
+/// @nodoc
+class __$$LoadedCopyWithImpl<$Res> extends _$SignUpScreenStateCopyWithImpl<$Res>
+    implements _$$LoadedCopyWith<$Res> {
+  __$$LoadedCopyWithImpl(_$Loaded _value, $Res Function(_$Loaded) _then)
+      : super(_value, (v) => _then(v as _$Loaded));
+
+  @override
+  _$Loaded get _value => super._value as _$Loaded;
+
+  @override
+  $Res call({
+    Object? data = freezed,
+  }) {
+    return _then(_$Loaded(
+      data == freezed
+          ? _value._data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<ProfessionData>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$Loaded implements Loaded {
+  const _$Loaded(final List<ProfessionData> data) : _data = data;
+
+  final List<ProfessionData> _data;
+  @override
+  List<ProfessionData> get data {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_data);
+  }
+
+  @override
+  String toString() {
+    return 'SignUpScreenState.loaded(data: $data)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$Loaded &&
+            const DeepCollectionEquality().equals(other._data, _data));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_data));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$LoadedCopyWith<_$Loaded> get copyWith =>
+      __$$LoadedCopyWithImpl<_$Loaded>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String fullName, String mobileNumber, int age,
+            String gender, String profession, bool isBusy)
+        initialized,
+    required TResult Function() loading,
+    required TResult Function(List<ProfessionData> data) loaded,
+  }) {
+    return loaded(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String fullName, String mobileNumber, int age,
+            String gender, String profession, bool isBusy)?
+        initialized,
+    TResult Function()? loading,
+    TResult Function(List<ProfessionData> data)? loaded,
+  }) {
+    return loaded?.call(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String fullName, String mobileNumber, int age,
+            String gender, String profession, bool isBusy)?
+        initialized,
+    TResult Function()? loading,
+    TResult Function(List<ProfessionData> data)? loaded,
+    required TResult orElse(),
+  }) {
+    if (loaded != null) {
+      return loaded(data);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Initialized value) initialized,
+    required TResult Function(Loading value) loading,
+    required TResult Function(Loaded value) loaded,
+  }) {
+    return loaded(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(Initialized value)? initialized,
+    TResult Function(Loading value)? loading,
+    TResult Function(Loaded value)? loaded,
+  }) {
+    return loaded?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Initialized value)? initialized,
+    TResult Function(Loading value)? loading,
+    TResult Function(Loaded value)? loaded,
+    required TResult orElse(),
+  }) {
+    if (loaded != null) {
+      return loaded(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class Loaded implements SignUpScreenState {
+  const factory Loaded(final List<ProfessionData> data) = _$Loaded;
+
+  List<ProfessionData> get data;
+  @JsonKey(ignore: true)
+  _$$LoadedCopyWith<_$Loaded> get copyWith =>
       throw _privateConstructorUsedError;
 }

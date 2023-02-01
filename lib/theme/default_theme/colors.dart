@@ -72,6 +72,12 @@ abstract class _IColors {
   static const pink0 = Color.fromRGBO(252, 237, 238, 1.0);
 
   static const black0 = Color.fromRGBO(33, 33, 41, 1);
+
+  static const greyDark = Color.fromRGBO(144, 144, 148, 1);
+
+  static const blackBrightness = Color.fromRGBO(33, 33, 41, 1);
+
+  // static const black00= Color.fromRGBO(33, 33, 41, 1);
   static const buttonColor = Color(0xffbb3127);
   static const textFieldColor = Color(0xff35353c);
   static const textFieldBorderColor = Color(0xfff1c452);
@@ -311,10 +317,11 @@ class _Colors implements IColors {
   @override
   Color get platformTextColor => _IColors.blue00;
 
-
   @override
   Color get filledButtonColor => _IColors.buttonColor;
 
+  @override
+  Color get verificationBackGround => _IColors.blackBrightness;
 
   @override
   Color stringColor(String strCode) {
@@ -329,6 +336,7 @@ class _Colors implements IColors {
 
   @override
   Color get textFieldFilledColor => _IColors.textFieldColor;
+
   @override
   Color get textFieldBorderColor => _IColors.textFieldBorderColor;
 }

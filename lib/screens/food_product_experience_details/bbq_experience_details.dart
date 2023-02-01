@@ -34,23 +34,23 @@ class _FoodProductExperienceDetailsState
     ]);
     wowFactorsList.addAll([
       CustomModel(
-          icon: Strings.productDetailWowFactorGarden,
-          name: "assets/images/icons/garden.png"),
+          name: Strings.productDetailWowFactorGarden,
+          icon: "assets/images/icons/garden.png"),
       CustomModel(
-          icon: Strings.productDetailWowFactorFireworks,
-          name: "assets/images/icons/fireworks.png"),
+          name: Strings.productDetailWowFactorFireworks,
+          icon: "assets/images/icons/fireworks.png"),
       CustomModel(
-          icon: Strings.productDetailWowFactorPetFriendly,
-          name: "assets/images/icons/pet_friendly.png"),
+          name: Strings.productDetailWowFactorPetFriendly,
+          icon: "assets/images/icons/pet_friendly.png"),
       CustomModel(
-          icon: Strings.productDetailWowFactorWifi,
-          name: "assets/images/icons/wifi_2.png"),
+          name: Strings.productDetailWowFactorWifi,
+          icon: "assets/images/icons/wifi_2.png"),
       CustomModel(
-          icon: Strings.productDetailWowFactorMusic,
-          name: "assets/images/icons/music.png"),
+          name: Strings.productDetailWowFactorMusic,
+          icon: "assets/images/icons/music.png"),
       CustomModel(
-          icon: Strings.productDetailWowFactorParking,
-          name: "assets/images/icons/parking.png")
+          name: Strings.productDetailWowFactorParking,
+          icon: "assets/images/icons/parking.png")
     ]);
 
     super.initState();
@@ -86,7 +86,7 @@ class _FoodProductExperienceDetailsState
                         right: -40,
                         top: -20,
                         child: Container(
-                          width: 173,
+                          width: 200,
                           padding: const EdgeInsetsDirectional.all(20),
                           decoration: const BoxDecoration(
                             image: DecorationImage(
@@ -126,6 +126,9 @@ class _FoodProductExperienceDetailsState
                                 color: HexColor.fromHex('#909094'),
                               ),
                             ),
+                            const SizedBox(
+                              height: 5.8,
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
@@ -143,7 +146,6 @@ class _FoodProductExperienceDetailsState
                                   style: appTheme
                                       .typographies.interFontFamily.headline6
                                       .copyWith(
-                                          decoration: TextDecoration.underline,
                                           fontSize: 12,
                                           color: HexColor.fromHex('#8ea659')),
                                 ),
@@ -152,11 +154,10 @@ class _FoodProductExperienceDetailsState
                           ]),
                       const Positioned.fill(
                         top: 40,
-
                         child: Align(
                             alignment: Alignment.topLeft,
                             child: GeneralNewAppBar(
-                              rightIcon:  Resources.homeIconSvg,
+                              rightIcon: Resources.homeIconSvg,
                             )),
                       ),
                     ],
@@ -230,7 +231,7 @@ class _FoodProductExperienceDetailsState
                         ],
                       ),
                       const SizedBox(
-                        height: 28,
+                        height: 11.6,
                       ),
                       wowFactors(appTheme),
                     ],
@@ -245,7 +246,7 @@ class _FoodProductExperienceDetailsState
                 ),
                 chefInformation(appTheme),
                 const SizedBox(
-                  height: 28,
+                  height: 45.9,
                 ),
                 productPriceInformation(appTheme),
                 const SizedBox(
@@ -253,7 +254,7 @@ class _FoodProductExperienceDetailsState
                 ),
                 extraPaymentNotes(appTheme),
                 SizedBox(
-                  height: 60.1,
+                  height: 209.1,
                 ),
               ],
             )),
@@ -268,16 +269,17 @@ class _FoodProductExperienceDetailsState
           top: 20, bottom: 20, start: 11.8, end: 11.8),
       decoration: BoxDecoration(
           color: HexColor.fromHex("#4b4b52"),
-          borderRadius: BorderRadius.circular(20)),
+          borderRadius: BorderRadius.circular(15)),
       child: Wrap(
         children: [
           for (int i = 0; i < wowFactorsList.length; i++)
             Padding(
-              padding: const EdgeInsets.only(right: 17, bottom: 7.7),
+              padding: const EdgeInsets.only(right: 15.1, bottom: 7.7),
               child: Column(
                 children: [
                   Container(
                     width: 58,
+                    height: 63.3,
                     padding: const EdgeInsetsDirectional.all(10),
                     decoration: BoxDecoration(
                       image: const DecorationImage(
@@ -293,13 +295,16 @@ class _FoodProductExperienceDetailsState
                         color: HexColor.fromHex("#f1c452"),
                         shape: BoxShape.circle,
                       ),
-                      child: Image.asset(wowFactorsList[i].name != null
-                          ? wowFactorsList[i].name ?? ""
+                      child: Image.asset(wowFactorsList[i].icon != null
+                          ? wowFactorsList[i].icon ?? ""
                           : ''),
                     ),
                   ),
+                  SizedBox(
+                    height: 2.5,
+                  ),
                   GeneralText(
-                    wowFactorsList[i].icon ?? "",
+                    wowFactorsList[i].name ?? "",
                     style: appTheme.typographies.interFontFamily.headline6
                         .copyWith(
                       fontSize: 14,
@@ -323,12 +328,12 @@ class _FoodProductExperienceDetailsState
               top: 22, bottom: 29, start: 10, end: 10),
           decoration: BoxDecoration(
               color: HexColor.fromHex("#4b4b52"),
-              borderRadius: BorderRadius.circular(20)),
+              borderRadius: BorderRadius.circular(15)),
           child: Column(
             children: [
               Container(
                 padding: EdgeInsetsDirectional.only(
-                    top: 17, bottom: 17, start: 26, end: 26),
+                    top: 17, bottom: 17, start: 26, end: 48),
                 decoration: BoxDecoration(
                     color: HexColor.fromHex("#212129"),
                     borderRadius: BorderRadius.circular(11)),
@@ -419,10 +424,13 @@ class _FoodProductExperienceDetailsState
             color: HexColor.fromHex('#f1c452'),
           ),
         ),
+        SizedBox(
+          height: 4,
+        ),
         Container(
           width: double.infinity,
           padding: EdgeInsetsDirectional.only(
-              top: 10, bottom: 10, start: 14, end: 14),
+              top: 15, bottom: 15, start: 14, end: 14),
           decoration: BoxDecoration(
               color: HexColor.fromHex("#212129"),
               borderRadius: BorderRadius.circular(11)),
@@ -449,7 +457,63 @@ class _FoodProductExperienceDetailsState
             color: HexColor.fromHex('#f1c452'),
           ),
         ),
-        GridView.builder(
+        SizedBox(
+          height: 7,
+        ),
+        Wrap(
+          children: [
+            for (int index = 0; index < menuListItems.length; index++)
+              Container(
+                width: 140,
+                // height: 67,
+                padding: const EdgeInsetsDirectional.only(
+                    top: 10, bottom: 10, start: 14, end: 14),
+                margin: EdgeInsets.only(right: 5, bottom: 7),
+                decoration: BoxDecoration(
+                    color: HexColor.fromHex("#212129"),
+                    borderRadius: BorderRadius.circular(11)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GeneralText(
+                          Strings.productDetailSelectionMenuQuantity,
+                          style: appTheme.typographies.interFontFamily.headline2
+                              .copyWith(
+                            fontSize: 16,
+                            color: HexColor.fromHex('#f89f84'),
+                          ),
+                        ),
+                        GeneralText(
+                          Strings.productDetailSelectionMenuAmount,
+                          style: appTheme.typographies.interFontFamily.headline2
+                              .copyWith(
+                            fontSize: 16,
+                            color: HexColor.fromHex('#909094'),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    GeneralText(
+                      menuListItems[index].name ?? "",
+                      style: appTheme.typographies.interFontFamily.headline2
+                          .copyWith(
+                              fontSize: 14,
+                              color: HexColor.fromHex('#ffffff'),
+                              fontWeight: FontWeight.w400),
+                      maxLines: 3,
+                    ),
+                  ],
+                ),
+              ),
+          ],
+        )
+        /*     GridView.builder(
             padding: EdgeInsets.zero,
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
@@ -509,7 +573,7 @@ class _FoodProductExperienceDetailsState
                   ],
                 ),
               );
-            }),
+            }),*/
       ],
     );
   }
@@ -547,13 +611,17 @@ class _FoodProductExperienceDetailsState
                 top: 22, bottom: 22, start: 23, end: 23),
             decoration: BoxDecoration(
                 color: HexColor.fromHex("#4b4b52"),
-                borderRadius: BorderRadius.circular(20)),
+                borderRadius: BorderRadius.circular(15)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Container(
-                      width: 40,
+                      width: 43,
+                      height: 43,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.white, width: 2),
+                          shape: BoxShape.circle),
                       child: Image.asset("assets/images/icons/user_image.png")),
                   SizedBox(
                     width: 11.5,
@@ -573,6 +641,7 @@ class _FoodProductExperienceDetailsState
                         children: [
                           Container(
                               width: 10.8,
+                              height: 14.4,
                               child: Image.asset(
                                   "assets/images/icons/location_pin.png")),
                           SizedBox(
@@ -583,8 +652,8 @@ class _FoodProductExperienceDetailsState
                             style: appTheme
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
-                                    fontSize: 20,
-                                    color: HexColor.fromHex('#f1c452'),
+                                    fontSize: 14,
+                                    color: HexColor.fromHex('#ffffff'),
                                     decoration: TextDecoration.underline),
                           ),
                         ],
@@ -596,7 +665,7 @@ class _FoodProductExperienceDetailsState
                   height: 18.1,
                 ),
                 Container(
-                  color: HexColor.fromHex("#ffffff"),
+                  color: HexColor.fromHex("#ffffff").withOpacity(0.3),
                   width: double.infinity,
                   height: 1,
                 ),
@@ -610,6 +679,9 @@ class _FoodProductExperienceDetailsState
                     fontSize: 14,
                     color: HexColor.fromHex('#909094'),
                   ),
+                ),
+                SizedBox(
+                  height: 1.7,
                 ),
                 GeneralText(
                   Strings.productDetailChefSubHostName,
@@ -660,7 +732,7 @@ class _FoodProductExperienceDetailsState
                 top: 22, bottom: 22, start: 23, end: 23),
             decoration: BoxDecoration(
                 color: HexColor.fromHex("#4b4b52"),
-                borderRadius: BorderRadius.circular(20)),
+                borderRadius: BorderRadius.circular(10)),
             child: Column(
               children: [
                 Column(
@@ -687,7 +759,7 @@ class _FoodProductExperienceDetailsState
                   height: 18.1,
                 ),
                 Container(
-                  color: HexColor.fromHex("#ffffff"),
+                  color: HexColor.fromHex("#ffffff").withOpacity(0.3),
                   width: double.infinity,
                   height: 1,
                 ),
@@ -777,7 +849,7 @@ class _FoodProductExperienceDetailsState
                 top: 22, bottom: 22, start: 23, end: 23),
             decoration: BoxDecoration(
                 color: HexColor.fromHex("#bb3127"),
-                borderRadius: BorderRadius.circular(20)),
+                borderRadius: BorderRadius.circular(15)),
             child: GeneralText(
               Strings.productDetailExtraNoteValue,
               style: appTheme.typographies.interFontFamily.headline6.copyWith(

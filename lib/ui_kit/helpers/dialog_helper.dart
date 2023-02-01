@@ -42,7 +42,7 @@ abstract class DialogHelper {
             }
           },
           child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+            filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
 
             child: ExtoDialog(
               header: header,

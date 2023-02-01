@@ -53,7 +53,7 @@ class SplashScreenViewModel extends BaseViewModel<SplashScreenState> {
           if (projectId.isNotEmpty) {
             _appService.updateSearchDisplay(isSearchVisible: false);
             _appService.updateSelectedNavId(id: NavigationDrawer.home);
-            _navigationService.replace(route: HomeRoute());
+            //  _navigationService.replace(route: HomeRoute());
           } else {
             _appService.updateSelectedNavId(id: NavigationDrawer.projects);
           }

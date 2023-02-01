@@ -28,7 +28,7 @@ abstract class Api {
   static const apiVersion2 = 'node/api/v2';
   static const client = 'client/';
   static const rest = 'rest/';
-  static const baseURL = 'https://weburl.com/client/';
+  static const baseURL = 'http://18.202.117.137:8080/feyst-service/';
   static const devBaseURL = 'https://abc2.com/';
   static const dprBaseURL = 'https://abc.com/';
 
@@ -44,6 +44,9 @@ abstract class Api {
   static const moduleList = '$apiVersion/module';
   static const customFormList = '$apiVersion/form';
   static const records = '$apiVersion/module-record';
+
+  static const professionalList = 'professional/list';
+  static const foodieSignUp = 'foodie/save';
 
   static const moduleSubMenuList = '$apiVersion2/menu/project/';
 

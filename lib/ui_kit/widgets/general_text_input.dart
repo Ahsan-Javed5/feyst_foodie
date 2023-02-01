@@ -176,7 +176,8 @@ class _GeneralTextInputState extends State<GeneralTextInput> {
           prefixIcon:
               widget._prefixIcon != null ? Icon(widget._prefixIcon) : null,
           //  suffixIcon: _buildSuffixIcon(appTheme),
-          contentPadding: widget._contentPadding,
+          contentPadding:
+        widget._contentPadding?? EdgeInsets.symmetric(vertical: 18,horizontal: 13)
         ),
         validator: widget._validator,
         onChanged: _onChange,

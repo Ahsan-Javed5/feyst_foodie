@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+version: 1.0.2+1
 
 environment:
   sdk: ">=2.16.0 <3.0.0"
@@ -57,7 +57,7 @@ dependencies:
   scan: 1.6.0
   shared_preferences: 2.0.8
   pin_code_fields: ^7.4.0
-
+  flutter_rating_bar: ^4.0.1
 
 dev_dependencies:
   analyzer: 4.3.1
@@ -76,7 +76,6 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
-    - assets/images_new/
     - assets/images/icons/
   fonts:
     - family: Roboto
@@ -94,4 +93,16 @@ flutter:
         - asset: assets/fonts/Roboto-Black.ttf
           weight: 700
         - asset: assets/fonts/Roboto-Black.ttf
+          weight: 800
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Poppins-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Poppins-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Poppins-SemiBold.ttf
+          weight: 700
+        - asset: assets/fonts/Poppins-Bold.ttf
           weight: 800

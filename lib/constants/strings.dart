@@ -295,8 +295,8 @@ abstract class Strings {
 
   static const noOfPersonsHint = '0';
   static const notesHint = 'Optional';
-  static const noOfPersonsLabel = 'Persons';
-  static const notesLabel = 'Notes';
+  static const noOfPersonsLabel = 'PERSONS';
+  static const notesLabel = 'NOTES';
 
   static const userProfileName = 'Minnie\'s Kitchen';
   static const userProfileReviews = '4.5 (5 Reviews)';
@@ -317,7 +317,7 @@ abstract class Strings {
   static const productDetailReview = '4.2';
   static const productDetailAboutTitle = 'About Experience';
   static const productDetailAboutSubTitle =
-      'Lorem ipsum dolor sit amet,\n consectetur adipiscing elit.';
+      'Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit.';
   static const productDetailWowFactorTitle = 'WOW Factors';
   static const productDetailWowFactorGarden = 'Garden';
   static const productDetailWowFactorFireworks = 'Fireworks';
@@ -325,9 +325,9 @@ abstract class Strings {
   static const productDetailWowFactorWifi = 'Wifi';
   static const productDetailWowFactorMusic = 'Music';
   static const productDetailWowFactorParking = 'Parking';
-  static const productDetailSelectionDate = 'MON, 10 Dec';
+  static const productDetailSelectionDate = 'MON, 10 DEC';
   static const productDetailSelectionTime = '10PM';
-  static const productDetailSelectionType = 'Family';
+  static const productDetailSelectionType = 'FAMILY';
   static const productDetailSelectionTotalPersons = '05';
   static const productDetailSelectionPersons = 'Persons';
   static const productDetailSelectionNotesLabel = 'Notes';
@@ -337,7 +337,7 @@ abstract class Strings {
   static const productDetailSelectionMenuAmount = 'Rs.195';
   static const productDetailChefLabel = 'Chef\'s Info';
   static const productDetailChefName = 'Zee Lounge';
-  static const productDetailChefLocation = 'Chef\'s Info';
+  static const productDetailChefLocation = 'H#25, St#43, Islamabad';
   static const productDetailChefSubHost = 'SUB HOST';
   static const productDetailChefSubHostName = 'Zoya Faraz';
   static const productDetailPriceLabel = 'Price';
@@ -387,27 +387,31 @@ abstract class Strings {
   static const foodItemBookingDateTime = '31 May @ 9 PM';
   static const foodItemBookingType = 'Couple';
   static const foodItemBookingApprovalPending = 'APPROVAL PENDING';
-  static const foodItemBookingAdvancePendingHeader = 'Advance Pending';
-  static const foodItemBookingAdvancePending = 'Advance Pending';
-  static const foodItemBookingInProgress = 'IN Process';
-  static const foodItemBookingBookingConfirmed = 'Booking Confirmed';
+  static const foodItemBookingAdvancePendingHeader = 'ADVANCE PENDING';
+  static const foodItemBookingAdvancePending = 'ADVANCE PENDING';
+  static const foodItemBookingInProgress = 'IN PROCESS';
+  static const foodItemBookingBookingConfirmed = 'BOOKING CONFIRMED';
   static const foodItemBookingAdvancePendingButton = 'Pay Advance';
-  static const foodItemAdvancePendingTermsCondition = 'Terms & Conditions';
+  static const foodItemAdvancePendingTermsCondition = 'Terms & Condition';
 
   static const verificationPopupTitle = "Verification\nCode";
   static const verificationPopupSubtitle =
-      'We have sent you an SMS with a code to number +92 345 000 0000';
+      'We have sent you an SMS with a code to\n number +92 345 000 0000';
   static const verificationPopupButton = "Verify";
   static const verificationPopupResendCode = "Resend Code";
 
+  static const ratingPopupTitle = "Order Completed!";
+  static const ratingPopupBtnTitle = "Submit";
+  static const ratingPopupSubTitle =
+      "Kindly review your experience with Spicy Bites Bistro";
   static const generalPopupTitle = "We are sorry";
   static const generalSubTitle =
       "Your Experience has been canceled by our host";
   static const generalButtonTitle = "okay";
-  static const popularFoodDetailTitle = 'BBQ \nExperience';
+  static const popularFoodDetailTitle = 'BBQ\nExperience';
   static const popularFoodDetailSubTitle = 'by Zee Lounge';
   static const popularFoodDetailReview = '4.2';
-  static const popularFoodDetailWowFactorTitle = 'WOW Factors';
+  static const popularFoodDetailWowFactorTitle = 'Wow Factors';
   static const foodItemBookingConfirmedStatus = 'Booking Confirmed';
   static const foodItemBookingConfirmedOrderNo = 'Order ID: 3345';
   static const foodItemBookingConfirmedComment =
@@ -418,8 +422,18 @@ abstract class Strings {
 
   static const popularFoodDetailAppBarTitle = 'Sindhi Biryani';
   static const foodDetailPreferences = 'Preferences';
-  static const foodDetailLocation= 'Location';
+  static const foodDetailLocation = 'Location';
   static const foodDetailPreferenceCouple = 'Couple';
   static const foodDetailPreferenceFamily = 'Family';
   static const foodDetailPreferenceFnf = 'F&F';
+  static const labelProfilePicture = 'Profile Picture';
+
+  static const productDetailChefLocations = 'Bahria Town, Rawalpindi';
+  static const bookingInProcessStatus = 'IN PROCESS';
+  static const bookingInProcessPayAdvance = 'Pay Digital';
+  static const bookingInProcessPayCash = 'Pay Cash';
+  static const bottomSheetTellUsWhyTitle =
+      "Tell us why you want to cancel order";
+  static const bottomSheetTellUsWhyRadioHint =
+      "Lorem ipsum dolor sit amet, consectetur";
 }
