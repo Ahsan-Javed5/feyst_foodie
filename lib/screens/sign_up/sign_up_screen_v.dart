@@ -8,6 +8,7 @@ import '../../ui_kit/helpers/dialog_helper.dart';
 import '../../ui_kit/widgets/general_gender.dart';
 import '../sign_in/sign_in_screen_v.dart';
 import 'get_started_screen_vm.dart';
+import 'package:chef/screens/sign_up/sign_up_screen_m.dart';
 
 import 'dart:developer' as developer;
 
@@ -25,31 +26,13 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
   final TextController _mobileNumberController = TextController();
   final TextController _ageController = TextController();
   final TextController _genderController = TextController(text: 'male');
-  String _dropDownValue = 'Scientist';
+
   final dropdownItems = <String>[];
   Gender selectedGender = Gender.male;
   Map<dynamic, dynamic> dropdownDetails = {};
 
-  // final TextController _professionID = TextController();
+
   int _professionID = 0;
-  // void initState() {
-  //   var newItem = const DropdownMenuItem(
-  //     child: Text('Scientist'),
-  //     value: 'Scientist',
-  //     alignment: Alignment.centerLeft,
-  //   );
-  //   var newItem2 = const DropdownMenuItem(
-  //     child: Text('Mathematician'),
-  //     value: 'Mathematician',
-  //     alignment: Alignment.centerLeft,
-  //   );
-  //   items.add(newItem);
-  //   items.add(newItem2);
-  //   dropdownItems.add('Student');
-  //   dropdownItems.add('Mathematician');
-  //   dropdownItems.add('Professor');
-  //   // super.initState();
-  // }
 
   void loadProfessionList(
     List<ProfessionData> professionList,
@@ -590,6 +573,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                   professionId: _professionID,
                   gender: _genderController.text,
                   context: context,
+                  baseUrl: baseURLs[0],
                 );
                 // viewModel.v
                 // Navigator.push(

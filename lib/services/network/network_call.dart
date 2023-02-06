@@ -158,7 +158,7 @@ class NetworkCall extends INetworkService {
       final userInfo = _storage.readString(key: PreferencesKeys.sLoginData);
       authData = LoginResponse.fromJson(jsonDecode(userInfo));
     } else {
-      authData = _appService.state.userInfo!;
+      //authData = _appService.state.userInfo!;
     }
 
     return authData;

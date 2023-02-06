@@ -20,7 +20,7 @@ export '../../ui_kit/widgets/general_dropdown.dart';
 
 export 'dart:convert';
 
-export 'package:chef/screens/sign_up/sign_up_screen_m.dart';
+// export 'package:chef/screens/sign_up/sign_up_screen_m.dart';
 export 'package:flutter/material.dart';
 export 'package:injectable/injectable.dart';
 

@@ -64,6 +64,7 @@ abstract class ITypography {
   TextStyle get label10;
   TextStyle get label11;
   TextStyle get label12;
+  TextStyle get label13;
   TextStyle get errorLabel3;
   TextStyle get errorLabel4;
   TextStyle get body1;

@@ -69,7 +69,7 @@ class Toaster {
               position: position ?? FlashPosition.bottom,
               enableVerticalDrag: enableVerticalDismiss,
               borderRadius: _appTheme.defaultBorderRadius,
-              backgroundColor: toastDecorationData.backgroundColor,
+              backgroundColor: toastDecorationData.primaryColor,
               controller: controller,
               margin: const EdgeInsets.all(_toastMargin),
               child: _buildToastContent(
@@ -118,7 +118,7 @@ class Toaster {
                       ),
                     TextSpan(
                       text: message,
-                      style: appTheme.typographies.interFontFamily.label1,
+                      style: appTheme.typographies.interFontFamily.label13,
                     )
                   ],
                 ),

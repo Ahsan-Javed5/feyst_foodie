@@ -1,21 +1,30 @@
 class LoginRequest {
   LoginRequest({
-    required this.username,
-    required this.password,
+    required this.t,
   });
 
+  T t;
+
   factory LoginRequest.fromJson(Map<String, dynamic> json) => LoginRequest(
-        username: json['username'],
-        password: json['password'],
+        t: T.fromJson(json["t"]),
       );
 
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['username'] = username;
-    data['password'] = password;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "t": t.toJson(),
+      };
+}
 
-  final String username;
-  final String password;
+class T {
+  T({
+    required this.mobileNo,
+  });
+  String mobileNo;
+
+  factory T.fromJson(Map<String, dynamic> json) => T(
+        mobileNo: json["mobileNumber"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "mobileNumber": mobileNo,
+      };
 }

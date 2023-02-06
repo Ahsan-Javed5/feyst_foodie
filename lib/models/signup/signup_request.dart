@@ -16,27 +16,24 @@ class SignupRequest {
 
 class T {
   T({
-    required this.age,
-    required this.gender,
-    this.id,
+    this.age,
+    this.gender,
     required this.mobileNo,
-    required this.name,
-    required this.professionalId,
-    required this.profileImageUrl,
+    this.name,
+    this.professionalId,
+    this.profileImageUrl,
   });
 
-  String age;
-  String gender;
-  int? id;
+  String? age;
+  String? gender;
   String mobileNo;
-  String name;
-  int professionalId;
-  String profileImageUrl;
+  String? name;
+  int? professionalId;
+  String? profileImageUrl;
 
   factory T.fromJson(Map<String, dynamic> json) => T(
         age: json["age"],
         gender: json["gender"],
-        id: json["id"],
         mobileNo: json["mobileNo"],
         name: json["name"],
         professionalId: json["professionalId"],
@@ -46,7 +43,6 @@ class T {
   Map<String, dynamic> toJson() => {
         "age": age,
         "gender": gender,
-        "id": id,
         "mobileNo": mobileNo,
         "name": name,
         "professionalId": professionalId,

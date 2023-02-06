@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:chef/models/signup/signup_response.dart';
+import 'package:chef/screens/sign_in/sign_in_screen_v.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,7 +34,8 @@ class ApplicationState extends Equatable {
     this.module,
   });
 
-  final LoginResponse? userInfo;
+  // final LoginResponse? userInfo;
+  final SignupResponse? userInfo;
   final AccessTokenData? accessTokenInfo;
   final String? tenantId;
   final String? workspaceId;
@@ -47,7 +50,8 @@ class ApplicationState extends Equatable {
   final Module? module;
 
   ApplicationState copyWith({
-    LoginResponse? userInfo,
+    //LoginResponse? userInfo,
+    SignupResponse? userInfo,
     AccessTokenData? accessTokenInfo,
     String? baseUrl,
     String? projectId,
@@ -111,7 +115,8 @@ class ApplicationService extends Cubit<ApplicationState> {
     final loginInfo = _storage.readString(key: PreferencesKeys.sLoginData);
     final _accessTokenInfo =
         _storage.readString(key: PreferencesKeys.sAccessTokenData);
-    final userInfo = LoginResponse.fromJson(jsonDecode(loginInfo));
+    //final userInfo = LoginResponse.fromJson(jsonDecode(loginInfo));
+    final userInfo = SignupResponse.fromJson(jsonDecode(loginInfo));
     var accessTokenInfo = AccessTokenData.empty();
     if (_accessTokenInfo != '') {
       accessTokenInfo = AccessTokenData.fromJson(jsonDecode(_accessTokenInfo));
@@ -254,15 +259,12 @@ class ApplicationService extends Cubit<ApplicationState> {
   void clearUserInfo() {
     emit(
       state.copyWith(
-        userInfo: LoginResponse.empty(),
-        tenantId: '',
-        projectId: '',
+        // userInfo: LoginResponse.empty(),
+        userInfo: SignupResponse.empty(),
         customerTokenLegacy: '',
         userFormData: {},
-        workspaceId: '',
         accessTokenInfo: AccessTokenData.empty(),
         baseUrl: '',
-        workflow: workflow_v3.Workflow.empty(),
         searchVisible: true,
       ),
     );
@@ -272,7 +274,7 @@ class ApplicationService extends Cubit<ApplicationState> {
     clearUserInfo();
     await _storage.clear();
 
-    //_navigation.replaceAll(route: [LoginRoute()]);
+    _navigation.replaceAll(route: [SignInRoute()]);
   }
 
   Future<void> fetchWorkspaceList({

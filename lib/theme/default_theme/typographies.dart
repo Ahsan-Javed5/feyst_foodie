@@ -186,6 +186,13 @@ class _InterTypography extends ITypography {
       );
 
   @override
+  TextStyle get label13 => _baseTextStyle.copyWith(
+        fontWeight: FontWeight.normal,
+        fontSize: _size16,
+        color: _IColors.white,
+      );
+
+  @override
   TextStyle get errorLabel3 => caption3.copyWith(
         color: _IColors.red0,
       );

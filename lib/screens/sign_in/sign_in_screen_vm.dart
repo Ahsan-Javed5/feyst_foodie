@@ -1,17 +1,20 @@
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/models/signup/profession_request.dart' as prorequest;
+import 'package:chef/screens/sign_in/sign_in_screen_m.dart';
 
-// import '../../base/screen_layout_base/screen_layout_base_m.dart';
-import '../../models/signup/profession_response.dart';
+// import '../../models/signup/profession_response.dart';
 import 'dart:developer' as developer;
 
-import '../../models/signup/signup_request.dart' as signuprequest;
+import '../../models/login/login_request.dart' as loginrequest;
 import '../../models/signup/signup_response.dart';
-import 'package:chef/screens/sign_up/sign_up_screen_m.dart';
+
+import 'package:chef/screens/sign_in/sign_in_screen_m.dart';
+
+import '../home/home_screen_v.dart';
 
 @injectable
-class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
-  SignUpScreenViewModel({
+class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
+  SignInScreenViewModel({
     required INavigationService navigation,
     required INetworkService network,
     required IStorageService storage,
@@ -22,12 +25,8 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
         _appService = appService,
         super(
           const Initialized(
-            fullName: '',
             mobileNumber: '',
-            age: 18,
-            gender: 'Male',
             isBusy: false,
-            profession: '',
           ),
         );
 
@@ -54,9 +53,9 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
       data: professionDataRequest,
     );
 
-    final currentProfessionData = professionFromJson(response.body);
-    List<ProfessionData> data = currentProfessionData.t;
-    emit(Loaded(currentProfessionData.t));
+    // final currentProfessionData = professionFromJson(response.body);
+    // List<ProfessionData> data = currentProfessionData.t;
+    // emit(Loaded(currentProfessionData.t));
   }
 
   bool isValidUrl(String url) => Uri.tryParse(url)?.hasAbsolutePath ?? false;
@@ -71,34 +70,26 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     return url;
   }
 
-  void onFormValuesChange({
-    String? fullName,
-    String? mobileNumber,
-    int? age,
-    String? gender,
-    String? profession,
-  }) =>
-      emit(Initialized(
-              fullName: fullName ?? '',
-              mobileNumber: mobileNumber ?? '',
-              age: age ?? 18,
-              gender: gender ?? 'male',
-              profession: profession ?? '',
-              isBusy: false)
-          .copyWith());
+  // void onFormValuesChange({
+  //   String? fullName,
+  //   String? mobileNumber,
+  //   int? age,
+  //   String? gender,
+  //   String? profession,
+  // }) =>
+  //     emit(Initialized(
+  //             fullName: fullName ?? '',
+  //             mobileNumber: mobileNumber ?? '',
+  //             age: age ?? 18,
+  //             gender: gender ?? 'male',
+  //             profession: profession ?? '',
+  //             isBusy: false)
+  //         .copyWith());
 
   bool _validateInput({
-    required String name,
     required String mobileNumber,
-    required int age,
-    required String gender,
-    required int professionId,
   }) =>
-      name.trim().isNotEmpty &&
-      mobileNumber.trim().isNotEmpty &&
-      age > 5 &&
-      gender.isNotEmpty &&
-      professionId != 0;
+      mobileNumber.trim().isNotEmpty;
 
   Future<void> _cacheData({
     required BuildContext context,
@@ -128,43 +119,35 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     await _appService.loadPrefData();
   }
 
-  void saveFoodie({
-    required String name,
+  void verifyUser({
     required String mobileNumber,
-    required int age,
-    required String gender,
-    required int professionId,
     required BuildContext context,
-    required String baseUrl,
   }) async {
     final isInputValid = _validateInput(
-      name: name,
       mobileNumber: mobileNumber,
-      age: age,
-      gender: gender,
-      professionId: professionId,
     );
     if (isInputValid) {
-      loading(isBusy: true);
+      //loading(isBusy: true);
       try {
-        final url =
-            InfininURLHelpers.getRestApiURL(Api.baseURL + Api.foodieSignUp);
-        signuprequest.T t = signuprequest.T(
-          age: age.toString(),
-          name: name,
-          gender: gender,
+        final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.loginAPI);
+
+        loginrequest.T t = loginrequest.T(
           mobileNo: mobileNumber,
-          professionalId: professionId,
-          profileImageUrl: null,
         );
 
-        final signUpCredentials = signuprequest.SignupRequest(
+        final loginCredentials = loginrequest.LoginRequest(
           t: t,
         ).toJson();
+
+        final _header = <String, String>{
+          Api.headerAcceptKey: Api.headerAcceptTypeValue
+        };
+
         final response = await _network
             .post(
               path: url,
-              data: signUpCredentials,
+              data: loginCredentials,
+              header: _header,
               //   accessToken: false,
             )
             .whenComplete(() {});
@@ -172,9 +155,11 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
         // final response = await _network.get(
         //   //below one is working
         //   path: 'https://run.mocky.io/v3/80289cbe-aa47-491e-9eb2-56126289c8a4',
+        //
+        //   // path: 'https://run.mocky.io/v3/d1f71fed-862a-4e17-a57c-07e99818e42f',
         // );
         if (response != null) {
-          developer.log(' Response of Signup body is ' + '${response.body}');
+          developer.log(' Response of login body is ' + '${response.body}');
 
           SignupResponse signupResponse = signupResponseFromJson(response.body);
 
@@ -183,13 +168,13 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
           await _cacheData(
             context: context,
             loginData: response.body,
-            baseUrl: baseUrl,
+            baseUrl: Api.baseURL,
           );
 
           developer.log(' Sign up Response is ' + signupResponse.message);
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => SignUpQuestionireScreen()),
+            MaterialPageRoute(builder: (context) => const HomeScreen()),
           );
         } else {
           Toaster.infoToast(
@@ -218,5 +203,5 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     }
   }
 
-  void loading({required bool isBusy}) => emit(const Loading());
+  // void loading({required bool isBusy}) => emit(const Loading());
 }

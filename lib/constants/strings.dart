@@ -373,6 +373,8 @@ abstract class Strings {
   static const labelReviews = 'Reviews';
   static const labelPrivacyPolicy = 'Privacy Policy';
   static const labelTermsCond = 'Terms & Conditions';
+  static const labelLogOut = 'Logout';
+
   static const labelBookings = 'Bookings';
 
   static const labelTitleProfile = 'Profile';

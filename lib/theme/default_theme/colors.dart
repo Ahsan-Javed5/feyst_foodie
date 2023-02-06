@@ -176,7 +176,7 @@ class _Colors implements IColors {
   Color get successCaption => _IColors.green05;
 
   @override
-  Color get successDark => _IColors.green06;
+  Color get successDark => _IColors.textFieldBorderColor;
 
   @override
   Color get errorBackground => _IColors.red0.withOpacity(0.2);

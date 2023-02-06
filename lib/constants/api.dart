@@ -10,6 +10,8 @@ abstract class Api {
   static const headerTenantKey = 'X-TENANT-ID';
   static const headerProjectKey = 'X-PROJECT-ID';
   static const headerWorkspaceKey = 'X-WORKSPACE-ID';
+  static const headerAcceptKey = 'accept';
+  static const headerAcceptTypeValue = '*/*';
 
   static const defaultHedears = {headerContentTypeKey: headerContentTypeValue};
   static const authBearer = 'Bearer ';
@@ -47,6 +49,7 @@ abstract class Api {
 
   static const professionalList = 'professional/list';
   static const foodieSignUp = 'foodie/save';
+  static const loginAPI = 'foodie/login';
 
   static const moduleSubMenuList = '$apiVersion2/menu/project/';
 

@@ -18,9 +18,10 @@ class ProfileInformationScreenViewModel
   final INavigationService _navigation;
   final ApplicationService _appService;
 
-  void fetchUserData() =>
-      emit(state.copyWith(user: _appService.state.userInfo?.user));
-
+  // void fetchUserData() =>
+  //  //   emit(state.copyWith(user: _appService.state.userInfo?.user));
+  // emit(state.copyWith(user: (_appService.state.userInfo?.t)));
+  void fetchUserData() => ({});
   void logout() async => _appService.logout();
 
   void pop() => _navigation.pop();

@@ -1,8 +1,11 @@
+import 'package:chef/screens/sign_in/sign_in_screen_vm.dart';
+import 'package:chef/services/device/device_service.dart';
 import 'package:chef/ui_kit/widgets/general_text_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
+import '../../base/base_view.dart';
 import '../../constants/resources.dart';
 import '../../constants/strings.dart';
 import '../../theme/app_theme_widget.dart';
@@ -11,18 +14,15 @@ import '../../ui_kit/helpers/dialog_helper.dart';
 import '../../ui_kit/widgets/general_bottom_sheet.dart';
 import '../../ui_kit/widgets/general_text.dart';
 
-class SignInScreen extends StatefulWidget {
-  @override
-  _SignInScreenState createState() => _SignInScreenState();
-}
-
-class _SignInScreenState extends State<SignInScreen> {
+class SignInScreen extends BaseView<SignInScreenViewModel> {
+  SignInScreen({Key? key}) : super(key: key);
   final TextController _mobileNumberController = TextController();
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildScreen(
+      {required BuildContext context, required ScreenSizeData screenSizeData}) {
     final appTheme = AppTheme.of(context).theme;
-
+    // developer.log(' ')
     return Scaffold(
       backgroundColor: appTheme.colors.primaryBackground,
       body: SafeArea(
@@ -86,7 +86,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           const TextStyle(color: Colors.white, fontSize: 14),
                       // valueStyle: valueStyle,
                       onChanged: (newValue) {}),
-                Spacer(),
+                  const Spacer(),
                   Expanded(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -96,7 +96,13 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                         InkWell(
                           onTap: () {
-                           // _showVerificationPopup(context);
+                            // _showVerificationPopup(context);
+                            viewModel.verifyUser(
+                              mobileNumber: _mobileNumberController.text
+                                  .toString()
+                                  .trim(),
+                              context: context,
+                            );
                           },
                           child: SvgPicture.asset(
                             Resources.getSignInRightArrow,
@@ -207,6 +213,10 @@ class _SignInScreenState extends State<SignInScreen> {
               styleType: ButtonStyleType.fill,
               width: 170,
               onTap: () {
+                viewModel.verifyUser(
+                  mobileNumber: _mobileNumberController.text.toString().trim(),
+                  context: context,
+                );
                 // Navigator.push(
                 //   context,
                 //   MaterialPageRoute(builder: (context) => SignUpScreen()),

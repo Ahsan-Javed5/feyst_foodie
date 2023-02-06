@@ -8,6 +8,7 @@ import '../../ui_kit/widgets/general_text.dart';
 import '../booking/food_item_bookng.dart';
 import '../home/food_details_screen.dart';
 import '../home/home_screen_v.dart';
+import '../user_account/edit_profie/edit_profile_screen_v.dart';
 import '../user_account/edit_profile.dart';
 import '../user_account/user_profile.dart';
 
@@ -27,7 +28,7 @@ class _BottomBarState extends State<BottomBar> with WidgetsBindingObserver {
     FoodItemBooking(),
     // FoodDetailScreen(),
     UserProfile(),
-    EditProfile(),
+    EditProfileScreen(),
   ];
   @override
   Widget build(BuildContext context) {
