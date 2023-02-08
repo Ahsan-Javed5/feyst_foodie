@@ -41,7 +41,6 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     for (int i = 0; i < professionList.length; i++) {
       developer.log(' ProfessionList id is ' + '${professionList[i].id}');
       dropdownDetails[professionList[i].name] = professionList[i].id;
-
       dropdownItems.add(professionList[i].name);
     }
 

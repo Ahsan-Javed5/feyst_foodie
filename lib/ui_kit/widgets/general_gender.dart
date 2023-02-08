@@ -39,10 +39,6 @@ class GeneralGender extends StatefulWidget {
 class _GeneralGenderState extends State<GeneralGender> {
   late String selectedValue;
 
-  static const _boxHeight = 35.0;
-  static const _boxBottomHeight = 40.0;
-  static const _verticalPadding = 20.0;
-
   @override
   void initState() {
     selectedValue = 'Male';
@@ -111,58 +107,8 @@ class _GeneralGenderState extends State<GeneralGender> {
                   ),
                 ],
               );
-              // decoration: BoxDecoration(
-              // border: Border.all(
-              // color: appTheme.colors
-              //     .textFieldBorderColor // green as background color
-              //
-              // ),
-              // borderRadius: BorderRadius.circular(10), // radius of 10
-              // //   color: widget._selectedItem == widget._gender
-              //
-              // color: widget._selectedItem.name == selectedValue
-              // ? appTheme.colors.textFieldBorderColor
-              //     : appTheme.colors.primaryBackground)
-              // return ListTile(
-              //   title: item.buildTitle(context),
-              //   //subtitle: item.buildSubtitle(context),
-              // );
             },
           ),
         ));
-    // child: widget._items
-    //     .map((data) => //DropdownMenuItem(
-    //             //  value: data,
-    //             Text(
-    //               data,
-    //             )
-    //         //    )
-    //         )
-    //     .toList(),
-    // child: GeneralText(
-    //   widget._text,
-    //   textAlign: TextAlign.center,
-    //   style: appTheme.typographies.interFontFamily.headline2.copyWith(
-    //       //   color: widget._selectedItem == widget._gender ? Colors.black : Colors.white,
-    //       color: widget._selectedItem.name == selectedValue
-    //           ? Colors.black
-    //           : Colors.white,
-    //       fontSize: 15,
-    //       fontWeight: FontWeight.bold),
-    // ),
-    // decoration: BoxDecoration(
-    //     border: Border.all(
-    //         color: appTheme.colors
-    //             .textFieldBorderColor // green as background color
-    //
-    //         ),
-    //     borderRadius: BorderRadius.circular(10), // radius of 10
-    //     //   color: widget._selectedItem == widget._gender
-    //
-    //     color: widget._selectedItem.name == selectedValue
-    //         ? appTheme.colors.textFieldBorderColor
-    //         : appTheme.colors.primaryBackground)
-
-    //  ));
   }
 }

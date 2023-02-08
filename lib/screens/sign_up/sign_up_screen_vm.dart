@@ -55,7 +55,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     );
 
     final currentProfessionData = professionFromJson(response.body);
-    List<ProfessionData> data = currentProfessionData.t;
+    // List<ProfessionData> data = currentProfessionData.t;
     emit(Loaded(currentProfessionData.t));
   }
 

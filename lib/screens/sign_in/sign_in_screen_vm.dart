@@ -145,19 +145,21 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
           Api.headerAcceptKey: Api.headerAcceptTypeValue
         };
 
-        final response = await _network
-            .post(
+        final response = await _network.post(
           path: url,
           data: loginCredentials,
           header: _header,
           //   accessToken: false,
-        )
-            .then((value) {
-          developer.log(' Response code is ' + '${value.runtimeType}');
-        }).whenComplete(() {
-          developer.log(' Completed code is ');
-        });
-        developer.log(' response data is  ' + '${response.runtimeType}');
+        );
+        //     .then((value) {
+        //   developer.log(' Response code is ' + '${value.runtimeType}');
+        //   if (value.runtimeType is Response) {
+        //     developer.log(' Response body is ' + '${value.body}');
+        //   }
+        // }).whenComplete(() {
+        //   developer.log(' Completed code is ');
+        // });
+        // developer.log(' response data is  ' + '${response.runtimeType}');
 
         // final response = await _network.get(
         //   //below one is working

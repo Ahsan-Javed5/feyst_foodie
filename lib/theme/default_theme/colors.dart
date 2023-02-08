@@ -236,7 +236,8 @@ class _Colors implements IColors {
   Color get disabledNavItemBackground => _IColors.grey01;
 
   @override
-  Color get shadow => _IColors.grey05.withOpacity(_opacity);
+  // Color get shadow => _IColors.grey05.withOpacity(_opacity);
+  Color get shadow => _IColors.white.withOpacity(_opacity);
 
   @override
   Color get focusedBorder => _IColors.blue02;
