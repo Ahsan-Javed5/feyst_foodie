@@ -196,17 +196,10 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
         //  loading(isBusy: false);
         //   _navigation.replace(route: CustomerRoute());
       } catch (error) {
-        developer.log(' Here in Error ' + '${error.runtimeType}');
-        developer.log(' Here Error by API is ' + '${error}');
-        // Response _response = error;
-        // emit(
-        //   // state.copyWith(
-        //   //   isBusy: false,
-        //   //   errorMessage: error.toString().contains(Api.unauthorizedRequest)
-        //   //       ? Strings.invalidUsernamePassword
-        //   //       : error.toString(),
-        //   // ),
-        // );
+        Toaster.infoToast(
+          context: context,
+          message: error.toString(),
+        );
       }
     } else {
       Toaster.errorToast(

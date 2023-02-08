@@ -107,7 +107,7 @@ class EditProfileScreen extends BaseView<EditProfileScreenViewModel> {
                     onTap: () {
                       if (othersList.elementAt(index) == Strings.labelLogOut) {
                         developer.log(' Clicked on logout ');
-                        viewModel.logout();
+                        viewModel.logout(context);
                       }
                     },
                     child: Padding(

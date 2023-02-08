@@ -17,6 +17,8 @@ import 'package:chef/models/custom_forms/workflow_v3.dart' as workflow_v3;
 import 'package:chef/models/custom_forms/workflow_template_current_step.dart'
     as cs;
 
+import 'dart:developer' as developer;
+
 class ApplicationState extends Equatable {
   const ApplicationState({
     this.baseUrl,
@@ -121,9 +123,6 @@ class ApplicationService extends Cubit<ApplicationState> {
     if (_accessTokenInfo != '') {
       accessTokenInfo = AccessTokenData.fromJson(jsonDecode(_accessTokenInfo));
     }
-    final projectId = _storage.readString(key: PreferencesKeys.projectId);
-    final tenantId = _storage.readString(key: PreferencesKeys.sTenantId);
-    final workspaceId = _storage.readString(key: PreferencesKeys.sWorkspaceId);
     final customerTokenLegacy =
         _storage.readString(key: PreferencesKeys.sCustomerTokenLegacy);
 
@@ -132,10 +131,6 @@ class ApplicationService extends Cubit<ApplicationState> {
         baseUrl: baseURL,
         userInfo: userInfo,
         accessTokenInfo: accessTokenInfo,
-        projectId: projectId,
-        tenantId: tenantId,
-        workspaceId: workspaceId,
-        customerTokenLegacy: customerTokenLegacy,
       ),
     );
   }
@@ -265,16 +260,23 @@ class ApplicationService extends Cubit<ApplicationState> {
         userFormData: {},
         accessTokenInfo: AccessTokenData.empty(),
         baseUrl: '',
-        searchVisible: true,
+        // searchVisible: true,
       ),
     );
   }
 
-  void logout() async {
+  void logout({BuildContext? context}) async {
     clearUserInfo();
     await _storage.clear();
-
-    _navigation.replaceAll(route: [SignInRoute()]);
+    if (context != null) {
+      developer.log(' Sending');
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => SignInScreen()),
+      );
+    } else {
+      _navigation.replaceAll(route: [SignInRoute()]);
+    }
   }
 
   Future<void> fetchWorkspaceList({

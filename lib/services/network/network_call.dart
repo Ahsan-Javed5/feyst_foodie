@@ -145,7 +145,11 @@ class NetworkCall extends INetworkService {
           .timeout(_timeout);
       responseJson = await _returnResponse(_response);
       return responseJson;
-    } catch (Exception) {
+    }
+    // catch (Exception) {
+    //   throw FetchDataException(Api.noConnection);
+    // }
+    on BadRequestException {
       throw FetchDataException(Api.noConnection);
     } on SocketException {
       throw FetchDataException(Api.noConnection);
@@ -214,8 +218,8 @@ class NetworkCall extends INetworkService {
         return response;
       case 400:
         final message = _getErrorMessage(response);
-        return response;
-      // throw BadRequestException(message);
+        // return response;
+        throw BadRequestException(message);
       case 401:
       case 403:
       case 422:

@@ -25,5 +25,5 @@ class EditProfileScreenViewModel extends BaseViewModel<EditProfileScreenState> {
   final IStorageService _storage;
   final ApplicationService _appService;
 
-  void logout() => _appService.logout();
+  void logout(BuildContext context) => _appService.logout(context: context);
 }
