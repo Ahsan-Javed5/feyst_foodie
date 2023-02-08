@@ -15,6 +15,7 @@ class GeneralGender extends StatefulWidget {
     required Gender gender,
     required Gender selectedItem,
     required Function(String) onTap,
+    required List<String> items,
     IconData? icon,
     Key? key,
   })  : _text = text,
@@ -22,12 +23,14 @@ class GeneralGender extends StatefulWidget {
         _selectedItem = selectedItem,
         _icon = icon,
         _onTap = onTap,
+        _items = items,
         super(key: key);
   final String _text;
   final Gender _gender;
   final Gender _selectedItem;
   final IconData? _icon;
   final Function(String) _onTap;
+  final List<String> _items;
 
   @override
   _GeneralGenderState createState() => _GeneralGenderState();
@@ -42,8 +45,8 @@ class _GeneralGenderState extends State<GeneralGender> {
 
   @override
   void initState() {
-    selectedValue = widget._selectedItem.name ?? '';
-    developer.log(' Selected Value is ' + '${selectedValue}');
+    selectedValue = 'Male';
+    developer.log(' Selected Value is ' + '$selectedValue');
     super.initState();
   }
 
@@ -55,30 +58,111 @@ class _GeneralGenderState extends State<GeneralGender> {
         onTap: () {
           widget._onTap.call(selectedValue);
         },
-        child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 15),
-            child: GeneralText(
-              widget._text,
-              textAlign: TextAlign.center,
-              style: appTheme.typographies.interFontFamily.headline2.copyWith(
-                  //   color: widget._selectedItem == widget._gender ? Colors.black : Colors.white,
-                  color: widget._selectedItem.name == selectedValue
-                      ? Colors.black
-                      : Colors.white,
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold),
-            ),
-            decoration: BoxDecoration(
-                border: Border.all(
-                    color: appTheme.colors
-                        .textFieldBorderColor // green as background color
+        child: SizedBox(
+          height: 55,
+          child: ListView.builder(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            itemCount: widget._items.length,
+            itemBuilder: (BuildContext context, int index) {
+              final item = widget._items[index];
 
-                    ),
-                borderRadius: BorderRadius.circular(10), // radius of 10
-                //   color: widget._selectedItem == widget._gender
+              return Row(
+                children: [
+                  InkWell(
+                      //  InkWell(
+                      onTap: () {
+                        developer.log(' Clicked on this ');
+                        setState(() {
+                          selectedValue = widget._items[index];
+                        });
+                      },
+                      child: Container(
+                          height: 51,
+                          width: 110,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 15, horizontal: 3),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: appTheme.colors
+                                      .textFieldBorderColor // green as background color
 
-                color: widget._selectedItem.name == selectedValue
-                    ? appTheme.colors.textFieldBorderColor
-                    : appTheme.colors.primaryBackground)));
+                                  ),
+                              borderRadius:
+                                  BorderRadius.circular(8), // radius of 10
+
+                              color: widget._items[index] == selectedValue
+                                  ? appTheme.colors.textFieldBorderColor
+                                  : appTheme.colors.primaryBackground),
+                          child: GeneralText(
+                            item,
+                            textAlign: TextAlign.center,
+                            style: appTheme
+                                .typographies.interFontFamily.headline2
+                                .copyWith(
+                                    color: widget._items[index] == selectedValue
+                                        ? Colors.black
+                                        : Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold),
+                          ))),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                ],
+              );
+              // decoration: BoxDecoration(
+              // border: Border.all(
+              // color: appTheme.colors
+              //     .textFieldBorderColor // green as background color
+              //
+              // ),
+              // borderRadius: BorderRadius.circular(10), // radius of 10
+              // //   color: widget._selectedItem == widget._gender
+              //
+              // color: widget._selectedItem.name == selectedValue
+              // ? appTheme.colors.textFieldBorderColor
+              //     : appTheme.colors.primaryBackground)
+              // return ListTile(
+              //   title: item.buildTitle(context),
+              //   //subtitle: item.buildSubtitle(context),
+              // );
+            },
+          ),
+        ));
+    // child: widget._items
+    //     .map((data) => //DropdownMenuItem(
+    //             //  value: data,
+    //             Text(
+    //               data,
+    //             )
+    //         //    )
+    //         )
+    //     .toList(),
+    // child: GeneralText(
+    //   widget._text,
+    //   textAlign: TextAlign.center,
+    //   style: appTheme.typographies.interFontFamily.headline2.copyWith(
+    //       //   color: widget._selectedItem == widget._gender ? Colors.black : Colors.white,
+    //       color: widget._selectedItem.name == selectedValue
+    //           ? Colors.black
+    //           : Colors.white,
+    //       fontSize: 15,
+    //       fontWeight: FontWeight.bold),
+    // ),
+    // decoration: BoxDecoration(
+    //     border: Border.all(
+    //         color: appTheme.colors
+    //             .textFieldBorderColor // green as background color
+    //
+    //         ),
+    //     borderRadius: BorderRadius.circular(10), // radius of 10
+    //     //   color: widget._selectedItem == widget._gender
+    //
+    //     color: widget._selectedItem.name == selectedValue
+    //         ? appTheme.colors.textFieldBorderColor
+    //         : appTheme.colors.primaryBackground)
+
+    //  ));
   }
 }

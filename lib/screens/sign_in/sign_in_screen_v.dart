@@ -13,6 +13,7 @@ import '../../ui_kit/general_ui_kit.dart';
 import '../../ui_kit/helpers/dialog_helper.dart';
 import '../../ui_kit/widgets/general_bottom_sheet.dart';
 import '../../ui_kit/widgets/general_text.dart';
+import '../sign_up/sign_up_screen_v.dart';
 
 class SignInScreen extends BaseView<SignInScreenViewModel> {
   SignInScreen({Key? key}) : super(key: key);
@@ -36,7 +37,7 @@ class SignInScreen extends BaseView<SignInScreenViewModel> {
                 child: Image.asset(
                   'assets/images/icons/food_product_ring.png',
                   height: 300,
-                  color: Color(0xfff1c452).withOpacity(0.1),
+                  color: const Color(0xfff1c452).withOpacity(0.1),
                 ),
               ),
             ),
@@ -84,19 +85,26 @@ class SignInScreen extends BaseView<SignInScreenViewModel> {
                       hint: '+92 345 000 0000',
                       hintStyle:
                           const TextStyle(color: Colors.white, fontSize: 14),
-                      // valueStyle: valueStyle,
                       onChanged: (newValue) {}),
                   const Spacer(),
                   Expanded(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SvgPicture.asset(
-                          Resources.getSignInLeftArrow,
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SignUpScreen()),
+                            );
+                          },
+                          child: SvgPicture.asset(
+                            Resources.getSignInLeftArrow,
+                          ),
                         ),
                         InkWell(
                           onTap: () {
-                            // _showVerificationPopup(context);
                             viewModel.verifyUser(
                               mobileNumber: _mobileNumberController.text
                                   .toString()

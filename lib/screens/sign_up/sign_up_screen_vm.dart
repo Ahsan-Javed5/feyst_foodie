@@ -213,7 +213,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     } else {
       Toaster.errorToast(
         context: context,
-        message: Strings.requiredFields,
+        message: Strings.signUpFields,
       );
     }
   }

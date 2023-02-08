@@ -145,6 +145,8 @@ class NetworkCall extends INetworkService {
           .timeout(_timeout);
       responseJson = await _returnResponse(_response);
       return responseJson;
+    } catch (Exception) {
+      throw FetchDataException(Api.noConnection);
     } on SocketException {
       throw FetchDataException(Api.noConnection);
     }
@@ -212,7 +214,8 @@ class NetworkCall extends INetworkService {
         return response;
       case 400:
         final message = _getErrorMessage(response);
-        throw BadRequestException(message);
+        return response;
+      // throw BadRequestException(message);
       case 401:
       case 403:
       case 422:
@@ -233,9 +236,11 @@ class NetworkCall extends INetworkService {
       jsonDecode(response.body.toString()),
     );
     final _error = _apiFailure.error;
-    _errorMessage = _error.detail.isNotEmpty
-        ? _error.detail.join('\n')
-        : '${_error.summary}: ${Strings.unknownError}';
+    // _errorMessage = _error.detail.isNotEmpty
+    //     ? _error.detail.join('\n')
+    //     : '${_error.summary}: ${Strings.unknownError}';
+
+    _errorMessage = _error.isNotEmpty ? _error : Strings.unknownError;
 
     return _errorMessage;
   }

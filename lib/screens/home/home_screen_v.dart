@@ -116,7 +116,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         return _PopularDishes(appTheme: appTheme);
                       },
                     ),
-                  )
+                  ),
+                  // Center(child: _letsStartedButtonTitle(appTheme: appTheme)),
+                  // const SizedBox(
+                  //   height: 20,
+                  // ),
                 ],
               ),
             ),

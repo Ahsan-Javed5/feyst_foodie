@@ -1,6 +1,7 @@
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/models/signup/profession_request.dart' as prorequest;
 import 'package:chef/screens/sign_in/sign_in_screen_m.dart';
+import 'package:http/http.dart';
 
 // import '../../models/signup/profession_response.dart';
 import 'dart:developer' as developer;
@@ -10,6 +11,7 @@ import '../../models/signup/signup_response.dart';
 
 import 'package:chef/screens/sign_in/sign_in_screen_m.dart';
 
+import '../bottom_bar/bottom_bar.dart';
 import '../home/home_screen_v.dart';
 
 @injectable
@@ -145,12 +147,17 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
 
         final response = await _network
             .post(
-              path: url,
-              data: loginCredentials,
-              header: _header,
-              //   accessToken: false,
-            )
-            .whenComplete(() {});
+          path: url,
+          data: loginCredentials,
+          header: _header,
+          //   accessToken: false,
+        )
+            .then((value) {
+          developer.log(' Response code is ' + '${value.runtimeType}');
+        }).whenComplete(() {
+          developer.log(' Completed code is ');
+        });
+        developer.log(' response data is  ' + '${response.runtimeType}');
 
         // final response = await _network.get(
         //   //below one is working
@@ -163,7 +170,7 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
 
           SignupResponse signupResponse = signupResponseFromJson(response.body);
 
-          Toaster.infoToast(context: context, message: signupResponse.message);
+          Toaster.infoToast(context: context, message: 'Welcome back');
 
           await _cacheData(
             context: context,
@@ -174,18 +181,22 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
           developer.log(' Sign up Response is ' + signupResponse.message);
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const HomeScreen()),
+            MaterialPageRoute(builder: (context) => const BottomBar()),
           );
         } else {
           Toaster.infoToast(
               context: context,
-              message: 'Something is wrong please content vendor');
-          developer.log(' Response of Signup is null ' + '$response');
+              message: 'Not found foodie [ ' +
+                  '${'${mobileNumber}'}' +
+                  '], Please enter registered number or SignUp');
         }
 
         //  loading(isBusy: false);
         //   _navigation.replace(route: CustomerRoute());
       } catch (error) {
+        developer.log(' Here in Error ' + '${error.runtimeType}');
+        developer.log(' Here Error by API is ' + '${error}');
+        // Response _response = error;
         // emit(
         //   // state.copyWith(
         //   //   isBusy: false,

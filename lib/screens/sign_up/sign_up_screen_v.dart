@@ -24,19 +24,20 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
   late List<DropdownMenuItem<String>> items = [];
   final TextController _nameController = TextController();
   final TextController _mobileNumberController = TextController();
-  final TextController _ageController = TextController();
+  final TextController _ageController = TextController(text: "0");
   final TextController _genderController = TextController(text: 'male');
 
   final dropdownItems = <String>[];
   Gender selectedGender = Gender.male;
   Map<dynamic, dynamic> dropdownDetails = {};
-
-
+  final genderList = <String>[];
   int _professionID = 0;
 
   void loadProfessionList(
     List<ProfessionData> professionList,
   ) {
+    genderList.add('Male');
+    genderList.add('Female');
     for (int i = 0; i < professionList.length; i++) {
       developer.log(' ProfessionList id is ' + '${professionList[i].id}');
       dropdownDetails[professionList[i].name] = professionList[i].id;
@@ -299,16 +300,17 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               const SizedBox(
                 height: 8,
               ),
-              Row(
-                children: [
-                  _genderWidget(appTheme, Gender.male, Strings.signMaleLabel),
-                  const SizedBox(
-                    width: 12,
-                  ),
-                  _genderWidget(
-                      appTheme, Gender.female, Strings.signFemaleLabel),
-                ],
-              ),
+              _genderWidget(appTheme, Gender.male, Strings.signMaleLabel),
+              // Row(
+              //   children: [
+              //     _genderWidget(appTheme, Gender.male, Strings.signMaleLabel),
+              //     const SizedBox(
+              //       width: 12,
+              //     ),
+              //     _genderWidget(
+              //         appTheme, Gender.female, Strings.signFemaleLabel),
+              //   ],
+              // ),
             ],
           ),
         ),
@@ -384,7 +386,8 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
           ),
           InkWell(
             onTap: () {
-              _showVerificationPopup(context);
+              proceedVerification(context);
+              //  _showVerificationPopup(context);
             },
             child: SvgPicture.asset(
               Resources.getRightArrow,
@@ -395,17 +398,28 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     );
   }
 
-  Expanded _genderWidget(IAppThemeData appTheme, Gender gender, String text) {
-    return Expanded(
-      child: GeneralGender(
-        gender: gender,
-        text: text,
-        selectedItem: gender,
-        onTap: (value) {
-          _genderController.text = value;
-          developer.log(' Here Gender clicked ' + '$value');
-        },
-      ),
+  void proceedVerification(context) {
+    viewModel.saveFoodie(
+      name: _nameController.text,
+      mobileNumber: _mobileNumberController.text,
+      age: int.parse(_ageController.text),
+      professionId: _professionID,
+      gender: _genderController.text,
+      context: context,
+      baseUrl: baseURLs[0],
+    );
+  }
+
+  Widget _genderWidget(IAppThemeData appTheme, Gender gender, String text) {
+    return GeneralGender(
+      gender: gender,
+      text: text,
+      selectedItem: gender,
+      items: genderList,
+      onTap: (value) {
+        _genderController.text = value;
+        developer.log(' Here Gender clicked ' + '$value');
+      },
     );
     // return Expanded(
     //   child: InkWell(

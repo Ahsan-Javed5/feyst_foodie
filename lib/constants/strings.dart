@@ -49,7 +49,9 @@ abstract class Strings {
   static const formInvalid = 'Form is invalid';
   static const noPermissionToAction =
       'This user has no permission to do any action';
-  static const requiredFields = 'Please fill username and password';
+  static const requiredFields = 'Please enter valid mobile number';
+
+  static const signUpFields = 'All fields are required';
   static const invalidUrl = 'Invalid URL';
   static const qrNotScanned = 'No QR Code scanned.';
 
