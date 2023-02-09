@@ -5,7 +5,9 @@ import 'package:chef/models/signup/profession_request.dart' as prorequest;
 import '../../models/signup/profession_response.dart';
 import 'dart:developer' as developer;
 
-import '../../models/signup/signup_request.dart' as signuprequest;
+import '../../helpers/data_request.dart' as signuprequest;
+// import '../../models/signup/signup_request.dart' as signuprequest;
+import '../../models/signup/signup_request.dart';
 import '../../models/signup/signup_response.dart';
 import 'package:chef/screens/sign_up/sign_up_screen_m.dart';
 
@@ -41,6 +43,9 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     required BuildContext context,
   }) async {
     final url = InfininURLHelpers.getRestApiURL(baseUrl + Api.professionalList);
+    // emit(const Loading());
+    List<ProfessionData> _professionData = [];
+    emit(Loaded(_professionData));
     final professionDataRequest = prorequest.ProfessionRequest(
       builderId: 0,
       currentPage: 0,
@@ -158,7 +163,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
           profileImageUrl: null,
         );
 
-        final signUpCredentials = signuprequest.SignupRequest(
+        final signUpCredentials = SignupRequest(
           t: t,
         ).toJson();
         final response = await _network
@@ -216,6 +221,32 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
         message: Strings.signUpFields,
       );
     }
+  }
+
+  bool verifyInput({
+    required String name,
+    required String mobileNumber,
+    required int age,
+    required String gender,
+    required int professionId,
+    required BuildContext context,
+    required String baseUrl,
+  }) {
+    final isInputValid = _validateInput(
+      name: name,
+      mobileNumber: mobileNumber,
+      age: age,
+      gender: gender,
+      professionId: professionId,
+    );
+    if (!isInputValid) {
+      Toaster.errorToast(
+        context: context,
+        message: Strings.signUpFields,
+      );
+      return false;
+    }
+    return true;
   }
 
   void loading({required bool isBusy}) => emit(const Loading());

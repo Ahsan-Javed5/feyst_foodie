@@ -48,6 +48,8 @@ abstract class Api {
   static const records = '$apiVersion/module-record';
 
   static const professionalList = 'professional/list';
+  static const experienceList = 'experience/list';
+
   static const foodieSignUp = 'foodie/save';
   static const loginAPI = 'foodie/login';
 

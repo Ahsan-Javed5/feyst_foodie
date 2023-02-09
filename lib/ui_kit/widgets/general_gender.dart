@@ -71,6 +71,7 @@ class _GeneralGenderState extends State<GeneralGender> {
                         developer.log(' Clicked on this ');
                         setState(() {
                           selectedValue = widget._items[index];
+                          widget._onTap.call(selectedValue);
                         });
                       },
                       child: Container(

@@ -30,20 +30,16 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
   final dropdownItems = <String>[];
   Gender selectedGender = Gender.male;
   Map<dynamic, dynamic> dropdownDetails = {};
-  final genderList = <String>[];
+  final genderList = <String>['Male', 'Female'];
   int _professionID = 0;
 
   void loadProfessionList(
     List<ProfessionData> professionList,
   ) {
-    genderList.add('Male');
-    genderList.add('Female');
     for (int i = 0; i < professionList.length; i++) {
-      developer.log(' ProfessionList id is ' + '${professionList[i].id}');
       dropdownDetails[professionList[i].name] = professionList[i].id;
       dropdownItems.add(professionList[i].name);
     }
-
     _professionID = dropdownDetails[dropdownItems[0]];
   }
 
@@ -54,20 +50,25 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
   }) {
     final appTheme = AppTheme.of(context).theme;
 
-    viewModel.loadProfessions(baseUrl: baseURLs[0], context: context);
     return BlocBuilder<SignUpScreenViewModel, SignUpScreenState>(
-        bloc: viewModel,
-        builder: (_, state) => state.when(
-            initialized:
-                (fullName, mobileNumber, age, gender, profession, isBusy) =>
-                    _initialized(),
-            loading: _loading,
-            loaded: (professionList) => _displayLoadedData(
-                state: state,
-                appTheme: appTheme,
-                context: context,
-                professionList: professionList,
-                screenSizeData: screenSizeData)));
+        bloc: viewModel
+          ..loadProfessions(baseUrl: baseURLs[0], context: context),
+        builder: (_, state) {
+          return Scaffold(
+              backgroundColor: appTheme.colors.primaryBackground,
+              bottomNavigationBar: displayAlreadySignIn(appTheme, context),
+              body: state.when(
+                  initialized: (fullName, mobileNumber, age, gender, profession,
+                          isBusy) =>
+                      _initialized(),
+                  loading: _loading,
+                  loaded: (professionList) => _displayLoadedData(
+                      state: state,
+                      appTheme: appTheme,
+                      context: context,
+                      professionList: professionList,
+                      screenSizeData: screenSizeData)));
+        });
   }
 
   Widget _initialized() {
@@ -84,34 +85,30 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     required ScreenSizeData screenSizeData,
   }) {
     final size = screenSizeData.size;
-    return Scaffold(
-      backgroundColor: appTheme.colors.primaryBackground,
-      bottomNavigationBar: displayAlreadySignIn(appTheme, context),
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Stack(
-                children: [
-                  screenSizeData.screenType == ScreenType.small
-                      ? _buildMobileView(
-                          context: context,
-                          state: state,
-                          appTheme: appTheme,
-                          size: size,
-                          professionList: professionList,
-                        )
-                      : _buildTabletView(
-                          context: context,
-                          state: state,
-                          appTheme: appTheme,
-                          size: size,
-                        ),
-                ],
-              )
-              // child:
-              ),
-        ),
+    return SingleChildScrollView(
+      child: SafeArea(
+        child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: Stack(
+              children: [
+                screenSizeData.screenType == ScreenType.small
+                    ? _buildMobileView(
+                        context: context,
+                        state: state,
+                        appTheme: appTheme,
+                        size: size,
+                        professionList: professionList,
+                      )
+                    : _buildTabletView(
+                        context: context,
+                        state: state,
+                        appTheme: appTheme,
+                        size: size,
+                      ),
+              ],
+            )
+            // child:
+            ),
       ),
     );
   }
@@ -154,8 +151,9 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
         const SizedBox(
           height: 10,
         ),
-        // state.when(initialized: initialized, loaded: loaded)
-        displayProfession(appTheme, professionList),
+        professionList.isNotEmpty
+            ? displayProfession(appTheme, professionList)
+            : const CircularProgressIndicator(),
         const SizedBox(
           height: 140,
         ),
@@ -385,8 +383,18 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
           ),
           InkWell(
             onTap: () {
-              proceedVerification(context);
-              //  _showVerificationPopup(context);
+              //proceedVerification(context);
+              if (viewModel.verifyInput(
+                name: _nameController.text,
+                mobileNumber: _mobileNumberController.text,
+                age: int.parse(_ageController.text),
+                professionId: _professionID,
+                gender: _genderController.text,
+                context: context,
+                baseUrl: baseURLs[0],
+              )) {
+                _showVerificationPopup(context);
+              }
             },
             child: SvgPicture.asset(
               Resources.getRightArrow,
@@ -579,7 +587,8 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
 
                 developer
                     .log(' Gender selected is    ' + _genderController.text);
-                viewModel.saveFoodie(
+
+                if (viewModel.verifyInput(
                   name: _nameController.text,
                   mobileNumber: _mobileNumberController.text,
                   age: int.parse(_ageController.text),
@@ -587,18 +596,19 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                   gender: _genderController.text,
                   context: context,
                   baseUrl: baseURLs[0],
-                );
-                // viewModel.v
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //       builder: (context) => SignUpQuestionireScreen()),
-                // );
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => SignUpScreen()),
-                // );
-                //    viewModel.goToForgotPasswordScreen();
+                )) {
+                  viewModel.saveFoodie(
+                    name: _nameController.text,
+                    mobileNumber: _mobileNumberController.text,
+                    age: int.parse(_ageController.text),
+                    professionId: _professionID,
+                    gender: _genderController.text,
+                    context: context,
+                    baseUrl: baseURLs[0],
+                  );
+                }
+
+                //  proceedVerification(context);
               },
             ),
             SizedBox(

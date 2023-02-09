@@ -123,6 +123,7 @@ Future<_i1.GetIt> $initGetIt(
         navigation: get<_i3.INavigationService<dynamic>>(),
         storage: get<_i3.IStorageService>(),
         appService: get<_i3.ApplicationService>(),
+        network: get<_i3.INetworkService<dynamic>>(),
       ));
   return get;
 }
