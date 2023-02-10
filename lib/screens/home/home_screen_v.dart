@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../helpers/color_helper.dart';
+import '../../models/home/experience_list_response.dart' as experience_data;
 import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
@@ -25,7 +26,8 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
               body: state.when(
                 initialized: displayInitialized,
                 loading: displayLoading,
-                loaded: (experienceList) => displayLoaded(context: context),
+                loaded: (experienceList) => displayLoaded(
+                    context: context, experienceList: experienceList),
               ));
         });
   }
@@ -38,7 +40,9 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
     return Container();
   }
 
-  Widget displayLoaded({required BuildContext context}) {
+  Widget displayLoaded(
+      {required BuildContext context,
+      required experience_data.ExperienceListResponse experienceList}) {
     final appTheme = AppTheme.of(context).theme;
     return Stack(
       children: [
@@ -98,11 +102,12 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
                   height: 250,
                   padding: EdgeInsets.only(left: 31),
                   child: ListView.builder(
-                      itemCount: 3,
-                      physics: BouncingScrollPhysics(),
+                      itemCount: experienceList.t.length,
+                      physics: const BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
-                        return _FoodContainer(appTheme: appTheme);
+                        return _FoodContainer(
+                            appTheme: appTheme, data: experienceList.t[index]);
                       }),
                 ),
                 Container(
@@ -129,9 +134,10 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
                       crossAxisSpacing: 20.0,
                       mainAxisSpacing: 20.0,
                     ),
-                    itemCount: 4,
+                    itemCount: experienceList.t.length,
                     itemBuilder: (context, index) {
-                      return _PopularDishes(appTheme: appTheme);
+                      return _PopularDishes(
+                          appTheme: appTheme, data: experienceList.t[index]);
                     },
                   ),
                 ),
@@ -152,9 +158,11 @@ class _PopularDishes extends StatelessWidget {
   const _PopularDishes({
     Key? key,
     required this.appTheme,
+    required this.data,
   }) : super(key: key);
 
   final IAppThemeData appTheme;
+  final experience_data.T data;
 
   @override
   Widget build(BuildContext context) {
@@ -210,7 +218,7 @@ class _PopularDishes extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     GeneralText(
-                      'Sindhi\nBiryani',
+                      data.description, //'Sindhi\nBiryani',
                       textAlign: TextAlign.left,
                       style: appTheme.typographies.interFontFamily.headline2
                           .copyWith(
@@ -246,9 +254,11 @@ class _FoodContainer extends StatelessWidget {
   const _FoodContainer({
     Key? key,
     required this.appTheme,
+    required this.data,
   }) : super(key: key);
 
   final IAppThemeData appTheme;
+  final experience_data.T data;
 
   @override
   Widget build(BuildContext context) {
@@ -296,7 +306,7 @@ class _FoodContainer extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             GeneralText(
-                              Strings.labelSeaFoodExperience,
+                              data.title,
                               style: appTheme
                                   .typographies.interFontFamily.headline2
                                   .copyWith(
@@ -306,7 +316,7 @@ class _FoodContainer extends StatelessWidget {
                               ),
                             ),
                             GeneralText(
-                              Strings.labelSeaFood2Experience,
+                              data.description, // Strings.labelSeaFood2Experience,
                               style: appTheme
                                   .typographies.interFontFamily.headline2
                                   .copyWith(
