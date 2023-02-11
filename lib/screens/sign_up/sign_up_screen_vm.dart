@@ -22,16 +22,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
         _network = network,
         _storage = storage,
         _appService = appService,
-        super(
-          const Initialized(
-            fullName: '',
-            mobileNumber: '',
-            age: 18,
-            gender: 'Male',
-            isBusy: false,
-            profession: '',
-          ),
-        );
+        super(const Loading());
 
   final INavigationService _navigation;
   final INetworkService _network;
@@ -47,13 +38,9 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     List<ProfessionData> _professionData = [];
     emit(Loaded(_professionData));
     final professionDataRequest = prorequest.ProfessionRequest(
-      builderId: 0,
-      currentPage: 0,
-      totalRecords: 0,
-      userId: 0,
-      userName: "",
       t: prorequest.T(),
     ).toJson();
+
     final response = await _network.post(
       path: url,
       data: professionDataRequest,
@@ -75,22 +62,6 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     }
     return url;
   }
-
-  void onFormValuesChange({
-    String? fullName,
-    String? mobileNumber,
-    int? age,
-    String? gender,
-    String? profession,
-  }) =>
-      emit(Initialized(
-              fullName: fullName ?? '',
-              mobileNumber: mobileNumber ?? '',
-              age: age ?? 18,
-              gender: gender ?? 'male',
-              profession: profession ?? '',
-              isBusy: false)
-          .copyWith());
 
   bool _validateInput({
     required String name,

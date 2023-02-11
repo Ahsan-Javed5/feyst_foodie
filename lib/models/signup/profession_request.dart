@@ -8,20 +8,20 @@ String professionRequestToJson(ProfessionRequest data) =>
 
 class ProfessionRequest {
   ProfessionRequest({
-    required this.builderId,
-    required this.currentPage,
+    this.builderId,
+    this.currentPage,
     required this.t,
-    required this.totalRecords,
-    required this.userId,
-    required this.userName,
+    this.totalRecords,
+    this.userId,
+    this.userName,
   });
 
-  int builderId;
-  int currentPage;
+  int? builderId;
+  int? currentPage;
   T t;
-  int totalRecords;
-  int userId;
-  String userName;
+  int? totalRecords;
+  int? userId;
+  String? userName;
 
   factory ProfessionRequest.fromJson(Map<String, dynamic> json) =>
       ProfessionRequest(

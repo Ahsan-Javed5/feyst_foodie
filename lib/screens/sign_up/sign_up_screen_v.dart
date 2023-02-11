@@ -58,9 +58,6 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               backgroundColor: appTheme.colors.primaryBackground,
               bottomNavigationBar: displayAlreadySignIn(appTheme, context),
               body: state.when(
-                  initialized: (fullName, mobileNumber, age, gender, profession,
-                          isBusy) =>
-                      _initialized(),
                   loading: _loading,
                   loaded: (professionList) => _displayLoadedData(
                       state: state,
@@ -69,10 +66,6 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                       professionList: professionList,
                       screenSizeData: screenSizeData)));
         });
-  }
-
-  Widget _initialized() {
-    return Container();
   }
 
   Widget _loading() => const GeneralLoading();
@@ -346,8 +339,6 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             required String key,
             required dynamic value,
           }) {
-            developer.log(' Key data is drop down ' + key);
-            developer.log(' value data is drop down ' + '$value');
             _professionID = dropdownDetails[value];
           },
         ),

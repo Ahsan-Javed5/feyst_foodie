@@ -129,7 +129,6 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
       mobileNumber: mobileNumber,
     );
     if (isInputValid) {
-      //loading(isBusy: true);
       try {
         final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.loginAPI);
 
