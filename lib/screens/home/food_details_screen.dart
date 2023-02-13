@@ -11,7 +11,10 @@ import '../../ui_kit/widgets/general_dropdown.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
 import '../../ui_kit/widgets/general_text_input.dart';
+import '../booking/food_item_bookng.dart';
+import '../food_product_experience_details/bbq_experience_details.dart';
 import '../user_account/user_profile.dart';
+import 'food_item_booking_confirmed.dart';
 
 enum TabBars { Details, Menu, Schedule }
 
@@ -183,8 +186,6 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                         const SizedBox(
                           height: 15,
                         ),
-
-                        
                         if (selectedTab == TabBars.Details)
                           detailsTabViewForm(context, appTheme),
                         if (selectedTab == TabBars.Menu)
@@ -201,8 +202,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           const Positioned.fill(
             top: 70,
             left: 20,
-            child: Align(
-                alignment: Alignment.topLeft, child: GeneralNewAppBar()),
+            child:
+                Align(alignment: Alignment.topLeft, child: GeneralNewAppBar()),
           ),
           Positioned(
             top: 140,
@@ -227,11 +228,10 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                             height: 5,
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.only(
-                                start: 36, end: 36),
+                            padding:
+                                EdgeInsetsDirectional.only(start: 36, end: 36),
                             child: Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 InkWell(
                                   child: Column(
@@ -277,10 +277,10 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                             .interFontFamily.headline6
                                             .copyWith(
                                                 fontSize: 14,
-                                                fontWeight: selectedTab ==
-                                                        TabBars.Menu
-                                                    ? FontWeight.bold
-                                                    : FontWeight.w400,
+                                                fontWeight:
+                                                    selectedTab == TabBars.Menu
+                                                        ? FontWeight.bold
+                                                        : FontWeight.w400,
                                                 color: HexColor.fromHex(
                                                     '#f1c452')),
                                       ),
@@ -494,7 +494,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                     ),
                                   ),
                                   const SizedBox(
-                                    width:44,
+                                    width: 44,
                                   ),
                                   InkWell(
                                     onTap: () {
@@ -525,9 +525,13 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                   child: Container(
                                       decoration: BoxDecoration(
                                           color: Colors.white,
-                                          borderRadius: BorderRadius.circular(8)),
+                                          borderRadius:
+                                              BorderRadius.circular(8)),
                                       padding: const EdgeInsetsDirectional.only(
-                                          start: 21, end: 21, top: 5, bottom: 5),
+                                          start: 21,
+                                          end: 21,
+                                          top: 5,
+                                          bottom: 5),
                                       child: getFoodItemQuantityValue(
                                           appTheme: appTheme)),
                                 ),
@@ -631,9 +635,14 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       title: Strings.nextButtonTitle.toUpperCase(),
       styleType: ButtonStyleType.fill,
       onTap: () {
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => UserProfile()),
+        // );
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => UserProfile()),
+          MaterialPageRoute(
+              builder: (context) => FoodProductExperienceDetails()),
         );
       },
     );

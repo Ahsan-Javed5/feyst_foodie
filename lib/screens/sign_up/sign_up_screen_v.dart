@@ -1,5 +1,10 @@
+import 'dart:developer';
+
 import 'package:chef/helpers/helpers.dart';
+import 'package:chef/screens/sign_up/pin_input_field.dart';
 import 'package:chef/screens/sign_up/sign_up_screen_vm.dart';
+import 'package:chef/screens/sign_up/verify_phone_number.dart';
+import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -13,7 +18,7 @@ import 'package:chef/screens/sign_up/sign_up_screen_m.dart';
 import 'dart:developer' as developer;
 
 class SignUpScreen extends BaseView<SignUpScreenViewModel> {
-  SignUpScreen({Key? key}) : super(key: key);
+  SignUpScreen({isVerified, Key? key}) : super(key: key);
 
   final baseURLs = [
     // Api.prodURL,
@@ -32,6 +37,8 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
   Map<dynamic, dynamic> dropdownDetails = {};
   final genderList = <String>['Male', 'Female'];
   int _professionID = 0;
+  late final ScrollController scrollController = ScrollController();
+  bool isKeyboardVisible = false;
 
   void loadProfessionList(
     List<ProfessionData> professionList,
@@ -313,37 +320,41 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     List<ProfessionData> professionList,
   ) {
     loadProfessionList(professionList);
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        GeneralText(
-          Strings.signProfessionLabel,
-          textAlign: TextAlign.center,
-          style: appTheme.typographies.interFontFamily.headline4.copyWith(
-              color: const Color(0xfffbeccb),
-              fontSize: 18,
-              fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        GeneralDropdown(
-          name: 'Select',
-          items: dropdownItems,
-          borderColor: appTheme.colors.textFieldBorderColor,
-          // selectedItem: dropdownItems.first,
-          style: appTheme.typographies.interFontFamily.headline6.copyWith(
-              color: Colors.white, fontSize: 15, fontWeight: FontWeight.w400),
-          onChange: ({
-            required String key,
-            required dynamic value,
-          }) {
-            _professionID = dropdownDetails[value];
-          },
-        ),
-      ],
-    );
+    return dropdownItems.isNotEmpty
+        ? Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              GeneralText(
+                Strings.signProfessionLabel,
+                textAlign: TextAlign.center,
+                style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                    color: const Color(0xfffbeccb),
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              GeneralDropdown(
+                name: 'Select',
+                items: dropdownItems,
+                borderColor: appTheme.colors.textFieldBorderColor,
+                // selectedItem: dropdownItems.first,
+                style: appTheme.typographies.interFontFamily.headline6.copyWith(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400),
+                onChange: ({
+                  required String key,
+                  required dynamic value,
+                }) {
+                  _professionID = dropdownDetails[value];
+                },
+              ),
+            ],
+          )
+        : Container();
   }
 
   Widget displayAlreadySignIn(
@@ -384,7 +395,17 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                 context: context,
                 baseUrl: baseURLs[0],
               )) {
-                _showVerificationPopup(context);
+                // _showVerificationPopup(context);
+                // fireBaseAuth();
+                //  VerifyPhoneNumberScreen();
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //       builder: (context) => VerifyPhoneNumberScreen(
+                //             phoneNumber: _mobileNumberController.text,
+                //           )),
+                // );
+                displayVerificationDisplay(context);
               }
             },
             child: SvgPicture.asset(
@@ -393,6 +414,28 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
           )
         ],
       ),
+    );
+  }
+
+  Widget fireBaseAuth() {
+    developer.log(' Mobile Number is ' + '${_mobileNumberController.text}');
+    return FirebasePhoneAuthHandler(
+      phoneNumber: "+" + _mobileNumberController.text,
+      // If true, the user is signed out before the onLoginSuccess callback is fired when the OTP is verified successfully.
+      signOutOnSuccessfulVerification: false,
+
+      linkWithExistingUser: false,
+      builder: (context, controller) {
+        return SizedBox.shrink();
+      },
+      onLoginSuccess: (userCredential, autoVerified) {
+        debugPrint("autoVerified: $autoVerified");
+        debugPrint("Login success UID: ${userCredential.user?.uid}");
+      },
+      onLoginFailed: (authException, stackTrace) {
+        debugPrint("An error occurred: ${authException.message}");
+      },
+      onError: (error, stackTrace) {},
     );
   }
 
@@ -517,7 +560,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               height: 34,
             ),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 12),
+              margin: const EdgeInsets.symmetric(horizontal: 12),
               child: PinCodeTextField(
                 controller: _otpController,
 
@@ -617,6 +660,441 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
           ],
         ),
       ),
+    );
+  }
+
+  void displayVerificationDisplay(BuildContext context) {
+    //   void displayAttachmentPopUp() {
+    final appTheme = AppTheme.of(context).theme;
+    final TextController _otpController = TextController();
+    DialogHelper.show(
+        context: context,
+        title: 'Verification code',
+        //   body: CheckListAttachmentsView(
+        //     checkList: widget._checkList,
+        //     fieldId: (widget.innerItem?.id)!,
+        //     itemAttachmentSuccessful: () {
+        //       setState(() {});
+        //     },
+        //   ),
+        //   isDismissible: false,
+        //   maxHeight: _screenSizeData.size.height * 0.6,
+        // );
+        // }
+        isDismissible: false,
+        maxHeight: MediaQuery.of(context).size.height * 0.6,
+        body: FirebasePhoneAuthHandler(
+          phoneNumber: "+" + _mobileNumberController.text,
+          signOutOnSuccessfulVerification: false,
+          linkWithExistingUser: false,
+          autoRetrievalTimeOutDuration: const Duration(seconds: 60),
+          otpExpirationDuration: const Duration(seconds: 60),
+          onCodeSent: () {
+            log(VerifyPhoneNumberScreen.id, name: 'OTP sent!');
+          },
+          onLoginSuccess: (userCredential, autoVerified) async {
+            log(
+              VerifyPhoneNumberScreen.id,
+              name: autoVerified
+                  ? 'OTP was fetched automatically!'
+                  : 'OTP was verified manually!',
+            );
+
+            // showSnackBar('Phone number verified successfully!');
+            Toaster.infoToast(
+                context: context,
+                message: 'Phone number verified successfully!');
+            log(
+              VerifyPhoneNumberScreen.id,
+              name: 'Login Success UID: ${userCredential.user?.uid}',
+            );
+            viewModel.saveFoodie(
+              name: _nameController.text,
+              mobileNumber: _mobileNumberController.text,
+              age: int.parse(_ageController.text),
+              professionId: _professionID,
+              gender: _genderController.text,
+              context: context,
+              baseUrl: baseURLs[0],
+            );
+            // Navigator.pushNamedAndRemoveUntil(
+            //   context,
+            //   HomeScreen.id,
+            //   (route) => false,
+            // );
+          },
+          onLoginFailed: (authException, stackTrace) {
+            log(
+              VerifyPhoneNumberScreen.id,
+              name: (authException.message)!,
+              error: authException,
+              stackTrace: stackTrace,
+            );
+
+            switch (authException.code) {
+              case 'invalid-phone-number':
+                // invalid phone number
+                return Toaster.infoToast(
+                    context: context, message: 'Invalid phone number!');
+              // developer.log(' Response of Signup is null ' + '$response');
+              // return showSnackBar('Invalid phone number!');
+              case 'invalid-verification-code':
+                // invalid otp entered
+                //return TooashowSnackBar('The entered OTP is invalid!');
+                return Toaster.infoToast(
+                    context: context, message: 'The entered OTP is invalid!');
+              // handle other error codes
+              default:
+                // showSnackBar('Something went wrong!');
+                Toaster.infoToast(
+                    context: context, message: 'Something went wrong!');
+              // handle error further if needed
+            }
+          },
+          onError: (error, stackTrace) {
+            log(
+              VerifyPhoneNumberScreen.id,
+              error: error,
+              stackTrace: stackTrace,
+            );
+
+            // showSnackBar('An error occurred!');
+            Toaster.infoToast(context: context, message: 'An error occurred!');
+          },
+          builder: (context, controller) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  GeneralText(
+                    Strings.verificationPopupTitle,
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                    style: appTheme.typographies.interFontFamily.headline6
+                        .copyWith(
+                            color: appTheme.colors.secondaryBackground,
+                            fontSize: 24,
+                            fontFamily: 'Poppins-Medium',
+                            fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(
+                    height: 14,
+                  ),
+                  GeneralText(
+                    Strings.verificationPopupSubtitle,
+                    textAlign: TextAlign.center,
+                    maxLines: 3,
+                    style: appTheme.typographies.interFontFamily.headline4
+                        .copyWith(
+                            color: appTheme.colors.secondaryBackground,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(
+                    height: 34,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 12),
+                    // child:PinInputField(
+                    //   length: 6,
+                    //
+                    //   onFocusChange: (hasFocus) async {
+                    //     if (hasFocus) await _scrollToBottomOnKeyboardOpen();
+                    //   },
+                    //   onSubmit: (enteredOtp) async {
+                    //     final verified =
+                    //     await controller.verifyOtp(enteredOtp);
+                    //     if (verified) {
+                    //       // number verify success
+                    //       // will call onLoginSuccess handler
+                    //       // viewModel.saveFoodie(name: name, mobileNumber: mobileNumber, age: age, gender: gender, professionId: professionId, context: context, baseUrl: baseUrl)
+                    //
+                    //       viewModel.saveFoodie(
+                    //         name: _nameController.text,
+                    //         mobileNumber: _mobileNumberController.text,
+                    //         age: int.parse(_ageController.text),
+                    //         professionId: _professionID,
+                    //         gender: _genderController.text,
+                    //         context: context,
+                    //         baseUrl: baseURLs[0],
+                    //       );
+                    //       // Navigator.push(
+                    //       //   context,
+                    //       //   MaterialPageRoute(
+                    //       //       builder: (context) => SignUpScreen(
+                    //       //         isVerified: true,
+                    //       //       )),
+                    //       // );
+                    //     } else {
+                    //       // phone verification failed
+                    //       // will call onLoginFailed or onError callbacks with the error
+                    //     }
+                    //   },
+                    // ),
+
+                    child: PinCodeTextField(
+                      controller: _otpController,
+
+                      length: 6,
+                      cursorColor: appTheme.colors.secondaryBackground,
+
+                      textStyle: TextStyle(
+                        color: appTheme.colors.secondaryBackground,
+                      ),
+                      pinTheme: PinTheme(
+                        shape: PinCodeFieldShape.underline,
+                        selectedColor: Color(0xfff1c452),
+                        disabledColor: Color(0xfff1c452),
+                        inactiveColor: Color(0xfff1c452),
+                        inactiveFillColor: Color(0xff35353C),
+                        activeColor: Color(0xff35353C),
+                        borderRadius: BorderRadius.circular(8),
+                        // fieldHeight: 58,
+                        fieldWidth: 39,
+                        selectedFillColor: Color(0xff35353C),
+                        activeFillColor: Color(0xff35353C),
+                      ),
+                      obscureText: false,
+                      keyboardType: TextInputType.number,
+
+                      enableActiveFill: true,
+                      // validator: (value) {
+                      //   String? validationText =getIt<Localization>().mtLocalized("otp_enterOTP");
+                      //       "Fields cannot be empty";
+                      //   if (value!.length == AppConstants.otpLength) {
+                      //     validationText = null;
+                      //   }
+                      //   return validationText;
+                      // },
+                      animationType: AnimationType.fade,
+                      animationDuration: const Duration(milliseconds: 300),
+                      //errorAnimationController: errorController, // Pass it here
+                      onChanged: (value) {},
+
+                      onSubmitted: (enteredOtp) async {
+                        final verified = await controller.verifyOtp(enteredOtp);
+                        if (verified) {
+                          // number verify success
+                          // will call onLoginSuccess handler
+                          // viewModel.saveFoodie(name: name, mobileNumber: mobileNumber, age: age, gender: gender, professionId: professionId, context: context, baseUrl: baseUrl)
+
+                          viewModel.saveFoodie(
+                            name: _nameController.text,
+                            mobileNumber: _mobileNumberController.text,
+                            age: int.parse(_ageController.text),
+                            professionId: _professionID,
+                            gender: _genderController.text,
+                            context: context,
+                            baseUrl: baseURLs[0],
+                          );
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //       builder: (context) => SignUpScreen(
+                          //         isVerified: true,
+                          //       )),
+                          // );
+                        } else {
+                          // phone verification failed
+                          // will call onLoginFailed or onError callbacks with the error
+                        }
+                      },
+                      appContext: context,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  GeneralButton.button(
+                    title: Strings.verificationPopupButton.toUpperCase(),
+                    styleType: ButtonStyleType.fill,
+                    width: 170,
+                    onTap: () {
+                      developer.log(' Here Collected data is ' +
+                          '${_nameController.text}');
+                      developer.log('Mobile Controller  ' +
+                          '${_mobileNumberController.text}');
+
+                      developer
+                          .log(' Age Controller  ' + '${_ageController.text}');
+                      developer.log(' Profession ID   ' + '${_professionID}');
+
+                      developer.log(
+                          ' Gender selected is    ' + _genderController.text);
+
+                      if (viewModel.verifyInput(
+                        name: _nameController.text,
+                        mobileNumber: _mobileNumberController.text,
+                        age: int.parse(_ageController.text),
+                        professionId: _professionID,
+                        gender: _genderController.text,
+                        context: context,
+                        baseUrl: baseURLs[0],
+                      )) {
+                        viewModel.saveFoodie(
+                          name: _nameController.text,
+                          mobileNumber: _mobileNumberController.text,
+                          age: int.parse(_ageController.text),
+                          professionId: _professionID,
+                          gender: _genderController.text,
+                          context: context,
+                          baseUrl: baseURLs[0],
+                        );
+                      }
+
+                      //  proceedVerification(context);
+                    },
+                  ),
+                  SizedBox(
+                    height: 22,
+                  ),
+                  GeneralText(
+                    Strings.verificationPopupResendCode,
+                    textAlign: TextAlign.center,
+                    style: appTheme.typographies.interFontFamily.headline4
+                        .copyWith(
+                            color: const Color(0xfff7dc99),
+                            fontSize: 15,
+                            decoration: TextDecoration.underline,
+                            fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
+            );
+            return Scaffold(
+              appBar: AppBar(
+                leadingWidth: 0,
+                leading: const SizedBox.shrink(),
+                title: const Text('Verify Phone Number'),
+                actions: [
+                  if (controller.codeSent)
+                    TextButton(
+                      onPressed: controller.isOtpExpired
+                          ? () async {
+                              log(VerifyPhoneNumberScreen.id,
+                                  name: 'Resend OTP');
+                              await controller.sendOTP();
+                            }
+                          : null,
+                      child: Text(
+                        controller.isOtpExpired
+                            ? 'Resend'
+                            : '${controller.otpExpirationTimeLeft.inSeconds}s',
+                        style:
+                            const TextStyle(color: Colors.blue, fontSize: 18),
+                      ),
+                    ),
+                  const SizedBox(width: 5),
+                ],
+              ),
+              body: controller.isSendingCode
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: const [
+                        //CustomLoader(),
+                        SizedBox(height: 50),
+                        Center(
+                          child: Text(
+                            'Sending OTP',
+                            style: TextStyle(fontSize: 25),
+                          ),
+                        ),
+                      ],
+                    )
+                  : ListView(
+                      padding: const EdgeInsets.all(20),
+                      //  controller: scrollController,
+                      children: [
+                        Text(
+                          "We've sent an SMS with a verification code to ${_mobileNumberController.text}",
+                          style: const TextStyle(fontSize: 25),
+                        ),
+                        const SizedBox(height: 10),
+                        const Divider(),
+                        if (controller.isListeningForOtpAutoRetrieve)
+                          Column(
+                            children: const [
+                              //   CustomLoader(),
+                              SizedBox(height: 50),
+                              Text(
+                                'Listening for OTP',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              SizedBox(height: 15),
+                              Divider(),
+                              Text('OR', textAlign: TextAlign.center),
+                              Divider(),
+                            ],
+                          ),
+                        const SizedBox(height: 15),
+                        const Text(
+                          'Enter OTP',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 15),
+                        PinInputField(
+                          length: 6,
+                          onFocusChange: (hasFocus) async {
+                            if (hasFocus) await _scrollToBottomOnKeyboardOpen();
+                          },
+                          onSubmit: (enteredOtp) async {
+                            final verified =
+                                await controller.verifyOtp(enteredOtp);
+                            if (verified) {
+                              // number verify success
+                              // will call onLoginSuccess handler
+                              // viewModel.saveFoodie(name: name, mobileNumber: mobileNumber, age: age, gender: gender, professionId: professionId, context: context, baseUrl: baseUrl)
+
+                              viewModel.saveFoodie(
+                                name: _nameController.text,
+                                mobileNumber: _mobileNumberController.text,
+                                age: int.parse(_ageController.text),
+                                professionId: _professionID,
+                                gender: _genderController.text,
+                                context: context,
+                                baseUrl: baseURLs[0],
+                              );
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //       builder: (context) => SignUpScreen(
+                              //         isVerified: true,
+                              //       )),
+                              // );
+                            } else {
+                              // phone verification failed
+                              // will call onLoginFailed or onError callbacks with the error
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+            );
+          },
+        ));
+  }
+
+  // scroll to bottom of screen, when pin input field is in focus.
+  Future<void> _scrollToBottomOnKeyboardOpen() async {
+    while (!isKeyboardVisible) {
+      await Future.delayed(const Duration(milliseconds: 50));
+    }
+
+    await Future.delayed(const Duration(milliseconds: 250));
+
+    await scrollController.animateTo(
+      scrollController.position.maxScrollExtent,
+      duration: const Duration(milliseconds: 250),
+      curve: Curves.easeIn,
     );
   }
 }

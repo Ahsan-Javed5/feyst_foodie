@@ -1,4 +1,4 @@
-package com.infiniun.chef_app_new;
+package com.feyst.foodie;
 
 import io.flutter.embedding.android.FlutterActivity;
 

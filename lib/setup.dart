@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:chef/services/renderer/field_renderer.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
@@ -15,6 +16,7 @@ final getIt = GetIt.instance;
 
 Future<dynamic> configureDependencies() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   HttpOverrides.global = DevHttpOverrides(); // to ignore ssl certification
   return $initGetIt(getIt);
 }

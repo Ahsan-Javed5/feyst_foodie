@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.infiniun.chef_app_new">
+    package="com.feyst.foodie">
    <application
         android:label="foodie"
         android:name="${applicationName}"
