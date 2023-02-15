@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../constants/resources.dart';
 import '../../constants/strings.dart';
 import '../../helpers/color_helper.dart';
+import '../../models/home/experience_list_response.dart';
 import '../../theme/app_theme_data/app_theme_data.dart';
 import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/widgets/general_button.dart';
@@ -16,11 +17,14 @@ import '../food_product_experience_details/bbq_experience_details.dart';
 import '../user_account/user_profile.dart';
 import 'food_item_booking_confirmed.dart';
 
+import '../../models/home/experience_list_response.dart' as experience_data;
+import 'dart:developer' as developer;
+
 enum TabBars { Details, Menu, Schedule }
 
 class FoodDetailScreen extends StatefulWidget {
-  const FoodDetailScreen({Key? key}) : super(key: key);
-
+  const FoodDetailScreen({Key? key, required this.data}) : super(key: key);
+  final experience_data.T data;
   @override
   State<FoodDetailScreen> createState() => _FoodDetailScreenState();
 }
@@ -76,38 +80,71 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       CustomModel(name: "Hyderabadi Rice"),
       CustomModel(name: "Soft Drinks"),
     ]);
-    wowFactorsList.addAll([
-      CustomModel(
-          icon: Strings.productDetailWowFactorGarden,
-          name: "assets/images/icons/garden.png"),
-      CustomModel(
-          icon: Strings.productDetailWowFactorFireworks,
-          name: "assets/images/icons/fireworks.png"),
-      CustomModel(
-          icon: Strings.productDetailWowFactorPetFriendly,
-          name: "assets/images/icons/pet_friendly.png"),
-      CustomModel(
-          icon: Strings.productDetailWowFactorWifi,
-          name: "assets/images/icons/wifi_2.png"),
-      CustomModel(
-          icon: Strings.productDetailWowFactorMusic,
-          name: "assets/images/icons/music.png"),
-      CustomModel(
-          icon: Strings.productDetailWowFactorParking,
-          name: "assets/images/icons/parking.png")
-    ]);
-    preferencesList.addAll([
-      CustomModel(
-          icon: Strings.foodDetailPreferenceCouple,
-          name: "assets/images/icons/couple.png"),
-      CustomModel(
-          icon: Strings.foodDetailPreferenceFamily,
-          name: "assets/images/icons/family.png"),
-      CustomModel(
-          icon: Strings.foodDetailPreferenceFnf,
-          name: "assets/images/icons/fnf.png"),
-    ]);
+
+    // wowFactorsList.addAll([
+    //   CustomModel(
+    //       icon: Strings.productDetailWowFactorGarden,
+    //       name: "assets/images/icons/garden.png"),
+    //   CustomModel(
+    //       icon: Strings.productDetailWowFactorFireworks,
+    //       name: "assets/images/icons/fireworks.png"),
+    //   CustomModel(
+    //       icon: Strings.productDetailWowFactorPetFriendly,
+    //       name: "assets/images/icons/pet_friendly.png"),
+    //   CustomModel(
+    //       icon: Strings.productDetailWowFactorWifi,
+    //       name: "assets/images/icons/wifi_2.png"),
+    //   CustomModel(
+    //       icon: Strings.productDetailWowFactorMusic,
+    //       name: "assets/images/icons/music.png"),
+    //   CustomModel(
+    //       icon: Strings.productDetailWowFactorParking,
+    //       name: "assets/images/icons/parking.png")
+    // ]);
+
+    loadWowFactor();
+    loadPerferences();
+    // preferencesList.addAll([
+    //   CustomModel(
+    //       icon: Strings.foodDetailPreferenceCouple,
+    //       name: "assets/images/icons/couple.png"),
+    //   CustomModel(
+    //       icon: Strings.foodDetailPreferenceFamily,
+    //       name: "assets/images/icons/family.png"),
+    //   CustomModel(
+    //       icon: Strings.foodDetailPreferenceFnf,
+    //       name: "assets/images/icons/fnf.png"),
+    // ]);
+    //
+
     super.initState();
+  }
+
+  void loadWowFactor() {
+    developer.log(' Wow factors are ' + '${widget.data.experienceWowFactors}');
+    var experienceWowFactor = widget.data.experienceWowFactors;
+
+    for (int i = 0; i < experienceWowFactor.length; i++) {
+      wowFactorsList.addAll([
+        CustomModel(
+            icon: experienceWowFactor[i].wowFactorName,
+            name: experienceWowFactor[i].wowFactorIconPath),
+      ]);
+    }
+  }
+
+  void loadPerferences() {
+    developer.log(' loadPerferences factors are ' +
+        '${widget.data.experiencePreferences}');
+    var experiencePreferences = widget.data.experiencePreferences;
+
+    for (int i = 0; i < experiencePreferences.length; i++) {
+      preferencesList.addAll([
+        CustomModel(
+            icon: experiencePreferences[i].preferenceName,
+            name: experiencePreferences[i].preferenceIconPath),
+      ]);
+    }
   }
 
   addQuantity() {
@@ -1352,7 +1389,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
         Padding(
           padding: const EdgeInsets.only(left: 23),
           child: GeneralText(
-            Strings.productDetailAboutSubTitle,
+            //  Strings.productDetailAboutSubTitle,
+            // 'Test',
+            widget.data.description,
             style: appTheme.typographies.interFontFamily.headline6.copyWith(
                 fontSize: 14,
                 color: HexColor.fromHex('#ffffff'),
@@ -1411,7 +1450,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               height: 12,
             ),
             GeneralText(
-              '22',
+              widget.data.persons,
               style: appTheme.typographies.interFontFamily.headline6.copyWith(
                 fontSize: 16,
                 color: HexColor.fromHex('#f1c452'),
@@ -1478,7 +1517,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                       color: HexColor.fromHex("#f1c452"),
                       shape: BoxShape.circle,
                     ),
-                    child: Image.asset(
+                    child: SvgPicture.network(
                         items[i].name != null ? items[i].name ?? "" : ''),
                   ),
                 ),

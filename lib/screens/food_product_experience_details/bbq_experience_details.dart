@@ -154,13 +154,24 @@ class _FoodProductExperienceDetailsState
                               ],
                             ),
                           ]),
-                      const Positioned.fill(
+                      Positioned.fill(
                         top: 40,
                         child: Align(
                             alignment: Alignment.topLeft,
-                            child: GeneralNewAppBar(
-                              rightIcon: Resources.homeIconSvg,
-                            )),
+                            child: InkWell(
+                                onTap: () {
+                                  // Navigator.popUntil(
+                                  //     context, (route) => HomeScreen());
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const BottomBar()),
+                                  );
+                                },
+                                child: GeneralNewAppBar(
+                                  rightIcon: Resources.homeIconSvg,
+                                ))),
                       ),
                     ],
                   ),

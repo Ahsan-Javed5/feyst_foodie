@@ -114,23 +114,35 @@ class ExperiencePreference {
     required this.id,
     required this.experienceId,
     required this.preferenceId,
+    required this.preferenceName,
+    required this.preferenceDescription,
+    required this.preferenceIconPath,
   });
 
   int id;
   int experienceId;
   int preferenceId;
+  String preferenceName;
+  String preferenceDescription;
+  String preferenceIconPath;
 
   factory ExperiencePreference.fromJson(Map<String, dynamic> json) =>
       ExperiencePreference(
         id: json["id"],
         experienceId: json["experienceId"],
         preferenceId: json["preferenceId"],
+        preferenceName: json["preferenceName"],
+        preferenceDescription: json["preferenceDescription"],
+        preferenceIconPath: json["preferenceIconPath"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "experienceId": experienceId,
         "preferenceId": preferenceId,
+        "preferenceName": preferenceName,
+        "preferenceDescription": preferenceDescription,
+        "preferenceIconPath": preferenceIconPath,
       };
 }
 
@@ -139,22 +151,34 @@ class ExperienceWowFactor {
     required this.id,
     required this.experienceId,
     required this.wowFactorId,
+    required this.wowFactorName,
+    required this.wowFactorDescription,
+    required this.wowFactorIconPath,
   });
 
   int id;
   int experienceId;
   int wowFactorId;
+  String wowFactorName;
+  String wowFactorDescription;
+  String wowFactorIconPath;
 
   factory ExperienceWowFactor.fromJson(Map<String, dynamic> json) =>
       ExperienceWowFactor(
         id: json["id"],
         experienceId: json["experienceId"],
         wowFactorId: json["wowFactorId"],
+        wowFactorName: json["wowFactorName"],
+        wowFactorDescription: json["wowFactorDescription"],
+        wowFactorIconPath: json["wowFactorIconPath"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "experienceId": experienceId,
         "wowFactorId": wowFactorId,
+        "wowFactorName": wowFactorName,
+        "wowFactorDescription": wowFactorDescription,
+        "wowFactorIconPath": wowFactorIconPath,
       };
 }
