@@ -56,7 +56,6 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     required ScreenSizeData screenSizeData,
   }) {
     final appTheme = AppTheme.of(context).theme;
-
     return BlocBuilder<SignUpScreenViewModel, SignUpScreenState>(
         bloc: viewModel
           ..loadProfessions(baseUrl: baseURLs[0], context: context),
