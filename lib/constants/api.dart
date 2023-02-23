@@ -49,6 +49,7 @@ abstract class Api {
 
   static const professionalList = 'professional/list';
   static const experienceList = 'experience/list';
+  static const experienceMenu = 'feyst-service/experience-menu/find-by-id';
 
   static const foodieSignUp = 'foodie/save';
   static const loginAPI = 'foodie/login';

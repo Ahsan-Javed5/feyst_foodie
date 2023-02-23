@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../constants/resources.dart';
 import '../../constants/strings.dart';
 import '../../helpers/color_helper.dart';
+import '../../models/home/experience_list_response.dart'as home_data;
 import '../../theme/app_theme_data/app_theme_data.dart';
 import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/widgets/general_button.dart';
@@ -16,7 +17,9 @@ import '../user_account/user_profile.dart';
 enum TabBars { Details, Menu, Schedule }
 
 class FoodDetailScreen extends StatefulWidget {
-  const FoodDetailScreen({Key? key}) : super(key: key);
+     final home_data.T data;
+
+  const FoodDetailScreen({Key? key, required this.data}) : super(key: key);
 
   @override
   State<FoodDetailScreen> createState() => _FoodDetailScreenState();
@@ -29,6 +32,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   String selectedMonth = "OCT";
   String selectedTime = "10 AM";
   final TextController nOfPersons = TextController();
+  final TextController quantityController = TextController();
   final TextController notes = TextController();
   late List<DropdownMenuItem<String>> statusList = [];
   // late List<DropdownMenuItem<String>> items = [];
@@ -105,6 +109,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           name: "assets/images/icons/fnf.png"),
     ]);
     super.initState();
+
   }
 
   addQuantity() {
@@ -349,7 +354,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                             Strings.appCurrency +
                                 "." +
                                 " " +
-                                Strings.foodProductItemPrice,
+                                widget.data.price.toString()??'',
                             style: appTheme
                                 .typographies.interFontFamily.headline4
                                 .copyWith(
@@ -613,7 +618,28 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   }
 
   Widget getFoodItemQuantityValue({required IAppThemeData appTheme}) {
-    return GeneralText(
+    return
+
+      GeneralTextInput(
+       textFieldWidth: 10,
+        controller: quantityController,
+        // hint: Strings.noOfPersonsHint,
+        contentPadding: EdgeInsets.only(right: 2),
+        isEnable: false,
+        labelText: foodItemQuantity.toString(),
+        // valueStyle: valueStyle,
+
+        validator: (_) {
+          return null;
+        },
+        onChanged: (newValue) {
+          setState(() {
+            nOfPersons.text = newValue;
+          });
+        },
+      );
+
+      GeneralText(
       (foodItemQuantity <= 9 && foodItemQuantity > 0)
           ? "0" + foodItemQuantity.toString()
           : foodItemQuantity.toString(),
@@ -653,7 +679,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   ///Schedule tab view
   Widget scheduleTabView(BuildContext context, IAppThemeData appTheme) {
     return scheduleForm
-        ? Padding(
+        ?
+    Padding(
             padding: EdgeInsetsDirectional.only(start: 20),
             child: Column(
               children: [
