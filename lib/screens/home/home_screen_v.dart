@@ -267,9 +267,10 @@ class _FoodContainer extends StatelessWidget {
         Navigator.push(
           context,
           // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
-          MaterialPageRoute(builder: (context) =>   FoodDetailScreen(
-            data: data,
-          )),
+          MaterialPageRoute(
+              builder: (context) => FoodDetailScreen(
+                    data: data,
+                  )),
         );
       },
       child: ClipRRect(

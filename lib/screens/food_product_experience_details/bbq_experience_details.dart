@@ -1,3 +1,4 @@
+import 'package:chef/screens/home/home_screen_v.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/resources.dart';
@@ -8,6 +9,7 @@ import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/widgets/general_button.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
+import '../bottom_bar/bottom_bar.dart';
 
 class FoodProductExperienceDetails extends StatefulWidget {
   const FoodProductExperienceDetails({Key? key}) : super(key: key);
@@ -152,13 +154,24 @@ class _FoodProductExperienceDetailsState
                               ],
                             ),
                           ]),
-                      const Positioned.fill(
+                      Positioned.fill(
                         top: 40,
                         child: Align(
                             alignment: Alignment.topLeft,
-                            child: GeneralNewAppBar(
-                              rightIcon: Resources.homeIconSvg,
-                            )),
+                            child: InkWell(
+                                onTap: () {
+                                  // Navigator.popUntil(
+                                  //     context, (route) => HomeScreen());
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const BottomBar()),
+                                  );
+                                },
+                                child: GeneralNewAppBar(
+                                  rightIcon: Resources.homeIconSvg,
+                                ))),
                       ),
                     ],
                   ),
@@ -868,7 +881,12 @@ class _FoodProductExperienceDetailsState
     return GeneralButton.button(
       title: Strings.productDetailButtonTitle.toUpperCase(),
       styleType: ButtonStyleType.fill,
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+            context,
+            //HomeScreen()
+            MaterialPageRoute(builder: (context) => BottomBar()));
+      },
     );
     // ExtoText(
     //   Strings.getStartedButtonTitle,

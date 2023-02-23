@@ -1,5 +1,6 @@
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/models/signup/profession_request.dart' as prorequest;
+import 'package:firebase_auth/firebase_auth.dart';
 
 // import '../../base/screen_layout_base/screen_layout_base_m.dart';
 import '../../models/signup/profession_response.dart';
@@ -10,6 +11,7 @@ import '../../helpers/data_request.dart' as signuprequest;
 import '../../models/signup/signup_request.dart';
 import '../../models/signup/signup_response.dart';
 import 'package:chef/screens/sign_up/sign_up_screen_m.dart';
+import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 
 @injectable
 class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
@@ -221,4 +223,95 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   }
 
   void loading({required bool isBusy}) => emit(const Loading());
+
+  // Future registerUser(String mobile, BuildContext context) async {
+  //   FirebaseAuth _auth = FirebaseAuth.instance;
+  //
+  //   _auth.verifyPhoneNumber(
+  //       phoneNumber: null,
+  //       timeout: null,
+  //       verificationCompleted: null,
+  //       verificationFailed: null,
+  //       codeSent: null,
+  //       codeAutoRetrievalTimeout: null);
+  // }
+
+  // Future<bool> registerUser(String phone, BuildContext context) async {
+  //   FirebaseAuth _auth = FirebaseAuth.instance;
+  //
+  //   _auth.verifyPhoneNumber(
+  //       phoneNumber: phone,
+  //       timeout: Duration(seconds: 60),
+  //       verificationCompleted: (AuthCredential credential) async {
+  //         Navigator.of(context).pop();
+  //
+  //         var result = await _auth.signInWithCredential(credential);
+  //
+  //         Users user = result.user;
+  //
+  //         if (user != null) {
+  //           Navigator.push(
+  //               context,
+  //               MaterialPageRoute(
+  //                   builder: (context) => HomeScreen(
+  //                         user: user,
+  //                       )));
+  //         } else {
+  //           print("Error");
+  //         }
+  //
+  //         //This callback would gets called when verification is done auto maticlly
+  //       },
+  //       verificationFailed: (AuthException exception) {
+  //         print(exception);
+  //       },
+  //       codeSent: (String verificationId, [int forceResendingToken]) {
+  //         showDialog(
+  //             context: context,
+  //             barrierDismissible: false,
+  //             builder: (context) {
+  //               return AlertDialog(
+  //                 title: Text("Give the code?"),
+  //                 content: Column(
+  //                   mainAxisSize: MainAxisSize.min,
+  //                   children: <Widget>[
+  //                     TextField(
+  //                       controller: _codeController,
+  //                     ),
+  //                   ],
+  //                 ),
+  //                 actions: <Widget>[
+  //                   FlatButton(
+  //                     child: Text("Confirm"),
+  //                     textColor: Colors.white,
+  //                     color: Colors.blue,
+  //                     onPressed: () async {
+  //                       final code = _codeController.text.trim();
+  //                       AuthCredential credential =
+  //                           PhoneAuthProvider.getCredential(
+  //                               verificationId: verificationId, smsCode: code);
+  //
+  //                       AuthResult result =
+  //                           await _auth.signInWithCredential(credential);
+  //
+  //                       FirebaseUser user = result.user;
+  //
+  //                       if (user != null) {
+  //                         Navigator.push(
+  //                             context,
+  //                             MaterialPageRoute(
+  //                                 builder: (context) => HomeScreen(
+  //                                       user: user,
+  //                                     )));
+  //                       } else {
+  //                         print("Error");
+  //                       }
+  //                     },
+  //                   )
+  //                 ],
+  //               );
+  //             });
+  //       },
+  //       codeAutoRetrievalTimeout: null);
+  // }
 }
