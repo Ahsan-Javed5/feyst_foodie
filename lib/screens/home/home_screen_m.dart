@@ -13,7 +13,6 @@ class HomeScreenState extends BaseState with _$HomeScreenState {
   const factory HomeScreenState.loading() = Loading;
   const factory HomeScreenState.loaded(
     ExperienceListResponse experienceListResponse,
-    FoodMenuModel foodMenuModel,
   ) = Loaded;
   // const factory HomeScreenState.error() = Error;
 }

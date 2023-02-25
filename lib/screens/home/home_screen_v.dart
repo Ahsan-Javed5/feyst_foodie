@@ -9,9 +9,12 @@ import '../../models/home/experience_list_response.dart' as experience_data;
 import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
+import 'component/food_detail_screen_v.dart';
 import 'food_details_menu_model.dart';
 import 'home_screen_m.dart';
 import 'home_screen_vm.dart';
+
+import 'dart:developer' as developer;
 
 class HomeScreen extends BaseView<HomeScreenViewModel> {
   HomeScreen({Key? key}) : super(key: key);
@@ -27,10 +30,10 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
               body: state.when(
                 initialized: displayInitialized,
                 loading: displayLoading,
-                loaded: (experienceList, foodMenuDetail) => displayLoaded(
+                loaded: (experienceList) => displayLoaded(
                   context: context,
                   experienceList: experienceList,
-                  foodMenuDetail: foodMenuDetail,
+                  // foodMenuDetail: foodMenuDetail,
                 ),
               ));
         });
@@ -47,7 +50,7 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
   Widget displayLoaded({
     required BuildContext context,
     required experience_data.ExperienceListResponse experienceList,
-    required FoodMenuModel foodMenuDetail,
+    //  required FoodMenuModel foodMenuDetail,
     // required
   }) {
     final appTheme = AppTheme.of(context).theme;
@@ -116,7 +119,7 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
                         return _FoodContainer(
                           appTheme: appTheme,
                           data: experienceList.t[index],
-                          foodMenuDetail: foodMenuDetail,
+                          //  foodMenuDetail: foodMenuDetail,
                         );
                       }),
                 ),
@@ -265,24 +268,26 @@ class _FoodContainer extends StatelessWidget {
     Key? key,
     required this.appTheme,
     required this.data,
-    required this.foodMenuDetail,
+    // required this.foodMenuDetail,
   }) : super(key: key);
 
   final IAppThemeData appTheme;
   final experience_data.T data;
-  final FoodMenuModel foodMenuDetail;
+  // final FoodMenuModel foodMenuDetail;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        developer.log('Experience Id selected is ' + '${data.id}');
         Navigator.push(
           context,
           // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
           MaterialPageRoute(
-              builder: (context) => FoodDetailScreen(
-                    data: data,
-                    foodMenuDetail: foodMenuDetail,
+              builder: (context) => FoodDetailScreenView(
+                    selectedExperienceId: data.id.toString(),
+                    experienceData: data,
+                    //  foodMenuDetail: foodMenuDetail,
                   )),
         );
       },

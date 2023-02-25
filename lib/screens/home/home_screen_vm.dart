@@ -95,10 +95,10 @@ class HomeScreenViewModel extends BaseViewModel<HomeScreenState> {
             experienceListResponseFromJson(response.body);
         developer.log(' experienceListResponse up Response is ' +
             '${experienceListResponse.code}');
-        getExperienceMenu(
-          experienceListResponse: experienceListResponse,
-        );
-        //  emit(Loaded(experienceListResponse));
+        // getExperienceMenu(
+        //   experienceListResponse: experienceListResponse,
+        // );
+        emit(Loaded(experienceListResponse));
       } else {
         Toaster.infoToast(
             context: context,
@@ -140,7 +140,7 @@ class HomeScreenViewModel extends BaseViewModel<HomeScreenState> {
     );
 
     final foodMenuData = foodMenuModelFromJson(response.body);
-    emit(Loaded(experienceListResponse, foodMenuData));
+    emit(Loaded(experienceListResponse));
 
     // List<ProfessionData> data = currentProfessionData.t;
     // emit(Loaded(currentProfessionData));

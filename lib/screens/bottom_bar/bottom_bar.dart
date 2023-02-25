@@ -6,7 +6,7 @@ import '../../constants/strings.dart';
 import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/widgets/general_text.dart';
 import '../booking/food_item_bookng.dart';
-import '../home/food_details_screen.dart';
+import '../home/widget/food_details_screen.dart';
 import '../home/home_screen_v.dart';
 import '../user_account/edit_profie/edit_profile_screen_v.dart';
 import '../user_account/edit_profile.dart';

@@ -16,7 +16,7 @@ import 'helpers/workspace_helper.dart' as _i15;
 import 'screens/account_settings/account_settings_screen_vm.dart' as _i18;
 import 'screens/change_password/change_password_screen_vm.dart' as _i20;
 import 'screens/forgot_password/forgot_password_screen_vm.dart' as _i21;
-import 'screens/home/food_detail_screen_vm.dart' as _i7;
+import 'screens/home/component/food_detail_screen_vm.dart' as _i7;
 import 'screens/home/home_screen_vm.dart' as _i22;
 import 'screens/sign_in/sign_in_screen_vm.dart' as _i12;
 import 'screens/sign_up/sign_up_screen_vm.dart' as _i13;

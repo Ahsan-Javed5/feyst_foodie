@@ -30,7 +30,7 @@ export 'package:chef/models/login/login_request.dart';
 export 'package:chef/models/login/login_response.dart';
 export 'package:chef/services/services.dart';
 export 'package:package_info_plus/package_info_plus.dart';
-export 'package:chef/screens/home/food_details_screen.dart';
+export 'package:chef/screens/home/widget/food_details_screen.dart';
 export 'package:chef/screens/sign_up/sign_up_screen_v.dart';
 
 export 'package:chef/screens/sign_up/lets_start_screen_v.dart';
