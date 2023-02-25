@@ -44,7 +44,10 @@ class AppRouter extends _i5.RootStackRouter {
           orElse: () => const SignUpRouteArgs());
       return _i5.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i3.SignUpScreen(key: args.key),
+        child: _i3.SignUpScreen(
+          isVerified: args.isVerified,
+          key: args.key,
+        ),
       );
     },
     ForgotPasswordRoute.name: (routeData) {
@@ -137,24 +140,34 @@ class GetStartedRoute extends _i5.PageRouteInfo<void> {
 /// generated route for
 /// [_i3.SignUpScreen]
 class SignUpRoute extends _i5.PageRouteInfo<SignUpRouteArgs> {
-  SignUpRoute({_i6.Key? key})
-      : super(
+  SignUpRoute({
+    dynamic isVerified,
+    _i6.Key? key,
+  }) : super(
           SignUpRoute.name,
           path: '/signUp',
-          args: SignUpRouteArgs(key: key),
+          args: SignUpRouteArgs(
+            isVerified: isVerified,
+            key: key,
+          ),
         );
 
   static const String name = 'SignUpRoute';
 }
 
 class SignUpRouteArgs {
-  const SignUpRouteArgs({this.key});
+  const SignUpRouteArgs({
+    this.isVerified,
+    this.key,
+  });
+
+  final dynamic isVerified;
 
   final _i6.Key? key;
 
   @override
   String toString() {
-    return 'SignUpRouteArgs{key: $key}';
+    return 'SignUpRouteArgs{isVerified: $isVerified, key: $key}';
   }
 }
 

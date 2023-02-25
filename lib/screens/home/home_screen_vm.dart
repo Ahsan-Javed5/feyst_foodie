@@ -16,6 +16,12 @@ import '../../ui_kit/helpers/toaster_helper.dart';
 import 'dart:developer' as developer;
 import '../../helpers/data_request.dart' as data_request;
 
+import 'package:chef/models/signup/profession_request.dart' as prorequest;
+
+import 'package:chef/models/home/food_menu_request.dart' as menurequest;
+
+import 'food_details_menu_model.dart';
+
 @injectable
 class HomeScreenViewModel extends BaseViewModel<HomeScreenState> {
   HomeScreenViewModel({
@@ -89,8 +95,10 @@ class HomeScreenViewModel extends BaseViewModel<HomeScreenState> {
             experienceListResponseFromJson(response.body);
         developer.log(' experienceListResponse up Response is ' +
             '${experienceListResponse.code}');
-
-        emit(Loaded(experienceListResponse));
+        getExperienceMenu(
+          experienceListResponse: experienceListResponse,
+        );
+        //  emit(Loaded(experienceListResponse));
       } else {
         Toaster.infoToast(
             context: context,
@@ -111,6 +119,31 @@ class HomeScreenViewModel extends BaseViewModel<HomeScreenState> {
       // );
     }
     // }
+  }
+
+  Future<void> getExperienceMenu({
+    required ExperienceListResponse experienceListResponse,
+  }) async {
+    final url =
+        InfininURLHelpers.getRestApiURL(Api.baseURL + Api.experienceMenu);
+    // emit(const Loading());
+
+    //  emit(const Loading());
+
+    final foodMenuRequest = menurequest.FoodMenuRequest(
+      t: 8,
+    ).toJson();
+
+    final response = await _network.post(
+      path: url,
+      data: foodMenuRequest,
+    );
+
+    final foodMenuData = foodMenuModelFromJson(response.body);
+    emit(Loaded(experienceListResponse, foodMenuData));
+
+    // List<ProfessionData> data = currentProfessionData.t;
+    // emit(Loaded(currentProfessionData));
   }
 
   void logout() async {

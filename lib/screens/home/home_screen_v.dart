@@ -9,6 +9,7 @@ import '../../models/home/experience_list_response.dart' as experience_data;
 import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
+import 'food_details_menu_model.dart';
 import 'home_screen_m.dart';
 import 'home_screen_vm.dart';
 
@@ -26,8 +27,11 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
               body: state.when(
                 initialized: displayInitialized,
                 loading: displayLoading,
-                loaded: (experienceList) => displayLoaded(
-                    context: context, experienceList: experienceList),
+                loaded: (experienceList, foodMenuDetail) => displayLoaded(
+                  context: context,
+                  experienceList: experienceList,
+                  foodMenuDetail: foodMenuDetail,
+                ),
               ));
         });
   }
@@ -40,9 +44,12 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
     return Container();
   }
 
-  Widget displayLoaded(
-      {required BuildContext context,
-      required experience_data.ExperienceListResponse experienceList}) {
+  Widget displayLoaded({
+    required BuildContext context,
+    required experience_data.ExperienceListResponse experienceList,
+    required FoodMenuModel foodMenuDetail,
+    // required
+  }) {
     final appTheme = AppTheme.of(context).theme;
     return Stack(
       children: [
@@ -107,7 +114,10 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
                         return _FoodContainer(
-                            appTheme: appTheme, data: experienceList.t[index]);
+                          appTheme: appTheme,
+                          data: experienceList.t[index],
+                          foodMenuDetail: foodMenuDetail,
+                        );
                       }),
                 ),
                 Container(
@@ -255,10 +265,12 @@ class _FoodContainer extends StatelessWidget {
     Key? key,
     required this.appTheme,
     required this.data,
+    required this.foodMenuDetail,
   }) : super(key: key);
 
   final IAppThemeData appTheme;
   final experience_data.T data;
+  final FoodMenuModel foodMenuDetail;
 
   @override
   Widget build(BuildContext context) {
@@ -270,6 +282,7 @@ class _FoodContainer extends StatelessWidget {
           MaterialPageRoute(
               builder: (context) => FoodDetailScreen(
                     data: data,
+                    foodMenuDetail: foodMenuDetail,
                   )),
         );
       },

@@ -18,6 +18,7 @@ import '../food_product_experience_details/bbq_experience_details.dart';
 import '../user_account/user_profile.dart';
 import 'food_detail_screen_m.dart';
 import 'food_detail_screen_vm.dart';
+import 'food_details_menu_model.dart';
 import 'food_item_booking_confirmed.dart';
 
 import '../../models/home/experience_list_response.dart' as experience_data;
@@ -32,11 +33,18 @@ enum TabBars { Details, Menu, Schedule }
 //   State<FoodDetailScreen> createState() => _FoodDetailScreenState();
 // }
 
-class FoodDetailScreen extends  BaseView<FoodDetailScreenViewModel>{
-    FoodDetailScreen({Key? key, required this.data}) : super(key: key);
+class FoodDetailScreen extends StatefulWidget {
+  const FoodDetailScreen(
+      {Key? key, required this.data, required this.foodMenuDetail})
+      : super(key: key);
+  final experience_data.T data;
+  final FoodMenuModel foodMenuDetail;
 
+  @override
+  _FoodDetailScreenState createState() => _FoodDetailScreenState();
+}
 
-    final experience_data.T data;
+class _FoodDetailScreenState extends State<FoodDetailScreen> {
   int foodItemQuantity = 0;
   String selectedDate = "13";
   String selectedDay = "MON";
@@ -55,8 +63,8 @@ class FoodDetailScreen extends  BaseView<FoodDetailScreenViewModel>{
   List<CustomModel> preferencesList = [];
   List<CustomModel> menuListItems = [];
 
-   
-  void initialize() {
+  @override
+  void initState() {
     var newItem = const DropdownMenuItem(
       child: Text('Scientist'),
       value: 'Scientist',
@@ -123,13 +131,17 @@ class FoodDetailScreen extends  BaseView<FoodDetailScreenViewModel>{
     //       name: "assets/images/icons/fnf.png"),
     // ]);
     //
-
-
+    super.initState();
   }
+  //
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Container();
+  // }
 
   void loadWowFactor() {
-    developer.log(' Wow factors are ' + '${ data.experienceWowFactors}');
-    var experienceWowFactor =  data.experienceWowFactors;
+    developer.log(' Wow factors are ' + '${widget.data.experienceWowFactors}');
+    var experienceWowFactor = widget.data.experienceWowFactors;
 
     for (int i = 0; i < experienceWowFactor.length; i++) {
       wowFactorsList.addAll([
@@ -142,8 +154,8 @@ class FoodDetailScreen extends  BaseView<FoodDetailScreenViewModel>{
 
   void loadPerferences() {
     developer.log(' loadPerferences factors are ' +
-        '${ data.experiencePreferences}');
-    var experiencePreferences =  data.experiencePreferences;
+        '${widget.data.experiencePreferences}');
+    var experiencePreferences = widget.data.experiencePreferences;
 
     for (int i = 0; i < experiencePreferences.length; i++) {
       preferencesList.addAll([
@@ -184,13 +196,15 @@ class FoodDetailScreen extends  BaseView<FoodDetailScreenViewModel>{
     });
   }
 
-
-
   @override
-  Widget buildScreen(
-      {required BuildContext context, required ScreenSizeData screenSizeData}) {
+  Widget build(BuildContext context) {
+    //   return Container();
+    // }
+    // @override
+    // Widget buildScreen(
+    //     {required BuildContext context, required ScreenSizeData screenSizeData}) {
     final appTheme = AppTheme.of(context).theme;
-    return   Scaffold(
+    return Scaffold(
       backgroundColor: HexColor.fromHex('#212129'),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: getStartedButtonTitle(appTheme: appTheme),
@@ -250,7 +264,7 @@ class FoodDetailScreen extends  BaseView<FoodDetailScreenViewModel>{
             top: 70,
             left: 20,
             child:
-            Align(alignment: Alignment.topLeft, child: GeneralNewAppBar()),
+                Align(alignment: Alignment.topLeft, child: GeneralNewAppBar()),
           ),
           Positioned(
             top: 140,
@@ -276,7 +290,7 @@ class FoodDetailScreen extends  BaseView<FoodDetailScreenViewModel>{
                           ),
                           Padding(
                             padding:
-                            EdgeInsetsDirectional.only(start: 36, end: 36),
+                                EdgeInsetsDirectional.only(start: 36, end: 36),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -288,20 +302,20 @@ class FoodDetailScreen extends  BaseView<FoodDetailScreenViewModel>{
                                         style: appTheme.typographies
                                             .interFontFamily.headline6
                                             .copyWith(
-                                            fontSize: 14,
-                                            fontWeight: selectedTab ==
-                                                TabBars.Details
-                                                ? FontWeight.bold
-                                                : FontWeight.w400,
-                                            color: HexColor.fromHex(
-                                                '#f1c452')),
+                                                fontSize: 14,
+                                                fontWeight: selectedTab ==
+                                                        TabBars.Details
+                                                    ? FontWeight.bold
+                                                    : FontWeight.w400,
+                                                color: HexColor.fromHex(
+                                                    '#f1c452')),
                                       ),
                                       Container(
                                         height: 9,
                                         width: 9,
                                         decoration: BoxDecoration(
                                             color: selectedTab ==
-                                                TabBars.Details
+                                                    TabBars.Details
                                                 ? HexColor.fromHex('#f1c452')
                                                 : Colors.transparent,
                                             shape: BoxShape.circle),
@@ -323,13 +337,13 @@ class FoodDetailScreen extends  BaseView<FoodDetailScreenViewModel>{
                                         style: appTheme.typographies
                                             .interFontFamily.headline6
                                             .copyWith(
-                                            fontSize: 14,
-                                            fontWeight:
-                                            selectedTab == TabBars.Menu
-                                                ? FontWeight.bold
-                                                : FontWeight.w400,
-                                            color: HexColor.fromHex(
-                                                '#f1c452')),
+                                                fontSize: 14,
+                                                fontWeight:
+                                                    selectedTab == TabBars.Menu
+                                                        ? FontWeight.bold
+                                                        : FontWeight.w400,
+                                                color: HexColor.fromHex(
+                                                    '#f1c452')),
                                       ),
                                       Container(
                                         height: 9,
@@ -354,20 +368,20 @@ class FoodDetailScreen extends  BaseView<FoodDetailScreenViewModel>{
                                         style: appTheme.typographies
                                             .interFontFamily.headline6
                                             .copyWith(
-                                            fontSize: 14,
-                                            fontWeight: selectedTab ==
-                                                TabBars.Schedule
-                                                ? FontWeight.bold
-                                                : FontWeight.w400,
-                                            color: HexColor.fromHex(
-                                                '#f1c452')),
+                                                fontSize: 14,
+                                                fontWeight: selectedTab ==
+                                                        TabBars.Schedule
+                                                    ? FontWeight.bold
+                                                    : FontWeight.w400,
+                                                color: HexColor.fromHex(
+                                                    '#f1c452')),
                                       ),
                                       Container(
                                         height: 9,
                                         width: 9,
                                         decoration: BoxDecoration(
                                             color: selectedTab ==
-                                                TabBars.Schedule
+                                                    TabBars.Schedule
                                                 ? HexColor.fromHex('#f1c452')
                                                 : Colors.transparent,
                                             shape: BoxShape.circle),
@@ -400,9 +414,9 @@ class FoodDetailScreen extends  BaseView<FoodDetailScreenViewModel>{
                             style: appTheme
                                 .typographies.interFontFamily.headline4
                                 .copyWith(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: HexColor.fromHex('#ffffff')),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: HexColor.fromHex('#ffffff')),
                           ),
                         ),
                       ],
@@ -423,7 +437,7 @@ class FoodDetailScreen extends  BaseView<FoodDetailScreenViewModel>{
                 child: CircleAvatar(
                   radius: 30,
                   backgroundImage:
-                  AssetImage("assets/images/icons/user_image.png"),
+                      AssetImage("assets/images/icons/user_image.png"),
                 ),
               ),
             ),
@@ -431,192 +445,403 @@ class FoodDetailScreen extends  BaseView<FoodDetailScreenViewModel>{
         ],
       ),
     );
-
   }
-
-
-
-
 
   Widget menuTabView(BuildContext context, IAppThemeData appTheme) {
-
-    return BlocBuilder< FoodDetailScreenViewModel, FoodDetailScreenState>(
-        bloc: viewModel.fetchData(context: context),
-        builder: (_, state) {
-         return
-           state.when(loading:()=>const CircularProgressIndicator(),
-
-               loaded:(FoodMenuModel)=>
-           Padding(
-             padding: EdgeInsetsDirectional.only(end: 12),
-             child: Container(
-                 padding: const EdgeInsetsDirectional.only(
-                     start: 9.9, end: 18.3, bottom: 93),
-                 decoration: BoxDecoration(
-                     borderRadius: BorderRadius.circular(10),
-                     border: Border.all(color: HexColor.fromHex('#f1c452'))),
-                 child: ListView.builder(
-                     physics: NeverScrollableScrollPhysics(),
-                     shrinkWrap: true,
-                     itemCount: 1,
-                     itemBuilder: (BuildContext context, int index) {
-                       return Column(
-                           crossAxisAlignment: CrossAxisAlignment.stretch,
-                           mainAxisAlignment: MainAxisAlignment.start,
-                           children: [
-                             Row(
-                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                               crossAxisAlignment: CrossAxisAlignment.start,
-                               children: [
-                                 Expanded(
-                                   flex: 2,
-                                   child: Container(
-                                     padding: const EdgeInsetsDirectional.all(16),
-                                     decoration: const BoxDecoration(
-                                       image: DecorationImage(
-                                         image: AssetImage(
-                                             'assets/images/icons/food_item_circle.png'),
-                                         fit: BoxFit.fill,
-                                       ),
-                                       shape: BoxShape.circle,
-                                     ),
-                                     child: Image.asset(
-                                       'assets/images/icons/food_item_sample.png',
-                                       height: 50,
-                                     ),
-                                   ),
-                                 ),
-                                 const SizedBox(
-                                   width: 7.7,
-                                 ),
-                                 Expanded(
-                                   flex: 4,
-                                   child: Column(
-                                     crossAxisAlignment: CrossAxisAlignment.start,
-                                     mainAxisAlignment: MainAxisAlignment.start,
-                                     children: [
-                                       Row(
-                                         mainAxisAlignment:
-                                         MainAxisAlignment.spaceBetween,
-                                         children: [
-                                           getFoodItemTitle(appTheme: appTheme),
-                                           getFoodItemAmount(appTheme: appTheme),
-                                         ],
-                                       ),
-                                       getFoodItemSubTitle(appTheme: appTheme),
-                                       getFoodItemDescription(appTheme: appTheme),
-                                     ],
-                                   ),
-                                 ),
-                               ],
-                             ),
-                             SizedBox(
-                               height: 20.5,
-                             ),
-                             Row(
-                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                               children: [
-                                 Row(
-                                   children: [
-                                     Image.asset(
-                                       Resources.userIcon,
-                                       height: 15,
-                                     ),
-                                     const SizedBox(
-                                       width: 4,
-                                     ),
-                                     getFoodItemUsers(appTheme: appTheme),
-                                   ],
-                                 ),
-                                 Stack(
-                                   children: [
-                                     Row(
-                                       children: [
-                                         getFoodItemQuantityLabel(appTheme: appTheme),
-                                         const SizedBox(
-                                           width: 4,
-                                         ),
-                                         InkWell(
-                                           onTap: () {
-                                             removeQuantity();
-                                           },
-                                           child: Container(
-                                             decoration: BoxDecoration(
-                                               color: HexColor.fromHex("#f7dc99"),
-                                               borderRadius: const BorderRadius.only(
-                                                   bottomLeft: Radius.circular(8),
-                                                   topLeft: Radius.circular(8)),
-                                             ),
-                                             padding: const EdgeInsetsDirectional.only(
-                                                 start: 8, end: 8, top: 6, bottom: 6),
-                                             child: const Icon(Icons.remove,
-                                                 color: Colors.black, size: 18),
-                                           ),
-                                         ),
-                                         const SizedBox(
-                                           width: 44,
-                                         ),
-                                         InkWell(
-                                           onTap: () {
-                                             addQuantity();
-                                           },
-                                           child: Container(
-                                             decoration: BoxDecoration(
-                                               color: HexColor.fromHex("#f7dc99"),
-                                               borderRadius: const BorderRadius.only(
-                                                   topRight: Radius.circular(8),
-                                                   bottomRight: Radius.circular(8)),
-                                             ),
-                                             padding: const EdgeInsetsDirectional.only(
-                                                 start: 8, end: 8, top: 6, bottom: 6),
-                                             child: Icon(
-                                               Icons.add,
-                                               color: Colors.black,
-                                               size: 18,
-                                             ),
-                                           ),
-                                         )
-                                       ],
-                                     ),
-                                     Positioned.fill(
-                                       left: 60,
-                                       child: Align(
-                                         alignment: Alignment.center,
-                                         child: Container(
-                                             decoration: BoxDecoration(
-                                                 color: Colors.white,
-                                                 borderRadius:
-                                                 BorderRadius.circular(8)),
-                                             padding: const EdgeInsetsDirectional.only(
-                                                 start: 21,
-                                                 end: 21,
-                                                 top: 5,
-                                                 bottom: 5),
-                                             child: getFoodItemQuantityValue(
-                                                 appTheme: appTheme)),
-                                       ),
-                                     ),
-                                   ],
-                                 )
-                               ],
-                             ),
-                             SizedBox(
-                               height: 23,
-                             ),
-                             Divider(
-                               color: HexColor.fromHex('#f1c452'),
-                               thickness: 1,
-                             )
-                           ]);
-                     })),
-           )
-           );
-
-
-        }
-
+    return Padding(
+      padding: EdgeInsetsDirectional.only(end: 12),
+      child: Container(
+          padding: const EdgeInsetsDirectional.only(
+              start: 9.9, end: 18.3, bottom: 93),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: HexColor.fromHex('#f1c452'))),
+          child: ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: widget.foodMenuDetail.t.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              padding: const EdgeInsetsDirectional.all(16),
+                              decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                      'assets/images/icons/food_item_circle.png'),
+                                  fit: BoxFit.fill,
+                                ),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Image.asset(
+                                'assets/images/icons/food_item_sample.png',
+                                height: 50,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 7.7,
+                          ),
+                          Expanded(
+                            flex: 4,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    getFoodItemTitle(
+                                        appTheme: appTheme,
+                                        foodItemTitle: widget
+                                            .foodMenuDetail.t[index].dish),
+                                    getFoodItemAmount(
+                                        appTheme: appTheme,
+                                        foodItemPrice: widget
+                                            .foodMenuDetail.t[index].price
+                                            .toString()),
+                                  ],
+                                ),
+                                getFoodItemSubTitle(appTheme: appTheme),
+                                getFoodItemDescription(
+                                    appTheme: appTheme,
+                                    foodItemDescription: widget
+                                        .foodMenuDetail.t[index].description),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20.5,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Image.asset(
+                                Resources.userIcon,
+                                height: 15,
+                              ),
+                              const SizedBox(
+                                width: 4,
+                              ),
+                              getFoodItemUsers(appTheme: appTheme),
+                            ],
+                          ),
+                          Stack(
+                            children: [
+                              Row(
+                                children: [
+                                  getFoodItemQuantityLabel(appTheme: appTheme),
+                                  const SizedBox(
+                                    width: 4,
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      removeQuantity();
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: HexColor.fromHex("#f7dc99"),
+                                        borderRadius: const BorderRadius.only(
+                                            bottomLeft: Radius.circular(8),
+                                            topLeft: Radius.circular(8)),
+                                      ),
+                                      padding: const EdgeInsetsDirectional.only(
+                                          start: 8, end: 8, top: 6, bottom: 6),
+                                      child: const Icon(Icons.remove,
+                                          color: Colors.black, size: 18),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 44,
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      addQuantity();
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: HexColor.fromHex("#f7dc99"),
+                                        borderRadius: const BorderRadius.only(
+                                            topRight: Radius.circular(8),
+                                            bottomRight: Radius.circular(8)),
+                                      ),
+                                      padding: const EdgeInsetsDirectional.only(
+                                          start: 8, end: 8, top: 6, bottom: 6),
+                                      child: Icon(
+                                        Icons.add,
+                                        color: Colors.black,
+                                        size: 18,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              Positioned.fill(
+                                left: 60,
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(8)),
+                                      padding: const EdgeInsetsDirectional.only(
+                                          start: 21,
+                                          end: 21,
+                                          top: 5,
+                                          bottom: 5),
+                                      child: getFoodItemQuantityValue(
+                                          appTheme: appTheme)),
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 23,
+                      ),
+                      Divider(
+                        color: HexColor.fromHex('#f1c452'),
+                        thickness: 1,
+                      )
+                    ]);
+              })),
+      // )
     );
+
+    //);
   }
+
+  // Widget menuTabView(BuildContext context, IAppThemeData appTheme) {
+  //   return BlocBuilder<FoodDetailScreenViewModel, FoodDetailScreenState>(
+  //       bloc: viewModel.fetchData(context: context),
+  //       builder: (_, state) {
+  //         return state.when(
+  //             loading: () => const CircularProgressIndicator(),
+  //             loaded: (FoodMenuModel) => Padding(
+  //                   padding: EdgeInsetsDirectional.only(end: 12),
+  //                   child: Container(
+  //                       padding: const EdgeInsetsDirectional.only(
+  //                           start: 9.9, end: 18.3, bottom: 93),
+  //                       decoration: BoxDecoration(
+  //                           borderRadius: BorderRadius.circular(10),
+  //                           border:
+  //                               Border.all(color: HexColor.fromHex('#f1c452'))),
+  //                       child: ListView.builder(
+  //                           physics: NeverScrollableScrollPhysics(),
+  //                           shrinkWrap: true,
+  //                           itemCount: 1,
+  //                           itemBuilder: (BuildContext context, int index) {
+  //                             return Column(
+  //                                 crossAxisAlignment:
+  //                                     CrossAxisAlignment.stretch,
+  //                                 mainAxisAlignment: MainAxisAlignment.start,
+  //                                 children: [
+  //                                   Row(
+  //                                     mainAxisAlignment:
+  //                                         MainAxisAlignment.spaceBetween,
+  //                                     crossAxisAlignment:
+  //                                         CrossAxisAlignment.start,
+  //                                     children: [
+  //                                       Expanded(
+  //                                         flex: 2,
+  //                                         child: Container(
+  //                                           padding:
+  //                                               const EdgeInsetsDirectional.all(
+  //                                                   16),
+  //                                           decoration: const BoxDecoration(
+  //                                             image: DecorationImage(
+  //                                               image: AssetImage(
+  //                                                   'assets/images/icons/food_item_circle.png'),
+  //                                               fit: BoxFit.fill,
+  //                                             ),
+  //                                             shape: BoxShape.circle,
+  //                                           ),
+  //                                           child: Image.asset(
+  //                                             'assets/images/icons/food_item_sample.png',
+  //                                             height: 50,
+  //                                           ),
+  //                                         ),
+  //                                       ),
+  //                                       const SizedBox(
+  //                                         width: 7.7,
+  //                                       ),
+  //                                       Expanded(
+  //                                         flex: 4,
+  //                                         child: Column(
+  //                                           crossAxisAlignment:
+  //                                               CrossAxisAlignment.start,
+  //                                           mainAxisAlignment:
+  //                                               MainAxisAlignment.start,
+  //                                           children: [
+  //                                             Row(
+  //                                               mainAxisAlignment:
+  //                                                   MainAxisAlignment
+  //                                                       .spaceBetween,
+  //                                               children: [
+  //                                                 getFoodItemTitle(
+  //                                                     appTheme: appTheme),
+  //                                                 getFoodItemAmount(
+  //                                                     appTheme: appTheme),
+  //                                               ],
+  //                                             ),
+  //                                             getFoodItemSubTitle(
+  //                                                 appTheme: appTheme),
+  //                                             getFoodItemDescription(
+  //                                                 appTheme: appTheme),
+  //                                           ],
+  //                                         ),
+  //                                       ),
+  //                                     ],
+  //                                   ),
+  //                                   SizedBox(
+  //                                     height: 20.5,
+  //                                   ),
+  //                                   Row(
+  //                                     mainAxisAlignment:
+  //                                         MainAxisAlignment.spaceBetween,
+  //                                     children: [
+  //                                       Row(
+  //                                         children: [
+  //                                           Image.asset(
+  //                                             Resources.userIcon,
+  //                                             height: 15,
+  //                                           ),
+  //                                           const SizedBox(
+  //                                             width: 4,
+  //                                           ),
+  //                                           getFoodItemUsers(
+  //                                               appTheme: appTheme),
+  //                                         ],
+  //                                       ),
+  //                                       Stack(
+  //                                         children: [
+  //                                           Row(
+  //                                             children: [
+  //                                               getFoodItemQuantityLabel(
+  //                                                   appTheme: appTheme),
+  //                                               const SizedBox(
+  //                                                 width: 4,
+  //                                               ),
+  //                                               InkWell(
+  //                                                 onTap: () {
+  //                                                   removeQuantity();
+  //                                                 },
+  //                                                 child: Container(
+  //                                                   decoration: BoxDecoration(
+  //                                                     color: HexColor.fromHex(
+  //                                                         "#f7dc99"),
+  //                                                     borderRadius:
+  //                                                         const BorderRadius
+  //                                                                 .only(
+  //                                                             bottomLeft: Radius
+  //                                                                 .circular(8),
+  //                                                             topLeft: Radius
+  //                                                                 .circular(8)),
+  //                                                   ),
+  //                                                   padding:
+  //                                                       const EdgeInsetsDirectional
+  //                                                               .only(
+  //                                                           start: 8,
+  //                                                           end: 8,
+  //                                                           top: 6,
+  //                                                           bottom: 6),
+  //                                                   child: const Icon(
+  //                                                       Icons.remove,
+  //                                                       color: Colors.black,
+  //                                                       size: 18),
+  //                                                 ),
+  //                                               ),
+  //                                               const SizedBox(
+  //                                                 width: 44,
+  //                                               ),
+  //                                               InkWell(
+  //                                                 onTap: () {
+  //                                                   addQuantity();
+  //                                                 },
+  //                                                 child: Container(
+  //                                                   decoration: BoxDecoration(
+  //                                                     color: HexColor.fromHex(
+  //                                                         "#f7dc99"),
+  //                                                     borderRadius:
+  //                                                         const BorderRadius
+  //                                                                 .only(
+  //                                                             topRight: Radius
+  //                                                                 .circular(8),
+  //                                                             bottomRight:
+  //                                                                 Radius
+  //                                                                     .circular(
+  //                                                                         8)),
+  //                                                   ),
+  //                                                   padding:
+  //                                                       const EdgeInsetsDirectional
+  //                                                               .only(
+  //                                                           start: 8,
+  //                                                           end: 8,
+  //                                                           top: 6,
+  //                                                           bottom: 6),
+  //                                                   child: Icon(
+  //                                                     Icons.add,
+  //                                                     color: Colors.black,
+  //                                                     size: 18,
+  //                                                   ),
+  //                                                 ),
+  //                                               )
+  //                                             ],
+  //                                           ),
+  //                                           Positioned.fill(
+  //                                             left: 60,
+  //                                             child: Align(
+  //                                               alignment: Alignment.center,
+  //                                               child: Container(
+  //                                                   decoration: BoxDecoration(
+  //                                                       color: Colors.white,
+  //                                                       borderRadius:
+  //                                                           BorderRadius
+  //                                                               .circular(8)),
+  //                                                   padding:
+  //                                                       const EdgeInsetsDirectional
+  //                                                               .only(
+  //                                                           start: 21,
+  //                                                           end: 21,
+  //                                                           top: 5,
+  //                                                           bottom: 5),
+  //                                                   child:
+  //                                                       getFoodItemQuantityValue(
+  //                                                           appTheme:
+  //                                                               appTheme)),
+  //                                             ),
+  //                                           ),
+  //                                         ],
+  //                                       )
+  //                                     ],
+  //                                   ),
+  //                                   SizedBox(
+  //                                     height: 23,
+  //                                   ),
+  //                                   Divider(
+  //                                     color: HexColor.fromHex('#f1c452'),
+  //                                     thickness: 1,
+  //                                   )
+  //                                 ]);
+  //                           })),
+  //                 ));
+  //       });
+  // }
 
   Widget getFoodItemHeading({required IAppThemeData appTheme}) {
     return GeneralText(
@@ -627,9 +852,11 @@ class FoodDetailScreen extends  BaseView<FoodDetailScreenViewModel>{
     );
   }
 
-  Widget getFoodItemTitle({required IAppThemeData appTheme}) {
+  Widget getFoodItemTitle(
+      {required IAppThemeData appTheme, required String foodItemTitle}) {
     return GeneralText(
-      Strings.foodProductTitle,
+      //  Strings.foodProductTitle,
+      foodItemTitle,
       style: appTheme.typographies.interFontFamily.headline6
           .copyWith(fontSize: 15, color: HexColor.fromHex('#f7dc99')),
     );
@@ -643,9 +870,11 @@ class FoodDetailScreen extends  BaseView<FoodDetailScreenViewModel>{
     );
   }
 
-  Widget getFoodItemAmount({required IAppThemeData appTheme}) {
+  Widget getFoodItemAmount(
+      {required IAppThemeData appTheme, required String foodItemPrice}) {
     return GeneralText(
-      Strings.appCurrency + "." + Strings.foodProductItemPrice,
+      //   Strings.appCurrency + "." + Strings.foodProductItemPrice,
+      Strings.appCurrency + "." + foodItemPrice,
       style: appTheme.typographies.interFontFamily.headline6.copyWith(
           fontSize: 22,
           fontWeight: FontWeight.bold,
@@ -653,9 +882,11 @@ class FoodDetailScreen extends  BaseView<FoodDetailScreenViewModel>{
     );
   }
 
-  Widget getFoodItemDescription({required IAppThemeData appTheme}) {
+  Widget getFoodItemDescription(
+      {required IAppThemeData appTheme, required String foodItemDescription}) {
     return GeneralText(
-      Strings.foodProductItemDescription,
+      // Strings.foodProductItemDescription,
+      foodItemDescription,
       maxLines: 3,
       textAlign: TextAlign.start,
       style: appTheme.typographies.interFontFamily.headline6
