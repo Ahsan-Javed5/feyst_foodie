@@ -1,4 +1,5 @@
 import 'package:chef/helpers/helpers.dart';
+import 'package:chef/screens/home/schedule_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -35,10 +36,11 @@ enum TabBars { Details, Menu, Schedule }
 
 class FoodDetailScreen extends StatefulWidget {
   const FoodDetailScreen(
-      {Key? key, required this.data, required this.foodMenuDetail})
+      {Key? key, required this.data, required this.foodMenuDetail, required this.scheduleModel})
       : super(key: key);
   final experience_data.T data;
   final FoodMenuModel foodMenuDetail;
+  final ScheduleModel scheduleModel;
 
   @override
   _FoodDetailScreenState createState() => _FoodDetailScreenState();
@@ -1246,8 +1248,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                 child: ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: 4,
+                    itemCount: widget.scheduleModel.t.daysGroups?.length??0,
                     itemBuilder: (BuildContext context, int index) {
+                      var item=widget.scheduleModel.t.daysGroups[index];
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -1270,7 +1273,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                                   HexColor.fromHex('#f1c452'),
                                               fontSize: 14,
                                               fontWeight: FontWeight.w700)),
-                                  GeneralText(selectedDate,
+                                  GeneralText(item.scheduledDate.day.toString(),
                                       style: appTheme.typographies
                                           .interFontFamily.headline2
                                           .copyWith(

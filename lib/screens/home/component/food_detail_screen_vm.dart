@@ -1,9 +1,11 @@
-import 'package:chef/helpers/helpers.dart';
-import 'package:chef/models/signup/profession_request.dart' as prorequest;
-import 'package:chef/models/home/food_menu_request.dart' as menurequest;
+import 'dart:async';
 
-import 'food_detail_screen_m.dart';
+import 'package:chef/helpers/helpers.dart';
+import 'package:chef/models/home/food_menu_request.dart' as menurequest;
+import 'package:chef/screens/home/schedule_model.dart';
+
 import '../food_details_menu_model.dart';
+import 'food_detail_screen_m.dart';
 
 @injectable
 class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
@@ -50,7 +52,7 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
         InfininURLHelpers.getRestApiURL(Api.baseURL + Api.experienceMenu);
     // emit(const Loading());
 
-    //  emit(const Loading());
+      emit(const Loading());
 
     final foodMenuRequest = menurequest.FoodMenuRequest(
       t: int.parse(experienceId),
@@ -62,34 +64,40 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
     );
 
     final foodMenuData = foodMenuModelFromJson(response.body);
-    emit(Loaded(foodMenuData));
+
+
+    getScheduleData(experienceId: experienceId,foodMenuModel: foodMenuData);
+  //  emit(Loaded(foodMenuData));
 
     // List<ProfessionData> data = currentProfessionData.t;
     // emit(Loaded(currentProfessionData));
   }
 
   Future<void> getScheduleData({
-    required String baseUrl,
-    required BuildContext context,
+  required String experienceId,
+  required FoodMenuModel foodMenuModel,
   }) async {
-    final url = InfininURLHelpers.getRestApiURL(baseUrl + Api.getScheduleData);
+    final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.scheduleData);
     // emit(const Loading());
 
-    // emit(const Loading());
-    final professionDataRequest = prorequest.ProfessionRequest(
-      t: prorequest.T(),
+    final scheduleRequest = menurequest.FoodMenuRequest(
+      t: int.parse(experienceId),
     ).toJson();
+
 
     final response = await _network.post(
       path: url,
-      data: professionDataRequest,
+      data: scheduleRequest
     );
 
-    // final foodMenuData = scheduleModelFromJson(response.body);
-    // emit(Loaded(foodMenuData));
 
-    // List<ProfessionData> data = currentProfessionData.t;
-    // emit(Loaded(currentProfessionData));
+    debugPrint("schedule response\n" +response.body.toString());
+
+      final scheduleData = scheduleModelFromJson(response.body);
+
+  emit(Loaded(foodMenuModel,scheduleData));
+
+
   }
 
   void loading({required bool isBusy}) => emit(const Loading());
