@@ -1,4 +1,6 @@
 import 'package:chef/helpers/helpers.dart';
+import 'package:chef/screens/home/schedule_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,19 +44,22 @@ class FoodDetailScreenView extends BaseView<FoodDetailScreenViewModel> {
             floatingActionButton: getStartedButtonTitle(context: context),
             body: state.when(
               loading: _loading,
-              loaded: (foodMenuDetail) => displayLoaded(foodMenuDetail),
+              loaded: (foodMenuDetail,scheduleModel) => displayLoaded(foodMenuDetail,scheduleModel),
             ));
       },
     );
   }
 
   Widget _loading() {
-    return const CircularProgressIndicator();
+    return Center(child: const CircularProgressIndicator());
   }
 
-  Widget displayLoaded(foodMenuDetail) {
+  Widget displayLoaded(foodMenuDetail,scheduleModel) {
     return FoodDetailScreen(
-        foodMenuDetail: foodMenuDetail, data: _experienceData);
+        foodMenuDetail: foodMenuDetail, data: _experienceData,
+
+    scheduleModel: scheduleModel,
+    );
   }
 
   Widget getStartedButtonTitle({required BuildContext context}) {

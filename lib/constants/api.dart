@@ -52,7 +52,7 @@ abstract class Api {
   // static const experienceMenu = 'experience-menu/find-by-id';
   static const experienceMenu = 'experience-menu/find-by-experience-id';
 
-  static const getScheduleData = 'experience-menu-schedule/find-by-id';
+  static const scheduleData = 'experience-schedule/find-by-experience-id';
 
   static const foodieSignUp = 'foodie/save';
   static const loginAPI = 'foodie/login';
