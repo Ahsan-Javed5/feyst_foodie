@@ -51,7 +51,7 @@ class FoodDetailScreenView extends BaseView<FoodDetailScreenViewModel> {
   }
 
   Widget _loading() {
-    return Center(child: const CircularProgressIndicator());
+    return const Center(child: CircularProgressIndicator());
   }
 
   Widget displayLoaded(foodMenuDetail,scheduleModel) {
