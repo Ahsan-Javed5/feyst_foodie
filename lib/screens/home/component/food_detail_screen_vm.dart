@@ -1,12 +1,11 @@
 import 'dart:async';
 
 import 'package:chef/helpers/helpers.dart';
-import 'package:chef/models/signup/profession_request.dart' as prorequest;
 import 'package:chef/models/home/food_menu_request.dart' as menurequest;
 import 'package:chef/screens/home/schedule_model.dart';
 
-import 'food_detail_screen_m.dart';
 import '../food_details_menu_model.dart';
+import 'food_detail_screen_m.dart';
 
 @injectable
 class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
@@ -65,10 +64,9 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
     );
 
     final foodMenuData = foodMenuModelFromJson(response.body);
-    Timer(const Duration(seconds: 1), () {
-      getScheduleData(experienceId: experienceId,foodMenuModel: foodMenuData);
 
-    });
+
+    getScheduleData(experienceId: experienceId,foodMenuModel: foodMenuData);
   //  emit(Loaded(foodMenuData));
 
     // List<ProfessionData> data = currentProfessionData.t;
