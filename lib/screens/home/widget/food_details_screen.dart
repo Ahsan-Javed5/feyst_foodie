@@ -2,6 +2,7 @@ import 'package:chef/helpers/helpers.dart';
 import 'package:chef/screens/home/schedule_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 import '../../../constants/resources.dart';
 import '../../../constants/strings.dart';
@@ -27,16 +28,12 @@ import 'dart:developer' as developer;
 
 enum TabBars { Details, Menu, Schedule }
 
-// class FoodDetailScreen extends StatefulWidget {
-//   const FoodDetailScreen({Key? key, required this.data}) : super(key: key);
-//   final experience_data.T data;
-//   @override
-//   State<FoodDetailScreen> createState() => _FoodDetailScreenState();
-// }
-
 class FoodDetailScreen extends StatefulWidget {
   const FoodDetailScreen(
-      {Key? key, required this.data, required this.foodMenuDetail, required this.scheduleModel})
+      {Key? key,
+      required this.data,
+      required this.foodMenuDetail,
+      required this.scheduleModel})
       : super(key: key);
   final experience_data.T data;
   final FoodMenuModel foodMenuDetail;
@@ -67,6 +64,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   @override
   void initState() {
+    developer.log(' Price Id is }');
+
     var newItem = const DropdownMenuItem(
       child: Text('Scientist'),
       value: 'Scientist',
@@ -269,12 +268,11 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           child: Align(alignment: Alignment.topLeft, child: GeneralNewAppBar()),
         ),
         Positioned(
-          top: 140,
-          width: MediaQuery.of(context).size.width,
-          child: Padding(
-            padding: EdgeInsetsDirectional.only(start: 25),
-            child: Column(
-              children: [
+            top: 140,
+            width: MediaQuery.of(context).size.width,
+            child: Padding(
+              padding: EdgeInsetsDirectional.only(start: 25),
+              child: Column(children: [
                 Container(
                     decoration: BoxDecoration(
                         color: HexColor.fromHex("#4b4b52"),
@@ -396,35 +394,37 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                     )),
                 if (selectedTab == TabBars.Menu ||
                     selectedTab == TabBars.Details) ...[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Container(
-                        padding: EdgeInsetsDirectional.only(
-                            start: 25, end: 25, bottom: 15, top: 15),
-                        decoration: BoxDecoration(
-                            color: HexColor.fromHex("#8ea659"),
-                            borderRadius: const BorderRadius.only(
-                                bottomLeft: Radius.circular(40))),
-                        child: GeneralText(
-                          Strings.appCurrency +
-                              "." +
-                              " " +
-                              widget.data.price.toString(),
-                          style: appTheme.typographies.interFontFamily.headline4
-                              .copyWith(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: HexColor.fromHex('#ffffff')),
-                        ),
-                      ),
-                    ],
-                  ),
+                  //  displayPriceOption(appTheme),
+                  // ]
+                  displayPriceOption(),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.end,
+                  //   children: [
+                  //     Container(
+                  //       padding: EdgeInsetsDirectional.only(
+                  //           start: 25, end: 25, bottom: 15, top: 15),
+                  //       decoration: BoxDecoration(
+                  //           color: HexColor.fromHex("#8ea659"),
+                  //           borderRadius: const BorderRadius.only(
+                  //               bottomLeft: Radius.circular(40))),
+                  //       child: GeneralText(
+                  //         Strings.appCurrency +
+                  //             "." +
+                  //             " " +
+                  //             widget.data.price.toString(),
+                  //         style: appTheme.typographies.interFontFamily.headline4
+                  //             .copyWith(
+                  //                 fontSize: 18,
+                  //                 fontWeight: FontWeight.bold,
+                  //                 color: HexColor.fromHex('#ffffff')),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                 ]
-              ],
-            ),
-          ),
-        ),
+                //),
+              ]),
+            )),
         // if (selectedTab != TabBars.Details)
         const Positioned.fill(
           top: 105,
@@ -444,6 +444,36 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       ],
     );
     //);
+  }
+
+  Widget displayPriceOption() {
+    final appTheme = AppTheme.of(context).theme;
+
+    /// if (widget.data.priceTypeId == 2) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Container(
+          padding: const EdgeInsetsDirectional.only(
+              start: 25, end: 25, bottom: 15, top: 15),
+          decoration: BoxDecoration(
+              color: HexColor.fromHex("#8ea659"),
+              borderRadius:
+                  const BorderRadius.only(bottomLeft: Radius.circular(40))),
+          child: GeneralText(
+            Strings.appCurrency + "." + " " + widget.data.price.toString(),
+            style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: HexColor.fromHex('#ffffff')),
+          ),
+        ),
+      ],
+    );
+    // }
+    // return Container();
+
+    // ];
   }
 
   Widget menuTabView(BuildContext context, IAppThemeData appTheme) {
@@ -503,11 +533,13 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                         appTheme: appTheme,
                                         foodItemTitle: widget
                                             .foodMenuDetail.t[index].dish),
-                                    getFoodItemAmount(
-                                        appTheme: appTheme,
-                                        foodItemPrice: widget
-                                            .foodMenuDetail.t[index].price
-                                            .toString()),
+                                    widget.data.priceTypeId != 1
+                                        ? getFoodItemAmount(
+                                            appTheme: appTheme,
+                                            foodItemPrice: widget
+                                                .foodMenuDetail.t[index].price
+                                                .toString())
+                                        : Container(),
                                   ],
                                 ),
                                 getFoodItemSubTitle(appTheme: appTheme),
@@ -520,95 +552,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                           ),
                         ],
                       ),
+                      displayQuantityData(),
                       SizedBox(
                         height: 20.5,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Image.asset(
-                                Resources.userIcon,
-                                height: 15,
-                              ),
-                              const SizedBox(
-                                width: 4,
-                              ),
-                              getFoodItemUsers(appTheme: appTheme),
-                            ],
-                          ),
-                          Stack(
-                            children: [
-                              Row(
-                                children: [
-                                  getFoodItemQuantityLabel(appTheme: appTheme),
-                                  const SizedBox(
-                                    width: 4,
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      removeQuantity();
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: HexColor.fromHex("#f7dc99"),
-                                        borderRadius: const BorderRadius.only(
-                                            bottomLeft: Radius.circular(8),
-                                            topLeft: Radius.circular(8)),
-                                      ),
-                                      padding: const EdgeInsetsDirectional.only(
-                                          start: 8, end: 8, top: 6, bottom: 6),
-                                      child: const Icon(Icons.remove,
-                                          color: Colors.black, size: 18),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 44,
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      addQuantity();
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: HexColor.fromHex("#f7dc99"),
-                                        borderRadius: const BorderRadius.only(
-                                            topRight: Radius.circular(8),
-                                            bottomRight: Radius.circular(8)),
-                                      ),
-                                      padding: const EdgeInsetsDirectional.only(
-                                          start: 8, end: 8, top: 6, bottom: 6),
-                                      child: Icon(
-                                        Icons.add,
-                                        color: Colors.black,
-                                        size: 18,
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Positioned.fill(
-                                left: 60,
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(8)),
-                                      padding: const EdgeInsetsDirectional.only(
-                                          start: 21,
-                                          end: 21,
-                                          top: 5,
-                                          bottom: 5),
-                                      child: getFoodItemQuantityValue(
-                                          appTheme: appTheme)),
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
                       ),
                       SizedBox(
                         height: 23,
@@ -623,6 +569,100 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     );
 
     //);
+  }
+
+  Widget displayQuantityData() {
+    final appTheme = AppTheme.of(context).theme;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            Image.asset(
+              Resources.userIcon,
+              height: 15,
+            ),
+            const SizedBox(
+              width: 4,
+            ),
+            getFoodItemUsers(appTheme: appTheme),
+          ],
+        ),
+        widget.data.priceTypeId != 1 ? displayQuantityDetails() : Container(),
+      ],
+    );
+  }
+
+  Widget displayQuantityDetails() {
+    final appTheme = AppTheme.of(context).theme;
+    return Stack(
+      children: [
+        Row(
+          children: [
+            getFoodItemQuantityLabel(appTheme: appTheme),
+            const SizedBox(
+              width: 4,
+            ),
+            InkWell(
+              onTap: () {
+                removeQuantity();
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: HexColor.fromHex("#f7dc99"),
+                  borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(8),
+                      topLeft: Radius.circular(8)),
+                ),
+                padding: const EdgeInsetsDirectional.only(
+                    start: 8, end: 8, top: 6, bottom: 6),
+                child: const Icon(Icons.remove, color: Colors.black, size: 18),
+              ),
+            ),
+            const SizedBox(
+              width: 44,
+            ),
+            InkWell(
+              onTap: () {
+                addQuantity();
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: HexColor.fromHex("#f7dc99"),
+                  borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(8),
+                      bottomRight: Radius.circular(8)),
+                ),
+                padding: const EdgeInsetsDirectional.only(
+                    start: 8, end: 8, top: 6, bottom: 6),
+                child: const Icon(
+                  Icons.add,
+                  color: Colors.black,
+                  size: 18,
+                ),
+              ),
+            )
+          ],
+        ),
+        displayQuantityNumber(),
+      ],
+    );
+  }
+
+  Widget displayQuantityNumber() {
+    final appTheme = AppTheme.of(context).theme;
+    return Positioned.fill(
+      left: 60,
+      child: Align(
+        alignment: Alignment.center,
+        child: Container(
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(8)),
+            padding: const EdgeInsetsDirectional.only(
+                start: 21, end: 21, top: 5, bottom: 5),
+            child: getFoodItemQuantityValue(appTheme: appTheme)),
+      ),
+    );
   }
 
   // Widget menuTabView(BuildContext context, IAppThemeData appTheme) {
@@ -925,28 +965,28 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     );
   }
 
-  Widget getStartedButtonTitle({required IAppThemeData appTheme}) {
-    return GeneralButton.button(
-      width: 151,
-      title: Strings.nextButtonTitle.toUpperCase(),
-      styleType: ButtonStyleType.fill,
-      onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => UserProfile()),
-        // );
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => FoodProductExperienceDetails()),
-        );
-      },
-    );
-    // ExtoText(
-    //   Strings.getStartedButtonTitle,
-    //   style: appTheme.typographies.interFontFamily.headline2,
-    // );
-  }
+  // Widget getStartedButtonTitle({required IAppThemeData appTheme}) {
+  //   return GeneralButton.button(
+  //     width: 151,
+  //     title: Strings.nextButtonTitle.toUpperCase(),
+  //     styleType: ButtonStyleType.fill,
+  //     onTap: () {
+  //       // Navigator.push(
+  //       //   context,
+  //       //   MaterialPageRoute(builder: (context) => UserProfile()),
+  //       // );
+  //       Navigator.push(
+  //         context,
+  //         MaterialPageRoute(
+  //             builder: (context) => FoodProductExperienceDetails()),
+  //       );
+  //     },
+  //   );
+  //   // ExtoText(
+  //   //   Strings.getStartedButtonTitle,
+  //   //   style: appTheme.typographies.interFontFamily.headline2,
+  //   // );
+  // }
 
   Widget getFoodMainHeading({required IAppThemeData appTheme}) {
     return GeneralText(Strings.foodItemMainHeading,
@@ -1248,9 +1288,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                 child: ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: widget.scheduleModel.t.daysGroups?.length??0,
+                    itemCount: widget.scheduleModel.t.daysGroups?.length ?? 0,
                     itemBuilder: (BuildContext context, int index) {
-                      var item=widget.scheduleModel.t.daysGroups[index];
+                      var item = widget.scheduleModel.t.daysGroups[index];
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -1265,7 +1305,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Column(children: [
-                                  GeneralText(selectedDay.toUpperCase(),
+                                  GeneralText(dayOfMonth(item.scheduledDate),
                                       style: appTheme.typographies
                                           .interFontFamily.headline6
                                           .copyWith(
@@ -1281,43 +1321,46 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                         fontSize: 40,
                                       ))
                                 ]),
-                                SizedBox(
+                                const SizedBox(
                                   width: 27,
                                 ),
-                                Expanded(
-                                  child: Container(
-                                    width: double.infinity,
-                                    padding: EdgeInsets.only(
-                                        left: 8, top: 10, bottom: 10),
-                                    decoration: BoxDecoration(
-                                        color: HexColor.fromHex('#2b2b33'),
-                                        borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(20),
-                                            bottomLeft: Radius.circular(20))),
-                                    child: Wrap(children: [
-                                      timeSelectorBox(appTheme,
-                                          showSelectedTime: true),
-                                      SizedBox(
-                                        width: 7,
-                                      ),
-                                      timeSelectorBox(appTheme,
-                                          showSelectedTime: false),
-                                      SizedBox(
-                                        width: 7,
-                                      ),
-                                      timeSelectorBox(appTheme,
-                                          showSelectedTime: false),
-                                      SizedBox(
-                                        width: 7,
-                                      ),
-                                      timeSelectorBox(appTheme,
-                                          showSelectedTime: false),
-                                      SizedBox(
-                                        width: 7,
-                                      ),
-                                    ]),
-                                  ),
-                                )
+
+                                displayScheduleTime(item.hours),
+
+                                // Expanded(
+                                //   child: Container(
+                                //     width: double.infinity,
+                                //     padding: const EdgeInsets.only(
+                                //         left: 8, top: 10, bottom: 10),
+                                //     decoration: BoxDecoration(
+                                //         color: HexColor.fromHex('#2b2b33'),
+                                //         borderRadius: const BorderRadius.only(
+                                //             topLeft: Radius.circular(20),
+                                //             bottomLeft: Radius.circular(20))),
+                                //     child: Wrap(children: [
+                                //       timeSelectorBox(appTheme,
+                                //           showSelectedTime: true),
+                                //       SizedBox(
+                                //         width: 7,
+                                //       ),
+                                //       timeSelectorBox(appTheme,
+                                //           showSelectedTime: false),
+                                //       SizedBox(
+                                //         width: 7,
+                                //       ),
+                                //       timeSelectorBox(appTheme,
+                                //           showSelectedTime: false),
+                                //       SizedBox(
+                                //         width: 7,
+                                //       ),
+                                //       timeSelectorBox(appTheme,
+                                //           showSelectedTime: false),
+                                //       SizedBox(
+                                //         width: 7,
+                                //       ),
+                                //     ]),
+                                //   ),
+                                // )
                               ],
                             ),
                           ),
@@ -1348,6 +1391,36 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               ),
             ],
           );
+  }
+
+  String dayOfMonth(DateTime _date) {
+    var dateData = DateFormat('EEEE').format(_date);
+    return dateData.substring(0, 3);
+  }
+
+  Widget displayScheduleTime(List<Hour> _hours) {
+    final appTheme = AppTheme.of(context).theme;
+    return Expanded(
+      child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.only(left: 8, top: 10, bottom: 10),
+          decoration: BoxDecoration(
+              color: HexColor.fromHex('#2b2b33'),
+              borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  bottomLeft: Radius.circular(20))),
+          child: Wrap(
+            direction: Axis.horizontal,
+            children: [
+              for (var i in _hours)
+                timeSelectorBox(
+                  appTheme,
+                  i.startTime.toString(),
+                  showSelectedTime: false,
+                ),
+            ],
+          )),
+    );
   }
 
   Future<void> selectStartDate(
@@ -1796,12 +1869,20 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     );
   }
 
-  Widget timeSelectorBox(IAppThemeData appTheme,
+  Widget timeSelectorBox(IAppThemeData appTheme, String displayTime,
       {bool showSelectedTime = false}) {
+    developer.log('Time DIsplay is ' +
+        DateFormat.jm().format(
+          DateFormat("hh:mm:ss").parse(displayTime),
+        ));
+    var _formatedTime =
+        DateFormat.jm().format(DateFormat("hh:mm:ss").parse(displayTime));
+
     return Container(
       // width: 71,
       // height: 36,
-      child: GeneralText(selectedTime,
+      //   child: GeneralText(selectedTime,
+      child: GeneralText(_formatedTime,
           style: appTheme.typographies.interFontFamily.headline6.copyWith(
               color: showSelectedTime
                   ? HexColor.fromHex('#212129')

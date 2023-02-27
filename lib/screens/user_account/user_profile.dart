@@ -52,17 +52,15 @@ class _UserProfileState extends State<UserProfile> {
       body: SingleChildScrollView(
         child: Container(
           child: Column(children: [
-
-
             Container(
                 // decoration: BoxDecoration(
                 //   color: HexColor.fromHex("#212129").withOpacity(0.8),
                 // ),
                 decoration: BoxDecoration(
                     image: DecorationImage(
-
-                        image: AssetImage(
-                            'assets/images/icons/user_blurred.jpeg'),fit: BoxFit.cover)),
+                        image:
+                            AssetImage('assets/images/icons/user_blurred.jpeg'),
+                        fit: BoxFit.cover)),
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: _sigmaX, sigmaY: _sigmaY),
                   child: Container(
@@ -71,15 +69,13 @@ class _UserProfileState extends State<UserProfile> {
                       // mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-
-
                         const SizedBox(
                           height: 70,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 18.0),
                           child: GeneralNewAppBar(
-                            rightIcon:  Resources.homeIconSvg,
+                            rightIcon: Resources.homeIconSvg,
                           ),
                         ),
                         const SizedBox(
@@ -87,8 +83,8 @@ class _UserProfileState extends State<UserProfile> {
                         ),
                         Container(
                           width: 129,
-
-                          child: Image.asset('assets/images/icons/userProfile.png',
+                          child: Image.asset(
+                              'assets/images/icons/userProfile.png',
                               fit: BoxFit.fill),
                         ),
                         const SizedBox(
@@ -96,16 +92,17 @@ class _UserProfileState extends State<UserProfile> {
                         ),
                         InkWell(
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      FoodProductExperienceDetails()),
-                            );
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) =>
+                            //           FoodProductExperienceDetails()),
+                            // );
                           },
                           child: GeneralText(
                             Strings.userProfileName,
-                            style: appTheme.typographies.interFontFamily.headline6
+                            style: appTheme
+                                .typographies.interFontFamily.headline6
                                 .copyWith(
                                     fontSize: 25,
                                     color: HexColor.fromHex('#f1c452'),
@@ -128,7 +125,8 @@ class _UserProfileState extends State<UserProfile> {
                             ),
                             GeneralText(
                               Strings.userProfileReviews,
-                              style: appTheme.typographies.interFontFamily.headline6
+                              style: appTheme
+                                  .typographies.interFontFamily.headline6
                                   .copyWith(
                                       decoration: TextDecoration.underline,
                                       fontSize: 12,

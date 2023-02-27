@@ -4,6 +4,7 @@ import 'package:chef/helpers/helpers.dart';
 import 'package:chef/models/home/food_menu_request.dart' as menurequest;
 import 'package:chef/screens/home/schedule_model.dart';
 
+import '../../../models/home/food_menu_request.dart';
 import '../food_details_menu_model.dart';
 import 'food_detail_screen_m.dart';
 
@@ -46,13 +47,14 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
   //   // List<ProfessionData> data = currentProfessionData.t;
   //   // emit(Loaded(currentProfessionData));
   // }
+  late FoodMenuModel foodMenuData;
 
   Future<void> getExperienceMenu({required String experienceId}) async {
     final url =
         InfininURLHelpers.getRestApiURL(Api.baseURL + Api.experienceMenu);
     // emit(const Loading());
 
-      emit(const Loading());
+    emit(const Loading());
 
     final foodMenuRequest = menurequest.FoodMenuRequest(
       t: int.parse(experienceId),
@@ -63,19 +65,18 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
       data: foodMenuRequest,
     );
 
-    final foodMenuData = foodMenuModelFromJson(response.body);
+    foodMenuData = foodMenuModelFromJson(response.body);
 
-
-    getScheduleData(experienceId: experienceId,foodMenuModel: foodMenuData);
-  //  emit(Loaded(foodMenuData));
+    getScheduleData(experienceId: experienceId, foodMenuModel: foodMenuData);
+    //  emit(Loaded(foodMenuData));
 
     // List<ProfessionData> data = currentProfessionData.t;
     // emit(Loaded(currentProfessionData));
   }
 
   Future<void> getScheduleData({
-  required String experienceId,
-  required FoodMenuModel foodMenuModel,
+    required String experienceId,
+    required FoodMenuModel foodMenuModel,
   }) async {
     final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.scheduleData);
     // emit(const Loading());
@@ -84,20 +85,13 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
       t: int.parse(experienceId),
     ).toJson();
 
+    final response = await _network.post(path: url, data: scheduleRequest);
 
-    final response = await _network.post(
-      path: url,
-      data: scheduleRequest
-    );
+    debugPrint("schedule response\n" + response.body.toString());
 
+    final scheduleData = scheduleModelFromJson(response.body);
 
-    debugPrint("schedule response\n" +response.body.toString());
-
-      final scheduleData = scheduleModelFromJson(response.body);
-
-  emit(Loaded(foodMenuModel,scheduleData));
-
-
+    emit(Loaded(foodMenuModel, scheduleData));
   }
 
   void loading({required bool isBusy}) => emit(const Loading());

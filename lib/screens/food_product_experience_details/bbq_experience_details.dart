@@ -1,3 +1,4 @@
+import 'package:chef/screens/home/food_details_menu_model.dart';
 import 'package:chef/screens/home/home_screen_v.dart';
 import 'package:flutter/material.dart';
 
@@ -10,9 +11,33 @@ import '../../ui_kit/widgets/general_button.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
 import '../bottom_bar/bottom_bar.dart';
+import '../../../models/home/experience_list_response.dart' as experience_data;
+
+import 'dart:developer' as developer;
 
 class FoodProductExperienceDetails extends StatefulWidget {
-  const FoodProductExperienceDetails({Key? key}) : super(key: key);
+  //const FoodProductExperienceDetails({Key? key}) : super(key: key);
+  // const FoodProductExperienceDetails({
+  //   required String selectedExperienceId,
+  //   required experience_data.T experienceData,
+  //   required FoodMenuModel foodMenuModel,
+  //   Key? key,
+  // });
+
+  const FoodProductExperienceDetails({
+    Key? key,
+    // required String selectedExperienceId,
+    // required experience_data.T experienceData,
+    // required FoodMenuModel foodMenuModel,
+
+    required this.experienceData,
+    required this.foodMenuDetail,
+    required this.selectedExperienceId,
+  }) : super(key: key);
+
+  final experience_data.T experienceData;
+  final FoodMenuModel foodMenuDetail;
+  final String selectedExperienceId;
 
   @override
   State<FoodProductExperienceDetails> createState() =>
@@ -26,36 +51,62 @@ class _FoodProductExperienceDetailsState
 
   @override
   void initState() {
+    //widget.foodMenuModel;
     // TODO: implement initState
-    menuListItems.addAll([
-      CustomModel(name: "Sindhi Biryani"),
-      CustomModel(name: "Buritto"),
-      CustomModel(name: "Vegetable Salad"),
-      CustomModel(name: "Hyderabadi Rice"),
-      CustomModel(name: "Soft Drinks"),
-    ]);
-    wowFactorsList.addAll([
-      CustomModel(
-          name: Strings.productDetailWowFactorGarden,
-          icon: "assets/images/icons/garden.png"),
-      CustomModel(
-          name: Strings.productDetailWowFactorFireworks,
-          icon: "assets/images/icons/fireworks.png"),
-      CustomModel(
-          name: Strings.productDetailWowFactorPetFriendly,
-          icon: "assets/images/icons/pet_friendly.png"),
-      CustomModel(
-          name: Strings.productDetailWowFactorWifi,
-          icon: "assets/images/icons/wifi_2.png"),
-      CustomModel(
-          name: Strings.productDetailWowFactorMusic,
-          icon: "assets/images/icons/music.png"),
-      CustomModel(
-          name: Strings.productDetailWowFactorParking,
-          icon: "assets/images/icons/parking.png")
-    ]);
+
+    //widget.foodMenuDetail.t
+
+    // menuListItems.addAll([
+    //   CustomModel(name: "Sindhi Biryani"),
+    //   CustomModel(name: "Buritto"),
+    //   CustomModel(name: "Vegetable Salad"),
+    //   CustomModel(name: "Hyderabadi Rice"),
+    //   CustomModel(name: "Soft Drinks"),
+    // ]);
+    loadMenuSelected();
+    loadWowFactors();
 
     super.initState();
+  }
+
+  void loadMenuSelected() {
+    for (var i = 0; i < widget.foodMenuDetail.t.length; i++) {
+      developer.log(
+          ' Widget  Food Menu Detail ' + '${widget.foodMenuDetail.t[i].dish}');
+      menuListItems.add(CustomModel(name: widget.foodMenuDetail.t[i].dish));
+    }
+  }
+
+  void loadWowFactors() {
+    for (int i = 0;
+        i < widget.experienceData.experienceWowFactors.length;
+        i++) {
+      wowFactorsList.add(CustomModel(
+          name: widget.experienceData.experienceWowFactors[i]
+              .wowFactorName, //   Strings.productDetailWowFactorGarden,
+          icon: "assets/images/icons/garden.png"));
+    }
+
+    // wowFactorsList.addAll([
+    //   CustomModel(
+    //       name: Strings.productDetailWowFactorGarden,
+    //       icon: "assets/images/icons/garden.png"),
+    //   CustomModel(
+    //       name: Strings.productDetailWowFactorFireworks,
+    //       icon: "assets/images/icons/fireworks.png"),
+    //   CustomModel(
+    //       name: Strings.productDetailWowFactorPetFriendly,
+    //       icon: "assets/images/icons/pet_friendly.png"),
+    //   CustomModel(
+    //       name: Strings.productDetailWowFactorWifi,
+    //       icon: "assets/images/icons/wifi_2.png"),
+    //   CustomModel(
+    //       name: Strings.productDetailWowFactorMusic,
+    //       icon: "assets/images/icons/music.png"),
+    //   CustomModel(
+    //       name: Strings.productDetailWowFactorParking,
+    //       icon: "assets/images/icons/parking.png")
+    // ]);
   }
 
   @override
@@ -499,14 +550,17 @@ class _FoodProductExperienceDetailsState
                             color: HexColor.fromHex('#f89f84'),
                           ),
                         ),
-                        GeneralText(
-                          Strings.productDetailSelectionMenuAmount,
-                          style: appTheme.typographies.interFontFamily.headline2
-                              .copyWith(
-                            fontSize: 16,
-                            color: HexColor.fromHex('#909094'),
-                          ),
-                        ),
+                        widget.experienceData.priceTypeId != 1
+                            ? GeneralText(
+                                Strings.productDetailSelectionMenuAmount,
+                                style: appTheme
+                                    .typographies.interFontFamily.headline2
+                                    .copyWith(
+                                  fontSize: 16,
+                                  color: HexColor.fromHex('#909094'),
+                                ),
+                              )
+                            : Container(),
                       ],
                     ),
                     SizedBox(
@@ -752,7 +806,8 @@ class _FoodProductExperienceDetailsState
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       GeneralText(
-                        Strings.productDetailPriceValue,
+                        // Strings.productDetailPriceValue,
+                        widget.experienceData.price.toString(),
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
                                 fontSize: 36,
