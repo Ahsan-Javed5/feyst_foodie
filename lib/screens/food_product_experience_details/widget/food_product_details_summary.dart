@@ -2,20 +2,24 @@ import 'package:chef/screens/home/food_details_menu_model.dart';
 import 'package:chef/screens/home/home_screen_v.dart';
 import 'package:flutter/material.dart';
 
-import '../../constants/resources.dart';
-import '../../constants/strings.dart';
-import '../../helpers/color_helper.dart';
-import '../../theme/app_theme_data/app_theme_data.dart';
-import '../../theme/app_theme_widget.dart';
-import '../../ui_kit/widgets/general_button.dart';
-import '../../ui_kit/widgets/general_new_appbar.dart';
-import '../../ui_kit/widgets/general_text.dart';
-import '../bottom_bar/bottom_bar.dart';
+import '../../../constants/resources.dart';
+import '../../../constants/strings.dart';
+import '../../../helpers/color_helper.dart';
+import '../../../helpers/order_helper.dart';
+import '../../../helpers/url_helper.dart';
+import '../../../services/application_state.dart';
+import '../../../setup.dart';
+import '../../../theme/app_theme_data/app_theme_data.dart';
+import '../../../theme/app_theme_widget.dart';
+import '../../../ui_kit/widgets/general_button.dart';
+import '../../../ui_kit/widgets/general_new_appbar.dart';
+import '../../../ui_kit/widgets/general_text.dart';
+import '../../bottom_bar/bottom_bar.dart';
 import '../../../models/home/experience_list_response.dart' as experience_data;
 
 import 'dart:developer' as developer;
 
-class FoodProductExperienceDetails extends StatefulWidget {
+class FoodProductDetailsSummary extends StatefulWidget {
   //const FoodProductExperienceDetails({Key? key}) : super(key: key);
   // const FoodProductExperienceDetails({
   //   required String selectedExperienceId,
@@ -24,7 +28,7 @@ class FoodProductExperienceDetails extends StatefulWidget {
   //   Key? key,
   // });
 
-  const FoodProductExperienceDetails({
+  const FoodProductDetailsSummary({
     Key? key,
     // required String selectedExperienceId,
     // required experience_data.T experienceData,
@@ -40,14 +44,14 @@ class FoodProductExperienceDetails extends StatefulWidget {
   final String selectedExperienceId;
 
   @override
-  State<FoodProductExperienceDetails> createState() =>
-      _FoodProductExperienceDetailsState();
+  State<FoodProductDetailsSummary> createState() =>
+      _FoodProductDetailsSummaryState();
 }
 
-class _FoodProductExperienceDetailsState
-    extends State<FoodProductExperienceDetails> {
+class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
   List<CustomModel> wowFactorsList = [];
   List<CustomModel> menuListItems = [];
+  final _appService = locateService<ApplicationService>();
 
   @override
   void initState() {
@@ -384,6 +388,38 @@ class _FoodProductExperienceDetailsState
   }
 
   Widget foodProductDetails(IAppThemeData appTheme) {
+    OrderHelper orderHelper = (_appService.state.orderHelper)!;
+    developer.log(' Schedule Id selected in Summary Page ' +
+        _appService.state.orderHelper!.scheduleId);
+    developer.log(' Schedule Id selected in Experience Price ' +
+        '${_appService.state.orderHelper!.selectedExperienceDetail.price}');
+    developer.log(' Schedule Id selected in Experience Id ' +
+        '${_appService.state.orderHelper!.selectedExperienceDetail.id}');
+    developer.log(' Foodie Id is ' + '${_appService.state.userInfo!.t.id}');
+    developer.log(' Order Helper Id is ' +
+        '${_appService.state.orderHelper!.daysGroup.scheduledDate.month}');
+    var _date = InfininURLHelpers.dayOfMonth(
+        _appService.state.orderHelper!.daysGroup.scheduledDate);
+    var dayOfMonth = _appService.state.orderHelper!.daysGroup.scheduledDate.day;
+    var _month = InfininURLHelpers.months[
+        _appService.state.orderHelper!.daysGroup.scheduledDate.month - 1];
+    var _hourSelected = _appService.state.orderHelper!.hourSelected.startTime;
+
+    developer.log(' _Date for Summary Page is ' + '${_date}');
+    developer.log(' Month of Summary Page is ' + '${_month}');
+
+    developer.log(' Day of Month is ' + '${dayOfMonth}');
+    developer.log(' Hour selected of Month is ' + '${_hourSelected}');
+
+    var _productDetailSelectionDate = _date.toUpperCase() +
+        ',  ' +
+        (dayOfMonth.toString())! +
+        "   " +
+        _month.toString().toUpperCase();
+    var _productDetailSelectionTime = InfininURLHelpers.getAmPm(
+        _appService.state.orderHelper!.hourSelected.startTime);
+    var _productDetailSelectionType =
+        _appService.state.orderHelper!.selectedCategory;
     return Padding(
       padding: EdgeInsetsDirectional.only(start: 25, end: 25),
       child: Container(
@@ -407,7 +443,8 @@ class _FoodProductExperienceDetailsState
                       Column(
                         children: [
                           GeneralText(
-                            Strings.productDetailSelectionDate,
+                            //    Strings.productDetailSelectionDate,
+                            _productDetailSelectionDate,
                             style: appTheme
                                 .typographies.interFontFamily.headline2
                                 .copyWith(
@@ -416,7 +453,8 @@ class _FoodProductExperienceDetailsState
                             ),
                           ),
                           GeneralText(
-                            Strings.productDetailSelectionTime,
+                            //   Strings.productDetailSelectionTime,
+                            _productDetailSelectionTime,
                             style: appTheme
                                 .typographies.interFontFamily.headline2
                                 .copyWith(
@@ -434,7 +472,8 @@ class _FoodProductExperienceDetailsState
                       Column(
                         children: [
                           GeneralText(
-                            Strings.productDetailSelectionType,
+                            // Strings.productDetailSelectionType,
+                            _productDetailSelectionType,
                             style: appTheme
                                 .typographies.interFontFamily.headline2
                                 .copyWith(
@@ -478,6 +517,7 @@ class _FoodProductExperienceDetailsState
   }
 
   Widget productRelatedNotes(IAppThemeData appTheme) {
+    var _noteAdded = _appService.state.orderHelper!.noteAdded ?? '';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -499,7 +539,7 @@ class _FoodProductExperienceDetailsState
               color: HexColor.fromHex("#212129"),
               borderRadius: BorderRadius.circular(11)),
           child: GeneralText(
-            Strings.productDetailSelectionNotes,
+            _noteAdded,
             style: appTheme.typographies.interFontFamily.headline6.copyWith(
                 fontSize: 14,
                 color: HexColor.fromHex('#ffffff'),
@@ -937,10 +977,10 @@ class _FoodProductExperienceDetailsState
       title: Strings.productDetailButtonTitle.toUpperCase(),
       styleType: ButtonStyleType.fill,
       onTap: () {
-        Navigator.push(
-            context,
-            //HomeScreen()
-            MaterialPageRoute(builder: (context) => BottomBar()));
+        // Navigator.push(
+        //     context,
+        //     //HomeScreen()
+        //     MaterialPageRoute(builder: (context) => BottomBar()));
       },
     );
     // ExtoText(

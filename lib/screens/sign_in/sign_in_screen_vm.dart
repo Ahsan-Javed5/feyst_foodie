@@ -150,22 +150,6 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
           header: _header,
           //   accessToken: false,
         );
-        //     .then((value) {
-        //   developer.log(' Response code is ' + '${value.runtimeType}');
-        //   if (value.runtimeType is Response) {
-        //     developer.log(' Response body is ' + '${value.body}');
-        //   }
-        // }).whenComplete(() {
-        //   developer.log(' Completed code is ');
-        // });
-        // developer.log(' response data is  ' + '${response.runtimeType}');
-
-        // final response = await _network.get(
-        //   //below one is working
-        //   path: 'https://run.mocky.io/v3/80289cbe-aa47-491e-9eb2-56126289c8a4',
-        //
-        //   // path: 'https://run.mocky.io/v3/d1f71fed-862a-4e17-a57c-07e99818e42f',
-        // );
         if (response != null) {
           developer.log(' Response of login body is ' + '${response.body}');
 

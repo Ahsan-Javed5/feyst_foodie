@@ -7,7 +7,9 @@ import 'package:intl/intl.dart';
 import '../../../constants/resources.dart';
 import '../../../constants/strings.dart';
 import '../../../helpers/color_helper.dart';
+import '../../../helpers/order_helper.dart';
 import '../../../models/home/experience_list_response.dart';
+import '../../../setup.dart';
 import '../../../theme/app_theme_data/app_theme_data.dart';
 import '../../../theme/app_theme_widget.dart';
 import '../../../ui_kit/widgets/general_button.dart';
@@ -16,7 +18,7 @@ import '../../../ui_kit/widgets/general_new_appbar.dart';
 import '../../../ui_kit/widgets/general_text.dart';
 import '../../../ui_kit/widgets/general_text_input.dart';
 import '../../booking/food_item_bookng.dart';
-import '../../food_product_experience_details/bbq_experience_details.dart';
+import '../../food_product_experience_details/food_product_details_screen_v.dart';
 import '../../user_account/user_profile.dart';
 import '../component/food_detail_screen_m.dart';
 import '../component/food_detail_screen_vm.dart';
@@ -61,14 +63,29 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   List<CustomModel> wowFactorsList = [];
   List<CustomModel> preferencesList = [];
   List<CustomModel> menuListItems = [];
+  final _appService = locateService<ApplicationService>();
+  List months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec'
+  ];
 
   @override
   void initState() {
     developer.log(' Price Id is }');
 
     var newItem = const DropdownMenuItem(
-      child: Text('Scientist'),
-      value: 'Scientist',
+      child: Text('Family'),
+      value: 'Family',
       alignment: Alignment.centerLeft,
     );
     var newItem1 = const DropdownMenuItem(
@@ -85,17 +102,15 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     // items.add(newItem1);
     // items.add(newItem2);
 
-    items.add('Scientist');
+    //   items.add('Scientist');
     items.add('Couple');
     items.add('Single');
-
-    menuListItems.addAll([
-      CustomModel(name: "Sindhi Biryani"),
-      CustomModel(name: "Buritto"),
-      CustomModel(name: "Vegetable Salad"),
-      CustomModel(name: "Hyderabadi Rice"),
-      CustomModel(name: "Soft Drinks"),
-    ]);
+    items.add('Family');
+    // _appService.state.orderHelper = OrderHelper();
+    if (_appService.state.orderHelper != null) {
+      _appService.state.orderHelper!.selectedCategory = items.first;
+      _appService.state.orderHelper!.noteAdded = 'no comments';
+    }
 
     // wowFactorsList.addAll([
     //   CustomModel(
@@ -220,7 +235,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             Expanded(
               child: SingleChildScrollView(
                 child: Container(
-                  padding: EdgeInsetsDirectional.only(start: 24),
+                  padding: const EdgeInsetsDirectional.only(start: 24),
                   color: HexColor.fromHex('#212129'),
                   child: Column(
                     children: [
@@ -1062,6 +1077,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                               fontSize: 36,
                                               fontWeight: FontWeight.normal)),
                                   GeneralText(selectedDay,
+
+                                      // GeneralText(item.scheduledDate,
                                       style: appTheme.typographies
                                           .interFontFamily.headline6
                                           .copyWith(
@@ -1184,7 +1201,13 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                               onChange: ({
                                                 required String key,
                                                 required dynamic value,
-                                              }) {},
+                                              }) {
+                                                developer.log(
+                                                    ' Selected value from Drop Down is ' +
+                                                        '${value}');
+                                                _appService.state.orderHelper!
+                                                    .selectedCategory = value;
+                                              },
                                             ),
                                             /*GeneralDropdown(
                                           borderColor: Colors.transparent,
@@ -1284,9 +1307,10 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
         : Stack(
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.only(start: 20, bottom: 50),
+                padding:
+                    const EdgeInsetsDirectional.only(start: 20, bottom: 50),
                 child: ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: widget.scheduleModel.t.daysGroups?.length ?? 0,
                     itemBuilder: (BuildContext context, int index) {
@@ -1297,6 +1321,20 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                         children: [
                           InkWell(
                             onTap: () {
+                              developer.log(' Clicked on Schedule form is ' +
+                                  '${widget.scheduleModel.t.daysGroups[index]}');
+                              final _appService =
+                                  locateService<ApplicationService>();
+
+                              _appService.state.orderHelper!.daysGroup =
+                                  widget.scheduleModel.t.daysGroups[index];
+
+                              selectedDay = InfininURLHelpers.dayOfMonth(
+                                  item.scheduledDate);
+                              selectedMonth =
+                                  months[item.scheduledDate.month - 1];
+                              selectedDate = item.scheduledDate.day.toString();
+
                               setState(() {
                                 scheduleForm = !scheduleForm;
                               });
@@ -1395,6 +1433,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   String dayOfMonth(DateTime _date) {
     var dateData = DateFormat('EEEE').format(_date);
+    selectedMonth = months[_date.month - 1];
+
     return dateData.substring(0, 3);
   }
 
@@ -1412,14 +1452,36 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           child: Wrap(
             direction: Axis.horizontal,
             children: [
-              for (var i in _hours)
+              for (var i in _hours) //displayTimeData(i),
                 timeSelectorBox(
                   appTheme,
                   i.startTime.toString(),
+                  i,
                   showSelectedTime: false,
                 ),
+              // const SizedBox(
+              //   width: 7,
+              // ),
             ],
           )),
+    );
+  }
+
+  Widget data() {
+    return Container();
+  }
+
+  Widget displayTimeData(i) {
+    final appTheme = AppTheme.of(context).theme;
+    return Row(
+      children: [
+        timeSelectorBox(
+          appTheme,
+          i.startTime.toString(),
+          i,
+          showSelectedTime: false,
+        ),
+      ],
     );
   }
 
@@ -1869,35 +1931,53 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     );
   }
 
-  Widget timeSelectorBox(IAppThemeData appTheme, String displayTime,
+  Widget timeSelectorBox(IAppThemeData appTheme, String displayTime, Hour _hour,
       {bool showSelectedTime = false}) {
-    developer.log('Time DIsplay is ' +
-        DateFormat.jm().format(
-          DateFormat("hh:mm:ss").parse(displayTime),
-        ));
-    var _formatedTime =
-        DateFormat.jm().format(DateFormat("hh:mm:ss").parse(displayTime));
+    //  developer.log('Time Display is ' +
+    //      DateFormat.jm().format(
+    //        DateFormat("hh:mm:ss").parse(displayTime),
+    //      ));
+    //  var _formatedTime =
+    //      DateFormat.jm().format(DateFormat("hh:mm:ss").parse(displayTime));
+    // // var _finalDate =
+    //  var data = _formatedTime.split(':');
+    //  var finalDate = '';
+    //  finalDate = data[0];
+    //  finalDate = finalDate + data[1].replaceAll('00', '');
+    var finalDate = '';
+    finalDate = InfininURLHelpers.getAmPm(displayTime);
 
-    return Container(
-      // width: 71,
-      // height: 36,
-      //   child: GeneralText(selectedTime,
-      child: GeneralText(_formatedTime,
-          style: appTheme.typographies.interFontFamily.headline6.copyWith(
+    return InkWell(
+        onTap: () {
+          developer.log(' Clicked on final date is ' + '${finalDate}');
+          selectedTime = finalDate;
+          developer.log(' Schedule Id selected is ' + '${_hour.scheduleId}');
+          final _appService = locateService<ApplicationService>();
+          OrderHelper orderHelper = OrderHelper();
+          orderHelper.scheduleId = _hour.scheduleId.toString();
+          orderHelper.selectedExperienceDetail = widget.data;
+          orderHelper.hourSelected = _hour;
+          _appService.updateOrderHelper(orderHelper);
+          //  _appService.updateScheduleId(scheduleId)
+          setState(() {});
+        },
+        child: Container(
+          child: GeneralText(finalDate,
+              style: appTheme.typographies.interFontFamily.headline6.copyWith(
+                  color: showSelectedTime
+                      ? HexColor.fromHex('#212129')
+                      : HexColor.fromHex('#f1c452'),
+                  fontSize: 14)),
+          decoration: BoxDecoration(
+              border: Border.all(color: HexColor.fromHex('#f1c452')),
               color: showSelectedTime
-                  ? HexColor.fromHex('#212129')
-                  : HexColor.fromHex('#f1c452'),
-              fontSize: 14)),
-      decoration: BoxDecoration(
-          border: Border.all(color: HexColor.fromHex('#f1c452')),
-          color: showSelectedTime
-              ? HexColor.fromHex('#f1c452')
-              : HexColor.fromHex('#2b2b33'),
-          borderRadius: BorderRadius.circular(10)),
-      padding:
-          EdgeInsetsDirectional.only(top: 8, bottom: 8, start: 16, end: 16),
-      margin: EdgeInsetsDirectional.only(bottom: 8),
-    );
+                  ? HexColor.fromHex('#f1c452')
+                  : HexColor.fromHex('#2b2b33'),
+              borderRadius: BorderRadius.circular(10)),
+          padding: const EdgeInsetsDirectional.only(
+              top: 8, bottom: 8, start: 16, end: 16),
+          margin: const EdgeInsetsDirectional.only(bottom: 8),
+        ));
   }
 
   Widget noOfPersonsField({
@@ -1905,6 +1985,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     required TextStyle valueStyle,
     required TextStyle hintStyle,
   }) {
+    nOfPersons.text = widget.data.persons;
     return GeneralTextInput(
       contentPadding:
           EdgeInsetsDirectional.only(top: 8, bottom: 8, start: 16, end: 16),
@@ -1942,6 +2023,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       onChanged: (newValue) {
         setState(() {
           notes.text = newValue;
+          _appService.state.orderHelper!.noteAdded = notes.text;
         });
       },
     );

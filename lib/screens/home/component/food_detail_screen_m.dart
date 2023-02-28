@@ -8,7 +8,6 @@ part 'food_detail_screen_m.freezed.dart';
 @freezed
 class FoodDetailScreenState extends BaseState with _$FoodDetailScreenState {
   const factory FoodDetailScreenState.loading() = Loading;
-  const factory FoodDetailScreenState.loaded(FoodMenuModel foodMenuModel,ScheduleModel scheduleModel) =
-      Loaded;
-
+  const factory FoodDetailScreenState.loaded(
+      FoodMenuModel foodMenuModel, ScheduleModel scheduleModel) = Loaded;
 }
