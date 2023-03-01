@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:chef/helpers/color_helper.dart';
 import 'package:chef/helpers/helpers.dart';
+import 'package:chef/screens/screen.dart';
 import 'package:chef/screens/user_account/reviews.dart';
 import 'package:chef/screens/user_account/user_profile.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +44,11 @@ class EditProfileScreen extends BaseView<EditProfileScreenViewModel> {
           child: Column(children: [
             Container(
               padding: EdgeInsets.only(left: 12, top: 20, bottom: 20),
-              child: const GeneralNewAppBar(
+              child: GeneralNewAppBar(callBack:(context)=> Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => HomeScreen()),
+              ),
                 rightIcon: Resources.homeIconSvg,
                 title: Strings.labelProfile,
                 titleColor: Colors.white,
@@ -65,12 +70,26 @@ class EditProfileScreen extends BaseView<EditProfileScreenViewModel> {
                       horizontal: 18.0, vertical: 12),
                   child: InkWell(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
-                        MaterialPageRoute(
-                            builder: (context) => const ReviewsScreen()),
-                      );
+                      if (accountList.elementAt(index) == Strings.labelPersonalDetails) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const UserProfile()),
+                        );
+                      } else if (accountList.elementAt(index) == Strings.labelProfile) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const UserProfile()),
+                        );
+                      } else if (accountList.elementAt(index) == Strings.labelReviews) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ReviewsScreen()),
+                        );
+                      }
+
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

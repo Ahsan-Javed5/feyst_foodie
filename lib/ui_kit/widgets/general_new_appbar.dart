@@ -9,7 +9,8 @@ class GeneralNewAppBar extends StatelessWidget {
   final String? title;
   final Color? titleColor;
   final String? rightIcon;
-  const GeneralNewAppBar({Key? key, this.title, this.titleColor, this.rightIcon})
+  final Function? callBack;
+  const GeneralNewAppBar({Key? key, this.title, this.titleColor, this.rightIcon, this.callBack})
       : super(key: key);
 
   @override
@@ -42,9 +43,12 @@ class GeneralNewAppBar extends StatelessWidget {
         ],
         if (rightIcon != null) ...[
           Spacer(),
-          SvgPicture.asset(
-            rightIcon!,
-            height: 25,
+          InkWell(
+            onTap: ()=> callBack!(context),
+            child: SvgPicture.asset(
+              rightIcon!,
+              height: 25,
+            ),
           ),
           SizedBox(
             width: 26,
