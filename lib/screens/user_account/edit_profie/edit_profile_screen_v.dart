@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:chef/helpers/color_helper.dart';
 import 'package:chef/helpers/helpers.dart';
+import 'package:chef/screens/bottom_bar/bottom_bar.dart';
 import 'package:chef/screens/screen.dart';
 import 'package:chef/screens/user_account/reviews.dart';
 import 'package:chef/screens/user_account/user_profile.dart';
@@ -47,7 +48,7 @@ class EditProfileScreen extends BaseView<EditProfileScreenViewModel> {
               child: GeneralNewAppBar(callBack:(context)=> Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => HomeScreen()),
+                    builder: (context) => const BottomBar()),
               ),
                 rightIcon: Resources.homeIconSvg,
                 title: Strings.labelProfile,
