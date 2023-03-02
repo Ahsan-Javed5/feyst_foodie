@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../base/base_view.dart';
 import '../../../helpers/color_helper.dart';
 import '../../../services/device/device_service.dart';
-import '../../food_product_experience_details/bbq_experience_details.dart';
+import '../../food_product_experience_details/food_product_details_screen_v.dart';
 import '../widget/food_details_screen.dart';
 import 'food_detail_screen_m.dart';
 import 'food_detail_screen_vm.dart';
@@ -72,7 +72,7 @@ class FoodDetailScreenView extends BaseView<FoodDetailScreenViewModel> {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => FoodProductExperienceDetails(
+              builder: (context) => FoodProductExperienceDetailsScreenView(
                     experienceData: _experienceData,
                     selectedExperienceId: _selectedExperienceId,
                     foodMenuDetail: viewModel.foodMenuData,

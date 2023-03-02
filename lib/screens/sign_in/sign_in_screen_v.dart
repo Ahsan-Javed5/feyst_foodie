@@ -23,7 +23,7 @@ class SignInScreen extends BaseView<SignInScreenViewModel> {
   Widget buildScreen(
       {required BuildContext context, required ScreenSizeData screenSizeData}) {
     final appTheme = AppTheme.of(context).theme;
-    // developer.log(' ')
+
     return Scaffold(
       backgroundColor: appTheme.colors.primaryBackground,
       body: SafeArea(

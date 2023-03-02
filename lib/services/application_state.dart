@@ -19,12 +19,15 @@ import 'package:chef/models/custom_forms/workflow_template_current_step.dart'
 
 import 'dart:developer' as developer;
 
+import '../helpers/order_helper.dart';
+
 class ApplicationState extends Equatable {
   const ApplicationState({
     this.baseUrl,
     this.userInfo,
     this.accessTokenInfo,
     this.tenantId,
+    this.orderHelper,
     this.workspaceId,
     this.projectId,
     this.customerTokenLegacy,
@@ -40,6 +43,7 @@ class ApplicationState extends Equatable {
   final SignupResponse? userInfo;
   final AccessTokenData? accessTokenInfo;
   final String? tenantId;
+  final OrderHelper? orderHelper;
   final String? workspaceId;
   final String? baseUrl;
   final String? projectId;
@@ -59,6 +63,8 @@ class ApplicationState extends Equatable {
     String? projectId,
     String? workspaceId,
     String? tenantId,
+    // String? scheduleId,
+    OrderHelper? orderHelper,
     String? customerTokenLegacy,
     Map<String, dynamic>? userFormData,
     workflow_v3.Workflow? workflow,
@@ -72,6 +78,7 @@ class ApplicationState extends Equatable {
       accessTokenInfo: accessTokenInfo ?? this.accessTokenInfo,
       baseUrl: baseUrl ?? this.baseUrl,
       tenantId: tenantId ?? this.tenantId,
+      orderHelper: orderHelper ?? this.orderHelper,
       projectId: projectId ?? this.projectId,
       customerTokenLegacy: customerTokenLegacy ?? this.customerTokenLegacy,
       userFormData: userFormData ?? this.userFormData,
@@ -89,6 +96,7 @@ class ApplicationState extends Equatable {
         userInfo,
         baseUrl,
         tenantId,
+        orderHelper,
         projectId,
         customerTokenLegacy,
         userFormData,
@@ -149,6 +157,10 @@ class ApplicationService extends Cubit<ApplicationState> {
 
   void updateTenantId(String tenantId) {
     emit(state.copyWith(tenantId: tenantId));
+  }
+
+  void updateOrderHelper(OrderHelper orderHelper) {
+    emit(state.copyWith(orderHelper: orderHelper));
   }
 
   void updateWorkspaceId(String workspaceId) {

@@ -9,7 +9,7 @@ import '../../theme/app_theme_data/app_theme_data.dart';
 import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
-import '../food_product_experience_details/bbq_experience_details.dart';
+import '../food_product_experience_details/food_product_details_screen_v.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({Key? key}) : super(key: key);
