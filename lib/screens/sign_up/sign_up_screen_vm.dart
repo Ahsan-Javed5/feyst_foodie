@@ -1,3 +1,4 @@
+// import 'package:chef/base/screen_layout_base/screen_layout_base_m.dart';
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/models/signup/profession_request.dart' as prorequest;
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,26 +32,33 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   final IStorageService _storage;
   final ApplicationService _appService;
 
+  final dropdownItems = <String>[];
+  Map<dynamic, dynamic> dropdownDetails = {};
+  int professionID = 0;
+  List<ProfessionData> _professionData = [];
+
   Future<void> loadProfessions({
     required String baseUrl,
     required BuildContext context,
   }) async {
     final url = InfininURLHelpers.getRestApiURL(baseUrl + Api.professionalList);
-    // emit(const Loading());
-    List<ProfessionData> _professionData = [];
+
     emit(Loaded(_professionData));
-    final professionDataRequest = prorequest.ProfessionRequest(
-      t: prorequest.T(),
-    ).toJson();
 
-    final response = await _network.post(
-      path: url,
-      data: professionDataRequest,
-    );
+    if (_professionData.isEmpty) {
+      final professionDataRequest = prorequest.ProfessionRequest(
+        t: prorequest.T(),
+      ).toJson();
 
-    final currentProfessionData = professionFromJson(response.body);
-    // List<ProfessionData> data = currentProfessionData.t;
-    emit(Loaded(currentProfessionData.t));
+      final response = await _network.post(
+        path: url,
+        data: professionDataRequest,
+      );
+      final currentProfessionData = professionFromJson(response.body);
+      _professionData = currentProfessionData.t;
+
+      emit(Loaded(_professionData));
+    }
   }
 
   bool isValidUrl(String url) => Uri.tryParse(url)?.hasAbsolutePath ?? false;
@@ -123,7 +131,9 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
       professionId: professionId,
     );
     if (isInputValid) {
-      loading(isBusy: true);
+      //loading(isBusy: true);
+      //emit(const Loading());
+      emit(Loaded(_professionData));
       try {
         final url =
             InfininURLHelpers.getRestApiURL(Api.baseURL + Api.foodieSignUp);
@@ -151,6 +161,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
         //   //below one is working
         //   path: 'https://run.mocky.io/v3/80289cbe-aa47-491e-9eb2-56126289c8a4',
         // );
+
         if (response != null) {
           developer.log(' Response of Signup body is ' + '${response.body}');
 
@@ -179,6 +190,9 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
         //  loading(isBusy: false);
         //   _navigation.replace(route: CustomerRoute());
       } catch (error) {
+        developer.log(' Error in ' + '${error}');
+
+        Toaster.errorToast(context: context, message: '$error');
         // emit(
         //   // state.copyWith(
         //   //   isBusy: false,

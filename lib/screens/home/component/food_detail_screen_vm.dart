@@ -5,8 +5,12 @@ import 'package:chef/models/home/food_menu_request.dart' as menurequest;
 import 'package:chef/screens/home/schedule_model.dart';
 
 import '../../../models/home/food_menu_request.dart';
+import '../../../setup.dart';
+import '../../food_product_experience_details/food_product_details_screen_v.dart';
 import '../food_details_menu_model.dart';
 import 'food_detail_screen_m.dart';
+
+import '../../../models/home/experience_list_response.dart' as experience_data;
 
 @injectable
 class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
@@ -95,4 +99,30 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
   }
 
   void loading({required bool isBusy}) => emit(const Loading());
+
+  void verifyAction(BuildContext context, String _selectedExperienceId,
+      experience_data.T _experienceData) {
+    final _appService = locateService<ApplicationService>();
+
+    var orderHelper = _appService.state.orderHelper;
+
+    if (orderHelper != null &&
+        orderHelper.scheduleId != null &&
+        orderHelper.scheduleId != '0' &&
+        orderHelper.daysGroup != null &&
+        orderHelper.daysGroup.dayOfMonth != 0) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => FoodProductExperienceDetailsScreenView(
+                  experienceData: _experienceData,
+                  selectedExperienceId: _selectedExperienceId,
+                  foodMenuDetail: foodMenuData,
+                )),
+      );
+    } else {
+      Toaster.infoToast(
+          context: context, message: 'Please select all the requisite data');
+    }
+  }
 }
