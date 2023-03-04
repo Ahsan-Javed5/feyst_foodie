@@ -65,12 +65,21 @@ class EditProfileScreen extends BaseView<EditProfileScreenViewModel> {
                       horizontal: 18.0, vertical: 12),
                   child: InkWell(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
-                        MaterialPageRoute(
-                            builder: (context) => const ReviewsScreen()),
-                      );
+                      if (accountList[index] == Strings.labelProfile) {
+                        Navigator.push(
+                          context,
+                          // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
+                          MaterialPageRoute(
+                              builder: (context) => SignUpQuestionireScreen()),
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
+                          MaterialPageRoute(
+                              builder: (context) => const ReviewsScreen()),
+                        );
+                      }
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

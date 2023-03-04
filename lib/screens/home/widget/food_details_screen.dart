@@ -117,50 +117,23 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       _appService.state.orderHelper!.daysGroup = DaysGroup(
           scheduledDate: DateTime(1900 - 12 - 12), dayOfMonth: 0, hours: []);
       // _appService.u
-    }
+    } else {
+      OrderHelper orderHelper = OrderHelper();
+      // orderHelper.selectedCategory
+      orderHelper.selectedCategory = items.first;
+      orderHelper.noteAdded = '';
+      orderHelper.scheduleId = 0.toString();
 
-    // wowFactorsList.addAll([
-    //   CustomModel(
-    //       icon: Strings.productDetailWowFactorGarden,
-    //       name: "assets/images/icons/garden.png"),
-    //   CustomModel(
-    //       icon: Strings.productDetailWowFactorFireworks,
-    //       name: "assets/images/icons/fireworks.png"),
-    //   CustomModel(
-    //       icon: Strings.productDetailWowFactorPetFriendly,
-    //       name: "assets/images/icons/pet_friendly.png"),
-    //   CustomModel(
-    //       icon: Strings.productDetailWowFactorWifi,
-    //       name: "assets/images/icons/wifi_2.png"),
-    //   CustomModel(
-    //       icon: Strings.productDetailWowFactorMusic,
-    //       name: "assets/images/icons/music.png"),
-    //   CustomModel(
-    //       icon: Strings.productDetailWowFactorParking,
-    //       name: "assets/images/icons/parking.png")
-    // ]);
+      orderHelper.daysGroup = DaysGroup(
+          scheduledDate: DateTime(1900 - 12 - 12), dayOfMonth: 0, hours: []);
+      _appService.updateOrderHelper(orderHelper);
+    }
 
     loadWowFactor();
     loadPerferences();
-    // preferencesList.addAll([
-    //   CustomModel(
-    //       icon: Strings.foodDetailPreferenceCouple,
-    //       name: "assets/images/icons/couple.png"),
-    //   CustomModel(
-    //       icon: Strings.foodDetailPreferenceFamily,
-    //       name: "assets/images/icons/family.png"),
-    //   CustomModel(
-    //       icon: Strings.foodDetailPreferenceFnf,
-    //       name: "assets/images/icons/fnf.png"),
-    // ]);
-    //
+
     super.initState();
   }
-  //
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Container();
-  // }
 
   void loadWowFactor() {
     developer.log(' Wow factors are ' + '${widget.data.experienceWowFactors}');

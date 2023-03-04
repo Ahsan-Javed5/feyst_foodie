@@ -1,6 +1,8 @@
 import 'package:chef/helpers/helpers.dart';
 
 class SignUpQuestionireScreen extends StatefulWidget {
+  const SignUpQuestionireScreen({Key? key}) : super(key: key);
+
   @override
   _SignUpQuestionireScreenState createState() =>
       _SignUpQuestionireScreenState();
@@ -13,20 +15,18 @@ class _SignUpQuestionireScreenState extends State<SignUpQuestionireScreen> {
 
     return Scaffold(
       backgroundColor: appTheme.colors.primaryBackground,
-      floatingActionButton:
-      Padding(
-        padding: const EdgeInsets.only(right: 18.0,bottom: 12),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(right: 18.0, bottom: 12),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                              const SignUpLetsStartScreen()),
-                        );
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const SignUpLetsStartScreen()),
+                );
               },
               child: SvgPicture.asset(
                 Resources.getSignInRightArrow,
@@ -307,7 +307,6 @@ class _SignUpQuestionireScreenState extends State<SignUpQuestionireScreen> {
                   const SizedBox(
                     height: 60,
                   ),
-
                   const SizedBox(
                     height: 30,
                   ),
