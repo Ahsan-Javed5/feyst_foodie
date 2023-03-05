@@ -9,7 +9,7 @@ import '../../../models/home/food_menu_request.dart';
 import '../../helpers/order_helper.dart';
 import '../../models/booking/booking_response.dart';
 import '../../setup.dart';
-import '../bottom_bar/bottom_bar.dart';
+// import '../bottom_bar/bottom_bar.dart';
 import 'food_product_details_screen_m.dart';
 
 @injectable
@@ -65,11 +65,13 @@ class FoodProductExperienceDetailsViewModel
 
     if (bookingResponse.code == 200) {
       emit(const Loaded());
-      Navigator.push(
-        context,
-        // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
-        MaterialPageRoute(builder: (context) => const BottomBar()),
-      );
+
+      _navigation.replace(route: BottomBar());
+      // Navigator.push(
+      //   context,
+      //   // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
+      //   MaterialPageRoute(builder: (context) => const BottomBar()),
+      // );
     } else {
       emit(const Loaded());
     }

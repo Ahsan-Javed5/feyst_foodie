@@ -32,123 +32,132 @@ class EditProfileScreen extends BaseView<EditProfileScreenViewModel> {
     Strings.labelLogOut,
   ];
 
+  Future<bool> onWillPop() async {
+    return false;
+  }
+
   @override
   Widget buildScreen(
       {required BuildContext context, required ScreenSizeData screenSizeData}) {
     final appTheme = AppTheme.of(context).theme;
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: HexColor.fromHex("#212129"),
-        body: Container(
-          child: Column(children: [
-            Container(
-              padding: EdgeInsets.only(left: 12, top: 20, bottom: 20),
-              child: const GeneralNewAppBar(
-                rightIcon: Resources.homeIconSvg,
-                title: Strings.labelProfile,
-                titleColor: Colors.white,
-              ),
-            ),
-            SizedBox(
-              height: 8,
-            ),
-            _Header(
-              appTheme: appTheme,
-              title: Strings.labelHeaderAccount,
-            ),
-            ListView.separated(
-              itemCount: accountList.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 18.0, vertical: 12),
-                  child: InkWell(
-                    onTap: () {
-                      if (accountList[index] == Strings.labelProfile) {
-                        Navigator.push(
-                          context,
-                          // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
-                          MaterialPageRoute(
-                              builder: (context) => SignUpQuestionireScreen()),
-                        );
-                      } else {
-                        Navigator.push(
-                          context,
-                          // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
-                          MaterialPageRoute(
-                              builder: (context) => const ReviewsScreen()),
-                        );
-                      }
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GeneralText(
-                          accountList.elementAt(index),
-                          style: appTheme.typographies.interFontFamily.headline6
-                              .copyWith(
-                                  fontSize: 15,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w400),
-                        ),
-                        SvgPicture.asset(Resources.arrowProfileSVG),
-                      ],
-                    ),
+    return WillPopScope(
+        onWillPop: () => onWillPop(),
+        child: SafeArea(
+          child: Scaffold(
+            backgroundColor: HexColor.fromHex("#212129"),
+            body: Container(
+              child: Column(children: [
+                Container(
+                  padding: EdgeInsets.only(left: 12, top: 20, bottom: 20),
+                  child: const GeneralNewAppBar(
+                    rightIcon: Resources.homeIconSvg,
+                    title: Strings.labelProfile,
+                    titleColor: Colors.white,
                   ),
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return Divider(
-                  color: Color(0xfff1c452).withOpacity(0.3),
-                );
-              },
-            ),
-            _Header(
-              appTheme: appTheme,
-              title: Strings.labelHeaderOthers,
-            ),
-            ListView.separated(
-              itemCount: othersList.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return InkWell(
-                    onTap: () {
-                      if (othersList.elementAt(index) == Strings.labelLogOut) {
-                        developer.log(' Clicked on logout ');
-                        viewModel.logout(context);
-                      }
-                    },
-                    child: Padding(
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                _Header(
+                  appTheme: appTheme,
+                  title: Strings.labelHeaderAccount,
+                ),
+                ListView.separated(
+                  itemCount: accountList.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 18.0, vertical: 12),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GeneralText(
-                            othersList.elementAt(index),
-                            style: appTheme
-                                .typographies.interFontFamily.headline6
-                                .copyWith(
-                                    fontSize: 15,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w400),
-                          ),
-                          SvgPicture.asset(Resources.arrowProfileSVG),
-                        ],
+                      child: InkWell(
+                        onTap: () {
+                          if (accountList[index] == Strings.labelProfile) {
+                            Navigator.push(
+                              context,
+                              // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      SignUpQuestionireScreen()),
+                            );
+                          } else {
+                            Navigator.push(
+                              context,
+                              // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
+                              MaterialPageRoute(
+                                  builder: (context) => const ReviewsScreen()),
+                            );
+                          }
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GeneralText(
+                              accountList.elementAt(index),
+                              style: appTheme
+                                  .typographies.interFontFamily.headline6
+                                  .copyWith(
+                                      fontSize: 15,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w400),
+                            ),
+                            SvgPicture.asset(Resources.arrowProfileSVG),
+                          ],
+                        ),
                       ),
-                    ));
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return Divider(
-                  color: Color(0xfff1c452).withOpacity(0.3),
-                );
-              },
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return Divider(
+                      color: Color(0xfff1c452).withOpacity(0.3),
+                    );
+                  },
+                ),
+                _Header(
+                  appTheme: appTheme,
+                  title: Strings.labelHeaderOthers,
+                ),
+                ListView.separated(
+                  itemCount: othersList.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                        onTap: () {
+                          if (othersList.elementAt(index) ==
+                              Strings.labelLogOut) {
+                            developer.log(' Clicked on logout ');
+                            viewModel.logout(context);
+                          }
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 18.0, vertical: 12),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GeneralText(
+                                othersList.elementAt(index),
+                                style: appTheme
+                                    .typographies.interFontFamily.headline6
+                                    .copyWith(
+                                        fontSize: 15,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w400),
+                              ),
+                              SvgPicture.asset(Resources.arrowProfileSVG),
+                            ],
+                          ),
+                        ));
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return Divider(
+                      color: Color(0xfff1c452).withOpacity(0.3),
+                    );
+                  },
+                ),
+              ]),
             ),
-          ]),
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }
 

@@ -282,10 +282,11 @@ class ApplicationService extends Cubit<ApplicationState> {
     await _storage.clear();
     if (context != null) {
       developer.log(' Sending');
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => SignInScreen()),
-      );
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => SignInScreen()),
+      // );
+      _navigation.replaceAll(route: [SignInRoute()]);
     } else {
       _navigation.replaceAll(route: [SignInRoute()]);
     }

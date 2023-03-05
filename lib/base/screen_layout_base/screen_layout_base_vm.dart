@@ -19,10 +19,6 @@ class ScreenLayoutBaseViewModel
   final IStorageService _storage;
   final WorkspaceHelper _workspaceHelper;
 
-  void logout() async {
-    _appService.logout();
-  }
-
   void fetchPreSelectedWorkspace(BuildContext context) async {
     final workspace = _workspaceHelper.fetchPreSelectedWorkspace(
       workspaceList: _appService.state.workspaceList ?? [],

@@ -11,7 +11,7 @@ import '../../models/signup/signup_response.dart';
 
 import 'package:chef/screens/sign_in/sign_in_screen_m.dart';
 
-import '../bottom_bar/bottom_bar.dart';
+// import '../bottom_bar/bottom_bar.dart';
 import '../home/home_screen_v.dart';
 
 @injectable
@@ -164,10 +164,13 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
           );
 
           developer.log(' Sign up Response is ' + signupResponse.message);
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const BottomBar()),
-          );
+
+          //    Navigator.pushReplacementNamed(context, '/BottomBar');
+          _navigation.replace(route: BottomBar());
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => const BottomBar()),
+          // );
         } else {
           Toaster.infoToast(
               context: context,

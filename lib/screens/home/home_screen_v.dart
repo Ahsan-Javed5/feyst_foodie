@@ -25,18 +25,25 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
     return BlocBuilder<HomeScreenViewModel, HomeScreenState>(
         bloc: viewModel..fetchData(context: context),
         builder: (_, state) {
-          return Scaffold(
-              backgroundColor: const Color(0xff212129),
-              body: state.when(
-                initialized: displayInitialized,
-                loading: displayLoading,
-                loaded: (experienceList) => displayLoaded(
-                  context: context,
-                  experienceList: experienceList,
-                  // foodMenuDetail: foodMenuDetail,
-                ),
-              ));
+          return WillPopScope(
+            child: Scaffold(
+                backgroundColor: const Color(0xff212129),
+                body: state.when(
+                  initialized: displayInitialized,
+                  loading: displayLoading,
+                  loaded: (experienceList) => displayLoaded(
+                    context: context,
+                    experienceList: experienceList,
+                    // foodMenuDetail: foodMenuDetail,
+                  ),
+                )),
+            onWillPop: () => onWillPop(),
+          );
         });
+  }
+
+  Future<bool> onWillPop() async {
+    return false;
   }
 
   Widget displayInitialized() {

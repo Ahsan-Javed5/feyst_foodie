@@ -11,30 +11,31 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i5;
-import 'package:flutter/material.dart' as _i6;
+import 'package:auto_route/auto_route.dart' as _i6;
+import 'package:flutter/material.dart' as _i7;
 
+import '../../screens/bottom_bar/bottom_bar.dart' as _i5;
 import '../../screens/screen.dart' as _i1;
 import '../../screens/sign_in/sign_in_screen_v.dart' as _i4;
 import '../../screens/sign_up/get_started_screen_v.dart' as _i2;
 import '../../screens/sign_up/sign_up_screen_v.dart' as _i3;
 
-class AppRouter extends _i5.RootStackRouter {
-  AppRouter([_i6.GlobalKey<_i6.NavigatorState>? navigatorKey])
+class AppRouter extends _i6.RootStackRouter {
+  AppRouter([_i7.GlobalKey<_i7.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
-  final Map<String, _i5.PageFactory> pagesMap = {
+  final Map<String, _i6.PageFactory> pagesMap = {
     SplashRoute.name: (routeData) {
       final args = routeData.argsAs<SplashRouteArgs>(
           orElse: () => const SplashRouteArgs());
-      return _i5.MaterialPageX<dynamic>(
+      return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i1.SplashScreen(key: args.key),
       );
     },
     GetStartedRoute.name: (routeData) {
-      return _i5.MaterialPageX<dynamic>(
+      return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i2.GetStartedScreen(),
       );
@@ -42,7 +43,7 @@ class AppRouter extends _i5.RootStackRouter {
     SignUpRoute.name: (routeData) {
       final args = routeData.argsAs<SignUpRouteArgs>(
           orElse: () => const SignUpRouteArgs());
-      return _i5.MaterialPageX<dynamic>(
+      return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i3.SignUpScreen(
           isVerified: args.isVerified,
@@ -52,7 +53,7 @@ class AppRouter extends _i5.RootStackRouter {
     },
     ForgotPasswordRoute.name: (routeData) {
       final args = routeData.argsAs<ForgotPasswordRouteArgs>();
-      return _i5.MaterialPageX<dynamic>(
+      return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i1.ForgotPasswordScreen(
           baseUrl: args.baseUrl,
@@ -63,36 +64,46 @@ class AppRouter extends _i5.RootStackRouter {
     SignInRoute.name: (routeData) {
       final args = routeData.argsAs<SignInRouteArgs>(
           orElse: () => const SignInRouteArgs());
-      return _i5.MaterialPageX<dynamic>(
+      return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i4.SignInScreen(key: args.key),
+      );
+    },
+    BottomBar.name: (routeData) {
+      return _i6.MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const _i5.BottomBar(),
       );
     },
   };
 
   @override
-  List<_i5.RouteConfig> get routes => [
-        _i5.RouteConfig(
+  List<_i6.RouteConfig> get routes => [
+        _i6.RouteConfig(
           SplashRoute.name,
           path: '/',
         ),
-        _i5.RouteConfig(
+        _i6.RouteConfig(
           GetStartedRoute.name,
           path: '/get_started_screen',
         ),
-        _i5.RouteConfig(
+        _i6.RouteConfig(
           SignUpRoute.name,
           path: '/signUp',
         ),
-        _i5.RouteConfig(
+        _i6.RouteConfig(
           ForgotPasswordRoute.name,
           path: '/forgotPassword',
         ),
-        _i5.RouteConfig(
+        _i6.RouteConfig(
           SignInRoute.name,
           path: '/login',
         ),
-        _i5.RouteConfig(
+        _i6.RouteConfig(
+          BottomBar.name,
+          path: '/bottomBar',
+        ),
+        _i6.RouteConfig(
           '*#redirect',
           path: '*',
           redirectTo: '/',
@@ -103,8 +114,8 @@ class AppRouter extends _i5.RootStackRouter {
 
 /// generated route for
 /// [_i1.SplashScreen]
-class SplashRoute extends _i5.PageRouteInfo<SplashRouteArgs> {
-  SplashRoute({_i6.Key? key})
+class SplashRoute extends _i6.PageRouteInfo<SplashRouteArgs> {
+  SplashRoute({_i7.Key? key})
       : super(
           SplashRoute.name,
           path: '/',
@@ -117,7 +128,7 @@ class SplashRoute extends _i5.PageRouteInfo<SplashRouteArgs> {
 class SplashRouteArgs {
   const SplashRouteArgs({this.key});
 
-  final _i6.Key? key;
+  final _i7.Key? key;
 
   @override
   String toString() {
@@ -127,7 +138,7 @@ class SplashRouteArgs {
 
 /// generated route for
 /// [_i2.GetStartedScreen]
-class GetStartedRoute extends _i5.PageRouteInfo<void> {
+class GetStartedRoute extends _i6.PageRouteInfo<void> {
   const GetStartedRoute()
       : super(
           GetStartedRoute.name,
@@ -139,10 +150,10 @@ class GetStartedRoute extends _i5.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.SignUpScreen]
-class SignUpRoute extends _i5.PageRouteInfo<SignUpRouteArgs> {
+class SignUpRoute extends _i6.PageRouteInfo<SignUpRouteArgs> {
   SignUpRoute({
     dynamic isVerified,
-    _i6.Key? key,
+    _i7.Key? key,
   }) : super(
           SignUpRoute.name,
           path: '/signUp',
@@ -163,7 +174,7 @@ class SignUpRouteArgs {
 
   final dynamic isVerified;
 
-  final _i6.Key? key;
+  final _i7.Key? key;
 
   @override
   String toString() {
@@ -173,10 +184,10 @@ class SignUpRouteArgs {
 
 /// generated route for
 /// [_i1.ForgotPasswordScreen]
-class ForgotPasswordRoute extends _i5.PageRouteInfo<ForgotPasswordRouteArgs> {
+class ForgotPasswordRoute extends _i6.PageRouteInfo<ForgotPasswordRouteArgs> {
   ForgotPasswordRoute({
     required String baseUrl,
-    _i6.Key? key,
+    _i7.Key? key,
   }) : super(
           ForgotPasswordRoute.name,
           path: '/forgotPassword',
@@ -197,7 +208,7 @@ class ForgotPasswordRouteArgs {
 
   final String baseUrl;
 
-  final _i6.Key? key;
+  final _i7.Key? key;
 
   @override
   String toString() {
@@ -207,8 +218,8 @@ class ForgotPasswordRouteArgs {
 
 /// generated route for
 /// [_i4.SignInScreen]
-class SignInRoute extends _i5.PageRouteInfo<SignInRouteArgs> {
-  SignInRoute({_i6.Key? key})
+class SignInRoute extends _i6.PageRouteInfo<SignInRouteArgs> {
+  SignInRoute({_i7.Key? key})
       : super(
           SignInRoute.name,
           path: '/login',
@@ -221,10 +232,22 @@ class SignInRoute extends _i5.PageRouteInfo<SignInRouteArgs> {
 class SignInRouteArgs {
   const SignInRouteArgs({this.key});
 
-  final _i6.Key? key;
+  final _i7.Key? key;
 
   @override
   String toString() {
     return 'SignInRouteArgs{key: $key}';
   }
+}
+
+/// generated route for
+/// [_i5.BottomBar]
+class BottomBar extends _i6.PageRouteInfo<void> {
+  const BottomBar()
+      : super(
+          BottomBar.name,
+          path: '/bottomBar',
+        );
+
+  static const String name = 'BottomBar';
 }
