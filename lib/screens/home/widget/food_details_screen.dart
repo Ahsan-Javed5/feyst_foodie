@@ -106,54 +106,34 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     items.add('Couple');
     items.add('Single');
     items.add('Family');
+    nOfPersons.text = widget.data.persons;
     // _appService.state.orderHelper = OrderHelper();
+    //  _appService.state.orderHelper = OrderHelper();
     if (_appService.state.orderHelper != null) {
       _appService.state.orderHelper!.selectedCategory = items.first;
-      _appService.state.orderHelper!.noteAdded = 'no comments';
-    }
+      _appService.state.orderHelper!.noteAdded = '';
+      _appService.state.orderHelper!.scheduleId = 0.toString();
 
-    // wowFactorsList.addAll([
-    //   CustomModel(
-    //       icon: Strings.productDetailWowFactorGarden,
-    //       name: "assets/images/icons/garden.png"),
-    //   CustomModel(
-    //       icon: Strings.productDetailWowFactorFireworks,
-    //       name: "assets/images/icons/fireworks.png"),
-    //   CustomModel(
-    //       icon: Strings.productDetailWowFactorPetFriendly,
-    //       name: "assets/images/icons/pet_friendly.png"),
-    //   CustomModel(
-    //       icon: Strings.productDetailWowFactorWifi,
-    //       name: "assets/images/icons/wifi_2.png"),
-    //   CustomModel(
-    //       icon: Strings.productDetailWowFactorMusic,
-    //       name: "assets/images/icons/music.png"),
-    //   CustomModel(
-    //       icon: Strings.productDetailWowFactorParking,
-    //       name: "assets/images/icons/parking.png")
-    // ]);
+      _appService.state.orderHelper!.daysGroup = DaysGroup(
+          scheduledDate: DateTime(1900 - 12 - 12), dayOfMonth: 0, hours: []);
+      // _appService.u
+    } else {
+      OrderHelper orderHelper = OrderHelper();
+      // orderHelper.selectedCategory
+      orderHelper.selectedCategory = items.first;
+      orderHelper.noteAdded = '';
+      orderHelper.scheduleId = 0.toString();
+
+      orderHelper.daysGroup = DaysGroup(
+          scheduledDate: DateTime(1900 - 12 - 12), dayOfMonth: 0, hours: []);
+      _appService.updateOrderHelper(orderHelper);
+    }
 
     loadWowFactor();
     loadPerferences();
-    // preferencesList.addAll([
-    //   CustomModel(
-    //       icon: Strings.foodDetailPreferenceCouple,
-    //       name: "assets/images/icons/couple.png"),
-    //   CustomModel(
-    //       icon: Strings.foodDetailPreferenceFamily,
-    //       name: "assets/images/icons/family.png"),
-    //   CustomModel(
-    //       icon: Strings.foodDetailPreferenceFnf,
-    //       name: "assets/images/icons/fnf.png"),
-    // ]);
-    //
+
     super.initState();
   }
-  //
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Container();
-  // }
 
   void loadWowFactor() {
     developer.log(' Wow factors are ' + '${widget.data.experienceWowFactors}');
@@ -501,7 +481,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               borderRadius: BorderRadius.circular(10),
               border: Border.all(color: HexColor.fromHex('#f1c452'))),
           child: ListView.builder(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: widget.foodMenuDetail.t.length,
               itemBuilder: (BuildContext context, int index) {
@@ -1133,8 +1113,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                                     BorderRadius.circular(10)),
                                             // padding: EdgeInsetsDirectional.only(
                                             //     top: 8, bottom: 8, start: 16, end: 16),
-                                            margin: EdgeInsetsDirectional.only(
-                                                bottom: 8),
+                                            margin: const EdgeInsetsDirectional
+                                                .only(bottom: 8),
                                             child: noOfPersonsField(
                                               appTheme: appTheme,
                                               valueStyle: appTheme.typographies
@@ -1323,8 +1303,6 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                             onTap: () {
                               developer.log(' Clicked on Schedule form is ' +
                                   '${widget.scheduleModel.t.daysGroups[index]}');
-                              final _appService =
-                                  locateService<ApplicationService>();
 
                               _appService.state.orderHelper!.daysGroup =
                                   widget.scheduleModel.t.daysGroups[index];
@@ -1457,7 +1435,10 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                   appTheme,
                   i.startTime.toString(),
                   i,
-                  showSelectedTime: false,
+                  showSelectedTime: _appService.state.orderHelper!.scheduleId ==
+                          i.scheduleId.toString()
+                      ? true
+                      : false,
                 ),
               // const SizedBox(
               //   width: 7,
@@ -1931,7 +1912,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     );
   }
 
-  Widget timeSelectorBox(IAppThemeData appTheme, String displayTime, Hour _hour,
+  Widget timeSelectorBoxtest(IAppThemeData appTheme, String displayTime,
       {bool showSelectedTime = false}) {
     //  developer.log('Time Display is ' +
     //      DateFormat.jm().format(
@@ -1950,16 +1931,73 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     return InkWell(
         onTap: () {
           developer.log(' Clicked on final date is ' + '${finalDate}');
+          // selectedTime = finalDate;
+          // developer.log(' Schedule Id selected is ' + '${_hour.scheduleId}');
+          // final _appService = locateService<ApplicationService>();
+          // OrderHelper orderHelper = OrderHelper();
+          // orderHelper.scheduleId = _hour.scheduleId.toString();
+          // orderHelper.selectedExperienceDetail = widget.data;
+          // orderHelper.hourSelected = _hour;
+          // _appService.updateOrderHelper(orderHelper);
+          //  _appService.updateScheduleId(scheduleId)
+          setState(() {});
+        },
+        child: Container(
+          child: GeneralText(finalDate,
+              style: appTheme.typographies.interFontFamily.headline6.copyWith(
+                  color: showSelectedTime
+                      ? HexColor.fromHex('#212129')
+                      : HexColor.fromHex('#f1c452'),
+                  fontSize: 14)),
+          decoration: BoxDecoration(
+              border: Border.all(color: HexColor.fromHex('#f1c452')),
+              color: showSelectedTime
+                  ? HexColor.fromHex('#f1c452')
+                  : HexColor.fromHex('#2b2b33'),
+              borderRadius: BorderRadius.circular(10)),
+          padding: const EdgeInsetsDirectional.only(
+              top: 8, bottom: 8, start: 16, end: 16),
+          margin: const EdgeInsetsDirectional.only(bottom: 8),
+        ));
+  }
+
+  Widget timeSelectorBox(IAppThemeData appTheme, String displayTime, Hour _hour,
+      {bool showSelectedTime = false}) {
+    //  developer.log('Time Display is ' +
+    //      DateFormat.jm().format(
+    //        DateFormat("hh:mm:ss").parse(displayTime),
+    //      ));
+    //  var _formatedTime =
+    //      DateFormat.jm().format(DateFormat("hh:mm:ss").parse(displayTime));
+    // // var _finalDate =
+    //  var data = _formatedTime.split(':');
+    //  var finalDate = '';
+    //  finalDate = data[0];
+    //  finalDate = finalDate + data[1].replaceAll('00', '');
+    var finalDate = '';
+    finalDate = InfininURLHelpers.getAmPm(displayTime);
+
+    return InkWell(
+        onTap: () {
+          developer.log(' Clicked on final date is ' + '$finalDate');
           selectedTime = finalDate;
           developer.log(' Schedule Id selected is ' + '${_hour.scheduleId}');
-          final _appService = locateService<ApplicationService>();
+          // final _appService = locateService<ApplicationService>();
           OrderHelper orderHelper = OrderHelper();
           orderHelper.scheduleId = _hour.scheduleId.toString();
           orderHelper.selectedExperienceDetail = widget.data;
           orderHelper.hourSelected = _hour;
+          orderHelper.daysGroup = DaysGroup(
+              scheduledDate: DateTime(1900 - 12 - 12),
+              dayOfMonth: 0,
+              hours: []);
+          orderHelper.numberOfPerson =
+              int.parse(widget.data.persons); //.data!.persons;
           _appService.updateOrderHelper(orderHelper);
           //  _appService.updateScheduleId(scheduleId)
-          setState(() {});
+          setState(() {
+            showSelectedTime = true;
+          });
         },
         child: Container(
           child: GeneralText(finalDate,
@@ -1985,21 +2023,27 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     required TextStyle valueStyle,
     required TextStyle hintStyle,
   }) {
-    nOfPersons.text = widget.data.persons;
     return GeneralTextInput(
-      contentPadding:
-          EdgeInsetsDirectional.only(top: 8, bottom: 8, start: 16, end: 16),
+      contentPadding: const EdgeInsetsDirectional.only(
+          top: 8, bottom: 8, start: 16, end: 16),
       controller: nOfPersons,
       hint: Strings.noOfPersonsHint,
+      inputType: InputType.digit,
       valueStyle: valueStyle,
       hintStyle: hintStyle,
       validator: (_) {
         return null;
       },
       onChanged: (newValue) {
-        setState(() {
-          nOfPersons.text = newValue;
-        });
+        if (newValue.isNotEmpty) {
+          setState(() {
+            developer.log(' New Value of Persons ' + '${newValue}');
+
+            nOfPersons.text = newValue;
+            _appService.state.orderHelper!.numberOfPerson =
+                int.parse(nOfPersons.text);
+          });
+        }
       },
     );
   }

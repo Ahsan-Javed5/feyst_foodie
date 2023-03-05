@@ -276,10 +276,12 @@ class T {
   List<DaysGroup> daysGroups;
 
   factory T.fromJson(Map<String, dynamic> json) => T(
-        experienceId: json["experienceId"],
-        chefId: json["chefId"],
-        daysGroups: List<DaysGroup>.from(
-            json["daysGroups"].map((x) => DaysGroup.fromJson(x))),
+        experienceId: json["experienceId"] ?? 0,
+        chefId: json["chefId"] ?? 0,
+        daysGroups: json["daysGroups"] != null
+            ? List<DaysGroup>.from(
+                json["daysGroups"].map((x) => DaysGroup.fromJson(x)))
+            : [],
       );
 
   Map<String, dynamic> toJson() => {

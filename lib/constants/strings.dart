@@ -345,7 +345,7 @@ abstract class Strings {
   static const productDetailPriceLabel = 'Price';
   static const productDetailPriceValue = 'Rs.5,000';
   static const productDetailPriceTotal = 'Total Price';
-  static const productDetailPriceTax = 'Tax';
+  static const productDetailPriceTax = 'Tax (17%)';
   static const productDetailPriceTaxValue = 'Rs.255';
   static const productDetailAdvancePayment = 'Advance Payment';
   static const productDetailAdvancePaymentValue = 'Rs.1,000';
@@ -400,7 +400,7 @@ abstract class Strings {
 
   static const verificationPopupTitle = "Verification\nCode";
   static const verificationPopupSubtitle =
-      'We have sent you an SMS with a code to\n number +92 345 000 0000';
+      'We have sent you an SMS with a code to\n number';
   static const verificationPopupButton = "Verify";
   static const verificationPopupResendCode = "Resend Code";
 

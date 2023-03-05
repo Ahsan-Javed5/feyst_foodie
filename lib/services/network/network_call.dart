@@ -234,17 +234,36 @@ class NetworkCall extends INetworkService {
     }
   }
 
+  // String _getErrorMessage(Response response) {
+  //   var _errorMessage = '';
+  //   final _apiFailure = ApiFailure.fromJson(
+  //     jsonDecode(response.body.toString()),
+  //   );
+  //   final _error = _apiFailure.error;
+  //   // _errorMessage = _error.detail.isNotEmpty
+  //   //     ? _error.detail.join('\n')
+  //   //     : '${_error.summary}: ${Strings.unknownError}';
+  //
+  //   _errorMessage = _error.isNotEmpty ? _error : Strings.unknownError;
+  //
+  //   return _errorMessage;
+  // }
+
   String _getErrorMessage(Response response) {
     var _errorMessage = '';
-    final _apiFailure = ApiFailure.fromJson(
-      jsonDecode(response.body.toString()),
-    );
-    final _error = _apiFailure.error;
-    // _errorMessage = _error.detail.isNotEmpty
-    //     ? _error.detail.join('\n')
-    //     : '${_error.summary}: ${Strings.unknownError}';
-
-    _errorMessage = _error.isNotEmpty ? _error : Strings.unknownError;
+    try {
+      final _apiFailure = ApiFailure.fromJson(
+        jsonDecode(response.body.toString()),
+      );
+      final _error = _apiFailure.error;
+      // _errorMessage = _error.isNotEmpty
+      //     ? _error.detail.join('\n')
+      //     : '${_error.summary}: ${Strings.unknownError}';
+      return _error;
+    } catch (e) {
+      _errorMessage =
+          jsonDecode(response.body)['message'] ?? Strings.unknownError;
+    }
 
     return _errorMessage;
   }

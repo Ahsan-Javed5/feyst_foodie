@@ -23,6 +23,7 @@ abstract class DialogHelper {
     Alignment? alignment,
     bool Function()? canDismiss,
     GeneralComponentStyle dialogType = GeneralComponentStyle.primary,
+    BuildContext? dcontext,
   }) {
     assert(
       !isDismissible || barrierLabel != null,
@@ -43,7 +44,6 @@ abstract class DialogHelper {
           },
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
-
             child: ExtoDialog(
               header: header,
               title: title,

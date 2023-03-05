@@ -4,12 +4,13 @@ import '../screens/home/schedule_model.dart';
 
 class OrderHelper {
   late String scheduleId;
-  late DaysGroup daysGroup;
+  DaysGroup daysGroup = DaysGroup(
+      scheduledDate: DateTime(1900 - 12 - 12), dayOfMonth: 0, hours: []);
   late Hour hourSelected;
   late experienceData.T selectedExperienceDetail;
-  late String noteAdded;
-  late String selectedCategory;
-  late String numberOfPerson;
+  String noteAdded = '';
+  String selectedCategory = 'Couple';
+  int numberOfPerson = 4;
 
   OrderHelper updateChecklist({
     required OrderHelper checkList,

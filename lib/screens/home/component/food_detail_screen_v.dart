@@ -14,6 +14,8 @@ import 'food_detail_screen_m.dart';
 import 'food_detail_screen_vm.dart';
 import '../../../models/home/experience_list_response.dart' as experience_data;
 
+import '../../../setup.dart';
+
 class FoodDetailScreenView extends BaseView<FoodDetailScreenViewModel> {
   FoodDetailScreenView({
     required String selectedExperienceId,
@@ -31,6 +33,7 @@ class FoodDetailScreenView extends BaseView<FoodDetailScreenViewModel> {
     required BuildContext context,
     required ScreenSizeData screenSizeData,
   }) {
+    final _appService = locateService<ApplicationService>();
     return BlocBuilder<FoodDetailScreenViewModel, FoodDetailScreenState>(
       bloc: viewModel
         ..getExperienceMenu(
@@ -42,6 +45,7 @@ class FoodDetailScreenView extends BaseView<FoodDetailScreenViewModel> {
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
             floatingActionButton: getStartedButtonTitle(context: context),
+            // : Container(),
             body: state.when(
               loading: _loading,
               loaded: (foodMenuDetail, scheduleModel) =>
@@ -69,15 +73,7 @@ class FoodDetailScreenView extends BaseView<FoodDetailScreenViewModel> {
       title: Strings.nextButtonTitle.toUpperCase(),
       styleType: ButtonStyleType.fill,
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => FoodProductExperienceDetailsScreenView(
-                    experienceData: _experienceData,
-                    selectedExperienceId: _selectedExperienceId,
-                    foodMenuDetail: viewModel.foodMenuData,
-                  )),
-        );
+        viewModel.verifyAction(context, _selectedExperienceId, _experienceData);
       },
     );
   }
