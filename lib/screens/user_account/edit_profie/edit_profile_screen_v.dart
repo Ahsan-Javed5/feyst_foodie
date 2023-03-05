@@ -34,11 +34,17 @@ class EditProfileScreen extends BaseView<EditProfileScreenViewModel> {
     Strings.labelLogOut,
   ];
 
+  Future<bool> onWillPop() async {
+    return false;
+  }
+
   @override
   Widget buildScreen(
       {required BuildContext context, required ScreenSizeData screenSizeData}) {
     final appTheme = AppTheme.of(context).theme;
-    return SafeArea(
+    return WillPopScope(
+        onWillPop: () => onWillPop(),
+        child:SafeArea(
       child: Scaffold(
         backgroundColor: HexColor.fromHex("#212129"),
         body: Container(

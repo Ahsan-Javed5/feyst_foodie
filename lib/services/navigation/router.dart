@@ -2,6 +2,7 @@ import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 
 import 'package:chef/constants/constants.dart';
+import 'package:chef/screens/bottom_bar/bottom_bar.dart';
 import 'package:chef/screens/screen.dart';
 import 'package:chef/screens/sign_in/sign_in_screen_v.dart';
 import 'package:chef/screens/sign_up/get_started_screen_v.dart';
@@ -13,6 +14,7 @@ export 'router.gr.dart';
 abstract class Routes {
   static const login = '/login';
   static const signUp = '/signUp';
+  static const bottomBar = '/bottomBar';
   static const forgotPassword = '/forgotPassword';
   static const splash = '/splash';
   static const home = '/home';
@@ -50,6 +52,10 @@ abstract class Routes {
     AutoRoute(
       page: SignInScreen,
       path: Routes.login,
+    ),
+    AutoRoute(
+      page: BottomBar,
+      path: Routes.bottomBar,
     ),
     // AutoRoute(
     //   page: HomeScreen,

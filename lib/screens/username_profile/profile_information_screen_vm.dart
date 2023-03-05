@@ -22,7 +22,6 @@ class ProfileInformationScreenViewModel
   //  //   emit(state.copyWith(user: _appService.state.userInfo?.user));
   // emit(state.copyWith(user: (_appService.state.userInfo?.t)));
   void fetchUserData() => ({});
-  void logout() async => _appService.logout();
 
   void pop() => _navigation.pop();
 }

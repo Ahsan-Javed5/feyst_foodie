@@ -146,9 +146,7 @@ class HomeScreenViewModel extends BaseViewModel<HomeScreenState> {
     // emit(Loaded(currentProfessionData));
   }
 
-  void logout() async {
-    _appService.logout();
-  }
+
 
   void navigateToProjectScreen() async {
     //_navigation.replace(route: ProjectsRoute());

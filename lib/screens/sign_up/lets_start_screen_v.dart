@@ -1,6 +1,9 @@
 import 'package:chef/helpers/helpers.dart';
 
-import '../bottom_bar/bottom_bar.dart';
+import '../../setup.dart';
+import 'dart:developer' as developer;
+//
+// import '../bottom_bar/bottom_bar.dart';
 
 class SignUpLetsStartScreen extends StatefulWidget {
   const SignUpLetsStartScreen({Key? key}) : super(key: key);
@@ -10,6 +13,8 @@ class SignUpLetsStartScreen extends StatefulWidget {
 }
 
 class _SignUpLetsStartScreenState extends State<SignUpLetsStartScreen> {
+  final _navigationService = locateService<INavigationService>();
+
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context).theme;
@@ -68,7 +73,7 @@ class _SignUpLetsStartScreenState extends State<SignUpLetsStartScreen> {
                       width: 10,
                     ),
                     Expanded(
-                       child: GeneralText(
+                      child: GeneralText(
                         Strings.letsStartScreenLabel2,
                         maxLines: 2,
                         textAlign: TextAlign.start,
@@ -180,11 +185,16 @@ class _SignUpLetsStartScreenState extends State<SignUpLetsStartScreen> {
       title: Strings.letsStartScreenBtnLabel.toUpperCase(),
       styleType: ButtonStyleType.fill,
       onTap: () {
-        Navigator.push(
-          context,
-          // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
-          MaterialPageRoute(builder: (context) => const BottomBar()),
-        );
+        developer.log(' here in lets start screen  Bar ');
+        _navigationService.navigateTo(route: BottomBar());
+        // _navigationService.replace(route: const BottomBar());
+
+        // _navigation.replace(route: BottomBar());
+        // Navigator.push(
+        //   context,
+        //   // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
+        //   MaterialPageRoute(builder: (context) => BottomBar()),
+        // );
         //    viewModel.goToForgotPasswordScreen();
       },
     );

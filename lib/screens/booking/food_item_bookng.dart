@@ -46,28 +46,34 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context).theme;
-    return Scaffold(
-      backgroundColor: HexColor.fromHex("#212129"),
-      body: Container(
-        // padding: const EdgeInsets.only(left: 22, right: 22),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-            // mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 40,
-              ),
-              Container(
-                padding: EdgeInsets.only(left: 12, top: 20, bottom: 20),
-                child: const GeneralNewAppBar(
-                  rightIcon: Resources.homeIconSvg,
-                  title: Strings.labelBookings,
-                  titleColor: Colors.white,
-                ),
-              ),
-              Expanded(child: bookingDetails(appTheme)),
-            ]),
-      ),
-    );
+    return WillPopScope(
+        onWillPop: () => onWillPop(),
+        child: Scaffold(
+          backgroundColor: HexColor.fromHex("#212129"),
+          body: Container(
+            // padding: const EdgeInsets.only(left: 22, right: 22),
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                // mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 40,
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(left: 12, top: 20, bottom: 20),
+                    child: const GeneralNewAppBar(
+                      rightIcon: Resources.homeIconSvg,
+                      title: Strings.labelBookings,
+                      titleColor: Colors.white,
+                    ),
+                  ),
+                  Expanded(child: bookingDetails(appTheme)),
+                ]),
+          ),
+        ));
+  }
+
+  Future<bool> onWillPop() async {
+    return false;
   }
 
   Widget bookingDetails(IAppThemeData appTheme) {

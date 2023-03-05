@@ -1,7 +1,10 @@
 import 'package:chef/constants/constants.dart';
+import 'package:chef/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../services/navigation/navigation_service.dart';
+import '../../setup.dart';
 import '../../theme/app_theme_widget.dart';
 import 'general_text.dart';
 
@@ -16,6 +19,7 @@ class GeneralNewAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context).theme;
+    final _navigationService = locateService<INavigationService>();
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -23,7 +27,13 @@ class GeneralNewAppBar extends StatelessWidget {
         // Image.asset(Resources.appBackIcon,height: 35,),
         InkWell(
             onTap: () {
-              Navigator.pop(context);
+              // Navigator.pop(context);
+              //_navigationService.navigateTo(route: '/home');
+
+              // _navigationService.replace(context);
+
+              // _navigationService.replace(route: BottomBar());
+              //    Navigator.p
             },
             child: SvgPicture.asset(
               Resources.appBackIconSVG,
@@ -34,11 +44,8 @@ class GeneralNewAppBar extends StatelessWidget {
           GeneralText(
             title ?? '',
             textAlign: TextAlign.center,
-            style: appTheme.typographies.interFontFamily.headline5
-                .copyWith(color: titleColor,
-            fontWeight: FontWeight.bold,
-            fontSize: 23
-            ),
+            style: appTheme.typographies.interFontFamily.headline5.copyWith(
+                color: titleColor, fontWeight: FontWeight.bold, fontSize: 23),
           ),
         ],
         if (rightIcon != null) ...[
