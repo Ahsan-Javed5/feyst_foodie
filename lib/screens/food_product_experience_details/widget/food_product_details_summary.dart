@@ -118,7 +118,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
     final appTheme = AppTheme.of(context).theme;
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: getStartedButtonTitle(appTheme: appTheme),
+      //floatingActionButton: getStartedButtonTitle(appTheme: appTheme),
       body: SingleChildScrollView(
         child: Container(
             color: HexColor.fromHex("#212129"),
@@ -984,6 +984,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
       title: Strings.productDetailButtonTitle.toUpperCase(),
       styleType: ButtonStyleType.fill,
       onTap: () {
+        //viewModel.
         // Navigator.push(
         //     context,
         //     //HomeScreen()

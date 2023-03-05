@@ -87,8 +87,8 @@ class FoodProductExperienceDetailsScreenView
 
   Widget getStartedButtonTitle({required BuildContext context}) {
     return GeneralButton.button(
-      width: 151,
-      title: Strings.nextButtonTitle.toUpperCase(),
+      width: 230,
+      title: Strings.productDetailButtonTitle.toUpperCase(),
       styleType: ButtonStyleType.fill,
       onTap: () {
         developer.log(' Ready to submit data ');
