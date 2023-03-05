@@ -66,7 +66,7 @@ class FoodProductExperienceDetailsViewModel
     if (bookingResponse.code == 200) {
       emit(const Loaded());
 
-      _navigation.replace(route: BottomBar());
+      _navigation.navigateTo(route: const BottomBar());
       // Navigator.push(
       //   context,
       //   // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
