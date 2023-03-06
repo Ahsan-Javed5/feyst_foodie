@@ -39,6 +39,6 @@ class  SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionna
     signUpQuestionsModel = signUpQuestionsModelFromJson(response.body);
     debugPrint("${response.body}");
 
-     emit(Loaded(signUpQuestionsModel));
+    response.body != "" || response.body != null ?  emit(Loaded(signUpQuestionsModel)) : emit(const Loading());
   }
 }

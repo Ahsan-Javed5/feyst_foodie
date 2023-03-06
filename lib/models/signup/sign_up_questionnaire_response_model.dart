@@ -89,8 +89,9 @@ class Answers {
   String? name;
   String? description;
   int? questionId;
+  bool? isSelected=false;
 
-  Answers({this.id, this.name, this.description, this.questionId});
+  Answers({this.id, this.name, this.description, this.questionId,this.isSelected});
 
   Answers.fromJson(Map<String, dynamic> json) {
     id = json['id'];
