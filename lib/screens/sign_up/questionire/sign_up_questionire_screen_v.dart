@@ -27,12 +27,11 @@ class SignUpQuestionireScreen extends BaseView<SignUpQuestionnaireScreenViewMode
           children: [
             InkWell(
               onTap: () {
-                viewModel.getQuestionnaireData(userId: '45');
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //       builder: (context) => const SignUpLetsStartScreen()),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const SignUpLetsStartScreen()),
+                );
               },
               child: SvgPicture.asset(
                 Resources.getSignInRightArrow,
