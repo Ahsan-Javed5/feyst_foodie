@@ -5,6 +5,7 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:chef/screens/sign_up/questionire/sign_up_questionire_screen_vm.dart';
 import 'package:flutter/material.dart' as _i10;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
@@ -25,6 +26,8 @@ import 'screens/sign_up/sign_up_screen_vm.dart' as _i14;
 import 'screens/splash/splash_screen_vm.dart' as _i15;
 import 'screens/user_account/edit_profie/edit_profile_screen_vm.dart' as _i4;
 import 'screens/username_profile/profile_information_screen_vm.dart' as _i11;
+
+import 'screens/sign_up/questionire/sign_up_questionire_screen_vm.dart' as _i26;
 import 'services/application_state.dart' as _i18;
 import 'services/renderer/field_renderer.dart' as _i6;
 import 'services/services.dart' as _i3;
@@ -140,6 +143,9 @@ Future<_i1.GetIt> $initGetIt(
         storage: get<_i3.IStorageService>(),
         appService: get<_i3.ApplicationService>(),
         network: get<_i3.INetworkService<dynamic>>(),
+      ));
+  gh.factory<SignUpQuestionnaireScreenViewModel>(
+          () => SignUpQuestionnaireScreenViewModel(network: get<_i3.INetworkService<dynamic>>(),
       ));
   return get;
 }
