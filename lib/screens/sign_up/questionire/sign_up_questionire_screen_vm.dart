@@ -5,12 +5,13 @@ import 'package:chef/models/signup/sign_up_questionnaire_request.dart' as basere
 import 'package:chef/models/signup/sign_up_questionnaire_response_model.dart';
 import 'package:chef/screens/sign_up/questionire/sign_up_questionire_screen_m.dart';
 import 'package:chef/services/network/network_service.dart';
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../constants/api.dart';
 
 @injectable
-class SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionnaireState> {
+class  SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionnaireState> {
   SignUpQuestionnaireScreenViewModel({
     required INetworkService network,
 }) : _network = network, super(const Loading());
@@ -20,7 +21,7 @@ class SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionnai
 
   late SignUpQuestionsModel signUpQuestionsModel;
 
-  Future<void> getExperienceMenu({required String userId}) async {
+  Future<void> getQuestionnaireData({required String userId}) async {
     final url =
     InfininURLHelpers.getRestApiURL(Api.baseURL + Api.singUpQuestionnaireList);
 
@@ -36,6 +37,7 @@ class SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionnai
     );
 
     signUpQuestionsModel = signUpQuestionsModelFromJson(response.body);
+    debugPrint("${response.body}");
 
      emit(Loaded(signUpQuestionsModel));
   }

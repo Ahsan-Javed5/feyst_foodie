@@ -1,5 +1,7 @@
 import 'package:chef/helpers/helpers.dart';
+import 'package:chef/screens/sign_up/questionire/sign_up_questionire_screen_m.dart';
 import 'package:chef/screens/sign_up/questionire/sign_up_questionire_screen_vm.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 
 
@@ -12,7 +14,11 @@ class SignUpQuestionireScreen extends BaseView<SignUpQuestionnaireScreenViewMode
   Widget buildScreen({required BuildContext context, required ScreenSizeData screenSizeData}) {
     final appTheme = AppTheme.of(context).theme;
 
-    return Scaffold(
+    return BlocBuilder<SignUpQuestionnaireScreenViewModel,
+        SignUpQuestionnaireState>(
+        bloc: viewModel..getQuestionnaireData(userId: '45'),
+        builder: (context, state) {
+          return Scaffold(
       backgroundColor: appTheme.colors.primaryBackground,
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(right: 18.0, bottom: 12),
@@ -21,11 +27,12 @@ class SignUpQuestionireScreen extends BaseView<SignUpQuestionnaireScreenViewMode
           children: [
             InkWell(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const SignUpLetsStartScreen()),
-                );
+                viewModel.getQuestionnaireData(userId: '45');
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //       builder: (context) => const SignUpLetsStartScreen()),
+                // );
               },
               child: SvgPicture.asset(
                 Resources.getSignInRightArrow,
@@ -300,7 +307,8 @@ class SignUpQuestionireScreen extends BaseView<SignUpQuestionnaireScreenViewMode
           ],
         ),
       ),
-    );
+          );
+  });
   }
 
   List<ChipsWidget> getChipsWigetsList(SignUpQuestionnaireScreenViewModel viewModel, IAppThemeData appTheme) {
