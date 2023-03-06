@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-SignUpQuestionsModel foodMenuModelFromJson(String str) =>
+SignUpQuestionsModel signUpQuestionsModelFromJson(String str) =>
     SignUpQuestionsModel.fromJson(json.decode(str));
 
 String signUpQuestionsModelToJson(SignUpQuestionsModel data) => json.encode(data.toJson());
