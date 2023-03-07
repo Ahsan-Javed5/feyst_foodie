@@ -28,7 +28,7 @@ class GeneralNewAppBar extends StatelessWidget {
         InkWell(
             onTap: () {
               // Navigator.pop(context);
-              //_navigationService.navigateTo(route: '/home');
+              _navigationService.navigateTo(route:const BottomBar());
 
               // _navigationService.replace(context);
 
@@ -38,7 +38,8 @@ class GeneralNewAppBar extends StatelessWidget {
             child: SvgPicture.asset(
               Resources.appBackIconSVG,
               height: 33,
-            )),
+            ),
+        ),
         if (title != null) ...[
           Spacer(),
           GeneralText(
@@ -51,7 +52,7 @@ class GeneralNewAppBar extends StatelessWidget {
         if (rightIcon != null) ...[
           Spacer(),
           InkWell(
-            onTap: ()=> callBack!(context),
+            onTap: ()=> _navigationService.navigateTo(route:const BottomBar()),
             child: SvgPicture.asset(
               rightIcon!,
               height: 25,

@@ -239,6 +239,7 @@ class _GeneralTextInputState extends State<GeneralTextInput> {
     if (widget._onEditingComplete != null) {
       //   widget._onChanged!();
     }
+    FocusManager.instance.primaryFocus?.unfocus();
   }
 
   void _validate() {

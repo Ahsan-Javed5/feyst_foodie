@@ -14,7 +14,6 @@ import '../../../theme/app_theme_data/app_theme_data.dart';
 import '../../../theme/app_theme_widget.dart';
 import '../../../ui_kit/widgets/general_new_appbar.dart';
 import '../../../ui_kit/widgets/general_text.dart';
-import '../../food_product_experience_details/food_product_details_screen_v.dart';
 
 import 'dart:developer' as developer;
 
@@ -51,11 +50,12 @@ class EditProfileScreen extends BaseView<EditProfileScreenViewModel> {
           child: Column(children: [
             Container(
               padding: EdgeInsets.only(left: 12, top: 20, bottom: 20),
-              child: GeneralNewAppBar(callBack:(context)=> Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const bb.BottomBar()),
-              ),
+              child:const GeneralNewAppBar(
+              //   callBack:(context)=> Navigator.pushReplacement(
+              //   context,
+              //   MaterialPageRoute(
+              //       builder: (context) => const bb.BottomBar()),
+              // ),
                 rightIcon: Resources.homeIconSvg,
                 title: Strings.labelProfile,
                 titleColor: Colors.white,
