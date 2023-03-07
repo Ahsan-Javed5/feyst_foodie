@@ -76,7 +76,7 @@ class _GeneralGenderState extends State<GeneralGender> {
                       },
                       child: Container(
                           height: 51,
-                          width: 110,
+                          width: 90,
                           padding: const EdgeInsets.symmetric(
                               vertical: 15, horizontal: 3),
                           decoration: BoxDecoration(
