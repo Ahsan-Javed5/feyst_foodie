@@ -412,6 +412,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                 //             phoneNumber: _mobileNumberController.text,
                 //           )),
                 // );
+
                 // displayVerificationDisplay(context);
                 displayVerificationDisplayBackup(context);
                 // testPopUp(context);
