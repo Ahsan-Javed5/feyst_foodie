@@ -29,7 +29,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
   late List<DropdownMenuItem<String>> items = [];
   final TextController _nameController = TextController();
   final TextController _mobileNumberController = TextController();
-  final TextController _ageController = TextController(text: "15");
+  final TextController _ageController = TextController(text: "");
   final TextController _genderController = TextController(text: 'male');
 
   Gender selectedGender = Gender.male;
@@ -248,6 +248,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
+          flex: 1,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -284,9 +285,6 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                   }),
             ],
           ),
-        ),
-        const SizedBox(
-          width: 5,
         ),
         Expanded(
           flex: 2,

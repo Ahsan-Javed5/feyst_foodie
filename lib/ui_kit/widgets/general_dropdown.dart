@@ -6,6 +6,9 @@ import 'package:chef/services/services.dart';
 import 'package:chef/constants/constants.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../theme/app_theme_data/app_theme_data.dart';
+import '../../theme/app_theme_widget.dart';
+
 class GeneralDropdown<T> extends StatefulWidget {
   const GeneralDropdown({
     required List<String> items,
@@ -75,6 +78,7 @@ class _GeneralDropdownState extends State<GeneralDropdown> {
 
   @override
   Widget build(BuildContext context) {
+    final appTheme = AppTheme.of(context).theme;
     return Padding(
         padding: EdgeInsets.all(widget._margin),
         child: widget._isMultiSelect
@@ -114,10 +118,19 @@ class _GeneralDropdownState extends State<GeneralDropdown> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: widget._borderColor ??
+                              const Color.fromRGBO(0, 0, 0, 0.57),
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: DropdownButton<String>(
                           isExpanded: true,
-                          dropdownColor: Colors.grey,
+                          dropdownColor: appTheme.colors.textFieldFilledColor,
+                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
                           style: widget._style,
                           value: currentChoice,
                           iconEnabledColor: widget._borderColor,
