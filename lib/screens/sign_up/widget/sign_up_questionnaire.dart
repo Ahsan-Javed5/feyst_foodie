@@ -32,7 +32,7 @@ class _SignUpQuestionnaireState extends State<SignUpQuestionnaire> {
           Container(
             height: 260,
             width: double.infinity,
-            child: Image.asset(Resources.getSignUpQuestionireBgPng),
+            child: Image.asset(Resources.getSignUpQuestionireBgPng,fit: BoxFit.fill,),
           ),
           const SizedBox(
             height: 20,
@@ -52,9 +52,6 @@ class _SignUpQuestionnaireState extends State<SignUpQuestionnaire> {
                           color: Colors.white,
                           fontSize: 24,
                           fontWeight: FontWeight.w500),
-                    ),
-                    const SizedBox(
-                      height: 27,
                     ),
                     getQuestionWigetsList(widget.signUpQuestionsModel,appTheme,context),
                     const SizedBox(
@@ -106,12 +103,13 @@ class _SignUpQuestionnaireState extends State<SignUpQuestionnaire> {
       var item = answers![index];
       return  InkWell(onTap: (){
       var currentItemSelectedStatus = item.isSelected;
-      for (var element in answers) {
-        if(element.id==item.id){
-          item.isSelected = !currentItemSelectedStatus!;
-        }else{
-          element.isSelected=false;}
-      }
+      // for (var element in answers) {
+      //   if(element.id==item.id){
+      //     item.isSelected = !currentItemSelectedStatus!;
+      //   }else{
+      //     element.isSelected=false;}
+      // }
+      item.isSelected = !currentItemSelectedStatus!;
       setState((){});
     },child: ChipsWidget(
       appTheme: appTheme,
@@ -126,12 +124,12 @@ class _SignUpQuestionnaireState extends State<SignUpQuestionnaire> {
 
   Widget getQuestionWigetsList(
       SignUpQuestionsModel model, IAppThemeData appTheme, BuildContext context) {
-    return ListView.builder(physics: ScrollPhysics(),
+    return ListView.builder(physics: const ScrollPhysics(),
       shrinkWrap: true,
       itemCount: model.t?.length,
       itemBuilder: (ctx, index) {
         var item = model.t![index];
-        return Padding(padding: const EdgeInsetsDirectional.only(top: 21,start: 16, end: 16),
+        return Padding(padding: const EdgeInsetsDirectional.only(top: 40,start: 20, end: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -175,7 +173,7 @@ class ChipsWidget extends StatelessWidget {
     required this.appTheme,
     required this.title,
     this.selected = false,
-    this.widthContainer = 160,
+    this.widthContainer = 140,
   }) : super(key: key);
 
   final IAppThemeData appTheme;
