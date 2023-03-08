@@ -63,110 +63,115 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
     final appTheme = AppTheme.of(context).theme;
     return Stack(
       children: [
-        Column(
-          children: [
-            Container(
-              height: 250,
-              width: double.infinity,
-              child: Image.asset(
-                Resources.homeScreenBG,
-                fit: BoxFit.cover,
-              ),
-            )
-          ],
-        ),
-        Positioned.fill(
-          top: 80,
-          child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            padding: EdgeInsets.only(bottom: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: EdgeInsets.only(left: 31),
-                  child: GeneralText(
-                    Strings.labelExplore,
-                    style: appTheme.typographies.interFontFamily.headline6
-                        .copyWith(
-                      fontSize: 35,
-                      // fontFamily: 'Poppins-Medium',
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
+        SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.only(bottom: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(children: [
+                Column(
+                  children: [
+                    Container(
+                      height: 250,
+                      width: double.infinity,
+                      child: Image.asset(
+                        Resources.homeScreenBG,
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  ],
+                ),
+                Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 80,
+                    ),
+                  Container(
+                    padding: EdgeInsets.only(left: 31),
+                    child: GeneralText(
+                      Strings.labelExplore,
+                      style: appTheme.typographies.interFontFamily.headline6
+                          .copyWith(
+                        fontSize: 35,
+                        // fontFamily: 'Poppins-Medium',
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                Container(
-                  padding: EdgeInsets.only(left: 31),
-                  child: GeneralText(
-                    Strings.labelFoodExperience,
-                    style: appTheme.typographies.interFontFamily.headline4
-                        .copyWith(
-                      fontSize: 29,
-                      fontFamily: 'Poppins-Medium',
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white,
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(left: 31),
+                    child: GeneralText(
+                      Strings.labelFoodExperience,
+                      style: appTheme.typographies.interFontFamily.headline4
+                          .copyWith(
+                        fontSize: 29,
+                        fontFamily: 'Poppins-Medium',
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 60,
-                ),
-                Container(
-                  height: 250,
-                  padding: EdgeInsets.only(left: 31),
-                  child: ListView.builder(
-                      itemCount: experienceList.t.length,
-                      physics: const BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return _FoodContainer(
-                          appTheme: appTheme,
-                          data: experienceList.t[index],
-                          //  foodMenuDetail: foodMenuDetail,
-                        );
-                      }),
-                ),
-                Container(
-                  padding: EdgeInsets.only(left: 31, bottom: 0),
-                  child: GeneralText(
-                    Strings.labelPopularDishes,
-                    style: appTheme.typographies.interFontFamily.headline6
-                        .copyWith(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xfff1c452),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(right: 20, left: 20, top: 4),
-                  child: GridView.builder(
-                    padding: EdgeInsets.zero,
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.61,
-                      crossAxisSpacing: 20.0,
-                      mainAxisSpacing: 20.0,
-                    ),
+                ],)
+
+              ],),
+
+              Container(
+                height: 250,
+                padding: EdgeInsets.only(left: 31),
+                child: ListView.builder(
                     itemCount: experienceList.t.length,
+                    physics: const BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
-                      return _PopularDishes(
-                          appTheme: appTheme, data: experienceList.t[index]);
-                    },
+                      return _FoodContainer(
+                        appTheme: appTheme,
+                        data: experienceList.t[index],
+                        //  foodMenuDetail: foodMenuDetail,
+                      );
+                    }),
+              ),
+              Container(
+                padding: EdgeInsets.only(left: 31, bottom: 0),
+                child: GeneralText(
+                  Strings.labelPopularDishes,
+                  style: appTheme.typographies.interFontFamily.headline6
+                      .copyWith(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xfff1c452),
                   ),
                 ),
-                // Center(child: _letsStartedButtonTitle(appTheme: appTheme)),
-                // const SizedBox(
-                //   height: 20,
-                // ),
-              ],
-            ),
+              ),
+              Container(
+                margin: EdgeInsets.only(right: 20, left: 20, top: 4),
+                child: GridView.builder(
+                  padding: EdgeInsets.zero,
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.61,
+                    crossAxisSpacing: 20.0,
+                    mainAxisSpacing: 20.0,
+                  ),
+                  itemCount: experienceList.t.length,
+                  itemBuilder: (context, index) {
+                    return _PopularDishes(
+                        appTheme: appTheme, data: experienceList.t[index]);
+                  },
+                ),
+              ),
+              // Center(child: _letsStartedButtonTitle(appTheme: appTheme)),
+              // const SizedBox(
+              //   height: 20,
+              // ),
+            ],
           ),
         )
       ],
@@ -214,8 +219,8 @@ class _PopularDishes extends StatelessWidget {
                 right: -50,
                 top: -20,
                 child: Container(
-                  height: 170,
-                  width: 170,
+                  height: 180,
+                  width: 180,
                   padding: const EdgeInsetsDirectional.only(bottom: 20),
                   decoration: const BoxDecoration(
                     image: DecorationImage(

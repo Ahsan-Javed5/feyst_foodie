@@ -242,7 +242,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                           ],
                         ),
                       const SizedBox(
-                        height: 15,
+                        height: 11,
                       ),
                       if (selectedTab == TabBars.Details)
                         detailsTabViewForm(context, appTheme),
@@ -476,7 +476,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       padding: EdgeInsetsDirectional.only(end: 12),
       child: Container(
           padding: const EdgeInsetsDirectional.only(
-              start: 9.9, end: 18.3, bottom: 93),
+              start: 9.9, end: 18.3, bottom: 44),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               border: Border.all(color: HexColor.fromHex('#f1c452'))),
@@ -507,7 +507,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                               ),
                               child: Image.asset(
                                 'assets/images/icons/food_item_sample.png',
-                                height: 50,
+                                fit: BoxFit.fill,
+                                height: 70,
+                                width: 70,
                               ),
                             ),
                           ),
@@ -516,44 +518,45 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                           ),
                           Expanded(
                             flex: 4,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    getFoodItemTitle(
-                                        appTheme: appTheme,
-                                        foodItemTitle: widget
-                                            .foodMenuDetail.t[index].dish),
-                                    widget.data.priceTypeId != 1
-                                        ? getFoodItemAmount(
-                                            appTheme: appTheme,
-                                            foodItemPrice: widget
-                                                .foodMenuDetail.t[index].price
-                                                .toString())
-                                        : Container(),
-                                  ],
-                                ),
-                                getFoodItemSubTitle(appTheme: appTheme),
-                                getFoodItemDescription(
-                                    appTheme: appTheme,
-                                    foodItemDescription: widget
-                                        .foodMenuDetail.t[index].description),
-                              ],
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.only(top: 15),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      getFoodItemTitle(
+                                          appTheme: appTheme,
+                                          foodItemTitle: widget
+                                              .foodMenuDetail.t[index].dish),
+                                      widget.data.priceTypeId != 1
+                                          ? getFoodItemAmount(
+                                              appTheme: appTheme,
+                                              foodItemPrice: widget
+                                                  .foodMenuDetail.t[index].price
+                                                  .toString())
+                                          : Container(),
+                                    ],
+                                  ),
+                                  getFoodItemSubTitle(appTheme: appTheme),
+                                  getFoodItemDescription(
+                                      appTheme: appTheme,
+                                      foodItemDescription: widget
+                                          .foodMenuDetail.t[index].description),
+                                ],
+                              ),
                             ),
                           ),
                         ],
                       ),
                       displayQuantityData(),
                       SizedBox(
-                        height: 20.5,
+                        height: 16,
                       ),
-                      SizedBox(
-                        height: 23,
-                      ),
+
                       Divider(
                         color: HexColor.fromHex('#f1c452'),
                         thickness: 1,

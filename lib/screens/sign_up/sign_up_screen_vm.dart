@@ -62,7 +62,13 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   }
 
   bool isValidUrl(String url) => Uri.tryParse(url)?.hasAbsolutePath ?? false;
-
+  void onFormValuesChange({
+    String? email,
+  }) {
+    emit(
+    state
+    );
+  }
   String updateUrl(String url) {
     if (!url.endsWith('/')) {
       url += '/';

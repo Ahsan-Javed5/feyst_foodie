@@ -230,7 +230,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             backgroundColor: appTheme.colors.textFieldFilledColor,
             inputBorder: appTheme.focusedBorder,
             valueStyle: const TextStyle(color: Colors.white),
-            hint: 'Enter Mobile Number',
+            hint: '923*********',
             hintStyle:
                 TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
             // valueStyle: valueStyle,
@@ -356,6 +356,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                   required String key,
                   required dynamic value,
                 }) {
+
                   viewModel.professionID = viewModel.dropdownDetails[value];
                 },
               )
@@ -419,7 +420,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               }
             },
             child: SvgPicture.asset(
-              Resources.getRightArrow,
+              Resources.getSignInRightArrow,
             ),
           )
         ],
@@ -1185,8 +1186,14 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             height: 22,
           ),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.pop(context);
+              displayVerificationDisplayBackup(context);
+              Toaster.infoToast(
+                  context: context, message: 'Verification Code Resent');
+            },
             child: GeneralText(
+
               Strings.verificationPopupResendCode,
               textAlign: TextAlign.center,
               style: appTheme.typographies.interFontFamily.headline4.copyWith(
