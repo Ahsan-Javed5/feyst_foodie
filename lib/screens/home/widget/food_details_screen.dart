@@ -436,6 +436,25 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             ),
           ),
         ),
+        if(selectedTab == TabBars.Schedule)
+          Positioned.fill(
+            right: 20,
+            bottom: 60,
+            child: Align(
+              alignment: Alignment.bottomRight,
+              child: FloatingActionButton(
+                elevation: 6,
+                onPressed: () {
+                  selectStartDate(context, appTheme);
+                },
+                child: Image.asset(
+                  Resources.calendarPNG,
+                  height: 23,
+                ),
+                backgroundColor: appTheme.colors.filledButtonColor,
+              ),
+            ),
+          ),
       ],
     );
     //);
@@ -1389,24 +1408,6 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                         ],
                       );
                     }),
-              ),
-              Positioned.fill(
-                right: 20,
-                bottom: 40,
-                child: Align(
-                  alignment: Alignment.bottomRight,
-                  child: FloatingActionButton(
-                    elevation: 6,
-                    onPressed: () {
-                      selectStartDate(context, appTheme);
-                    },
-                    child: Image.asset(
-                      Resources.calendarPNG,
-                      height: 23,
-                    ),
-                    backgroundColor: appTheme.colors.filledButtonColor,
-                  ),
-                ),
               ),
             ],
           );
