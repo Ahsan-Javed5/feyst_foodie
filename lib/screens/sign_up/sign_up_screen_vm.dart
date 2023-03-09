@@ -253,6 +253,10 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     return true;
   }
   bool checkAllInputAdded() {
+    var age = ageController.text;
+    if(age.isEmpty||age==null){
+      age="0";
+    }
     final isInputValid = _validateInput(
       name: nameController.text,
       mobileNumber: mobileNumberController.text,
