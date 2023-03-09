@@ -260,7 +260,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     final isInputValid = _validateInput(
       name: nameController.text,
       mobileNumber: mobileNumberController.text,
-      age: int.parse(ageController.text),
+      age: int.parse(age),
       gender: genderController.text,
       professionId: professionID,
     );
