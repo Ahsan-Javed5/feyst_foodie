@@ -52,6 +52,8 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
 
     if(viewModel.checkAllInputAdded()){
       viewModel.changeButton(true);
+    }else{
+      viewModel.changeButton(false);
     }
   }
 
@@ -204,6 +206,8 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             onChanged: (value) {
               if(viewModel.checkAllInputAdded()){
                 viewModel.changeButton(true);
+              }else{
+                viewModel.changeButton(false);
               }
               // viewModel.onFormValuesChange(
               //     fullName: _nameController.text.trim());
@@ -241,6 +245,8 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             onChanged: (newValue) {
               if(viewModel.checkAllInputAdded()){
                 viewModel.changeButton(true);
+              }else{
+                viewModel.changeButton(false);
               }
               // viewModel.onFormValuesChange(
               //     mobileNumber: _mobileNumberController.text.trim());
@@ -289,6 +295,8 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                     }
                     if(viewModel.checkAllInputAdded()){
                       viewModel.changeButton(true);
+                    }else{
+                      viewModel.changeButton(false);
                     }
                     // viewModel.onFormValuesChange(
                     //     age: int.parse(_ageController.text.trim()));
@@ -401,47 +409,52 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                   fontWeight: FontWeight.w500),
             ),
           ),
-          InkWell(
-            onTap: () {
-              //proceedVerification(context);
-              if (viewModel.verifyInput(
-                name: viewModel.nameController.text,
-                mobileNumber: viewModel.mobileNumberController.text,
-                age: int.parse(viewModel.ageController.text),
-                professionId: viewModel.professionID,
-                gender: viewModel.genderController.text,
-                context: context,
-                baseUrl: baseURLs[0],
-              )) {
-                // _showVerificationPopup(context);
-                // fireBaseAuth();
-                //  VerifyPhoneNumberScreen();
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //       builder: (context) => VerifyPhoneNumberScreen(
-                //             phoneNumber: _mobileNumberController.text,
-                //           )),
-                // );
+          ValueListenableBuilder(
+            builder: (context, value, _) {
+              return InkWell(
+                onTap: value == true? () {
+                  //proceedVerification(context);
+                  if (viewModel.verifyInput(
+                    name: viewModel.nameController.text,
+                    mobileNumber: viewModel.mobileNumberController.text,
+                    age: int.parse(viewModel.ageController.text),
+                    professionId: viewModel.professionID,
+                    gender: viewModel.genderController.text,
+                    context: context,
+                    baseUrl: baseURLs[0],
+                  )) {
+                    // _showVerificati onPopup(context);
+                    // fireBaseAuth();
+                    //  VerifyPhoneNumberScreen();
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //       builder: (context) => VerifyPhoneNumberScreen(
+                    //             phoneNumber: _mobileNumberController.text,
+                    //           )),
+                    // );
 
-                // displayVerificationDisplay(context);
-                displayVerificationDisplayBackup(context);
-                // testPopUp(context);
-              }
-            },
-            child: ValueListenableBuilder(
-             valueListenable: viewModel.buttonEnabled,
-              builder: (context, value, _){
-              return value == true?
-              SvgPicture.asset(
-                Resources.getSignInRightArrow,
-              )
-                  :
-              SvgPicture.asset(
-                Resources.getRightArrow,
+                    // displayVerificationDisplay(context);
+                    displayVerificationDisplayBackup(context);
+                    // testPopUp(context);
+                  }
+                }:null,
+                child: ValueListenableBuilder(
+                  valueListenable: viewModel.buttonEnabled,
+                  builder: (context, value, _){
+                    return value == true?
+                    SvgPicture.asset(
+                      Resources.getSignInRightArrow,
+                    )
+                        :
+                    SvgPicture.asset(
+                      Resources.getRightArrow,
+                    );
+                  },
+                ),
               );
             },
-    ),
+            valueListenable: viewModel.buttonEnabled,
           )
         ],
       ),
@@ -492,6 +505,8 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
         viewModel.genderController.text = value;
         if(viewModel.checkAllInputAdded()){
           viewModel.changeButton(true);
+        }else{
+          viewModel.changeButton(false);
         }
         developer.log(' Here Gender clicked ' + '$value');
       },
