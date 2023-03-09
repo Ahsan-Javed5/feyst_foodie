@@ -27,10 +27,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
   ];
 
   late List<DropdownMenuItem<String>> items = [];
-  final TextController _nameController = TextController();
-  final TextController _mobileNumberController = TextController();
-  final TextController _ageController = TextController(text: "");
-  final TextController _genderController = TextController(text: 'male');
+
 
   Gender selectedGender = Gender.male;
 
@@ -52,6 +49,10 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     }
     viewModel.professionID =
         viewModel.dropdownDetails[viewModel.dropdownItems[0]];
+
+    if(viewModel.checkAllInputAdded()){
+      viewModel.changeButton(true);
+    }
   }
 
   @override
@@ -191,7 +192,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
           height: 8,
         ),
         GeneralTextInput(
-            controller: _nameController,
+            controller: viewModel.nameController,
             inputType: InputType.text,
             backgroundColor: appTheme.colors.textFieldFilledColor,
             inputBorder: appTheme.focusedBorder,
@@ -201,6 +202,9 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                 TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
             // valueStyle: valueStyle,
             onChanged: (value) {
+              if(viewModel.checkAllInputAdded()){
+                viewModel.changeButton(true);
+              }
               // viewModel.onFormValuesChange(
               //     fullName: _nameController.text.trim());
             }),
@@ -225,7 +229,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
           height: 8,
         ),
         GeneralTextInput(
-            controller: _mobileNumberController,
+            controller: viewModel.mobileNumberController,
             inputType: InputType.digit,
             backgroundColor: appTheme.colors.textFieldFilledColor,
             inputBorder: appTheme.focusedBorder,
@@ -235,6 +239,9 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                 TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
             // valueStyle: valueStyle,
             onChanged: (newValue) {
+              if(viewModel.checkAllInputAdded()){
+                viewModel.changeButton(true);
+              }
               // viewModel.onFormValuesChange(
               //     mobileNumber: _mobileNumberController.text.trim());
             }),
@@ -266,7 +273,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               GeneralTextInput(
                   height: 80,
                   textFieldWidth: 80,
-                  controller: _ageController,
+                  controller: viewModel.ageController,
                   inputType: InputType.digit,
                   backgroundColor: appTheme.colors.textFieldFilledColor,
                   inputBorder: appTheme.focusedBorder,
@@ -278,7 +285,10 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                   onChanged: (newValue) {
                     if (newValue.isNotEmpty) {
                       developer.log(' Age Setup is ' + '${newValue}');
-                      _ageController.text = newValue.toString();
+                      viewModel.ageController.text = newValue.toString();
+                    }
+                    if(viewModel.checkAllInputAdded()){
+                      viewModel.changeButton(true);
                     }
                     // viewModel.onFormValuesChange(
                     //     age: int.parse(_ageController.text.trim()));
@@ -395,11 +405,11 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             onTap: () {
               //proceedVerification(context);
               if (viewModel.verifyInput(
-                name: _nameController.text,
-                mobileNumber: _mobileNumberController.text,
-                age: int.parse(_ageController.text),
+                name: viewModel.nameController.text,
+                mobileNumber: viewModel.mobileNumberController.text,
+                age: int.parse(viewModel.ageController.text),
                 professionId: viewModel.professionID,
-                gender: _genderController.text,
+                gender: viewModel.genderController.text,
                 context: context,
                 baseUrl: baseURLs[0],
               )) {
@@ -419,9 +429,19 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                 // testPopUp(context);
               }
             },
-            child: SvgPicture.asset(
-              Resources.getSignInRightArrow,
-            ),
+            child: ValueListenableBuilder(
+             valueListenable: viewModel.buttonEnabled,
+              builder: (context, value, _){
+              return value == true?
+              SvgPicture.asset(
+                Resources.getSignInRightArrow,
+              )
+                  :
+              SvgPicture.asset(
+                Resources.getRightArrow,
+              );
+            },
+    ),
           )
         ],
       ),
@@ -429,9 +449,9 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
   }
 
   Widget fireBaseAuth() {
-    developer.log(' Mobile Number is ' + '${_mobileNumberController.text}');
+    developer.log(' Mobile Number is ' + '${viewModel.mobileNumberController.text}');
     return FirebasePhoneAuthHandler(
-      phoneNumber: "+" + _mobileNumberController.text,
+      phoneNumber: "+" + viewModel.mobileNumberController.text,
       // If true, the user is signed out before the onLoginSuccess callback is fired when the OTP is verified successfully.
       signOutOnSuccessfulVerification: false,
 
@@ -452,11 +472,11 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
 
   void proceedVerification(context) {
     viewModel.saveFoodie(
-      name: _nameController.text,
-      mobileNumber: _mobileNumberController.text,
-      age: int.parse(_ageController.text),
+      name: viewModel.nameController.text,
+      mobileNumber: viewModel.mobileNumberController.text,
+      age: int.parse(viewModel.ageController.text),
       professionId: viewModel.professionID,
-      gender: _genderController.text,
+      gender: viewModel.genderController.text,
       context: context,
       baseUrl: baseURLs[0],
     );
@@ -469,7 +489,10 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
       selectedItem: gender,
       items: genderList,
       onTap: (value) {
-        _genderController.text = value;
+        viewModel.genderController.text = value;
+        if(viewModel.checkAllInputAdded()){
+          viewModel.changeButton(true);
+        }
         developer.log(' Here Gender clicked ' + '$value');
       },
     );
@@ -795,7 +818,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
         context: context,
         maxHeight: MediaQuery.of(context).size.height * 0.6,
         body: FirebasePhoneAuthHandler(
-          phoneNumber: "+" + _mobileNumberController.text,
+          phoneNumber: "+" + viewModel.mobileNumberController.text,
           signOutOnSuccessfulVerification: false,
           linkWithExistingUser: false,
           autoRetrievalTimeOutDuration: const Duration(seconds: 60),
@@ -820,11 +843,11 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               name: 'Login Success UID: ${userCredential.user?.uid}',
             );
             viewModel.saveFoodie(
-              name: _nameController.text,
-              mobileNumber: _mobileNumberController.text,
-              age: int.parse(_ageController.text),
+              name: viewModel.nameController.text,
+              mobileNumber: viewModel.mobileNumberController.text,
+              age: int.parse(viewModel.ageController.text),
               professionId: viewModel.professionID,
-              gender: _genderController.text,
+              gender: viewModel.genderController.text,
               context: context,
               baseUrl: baseURLs[0],
             );
@@ -1020,7 +1043,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
           GeneralText(
             Strings.verificationPopupSubtitle +
                 " " +
-                _mobileNumberController.text,
+                viewModel.mobileNumberController.text,
             textAlign: TextAlign.center,
             maxLines: 3,
             style: appTheme.typographies.interFontFamily.headline4.copyWith(
@@ -1118,11 +1141,11 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                   // viewModel.saveFoodie(name: name, mobileNumber: mobileNumber, age: age, gender: gender, professionId: professionId, context: context, baseUrl: baseUrl)
 
                   viewModel.saveFoodie(
-                    name: _nameController.text,
-                    mobileNumber: _mobileNumberController.text,
-                    age: int.parse(_ageController.text),
+                    name: viewModel.nameController.text,
+                    mobileNumber: viewModel.mobileNumberController.text,
+                    age: int.parse(viewModel.ageController.text),
                     professionId: viewModel.professionID,
-                    gender: _genderController.text,
+                    gender: viewModel.genderController.text,
                     context: context,
                     baseUrl: baseURLs[0],
                   );
@@ -1150,30 +1173,30 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             width: 170,
             onTap: () {
               developer
-                  .log(' Here Collected data is ' + '${_nameController.text}');
+                  .log(' Here Collected data is ' + '${viewModel.nameController.text}');
               developer.log(
-                  'Mobile Controller  ' + '${_mobileNumberController.text}');
+                  'Mobile Controller  ' + '${viewModel.mobileNumberController.text}');
 
-              developer.log(' Age Controller  ' + '${_ageController.text}');
+              developer.log(' Age Controller  ' + '${viewModel.ageController.text}');
               developer.log(' Profession ID   ' + '${viewModel.professionID}');
 
-              developer.log(' Gender selected is    ' + _genderController.text);
+              developer.log(' Gender selected is    ' + viewModel.genderController.text);
 
               if (viewModel.verifyInput(
-                name: _nameController.text,
-                mobileNumber: _mobileNumberController.text,
-                age: int.parse(_ageController.text),
+                name: viewModel.nameController.text,
+                mobileNumber: viewModel.mobileNumberController.text,
+                age: int.parse(viewModel.ageController.text),
                 professionId: viewModel.professionID,
-                gender: _genderController.text,
+                gender: viewModel.genderController.text,
                 context: context,
                 baseUrl: baseURLs[0],
               )) {
                 viewModel.saveFoodie(
-                  name: _nameController.text,
-                  mobileNumber: _mobileNumberController.text,
-                  age: int.parse(_ageController.text),
+                  name: viewModel.nameController.text,
+                  mobileNumber: viewModel.mobileNumberController.text,
+                  age: int.parse(viewModel.ageController.text),
                   professionId: viewModel.professionID,
-                  gender: _genderController.text,
+                  gender: viewModel.genderController.text,
                   context: context,
                   baseUrl: baseURLs[0],
                 );

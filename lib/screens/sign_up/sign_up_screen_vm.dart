@@ -32,10 +32,21 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   final IStorageService _storage;
   final ApplicationService _appService;
 
+   TextController nameController = TextController();
+   TextController mobileNumberController = TextController();
+   TextController ageController = TextController(text: "");
+   TextController genderController = TextController(text: 'male');
+
   final dropdownItems = <String>[];
   Map<dynamic, dynamic> dropdownDetails = {};
   int professionID = 0;
   List<ProfessionData> _professionData = [];
+  ValueNotifier<bool> buttonEnabled = ValueNotifier(false);
+
+  void changeButton(bool? value) {
+
+    buttonEnabled.value =  value??!buttonEnabled.value;
+  }
 
   Future<void> loadProfessions({
     required String baseUrl,
@@ -240,6 +251,17 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
       return false;
     }
     return true;
+  }
+  bool checkAllInputAdded() {
+    final isInputValid = _validateInput(
+      name: nameController.text,
+      mobileNumber: mobileNumberController.text,
+      age: int.parse(ageController.text),
+      gender: genderController.text,
+      professionId: professionID,
+    );
+
+    return isInputValid;
   }
 
   void loading({required bool isBusy}) => emit(const Loading());

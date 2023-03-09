@@ -1310,7 +1310,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             children: [
               Padding(
                 padding:
-                    const EdgeInsetsDirectional.only(start: 20, bottom: 50),
+                    const EdgeInsetsDirectional.only( bottom: 50),
                 child: ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
@@ -1351,17 +1351,21 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                                   HexColor.fromHex('#f1c452'),
                                               fontSize: 14,
                                               fontWeight: FontWeight.w700)),
-                                  GeneralText(item.scheduledDate.day.toString(),
-                                      style: appTheme.typographies
-                                          .interFontFamily.headline2
-                                          .copyWith(
-                                        color: HexColor.fromHex('#909094'),
-                                        fontSize: 40,
-                                      ))
+                                  SizedBox(
+                                    width: 70,
+                                    child: GeneralText(item.scheduledDate.day.toString(),
+                                        textAlign: TextAlign.center,
+                                        style: appTheme.typographies
+                                            .interFontFamily.headline2
+                                            .copyWith(
+                                          color: HexColor.fromHex('#909094'),
+                                          fontSize: 40,
+                                        )),
+                                  )
                                 ]),
-                                const SizedBox(
-                                  width: 27,
-                                ),
+                                // const SizedBox(
+                                //   width: 27,
+                                // ),
 
                                 displayScheduleTime(item.hours),
 
