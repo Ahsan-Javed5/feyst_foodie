@@ -10,7 +10,7 @@ import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/widgets/general_button.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
-import '../booking/food_item_bookng.dart';
+import '../booking/food_item_booking.dart';
 
 class FoodItemInProcessBooking extends StatefulWidget {
   const FoodItemInProcessBooking({Key? key}) : super(key: key);
@@ -186,116 +186,114 @@ class _FoodItemInProcessBookingState extends State<FoodItemInProcessBooking> {
                                 rightIcon: Resources.homeIconSvg,
                               )),
                         ),
-
-
                       ],
                     ),
                   ),
                   const SizedBox(
                     height: 33.9,
                   ),
-                  
                   Expanded(
                     child: SingleChildScrollView(
-                      child: Column(children: [
-
-                        Container(
-                          padding: EdgeInsetsDirectional.only(start: 25, end: 25),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    color: HexColor.fromHex('#f1c452'),
-                                    width: 16,
-                                    height: 1,
-                                  ),
-                                  const SizedBox(
-                                    width: 7.5,
-                                  ),
-                                  GeneralText(
-                                    Strings.productDetailAboutTitle,
-                                    style: appTheme
-                                        .typographies.interFontFamily.headline6
-                                        .copyWith(
-                                      fontSize: 20,
+                      child: Column(
+                        children: [
+                          Container(
+                            padding:
+                                EdgeInsetsDirectional.only(start: 25, end: 25),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
                                       color: HexColor.fromHex('#f1c452'),
+                                      width: 16,
+                                      height: 1,
                                     ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 23),
-                                child: GeneralText(
-                                  Strings.productDetailAboutSubTitle,
-                                  style: appTheme.typographies.interFontFamily.headline6
-                                      .copyWith(
-                                      fontSize: 14,
-                                      color: HexColor.fromHex('#ffffff'),
-                                      fontWeight: FontWeight.w400),
+                                    const SizedBox(
+                                      width: 7.5,
+                                    ),
+                                    GeneralText(
+                                      Strings.productDetailAboutTitle,
+                                      style: appTheme.typographies
+                                          .interFontFamily.headline6
+                                          .copyWith(
+                                        fontSize: 20,
+                                        color: HexColor.fromHex('#f1c452'),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 27,
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    color: HexColor.fromHex('#f1c452'),
-                                    width: 16,
-                                    height: 1,
-                                  ),
-                                  const SizedBox(
-                                    width: 7.5,
-                                  ),
-                                  GeneralText(
-                                    Strings.productDetailWowFactorTitle,
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 23),
+                                  child: GeneralText(
+                                    Strings.productDetailAboutSubTitle,
                                     style: appTheme
                                         .typographies.interFontFamily.headline6
                                         .copyWith(
-                                      fontSize: 20,
-                                      color: HexColor.fromHex('#f1c452'),
-                                    ),
+                                            fontSize: 14,
+                                            color: HexColor.fromHex('#ffffff'),
+                                            fontWeight: FontWeight.w400),
                                   ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 11.6,
-                              ),
-                              wowFactors(appTheme),
-                            ],
+                                ),
+                                const SizedBox(
+                                  height: 27,
+                                ),
+                                Row(
+                                  children: [
+                                    Container(
+                                      color: HexColor.fromHex('#f1c452'),
+                                      width: 16,
+                                      height: 1,
+                                    ),
+                                    const SizedBox(
+                                      width: 7.5,
+                                    ),
+                                    GeneralText(
+                                      Strings.productDetailWowFactorTitle,
+                                      style: appTheme.typographies
+                                          .interFontFamily.headline6
+                                          .copyWith(
+                                        fontSize: 20,
+                                        color: HexColor.fromHex('#f1c452'),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 11.6,
+                                ),
+                                wowFactors(appTheme),
+                              ],
+                            ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        foodProductDetails(appTheme),
-                        const SizedBox(
-                          height: 28,
-                        ),
-                        chefInformation(appTheme),
-                        const SizedBox(
-                          height: 47.9,
-                        ),
-                        productPriceInformation(appTheme),
-
-                        SizedBox(
-                          height: 209.1,
-                        ),
-                      ],),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          foodProductDetails(appTheme),
+                          const SizedBox(
+                            height: 28,
+                          ),
+                          chefInformation(appTheme),
+                          const SizedBox(
+                            height: 47.9,
+                          ),
+                          productPriceInformation(appTheme),
+                          SizedBox(
+                            height: 209.1,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-              
                 ],
               )),
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 20,vertical: 20),
+              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -441,9 +439,9 @@ class _FoodItemInProcessBookingState extends State<FoodItemInProcessBooking> {
                             style: appTheme
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
-                                fontSize: 12,
-                                color: HexColor.fromHex('#909094'),
-                                fontWeight: FontWeight.w400),
+                                    fontSize: 12,
+                                    color: HexColor.fromHex('#909094'),
+                                    fontWeight: FontWeight.w400),
                           ),
                         ],
                       ),
@@ -793,9 +791,9 @@ class _FoodItemInProcessBookingState extends State<FoodItemInProcessBooking> {
                         Strings.productDetailPriceValue,
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
-                            fontSize: 36,
-                            color: HexColor.fromHex('#f89f84'),
-                            fontWeight: FontWeight.w300),
+                                fontSize: 36,
+                                color: HexColor.fromHex('#f89f84'),
+                                fontWeight: FontWeight.w300),
                       ),
                       GeneralText(
                         Strings.productDetailPriceTotal,
@@ -881,7 +879,6 @@ class _FoodItemInProcessBookingState extends State<FoodItemInProcessBooking> {
                         fontSize: 15,
                         color: HexColor.fromHex('#8ea659'),
                         fontWeight: FontWeight.w800,
-
                       ),
                     ),
                   ],
@@ -1027,7 +1024,6 @@ class _FoodItemInProcessBookingState extends State<FoodItemInProcessBooking> {
       width: 159,
       title: Strings.bookingInProcessPayAdvance.toUpperCase(),
       styleType: ButtonStyleType.fill,
-
       onTap: () {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => FoodItemBooking()));
@@ -1041,10 +1037,8 @@ class _FoodItemInProcessBookingState extends State<FoodItemInProcessBooking> {
 
   Widget getPayAdvanceCash({required IAppThemeData appTheme}) {
     return GeneralButton.button(
-       width: 150,
-
+      width: 150,
       title: Strings.bookingInProcessPayCash.toUpperCase(),
-
       styleType: ButtonStyleType.fill,
       onTap: () {
         Navigator.push(context,
