@@ -5,34 +5,33 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:chef/screens/sign_up/questionire/sign_up_questionire_screen_vm.dart';
 import 'package:flutter/material.dart' as _i10;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
-import 'app.dart' as _i20;
+import 'app.dart' as _i22;
 import 'base/screen_layout_base/screen_layout_base_vm.dart' as _i12;
 import 'helpers/helpers.dart' as _i5;
-import 'helpers/workspace_helper.dart' as _i16;
-import 'screens/account_settings/account_settings_screen_vm.dart' as _i19;
-import 'screens/change_password/change_password_screen_vm.dart' as _i21;
+import 'helpers/workspace_helper.dart' as _i18;
+import 'screens/account_settings/account_settings_screen_vm.dart' as _i21;
+import 'screens/change_password/change_password_screen_vm.dart' as _i23;
 import 'screens/food_product_experience_details/food_product_details_screen_vm.dart'
     as _i8;
-import 'screens/forgot_password/forgot_password_screen_vm.dart' as _i22;
+import 'screens/forgot_password/forgot_password_screen_vm.dart' as _i24;
 import 'screens/home/component/food_detail_screen_vm.dart' as _i7;
-import 'screens/home/home_screen_vm.dart' as _i23;
+import 'screens/home/home_screen_vm.dart' as _i25;
 import 'screens/sign_in/sign_in_screen_vm.dart' as _i13;
-import 'screens/sign_up/sign_up_screen_vm.dart' as _i14;
-import 'screens/splash/splash_screen_vm.dart' as _i15;
+import 'screens/sign_up/questionire/sign_up_questionire_screen_vm.dart' as _i14;
+import 'screens/sign_up/sign_up_screen_vm.dart' as _i16;
+import 'screens/splash/splash_screen_vm.dart' as _i17;
 import 'screens/user_account/edit_profie/edit_profile_screen_vm.dart' as _i4;
 import 'screens/username_profile/profile_information_screen_vm.dart' as _i11;
-
-import 'screens/sign_up/questionire/sign_up_questionire_screen_vm.dart' as _i26;
-import 'services/application_state.dart' as _i18;
+import 'services/application_state.dart' as _i20;
+import 'services/network/network_service.dart' as _i15;
 import 'services/renderer/field_renderer.dart' as _i6;
 import 'services/services.dart' as _i3;
-import 'services/storage/storage_service.dart' as _i17;
-import 'setup.dart' as _i24;
+import 'services/storage/storage_service.dart' as _i19;
+import 'setup.dart' as _i26;
 import 'theme/theme.dart' as _i9; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
@@ -107,50 +106,50 @@ Future<_i1.GetIt> $initGetIt(
         storage: get<_i5.IStorageService>(),
         appService: get<_i5.ApplicationService>(),
       ));
-  gh.factory<_i14.SignUpScreenViewModel>(() => _i14.SignUpScreenViewModel(
+  gh.factory<_i14.SignUpQuestionnaireScreenViewModel>(() =>
+      _i14.SignUpQuestionnaireScreenViewModel(
+          network: get<_i15.INetworkService<dynamic>>()));
+  gh.factory<_i16.SignUpScreenViewModel>(() => _i16.SignUpScreenViewModel(
         navigation: get<_i5.INavigationService<dynamic>>(),
         network: get<_i5.INetworkService<dynamic>>(),
         storage: get<_i5.IStorageService>(),
         appService: get<_i5.ApplicationService>(),
       ));
-  gh.factory<_i15.SplashScreenViewModel>(() => _i15.SplashScreenViewModel(
+  gh.factory<_i17.SplashScreenViewModel>(() => _i17.SplashScreenViewModel(
         navigationService: get<_i3.INavigationService<dynamic>>(),
         storage: get<_i3.IStorageService>(),
         appService: get<_i3.ApplicationService>(),
       ));
-  gh.factory<_i16.WorkspaceHelper>(() => _i16.WorkspaceHelper(
-        storage: get<_i17.IStorageService>(),
-        appService: get<_i18.ApplicationService>(),
+  gh.factory<_i18.WorkspaceHelper>(() => _i18.WorkspaceHelper(
+        storage: get<_i19.IStorageService>(),
+        appService: get<_i20.ApplicationService>(),
       ));
-  gh.factory<_i19.AccountSettingsScreenViewModel>(
-      () => _i19.AccountSettingsScreenViewModel(
+  gh.factory<_i21.AccountSettingsScreenViewModel>(
+      () => _i21.AccountSettingsScreenViewModel(
             storage: get<_i3.IStorageService>(),
             navigation: get<_i3.INavigationService<dynamic>>(),
           ));
-  gh.singleton<_i20.App>(_i20.App(
+  gh.singleton<_i22.App>(_i22.App(
     appThemeData: get<_i9.IAppThemeData>(),
     appRouter: get<_i3.AppRouter>(),
     key: get<_i10.Key>(),
   ));
-  gh.factory<_i21.ChangePasswordScreenViewModel>(() =>
-      _i21.ChangePasswordScreenViewModel(
+  gh.factory<_i23.ChangePasswordScreenViewModel>(() =>
+      _i23.ChangePasswordScreenViewModel(
           navigation: get<_i3.INavigationService<dynamic>>()));
-  gh.factory<_i22.ForgotPasswordScreenViewModel>(() =>
-      _i22.ForgotPasswordScreenViewModel(
+  gh.factory<_i24.ForgotPasswordScreenViewModel>(() =>
+      _i24.ForgotPasswordScreenViewModel(
           navigation: get<_i3.INavigationService<dynamic>>()));
-  gh.factory<_i23.HomeScreenViewModel>(() => _i23.HomeScreenViewModel(
+  gh.factory<_i25.HomeScreenViewModel>(() => _i25.HomeScreenViewModel(
         navigation: get<_i3.INavigationService<dynamic>>(),
         storage: get<_i3.IStorageService>(),
         appService: get<_i3.ApplicationService>(),
         network: get<_i3.INetworkService<dynamic>>(),
       ));
-  gh.factory<SignUpQuestionnaireScreenViewModel>(
-          () => SignUpQuestionnaireScreenViewModel(network: get<_i3.INetworkService<dynamic>>(),
-      ));
   return get;
 }
 
-class _$RegisterModule extends _i24.RegisterModule {
+class _$RegisterModule extends _i26.RegisterModule {
   @override
   _i10.UniqueKey get key => _i10.UniqueKey();
 }

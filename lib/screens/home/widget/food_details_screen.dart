@@ -17,7 +17,7 @@ import '../../../ui_kit/widgets/general_dropdown.dart';
 import '../../../ui_kit/widgets/general_new_appbar.dart';
 import '../../../ui_kit/widgets/general_text.dart';
 import '../../../ui_kit/widgets/general_text_input.dart';
-import '../../booking/food_item_bookng.dart';
+import '../../booking/food_item_booking.dart';
 import '../../food_product_experience_details/food_product_details_screen_v.dart';
 import '../../user_account/user_profile.dart';
 import '../component/food_detail_screen_m.dart';
