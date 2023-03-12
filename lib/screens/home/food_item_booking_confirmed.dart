@@ -13,7 +13,7 @@ import '../../ui_kit/helpers/dialog_helper.dart';
 import '../../ui_kit/widgets/general_button.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
-import '../booking/food_item_bookng.dart';
+import '../booking/food_item_booking.dart';
 import '../custom_form/widgets/exto_field_option.dart';
 
 class FoodProductBookingConfirmedDetails extends StatefulWidget {

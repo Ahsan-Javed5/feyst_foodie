@@ -11,7 +11,7 @@ import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/widgets/general_button.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
-import '../booking/food_item_bookng.dart';
+import '../booking/food_item_booking.dart';
 
 class FoodProductAdvancePendingDetails extends StatefulWidget {
   const FoodProductAdvancePendingDetails({Key? key}) : super(key: key);
