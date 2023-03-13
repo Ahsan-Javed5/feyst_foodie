@@ -1,3 +1,4 @@
+import 'package:chef/models/booking/booking_list_response_model.dart';
 import 'package:chef/theme/app_theme_data/app_theme_data.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,9 @@ import 'booking_in_process_screen.dart';
 import 'food_item_advance_booking.dart';
 
 class FoodItemBooking extends StatefulWidget {
-  const FoodItemBooking({Key? key}) : super(key: key);
+  const FoodItemBooking({Key? key, this.bookingListModel}) : super(key: key);
+
+  final BookingListModel? bookingListModel;
 
   @override
   State<FoodItemBooking> createState() => _FoodItemBookingState();

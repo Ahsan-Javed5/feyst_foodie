@@ -5,6 +5,7 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:chef/screens/booking/booking_list/booking_list_screen_vm.dart';
 import 'package:flutter/material.dart' as _i10;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
@@ -108,6 +109,9 @@ Future<_i1.GetIt> $initGetIt(
       ));
   gh.factory<_i14.SignUpQuestionnaireScreenViewModel>(() =>
       _i14.SignUpQuestionnaireScreenViewModel(
+          network: get<_i15.INetworkService<dynamic>>()));
+  gh.factory<BookingListScreenViewModel>(() =>
+      BookingListScreenViewModel(
           network: get<_i15.INetworkService<dynamic>>()));
   gh.factory<_i16.SignUpScreenViewModel>(() => _i16.SignUpScreenViewModel(
         navigation: get<_i5.INavigationService<dynamic>>(),
