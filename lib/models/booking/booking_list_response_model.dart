@@ -7,7 +7,7 @@ String bookingListModelToJson(BookingListModel data) => json.encode(data.toJson(
 
 
 class BookingListModel {
-  List<T>? t;
+  List<BookingItem>? t;
   dynamic userId;
   dynamic message;
   dynamic error;
@@ -17,9 +17,9 @@ class BookingListModel {
 
   BookingListModel.fromJson(Map<String, dynamic> json) {
     if (json['t'] != null) {
-      t = <T>[];
+      t = <BookingItem>[];
       json['t'].forEach((v) {
-        t!.add(new T.fromJson(v));
+        t!.add(new BookingItem.fromJson(v));
       });
     }
     userId = json['userId'];
@@ -41,7 +41,7 @@ class BookingListModel {
   }
 }
 
-class T {
+class BookingItem {
   int? id;
   int? experienceId;
   int? foodieId;
@@ -62,7 +62,7 @@ class T {
   int? chefId;
   String? brandName;
 
-  T(
+  BookingItem(
       {this.id,
         this.experienceId,
         this.foodieId,
@@ -83,7 +83,7 @@ class T {
         this.chefId,
         this.brandName});
 
-  T.fromJson(Map<String, dynamic> json) {
+  BookingItem.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     experienceId = json['experienceId'];
     foodieId = json['foodieId'];
