@@ -1,3 +1,4 @@
+import 'package:chef/screens/booking/booking_list/booking_list_screen_v.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -25,7 +26,8 @@ class _BottomBarState extends State<BottomBar> with WidgetsBindingObserver {
   List<Widget> screens = [
     HomeScreen(),
     // UserProfile(),
-    FoodItemBooking(),
+    // FoodItemBooking(),
+    BookingListScreen(),
     // FoodDetailScreen(),
     UserProfile(),
     EditProfileScreen(),
