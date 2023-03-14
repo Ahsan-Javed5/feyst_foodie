@@ -1,5 +1,7 @@
+import 'package:chef/models/booking/booking_list_response_model.dart';
 import 'package:chef/theme/app_theme_data/app_theme_data.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../constants/resources.dart';
 import '../../constants/strings.dart';
@@ -14,19 +16,23 @@ import 'booking_in_process_screen.dart';
 import 'food_item_advance_booking.dart';
 
 class FoodItemBooking extends StatefulWidget {
-  const FoodItemBooking({Key? key}) : super(key: key);
+  const FoodItemBooking({Key? key, this.bookingListModel}) : super(key: key);
+
+  final BookingListModel? bookingListModel;
 
   @override
   State<FoodItemBooking> createState() => _FoodItemBookingState();
 }
 
 class _FoodItemBookingState extends State<FoodItemBooking> {
-  List<BookingProgress> bookingProgressStatus = [];
+  List<BookingItem> bookingProgressStatus = [];
+  List<BookingProgress> bookingProgres = [];
 
   @override
   void initState() {
-    // TODO: implement initState
-    bookingProgressStatus.addAll([
+    var list = widget.bookingListModel?.t;
+   bookingProgressStatus.addAll(list!);
+    bookingProgres.addAll([
       BookingProgress(
           bookingStatusIcon: Resources.timeLapsePNG,
           statusName: Strings.foodItemBookingApprovalPending),
@@ -75,8 +81,15 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
   Future<bool> onWillPop() async {
     return false;
   }
-
+  String getMonthName(int month) {
+    List<String> monthNames = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+    return monthNames[month - 1];
+  }
   Widget bookingDetails(IAppThemeData appTheme) {
+
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20),
       child: ListView.builder(
@@ -85,11 +98,22 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
           physics: BouncingScrollPhysics(),
           itemCount: bookingProgressStatus.length,
           itemBuilder: (BuildContext context, int index) {
+            var item = bookingProgressStatus[index];
+            final  noImage =  Resources.bookingUserPNG;
+            final imageUrl = item.preferenceIconPath;
+            DateTime date = DateTime.parse( item.scheduleScheduledDate??'');
+            String formattedDate = "${date.day} ${getMonthName(date.month)}";
+
+            String timeString = item.scheduleStartTime??'';
+            DateFormat inputFormat = DateFormat('HH:mm:ss');
+            DateTime dateTime = inputFormat.parse(timeString);
+            DateFormat outputFormat = DateFormat('hh a');
+            String formattedTime = outputFormat.format(dateTime);
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 GeneralText(
-                  Strings.foodItemBookingDate,
+                  item.scheduleScheduledDate.toString(),
                   style: appTheme.typographies.interFontFamily.headline6
                       .copyWith(
                           fontSize: 12,
@@ -136,10 +160,16 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                             children: [
                               Row(
                                 children: [
-                                  Image.asset(
-                                    Resources.bookingUserPNG,
-                                    width: 35,
-                                  ),
+                   /* (imageUrl != null) // Only use the network image if the url is not null
+                        ? Image.network(
+                      imageUrl,
+                      loadingBuilder: (context, child, loadingProgress) =>
+                      (loadingProgress == null) ? child : CircularProgressIndicator(),
+                      errorBuilder: (context, error, stackTrace) => noImage,
+                    )
+                        : noImage;*/
+                                 Image.asset(noImage),
+
                                   SizedBox(
                                     width: 7.2,
                                   ),
@@ -148,7 +178,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       GeneralText(
-                                        Strings.foodItemBookingUserName,
+                                        item.preferenceName??"",
                                         style: appTheme.typographies
                                             .interFontFamily.headline6
                                             .copyWith(
@@ -194,7 +224,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                   ),
                                 ),
                                 child: GeneralText(
-                                  Strings.foodItemBookingAmount,
+                                  Strings.rsLabel + item.totalPrice.toString(),
                                   style: appTheme
                                       .typographies.interFontFamily.headline1
                                       .copyWith(
@@ -216,7 +246,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   GeneralText(
-                                    Strings.foodItemBookingName,
+                                    item.brandName??"",
                                     style: appTheme
                                         .typographies.interFontFamily.headline1
                                         .copyWith(
@@ -225,7 +255,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                             fontWeight: FontWeight.w600),
                                   ),
                                   GeneralText(
-                                    Strings.foodItemBookingNoPersons,
+                                    item.persons! + Strings.personsLabel,
                                     style: appTheme
                                         .typographies.interFontFamily.headline1
                                         .copyWith(
@@ -240,7 +270,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   GeneralText(
-                                    Strings.foodItemBookingDateTime,
+                                    "${formattedDate??""} @ ${formattedTime}" ,
                                     style: appTheme
                                         .typographies.interFontFamily.headline1
                                         .copyWith(
@@ -249,7 +279,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                             fontWeight: FontWeight.w400),
                                   ),
                                   GeneralText(
-                                    Strings.foodItemBookingType,
+                                    item.preferenceName??"",
                                     style: appTheme
                                         .typographies.interFontFamily.headline1
                                         .copyWith(
@@ -262,7 +292,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                               SizedBox(
                                 height: 25,
                               ),
-                              progressBar(appTheme, index),
+                              progressBar(appTheme, getBookingIconData(item.bookingStatus)),
                               SizedBox(
                                 height: 23,
                               ),
@@ -270,7 +300,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   GeneralText(
-                                    bookingProgressStatus[index].statusName ??
+                                    item.bookingStatus ??
                                         "",
                                     style: appTheme
                                         .typographies.interFontFamily.headline1
@@ -303,7 +333,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
             decoration: BoxDecoration(
                 color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
             child: Image.asset(
-              bookingProgressStatus[index].bookingStatusIcon!,
+              bookingProgres[index].bookingStatusIcon!,
               width: 18.5,
               height: 18.5,
             ),
@@ -390,7 +420,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
             decoration: BoxDecoration(
                 color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
             child: Image.asset(
-              bookingProgressStatus[index].bookingStatusIcon!,
+              bookingProgres[index].bookingStatusIcon!,
               width: 18.5,
               height: 18.5,
             ),
@@ -476,7 +506,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
             decoration: BoxDecoration(
                 color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
             child: Image.asset(
-              bookingProgressStatus[index].bookingStatusIcon!,
+              bookingProgres[index].bookingStatusIcon!,
               width: 18.5,
               height: 18.5,
             ),
@@ -563,7 +593,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
             decoration: BoxDecoration(
                 color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
             child: Image.asset(
-              bookingProgressStatus[index].bookingStatusIcon!,
+              bookingProgres[index].bookingStatusIcon!,
               width: 18.5,
               height: 18.5,
             ),
@@ -645,6 +675,16 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
       //   bottomSheetType: BottomSheetType.dateFormat,
       // ),
     );
+  }
+
+  int getBookingIconData(String? bookingStatus) {
+    var index = 0;
+    for(int i = 0; i< bookingProgres.length;i++){
+      if(bookingStatus==bookingProgres[i].statusName){
+        index = i;
+      }
+    }
+    return index;
   }
 }
 
