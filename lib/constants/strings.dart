@@ -423,6 +423,8 @@ abstract class Strings {
   static const foodItemBookingConfirmedCancelOrderButton = 'Cancel Order';
   static const foodItemAdvancePaymentValue = 'Rs. -1,000';
   static const bookingConfirmedDetailsLabel = 'Details';
+  static const personsLabel = ' Persons';
+  static const rsLabel = 'RS. ';
 
   static const popularFoodDetailAppBarTitle = 'Sindhi Biryani';
   static const foodDetailPreferences = 'Preferences';

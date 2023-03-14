@@ -1,6 +1,7 @@
 import 'package:chef/models/booking/booking_list_response_model.dart';
 import 'package:chef/theme/app_theme_data/app_theme_data.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../constants/resources.dart';
 import '../../constants/strings.dart';
@@ -80,8 +81,15 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
   Future<bool> onWillPop() async {
     return false;
   }
-
+  String getMonthName(int month) {
+    List<String> monthNames = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+    return monthNames[month - 1];
+  }
   Widget bookingDetails(IAppThemeData appTheme) {
+
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20),
       child: ListView.builder(
@@ -93,6 +101,14 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
             var item = bookingProgressStatus[index];
             final  noImage =  Resources.bookingUserPNG;
             final imageUrl = item.preferenceIconPath;
+            DateTime date = DateTime.parse( item.scheduleScheduledDate??'');
+            String formattedDate = "${date.day} ${getMonthName(date.month)}";
+
+            String timeString = item.scheduleStartTime??'';
+            DateFormat inputFormat = DateFormat('HH:mm:ss');
+            DateTime dateTime = inputFormat.parse(timeString);
+            DateFormat outputFormat = DateFormat('hh a');
+            String formattedTime = outputFormat.format(dateTime);
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -208,7 +224,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                   ),
                                 ),
                                 child: GeneralText(
-                                  item.totalPrice.toString(),
+                                  Strings.rsLabel + item.totalPrice.toString(),
                                   style: appTheme
                                       .typographies.interFontFamily.headline1
                                       .copyWith(
@@ -239,7 +255,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                             fontWeight: FontWeight.w600),
                                   ),
                                   GeneralText(
-                                    item.persons!,
+                                    item.persons! + Strings.personsLabel,
                                     style: appTheme
                                         .typographies.interFontFamily.headline1
                                         .copyWith(
@@ -254,7 +270,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   GeneralText(
-                                    "${item.scheduleScheduledDate??""} ${item.scheduleStartTime}" ,
+                                    "${formattedDate??""} @ ${formattedTime}" ,
                                     style: appTheme
                                         .typographies.interFontFamily.headline1
                                         .copyWith(
