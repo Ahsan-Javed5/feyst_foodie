@@ -9,6 +9,7 @@ import '../../../constants/strings.dart';
 import '../../../helpers/color_helper.dart';
 import '../../../helpers/order_helper.dart';
 import '../../../models/home/experience_list_response.dart';
+import '../../../models/perferences/perference_response.dart';
 import '../../../setup.dart';
 import '../../../theme/app_theme_data/app_theme_data.dart';
 import '../../../theme/app_theme_widget.dart';
@@ -31,15 +32,18 @@ import 'dart:developer' as developer;
 enum TabBars { Details, Menu, Schedule }
 
 class FoodDetailScreen extends StatefulWidget {
-  const FoodDetailScreen(
-      {Key? key,
-      required this.data,
-      required this.foodMenuDetail,
-      required this.scheduleModel})
-      : super(key: key);
+  const FoodDetailScreen({
+    Key? key,
+    required this.data,
+    required this.foodMenuDetail,
+    required this.scheduleModel,
+
+    ///required this.preferences,
+  }) : super(key: key);
   final experience_data.T data;
   final FoodMenuModel foodMenuDetail;
   final ScheduleModel scheduleModel;
+  //final PerferenceResponse preferences;
 
   @override
   _FoodDetailScreenState createState() => _FoodDetailScreenState();
@@ -106,6 +110,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     items.add('Couple');
     items.add('Single');
     items.add('Family');
+
+    //widget.preferences.t
     nOfPersons.text = widget.data.persons;
     // _appService.state.orderHelper = OrderHelper();
     //  _appService.state.orderHelper = OrderHelper();
@@ -436,7 +442,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             ),
           ),
         ),
-        if(selectedTab == TabBars.Schedule)
+        if (selectedTab == TabBars.Schedule)
           Positioned.fill(
             right: 20,
             bottom: 60,
@@ -575,7 +581,6 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                       SizedBox(
                         height: 16,
                       ),
-
                       Divider(
                         color: HexColor.fromHex('#f1c452'),
                         thickness: 1,
@@ -1309,14 +1314,13 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
         : Stack(
             children: [
               Padding(
-                padding:
-                    const EdgeInsetsDirectional.only( bottom: 50),
+                padding: const EdgeInsetsDirectional.only(bottom: 50),
                 child: ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: widget.scheduleModel.t.daysGroups?.length ?? 0,
                     itemBuilder: (BuildContext context, int index) {
-                      var item = widget.scheduleModel.t.daysGroups[index];
+                      var item = widget.scheduleModel.t.daysGroups![index];
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -1324,10 +1328,10 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                           InkWell(
                             onTap: () {
                               developer.log(' Clicked on Schedule form is ' +
-                                  '${widget.scheduleModel.t.daysGroups[index]}');
+                                  '${widget.scheduleModel.t.daysGroups![index]}');
 
                               _appService.state.orderHelper!.daysGroup =
-                                  widget.scheduleModel.t.daysGroups[index];
+                                  widget.scheduleModel.t.daysGroups![index];
 
                               selectedDay = InfininURLHelpers.dayOfMonth(
                                   item.scheduledDate);
@@ -1353,7 +1357,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                               fontWeight: FontWeight.w700)),
                                   SizedBox(
                                     width: 70,
-                                    child: GeneralText(item.scheduledDate.day.toString(),
+                                    child: GeneralText(
+                                        item.scheduledDate.day.toString(),
                                         textAlign: TextAlign.center,
                                         style: appTheme.typographies
                                             .interFontFamily.headline2

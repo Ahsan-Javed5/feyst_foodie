@@ -92,7 +92,7 @@ class FoodProductExperienceDetailsScreenView
       styleType: ButtonStyleType.fill,
       onTap: () {
         developer.log(' Ready to submit data ');
-        viewModel.submitBooking(context);
+        viewModel.submitBooking(context, _experienceData);
         // Navigator.push(
         //   context,
         //   MaterialPageRoute(

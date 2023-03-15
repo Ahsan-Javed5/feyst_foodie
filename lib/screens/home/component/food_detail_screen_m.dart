@@ -3,6 +3,8 @@ import 'package:chef/screens/home/schedule_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'package:chef/base/base.dart';
+
+import '../../../models/perferences/perference_response.dart';
 part 'food_detail_screen_m.freezed.dart';
 
 @freezed

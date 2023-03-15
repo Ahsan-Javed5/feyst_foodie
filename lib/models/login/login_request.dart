@@ -1,26 +1,28 @@
+import 'package:chef/models/general_model.dart';
+
 class LoginRequest {
   LoginRequest({
     required this.t,
   });
 
-  T t;
+  DataRequest t;
 
   factory LoginRequest.fromJson(Map<String, dynamic> json) => LoginRequest(
-        t: T.fromJson(json["t"]),
+        t: json["t"] != null ? DataRequest.fromJson(json["t"]) : DataRequest(),
       );
 
   Map<String, dynamic> toJson() => {
-        "t": t.toJson(),
+        "t": t != null ? t.toJson() : t,
       };
 }
 
-class T {
-  T({
-    required this.mobileNo,
+class DataRequest {
+  DataRequest({
+    this.mobileNo,
   });
-  String mobileNo;
+  String? mobileNo;
 
-  factory T.fromJson(Map<String, dynamic> json) => T(
+  factory DataRequest.fromJson(Map<String, dynamic> json) => DataRequest(
         mobileNo: json["mobileNumber"],
       );
 

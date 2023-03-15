@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:chef/models/general_model.dart';
 
 BookingResponse bookingResponseFromJson(String str) =>
     BookingResponse.fromJson(json.decode(str));
@@ -36,37 +37,5 @@ class BookingResponse {
         "message": message,
         "error": error,
         "code": code,
-      };
-}
-
-class T {
-  T({
-    required this.id,
-    required this.experienceId,
-    required this.foodieId,
-    required this.comments,
-    required this.totalPrice,
-  });
-
-  int id;
-  int experienceId;
-  int foodieId;
-  String comments;
-  int totalPrice;
-
-  factory T.fromJson(Map<String, dynamic> json) => T(
-        id: json["id"],
-        experienceId: json["experienceId"],
-        foodieId: json["foodieId"],
-        comments: json["comments"],
-        totalPrice: json["totalPrice"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "experienceId": experienceId,
-        "foodieId": foodieId,
-        "comments": comments,
-        "totalPrice": totalPrice,
       };
 }

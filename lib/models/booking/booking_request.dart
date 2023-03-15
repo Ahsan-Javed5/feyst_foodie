@@ -28,6 +28,8 @@ class T {
     required this.foodieId,
     required this.totalPrice,
     required this.scheduleId,
+    required this.persons,
+    required this.preferenceId,
   });
 
   String comments;
@@ -35,6 +37,8 @@ class T {
   int foodieId;
   int totalPrice;
   int scheduleId;
+  String persons;
+  int preferenceId;
 
   factory T.fromJson(Map<String, dynamic> json) => T(
         comments: json["comments"],
@@ -42,6 +46,8 @@ class T {
         foodieId: json["foodieId"],
         totalPrice: json["totalPrice"],
         scheduleId: json["scheduleId"],
+        persons: json["persons"],
+        preferenceId: json["preferenceId"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -50,5 +56,7 @@ class T {
         "foodieId": foodieId,
         "totalPrice": totalPrice,
         "scheduleId": scheduleId,
+        "persons": persons,
+        "preferenceId": preferenceId,
       };
 }

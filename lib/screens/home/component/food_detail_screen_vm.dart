@@ -5,6 +5,8 @@ import 'package:chef/models/home/food_menu_request.dart' as menurequest;
 import 'package:chef/screens/home/schedule_model.dart';
 
 import '../../../models/home/food_menu_request.dart';
+import '../../../models/perferences/perference_response.dart';
+import '../../../models/perferences/perferences_request.dart';
 import '../../../setup.dart';
 import '../../food_product_experience_details/food_product_details_screen_v.dart';
 import '../food_details_menu_model.dart';
@@ -94,6 +96,38 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
     debugPrint("schedule response\n" + response.body.toString());
 
     final scheduleData = scheduleModelFromJson(response.body);
+    emit(Loaded(foodMenuModel, scheduleData));
+    // loadPreference(foodMenuModel: foodMenuModel, scheduleData: scheduleData);
+  }
+
+  void loadPreference({
+    required FoodMenuModel foodMenuModel,
+    required ScheduleModel scheduleData,
+  }) async {
+    final url =
+        InfininURLHelpers.getRestApiURL(Api.baseURL + Api.preferenceAPI);
+
+    // T t = loginrequest.T(
+    //   mobileNo: mobileNumber,
+    // );
+
+    final requestPeference = PerferencesRequest(
+      t: DataRequest(),
+    ).toJson();
+
+    final _header = <String, String>{
+      Api.headerAcceptKey: Api.headerAcceptTypeValue
+    };
+
+    // final questionsDataRequest = questionirerequest.QuestionireRequest(
+    //   t: questionirerequest.T(category: "CHEF_PROFILE"),
+    // ).toJson();
+    final response = await _network.post(
+      path: url,
+      data: requestPeference,
+    );
+
+    final _preferenceResponse = perferenceResponseFromJson(response.body);
 
     emit(Loaded(foodMenuModel, scheduleData));
   }

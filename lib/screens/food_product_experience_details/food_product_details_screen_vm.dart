@@ -8,9 +8,14 @@ import 'package:flutter_html/flutter_html.dart';
 import '../../../models/home/food_menu_request.dart';
 import '../../helpers/order_helper.dart';
 import '../../models/booking/booking_response.dart';
+import '../../models/perferences/perferences_request.dart';
 import '../../setup.dart';
 // import '../bottom_bar/bottom_bar.dart';
 import 'food_product_details_screen_m.dart';
+import 'package:chef/models/general_model.dart';
+
+import 'package:chef/models/perferences/perference_response.dart';
+import '../../../models/home/experience_list_response.dart' as experience_data;
 
 @injectable
 class FoodProductExperienceDetailsViewModel
@@ -36,7 +41,8 @@ class FoodProductExperienceDetailsViewModel
     emit(Loaded());
   }
 
-  Future<void> submitBooking(BuildContext context) async {
+  Future<void> submitBooking(
+      BuildContext context, experience_data.T experienceData) async {
     final url =
         InfininURLHelpers.getRestApiURL(Api.baseURL + Api.experienceBooking);
     // emit(const Loading());
@@ -49,9 +55,11 @@ class FoodProductExperienceDetailsViewModel
       t: booking.T(
         comments: orderHelper.noteAdded,
         experienceId: orderHelper.selectedExperienceDetail.id,
-        foodieId: _appService.state.userInfo!.t.id,
+        foodieId: (_appService.state.userInfo!.t.id),
         totalPrice: orderHelper.selectedExperienceDetail.price,
         scheduleId: int.parse(orderHelper.scheduleId),
+        persons: orderHelper.numberOfPerson.toString(),
+        preferenceId: experienceData.preferenceId,
       ),
     ).toJson();
 

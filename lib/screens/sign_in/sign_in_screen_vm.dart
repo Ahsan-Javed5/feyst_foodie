@@ -13,6 +13,7 @@ import 'package:chef/screens/sign_in/sign_in_screen_m.dart';
 
 // import '../bottom_bar/bottom_bar.dart';
 import '../home/home_screen_v.dart';
+import 'package:chef/models/general_model.dart';
 
 @injectable
 class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
@@ -132,11 +133,11 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
       try {
         final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.loginAPI);
 
-        loginrequest.T t = loginrequest.T(
+        DataRequest t = DataRequest(
           mobileNo: mobileNumber,
         );
 
-        final loginCredentials = loginrequest.LoginRequest(
+        final loginCredentials = LoginRequest(
           t: t,
         ).toJson();
 
@@ -146,6 +147,7 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
 
         final response = await _network.post(
           path: url,
+          //   data: {'mobileNo': '$mobileNumber'},
           data: loginCredentials,
           header: _header,
           //   accessToken: false,

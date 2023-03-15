@@ -31,6 +31,7 @@ abstract class Api {
   static const client = 'client/';
   static const rest = 'rest/';
   static const baseURL = 'http://18.202.117.137:8080/feyst-service/';
+  static const preferenceAPI = 'preference/list';
   static const devBaseURL = 'https://abc2.com/';
   static const dprBaseURL = 'https://abc.com/';
 

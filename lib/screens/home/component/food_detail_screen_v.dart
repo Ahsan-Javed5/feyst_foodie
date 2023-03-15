@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../base/base_view.dart';
 import '../../../helpers/color_helper.dart';
+import '../../../models/perferences/perference_response.dart';
 import '../../../services/device/device_service.dart';
 import '../../food_product_experience_details/food_product_details_screen_v.dart';
 import '../widget/food_details_screen.dart';
@@ -64,6 +65,7 @@ class FoodDetailScreenView extends BaseView<FoodDetailScreenViewModel> {
       foodMenuDetail: foodMenuDetail,
       data: _experienceData,
       scheduleModel: scheduleModel,
+      // preferences:preferences,
     );
   }
 
