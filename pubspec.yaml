@@ -57,7 +57,7 @@ dependencies:
   open_settings: 2.0.2
   package_info_plus: 1.4.2
   permission_handler: 9.2.0
-  pinput: 2.2.16
+  pinput: 2.2.31
   scan: 1.6.0
   shared_preferences: 2.0.8
   pin_code_fields: ^7.4.0

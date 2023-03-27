@@ -146,8 +146,6 @@ class HomeScreenViewModel extends BaseViewModel<HomeScreenState> {
     // emit(Loaded(currentProfessionData));
   }
 
-
-
   void navigateToProjectScreen() async {
     //_navigation.replace(route: ProjectsRoute());
   }
@@ -162,7 +160,7 @@ class HomeScreenViewModel extends BaseViewModel<HomeScreenState> {
 
   void navigateToModulesScreen() async {
     _appService.updateSearchDisplay();
-    _appService.updateSelectedNavId(id: NavigationDrawer.module);
+    _appService.updateSelectedNavId(id: NavDrawerItem.module);
     //  _navigation.replace(route: ModulesRoute());
   }
 

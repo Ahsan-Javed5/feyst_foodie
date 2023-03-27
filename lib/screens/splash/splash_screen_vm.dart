@@ -52,13 +52,13 @@ class SplashScreenViewModel extends BaseViewModel<SplashScreenState> {
           final projectId = _storage.readString(key: PreferencesKeys.projectId);
           if (projectId.isNotEmpty) {
             _appService.updateSearchDisplay(isSearchVisible: false);
-            _appService.updateSelectedNavId(id: NavigationDrawer.home);
+            _appService.updateSelectedNavId(id: NavDrawerItem.home);
             //  _navigationService.replace(route: HomeRoute());
           } else {
-            _appService.updateSelectedNavId(id: NavigationDrawer.projects);
+            _appService.updateSelectedNavId(id: NavDrawerItem.projects);
           }
         } else {
-          _appService.updateSelectedNavId(id: NavigationDrawer.workspace);
+          _appService.updateSelectedNavId(id: NavDrawerItem.workspace);
           //   _navigationService.replace(route: WorkspaceRoute());
         }
       } else {

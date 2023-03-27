@@ -4,7 +4,7 @@ class EnumHelpers {
   }
 }
 
-enum NavigationDrawer {
+enum NavDrawerItem {
   home,
   module,
   projects,

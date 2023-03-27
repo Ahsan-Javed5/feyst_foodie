@@ -51,7 +51,7 @@ class ApplicationState extends Equatable {
   final Map<String, dynamic>? userFormData;
   final workflow_v3.Workflow? workflow;
   final List<Workspace>? workspaceList;
-  final NavigationDrawer? selectedNavId;
+  final NavDrawerItem? selectedNavId;
   final bool? searchVisible;
   final Module? module;
 
@@ -69,7 +69,7 @@ class ApplicationState extends Equatable {
     Map<String, dynamic>? userFormData,
     workflow_v3.Workflow? workflow,
     List<Workspace>? workspaceList,
-    NavigationDrawer? selectedNavId,
+    NavDrawerItem? selectedNavId,
     bool? searchVisible,
     Module? module,
   }) {
@@ -143,7 +143,7 @@ class ApplicationService extends Cubit<ApplicationState> {
     );
   }
 
-  void updateSelectedNavId({required NavigationDrawer id}) {
+  void updateSelectedNavId({required NavDrawerItem id}) {
     emit(state.copyWith(selectedNavId: id));
   }
 
