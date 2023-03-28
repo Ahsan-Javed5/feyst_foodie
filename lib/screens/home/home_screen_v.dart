@@ -13,6 +13,7 @@ import 'component/food_detail_screen_v.dart';
 import 'food_details_menu_model.dart';
 import 'home_screen_m.dart';
 import 'home_screen_vm.dart';
+import 'package:marqueer/marqueer.dart';
 
 import 'dart:developer' as developer;
 
@@ -69,57 +70,59 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Stack(children: [
-                Column(
-                  children: [
-                    Container(
-                      height: 250,
-                      width: double.infinity,
-                      child: Image.asset(
-                        Resources.homeScreenBG,
-                        fit: BoxFit.cover,
-                      ),
-                    )
-                  ],
-                ),
-                Column(
+              Stack(
+                children: [
+                  Column(
+                    children: [
+                      Container(
+                        height: 250,
+                        width: double.infinity,
+                        child: Image.asset(
+                          Resources.homeScreenBG,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    ],
+                  ),
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 80,
-                    ),
-                  Container(
-                    padding: EdgeInsets.only(left: 31),
-                    child: GeneralText(
-                      Strings.labelExplore,
-                      style: appTheme.typographies.interFontFamily.headline6
-                          .copyWith(
-                        fontSize: 35,
-                        // fontFamily: 'Poppins-Medium',
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white,
+                    children: [
+                      SizedBox(
+                        height: 80,
                       ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(left: 31),
-                    child: GeneralText(
-                      Strings.labelFoodExperience,
-                      style: appTheme.typographies.interFontFamily.headline4
-                          .copyWith(
-                        fontSize: 29,
-                        fontFamily: 'Poppins-Medium',
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
+                      Container(
+                        padding: EdgeInsets.only(left: 31),
+                        child: GeneralText(
+                          Strings.labelExplore,
+                          style: appTheme.typographies.interFontFamily.headline6
+                              .copyWith(
+                            fontSize: 35,
+                            // fontFamily: 'Poppins-Medium',
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ],)
-
-              ],),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(left: 31),
+                        child: GeneralText(
+                          Strings.labelFoodExperience,
+                          style: appTheme.typographies.interFontFamily.headline4
+                              .copyWith(
+                            fontSize: 29,
+                            fontFamily: 'Poppins-Medium',
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
 
               Container(
                 height: 250,
@@ -140,8 +143,8 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
                 padding: EdgeInsets.only(left: 31, bottom: 0),
                 child: GeneralText(
                   Strings.labelPopularDishes,
-                  style: appTheme.typographies.interFontFamily.headline6
-                      .copyWith(
+                  style:
+                      appTheme.typographies.interFontFamily.headline6.copyWith(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
                     color: Color(0xfff1c452),
@@ -324,41 +327,69 @@ class _FoodContainer extends StatelessWidget {
                   child: Container(
                     width: 150,
                     height: 50,
-                    padding: EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                        color: const Color(0xffbb3127),
+                    padding: const EdgeInsets.all(4),
+                    decoration: const BoxDecoration(
+                        color: Color(0xffbb3127),
                         borderRadius: BorderRadius.only(
-                          topLeft: const Radius.circular(12.0),
-                          topRight: const Radius.circular(12.0),
-                          bottomLeft: const Radius.circular(12.0),
+                          topLeft: Radius.circular(12.0),
+                          topRight: Radius.circular(12.0),
+                          bottomLeft: Radius.circular(12.0),
                         )),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            GeneralText(
-                              data.title,
-                              style: appTheme
-                                  .typographies.interFontFamily.headline2
-                                  .copyWith(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.white,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              GeneralText(
+                                data.title,
+                                // 'test',
+                                style: appTheme
+                                    .typographies.interFontFamily.headline2
+                                    .copyWith(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
-                            GeneralText(
-                              data.description, // Strings.labelSeaFood2Experience,
-                              style: appTheme
-                                  .typographies.interFontFamily.headline2
-                                  .copyWith(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                              //displayMarque(data.title),
+                              // FittedBox(
+                              //   fit: BoxFit.contain,
+                              //   child: GeneralText(
+                              //     data.description, // Strings.labelSeaFood2Experience,
+                              //     style: appTheme
+                              //         .typographies.interFontFamily.headline2
+                              //         .copyWith(
+                              //       fontSize: 14,
+                              //       fontWeight: FontWeight.bold,
+                              //       color: Colors.white,
+                              //     ),
+                              //   ),
+                              // ),
+                              GeneralText(
+                                data.description, // Strings.labelSeaFood2Experience,
+                                style: appTheme
+                                    .typographies.interFontFamily.headline2
+                                    .copyWith(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
-                          ],
+                              //    displayMarque(data.description),
+                              // GeneralText(
+                              //   data.description, // Strings.labelSeaFood2Experience,
+                              //   style: appTheme
+                              //       .typographies.interFontFamily.headline2
+                              //       .copyWith(
+                              //     fontSize: 14,
+                              //     fontWeight: FontWeight.bold,
+                              //     color: Colors.white,
+                              //   ),
+                              // ),
+                            ],
+                          ),
                         ),
                         SizedBox(
                           width: 12,
@@ -375,5 +406,46 @@ class _FoodContainer extends StatelessWidget {
             ],
           )),
     );
+  }
+
+  Widget displayMarque(String _text) {
+    final _controller = MarqueerController();
+    return SizedBox(
+        height: 20,
+        width: 100,
+        child: Marqueer(
+          // pps: 100,
+          //
+          // /// optional
+          // controller: _controller,
+          //
+          // /// optional
+          // restartAfterInteractionDuration: const Duration(seconds: 6),
+          //
+          // /// optional
+          // restartAfterInteraction: false,
+          //
+          // /// optional
+          // onChangeItemInViewPort: (index) {
+          //   print('item index: $index');
+          // },
+          // onInteraction: () {
+          //   print('on interaction callback');
+          // },
+          // onStarted: () {
+          //   print('on started callback');
+          // },
+          // onStopped: () {
+          //   print('on stopped callback');
+          // },
+          child: GeneralText(
+            _text, // Strings.labelSeaFood2Experience,
+            style: appTheme.typographies.interFontFamily.headline2.copyWith(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        ));
   }
 }

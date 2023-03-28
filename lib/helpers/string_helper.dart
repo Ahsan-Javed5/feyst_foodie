@@ -17,4 +17,8 @@ extension StringHelper on String {
   String capitalize() {
     return '${this[0].toUpperCase()}${substring(1).toLowerCase()}';
   }
+
+  String displaySubString() {
+    return '${this[0].toUpperCase()}${substring(0, 10).toLowerCase()}';
+  }
 }

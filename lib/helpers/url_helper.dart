@@ -42,4 +42,6 @@ class InfininURLHelpers {
     finalDate = finalDate + data[1].replaceAll('00', '');
     return finalDate;
   }
+
+  //static String get
 }
