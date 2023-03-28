@@ -481,7 +481,7 @@ class T {
         title: json["title"],
         description: json["description"],
         wowFactorId: json["wowFactorId"],
-        preferenceId: json["preferenceId"],
+        preferenceId: json["preferenceId"] ?? 1,
         price: json["price"],
         priceTypeId: json["priceTypeId"],
         persons: json["persons"],

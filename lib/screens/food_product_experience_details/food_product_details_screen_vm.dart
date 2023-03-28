@@ -59,7 +59,8 @@ class FoodProductExperienceDetailsViewModel
         totalPrice: orderHelper.selectedExperienceDetail.price,
         scheduleId: int.parse(orderHelper.scheduleId),
         persons: orderHelper.numberOfPerson.toString(),
-        preferenceId: experienceData.preferenceId,
+        // preferenceId: experienceData.preferenceId,
+        preferenceId: 1,
       ),
     ).toJson();
 
