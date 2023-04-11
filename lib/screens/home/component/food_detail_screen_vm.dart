@@ -14,6 +14,8 @@ import 'food_detail_screen_m.dart';
 
 import '../../../models/home/experience_list_response.dart' as experience_data;
 
+import 'dart:developer' as developer;
+
 @injectable
 class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
   FoodDetailScreenViewModel({
@@ -62,6 +64,7 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
 
     emit(const Loading());
 
+    developer.log(' Experience Id to fetch menu is ' + '${experienceId}');
     final foodMenuRequest = menurequest.FoodMenuRequest(
       t: int.parse(experienceId),
     ).toJson();
