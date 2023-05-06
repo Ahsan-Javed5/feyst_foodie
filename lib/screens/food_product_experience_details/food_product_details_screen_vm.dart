@@ -8,6 +8,8 @@ import 'package:flutter_html/flutter_html.dart';
 import '../../../models/home/food_menu_request.dart';
 import '../../helpers/order_helper.dart';
 import '../../models/booking/booking_response.dart';
+import '../../models/food_details_screen/food_details_response_model.dart';
+import '../../models/food_details_screen/food_details_screen_by_id_request.dart' as foodRequest;
 import '../../models/perferences/perferences_request.dart';
 import '../../setup.dart';
 // import '../bottom_bar/bottom_bar.dart';
@@ -40,6 +42,36 @@ class FoodProductExperienceDetailsViewModel
   Future<void> defaultState() async {
     emit(Loaded());
   }
+
+  late FoodDetailsResponse foodDetailsResponse;
+
+  Future<void> getMenuDetailsById({required String experienceId}) async {
+
+    final _appService = locateService<ApplicationService>();
+
+    int _userId = (_appService.state.userInfo?.t.id)!;
+
+    final url =
+    InfininURLHelpers.getRestApiURL(Api.baseURL + Api.experienceMenuById);
+
+    emit(const Loading());
+
+    final foodDetailsRequest = foodRequest.FoodDetailsDataRequest(
+      t: int.parse(experienceId),
+      userId: _userId,
+    ).toJson();
+
+    final response = await _network.post(
+      path: url,
+      data: foodDetailsRequest,
+    );
+
+    print("req resp ${response.body}");
+    foodDetailsResponse = foodDataResponseFromJson(response.body);
+
+    emit(const Loaded());
+  }
+
 
   Future<void> submitBooking(
       BuildContext context, experience_data.T experienceData) async {

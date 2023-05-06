@@ -7,6 +7,7 @@ import '../../../constants/strings.dart';
 import '../../../helpers/color_helper.dart';
 import '../../../helpers/order_helper.dart';
 import '../../../helpers/url_helper.dart';
+import '../../../models/food_details_screen/food_details_response_model.dart';
 import '../../../services/application_state.dart';
 import '../../../setup.dart';
 import '../../../theme/app_theme_data/app_theme_data.dart';
@@ -37,11 +38,13 @@ class FoodProductDetailsSummary extends StatefulWidget {
     required this.experienceData,
     required this.foodMenuDetail,
     required this.selectedExperienceId,
+    required this.foodDetailsResponse,
   }) : super(key: key);
 
   final experience_data.T experienceData;
   final FoodMenuModel foodMenuDetail;
   final String selectedExperienceId;
+  final FoodDetailsResponse foodDetailsResponse;
 
   @override
   State<FoodProductDetailsSummary> createState() =>
@@ -52,6 +55,59 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
   List<CustomModel> wowFactorsList = [];
   List<CustomModel> menuListItems = [];
   final _appService = locateService<ApplicationService>();
+
+  String _getMonthAbbreviation(int month) {
+    switch (month) {
+      case DateTime.january:
+        return 'JAN';
+      case DateTime.february:
+        return 'FEB';
+      case DateTime.march:
+        return 'MAR';
+      case DateTime.april:
+        return 'APR';
+      case DateTime.may:
+        return 'MAY';
+      case DateTime.june:
+        return 'JUN';
+      case DateTime.july:
+        return 'JUL';
+      case DateTime.august:
+        return 'AUG';
+      case DateTime.september:
+        return 'SEP';
+      case DateTime.october:
+        return 'OCT';
+      case DateTime.november:
+        return 'NOV';
+      case DateTime.december:
+        return 'DEC';
+      default:
+        return '';
+    }
+  }
+
+  String _getDayAbbreviation(int day) {
+    switch (day) {
+      case DateTime.monday:
+        return 'MON';
+      case DateTime.tuesday:
+        return 'TUE';
+      case DateTime.wednesday:
+        return 'WED';
+      case DateTime.thursday:
+        return 'THU';
+      case DateTime.friday:
+        return 'FRI';
+      case DateTime.saturday:
+        return 'SAT';
+      case DateTime.sunday:
+        return 'SUN';
+      default:
+        return '';
+    }
+  }
+
 
   @override
   void initState() {
@@ -163,7 +219,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             GeneralText(
-                              Strings.productDetailTitle,
+                              widget.foodDetailsResponse.t?.experienceName??"",
                               style: appTheme
                                   .typographies.interFontFamily.headline6
                                   .copyWith(
@@ -171,11 +227,11 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                                 color: HexColor.fromHex('#f1c452'),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                             GeneralText(
-                              Strings.productDetailSubTitle,
+                              "by "+widget.foodDetailsResponse.t?.brandName??"",
                               style: appTheme
                                   .typographies.interFontFamily.headline6
                                   .copyWith(
@@ -390,44 +446,49 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
 
   Widget foodProductDetails(IAppThemeData appTheme) {
     OrderHelper orderHelper = (_appService.state.orderHelper)!;
-    developer.log(' Schedule Id selected in Summary Page ' +
-        _appService.state.orderHelper!.scheduleId);
-    developer.log(' Schedule Id selected in Experience Price ' +
-        '${_appService.state.orderHelper!.selectedExperienceDetail.price}');
-    developer.log(' Schedule Id selected in Experience Id ' +
-        '${_appService.state.orderHelper!.selectedExperienceDetail.id}');
-    developer.log(' Foodie Id is ' + '${_appService.state.userInfo!.t.id}');
-    developer.log(' Order Helper Id is ' +
-        '${_appService.state.orderHelper!.daysGroup.scheduledDate.month}');
-    var _date = InfininURLHelpers.dayOfMonth(
-        _appService.state.orderHelper!.daysGroup.scheduledDate);
-    var dayOfMonth = _appService.state.orderHelper!.daysGroup.scheduledDate.day;
-    var _month = InfininURLHelpers.months[
-        _appService.state.orderHelper!.daysGroup.scheduledDate.month - 1];
-    var _hourSelected = _appService.state.orderHelper!.hourSelected.startTime;
+    // developer.log(' Schedule Id selected in Summary Page ' + _appService.state.orderHelper!.scheduleId);
+    // developer.log(' Schedule Id selected in Experience Price ' '${_appService.state.orderHelper!.selectedExperienceDetail.price}');
+    // developer.log(' Schedule Id selected in Experience Id ' '${_appService.state.orderHelper!.selectedExperienceDetail.id}');
+    // developer.log(' Foodie Id is '  '${_appService.state.userInfo!.t.id}');
+    // developer.log(' Order Helper Id is '
+        // '${_appService.state.orderHelper!.daysGroup.scheduledDate.month}');
+    // var _date = InfininURLHelpers.dayOfMonth(
+    //     _appService.state.orderHelper!.daysGroup.scheduledDate);
+    // var dayOfMonth = _appService.state.orderHelper!.daysGroup.scheduledDate.day;
+    // var _month = InfininURLHelpers.months[
+    //     _appService.state.orderHelper!.daysGroup.scheduledDate.month - 1];
+    // var _hourSelected = _appService.state.orderHelper!.hourSelected.startTime;
 
-    developer.log(' _Date for Summary Page is ' + '${_date}');
-    developer.log(' Month of Summary Page is ' + '${_month}');
 
-    developer.log(' Day of Month is ' + '${dayOfMonth}');
-    developer.log(' Hour selected of Month is ' + '${_hourSelected}');
+    var dateValue = widget.foodDetailsResponse.t?.scheduleScheduledDate??"";
+    DateTime dateTime = DateTime.parse(dateValue);
+    String monthAbbreviation = _getMonthAbbreviation(dateTime.month);
+    String dayAbbreviation = _getDayAbbreviation(dateTime.weekday);
 
-    var _productDetailSelectionDate = _date.toUpperCase() +
+
+    var _hourSelected = widget.foodDetailsResponse.t?.scheduleStartTime??"";
+
+
+    var _productDetailSelectionDate =
+        dayAbbreviation +
         ',  ' +
-        (dayOfMonth.toString())! +
-        "   " +
-        _month.toString().toUpperCase();
-    var _productDetailSelectionTime = InfininURLHelpers.getAmPm(
-        _appService.state.orderHelper!.hourSelected.startTime);
-    var _productDetailSelectionType =
-        _appService.state.orderHelper!.selectedCategory;
-    var _numberOfPerson =
-        _appService.state.orderHelper!.numberOfPerson ?? 4.toString();
+        (dateTime.day.toString())! +
+        " " + monthAbbreviation;
+    // var _productDetailSelectionTime = InfininURLHelpers.getAmPm(
+    //     _appService.state.orderHelper!.hourSelected.startTime);
+    // var _productDetailSelectionType =
+    //     _appService.state.orderHelper!.selectedCategory;
+    // var _numberOfPerson =
+    //     _appService.state.orderHelper!.numberOfPerson ?? 4.toString();
+
+    var _productDetailSelectionTime = InfininURLHelpers.getAmPm(widget.foodDetailsResponse.t?.scheduleStartTime??"");
+    var _productDetailSelectionType = widget.foodDetailsResponse.t?.preferenceName??"";
+    var _numberOfPerson = widget.foodDetailsResponse.t?.persons??'';
     return Padding(
       padding: EdgeInsetsDirectional.only(start: 25, end: 25),
       child: Container(
           width: double.infinity,
-          padding: EdgeInsetsDirectional.only(
+          padding: const EdgeInsetsDirectional.only(
               top: 22, bottom: 29, start: 10, end: 10),
           decoration: BoxDecoration(
               color: HexColor.fromHex("#4b4b52"),

@@ -56,12 +56,13 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
   //   // emit(Loaded(currentProfessionData));
   // }
   late FoodMenuModel foodMenuData;
+  late String expId;
 
   Future<void> getExperienceMenu({required String experienceId}) async {
     final url =
         InfininURLHelpers.getRestApiURL(Api.baseURL + Api.experienceMenu);
     // emit(const Loading());
-
+    expId = experienceId;
     emit(const Loading());
 
     developer.log(' Experience Id to fetch menu is ' + '${experienceId}');
@@ -142,7 +143,16 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
     final _appService = locateService<ApplicationService>();
 
     var orderHelper = _appService.state.orderHelper;
-
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => FoodProductExperienceDetailsScreenView(
+            experienceData: _experienceData,
+            selectedExperienceId: _selectedExperienceId,
+            foodMenuDetail: foodMenuData,
+            experienceId: expId,
+          )),
+    );
     if (orderHelper != null &&
         orderHelper.scheduleId != null &&
         orderHelper.scheduleId != '0' &&
@@ -155,6 +165,7 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
                   experienceData: _experienceData,
                   selectedExperienceId: _selectedExperienceId,
                   foodMenuDetail: foodMenuData,
+              experienceId: expId,
                 )),
       );
     } else {

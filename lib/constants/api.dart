@@ -50,7 +50,7 @@ abstract class Api {
 
   static const professionalList = 'professional/list';
   static const experienceList = 'experience/list';
-  // static const experienceMenu = 'experience-menu/find-by-id';
+  static const experienceMenuById = 'experience-booking/find-by-id';
   static const experienceMenu = 'experience-menu/find-by-experience-id';
 
   static const experienceBooking = 'experience-booking/save';

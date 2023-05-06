@@ -41,15 +41,18 @@ class FoodProductExperienceDetailsScreenView
     required String selectedExperienceId,
     required experience_data.T experienceData,
     required FoodMenuModel foodMenuDetail,
+    required String experienceId,
     Key? key,
   })  : _selectedExperienceId = selectedExperienceId,
         _experienceData = experienceData,
         _foodMenuDetail = foodMenuDetail,
+        _experienceId = experienceId,
         super(key: key);
 
   final String _selectedExperienceId;
   final experience_data.T _experienceData;
   final FoodMenuModel _foodMenuDetail;
+  final String _experienceId;
 
   @override
   Widget buildScreen({
@@ -58,7 +61,7 @@ class FoodProductExperienceDetailsScreenView
   }) {
     return BlocBuilder<FoodProductExperienceDetailsViewModel,
         FoodProductDetailScreenState>(
-      bloc: viewModel..defaultState(),
+      bloc: viewModel..getMenuDetailsById(experienceId: _experienceId),
       builder: (_, state) {
         return Scaffold(
             backgroundColor: HexColor.fromHex('#212129'),
@@ -82,6 +85,7 @@ class FoodProductExperienceDetailsScreenView
       experienceData: _experienceData,
       selectedExperienceId: _selectedExperienceId,
       foodMenuDetail: _foodMenuDetail,
+      foodDetailsResponse: viewModel.foodDetailsResponse,
     );
   }
 
