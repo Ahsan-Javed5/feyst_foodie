@@ -1,11 +1,15 @@
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/services/renderer/field_renderer_helpers.dart';
+import 'package:chef/setup.dart';
 import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/resources.dart';
 import '../../constants/strings.dart';
 import '../../helpers/color_helper.dart';
+import '../../helpers/function_helper.dart';
+import '../../models/booking/advance_pending_response.dart';
+import '../../models/booking/booking_list_response_model.dart';
 import '../../theme/app_theme_data/app_theme_data.dart';
 import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/widgets/general_button.dart';
@@ -13,8 +17,17 @@ import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
 import '../booking/food_item_booking.dart';
 
+import 'dart:developer' as developer;
+
+import 'advance_payment/food_item_advance_payment_vm.dart';
+
 class FoodProductAdvancePendingDetails extends StatefulWidget {
-  const FoodProductAdvancePendingDetails({Key? key}) : super(key: key);
+  const FoodProductAdvancePendingDetails(
+      {Key? key, required AdvancePendingResponse advancePendingDetails})
+      : _advancePendingDetails = advancePendingDetails,
+        super(key: key);
+
+  final AdvancePendingResponse _advancePendingDetails;
 
   @override
   State<FoodProductAdvancePendingDetails> createState() =>
@@ -29,35 +42,67 @@ class _FoodProductAdvancePendingDetailsState
 
   @override
   void initState() {
-    // TODO: implement initState
-    menuListItems.addAll([
-      CustomModel(name: "Sindhi Biryani"),
-      CustomModel(name: "Buritto"),
-      CustomModel(name: "Vegetable Salad"),
-      CustomModel(name: "Hyderabadi Rice"),
-      CustomModel(name: "Soft Drinks"),
-    ]);
-    wowFactorsList.addAll([
-      CustomModel(
-          name: Strings.productDetailWowFactorGarden,
-          icon: "assets/images/icons/garden.png"),
-      CustomModel(
-          name: Strings.productDetailWowFactorFireworks,
-          icon: "assets/images/icons/fireworks.png"),
-      CustomModel(
-          name: Strings.productDetailWowFactorPetFriendly,
-          icon: "assets/images/icons/pet_friendly.png"),
-      CustomModel(
-          name: Strings.productDetailWowFactorWifi,
-          icon: "assets/images/icons/wifi_2.png"),
-      CustomModel(
-          name: Strings.productDetailWowFactorMusic,
-          icon: "assets/images/icons/music.png"),
-      CustomModel(
-          name: Strings.productDetailWowFactorParking,
-          icon: "assets/images/icons/parking.png")
-    ]);
+    developer.log(' Booking bookingStatus here is ' +
+        widget._advancePendingDetails.t.bookingStatus);
+
+    loadMenu();
+    loadWowFactor();
+    // wowFactorsList.addAll([
+    //   CustomModel(
+    //       name: Strings.productDetailWowFactorGarden,
+    //       icon: "assets/images/icons/garden.png"),
+    //   CustomModel(
+    //       name: Strings.productDetailWowFactorFireworks,
+    //       icon: "assets/images/icons/fireworks.png"),
+    //   CustomModel(
+    //       name: Strings.productDetailWowFactorPetFriendly,
+    //       icon: "assets/images/icons/pet_friendly.png"),
+    //   CustomModel(
+    //       name: Strings.productDetailWowFactorWifi,
+    //       icon: "assets/images/icons/wifi_2.png"),
+    //   CustomModel(
+    //       name: Strings.productDetailWowFactorMusic,
+    //       icon: "assets/images/icons/music.png"),
+    //   CustomModel(
+    //       name: Strings.productDetailWowFactorParking,
+    //       icon: "assets/images/icons/parking.png")
+    // ]);
     super.initState();
+  }
+
+  void loadMenu() {
+    for (var i = 0;
+        i < widget._advancePendingDetails.t.experienceMenu.length;
+        i++) {
+      menuListItems.addAll([
+        CustomModel(
+          name: widget._advancePendingDetails.t.experienceMenu[i].dish,
+          price: widget._advancePendingDetails.t.experienceMenu[i].price
+              .toString(),
+        ),
+        // CustomModel(name: "Buritto"),
+        // CustomModel(name: "Vegetable Salad"),
+        // CustomModel(name: "Hyderabadi Rice"),
+        // CustomModel(name: "Soft Drinks"),
+      ]);
+    }
+  }
+
+  void loadWowFactor() {
+    for (var i = 0;
+        i <
+            widget._advancePendingDetails.t.experience.experienceWowFactors
+                .length;
+        i++) {
+      wowFactorsList.add(
+        CustomModel(
+          name: widget._advancePendingDetails.t.experience
+              .experienceWowFactors[i].wowFactorName,
+          icon: widget._advancePendingDetails.t.experience
+              .experienceWowFactors[i].wowFactorIconPath,
+        ),
+      );
+    }
   }
 
   @override
@@ -65,7 +110,10 @@ class _FoodProductAdvancePendingDetailsState
     final appTheme = AppTheme.of(context).theme;
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: getStartedButtonTitle(appTheme: appTheme),
+      floatingActionButton:
+          widget._advancePendingDetails.t.bookingStatus == Strings.acceptData
+              ? getStartedButtonTitle(appTheme: appTheme)
+              : Container(),
       body: Container(
           color: HexColor.fromHex("#212129"),
           child: Column(
@@ -75,7 +123,7 @@ class _FoodProductAdvancePendingDetailsState
               ),
               Container(
                 height: 217,
-                padding: EdgeInsets.only(left: 33, bottom: 17),
+                padding: const EdgeInsets.only(left: 33, bottom: 17),
                 decoration: BoxDecoration(
                   color: HexColor.fromHex("#4b4b52"),
                   borderRadius: const BorderRadius.only(
@@ -108,9 +156,9 @@ class _FoodProductAdvancePendingDetailsState
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-
                           GeneralText(
-                            Strings.productDetailTitle,
+                            // Strings.productDetailTitle,
+                            widget._advancePendingDetails.t.experienceName,
                             style: appTheme
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
@@ -122,7 +170,9 @@ class _FoodProductAdvancePendingDetailsState
                             height: 3,
                           ),
                           GeneralText(
-                            Strings.productDetailSubTitle,
+                            Strings.byText +
+                                ' ' +
+                                widget._advancePendingDetails.t.brandName,
                             style: appTheme
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
@@ -196,108 +246,111 @@ class _FoodProductAdvancePendingDetailsState
               ),
               Expanded(
                 child: SingleChildScrollView(
-                  child: Column(children: [
-                    Container(
-                      padding: EdgeInsetsDirectional.only(start: 25, end: 25),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                color: HexColor.fromHex('#f1c452'),
-                                width: 16,
-                                height: 1,
-                              ),
-                              const SizedBox(
-                                width: 7.2,
-                              ),
-                              GeneralText(
-                                Strings.productDetailAboutTitle,
-                                style: appTheme
-                                    .typographies.interFontFamily.headline6
-                                    .copyWith(
-                                  fontSize: 20,
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsetsDirectional.only(start: 25, end: 25),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
                                   color: HexColor.fromHex('#f1c452'),
+                                  width: 16,
+                                  height: 1,
                                 ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 23),
-                            child: GeneralText(
-                              Strings.productDetailAboutSubTitle,
-                              style: appTheme.typographies.interFontFamily.headline6
-                                  .copyWith(
-                                  fontSize: 14,
-                                  color: HexColor.fromHex('#ffffff'),
-                                  fontWeight: FontWeight.w400),
+                                const SizedBox(
+                                  width: 7.2,
+                                ),
+                                GeneralText(
+                                  Strings.productDetailAboutTitle,
+                                  style: appTheme
+                                      .typographies.interFontFamily.headline6
+                                      .copyWith(
+                                    fontSize: 20,
+                                    color: HexColor.fromHex('#f1c452'),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          const SizedBox(
-                            height: 27,
-                          ),
-                          Row(
-                            children: [
-                              Container(
-                                color: HexColor.fromHex('#f1c452'),
-                                width: 16,
-                                height: 1,
-                              ),
-                              const SizedBox(
-                                width: 7.2,
-                              ),
-                              GeneralText(
-                                Strings.productDetailWowFactorTitle,
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 23),
+                              child: GeneralText(
+                                //   widget.bookingListModel.t[]
+                                // widget._bookingItem.
+                                //   Strings.productDetailAboutSubTitle,
+                                widget._advancePendingDetails.t.experience
+                                    .description,
                                 style: appTheme
                                     .typographies.interFontFamily.headline6
                                     .copyWith(
-                                  fontSize: 20,
-                                  color: HexColor.fromHex('#f1c452'),
-                                ),
+                                        fontSize: 14,
+                                        color: HexColor.fromHex('#ffffff'),
+                                        fontWeight: FontWeight.w400),
                               ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 11.6,
-                          ),
-                          wowFactors(appTheme),
-                        ],
+                            ),
+                            const SizedBox(
+                              height: 27,
+                            ),
+                            Row(
+                              children: [
+                                Container(
+                                  color: HexColor.fromHex('#f1c452'),
+                                  width: 16,
+                                  height: 1,
+                                ),
+                                const SizedBox(
+                                  width: 7.2,
+                                ),
+                                GeneralText(
+                                  Strings.productDetailWowFactorTitle,
+                                  style: appTheme
+                                      .typographies.interFontFamily.headline6
+                                      .copyWith(
+                                    fontSize: 20,
+                                    color: HexColor.fromHex('#f1c452'),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 11.6,
+                            ),
+                            wowFactors(appTheme),
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    foodProductDetails(appTheme),
-                    const SizedBox(
-                      height: 28,
-                    ),
-                    chefInformation(appTheme),
-                    const SizedBox(
-                      height: 47.9,
-                    ),
-                    productPriceInformation(appTheme),
-                    const SizedBox(
-                      height: 32.9,
-                    ),
-                    extraPaymentNotes(appTheme),
-                    SizedBox(
-                      height: 42,
-                    ),
-                    checkTermsConditions(appTheme),
-                    SizedBox(
-                      height: 209.1,
-                    ),
-                  ],),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      foodProductDetails(appTheme),
+                      const SizedBox(
+                        height: 28,
+                      ),
+                      chefInformation(appTheme),
+                      const SizedBox(
+                        height: 47.9,
+                      ),
+                      productPriceInformation(appTheme),
+                      const SizedBox(
+                        height: 32.9,
+                      ),
+                      extraPaymentNotes(appTheme),
+                      SizedBox(
+                        height: 42,
+                      ),
+                      checkTermsConditions(appTheme),
+                      SizedBox(
+                        height: 209.1,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              
-              
-              
-          
             ],
           )),
     );
@@ -336,7 +389,11 @@ class _FoodProductAdvancePendingDetailsState
                         color: HexColor.fromHex("#f1c452"),
                         shape: BoxShape.circle,
                       ),
-                      child: Image.asset(wowFactorsList[i].icon != null
+                      // child: Image.asset(wowFactorsList[i].icon != null
+                      //     ? wowFactorsList[i].icon ?? ""
+                      //     : ''),
+
+                      child: SvgPicture.network(wowFactorsList[i].icon != null
                           ? wowFactorsList[i].icon ?? ""
                           : ''),
                     ),
@@ -358,11 +415,33 @@ class _FoodProductAdvancePendingDetailsState
   }
 
   Widget foodProductDetails(IAppThemeData appTheme) {
+    DateTime dateTime =
+        widget._advancePendingDetails.t.scheduleScheduledDate ?? DateTime.now();
+    // DateTime dateTime = DateTime.parse(dateValue);
+    String monthAbbreviation =
+        FunctionHelper().getMonthAbbreviation(dateTime.month);
+    String dayAbbreviation =
+        FunctionHelper().getDayAbbreviation(dateTime.weekday);
+
+    var _hourSelected = widget._advancePendingDetails.t.scheduleStartTime ?? "";
+
+    var _productDetailSelectionDate = dayAbbreviation +
+        ',  ' +
+        (dateTime.day.toString()) +
+        " " +
+        monthAbbreviation;
+
+    var _productDetailSelectionTime = InfininURLHelpers.getAmPm(
+        widget._advancePendingDetails.t.scheduleStartTime ?? "");
+    var _productDetailSelectionType =
+        widget._advancePendingDetails.t.preferenceName ?? "";
+    var _numberOfPerson = widget._advancePendingDetails.t.persons ?? '';
+
     return Padding(
-      padding: EdgeInsetsDirectional.only(start: 25, end: 25),
+      padding: const EdgeInsetsDirectional.only(start: 25, end: 25),
       child: Container(
           width: double.infinity,
-          padding: EdgeInsetsDirectional.only(
+          padding: const EdgeInsetsDirectional.only(
               top: 22, bottom: 29, start: 10, end: 10),
           decoration: BoxDecoration(
               color: HexColor.fromHex("#4b4b52"),
@@ -370,7 +449,7 @@ class _FoodProductAdvancePendingDetailsState
           child: Column(
             children: [
               Container(
-                padding: EdgeInsetsDirectional.only(
+                padding: const EdgeInsetsDirectional.only(
                     top: 17, bottom: 17, start: 26, end: 48),
                 decoration: BoxDecoration(
                     color: HexColor.fromHex("#212129"),
@@ -382,7 +461,8 @@ class _FoodProductAdvancePendingDetailsState
                       Column(
                         children: [
                           GeneralText(
-                            Strings.productDetailSelectionDate,
+                            // Strings.productDetailSelectionDate,
+                            _productDetailSelectionDate,
                             style: appTheme
                                 .typographies.interFontFamily.headline2
                                 .copyWith(
@@ -391,7 +471,8 @@ class _FoodProductAdvancePendingDetailsState
                             ),
                           ),
                           GeneralText(
-                            Strings.productDetailSelectionTime,
+                            //  Strings.productDetailSelectionTime,
+                            _productDetailSelectionTime,
                             style: appTheme
                                 .typographies.interFontFamily.headline2
                                 .copyWith(
@@ -409,7 +490,8 @@ class _FoodProductAdvancePendingDetailsState
                       Column(
                         children: [
                           GeneralText(
-                            Strings.productDetailSelectionType,
+                            // Strings.productDetailSelectionType,
+                            _productDetailSelectionType,
                             style: appTheme
                                 .typographies.interFontFamily.headline2
                                 .copyWith(
@@ -418,7 +500,8 @@ class _FoodProductAdvancePendingDetailsState
                             ),
                           ),
                           GeneralText(
-                            Strings.productDetailSelectionTotalPersons,
+                            //    Strings.productDetailSelectionTotalPersons,
+                            _numberOfPerson,
                             style: appTheme
                                 .typographies.interFontFamily.headline2
                                 .copyWith(
@@ -431,9 +514,9 @@ class _FoodProductAdvancePendingDetailsState
                             style: appTheme
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
-                                fontSize: 12,
-                                color: HexColor.fromHex('#909094'),
-                                fontWeight: FontWeight.w400),
+                                    fontSize: 12,
+                                    color: HexColor.fromHex('#909094'),
+                                    fontWeight: FontWeight.w400),
                           ),
                         ],
                       ),
@@ -474,7 +557,8 @@ class _FoodProductAdvancePendingDetailsState
               color: HexColor.fromHex("#212129"),
               borderRadius: BorderRadius.circular(11)),
           child: GeneralText(
-            Strings.productDetailSelectionNotes,
+            // Strings.productDetailSelectionNotes,
+            widget._advancePendingDetails.t.comments,
             style: appTheme.typographies.interFontFamily.headline6.copyWith(
                 fontSize: 14,
                 color: HexColor.fromHex('#ffffff'),
@@ -528,7 +612,8 @@ class _FoodProductAdvancePendingDetailsState
                           ),
                         ),
                         GeneralText(
-                          Strings.productDetailSelectionMenuAmount,
+                          // Strings.productDetailSelectionMenuAmount,
+                          menuListItems[index].price.toString(),
                           style: appTheme.typographies.interFontFamily.headline2
                               .copyWith(
                             fontSize: 16,
@@ -671,7 +756,9 @@ class _FoodProductAdvancePendingDetailsState
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         GeneralText(
-                          Strings.productDetailChefName,
+                          // Strings.productDetailChefName,
+                          widget._advancePendingDetails.t.experience
+                              .chefBrandName,
                           style: appTheme.typographies.interFontFamily.headline6
                               .copyWith(
                             fontSize: 18,
@@ -689,7 +776,9 @@ class _FoodProductAdvancePendingDetailsState
                             ),
                             Expanded(
                               child: GeneralText(
-                                Strings.productDetailChefLocation,
+                                // Strings.productDetailChefLocation,
+                                widget._advancePendingDetails.t.experience
+                                    .chefAddress,
                                 style: appTheme
                                     .typographies.interFontFamily.headline6
                                     .copyWith(
@@ -725,7 +814,8 @@ class _FoodProductAdvancePendingDetailsState
                   ),
                 ),
                 GeneralText(
-                  Strings.productDetailChefSubHostName,
+                  //Strings.productDetailChefSubHostName,
+                  widget._advancePendingDetails.t.experience.subHostName,
                   style:
                       appTheme.typographies.interFontFamily.headline6.copyWith(
                     fontSize: 18,
@@ -780,7 +870,8 @@ class _FoodProductAdvancePendingDetailsState
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       GeneralText(
-                        Strings.productDetailPriceValue,
+                        // Strings.productDetailPriceValue,
+                        widget._advancePendingDetails.t.totalPrice.toString(),
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
                                 fontSize: 36,
@@ -819,7 +910,10 @@ class _FoodProductAdvancePendingDetailsState
                       ),
                     ),
                     GeneralText(
-                      Strings.productDetailPriceTaxValue,
+                      // Strings.productDetailPriceTaxValue,
+
+                      widget._advancePendingDetails.t.tax.toString(),
+                      // .chefBrandName,
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -840,7 +934,8 @@ class _FoodProductAdvancePendingDetailsState
                       ),
                     ),
                     GeneralText(
-                      Strings.productDetailAdvancePaymentValue,
+                      // Strings.productDetailAdvancePaymentValue,
+                      widget._advancePendingDetails.t.advancePayment.toString(),
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -990,8 +1085,12 @@ class _FoodProductAdvancePendingDetailsState
       title: Strings.foodItemBookingAdvancePendingButton.toUpperCase(),
       styleType: ButtonStyleType.fill,
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => FoodItemBooking()));
+        final _foodItemAdvance =
+            locateService<FoodItemAdvancePaymentViewModel>();
+        _foodItemAdvance
+            .requestConfirmBooking(widget._advancePendingDetails.t.id);
+        // Navigator.push(context,
+        //     MaterialPageRoute(builder: (context) => FoodItemBooking()));
       },
     );
     // ExtoText(
@@ -1004,6 +1103,7 @@ class _FoodProductAdvancePendingDetailsState
 class CustomModel {
   String? name;
   String? icon;
+  String? price;
 
-  CustomModel({this.name, this.icon});
+  CustomModel({this.name, this.icon, this.price});
 }

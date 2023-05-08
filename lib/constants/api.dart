@@ -59,7 +59,9 @@ abstract class Api {
   static const singUpQuestionnaireList = "question/list";
 
   static const bookingListData = "experience-booking/find-by-foodie-id";
-
+  static const bookingDetailsAdvancePaymentPending =
+      "experience-booking/find-by-id";
+  static const confirmBooking = "experience-booking/confirm-booking";
   static const foodieSignUp = 'foodie/save';
   static const loginAPI = 'foodie/login';
 

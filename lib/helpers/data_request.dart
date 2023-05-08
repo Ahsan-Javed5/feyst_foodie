@@ -16,6 +16,7 @@ class DataRequest {
 
 class T {
   T({
+    this.id,
     this.age,
     this.gender,
     this.mobileNo,
@@ -24,6 +25,7 @@ class T {
     this.profileImageUrl,
   });
 
+  int? id;
   String? age;
   String? gender;
   String? mobileNo;
@@ -32,6 +34,7 @@ class T {
   String? profileImageUrl;
 
   factory T.fromJson(Map<String, dynamic> json) => T(
+        id: json["id"],
         age: json["age"],
         gender: json["gender"],
         mobileNo: json["mobileNo"],
@@ -41,6 +44,7 @@ class T {
       );
 
   Map<String, dynamic> toJson() => {
+        "id": id,
         "age": age,
         "gender": gender,
         "mobileNo": mobileNo,

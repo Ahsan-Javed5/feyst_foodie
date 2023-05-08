@@ -15,6 +15,13 @@ import '../booking/food_item_booking.dart';
 class FoodItemInProcessBooking extends StatefulWidget {
   const FoodItemInProcessBooking({Key? key}) : super(key: key);
 
+  // const FoodItemInProcessBooking(
+  //     {Key? key, required AdvancePendingResponse advancePendingDetails})
+  //     : _advancePendingDetails = advancePendingDetails,
+  //       super(key: key);
+  //
+  // final AdvancePendingResponse _advancePendingDetails;
+
   @override
   State<FoodItemInProcessBooking> createState() =>
       _FoodItemInProcessBookingState();
@@ -29,7 +36,7 @@ class _FoodItemInProcessBookingState extends State<FoodItemInProcessBooking> {
   void initState() {
     // TODO: implement initState
     menuListItems.addAll([
-      CustomModel(name: "Sindhi Biryani"),
+      CustomModel(name: "Sindhi2 Biryani"),
       CustomModel(name: "Buritto"),
       CustomModel(name: "Vegetable Salad"),
       CustomModel(name: "Hyderabadi Rice"),
@@ -56,6 +63,38 @@ class _FoodItemInProcessBookingState extends State<FoodItemInProcessBooking> {
           icon: "assets/images/icons/parking.png")
     ]);
     super.initState();
+  }
+
+  void loadMenu() {
+    // for (var i = 0;
+    //     i < widget._advancePendingDetails.t.experienceMenu.length;
+    //     i++) {
+    //   menuListItems.addAll([
+    //     CustomModel(
+    //       name: widget._advancePendingDetails.t.experienceMenu[i].dish,
+    //       price: widget._advancePendingDetails.t.experienceMenu[i].price
+    //           .toString(),
+    //     ),
+    //
+    //   ]);
+    // }
+  }
+
+  void loadWowFactor() {
+    // for (var i = 0;
+    //     i <
+    //         widget._advancePendingDetails.t.experience.experienceWowFactors
+    //             .length;
+    //     i++) {
+    //   wowFactorsList.add(
+    //     CustomModel(
+    //       name: widget._advancePendingDetails.t.experience
+    //           .experienceWowFactors[i].wowFactorName,
+    //       icon: widget._advancePendingDetails.t.experience
+    //           .experienceWowFactors[i].wowFactorIconPath,
+    //     ),
+    //   );
+    // }
   }
 
   @override

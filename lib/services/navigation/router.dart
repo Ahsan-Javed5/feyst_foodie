@@ -7,6 +7,11 @@ import 'package:chef/screens/screen.dart';
 import 'package:chef/screens/sign_in/sign_in_screen_v.dart';
 import 'package:chef/screens/sign_up/get_started_screen_v.dart';
 
+import '../../screens/booking/advance_payment/food_item_advance_payment_v.dart';
+import '../../screens/booking/booking_confirmed/booking_in_process_screen_v.dart';
+import '../../screens/booking/booking_in_process_screen.dart';
+import '../../screens/booking/food_item_advance_booking.dart';
+import '../../screens/home/food_item_booking_confirmed.dart';
 import '../../screens/sign_up/sign_up_screen_v.dart';
 
 export 'router.gr.dart';
@@ -20,6 +25,16 @@ abstract class Routes {
   static const home = '/home';
   static const profile = '/profile';
   static const dashboard = '/dashboard';
+  static const foodProductAdvancePendingDetails =
+      '/foodProductAdvancePendingDetails/:advancePendingDetails';
+  static const foodItemAdvancePaymentScreen =
+      '/foodItemAdvancePaymentScreen/:bookingItem';
+
+  static const foodInProcessScreen = '/foodInProcessScreen/:bookedItem';
+
+  static const foodItemInProcessScreen = '/foodItemInProcessScreen';
+  static const foodProductBookingConfirmedDetailsScreen =
+      '/foodProductBookingConfirmedDetailsScreen/:bookingConfirmedDetails';
   static const records = '/forms/:formId';
   static const customForm = '/custom_form/:${Strings.formIdParam}';
   static const mainProfile = '/main_profile';
@@ -53,6 +68,30 @@ abstract class Routes {
       page: SignInScreen,
       path: Routes.login,
     ),
+    AutoRoute(
+      page: FoodProductAdvancePendingDetails,
+      path: Routes.foodProductAdvancePendingDetails,
+    ),
+
+    AutoRoute(
+      page: FoodItemAdvancePaymentScreen,
+      path: Routes.foodItemAdvancePaymentScreen,
+    ),
+    AutoRoute(
+      page: BookingInProcessScreenView,
+      path: Routes.foodInProcessScreen,
+    ),
+
+    AutoRoute(
+      page: FoodItemInProcessBooking,
+      path: Routes.foodItemInProcessScreen,
+    ),
+
+    AutoRoute(
+      page: FoodProductBookingConfirmedDetails,
+      path: Routes.foodProductBookingConfirmedDetailsScreen,
+    ),
+
     AutoRoute(
       page: BottomBar,
       path: Routes.bottomBar,

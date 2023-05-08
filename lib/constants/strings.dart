@@ -316,6 +316,7 @@ abstract class Strings {
   static const userProfileSocialMediaHandle = 'sugarplum';
   static const productDetailTitle = 'BBQ \nExperience';
   static const productDetailSubTitle = 'by Zee Lounge';
+  static const byText = 'by';
   static const productDetailReview = '4.2';
   static const productDetailAboutTitle = 'About Experience';
   static const productDetailAboutSubTitle =
@@ -417,7 +418,7 @@ abstract class Strings {
   static const popularFoodDetailReview = '4.2';
   static const popularFoodDetailWowFactorTitle = 'Wow Factors';
   static const foodItemBookingConfirmedStatus = 'Booking Confirmed';
-  static const foodItemBookingConfirmedOrderNo = 'Order ID: 3345';
+  static const foodItemBookingConfirmedOrderNo = 'Order ID: ';
   static const foodItemBookingConfirmedComment =
       'Thank you for booking with Zee Lounge looking forward to you at';
   static const foodItemBookingConfirmedCancelOrderButton = 'Cancel Order';
@@ -442,4 +443,11 @@ abstract class Strings {
       "Tell us why you want to cancel order";
   static const bottomSheetTellUsWhyRadioHint =
       "Lorem ipsum dolor sit amet, consectetur";
+
+  static const requestedOrder = 'REQUESTED';
+  static const acceptData = 'ACCEPTED';
+  static const confirmed = 'CONFIRMED';
+
+  static const declined = 'DECLINED';
+  static const inProgress = 'IN_PROGRESS';
 }

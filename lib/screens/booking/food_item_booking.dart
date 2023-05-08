@@ -6,14 +6,20 @@ import 'package:intl/intl.dart';
 import '../../constants/resources.dart';
 import '../../constants/strings.dart';
 import '../../helpers/color_helper.dart';
+import '../../services/navigation/navigation_service.dart';
+import '../../services/navigation/router.gr.dart' as nav;
+import '../../setup.dart';
 import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/helpers/dialog_helper.dart';
 import '../../ui_kit/widgets/general_button.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
 import '../home/food_item_booking_confirmed.dart';
+import 'advance_payment/food_item_advance_payment_v.dart';
 import 'booking_in_process_screen.dart';
-import 'food_item_advance_booking.dart';
+// import 'food_item_advance_booking.dart';
+
+import 'dart:developer' as developer;
 
 class FoodItemBooking extends StatefulWidget {
   const FoodItemBooking({Key? key, this.bookingListModel}) : super(key: key);
@@ -27,6 +33,8 @@ class FoodItemBooking extends StatefulWidget {
 class _FoodItemBookingState extends State<FoodItemBooking> {
   List<BookingItem> bookingProgressStatus = [];
   List<BookingProgress> bookingProgres = [];
+
+  final _navigation = locateService<INavigationService>();
 
   @override
   void initState() {
@@ -56,25 +64,23 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
         onWillPop: () => onWillPop(),
         child: Scaffold(
           backgroundColor: HexColor.fromHex("#212129"),
-          body: Container(
-            // padding: const EdgeInsets.only(left: 22, right: 22),
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                // mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 40,
+          body: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              // mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 40,
+                ),
+                Container(
+                  padding: const EdgeInsets.only(left: 12, top: 20, bottom: 20),
+                  child: const GeneralNewAppBar(
+                    rightIcon: Resources.homeIconSvg,
+                    title: Strings.labelBookings,
+                    titleColor: Colors.white,
                   ),
-                  Container(
-                    padding: EdgeInsets.only(left: 12, top: 20, bottom: 20),
-                    child: const GeneralNewAppBar(
-                      rightIcon: Resources.homeIconSvg,
-                      title: Strings.labelBookings,
-                      titleColor: Colors.white,
-                    ),
-                  ),
-                  Expanded(child: bookingDetails(appTheme)),
-                ]),
-          ),
+                ),
+                Expanded(child: bookingDetails(appTheme)),
+              ]),
         ));
   }
 
@@ -102,15 +108,15 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
 
   Widget bookingDetails(IAppThemeData appTheme) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
       child: ListView.builder(
           padding: EdgeInsets.zero,
           shrinkWrap: true,
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           itemCount: bookingProgressStatus.length,
           itemBuilder: (BuildContext context, int index) {
             var item = bookingProgressStatus[index];
-            final noImage = Resources.bookingUserPNG;
+            const noImage = Resources.bookingUserPNG;
             final imageUrl = item.preferenceIconPath;
             DateTime date = DateTime.parse(item.scheduleScheduledDate ?? '');
             String formattedDate = "${date.day} ${getMonthName(date.month)}";
@@ -131,32 +137,46 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                           color: HexColor.fromHex('#fee4a4'),
                           fontWeight: FontWeight.w400),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 22, bottom: 40),
-                  margin: EdgeInsets.only(bottom: 20),
+                  padding: const EdgeInsets.only(left: 22, bottom: 40),
+                  margin: const EdgeInsets.only(bottom: 20),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: HexColor.fromHex("#4b4b52")),
                   child: InkWell(
                     onTap: () {
-                      if (index == 1) {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return FoodProductAdvancePendingDetails();
-                        }));
-                      } else if (index == 2) {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return FoodItemInProcessBooking();
-                        }));
+                      //if (index == 1) {
+                      if (item.bookingStatus == Strings.acceptData) {
+                        // _navigation.navigateTo(
+                        //     route: FoodProductAdvancePendingDetails(
+                        //         bookingItem: item));
+
+                        _navigation.navigateTo(
+                            route: nav.FoodItemAdvancePaymentRoute(
+                                bookingItem: item));
+
+                        //     Navigator
+                        //     .push(context,
+                        //         MaterialPageRoute(builder: (context) {
+                        //   return const FoodProductAdvancePendingDetails();
+                        // }));
+                      } else if (item.bookingStatus!.toUpperCase() ==
+                          Strings.confirmed) {
+                        _navigation.navigateTo(
+                            route: nav.BookingInProcessRouteView(
+                                bookingItem: item));
+                        // Navigator.push(context,
+                        //     MaterialPageRoute(builder: (context) {
+                        //   return const FoodItemInProcessBooking();
+                        // }));
                       } else if (index == 3) {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return FoodProductBookingConfirmedDetails();
-                        }));
+                        // Navigator.push(context,
+                        //     MaterialPageRoute(builder: (context) {
+                        //   return const FoodProductBookingConfirmedDetails();
+                        // }));
                       }
                       // else{
                       //   _showGeneralPopup(context);
@@ -200,7 +220,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                       Row(
                                         // mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
-                                          Container(
+                                          SizedBox(
                                             width: 13.9,
                                             child: Image.asset(
                                                 Resources.bookingStarPNG,
@@ -225,7 +245,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                 ],
                               ),
                               Container(
-                                padding: EdgeInsets.all(25),
+                                padding: const EdgeInsets.all(25),
                                 decoration: BoxDecoration(
                                   color: HexColor.fromHex("#bb3127"),
                                   borderRadius: const BorderRadius.only(
@@ -245,11 +265,11 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 17,
                           ),
                           Container(
-                            padding: EdgeInsets.only(right: 22),
+                            padding: const EdgeInsets.only(right: 22),
                             child: Column(children: [
                               Row(
                                 mainAxisAlignment:
@@ -302,19 +322,22 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 25,
                               ),
-                              progressBar(appTheme,
-                                  getBookingIconData(item.bookingStatus)),
-                              SizedBox(
+                              progressBar(
+                                  appTheme,
+                                  getBookingIconData(item.bookingStatus),
+                                  item.bookingStatus!),
+                              const SizedBox(
                                 height: 23,
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   GeneralText(
-                                    item.bookingStatus ?? "",
+                                    getStatus(item.bookingStatus ?? ""),
+                                    //  item.bookingStatus ?? "",
                                     style: appTheme
                                         .typographies.interFontFamily.headline1
                                         .copyWith(
@@ -335,24 +358,40 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
     );
   }
 
-  Widget progressBar(IAppThemeData appTheme, int index) {
+  String getStatus(String status) {
+    switch (status.toUpperCase()) {
+      case Strings.acceptData:
+        return Strings.foodItemBookingAdvancePendingHeader;
+      case Strings.requestedOrder:
+        return Strings.foodItemBookingApprovalPending;
+      case Strings.confirmed:
+        return Strings.foodItemBookingBookingConfirmed;
+      default:
+        return '';
+    }
+  }
+
+  Widget progressBar(IAppThemeData appTheme, int index, String bookingStatus) {
     var progressBar;
-    if (index == 0) {
+    developer.log(' Booking Status is ' + bookingStatus);
+    if (bookingStatus == Strings.requestedOrder) {
       progressBar = Row(children: [
         Flexible(
           child: Container(
-            padding: EdgeInsets.only(top: 8.0, bottom: 8.8),
+            padding: const EdgeInsets.only(top: 8.0, bottom: 8.8),
             width: 36,
             decoration: BoxDecoration(
                 color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
             child: Image.asset(
-              bookingProgres[index].bookingStatusIcon!,
+              bookingStatus == 'ACCEPTED'
+                  ? Resources.hourglassPNG
+                  : bookingProgres[index].bookingStatusIcon!,
               width: 18.5,
               height: 18.5,
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 7.5,
         ),
         Container(
@@ -361,7 +400,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
           height: 1,
           color: HexColor.fromHex("#f1c452"),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -370,7 +409,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
           decoration: BoxDecoration(
               color: HexColor.fromHex("#909094"), shape: BoxShape.circle),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -378,7 +417,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
             // width: MediaQuery.of(context).size.width / 5,
             height: 1,
             color: HexColor.fromHex("#909094")),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -387,7 +426,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
           decoration: BoxDecoration(
               color: HexColor.fromHex("#909094"), shape: BoxShape.circle),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -396,7 +435,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
           height: 1,
           color: HexColor.fromHex("#909094"),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -406,7 +445,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
               color: HexColor.fromHex("#909094"), shape: BoxShape.circle),
         ),
       ]);
-    } else if (index == 1) {
+    } else if (bookingStatus == Strings.acceptData) {
       progressBar = Row(children: [
         Container(
           width: 12,
@@ -414,7 +453,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
           decoration: BoxDecoration(
               color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
         ),
-        SizedBox(
+        const SizedBox(
           width: 7.5,
         ),
         Container(
@@ -423,17 +462,18 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
           height: 1,
           color: HexColor.fromHex("#f1c452"),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Flexible(
           child: Container(
-            padding: EdgeInsets.only(top: 8.0, bottom: 8.8),
+            padding: const EdgeInsets.only(top: 8.0, bottom: 8.8),
             width: 36,
             decoration: BoxDecoration(
                 color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
             child: Image.asset(
-              bookingProgres[index].bookingStatusIcon!,
+              Resources
+                  .hourglassPNG, //   bookingProgres[index].bookingStatusIcon!,
               width: 18.5,
               height: 18.5,
             ),
@@ -475,7 +515,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
               color: HexColor.fromHex("#909094"), shape: BoxShape.circle),
         ),
       ]);
-    } else if (index == 2) {
+    } else if (bookingStatus.toUpperCase() == Strings.confirmed.toUpperCase()) {
       progressBar = Row(children: [
         Container(
           width: 12,
@@ -613,6 +653,8 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
           ),
         ),
       ]);
+    } else {
+      return Container();
     }
 
     return progressBar;
