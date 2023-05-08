@@ -42,36 +42,36 @@ class FoodProductExperienceDetailsViewModel
   Future<void> defaultState() async {
     emit(Loaded());
   }
-
-  late FoodDetailsResponse foodDetailsResponse;
-
-  Future<void> getMenuDetailsById({required String experienceId}) async {
-
-    final _appService = locateService<ApplicationService>();
-
-    int _userId = (_appService.state.userInfo?.t.id)!;
-
-    final url =
-    InfininURLHelpers.getRestApiURL(Api.baseURL + Api.experienceMenuById);
-
-    emit(const Loading());
-
-    final foodDetailsRequest = foodRequest.FoodDetailsDataRequest(
-      t: int.parse(experienceId),
-      userId: _userId,
-    ).toJson();
-
-    final response = await _network.post(
-      path: url,
-      data: foodDetailsRequest,
-    );
-
-    print("req resp ${response.body}");
-    foodDetailsResponse = foodDataResponseFromJson(response.body);
-
-    emit(const Loaded());
-  }
-
+  //
+  // late FoodDetailsResponse foodDetailsResponse;
+  //
+  // Future<void> getMenuDetailsById({required String experienceId}) async {
+  //
+  //   final _appService = locateService<ApplicationService>();
+  //
+  //   int _userId = (_appService.state.userInfo?.t.id)!;
+  //
+  //   final url =
+  //   InfininURLHelpers.getRestApiURL(Api.baseURL + Api.experienceMenuById);
+  //
+  //   emit(const Loading());
+  //
+  //   final foodDetailsRequest = foodRequest.FoodDetailsDataRequest(
+  //     t: int.parse(experienceId),
+  //     userId: _userId,
+  //   ).toJson();
+  //
+  //   final response = await _network.post(
+  //     path: url,
+  //     data: foodDetailsRequest,
+  //   );
+  //
+  //   print("req resp ${response.body}");
+  //   foodDetailsResponse = foodDataResponseFromJson(response.body);
+  //
+  //   emit(const Loaded());
+  // }
+  //
 
   Future<void> submitBooking(
       BuildContext context, experience_data.T experienceData) async {
