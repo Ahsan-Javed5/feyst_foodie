@@ -16,7 +16,7 @@ final getIt = GetIt.instance;
 
 Future<dynamic> configureDependencies() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  // await Firebase.initializeApp();
   HttpOverrides.global = DevHttpOverrides(); // to ignore ssl certification
   return $initGetIt(getIt);
 }
