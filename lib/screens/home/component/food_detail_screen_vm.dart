@@ -143,16 +143,6 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
     final _appService = locateService<ApplicationService>();
 
     var orderHelper = _appService.state.orderHelper;
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => FoodProductExperienceDetailsScreenView(
-            experienceData: _experienceData,
-            selectedExperienceId: _selectedExperienceId,
-            foodMenuDetail: foodMenuData,
-            experienceId: expId,
-          )),
-    );
     if (orderHelper != null &&
         orderHelper.scheduleId != null &&
         orderHelper.scheduleId != '0' &&
@@ -165,7 +155,6 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
                   experienceData: _experienceData,
                   selectedExperienceId: _selectedExperienceId,
                   foodMenuDetail: foodMenuData,
-              experienceId: expId,
                 )),
       );
     } else {

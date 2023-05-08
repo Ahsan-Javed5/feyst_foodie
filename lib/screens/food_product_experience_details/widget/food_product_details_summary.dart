@@ -5,11 +5,8 @@ import 'package:flutter/material.dart';
 import '../../../constants/resources.dart';
 import '../../../constants/strings.dart';
 import '../../../helpers/color_helper.dart';
-import '../../../helpers/function_helper.dart';
 import '../../../helpers/order_helper.dart';
-import '../../../helpers/string_helper.dart';
 import '../../../helpers/url_helper.dart';
-import '../../../models/food_details_screen/food_details_response_model.dart';
 import '../../../services/application_state.dart';
 import '../../../setup.dart';
 import '../../../theme/app_theme_data/app_theme_data.dart';
@@ -40,13 +37,11 @@ class FoodProductDetailsSummary extends StatefulWidget {
     required this.experienceData,
     required this.foodMenuDetail,
     required this.selectedExperienceId,
-    required this.foodDetailsResponse,
   }) : super(key: key);
 
   final experience_data.T experienceData;
   final FoodMenuModel foodMenuDetail;
   final String selectedExperienceId;
-  final FoodDetailsResponse foodDetailsResponse;
 
   @override
   State<FoodProductDetailsSummary> createState() =>
@@ -88,8 +83,8 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
 
   void loadWowFactors() {
     for (int i = 0;
-        i < widget.experienceData.experienceWowFactors.length;
-        i++) {
+    i < widget.experienceData.experienceWowFactors.length;
+    i++) {
       wowFactorsList.add(CustomModel(
           name: widget.experienceData.experienceWowFactors[i]
               .wowFactorName, //   Strings.productDetailWowFactorGarden,
@@ -168,8 +163,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             GeneralText(
-                              widget.foodDetailsResponse.t?.experienceName ??
-                                  "",
+                              widget.experienceData.title,
                               style: appTheme
                                   .typographies.interFontFamily.headline6
                                   .copyWith(
@@ -177,12 +171,11 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                                 color: HexColor.fromHex('#f1c452'),
                               ),
                             ),
-                            const SizedBox(
+                            SizedBox(
                               height: 5,
                             ),
                             GeneralText(
-                              "by " + widget.foodDetailsResponse.t?.brandName ??
-                                  "",
+                              widget.experienceData.chefBrandName,
                               style: appTheme
                                   .typographies.interFontFamily.headline6
                                   .copyWith(
@@ -210,8 +203,8 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                                   style: appTheme
                                       .typographies.interFontFamily.headline6
                                       .copyWith(
-                                          fontSize: 12,
-                                          color: HexColor.fromHex('#8ea659')),
+                                      fontSize: 12,
+                                      color: HexColor.fromHex('#8ea659')),
                                 ),
                               ],
                             ),
@@ -228,7 +221,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            const BottomBar()),
+                                        const BottomBar()),
                                   );
                                 },
                                 child: GeneralNewAppBar(
@@ -277,9 +270,9 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                           widget.experienceData.description,
                           style: appTheme.typographies.interFontFamily.headline6
                               .copyWith(
-                                  fontSize: 14,
-                                  color: HexColor.fromHex('#ffffff'),
-                                  fontWeight: FontWeight.w400),
+                              fontSize: 14,
+                              color: HexColor.fromHex('#ffffff'),
+                              fontWeight: FontWeight.w400),
                         ),
                       ),
                       const SizedBox(
@@ -397,38 +390,44 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
 
   Widget foodProductDetails(IAppThemeData appTheme) {
     OrderHelper orderHelper = (_appService.state.orderHelper)!;
+    developer.log(' Schedule Id selected in Summary Page ' +
+        _appService.state.orderHelper!.scheduleId);
+    developer.log(' Schedule Id selected in Experience Price ' +
+        '${_appService.state.orderHelper!.selectedExperienceDetail.price}');
+    developer.log(' Schedule Id selected in Experience Id ' +
+        '${_appService.state.orderHelper!.selectedExperienceDetail.id}');
+    developer.log(' Foodie Id is ' + '${_appService.state.userInfo!.t.id}');
+    developer.log(' Order Helper Id is ' +
+        '${_appService.state.orderHelper!.daysGroup.scheduledDate.month}');
+    var _date = InfininURLHelpers.dayOfMonth(
+        _appService.state.orderHelper!.daysGroup.scheduledDate);
+    var dayOfMonth = _appService.state.orderHelper!.daysGroup.scheduledDate.day;
+    var _month = InfininURLHelpers.months[
+    _appService.state.orderHelper!.daysGroup.scheduledDate.month - 1];
+    var _hourSelected = _appService.state.orderHelper!.hourSelected.startTime;
 
-    var dateValue = widget.foodDetailsResponse.t?.scheduleScheduledDate ?? "";
-    DateTime dateTime = DateTime.parse(dateValue);
-    String monthAbbreviation =
-        FunctionHelper().getMonthAbbreviation(dateTime.month);
-    String dayAbbreviation =
-        FunctionHelper().getDayAbbreviation(dateTime.weekday);
+    developer.log(' _Date for Summary Page is ' + '${_date}');
+    developer.log(' Month of Summary Page is ' + '${_month}');
 
-    var _hourSelected = widget.foodDetailsResponse.t?.scheduleStartTime ?? "";
+    developer.log(' Day of Month is ' + '${dayOfMonth}');
+    developer.log(' Hour selected of Month is ' + '${_hourSelected}');
 
-    var _productDetailSelectionDate = dayAbbreviation +
+    var _productDetailSelectionDate = _date.toUpperCase() +
         ',  ' +
-        (dateTime.day.toString())! +
-        " " +
-        monthAbbreviation;
-    // var _productDetailSelectionTime = InfininURLHelpers.getAmPm(
-    //     _appService.state.orderHelper!.hourSelected.startTime);
-    // var _productDetailSelectionType =
-    //     _appService.state.orderHelper!.selectedCategory;
-    // var _numberOfPerson =
-    //     _appService.state.orderHelper!.numberOfPerson ?? 4.toString();
-
+        (dayOfMonth.toString())! +
+        "   " +
+        _month.toString().toUpperCase();
     var _productDetailSelectionTime = InfininURLHelpers.getAmPm(
-        widget.foodDetailsResponse.t?.scheduleStartTime ?? "");
+        _appService.state.orderHelper!.hourSelected.startTime);
     var _productDetailSelectionType =
-        widget.foodDetailsResponse.t?.preferenceName ?? "";
-    var _numberOfPerson = widget.foodDetailsResponse.t?.persons ?? '';
+        _appService.state.orderHelper!.selectedCategory;
+    var _numberOfPerson =
+        _appService.state.orderHelper!.numberOfPerson ?? 4.toString();
     return Padding(
       padding: EdgeInsetsDirectional.only(start: 25, end: 25),
       child: Container(
           width: double.infinity,
-          padding: const EdgeInsetsDirectional.only(
+          padding: EdgeInsetsDirectional.only(
               top: 22, bottom: 29, start: 10, end: 10),
           decoration: BoxDecoration(
               color: HexColor.fromHex("#4b4b52"),
@@ -500,9 +499,9 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                             style: appTheme
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
-                                    fontSize: 12,
-                                    color: HexColor.fromHex('#909094'),
-                                    fontWeight: FontWeight.w400),
+                                fontSize: 12,
+                                color: HexColor.fromHex('#909094'),
+                                fontWeight: FontWeight.w400),
                           ),
                         ],
                       ),
@@ -597,14 +596,14 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                         ),
                         widget.experienceData.priceTypeId != 1
                             ? GeneralText(
-                                Strings.productDetailSelectionMenuAmount,
-                                style: appTheme
-                                    .typographies.interFontFamily.headline2
-                                    .copyWith(
-                                  fontSize: 16,
-                                  color: HexColor.fromHex('#909094'),
-                                ),
-                              )
+                          Strings.productDetailSelectionMenuAmount,
+                          style: appTheme
+                              .typographies.interFontFamily.headline2
+                              .copyWith(
+                            fontSize: 16,
+                            color: HexColor.fromHex('#909094'),
+                          ),
+                        )
                             : Container(),
                       ],
                     ),
@@ -615,9 +614,9 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                       menuListItems[index].name ?? "",
                       style: appTheme.typographies.interFontFamily.headline2
                           .copyWith(
-                              fontSize: 14,
-                              color: HexColor.fromHex('#ffffff'),
-                              fontWeight: FontWeight.w400),
+                          fontSize: 14,
+                          color: HexColor.fromHex('#ffffff'),
+                          fontWeight: FontWeight.w400),
                       maxLines: 3,
                     ),
                   ],
@@ -764,9 +763,9 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                             style: appTheme
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
-                                    fontSize: 14,
-                                    color: HexColor.fromHex('#ffffff'),
-                                    decoration: TextDecoration.underline),
+                                fontSize: 14,
+                                color: HexColor.fromHex('#ffffff'),
+                                decoration: TextDecoration.underline),
                           ),
                         ],
                       )
@@ -787,7 +786,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                 GeneralText(
                   Strings.productDetailChefSubHost,
                   style:
-                      appTheme.typographies.interFontFamily.headline6.copyWith(
+                  appTheme.typographies.interFontFamily.headline6.copyWith(
                     fontSize: 14,
                     color: HexColor.fromHex('#909094'),
                   ),
@@ -799,7 +798,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                   widget.experienceData
                       .subHostName, //    Strings.productDetailChefSubHostName,
                   style:
-                      appTheme.typographies.interFontFamily.headline6.copyWith(
+                  appTheme.typographies.interFontFamily.headline6.copyWith(
                     fontSize: 18,
                     color: HexColor.fromHex('#f1c452'),
                   ),
@@ -856,9 +855,9 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                         widget.experienceData.price.toString(),
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
-                                fontSize: 36,
-                                color: HexColor.fromHex('#f89f84'),
-                                fontWeight: FontWeight.w300),
+                            fontSize: 36,
+                            color: HexColor.fromHex('#f89f84'),
+                            fontWeight: FontWeight.w300),
                       ),
                       GeneralText(
                         Strings.productDetailPriceTotal,
