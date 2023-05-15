@@ -149,7 +149,8 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                   child: InkWell(
                     onTap: () {
                       //if (index == 1) {
-                      if (item.bookingStatus == Strings.acceptData) {
+                      if (item.bookingStatus.toString().toUpperCase() ==
+                          Strings.acceptData) {
                         // _navigation.navigateTo(
                         //     route: FoodProductAdvancePendingDetails(
                         //         bookingItem: item));

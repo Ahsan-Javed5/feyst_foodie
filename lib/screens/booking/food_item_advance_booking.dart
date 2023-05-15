@@ -110,10 +110,12 @@ class _FoodProductAdvancePendingDetailsState
     final appTheme = AppTheme.of(context).theme;
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton:
-          widget._advancePendingDetails.t.bookingStatus == Strings.acceptData
-              ? getStartedButtonTitle(appTheme: appTheme)
-              : Container(),
+      floatingActionButton: widget._advancePendingDetails.t.bookingStatus
+                  .toString()
+                  .toUpperCase() ==
+              Strings.acceptData
+          ? getStartedButtonTitle(appTheme: appTheme)
+          : Container(),
       body: Container(
           color: HexColor.fromHex("#212129"),
           child: Column(
