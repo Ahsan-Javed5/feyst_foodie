@@ -87,11 +87,11 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 80,
                       ),
                       Container(
-                        padding: EdgeInsets.only(left: 31),
+                        padding: const EdgeInsets.only(left: 31),
                         child: GeneralText(
                           Strings.labelExplore,
                           style: appTheme.typographies.interFontFamily.headline6
@@ -103,11 +103,11 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       Container(
-                        padding: EdgeInsets.only(left: 31),
+                        padding: const EdgeInsets.only(left: 31),
                         child: GeneralText(
                           Strings.labelFoodExperience,
                           style: appTheme.typographies.interFontFamily.headline4
@@ -126,7 +126,7 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
 
               Container(
                 height: 250,
-                padding: EdgeInsets.only(left: 31),
+                padding: const EdgeInsets.only(left: 31),
                 child: ListView.builder(
                     itemCount: experienceList.t.length,
                     physics: const BouncingScrollPhysics(),
@@ -140,24 +140,24 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
                     }),
               ),
               Container(
-                padding: EdgeInsets.only(left: 31, bottom: 0),
+                padding: const EdgeInsets.only(left: 31, bottom: 0),
                 child: GeneralText(
                   Strings.labelPopularDishes,
                   style:
                       appTheme.typographies.interFontFamily.headline6.copyWith(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xfff1c452),
+                    color: const Color(0xfff1c452),
                   ),
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(right: 20, left: 20, top: 4),
+                margin: const EdgeInsets.only(right: 20, left: 20, top: 4),
                 child: GridView.builder(
                   padding: EdgeInsets.zero,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     childAspectRatio: 0.61,
                     crossAxisSpacing: 20.0,
@@ -261,10 +261,10 @@ class _PopularDishes extends StatelessWidget {
                           .copyWith(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
-                        color: Color(0xff909094),
+                        color: const Color(0xff909094),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                   ],
@@ -311,10 +311,12 @@ class _FoodContainer extends StatelessWidget {
           child: Stack(
             children: [
               Container(
-                height: 230,
-                padding: EdgeInsets.all(12),
+                height: 264,
+                width: 206,
+                padding: const EdgeInsets.all(12),
                 child: Container(
-                    height: 200,
+                    height: 264,
+                    width: 206,
                     child: Image.asset(
                       Resources.seafoodPNG,
                       fit: BoxFit.cover,
@@ -325,8 +327,8 @@ class _FoodContainer extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Container(
-                    width: 150,
-                    height: 50,
+                    width: 198,
+                    height: 80,
                     padding: const EdgeInsets.all(4),
                     decoration: const BoxDecoration(
                         color: Color(0xffbb3127),
@@ -342,33 +344,64 @@ class _FoodContainer extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width:45,
+                                    child: displayMarque(data.title +" ", appTheme
+                                            .typographies.interFontFamily.headline2
+                                            .copyWith(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.white,
+                                        ),),
+                                    // GeneralText(
+                                    //   data.title,
+                                    //   // 'test',
+                                    //   style: appTheme
+                                    //       .typographies.interFontFamily.headline2
+                                    //       .copyWith(
+                                    //     fontSize: 14,
+                                    //     fontWeight: FontWeight.w400,
+                                    //     color: Colors.white,
+                                    //   ),
+                                    // ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                     displayMarque(data.description+" ",appTheme
+                                             .typographies.interFontFamily.headline2
+                                             .copyWith(
+                                           fontSize: 14,
+                                           fontWeight: FontWeight.bold,
+                                           color: Colors.white,
+                                         ),),
+                                  // GeneralText(
+                                  //   data.description, // Strings.labelSeaFood2Experience,
+                                  //   style: appTheme
+                                  //       .typographies.interFontFamily.headline2
+                                  //       .copyWith(
+                                  //     fontSize: 14,
+                                  //     fontWeight: FontWeight.bold,
+                                  //     color: Colors.white,
+                                  //   ),
+                                  // ),
+                                ],
+                              ),
+                              //    displayMarque(data.description),
+                              const SizedBox(height: 10),
                               GeneralText(
-                                data.title,
-                                // 'test',
-                                style: appTheme
-                                    .typographies.interFontFamily.headline2
+                                "by " + data.chefBrandName, // Strings.labelSeaFood2Experience,
+                                style:appTheme.typographies.interFontFamily.headline2
                                     .copyWith(
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xff909094),
                                 ),
                               ),
-                              //displayMarque(data.title),
-                              // FittedBox(
-                              //   fit: BoxFit.contain,
-                              //   child: GeneralText(
-                              //     data.description, // Strings.labelSeaFood2Experience,
-                              //     style: appTheme
-                              //         .typographies.interFontFamily.headline2
-                              //         .copyWith(
-                              //       fontSize: 14,
-                              //       fontWeight: FontWeight.bold,
-                              //       color: Colors.white,
-                              //     ),
-                              //   ),
-                              // ),
                               GeneralText(
-                                data.description, // Strings.labelSeaFood2Experience,
+                                data.chefAddress, // Strings.labelSeaFood2Experience,
                                 style: appTheme
                                     .typographies.interFontFamily.headline2
                                     .copyWith(
@@ -377,22 +410,12 @@ class _FoodContainer extends StatelessWidget {
                                   color: Colors.white,
                                 ),
                               ),
-                              //    displayMarque(data.description),
-                              // GeneralText(
-                              //   data.description, // Strings.labelSeaFood2Experience,
-                              //   style: appTheme
-                              //       .typographies.interFontFamily.headline2
-                              //       .copyWith(
-                              //     fontSize: 14,
-                              //     fontWeight: FontWeight.bold,
-                              //     color: Colors.white,
-                              //   ),
-                              // ),
+
                             ],
                           ),
                         ),
-                        SizedBox(
-                          width: 12,
+                        const SizedBox(
+                          width: 1,
                         ),
                         SvgPicture.asset(
                           Resources.arrowRT,
@@ -408,7 +431,7 @@ class _FoodContainer extends StatelessWidget {
     );
   }
 
-  Widget displayMarque(String _text) {
+  Widget displayMarque(String _text, TextStyle style) {
     final _controller = MarqueerController();
     return SizedBox(
         height: 20,
@@ -440,11 +463,8 @@ class _FoodContainer extends StatelessWidget {
           // },
           child: GeneralText(
             _text, // Strings.labelSeaFood2Experience,
-            style: appTheme.typographies.interFontFamily.headline2.copyWith(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
+            style: style,
+            maxLines: 1,
           ),
         ));
   }
