@@ -347,7 +347,17 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                             fontWeight: FontWeight.w600),
                                   ),
                                 ],
-                              )
+                              ),
+                              item.bookingStatus?.toUpperCase() == Strings.acceptData? GeneralText(
+                                "Please pay advance to confirm booking",
+                                //  item.bookingStatus ?? "",
+                                style:appTheme
+                                    .typographies.interFontFamily.headline1
+                                    .copyWith(
+                                    fontSize: 13,
+                                    color: HexColor.fromHex('#909094'),),
+                              ):Container(),
+
                             ]),
                           )
                         ]),
@@ -362,20 +372,25 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
   String getStatus(String status) {
     switch (status.toUpperCase()) {
       case Strings.acceptData:
-        return Strings.foodItemBookingAdvancePendingHeader;
+        return Strings.acceptData;
       case Strings.requestedOrder:
-        return Strings.foodItemBookingApprovalPending;
+        return Strings.pendingValue;
       case Strings.confirmed:
-        return Strings.foodItemBookingBookingConfirmed;
+        return Strings.confirmed;
+      case Strings.inProgress:
+        return Strings.inProgressValue;
+      case Strings.billGenerated:
+        return Strings.billGeneratedValue;
       default:
-        return '';
+        return "";
     }
   }
 
   Widget progressBar(IAppThemeData appTheme, int index, String bookingStatus) {
     var progressBar;
     developer.log(' Booking Status is ' + bookingStatus);
-    if (bookingStatus == Strings.requestedOrder) {
+
+    if (bookingStatus.toUpperCase() == Strings.requestedOrder) {
       progressBar = Row(children: [
         Flexible(
           child: Container(
@@ -446,7 +461,8 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
               color: HexColor.fromHex("#909094"), shape: BoxShape.circle),
         ),
       ]);
-    } else if (bookingStatus == Strings.acceptData) {
+    }
+    else if (bookingStatus.toUpperCase() == Strings.acceptData) {
       progressBar = Row(children: [
         Container(
           width: 12,
@@ -516,7 +532,152 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
               color: HexColor.fromHex("#909094"), shape: BoxShape.circle),
         ),
       ]);
-    } else if (bookingStatus.toUpperCase() == Strings.confirmed.toUpperCase()) {
+    }
+    else if (bookingStatus.toUpperCase() == Strings.billGenerated) {
+      progressBar = Row(children: [
+        Container(
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(
+              color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
+        ),
+        const SizedBox(
+          width: 7.5,
+        ),
+        Container(
+          width: 64,
+          // width: MediaQuery.of(context).size.width / 6,
+          height: 1,
+          color: HexColor.fromHex("#f1c452"),
+        ),
+        SizedBox(
+          width: 2,
+        ),
+        Container(
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(
+              color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
+        ),
+        const SizedBox(
+          width: 2,
+        ),
+        Container(
+          width: 64,
+          // width: MediaQuery.of(context).size.width / 6,
+          height: 1,
+          color: HexColor.fromHex("#f1c452"),
+        ),
+        SizedBox(
+          width: 2,
+        ),
+        Container(
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(
+              color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
+        ),
+        const SizedBox(
+          width: 2,
+        ),
+        Container(
+          width: 64,
+          // width: MediaQuery.of(context).size.width / 6,
+          height: 1,
+          color: HexColor.fromHex("#f1c452"),
+        ),
+        const SizedBox(
+          width: 2,
+        ),
+        Flexible(
+          child: Container(
+            padding: const EdgeInsets.only(top: 8.0, bottom: 8.8),
+            width: 36,
+            decoration: BoxDecoration(
+                color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
+            child: Image.asset(
+              Resources
+                  .billGeneratedPNG, //   bookingProgres[index].bookingStatusIcon!,
+              width: 18.5,
+              height: 18.5,
+            ),
+          ),
+        ),
+      ]);
+    }
+    else if (bookingStatus.toUpperCase() == Strings.inProgress) {
+      progressBar = Row(children: [
+        Container(
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(
+              color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
+        ),
+        const SizedBox(
+          width: 7.5,
+        ),
+        Container(
+          width: 64,
+          // width: MediaQuery.of(context).size.width / 6,
+          height: 1,
+          color: HexColor.fromHex("#f1c452"),
+        ),
+        SizedBox(
+          width: 2,
+        ),
+        Container(
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(
+              color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
+        ),
+        const SizedBox(
+          width: 2,
+        ),
+        Container(
+          width: 64,
+          // width: MediaQuery.of(context).size.width / 6,
+          height: 1,
+          color: HexColor.fromHex("#f1c452"),
+        ),
+        SizedBox(
+          width: 2,
+        ),
+        Container(
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(
+              color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
+        ),
+        const SizedBox(
+          width: 2,
+        ),
+        Container(
+          width: 64,
+          // width: MediaQuery.of(context).size.width / 6,
+          height: 1,
+          color: HexColor.fromHex("#f1c452"),
+        ),
+        const SizedBox(
+          width: 2,
+        ),
+        Flexible(
+          child: Container(
+            padding: const EdgeInsets.only(top: 8.0, bottom: 8.8),
+            width: 36,
+            decoration: BoxDecoration(
+                color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
+            child: Image.asset(
+              Resources
+                  .paymentPNG, //   bookingProgres[index].bookingStatusIcon!,
+              width: 18.5,
+              height: 18.5,
+            ),
+          ),
+        ),
+      ]);
+    }
+    else if (bookingStatus.toUpperCase() == Strings.confirmed.toUpperCase()) {
       progressBar = Row(children: [
         Container(
           width: 12,
@@ -585,7 +746,8 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
               color: HexColor.fromHex("#909094"), shape: BoxShape.circle),
         ),
       ]);
-    } else if (index == 3) {
+    }
+    else if (index == 3) {
       progressBar = Row(children: [
         Container(
           width: 12,
