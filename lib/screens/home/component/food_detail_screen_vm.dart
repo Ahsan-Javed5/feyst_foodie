@@ -162,4 +162,13 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
           context: context, message: 'Please select all the requisite data');
     }
   }
+
+  String getValidUrlForImages(String imagePath) {
+    String baseUrl = Api.baseURL;
+    baseUrl = baseUrl
+        .replaceAll("feyst-service", "feyst-media")
+        .replaceAll(":8080", '');
+    baseUrl = baseUrl + imagePath;
+    return baseUrl;
+  }
 }

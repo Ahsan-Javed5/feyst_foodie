@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/screens/home/schedule_model.dart';
 import 'package:flutter/material.dart';
@@ -67,6 +69,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   List<CustomModel> wowFactorsList = [];
   List<CustomModel> preferencesList = [];
   List<CustomModel> menuListItems = [];
+
+  final foodDetailsViewModel = locateService<FoodDetailScreenViewModel>();
   final _appService = locateService<ApplicationService>();
   List months = [
     'Jan',
@@ -1906,8 +1910,11 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                       color: HexColor.fromHex("#f1c452"),
                       shape: BoxShape.circle,
                     ),
-                    child: SvgPicture.network(
-                        items[i].name != null ? items[i].name ?? "" : ''),
+                    child: SvgPicture.network(items[i].name != null
+                        ? foodDetailsViewModel
+                                .getValidUrlForImages(items[i].name!) ??
+                            ""
+                        : ''),
                   ),
                 ),
                 GeneralText(
