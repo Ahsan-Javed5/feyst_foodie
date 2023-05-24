@@ -38,6 +38,8 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
   final IStorageService _storage;
   final ApplicationService _appService;
 
+  void test() {}
+
   Future<void> loadProfessions({
     required String baseUrl,
     required BuildContext context,
