@@ -128,15 +128,16 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
                 height: 250,
                 padding: const EdgeInsets.only(left: 31),
                 child: ListView.builder(
-                    itemCount: experienceList.t.length,
+                    itemCount: 10,
+                    //itemCount: experienceList.t.length,
                     physics: const BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
-                      return _FoodContainer(
+                      return experienceList.t[index].priceTypeId == 1 ? _FoodContainer(
                         appTheme: appTheme,
                         data: experienceList.t[index],
                         //  foodMenuDetail: foodMenuDetail,
-                      );
+                      ) : SizedBox();
                     }),
               ),
               Container(
@@ -328,7 +329,7 @@ class _FoodContainer extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Container(
                     width: 198,
-                    height: 80,
+                    height: 85,
                     padding: const EdgeInsets.all(4),
                     decoration: const BoxDecoration(
                         color: Color(0xffbb3127),

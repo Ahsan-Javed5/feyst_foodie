@@ -1,34 +1,18 @@
 import 'package:chef/screens/food_product_experience_details/widget/food_product_details_summary.dart';
 import 'package:chef/screens/home/food_details_menu_model.dart';
-import 'package:chef/screens/home/home_screen_v.dart';
 import 'package:flutter/material.dart';
-
-import '../../constants/resources.dart';
 import '../../constants/strings.dart';
 import '../../helpers/color_helper.dart';
-import '../../helpers/order_helper.dart';
-import '../../helpers/url_helper.dart';
-import '../../services/application_state.dart';
-import '../../setup.dart';
-import '../../theme/app_theme_data/app_theme_data.dart';
-import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/widgets/general_button.dart';
-import '../../ui_kit/widgets/general_new_appbar.dart';
-import '../../ui_kit/widgets/general_text.dart';
-import '../bottom_bar/bottom_bar.dart';
 import '../../../models/home/experience_list_response.dart' as experience_data;
 
 import 'dart:developer' as developer;
 
 import 'package:chef/helpers/helpers.dart';
-import 'package:chef/screens/home/schedule_model.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../base/base_view.dart';
-import '../../../helpers/color_helper.dart';
 import '../../../services/device/device_service.dart';
 
 import '../../../models/home/experience_list_response.dart' as experience_data;

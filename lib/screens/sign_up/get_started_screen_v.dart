@@ -1,5 +1,7 @@
 import 'package:chef/helpers/helpers.dart';
 
+import '../home/home_screen_v.dart';
+
 class GetStartedScreen extends StatefulWidget {
   const GetStartedScreen({Key? key}) : super(key: key);
 
@@ -147,7 +149,10 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => SignUpScreen()),
+          MaterialPageRoute(builder: (context) =>
+             // SignUpScreen(),
+            HomeScreen(),
+          ),
         );
         //    viewModel.goToForgotPasswordScreen();
       },

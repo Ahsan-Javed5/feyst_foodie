@@ -172,8 +172,8 @@ class _FoodProductBookingConfirmedDetailsState
                                   style: appTheme
                                       .typographies.interFontFamily.headline6
                                       .copyWith(
-                                          fontSize: 12,
-                                          color: HexColor.fromHex('#8ea659')),
+                                      fontSize: 12,
+                                      color: HexColor.fromHex('#8ea659')),
                                 ),
                               ],
                             ),
@@ -226,8 +226,8 @@ class _FoodProductBookingConfirmedDetailsState
                     children: [
                       GeneralText(
                         Strings.foodItemBookingConfirmedOrderNo +
-                                widget._advancePendingDetails.t.verificationCode
-                                    .toString() ??
+                            widget._advancePendingDetails.t.verificationCode
+                                .toString() ??
                             '',
                         style: appTheme.typographies.interFontFamily.headline2
                             .copyWith(
@@ -254,10 +254,10 @@ class _FoodProductBookingConfirmedDetailsState
                                   decoration: BoxDecoration(
                                     border: qr_code_scanned
                                         ? Border.all(
-                                            color: HexColor.fromHex("#8ea659"),
-                                            width: 10)
+                                        color: HexColor.fromHex("#8ea659"),
+                                        width: 10)
                                         : Border.all(
-                                            color: Colors.white, width: 10),
+                                        color: Colors.white, width: 10),
                                     borderRadius: BorderRadius.circular(10),
                                     color: Colors.white,
                                   ),
@@ -353,17 +353,17 @@ class _FoodProductBookingConfirmedDetailsState
                               },
                               child: showDetailsView
                                   ? Container(
-                                      width: 26,
-                                      child: Image.asset(
-                                        "assets/images/icons/showData.png",
-                                      ),
-                                    )
+                                width: 26,
+                                child: Image.asset(
+                                  "assets/images/icons/showData.png",
+                                ),
+                              )
                                   : Container(
-                                      width: 26,
-                                      child: Image.asset(
-                                        "assets/images/icons/hideData.png",
-                                      ),
-                                    ),
+                                width: 26,
+                                child: Image.asset(
+                                  "assets/images/icons/hideData.png",
+                                ),
+                              ),
                             )
                           ],
                         ),
@@ -562,9 +562,9 @@ class _FoodProductBookingConfirmedDetailsState
                             style: appTheme
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
-                                    fontSize: 12,
-                                    color: HexColor.fromHex('#909094'),
-                                    fontWeight: FontWeight.w400),
+                                fontSize: 12,
+                                color: HexColor.fromHex('#909094'),
+                                fontWeight: FontWeight.w400),
                           ),
                         ],
                       ),
@@ -673,9 +673,9 @@ class _FoodProductBookingConfirmedDetailsState
                       menuListItems[index].name ?? "",
                       style: appTheme.typographies.interFontFamily.headline2
                           .copyWith(
-                              fontSize: 14,
-                              color: HexColor.fromHex('#ffffff'),
-                              fontWeight: FontWeight.w400),
+                          fontSize: 14,
+                          color: HexColor.fromHex('#ffffff'),
+                          fontWeight: FontWeight.w400),
                       maxLines: 3,
                     ),
                   ],
@@ -825,9 +825,9 @@ class _FoodProductBookingConfirmedDetailsState
                                 style: appTheme
                                     .typographies.interFontFamily.headline6
                                     .copyWith(
-                                        fontSize: 14,
-                                        color: Colors.white,
-                                        decoration: TextDecoration.underline),
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                    decoration: TextDecoration.underline),
                               )),
                         ],
                       )
@@ -848,7 +848,7 @@ class _FoodProductBookingConfirmedDetailsState
                 GeneralText(
                   Strings.productDetailChefSubHost,
                   style:
-                      appTheme.typographies.interFontFamily.headline6.copyWith(
+                  appTheme.typographies.interFontFamily.headline6.copyWith(
                     fontSize: 14,
                     color: HexColor.fromHex('#909094'),
                   ),
@@ -859,7 +859,7 @@ class _FoodProductBookingConfirmedDetailsState
                   //+
                   //     widget._advancePendingDetails.t.subHostMobileNo,
                   style:
-                      appTheme.typographies.interFontFamily.headline6.copyWith(
+                  appTheme.typographies.interFontFamily.headline6.copyWith(
                     fontSize: 18,
                     color: HexColor.fromHex('#f1c452'),
                   ),
@@ -915,9 +915,9 @@ class _FoodProductBookingConfirmedDetailsState
                         Strings.productDetailPriceValue,
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
-                                fontSize: 36,
-                                color: HexColor.fromHex('#f89f84'),
-                                fontWeight: FontWeight.w300),
+                            fontSize: 36,
+                            color: HexColor.fromHex('#f89f84'),
+                            fontWeight: FontWeight.w300),
                       ),
                       GeneralText(
                         Strings.productDetailPriceTotal,
@@ -1032,89 +1032,89 @@ class _FoodProductBookingConfirmedDetailsState
   Widget showDetails(IAppThemeData appTheme) {
     return showDetailsView
         ? Column(
+      children: [
+        Container(
+          padding: EdgeInsetsDirectional.only(start: 25, end: 25),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                padding: EdgeInsetsDirectional.only(start: 25, end: 25),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          color: HexColor.fromHex('#f1c452'),
-                          width: 16,
-                          height: 1,
-                        ),
-                        const SizedBox(
-                          width: 7.2,
-                        ),
-                        GeneralText(
-                          Strings.productDetailAboutTitle,
-                          style: appTheme.typographies.interFontFamily.headline6
-                              .copyWith(
-                            fontSize: 20,
-                            color: HexColor.fromHex('#f1c452'),
-                          ),
-                        ),
-                      ],
+              Row(
+                children: [
+                  Container(
+                    color: HexColor.fromHex('#f1c452'),
+                    width: 16,
+                    height: 1,
+                  ),
+                  const SizedBox(
+                    width: 7.2,
+                  ),
+                  GeneralText(
+                    Strings.productDetailAboutTitle,
+                    style: appTheme.typographies.interFontFamily.headline6
+                        .copyWith(
+                      fontSize: 20,
+                      color: HexColor.fromHex('#f1c452'),
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 23),
-                      child: GeneralText(
-                        Strings.productDetailAboutSubTitle,
-                        style: appTheme.typographies.interFontFamily.headline6
-                            .copyWith(
-                                fontSize: 14,
-                                color: HexColor.fromHex('#ffffff'),
-                                fontWeight: FontWeight.w400),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 27,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          color: HexColor.fromHex('#f1c452'),
-                          width: 16,
-                          height: 1,
-                        ),
-                        const SizedBox(
-                          width: 7.2,
-                        ),
-                        GeneralText(
-                          Strings.productDetailWowFactorTitle,
-                          style: appTheme.typographies.interFontFamily.headline6
-                              .copyWith(
-                            fontSize: 20,
-                            color: HexColor.fromHex('#f1c452'),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 11.6,
-                    ),
-                    wowFactors(appTheme),
-                  ],
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 23),
+                child: GeneralText(
+                  Strings.productDetailAboutSubTitle,
+                  style: appTheme.typographies.interFontFamily.headline6
+                      .copyWith(
+                      fontSize: 14,
+                      color: HexColor.fromHex('#ffffff'),
+                      fontWeight: FontWeight.w400),
                 ),
               ),
               const SizedBox(
-                height: 16,
+                height: 27,
               ),
-              foodProductDetails(appTheme),
+              Row(
+                children: [
+                  Container(
+                    color: HexColor.fromHex('#f1c452'),
+                    width: 16,
+                    height: 1,
+                  ),
+                  const SizedBox(
+                    width: 7.2,
+                  ),
+                  GeneralText(
+                    Strings.productDetailWowFactorTitle,
+                    style: appTheme.typographies.interFontFamily.headline6
+                        .copyWith(
+                      fontSize: 20,
+                      color: HexColor.fromHex('#f1c452'),
+                    ),
+                  ),
+                ],
+              ),
               const SizedBox(
-                height: 28,
+                height: 11.6,
               ),
-              productPriceInformation(appTheme),
-              SizedBox(
-                height: 209,
-              ),
+              wowFactors(appTheme),
             ],
-          )
+          ),
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        foodProductDetails(appTheme),
+        const SizedBox(
+          height: 28,
+        ),
+        productPriceInformation(appTheme),
+        SizedBox(
+          height: 209,
+        ),
+      ],
+    )
         : Container();
   }
 
@@ -1182,9 +1182,9 @@ class _FoodProductBookingConfirmedDetailsState
                       Radio(
                         visualDensity: VisualDensity.compact,
                         fillColor: MaterialStateProperty.resolveWith<Color>(
-                            (Set<MaterialState> states) {
-                          return HexColor.fromHex("#fbeccb");
-                        }),
+                                (Set<MaterialState> states) {
+                              return HexColor.fromHex("#fbeccb");
+                            }),
                         activeColor: HexColor.fromHex("#fbeccb"),
                         value: 0,
                         groupValue: group1Value,
@@ -1200,9 +1200,9 @@ class _FoodProductBookingConfirmedDetailsState
                           maxLines: 2,
                           style: appTheme.typographies.interFontFamily.headline6
                               .copyWith(
-                                  color: HexColor.fromHex("#fbeccb"),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600),
+                              color: HexColor.fromHex("#fbeccb"),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
                     ],
@@ -1212,9 +1212,9 @@ class _FoodProductBookingConfirmedDetailsState
                       Radio(
                         visualDensity: VisualDensity.compact,
                         fillColor: MaterialStateProperty.resolveWith<Color>(
-                            (Set<MaterialState> states) {
-                          return HexColor.fromHex("#fbeccb");
-                        }),
+                                (Set<MaterialState> states) {
+                              return HexColor.fromHex("#fbeccb");
+                            }),
                         activeColor: HexColor.fromHex("#fbeccb"),
                         value: 1,
                         groupValue: group1Value,
@@ -1230,9 +1230,9 @@ class _FoodProductBookingConfirmedDetailsState
                           maxLines: 2,
                           style: appTheme.typographies.interFontFamily.headline6
                               .copyWith(
-                                  color: HexColor.fromHex("#fbeccb"),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600),
+                              color: HexColor.fromHex("#fbeccb"),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
                     ],
@@ -1242,9 +1242,9 @@ class _FoodProductBookingConfirmedDetailsState
                       Radio(
                         visualDensity: VisualDensity.compact,
                         fillColor: MaterialStateProperty.resolveWith<Color>(
-                            (Set<MaterialState> states) {
-                          return HexColor.fromHex("#fbeccb");
-                        }),
+                                (Set<MaterialState> states) {
+                              return HexColor.fromHex("#fbeccb");
+                            }),
                         activeColor: HexColor.fromHex("#fbeccb"),
                         value: 2,
                         groupValue: group1Value,
@@ -1260,9 +1260,9 @@ class _FoodProductBookingConfirmedDetailsState
                           maxLines: 2,
                           style: appTheme.typographies.interFontFamily.headline6
                               .copyWith(
-                                  color: HexColor.fromHex("#fbeccb"),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600),
+                              color: HexColor.fromHex("#fbeccb"),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
                     ],
@@ -1274,9 +1274,9 @@ class _FoodProductBookingConfirmedDetailsState
                       Radio(
                         visualDensity: VisualDensity.compact,
                         fillColor: MaterialStateProperty.resolveWith<Color>(
-                            (Set<MaterialState> states) {
-                          return HexColor.fromHex("#fbeccb");
-                        }),
+                                (Set<MaterialState> states) {
+                              return HexColor.fromHex("#fbeccb");
+                            }),
                         activeColor: HexColor.fromHex("#fbeccb"),
                         value: 3,
                         groupValue: group1Value,

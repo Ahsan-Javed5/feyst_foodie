@@ -127,6 +127,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                 const SizedBox(
                   height: 18,
                 ),
+                ///top container which have image, title, home icon etc
                 Container(
                   height: 217,
                   padding: EdgeInsets.only(left: 33, bottom: 17),
@@ -139,6 +140,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                   child: Stack(
                     clipBehavior: Clip.none,
                     children: [
+                      ///experience image
                       Positioned(
                         right: -40,
                         top: -20,
@@ -158,6 +160,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                           ),
                         ),
                       ),
+                      ///experience title, name and rating column
                       Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -209,6 +212,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                               ],
                             ),
                           ]),
+                      ///home icon
                       Positioned.fill(
                         top: 40,
                         child: Align(
@@ -263,6 +267,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                       const SizedBox(
                         height: 5,
                       ),
+                      ///experience description
                       Padding(
                         padding: const EdgeInsets.only(left: 23),
                         child: GeneralText(
@@ -586,14 +591,14 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        GeneralText(
+                        widget.experienceData.priceTypeId != 1 ? GeneralText(
                           Strings.productDetailSelectionMenuQuantity,
                           style: appTheme.typographies.interFontFamily.headline2
                               .copyWith(
                             fontSize: 16,
                             color: HexColor.fromHex('#f89f84'),
                           ),
-                        ),
+                        ):SizedBox(),
                         widget.experienceData.priceTypeId != 1
                             ? GeneralText(
                           Strings.productDetailSelectionMenuAmount,
@@ -759,7 +764,8 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                             width: 5,
                           ),
                           GeneralText(
-                            Strings.productDetailChefLocation,
+                            widget.experienceData.chefAddress,
+                            //Strings.productDetailChefLocation,
                             style: appTheme
                                 .typographies.interFontFamily.headline6
                                 .copyWith(

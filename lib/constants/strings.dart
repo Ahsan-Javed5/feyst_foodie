@@ -279,6 +279,7 @@ abstract class Strings {
   static const foodProductSubTitle = "Biryani";
   static const appCurrency = "Rs";
   static const foodProductItemPrice = "280";
+  static const perPerson = 'Per Person';
   static const foodProductItemDescription =
       "A spiced mix of meat and rice, traditionally cooked over an open fire.";
 
@@ -430,6 +431,7 @@ abstract class Strings {
   static const popularFoodDetailAppBarTitle = 'Sindhi Biryani';
   static const foodDetailPreferences = 'Preferences';
   static const foodDetailLocation = 'Location';
+  static const locationOnOrderConfirmation = 'Location will be shown on Map here, when you confirm at least one order.';
   static const foodDetailPreferenceCouple = 'Couple';
   static const foodDetailPreferenceFamily = 'Family';
   static const foodDetailPreferenceFnf = 'F&F';

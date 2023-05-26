@@ -479,17 +479,28 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       children: [
         Container(
           padding: const EdgeInsetsDirectional.only(
-              start: 25, end: 25, bottom: 15, top: 15),
+              start: 25, end: 25, bottom: 5, top: 5),
           decoration: BoxDecoration(
               color: HexColor.fromHex("#8ea659"),
               borderRadius:
                   const BorderRadius.only(bottomLeft: Radius.circular(40))),
-          child: GeneralText(
-            Strings.appCurrency + "." + " " + widget.data.price.toString(),
-            style: appTheme.typographies.interFontFamily.headline4.copyWith(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: HexColor.fromHex('#ffffff')),
+          child: Column(
+            children: [
+              widget.data.priceTypeId ==1 ? GeneralText(
+                Strings.appCurrency + "." + " " + widget.data.price.toString(),
+                style: appTheme.typographies.interFontFamily.headline6.copyWith(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: HexColor.fromHex('#ffffff')),
+              ) : SizedBox(),
+              GeneralText(
+                Strings.perPerson,
+                style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                    fontSize: 12,
+                    fontWeight: FontWeight.normal,
+                    color: HexColor.fromHex('#ffffff')),
+              ),
+            ],
           ),
         ),
       ],
@@ -581,9 +592,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                           ),
                         ],
                       ),
-                      displayQuantityData(),
+                      widget.data.priceTypeId != 1 ? displayQuantityData() : Container(),
                       SizedBox(
-                        height: 16,
+                        height: 15,
                       ),
                       Divider(
                         color: HexColor.fromHex('#f1c452'),
@@ -614,7 +625,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             getFoodItemUsers(appTheme: appTheme),
           ],
         ),
-        widget.data.priceTypeId != 1 ? displayQuantityDetails() : Container(),
+        displayQuantityDetails(),
       ],
     );
   }
@@ -1820,44 +1831,64 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
         const SizedBox(
           height: 12,
         ),
+        ///preferences and no of persons section in this row
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            Column(
+              children: [
+                GeneralText(
+                  Strings.foodDetailPreferences,
+                  style: appTheme.typographies.interFontFamily.headline6.copyWith(
+                    fontSize: 20,
+                    color: HexColor.fromHex('#f1c452'),
+                  ),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                wowFactors(appTheme, preferencesList),
+              ],
+            ),
             Container(
-              color: HexColor.fromHex('#f1c452'),
-              width: 16,
-              height: 1,
+              color: Colors.white.withOpacity(0.8),
+              width: 0.5,
+              height: 110,
             ),
-            const SizedBox(
-              width: 5,
-            ),
-            GeneralText(
-              Strings.foodDetailPreferences,
-              style: appTheme.typographies.interFontFamily.headline6.copyWith(
-                fontSize: 20,
-                color: HexColor.fromHex('#f1c452'),
+            //Spacer(),
+            Padding(
+              padding: const EdgeInsets.only(right: 30,),
+              child: Column(
+                children: [
+                  GeneralText(
+                    widget.data.persons,
+                    style: appTheme.typographies.interFontFamily.headline6.copyWith(
+                      fontSize: 35,
+                      color: HexColor.fromHex('#b0c18b'),
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Image.asset(
+                        Resources.userIconPNG,
+                        height: 10,
+                        color: Colors.white,
+                      ),
+                      SizedBox(width:6),
+                      GeneralText(
+                        'Persons',
+                        style: appTheme.typographies.interFontFamily.headline6.copyWith(
+                          fontSize: 14,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ),
-            Spacer(),
-            Image.asset(
-              Resources.userIconPNG,
-              height: 12,
-            ),
-            GeneralText(
-              widget.data.persons,
-              style: appTheme.typographies.interFontFamily.headline6.copyWith(
-                fontSize: 16,
-                color: HexColor.fromHex('#f1c452'),
-              ),
-            ),
-            SizedBox(
-              width: 12,
             ),
           ],
         ),
-        const SizedBox(
-          height: 12,
-        ),
-        wowFactors(appTheme, preferencesList),
         const SizedBox(
           height: 12,
         ),
@@ -1880,6 +1911,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             ),
           ],
         ),
+        SizedBox(height:5),
+        ///Google map will be here
+        SizedBox(height:80),
       ],
     );
   }
