@@ -128,16 +128,16 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
                 height: 250,
                 padding: const EdgeInsets.only(left: 31),
                 child: ListView.builder(
-                    itemCount: 10,
-                    //itemCount: experienceList.t.length,
+                   // itemCount: 10,
+                    itemCount: experienceList.t.length,
                     physics: const BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
-                      return experienceList.t[index].priceTypeId == 1 ? _FoodContainer(
+                      return _FoodContainer(
                         appTheme: appTheme,
-                        data: experienceList.t[index],
+                        data: experienceList.t[(experienceList.t.length-1)-index],
                         //  foodMenuDetail: foodMenuDetail,
-                      ) : SizedBox();
+                      );
                     }),
               ),
               Container(

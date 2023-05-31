@@ -90,12 +90,12 @@ class HomeScreenViewModel extends BaseViewModel<HomeScreenState> {
       //   path: 'https://run.mocky.io/v3/80289cbe-aa47-491e-9eb2-56126289c8a4',
       // );
       if (response != null) {
-        developer.log(' Response experience is ' + '${response.body}');
+        //developer.log(' Response experience is ' + '${response.body}');
 
         ExperienceListResponse experienceListResponse =
             experienceListResponseFromJson(response.body);
-        developer.log(' experienceListResponse up Response is ' +
-            '${experienceListResponse.code}');
+        // developer.log(' experienceListResponse up Response is ' +
+        //     '${experienceListResponse.code}');
         // getExperienceMenu(
         //   experienceListResponse: experienceListResponse,
         // );

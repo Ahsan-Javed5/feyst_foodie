@@ -45,7 +45,7 @@ class FoodDetailScreenView extends BaseView<FoodDetailScreenViewModel> {
             backgroundColor: HexColor.fromHex('#212129'),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
-            floatingActionButton: getStartedButtonTitle(context: context),
+           //floatingActionButton: getStartedButtonTitle(context: context),
             // : Container(),
             body: state.when(
               loading: _loading,

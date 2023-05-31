@@ -56,140 +56,139 @@ class _UserProfileState extends State<UserProfile> {
         onWillPop: () => onWillPop(),
         child: Scaffold(
           body: SingleChildScrollView(
-            child: Container(
-              child: Column(children: [
-                Container(
-                    // decoration: BoxDecoration(
-                    //   color: HexColor.fromHex("#212129").withOpacity(0.8),
-                    // ),
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage(
-                                'assets/images/icons/user_blurred.jpeg'),
-                            fit: BoxFit.cover)),
-                    child: BackdropFilter(
-                      filter:
-                          ImageFilter.blur(sigmaX: _sigmaX, sigmaY: _sigmaY),
-                      child: Container(
-                        color: HexColor.fromHex("#212129").withOpacity(0.96),
-                        child: Column(
-                          // mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const SizedBox(
-                              height: 70,
+            child: Column(
+                children: [
+              Container(
+                  // decoration: BoxDecoration(
+                  //   color: HexColor.fromHex("#212129").withOpacity(0.8),
+                  // ),
+                  decoration: const BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(
+                              'assets/images/icons/user_blurred.jpeg'),
+                          fit: BoxFit.cover)),
+                  child: BackdropFilter(
+                    filter:
+                        ImageFilter.blur(sigmaX: _sigmaX, sigmaY: _sigmaY),
+                    child: Container(
+                      color: HexColor.fromHex("#212129").withOpacity(0.96),
+                      child: Column(
+                        // mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            height: 70,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.only(left: 18.0),
+                            child: GeneralNewAppBar(
+                              rightIcon: Resources.homeIconSvg,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 18.0),
-                              child: GeneralNewAppBar(
-                                rightIcon: Resources.homeIconSvg,
+                          ),
+                          const SizedBox(
+                            height: 40,
+                          ),
+                          SizedBox(
+                            width: 129,
+                            child: Image.asset(
+                                'assets/images/icons/userProfile.png',
+                                fit: BoxFit.fill),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //       builder: (context) =>
+                              //           FoodProductExperienceDetails()),
+                              // );
+                            },
+                            child: GeneralText(
+                              Strings.userProfileName,
+                              style: appTheme
+                                  .typographies.interFontFamily.headline6
+                                  .copyWith(
+                                      fontSize: 25,
+                                      color: HexColor.fromHex('#f1c452'),
+                                      fontWeight: FontWeight.w400),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 38,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 18.9,
+                                child: Image.asset(
+                                    'assets/images/icons/star.png',
+                                    fit: BoxFit.fill),
                               ),
-                            ),
-                            const SizedBox(
-                              height: 40,
-                            ),
-                            Container(
-                              width: 129,
-                              child: Image.asset(
-                                  'assets/images/icons/userProfile.png',
-                                  fit: BoxFit.fill),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            InkWell(
-                              onTap: () {
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //       builder: (context) =>
-                                //           FoodProductExperienceDetails()),
-                                // );
-                              },
-                              child: GeneralText(
-                                Strings.userProfileName,
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              GeneralText(
+                                Strings.userProfileReviews,
                                 style: appTheme
                                     .typographies.interFontFamily.headline6
                                     .copyWith(
-                                        fontSize: 25,
-                                        color: HexColor.fromHex('#f1c452'),
-                                        fontWeight: FontWeight.w400),
+                                        decoration: TextDecoration.underline,
+                                        fontSize: 12,
+                                        color: HexColor.fromHex('#8ea659')),
                               ),
-                            ),
-                            SizedBox(
-                              height: 38,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: 18.9,
-                                  child: Image.asset(
-                                      'assets/images/icons/star.png',
-                                      fit: BoxFit.fill),
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                GeneralText(
-                                  Strings.userProfileReviews,
-                                  style: appTheme
-                                      .typographies.interFontFamily.headline6
-                                      .copyWith(
-                                          decoration: TextDecoration.underline,
-                                          fontSize: 12,
-                                          color: HexColor.fromHex('#8ea659')),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 17,
-                            ),
-                          ],
-                        ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 17,
+                          ),
+                        ],
                       ),
-                    )),
-                Container(
-                  padding: EdgeInsetsDirectional.only(
-                      top: 10, bottom: 10, start: 23),
-                  color: HexColor.fromHex("#2c292b"),
-                  child: Row(
-                    children: [
-                      GeneralText(
-                        Strings.userProfileDetailsLabel,
-                        style: appTheme.typographies.interFontFamily.headline6
-                            .copyWith(
-                                fontSize: 20,
-                                color: HexColor.fromHex('#f1c452'),
-                                fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
+                    ),
+                  )),
+              Container(
+                padding: const EdgeInsetsDirectional.only(
+                    top: 10, bottom: 10, start: 23),
+                color: HexColor.fromHex("#2c292b"),
+                child: Row(
+                  children: [
+                    GeneralText(
+                      Strings.userProfileDetailsLabel,
+                      style: appTheme.typographies.interFontFamily.headline6
+                          .copyWith(
+                              fontSize: 20,
+                              color: HexColor.fromHex('#f1c452'),
+                              fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
-                Container(
-                    color: HexColor.fromHex("#212129"),
-                    padding:
-                        EdgeInsetsDirectional.only(start: 23, end: 23, top: 18),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        firstQuestioner(appTheme),
-                        const SizedBox(
-                          height: 38,
-                        ),
-                        secondQuestioner(appTheme),
-                        const SizedBox(
-                          height: 38,
-                        ),
-                        userInterest(appTheme),
-                        const SizedBox(
-                          height: 38,
-                        ),
-                        socialMediaHandles(appTheme),
-                      ],
-                    )),
-              ]),
-            ),
+              ),
+              Container(
+                  color: HexColor.fromHex("#212129"),
+                  padding:
+                      const EdgeInsetsDirectional.only(start: 23, end: 23, top: 18),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      firstQuestioner(appTheme),
+                      const SizedBox(
+                        height: 38,
+                      ),
+                      secondQuestioner(appTheme),
+                      const SizedBox(
+                        height: 38,
+                      ),
+                      userInterest(appTheme),
+                      const SizedBox(
+                        height: 38,
+                      ),
+                      socialMediaHandles(appTheme),
+                    ],
+                  )),
+            ]),
           ),
         ));
   }
@@ -336,7 +335,7 @@ class _UserProfileState extends State<UserProfile> {
         ),
         GridView.builder(
             padding: EdgeInsets.zero,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,

@@ -14,6 +14,7 @@ import '../../theme/app_theme_widget.dart';
 class SplashScreen extends BaseView<SplashScreenViewModel> {
   SplashScreen({Key? key}) : super(key: key);
 
+
   @override
   Widget buildScreen({
     required BuildContext context,
@@ -24,13 +25,15 @@ class SplashScreen extends BaseView<SplashScreenViewModel> {
     final _logoHeight = _screenSize.height * .1;
     final appTheme = AppTheme.of(context).theme;
     viewModel.fetchLoginDetails(context);
+
     return BlocBuilder<SplashScreenViewModel, SplashScreenState>(
       bloc: viewModel,
       builder: (_, state) {
         return Scaffold(
           backgroundColor: appTheme.colors.primaryBackground,
           body: Center(
-            child: InkWell(
+            child:
+            InkWell(
               onTap: (){
                 Navigator.push(
                   context,

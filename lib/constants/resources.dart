@@ -61,4 +61,9 @@ abstract class Resources {
   static const reviewCheckPNG = 'assets/images/icons/review_check.png';
   static const infoPNG = 'assets/images/icons/info.png';
   static const bookingCheckboxPNG = 'assets/images/icons/booking_checkbox.png';
+
+  ///food details screen
+  static const String foodDetailsBg = 'assets/images/icons/food_detail_bg.png';
+
+
 }

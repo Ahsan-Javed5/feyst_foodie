@@ -1,6 +1,6 @@
 import 'package:chef/helpers/helpers.dart';
+import 'package:video_player/video_player.dart';
 
-import '../home/home_screen_v.dart';
 
 class GetStartedScreen extends StatefulWidget {
   const GetStartedScreen({Key? key}) : super(key: key);
@@ -17,9 +17,24 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
     buildNumber: 'Unknown',
     buildSignature: 'Unknown',
   );
+  late VideoPlayerController videoController;
 
   void initState() {
+    videoController = VideoPlayerController.asset(
+        'assets/videos/Clipped.m4v')
+      ..initialize().then((_) {
+        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+        setState(() {});
+      });
+    videoController.play();
+    videoController.setLooping(true);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    videoController.dispose();
   }
 
   @override
@@ -36,41 +51,46 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
     final appTheme = AppTheme.of(context).theme;
     return Scaffold(
       backgroundColor: appTheme.colors.primaryBackground,
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              Resources.getStartedBgPng,
-            ),
-            fit: BoxFit.cover,
+      body: Stack(
+        children: [
+          VideoPlayer(videoController),
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            // decoration: const BoxDecoration(
+            //   image: DecorationImage(
+            //     image: AssetImage(
+            //       Resources.getStartedBgPng,
+            //     ),
+            //     fit: BoxFit.cover,
+            //   ),
+            // ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Spacer(),
+                _getStartedTitle(appTheme: appTheme),
+                const SizedBox(
+                  height: 12,
+                ),
+                _getStartedSubTitle(appTheme: appTheme),
+                const SizedBox(
+                  height: 230,
+                ),
+                _getStartedButtonTitle(appTheme: appTheme),
+                const SizedBox(
+                  height: 50,
+                ),
+                Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Text(
+                      ' Version ' + '${_packageInfo.version}',
+                      style: appTheme.typographies.interFontFamily.headline6,
+                    )),
+              ],
+            ) /* add child content here */,
           ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Spacer(),
-            _getStartedTitle(appTheme: appTheme),
-            const SizedBox(
-              height: 12,
-            ),
-            _getStartedSubTitle(appTheme: appTheme),
-            const SizedBox(
-              height: 230,
-            ),
-            _getStartedButtonTitle(appTheme: appTheme),
-            const SizedBox(
-              height: 50,
-            ),
-            Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: Text(
-                  ' Version ' + '${_packageInfo.version}',
-                  style: appTheme.typographies.interFontFamily.headline6,
-                )),
-          ],
-        ) /* add child content here */,
+        ],
       ),
     );
   }
@@ -150,8 +170,8 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) =>
-             // SignUpScreen(),
-            HomeScreen(),
+             SignUpScreen(),
+            //HomeScreen(),
           ),
         );
         //    viewModel.goToForgotPasswordScreen();

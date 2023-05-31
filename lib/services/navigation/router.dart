@@ -48,13 +48,14 @@ abstract class Routes {
 @MaterialAutoRouter(
   replaceInRouteName: 'Screen,Route',
   routes: <AutoRoute>[
-    AutoRoute(
-      page: SplashScreen,
-      initial: true,
-    ),
+    // AutoRoute(
+    //   page: SplashScreen,
+    //   initial: true,
+    // ),
     AutoRoute(
       page: GetStartedScreen,
-      path: Routes.getStartedScreen,
+      initial: true,
+      //path: Routes.getStartedScreen,
     ),
     AutoRoute(
       page: SignUpScreen,

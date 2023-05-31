@@ -27,8 +27,8 @@ class GeneralNewAppBar extends StatelessWidget {
         // Image.asset(Resources.appBackIcon,height: 35,),
         InkWell(
             onTap: () {
-              // Navigator.pop(context);
-              _navigationService.navigateTo(route:const BottomBar());
+               Navigator.pop(context);
+              //_navigationService.navigateTo(route:const BottomBar());
 
               // _navigationService.replace(context);
 
