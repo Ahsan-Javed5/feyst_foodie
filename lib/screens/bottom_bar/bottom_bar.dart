@@ -27,9 +27,9 @@ class _BottomBarState extends State<BottomBar> with WidgetsBindingObserver {
     HomeScreen(),
     // UserProfile(),
     // FoodItemBooking(),
-    BookingListScreen(),
+    BookingListScreen(isBookingScreen: true,),
     // FoodDetailScreen(),
-    UserProfile(),
+    BookingListScreen(isBookingScreen: false,),
     EditProfileScreen(),
   ];
   @override

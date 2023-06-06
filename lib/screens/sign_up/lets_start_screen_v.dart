@@ -100,7 +100,7 @@ class _SignUpLetsStartScreenState extends State<SignUpLetsStartScreen> {
                     ),
                     Expanded(
                       child: GeneralText(
-                        Strings.letsStartScreenLabel2,
+                        Strings.letsStartScreenLabel3,
                         maxLines: 2,
                         textAlign: TextAlign.start,
                         style: appTheme.typographies.interFontFamily.headline4
@@ -126,7 +126,7 @@ class _SignUpLetsStartScreenState extends State<SignUpLetsStartScreen> {
                     ),
                     Expanded(
                       child: GeneralText(
-                        Strings.letsStartScreenLabel2,
+                        Strings.letsStartScreenLabel4,
                         maxLines: 2,
                         textAlign: TextAlign.start,
                         style: appTheme.typographies.interFontFamily.headline4
@@ -152,7 +152,7 @@ class _SignUpLetsStartScreenState extends State<SignUpLetsStartScreen> {
                     ),
                     Expanded(
                       child: GeneralText(
-                        Strings.letsStartScreenLabel2,
+                        Strings.letsStartScreenLabel5,
                         maxLines: 2,
                         textAlign: TextAlign.start,
                         style: appTheme.typographies.interFontFamily.headline4

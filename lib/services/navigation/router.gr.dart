@@ -24,10 +24,10 @@ import '../../screens/booking/booking_in_process_screen.dart' as _i8;
 import '../../screens/booking/food_item_advance_booking.dart' as _i5;
 import '../../screens/bottom_bar/bottom_bar.dart' as _i10;
 import '../../screens/home/food_item_booking_confirmed.dart' as _i9;
-import '../../screens/screen.dart' as _i1;
+import '../../screens/screen.dart' as _i3;
 import '../../screens/sign_in/sign_in_screen_v.dart' as _i4;
-import '../../screens/sign_up/get_started_screen_v.dart' as _i2;
-import '../../screens/sign_up/sign_up_screen_v.dart' as _i3;
+import '../../screens/sign_up/get_started_screen_v.dart' as _i1;
+import '../../screens/sign_up/sign_up_screen_v.dart' as _i2;
 
 class AppRouter extends _i11.RootStackRouter {
   AppRouter([_i12.GlobalKey<_i12.NavigatorState>? navigatorKey])
@@ -35,18 +35,10 @@ class AppRouter extends _i11.RootStackRouter {
 
   @override
   final Map<String, _i11.PageFactory> pagesMap = {
-    SplashRoute.name: (routeData) {
-      final args = routeData.argsAs<SplashRouteArgs>(
-          orElse: () => const SplashRouteArgs());
-      return _i11.MaterialPageX<dynamic>(
-        routeData: routeData,
-        child: _i1.SplashScreen(key: args.key),
-      );
-    },
     GetStartedRoute.name: (routeData) {
       return _i11.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i2.GetStartedScreen(),
+        child: const _i1.GetStartedScreen(),
       );
     },
     SignUpRoute.name: (routeData) {
@@ -54,7 +46,7 @@ class AppRouter extends _i11.RootStackRouter {
           orElse: () => const SignUpRouteArgs());
       return _i11.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i3.SignUpScreen(
+        child: _i2.SignUpScreen(
           isVerified: args.isVerified,
           key: args.key,
         ),
@@ -64,7 +56,7 @@ class AppRouter extends _i11.RootStackRouter {
       final args = routeData.argsAs<ForgotPasswordRouteArgs>();
       return _i11.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i1.ForgotPasswordScreen(
+        child: _i3.ForgotPasswordScreen(
           baseUrl: args.baseUrl,
           key: args.key,
         ),
@@ -135,12 +127,8 @@ class AppRouter extends _i11.RootStackRouter {
   @override
   List<_i11.RouteConfig> get routes => [
         _i11.RouteConfig(
-          SplashRoute.name,
-          path: '/',
-        ),
-        _i11.RouteConfig(
           GetStartedRoute.name,
-          path: '/get_started_screen',
+          path: '/',
         ),
         _i11.RouteConfig(
           SignUpRoute.name,
@@ -189,43 +177,19 @@ class AppRouter extends _i11.RootStackRouter {
 }
 
 /// generated route for
-/// [_i1.SplashScreen]
-class SplashRoute extends _i11.PageRouteInfo<SplashRouteArgs> {
-  SplashRoute({_i12.Key? key})
-      : super(
-          SplashRoute.name,
-          path: '/',
-          args: SplashRouteArgs(key: key),
-        );
-
-  static const String name = 'SplashRoute';
-}
-
-class SplashRouteArgs {
-  const SplashRouteArgs({this.key});
-
-  final _i12.Key? key;
-
-  @override
-  String toString() {
-    return 'SplashRouteArgs{key: $key}';
-  }
-}
-
-/// generated route for
-/// [_i2.GetStartedScreen]
+/// [_i1.GetStartedScreen]
 class GetStartedRoute extends _i11.PageRouteInfo<void> {
   const GetStartedRoute()
       : super(
           GetStartedRoute.name,
-          path: '/get_started_screen',
+          path: '/',
         );
 
   static const String name = 'GetStartedRoute';
 }
 
 /// generated route for
-/// [_i3.SignUpScreen]
+/// [_i2.SignUpScreen]
 class SignUpRoute extends _i11.PageRouteInfo<SignUpRouteArgs> {
   SignUpRoute({
     dynamic isVerified,
@@ -259,7 +223,7 @@ class SignUpRouteArgs {
 }
 
 /// generated route for
-/// [_i1.ForgotPasswordScreen]
+/// [_i3.ForgotPasswordScreen]
 class ForgotPasswordRoute extends _i11.PageRouteInfo<ForgotPasswordRouteArgs> {
   ForgotPasswordRoute({
     required String baseUrl,

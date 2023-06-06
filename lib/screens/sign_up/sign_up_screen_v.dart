@@ -1223,6 +1223,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
           SizedBox(
             height: 22,
           ),
+          ///resend code
           InkWell(
             onTap: () {
               Navigator.pop(context);

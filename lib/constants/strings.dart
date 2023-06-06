@@ -291,9 +291,15 @@ abstract class Strings {
 
   static const letsStartScreenLabel = "Last but not the least!";
   static const letsStartScreenLabel1 =
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor";
+      "As a Foodie , you must need to read these instructions";
   static const letsStartScreenLabel2 =
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit";
+      "Browse and book chefs based on cuisine, location, and availability.";
+  static const letsStartScreenLabel3 =
+      "Discover new and exciting culinary experiences";
+  static const letsStartScreenLabel4 =
+      "Review and rate chefs to help build a trustworthy community.";
+  static const letsStartScreenLabel5 =
+      "Please be respectful to the chef and their staff, and follow any guidelines";
   static const letsStartScreenBtnLabel = "Let's Start";
 
   static const noOfPersonsHint = '0';
@@ -380,6 +386,8 @@ abstract class Strings {
   static const labelLogOut = 'Logout';
 
   static const labelBookings = 'Bookings';
+
+  static const lableHistory = 'History';
 
   static const labelTitleProfile = 'Profile';
 

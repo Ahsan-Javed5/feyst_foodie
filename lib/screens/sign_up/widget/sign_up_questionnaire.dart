@@ -1,17 +1,10 @@
-
-
 import 'package:chef/helpers/helpers.dart';
-import 'package:flutter/material.dart';
-
-import '../../../models/signup/sign_up_questionnaire_response_model.dart';
-import '../../../theme/app_theme_data/app_theme_data.dart';
-import '../../../ui_kit/widgets/general_text.dart';
-
-
-
+import '../questionire/sign_up_questionire_screen_vm.dart' as questionireViewModel;
+import '/models/signup/sign_up_questionnaire_response_model.dart';
 
 class SignUpQuestionnaire extends StatefulWidget {
-  const SignUpQuestionnaire({Key? key,required this.signUpQuestionsModel}) : super(key: key);
+  const SignUpQuestionnaire({Key? key, required this.signUpQuestionsModel})
+      : super(key: key);
 
   final SignUpQuestionsModel signUpQuestionsModel;
 
@@ -29,116 +22,130 @@ class _SignUpQuestionnaireState extends State<SignUpQuestionnaire> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            height: 260,
+          ///header image
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.35,
             width: double.infinity,
-            child: Image.asset(Resources.getSignUpQuestionireBgPng,fit: BoxFit.fill,),
+            child: Image.asset(
+              Resources.getSignUpQuestionireBgPng,
+              fit: BoxFit.fill,
+            ),
           ),
+
+          ///only height
           const SizedBox(
             height: 20,
           ),
+
+          ///question answers
           Center(
               child: Container(
-                alignment: Alignment.center,
-                //  padding: const EdgeInsets.only(left: 29),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    GeneralText(
-                      Strings.questionireLabel,
-                      textAlign: TextAlign.center,
-                      style: appTheme.typographies.interFontFamily.headline4
-                          .copyWith(
+            alignment: Alignment.center,
+            //  padding: const EdgeInsets.only(left: 29),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                GeneralText(
+                  Strings.questionireLabel,
+                  textAlign: TextAlign.center,
+                  style: appTheme.typographies.interFontFamily.headline4
+                      .copyWith(
                           color: Colors.white,
                           fontSize: 24,
                           fontWeight: FontWeight.w500),
-                    ),
-                    getQuestionWigetsList(widget.signUpQuestionsModel,appTheme,context),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 35),
-                      height: 70,
-                      padding: const EdgeInsets.symmetric(horizontal: 22),
-                      decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(12))),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GeneralText(
-                            Strings.labelProfilePicture,
-                            textAlign: TextAlign.center,
-                            style: appTheme.typographies.interFontFamily.headline4
-                                .copyWith(
+                ),
+
+                ///question answers list
+                getQuestionWidgetsList(
+                    widget.signUpQuestionsModel, appTheme, context),
+                const SizedBox(
+                  height: 30,
+                ),
+
+                ///profile picture section
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 35),
+                  height: 70,
+                  padding: const EdgeInsets.symmetric(horizontal: 22),
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(12))),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GeneralText(
+                        Strings.labelProfilePicture,
+                        textAlign: TextAlign.center,
+                        style: appTheme.typographies.interFontFamily.headline4
+                            .copyWith(
                                 color: appTheme.colors.primaryBackground,
                                 fontSize: 15,
                                 fontWeight: FontWeight.w500),
-                          ),
-                          Image.asset(
-                            Resources.userProfilePicPng,
-                            height: 47,
-                          )
-                        ],
                       ),
-                    ),
-                    const SizedBox(
-                      height: 60,
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                  ],
+                      Image.asset(
+                        Resources.userProfilePicPng,
+                        height: 47,
+                      )
+                    ],
+                  ),
                 ),
-              ))
+                const SizedBox(
+                  height: 60,
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+              ],
+            ),
+          ))
         ],
       ),
     );
   }
 
-
-  List<Widget> getChipsWigetsList(SignUpQuestionsModel viewModel, IAppThemeData appTheme, List<Answers>? answers, BuildContext context){
-    return List.generate(answers?.length??0, (index) {
+  List<Widget> getChipsWidgetsList(SignUpQuestionsModel viewModel,
+      IAppThemeData appTheme, List<Answers>? answers, BuildContext context) {
+    return List.generate(answers?.length ?? 0, (index) {
       var item = answers![index];
-      return  InkWell(onTap: (){
-      var currentItemSelectedStatus = item.isSelected;
-      // for (var element in answers) {
-      //   if(element.id==item.id){
-      //     item.isSelected = !currentItemSelectedStatus!;
-      //   }else{
-      //     element.isSelected=false;}
-      // }
-      item.isSelected = !currentItemSelectedStatus!;
-      setState((){});
-    },child: ChipsWidget(
-      appTheme: appTheme,
-      title: item.name??'',
-      selected: item.isSelected??false,
-    ),);}
-
-
-    );
+      return InkWell(
+        onTap: () {
+          var currentItemSelectedStatus = item.isSelected;
+          // for (var element in answers) {
+          //   if(element.id==item.id){
+          //     item.isSelected = !currentItemSelectedStatus!;
+          //   }else{
+          //     element.isSelected=false;}
+          // }
+          item.isSelected = !currentItemSelectedStatus!;
+          setState(() {});
+        },
+        child: ChipsWidget(
+          appTheme: appTheme,
+          title: item.name ?? '',
+          selected: item.isSelected ?? false,
+        ),
+      );
+    });
   }
 
-
-  Widget getQuestionWigetsList(
-      SignUpQuestionsModel model, IAppThemeData appTheme, BuildContext context) {
-    return ListView.builder(physics: const ScrollPhysics(),
+  Widget getQuestionWidgetsList(SignUpQuestionsModel model,
+      IAppThemeData appTheme, BuildContext context) {
+    return ListView.builder(
+      physics: const ScrollPhysics(),
       shrinkWrap: true,
       itemCount: model.t?.length,
       itemBuilder: (ctx, index) {
         var item = model.t![index];
-        return Padding(padding: const EdgeInsetsDirectional.only(top: 40,start: 20, end: 20),
+        return Padding(
+          padding:
+              const EdgeInsetsDirectional.only(top: 40, start: 20, end: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               GeneralText(
-                item.name??'',
+                item.name ?? '',
                 textAlign: TextAlign.center,
-                style: appTheme
-                    .typographies.interFontFamily.headline4
-                    .copyWith(
+                style: appTheme.typographies.interFontFamily.headline4.copyWith(
                     color: const Color(0xfffbeccb),
                     fontSize: 18,
                     fontWeight: FontWeight.bold),
@@ -151,8 +158,8 @@ class _SignUpQuestionnaireState extends State<SignUpQuestionnaire> {
                 runSpacing: 12,
                 alignment: WrapAlignment.start,
                 crossAxisAlignment: WrapCrossAlignment.start,
-                children: getChipsWigetsList(model, appTheme,item.answers,context)
-                ,
+                children:
+                    getChipsWidgetsList(model, appTheme, item.answers, context),
               ),
             ],
           ),
@@ -161,11 +168,6 @@ class _SignUpQuestionnaireState extends State<SignUpQuestionnaire> {
     );
   }
 }
-
-
-
-
-
 
 class ChipsWidget extends StatelessWidget {
   const ChipsWidget({

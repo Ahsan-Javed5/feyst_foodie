@@ -30,16 +30,19 @@ class SignUpQuestionsRequest {
 
 class T {
   int? userId;
+  String? category;
 
-  T({this.userId});
+  T({this.userId, this.category});
 
   T.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
+    category = json['category'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['userId'] = this.userId;
+    data['category'] = this.category;
     return data;
   }
 }

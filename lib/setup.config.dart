@@ -123,7 +123,9 @@ Future<_i1.GetIt> $initGetIt(
       ));
   gh.factory<_i18.SignUpQuestionnaireScreenViewModel>(() =>
       _i18.SignUpQuestionnaireScreenViewModel(
-          network: get<_i7.INetworkService<dynamic>>()));
+          network: get<_i7.INetworkService<dynamic>>(),
+        appService: get<_i5.ApplicationService>(),),);
+
   gh.factory<_i19.SignUpScreenViewModel>(() => _i19.SignUpScreenViewModel(
         navigation: get<_i5.INavigationService<dynamic>>(),
         network: get<_i5.INetworkService<dynamic>>(),

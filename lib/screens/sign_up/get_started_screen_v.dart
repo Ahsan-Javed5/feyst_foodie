@@ -1,6 +1,8 @@
 import 'package:chef/helpers/helpers.dart';
 import 'package:video_player/video_player.dart';
 
+import '../home/home_screen_v.dart';
+
 
 class GetStartedScreen extends StatefulWidget {
   const GetStartedScreen({Key? key}) : super(key: key);
@@ -170,7 +172,7 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) =>
-             SignUpScreen(),
+            SignUpScreen(),
             //HomeScreen(),
           ),
         );

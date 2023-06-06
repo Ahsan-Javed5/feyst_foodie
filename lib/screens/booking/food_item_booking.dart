@@ -22,9 +22,10 @@ import 'booking_in_process_screen.dart';
 import 'dart:developer' as developer;
 
 class FoodItemBooking extends StatefulWidget {
-  const FoodItemBooking({Key? key, this.bookingListModel}) : super(key: key);
+  const FoodItemBooking({Key? key, this.bookingListModel, required this.isBookingScreen}) : super(key: key);
 
   final BookingListModel? bookingListModel;
+  final bool isBookingScreen;
 
   @override
   State<FoodItemBooking> createState() => _FoodItemBookingState();
@@ -73,9 +74,9 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                 ),
                 Container(
                   padding: const EdgeInsets.only(left: 12, top: 20, bottom: 20),
-                  child: const GeneralNewAppBar(
+                  child: GeneralNewAppBar(
                     rightIcon: Resources.homeIconSvg,
-                    title: Strings.labelBookings,
+                    title: widget.isBookingScreen ? Strings.labelBookings : Strings.lableHistory,
                     titleColor: Colors.white,
                   ),
                 ),

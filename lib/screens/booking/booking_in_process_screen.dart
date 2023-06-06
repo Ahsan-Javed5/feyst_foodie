@@ -1065,7 +1065,7 @@ class _FoodItemInProcessBookingState extends State<FoodItemInProcessBooking> {
       styleType: ButtonStyleType.fill,
       onTap: () {
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => FoodItemBooking()));
+            MaterialPageRoute(builder: (context) => FoodItemBooking(isBookingScreen: true,)));
       },
     );
     // ExtoText(
@@ -1081,7 +1081,7 @@ class _FoodItemInProcessBookingState extends State<FoodItemInProcessBooking> {
       styleType: ButtonStyleType.fill,
       onTap: () {
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => FoodItemBooking()));
+            MaterialPageRoute(builder: (context) => FoodItemBooking(isBookingScreen: true,)));
       },
     );
     // ExtoText(

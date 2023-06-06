@@ -4,10 +4,10 @@ import 'package:chef/screens/booking/booking_list/booking_list_screen_vm.dart';
 import 'package:chef/screens/booking/food_item_booking.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../setup.dart';
 
 class BookingListScreen extends BaseView<BookingListScreenViewModel> {
-  BookingListScreen({Key? key}) : super(key: key);
+  BookingListScreen({Key? key, required this.isBookingScreen}) : super(key: key);
+  bool isBookingScreen;
 
   @override
   Widget buildScreen(
@@ -31,6 +31,6 @@ class BookingListScreen extends BaseView<BookingListScreenViewModel> {
   }
 
   Widget displayLoaded(bookingListModel) {
-    return FoodItemBooking(bookingListModel: bookingListModel);
+    return FoodItemBooking(bookingListModel: bookingListModel, isBookingScreen: isBookingScreen);
   }
 }

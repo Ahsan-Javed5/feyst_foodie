@@ -48,6 +48,8 @@ abstract class Api {
   static const customFormList = '$apiVersion/form';
   static const records = '$apiVersion/module-record';
 
+  static const saveFoodieAnswers = 'foodie-question-answer/save-all';
+
   static const professionalList = 'professional/list';
   static const experienceList = 'experience/list';
   static const experienceMenuById = 'experience-booking/find-by-id';

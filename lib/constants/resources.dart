@@ -31,6 +31,7 @@ abstract class Resources {
   static const scanIcon = 'assets/images/scan.svg';
   static const shieldIcon = 'assets/images/shield.svg';
   static const userProfileIcon = 'assets/images/person.svg';
+  static const userIconMenu = 'assets/images/user_icon.svg';
   static const expandIcon = 'assets/images/expand.svg';
   static const masterIcon = 'assets/images/master_icon.svg';
   static const cameraIcon = 'assets/images/camera_icon.svg';
