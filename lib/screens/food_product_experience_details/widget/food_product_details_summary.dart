@@ -1,3 +1,4 @@
+import 'package:chef/models/home/home_response.dart' as home_data;
 import 'package:chef/screens/home/food_details_menu_model.dart';
 import 'package:chef/screens/home/home_screen_v.dart';
 import 'package:flutter/material.dart';
@@ -37,11 +38,13 @@ class FoodProductDetailsSummary extends StatefulWidget {
     required this.experienceData,
     required this.foodMenuDetail,
     required this.selectedExperienceId,
+    required this.appService,
   }) : super(key: key);
 
-  final experience_data.T experienceData;
+  final home_data.Experiences? experienceData;
   final FoodMenuModel foodMenuDetail;
   final String selectedExperienceId;
+  final appService;
 
   @override
   State<FoodProductDetailsSummary> createState() =>
@@ -51,13 +54,12 @@ class FoodProductDetailsSummary extends StatefulWidget {
 class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
   List<CustomModel> wowFactorsList = [];
   List<CustomModel> menuListItems = [];
-  final _appService = locateService<ApplicationService>();
+  bool isLoading = true;
 
   @override
   void initState() {
     //widget.foodMenuModel;
     // TODO: implement initState
-
     //widget.foodMenuDetail.t
 
     // menuListItems.addAll([
@@ -69,8 +71,8 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
     // ]);
     loadMenuSelected();
     loadWowFactors();
-
     super.initState();
+    isLoading = false;
   }
 
   void loadMenuSelected() {
@@ -83,10 +85,10 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
 
   void loadWowFactors() {
     for (int i = 0;
-    i < widget.experienceData.experienceWowFactors.length;
+    i < widget.experienceData!.experienceWowFactors!.length;
     i++) {
       wowFactorsList.add(CustomModel(
-          name: widget.experienceData.experienceWowFactors[i]
+          name: widget.experienceData!.experienceWowFactors![i]
               .wowFactorName, //   Strings.productDetailWowFactorGarden,
           icon: "assets/images/icons/garden.png"));
     }
@@ -116,7 +118,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context).theme;
-    return Scaffold(
+    return isLoading ? CircularProgressIndicator() : Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       //floatingActionButton: getStartedButtonTitle(appTheme: appTheme),
       body: SingleChildScrollView(
@@ -130,7 +132,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                 ///top container which have image, title, home icon etc
                 Container(
                   height: 217,
-                  padding: EdgeInsets.only(left: 33, bottom: 17),
+                  padding: const EdgeInsets.only(left: 33, bottom: 17),
                   decoration: BoxDecoration(
                     color: HexColor.fromHex("#4b4b52"),
                     borderRadius: const BorderRadius.only(
@@ -166,7 +168,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             GeneralText(
-                              widget.experienceData.title,
+                              widget.experienceData!.title!,
                               style: appTheme
                                   .typographies.interFontFamily.headline6
                                   .copyWith(
@@ -174,11 +176,11 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                                 color: HexColor.fromHex('#f1c452'),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                             GeneralText(
-                              widget.experienceData.chefBrandName,
+                              widget.experienceData!.chefBrandName!,
                               style: appTheme
                                   .typographies.interFontFamily.headline6
                                   .copyWith(
@@ -228,7 +230,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                                         const BottomBar()),
                                   );
                                 },
-                                child: GeneralNewAppBar(
+                                child: const GeneralNewAppBar(
                                   rightIcon: Resources.homeIconSvg,
                                 ))),
                       ),
@@ -239,7 +241,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                   height: 33.9,
                 ),
                 Container(
-                  padding: EdgeInsetsDirectional.only(start: 25, end: 25),
+                  padding: const EdgeInsetsDirectional.only(start: 25, end: 25),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -272,7 +274,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                         padding: const EdgeInsets.only(left: 23),
                         child: GeneralText(
                           // Strings.productDetailAboutSubTitle,
-                          widget.experienceData.description,
+                          widget.experienceData!.description!,
                           style: appTheme.typographies.interFontFamily.headline6
                               .copyWith(
                               fontSize: 14,
@@ -327,7 +329,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                   height: 28,
                 ),
                 extraPaymentNotes(appTheme),
-                SizedBox(
+                const SizedBox(
                   height: 209.1,
                 ),
               ],
@@ -339,7 +341,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
   Widget wowFactors(IAppThemeData appTheme) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsetsDirectional.only(
+      padding: const EdgeInsetsDirectional.only(
           top: 20, bottom: 20, start: 11.8, end: 11.8),
       decoration: BoxDecoration(
           color: HexColor.fromHex("#4b4b52"),
@@ -355,8 +357,8 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                     width: 58,
                     height: 63.3,
                     padding: const EdgeInsetsDirectional.all(10),
-                    decoration: BoxDecoration(
-                      image: const DecorationImage(
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
                         image: AssetImage(
                             'assets/images/icons/food_item_circle.png'),
                         fit: BoxFit.fill,
@@ -374,7 +376,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                           : ''),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 2.5,
                   ),
                   GeneralText(
@@ -394,22 +396,22 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
   }
 
   Widget foodProductDetails(IAppThemeData appTheme) {
-    OrderHelper orderHelper = (_appService.state.orderHelper)!;
+   OrderHelper orderHelper = (widget.appService.state.orderHelper)!;
     developer.log(' Schedule Id selected in Summary Page ' +
-        _appService.state.orderHelper!.scheduleId);
-    developer.log(' Schedule Id selected in Experience Price ' +
-        '${_appService.state.orderHelper!.selectedExperienceDetail.price}');
-    developer.log(' Schedule Id selected in Experience Id ' +
-        '${_appService.state.orderHelper!.selectedExperienceDetail.id}');
-    developer.log(' Foodie Id is ' + '${_appService.state.userInfo!.t.id}');
-    developer.log(' Order Helper Id is ' +
-        '${_appService.state.orderHelper!.daysGroup.scheduledDate.month}');
+        orderHelper!.scheduleId);
+    // developer.log(' Schedule Id selected in Experience Price ' +
+    //     '${_appService.state.orderHelper!.selectedExperienceDetail.price}');
+    // developer.log(' Schedule Id selected in Experience Id ' +
+    //     '${_appService.state.orderHelper!.selectedExperienceDetail.id}');
+    // developer.log(' Foodie Id is ' + '${_appService.state.userInfo!.t.id}');
+    // developer.log(' Order Helper Id is ' +
+    //     '${_appService.state.orderHelper!.daysGroup.scheduledDate.month}');
     var _date = InfininURLHelpers.dayOfMonth(
-        _appService.state.orderHelper!.daysGroup.scheduledDate);
-    var dayOfMonth = _appService.state.orderHelper!.daysGroup.scheduledDate.day;
+        orderHelper!.daysGroup.scheduledDate);
+    var dayOfMonth = orderHelper!.daysGroup.scheduledDate.day;
     var _month = InfininURLHelpers.months[
-    _appService.state.orderHelper!.daysGroup.scheduledDate.month - 1];
-    var _hourSelected = _appService.state.orderHelper!.hourSelected.startTime;
+    orderHelper!.daysGroup.scheduledDate.month - 1];
+    var _hourSelected = orderHelper!.hourSelected.startTime;
 
     developer.log(' _Date for Summary Page is ' + '${_date}');
     developer.log(' Month of Summary Page is ' + '${_month}');
@@ -423,16 +425,16 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
         "   " +
         _month.toString().toUpperCase();
     var _productDetailSelectionTime = InfininURLHelpers.getAmPm(
-        _appService.state.orderHelper!.hourSelected.startTime);
+        orderHelper!.hourSelected.startTime);
     var _productDetailSelectionType =
-        _appService.state.orderHelper!.selectedCategory;
+        orderHelper!.selectedCategory;
     var _numberOfPerson =
-        _appService.state.orderHelper!.numberOfPerson ?? 4.toString();
+        orderHelper!.numberOfPerson ?? 4.toString();
     return Padding(
-      padding: EdgeInsetsDirectional.only(start: 25, end: 25),
+      padding: const EdgeInsetsDirectional.only(start: 25, end: 25),
       child: Container(
           width: double.infinity,
-          padding: EdgeInsetsDirectional.only(
+          padding: const EdgeInsetsDirectional.only(
               top: 22, bottom: 29, start: 10, end: 10),
           decoration: BoxDecoration(
               color: HexColor.fromHex("#4b4b52"),
@@ -440,7 +442,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
           child: Column(
             children: [
               Container(
-                padding: EdgeInsetsDirectional.only(
+                padding: const EdgeInsetsDirectional.only(
                     top: 17, bottom: 17, start: 26, end: 48),
                 decoration: BoxDecoration(
                     color: HexColor.fromHex("#212129"),
@@ -512,11 +514,11 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                       ),
                     ]),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 29,
               ),
               productRelatedNotes(appTheme),
-              SizedBox(
+              const SizedBox(
                 height: 29,
               ),
               productMenuDetails(appTheme),
@@ -526,7 +528,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
   }
 
   Widget productRelatedNotes(IAppThemeData appTheme) {
-    var _noteAdded = _appService.state.orderHelper!.noteAdded ?? '';
+    var _noteAdded = widget.appService.state.orderHelper!.noteAdded ?? '';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -537,12 +539,12 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
             color: HexColor.fromHex('#f1c452'),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 4,
         ),
         Container(
           width: double.infinity,
-          padding: EdgeInsetsDirectional.only(
+          padding: const EdgeInsetsDirectional.only(
               top: 15, bottom: 15, start: 14, end: 14),
           decoration: BoxDecoration(
               color: HexColor.fromHex("#212129"),
@@ -570,7 +572,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
             color: HexColor.fromHex('#f1c452'),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 7,
         ),
         Wrap(
@@ -581,7 +583,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                 // height: 67,
                 padding: const EdgeInsetsDirectional.only(
                     top: 10, bottom: 10, start: 14, end: 14),
-                margin: EdgeInsets.only(right: 5, bottom: 7),
+                margin: const EdgeInsets.only(right: 5, bottom: 7),
                 decoration: BoxDecoration(
                     color: HexColor.fromHex("#212129"),
                     borderRadius: BorderRadius.circular(11)),
@@ -591,15 +593,15 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        widget.experienceData.priceTypeId != 1 ? GeneralText(
+                        widget.experienceData!.priceTypeId != 1 ? GeneralText(
                           Strings.productDetailSelectionMenuQuantity,
                           style: appTheme.typographies.interFontFamily.headline2
                               .copyWith(
                             fontSize: 16,
                             color: HexColor.fromHex('#f89f84'),
                           ),
-                        ):SizedBox(),
-                        widget.experienceData.priceTypeId != 1
+                        ):const SizedBox(),
+                        widget.experienceData!.priceTypeId != 1
                             ? GeneralText(
                           Strings.productDetailSelectionMenuAmount,
                           style: appTheme
@@ -612,7 +614,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                             : Container(),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     GeneralText(
@@ -696,7 +698,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
 
   Widget chefInformation(IAppThemeData appTheme) {
     return Container(
-      padding: EdgeInsetsDirectional.only(start: 25, end: 25),
+      padding: const EdgeInsetsDirectional.only(start: 25, end: 25),
       child: Column(
         children: [
           Row(
@@ -718,12 +720,12 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 13.1,
           ),
           Container(
             width: double.infinity,
-            padding: EdgeInsetsDirectional.only(
+            padding: const EdgeInsetsDirectional.only(
                 top: 22, bottom: 22, start: 23, end: 23),
             decoration: BoxDecoration(
                 color: HexColor.fromHex("#4b4b52"),
@@ -739,7 +741,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                           border: Border.all(color: Colors.white, width: 2),
                           shape: BoxShape.circle),
                       child: Image.asset("assets/images/icons/user_image.png")),
-                  SizedBox(
+                  const SizedBox(
                     width: 11.5,
                   ),
                   Column(
@@ -760,11 +762,11 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                               height: 14.4,
                               child: Image.asset(
                                   "assets/images/icons/location_pin.png")),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           GeneralText(
-                            widget.experienceData.chefAddress,
+                            widget.experienceData!.chefAddress!,
                             //Strings.productDetailChefLocation,
                             style: appTheme
                                 .typographies.interFontFamily.headline6
@@ -778,7 +780,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                     ],
                   )
                 ]),
-                SizedBox(
+                const SizedBox(
                   height: 18.1,
                 ),
                 Container(
@@ -786,7 +788,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                   width: double.infinity,
                   height: 1,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 GeneralText(
@@ -797,12 +799,12 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                     color: HexColor.fromHex('#909094'),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 1.7,
                 ),
                 GeneralText(
                   widget.experienceData
-                      .subHostName, //    Strings.productDetailChefSubHostName,
+                      !.subHostName!, //    Strings.productDetailChefSubHostName,
                   style:
                   appTheme.typographies.interFontFamily.headline6.copyWith(
                     fontSize: 18,
@@ -819,7 +821,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
 
   Widget productPriceInformation(IAppThemeData appTheme) {
     return Container(
-      padding: EdgeInsetsDirectional.only(start: 25, end: 25),
+      padding: const EdgeInsetsDirectional.only(start: 25, end: 25),
       child: Column(
         children: [
           Row(
@@ -841,12 +843,12 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 13.1,
           ),
           Container(
             width: double.infinity,
-            padding: EdgeInsetsDirectional.only(
+            padding: const EdgeInsetsDirectional.only(
                 top: 22, bottom: 22, start: 23, end: 23),
             decoration: BoxDecoration(
                 color: HexColor.fromHex("#4b4b52"),
@@ -858,7 +860,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                     children: [
                       GeneralText(
                         // Strings.productDetailPriceValue,
-                        widget.experienceData.price.toString(),
+                        widget.experienceData!.price.toString(),
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
                             fontSize: 36,
@@ -874,7 +876,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                         ),
                       ),
                     ]),
-                SizedBox(
+                const SizedBox(
                   height: 18.1,
                 ),
                 Container(
@@ -882,7 +884,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                   width: double.infinity,
                   height: 1,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
@@ -898,7 +900,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                     ),
                     GeneralText(
                       // Strings.productDetailPriceTaxValue,
-                      (widget.experienceData.price * 0.17).toStringAsFixed(2),
+                      (widget.experienceData!.price! * 0.17).toStringAsFixed(2),
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -920,7 +922,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                     ),
                     GeneralText(
                       // Strings.productDetailAdvancePaymentValue,
-                      (widget.experienceData.price * 0.20).toStringAsFixed(2),
+                      (widget.experienceData!.price! * 0.20).toStringAsFixed(2),
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -939,7 +941,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
 
   Widget extraPaymentNotes(IAppThemeData appTheme) {
     return Container(
-      padding: EdgeInsetsDirectional.only(start: 25, end: 25),
+      padding: const EdgeInsetsDirectional.only(start: 25, end: 25),
       child: Column(
         children: [
           Row(
@@ -961,12 +963,12 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 13.1,
           ),
           Container(
             width: double.infinity,
-            padding: EdgeInsetsDirectional.only(
+            padding: const EdgeInsetsDirectional.only(
                 top: 22, bottom: 22, start: 23, end: 23),
             decoration: BoxDecoration(
                 color: HexColor.fromHex("#bb3127"),

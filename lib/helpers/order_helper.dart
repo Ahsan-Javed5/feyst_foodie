@@ -1,5 +1,4 @@
-import 'dart:convert';
-import '../../../models/home/experience_list_response.dart' as experienceData;
+import '../models/home/home_response.dart' as home_data;
 import '../screens/home/schedule_model.dart';
 
 class OrderHelper {
@@ -7,7 +6,7 @@ class OrderHelper {
   DaysGroup daysGroup = DaysGroup(
       scheduledDate: DateTime(1900 - 12 - 12), dayOfMonth: 0, hours: []);
   late Hour hourSelected;
-  late experienceData.T selectedExperienceDetail;
+  late home_data.Experiences selectedExperienceDetail;
   String noteAdded = '';
   String selectedCategory = 'Couple';
   int numberOfPerson = 4;

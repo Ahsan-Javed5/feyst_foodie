@@ -252,6 +252,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     }
     return true;
   }
+
   bool checkAllInputAdded() {
     var age = ageController.text;
     if(age.isEmpty){

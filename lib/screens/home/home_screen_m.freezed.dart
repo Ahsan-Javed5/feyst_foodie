@@ -20,22 +20,21 @@ mixin _$HomeScreenState {
   TResult when<TResult extends Object?>({
     required TResult Function() initialized,
     required TResult Function() loading,
-    required TResult Function(ExperienceListResponse experienceListResponse)
-        loaded,
+    required TResult Function(HomeResponse homeResponse) loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialized,
     TResult Function()? loading,
-    TResult Function(ExperienceListResponse experienceListResponse)? loaded,
+    TResult Function(HomeResponse homeResponse)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialized,
     TResult Function()? loading,
-    TResult Function(ExperienceListResponse experienceListResponse)? loaded,
+    TResult Function(HomeResponse homeResponse)? loaded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -123,8 +122,7 @@ class _$Initialized implements Initialized {
   TResult when<TResult extends Object?>({
     required TResult Function() initialized,
     required TResult Function() loading,
-    required TResult Function(ExperienceListResponse experienceListResponse)
-        loaded,
+    required TResult Function(HomeResponse homeResponse) loaded,
   }) {
     return initialized();
   }
@@ -134,7 +132,7 @@ class _$Initialized implements Initialized {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialized,
     TResult Function()? loading,
-    TResult Function(ExperienceListResponse experienceListResponse)? loaded,
+    TResult Function(HomeResponse homeResponse)? loaded,
   }) {
     return initialized?.call();
   }
@@ -144,7 +142,7 @@ class _$Initialized implements Initialized {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialized,
     TResult Function()? loading,
-    TResult Function(ExperienceListResponse experienceListResponse)? loaded,
+    TResult Function(HomeResponse homeResponse)? loaded,
     required TResult orElse(),
   }) {
     if (initialized != null) {
@@ -232,8 +230,7 @@ class _$Loading implements Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initialized,
     required TResult Function() loading,
-    required TResult Function(ExperienceListResponse experienceListResponse)
-        loaded,
+    required TResult Function(HomeResponse homeResponse) loaded,
   }) {
     return loading();
   }
@@ -243,7 +240,7 @@ class _$Loading implements Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialized,
     TResult Function()? loading,
-    TResult Function(ExperienceListResponse experienceListResponse)? loaded,
+    TResult Function(HomeResponse homeResponse)? loaded,
   }) {
     return loading?.call();
   }
@@ -253,7 +250,7 @@ class _$Loading implements Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialized,
     TResult Function()? loading,
-    TResult Function(ExperienceListResponse experienceListResponse)? loaded,
+    TResult Function(HomeResponse homeResponse)? loaded,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -305,7 +302,7 @@ abstract class Loading implements HomeScreenState {
 abstract class _$$LoadedCopyWith<$Res> {
   factory _$$LoadedCopyWith(_$Loaded value, $Res Function(_$Loaded) then) =
       __$$LoadedCopyWithImpl<$Res>;
-  $Res call({ExperienceListResponse experienceListResponse});
+  $Res call({HomeResponse homeResponse});
 }
 
 /// @nodoc
@@ -319,13 +316,13 @@ class __$$LoadedCopyWithImpl<$Res> extends _$HomeScreenStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? experienceListResponse = freezed,
+    Object? homeResponse = freezed,
   }) {
     return _then(_$Loaded(
-      experienceListResponse == freezed
-          ? _value.experienceListResponse
-          : experienceListResponse // ignore: cast_nullable_to_non_nullable
-              as ExperienceListResponse,
+      homeResponse == freezed
+          ? _value.homeResponse
+          : homeResponse // ignore: cast_nullable_to_non_nullable
+              as HomeResponse,
     ));
   }
 }
@@ -333,14 +330,14 @@ class __$$LoadedCopyWithImpl<$Res> extends _$HomeScreenStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$Loaded implements Loaded {
-  const _$Loaded(this.experienceListResponse);
+  const _$Loaded(this.homeResponse);
 
   @override
-  final ExperienceListResponse experienceListResponse;
+  final HomeResponse homeResponse;
 
   @override
   String toString() {
-    return 'HomeScreenState.loaded(experienceListResponse: $experienceListResponse)';
+    return 'HomeScreenState.loaded(homeResponse: $homeResponse)';
   }
 
   @override
@@ -349,12 +346,12 @@ class _$Loaded implements Loaded {
         (other.runtimeType == runtimeType &&
             other is _$Loaded &&
             const DeepCollectionEquality()
-                .equals(other.experienceListResponse, experienceListResponse));
+                .equals(other.homeResponse, homeResponse));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(experienceListResponse));
+      runtimeType, const DeepCollectionEquality().hash(homeResponse));
 
   @JsonKey(ignore: true)
   @override
@@ -366,10 +363,9 @@ class _$Loaded implements Loaded {
   TResult when<TResult extends Object?>({
     required TResult Function() initialized,
     required TResult Function() loading,
-    required TResult Function(ExperienceListResponse experienceListResponse)
-        loaded,
+    required TResult Function(HomeResponse homeResponse) loaded,
   }) {
-    return loaded(experienceListResponse);
+    return loaded(homeResponse);
   }
 
   @override
@@ -377,9 +373,9 @@ class _$Loaded implements Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialized,
     TResult Function()? loading,
-    TResult Function(ExperienceListResponse experienceListResponse)? loaded,
+    TResult Function(HomeResponse homeResponse)? loaded,
   }) {
-    return loaded?.call(experienceListResponse);
+    return loaded?.call(homeResponse);
   }
 
   @override
@@ -387,11 +383,11 @@ class _$Loaded implements Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialized,
     TResult Function()? loading,
-    TResult Function(ExperienceListResponse experienceListResponse)? loaded,
+    TResult Function(HomeResponse homeResponse)? loaded,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(experienceListResponse);
+      return loaded(homeResponse);
     }
     return orElse();
   }
@@ -432,10 +428,9 @@ class _$Loaded implements Loaded {
 }
 
 abstract class Loaded implements HomeScreenState {
-  const factory Loaded(final ExperienceListResponse experienceListResponse) =
-      _$Loaded;
+  const factory Loaded(final HomeResponse homeResponse) = _$Loaded;
 
-  ExperienceListResponse get experienceListResponse;
+  HomeResponse get homeResponse;
   @JsonKey(ignore: true)
   _$$LoadedCopyWith<_$Loaded> get copyWith =>
       throw _privateConstructorUsedError;

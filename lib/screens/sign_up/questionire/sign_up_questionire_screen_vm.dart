@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:chef/base/base_viewmodel.dart';
 import 'package:chef/helpers/url_helper.dart';
 import 'package:chef/models/signup/sign_up_questionnaire_request.dart' as baserequest;
@@ -26,15 +28,54 @@ class  SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionna
 
   final INetworkService _network;
 
-  List<FoodieQuestionAnswers> foodieQuestionAnswersList = [];
+  List<T1> foodieQuestionAnswersList = [];
 
   List<int> answerIdsUniqueFoodie = [];
   List<int> answerIdPerfectAmbience = [];
   List<int> answerIdsCuisineTaste = [];
   List<int> answerIdInterest = [];
-
+  ValueNotifier<File?> selectedImageNotifier = ValueNotifier<File?>(null);
   final ApplicationService _appService;
   late SignUpQuestionsModel signUpQuestionsModel;
+
+  bool isImageSelected = false;
+  void updateSelectedImage(File? image) {
+    isImageSelected = false;
+    if (image != null) {
+      selectedImageNotifier.value = image;
+      isImageSelected = true;
+    }
+  }
+
+  Future<void> savePicture({
+    required String baseUrl,
+    required BuildContext context,
+    required String image,
+    Function? completion,
+  }) async {
+    final url = InfininURLHelpers.getRestApiURL(
+        baseUrl + "foodie/profile-image/${_appService.state.userInfo!.t.id}");
+
+    final savePicRequest = {
+      "image": image,
+    };
+    developer.log("this is savePicReq" "$savePicRequest");
+
+    final response = await _network.post(
+      path: url,
+      data: savePicRequest,
+    );
+
+    if (response != null) {
+      developer.log(' Response of Save Pic is  ' '${response.body}');
+      // ChefQuestionAnswerResponse chefQuestionAnswerResponse = chefQuestionAnswerResponseFromJson(response.body);
+      Toaster.infoToast(context: context, message: response.message);
+      completion!();
+    } else {
+      Toaster.infoToast(context: context, message: 'Error in calling the Api');
+    }
+  }
+
 
   Future<void> getQuestionnaireData({required String userId}) async {
     final url =
@@ -59,10 +100,10 @@ class  SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionna
 
   void addModelsFromQuestions({Function? completion, required BuildContext context}){
     if(answerIdsUniqueFoodie.isNotEmpty && answerIdPerfectAmbience.isNotEmpty && answerIdsCuisineTaste.isNotEmpty && answerIdInterest.isNotEmpty){
-      foodieQuestionAnswersList.add(FoodieQuestionAnswers(answerIds: answerIdsUniqueFoodie, foodieId: _appService.state.userInfo!.t.id,id: 7,inputAnswer: '',questionId: 7));
-      foodieQuestionAnswersList.add(FoodieQuestionAnswers(answerIds: answerIdPerfectAmbience,foodieId: _appService.state.userInfo!.t.id,id: 4,inputAnswer: '',questionId: 4));
-      foodieQuestionAnswersList.add(FoodieQuestionAnswers(answerIds: answerIdsCuisineTaste, foodieId: _appService.state.userInfo!.t.id,id: 7,inputAnswer: '',questionId: 7));
-      foodieQuestionAnswersList.add(FoodieQuestionAnswers(answerIds: answerIdInterest,foodieId: _appService.state.userInfo!.t.id,id: 4,inputAnswer: '',questionId: 4));
+      foodieQuestionAnswersList.add(T1(answerIds: answerIdsUniqueFoodie, foodieId: _appService.state.userInfo!.t.id,id: 7,inputAnswer: '',questionId: 7));
+      foodieQuestionAnswersList.add(T1(answerIds: answerIdPerfectAmbience,foodieId: _appService.state.userInfo!.t.id,id: 4,inputAnswer: '',questionId: 4));
+      foodieQuestionAnswersList.add(T1(answerIds: answerIdsCuisineTaste, foodieId: _appService.state.userInfo!.t.id,id: 7,inputAnswer: '',questionId: 7));
+      foodieQuestionAnswersList.add(T1(answerIds: answerIdInterest,foodieId: _appService.state.userInfo!.t.id,id: 4,inputAnswer: '',questionId: 4));
       completion!();
     }else{
       Toaster.errorToast(context: context, message: 'Please fill all the fields');
@@ -77,7 +118,7 @@ class  SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionna
     final url = InfininURLHelpers.getRestApiURL(baseUrl + Api.saveFoodieAnswers);
     final saveFoodieRequest = save_foodie_request.SaveFoodieRequest(
       userId: _appService.state.userInfo?.t.id,
-      t: save_foodie_request.T(foodieQuestionAnswers: foodieQuestionAnswersList),
+      t: foodieQuestionAnswersList,
     ).toJson();
     final response = await _network.post(
       path: url,

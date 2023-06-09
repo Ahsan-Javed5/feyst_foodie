@@ -45,12 +45,12 @@ class _QuestionViewState extends State<QuestionView> {
             style: widget.appTheme.typographies.interFontFamily.headline6
                 .copyWith(
                     color: const Color(0xfffbeccb),
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold),
           ),
         ),
         const SizedBox(
-          height: 15,
+          height: 5,
         ),
         MultiChipView(
           answerIdsInterests: widget.answerIdsYourInterests,
@@ -109,7 +109,7 @@ class _MultiChipViewState extends State<MultiChipView> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(right: 20, left: 20, top: 4),
+      margin: const EdgeInsets.only(top: 4),
       child: GridView.builder(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,

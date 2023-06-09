@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/models/home/food_menu_request.dart' as menurequest;
 import 'package:chef/screens/home/schedule_model.dart';
+import '../../../models/home/home_response.dart' as home_data;
 import '/models/perferences/perference_response.dart';
 import '/models/perferences/perferences_request.dart';
 import '/setup.dart';
@@ -137,7 +138,7 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
   void loading({required bool isBusy}) => emit(const Loading());
 
   void verifyAction(BuildContext context, String _selectedExperienceId,
-      experience_data.T _experienceData) {
+      home_data.Experiences _experienceData) {
     final _appService = locateService<ApplicationService>();
 
     var orderHelper = _appService.state.orderHelper;

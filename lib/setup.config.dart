@@ -12,7 +12,7 @@ import 'package:injectable/injectable.dart' as _i2;
 import 'app.dart' as _i25;
 import 'base/screen_layout_base/screen_layout_base_vm.dart' as _i16;
 import 'helpers/helpers.dart' as _i5;
-import 'helpers/workspace_helper.dart' as _i21;
+import 'helpers/workspace_helper.dart' as _i22;
 import 'screens/account_settings/account_settings_screen_vm.dart' as _i24;
 import 'screens/booking/advance_payment/food_item_advance_payment_vm.dart'
     as _i11;
@@ -27,15 +27,15 @@ import 'screens/home/component/food_detail_screen_vm.dart' as _i10;
 import 'screens/home/home_screen_vm.dart' as _i28;
 import 'screens/sign_in/sign_in_screen_vm.dart' as _i17;
 import 'screens/sign_up/questionire/sign_up_questionire_screen_vm.dart' as _i18;
-import 'screens/sign_up/sign_up_screen_vm.dart' as _i19;
-import 'screens/splash/splash_screen_vm.dart' as _i20;
+import 'screens/sign_up/sign_up_screen_vm.dart' as _i20;
+import 'screens/splash/splash_screen_vm.dart' as _i21;
 import 'screens/user_account/edit_profie/edit_profile_screen_vm.dart' as _i8;
 import 'screens/username_profile/profile_information_screen_vm.dart' as _i15;
-import 'services/application_state.dart' as _i23;
+import 'services/application_state.dart' as _i19;
 import 'services/network/network_service.dart' as _i7;
 import 'services/renderer/field_renderer.dart' as _i9;
 import 'services/services.dart' as _i3;
-import 'services/storage/storage_service.dart' as _i22;
+import 'services/storage/storage_service.dart' as _i23;
 import 'setup.dart' as _i29;
 import 'theme/theme.dart' as _i13; // ignore_for_file: unnecessary_lambdas
 
@@ -121,25 +121,25 @@ Future<_i1.GetIt> $initGetIt(
         storage: get<_i5.IStorageService>(),
         appService: get<_i5.ApplicationService>(),
       ));
-  gh.factory<_i18.SignUpQuestionnaireScreenViewModel>(() =>
-      _i18.SignUpQuestionnaireScreenViewModel(
-          network: get<_i7.INetworkService<dynamic>>(),
-        appService: get<_i5.ApplicationService>(),),);
-
-  gh.factory<_i19.SignUpScreenViewModel>(() => _i19.SignUpScreenViewModel(
+  gh.factory<_i18.SignUpQuestionnaireScreenViewModel>(
+      () => _i18.SignUpQuestionnaireScreenViewModel(
+            network: get<_i7.INetworkService<dynamic>>(),
+            appService: get<_i19.ApplicationService>(),
+          ));
+  gh.factory<_i20.SignUpScreenViewModel>(() => _i20.SignUpScreenViewModel(
         navigation: get<_i5.INavigationService<dynamic>>(),
         network: get<_i5.INetworkService<dynamic>>(),
         storage: get<_i5.IStorageService>(),
         appService: get<_i5.ApplicationService>(),
       ));
-  gh.factory<_i20.SplashScreenViewModel>(() => _i20.SplashScreenViewModel(
+  gh.factory<_i21.SplashScreenViewModel>(() => _i21.SplashScreenViewModel(
         navigationService: get<_i3.INavigationService<dynamic>>(),
         storage: get<_i3.IStorageService>(),
         appService: get<_i3.ApplicationService>(),
       ));
-  gh.factory<_i21.WorkspaceHelper>(() => _i21.WorkspaceHelper(
-        storage: get<_i22.IStorageService>(),
-        appService: get<_i23.ApplicationService>(),
+  gh.factory<_i22.WorkspaceHelper>(() => _i22.WorkspaceHelper(
+        storage: get<_i23.IStorageService>(),
+        appService: get<_i19.ApplicationService>(),
       ));
   gh.factory<_i24.AccountSettingsScreenViewModel>(
       () => _i24.AccountSettingsScreenViewModel(

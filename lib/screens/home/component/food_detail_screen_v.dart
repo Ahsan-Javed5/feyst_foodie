@@ -1,5 +1,5 @@
 import 'package:chef/helpers/helpers.dart';
-import 'package:chef/screens/home/schedule_model.dart';
+import 'package:chef/models/home/home_response.dart' as home_data;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -7,9 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../base/base_view.dart';
 import '../../../helpers/color_helper.dart';
-import '../../../models/perferences/perference_response.dart';
 import '../../../services/device/device_service.dart';
-import '../../food_product_experience_details/food_product_details_screen_v.dart';
 import '../widget/food_details_screen.dart';
 import 'food_detail_screen_m.dart';
 import 'food_detail_screen_vm.dart';
@@ -20,14 +18,14 @@ import '../../../setup.dart';
 class FoodDetailScreenView extends BaseView<FoodDetailScreenViewModel> {
   FoodDetailScreenView({
     required String selectedExperienceId,
-    required experience_data.T experienceData,
+    required home_data.Experiences experienceData,
     Key? key,
   })  : _selectedExperienceId = selectedExperienceId,
         _experienceData = experienceData,
         super(key: key);
 
   final String _selectedExperienceId;
-  final experience_data.T _experienceData;
+  final home_data.Experiences _experienceData;
 
   @override
   Widget buildScreen({
@@ -75,7 +73,7 @@ class FoodDetailScreenView extends BaseView<FoodDetailScreenViewModel> {
       title: Strings.nextButtonTitle.toUpperCase(),
       styleType: ButtonStyleType.fill,
       onTap: () {
-        viewModel.verifyAction(context, _selectedExperienceId, _experienceData);
+        viewModel.verifyAction(context, _selectedExperienceId, _experienceData!);
       },
     );
   }

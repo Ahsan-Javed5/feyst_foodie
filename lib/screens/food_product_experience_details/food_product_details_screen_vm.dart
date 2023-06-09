@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/models/booking/booking_request.dart' as booking;
+import 'package:chef/models/home/home_response.dart' as home_data;
 import 'package:chef/screens/home/schedule_model.dart';
 import 'package:flutter_html/flutter_html.dart';
 
@@ -74,7 +75,7 @@ class FoodProductExperienceDetailsViewModel
   //
 
   Future<void> submitBooking(
-      BuildContext context, experience_data.T experienceData) async {
+      BuildContext context, home_data.Experiences experienceData) async {
     final url =
         InfininURLHelpers.getRestApiURL(Api.baseURL + Api.experienceBooking);
     // emit(const Loading());
@@ -86,9 +87,9 @@ class FoodProductExperienceDetailsViewModel
     final bookingRequest = booking.BookingRequest(
       t: booking.T(
         comments: orderHelper.noteAdded,
-        experienceId: orderHelper.selectedExperienceDetail.id,
+        experienceId: orderHelper.selectedExperienceDetail.id!.toInt(),
         foodieId: (_appService.state.userInfo!.t.id),
-        totalPrice: orderHelper.selectedExperienceDetail.price,
+        totalPrice: orderHelper.selectedExperienceDetail.price!.toInt(),
         scheduleId: int.parse(orderHelper.scheduleId),
         persons: orderHelper.numberOfPerson.toString(),
         // preferenceId: experienceData.preferenceId,

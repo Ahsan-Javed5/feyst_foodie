@@ -49,6 +49,7 @@ abstract class Api {
   static const records = '$apiVersion/module-record';
 
   static const saveFoodieAnswers = 'foodie-question-answer/save-all';
+  static const homeApis = 'home/';
 
   static const professionalList = 'professional/list';
   static const experienceList = 'experience/list';

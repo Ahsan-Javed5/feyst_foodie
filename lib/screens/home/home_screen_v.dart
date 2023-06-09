@@ -1,5 +1,6 @@
 import 'package:chef/constants/constants.dart';
 import 'package:chef/helpers/helpers.dart';
+import 'package:chef/models/home/home_response.dart' as home_data;
 import 'package:chef/screens/home/popular_food_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,10 +33,10 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
                 body: state.when(
                   initialized: displayInitialized,
                   loading: displayLoading,
-                  loaded: (experienceList) => displayLoaded(
+                  loaded: (homeResponse) => displayLoaded(
                     context: context,
-                    experienceList: experienceList,
-                    // foodMenuDetail: foodMenuDetail,
+                    homeResponseData: homeResponse,
+                    //foodMenuDetail: foodMenuDetail,
                   ),
                 )),
             onWillPop: () => onWillPop(),
@@ -57,7 +58,7 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
 
   Widget displayLoaded({
     required BuildContext context,
-    required experience_data.ExperienceListResponse experienceList,
+    required home_data.HomeResponse homeResponseData,
     //  required FoodMenuModel foodMenuDetail,
     // required
   }) {
@@ -70,6 +71,7 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              ///explore container
               Stack(
                 children: [
                   Column(
@@ -123,23 +125,24 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
                   )
                 ],
               ),
-
+              ///experiences horizontal list
               Container(
                 height: 250,
                 padding: const EdgeInsets.only(left: 31),
                 child: ListView.builder(
                    // itemCount: 10,
-                    itemCount: experienceList.t.length,
+                    itemCount: homeResponseData.t?.experiences?.length,
                     physics: const BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       return _FoodContainer(
                         appTheme: appTheme,
-                        data: experienceList.t[(experienceList.t.length-1)-index],
+                        data: homeResponseData.t?.experiences![(homeResponseData.t!.experiences!.length - 1)-index],
                         //  foodMenuDetail: foodMenuDetail,
                       );
                     }),
               ),
+              ///popular dishes label
               Container(
                 padding: const EdgeInsets.only(left: 31, bottom: 0),
                 child: GeneralText(
@@ -152,6 +155,7 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
                   ),
                 ),
               ),
+              ///popular dishes grid
               Container(
                 margin: const EdgeInsets.only(right: 20, left: 20, top: 4),
                 child: GridView.builder(
@@ -164,10 +168,10 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
                     crossAxisSpacing: 20.0,
                     mainAxisSpacing: 20.0,
                   ),
-                  itemCount: experienceList.t.length,
+                  itemCount: homeResponseData.t!.experienceMenus!.length,
                   itemBuilder: (context, index) {
                     return _PopularDishes(
-                        appTheme: appTheme, data: experienceList.t[index]);
+                        appTheme: appTheme, dishData: homeResponseData.t!.experienceMenus![index], experiencesList: homeResponseData.t!.experiences,);
                   },
                 ),
               ),
@@ -187,11 +191,13 @@ class _PopularDishes extends StatelessWidget {
   const _PopularDishes({
     Key? key,
     required this.appTheme,
-    required this.data,
+    required this.dishData,
+    required this.experiencesList,
   }) : super(key: key);
 
   final IAppThemeData appTheme;
-  final experience_data.T data;
+  final home_data.ExperienceMenus dishData;
+  final List<home_data.Experiences>? experiencesList;
 
   @override
   Widget build(BuildContext context) {
@@ -234,8 +240,8 @@ class _PopularDishes extends StatelessWidget {
                     ),
                     shape: BoxShape.circle,
                   ),
-                  child: Image.asset(
-                    'assets/images/icons/food_product_experience.png',
+                  child: Image.network(
+                    dishData.pictureUrl.toString(),
                     // height: 130,
                   ),
                 ),
@@ -247,7 +253,7 @@ class _PopularDishes extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     GeneralText(
-                      data.description, //'Sindhi\nBiryani',
+                      dishData.dish.toString(), //'Sindhi\nBiryani',
                       textAlign: TextAlign.left,
                       style: appTheme.typographies.interFontFamily.headline2
                           .copyWith(
@@ -288,21 +294,21 @@ class _FoodContainer extends StatelessWidget {
   }) : super(key: key);
 
   final IAppThemeData appTheme;
-  final experience_data.T data;
+  final home_data.Experiences? data;
   // final FoodMenuModel foodMenuDetail;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        developer.log('Experience Id selected is ' + '${data.id}');
+        developer.log('Experience Id selected is ' + '${data?.id}');
         Navigator.push(
           context,
           // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
           MaterialPageRoute(
               builder: (context) => FoodDetailScreenView(
-                    selectedExperienceId: data.id.toString(),
-                    experienceData: data,
+                    selectedExperienceId: data!.id.toString(),
+                    experienceData: data!,
                     //  foodMenuDetail: foodMenuDetail,
                   )),
         );
@@ -349,7 +355,7 @@ class _FoodContainer extends StatelessWidget {
                                 children: [
                                   SizedBox(
                                     width:45,
-                                    child: displayMarque(data.title +" ", appTheme
+                                    child: displayMarque(data!.title! +" ", appTheme
                                             .typographies.interFontFamily.headline2
                                             .copyWith(
                                           fontSize: 14,
@@ -371,7 +377,7 @@ class _FoodContainer extends StatelessWidget {
                                   const SizedBox(
                                     width: 10,
                                   ),
-                                     displayMarque(data.description+" ",appTheme
+                                     displayMarque(data!.description!+" ",appTheme
                                              .typographies.interFontFamily.headline2
                                              .copyWith(
                                            fontSize: 14,
@@ -393,7 +399,7 @@ class _FoodContainer extends StatelessWidget {
                               //    displayMarque(data.description),
                               const SizedBox(height: 10),
                               GeneralText(
-                                "by " + data.chefBrandName, // Strings.labelSeaFood2Experience,
+                                "by " + data!.chefBrandName.toString(), // Strings.labelSeaFood2Experience,
                                 style:appTheme.typographies.interFontFamily.headline2
                                     .copyWith(
                                   fontSize: 14,
@@ -402,7 +408,7 @@ class _FoodContainer extends StatelessWidget {
                                 ),
                               ),
                               GeneralText(
-                                data.chefAddress, // Strings.labelSeaFood2Experience,
+                                data!.chefAddress.toString(), // Strings.labelSeaFood2Experience,
                                 style: appTheme
                                     .typographies.interFontFamily.headline2
                                     .copyWith(
