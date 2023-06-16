@@ -227,7 +227,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                        const BottomBar()),
+                                        BottomBar(bottomBarType: BottomBarType.home,)),
                                   );
                                 },
                                 child: const GeneralNewAppBar(

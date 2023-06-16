@@ -1,11 +1,11 @@
 import 'package:chef/constants/constants.dart';
 import 'package:chef/helpers/helpers.dart';
+//import 'package:chef/screens/bottom_bar/bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
+import 'package:chef/screens/bottom_bar/bottom_bar.dart' as bottom_bar;
 import '../../services/navigation/navigation_service.dart';
 import '../../setup.dart';
-import '../../theme/app_theme_widget.dart';
 import 'general_text.dart';
 
 class GeneralNewAppBar extends StatelessWidget {
@@ -52,7 +52,7 @@ class GeneralNewAppBar extends StatelessWidget {
         if (rightIcon != null) ...[
           Spacer(),
           InkWell(
-            onTap: ()=> _navigationService.navigateTo(route:const BottomBar()),
+            onTap: ()=> _navigationService.navigateTo(route: BottomBar(bottomBarType: bottom_bar.BottomBarType.home),),
             child: SvgPicture.asset(
               rightIcon!,
               height: 25,

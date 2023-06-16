@@ -2,8 +2,7 @@ import 'package:chef/helpers/helpers.dart';
 
 import '../../setup.dart';
 import 'dart:developer' as developer;
-//
-// import '../bottom_bar/bottom_bar.dart';
+import '../bottom_bar/bottom_bar.dart' as bottom_bar;
 
 class SignUpLetsStartScreen extends StatefulWidget {
   const SignUpLetsStartScreen({Key? key}) : super(key: key);
@@ -186,7 +185,7 @@ class _SignUpLetsStartScreenState extends State<SignUpLetsStartScreen> {
       styleType: ButtonStyleType.fill,
       onTap: () {
         developer.log(' here in lets start screen  Bar ');
-        _navigationService.navigateTo(route: BottomBar());
+        _navigationService.navigateTo(route: BottomBar(bottomBarType: bottom_bar.BottomBarType.home));
         // _navigationService.replace(route: const BottomBar());
 
         // _navigation.replace(route: BottomBar());

@@ -1,4 +1,5 @@
 import 'package:chef/helpers/helpers.dart';
+import 'package:chef/screens/booking/advance_payment/jazz_cash_webview.dart';
 import 'package:video_player/video_player.dart';
 
 import '../home/home_screen_v.dart';
@@ -172,8 +173,8 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) =>
-            SignUpScreen(),
-            //HomeScreen(),
+          SignUpScreen(isProfileDetails: false),
+          //  HomeScreen(),
           ),
         );
         //    viewModel.goToForgotPasswordScreen();

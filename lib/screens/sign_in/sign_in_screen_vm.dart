@@ -1,5 +1,6 @@
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/models/signup/profession_request.dart' as prorequest;
+import 'package:chef/screens/bottom_bar/bottom_bar.dart' as bottom_bar;
 import 'package:chef/screens/sign_in/sign_in_screen_m.dart';
 import 'package:http/http.dart';
 
@@ -170,7 +171,7 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
           developer.log(' Sign up Response is ' + signupResponse.message);
 
           //    Navigator.pushReplacementNamed(context, '/BottomBar');
-          _navigation.replace(route: BottomBar());
+          _navigation.replace(route: BottomBar(bottomBarType: bottom_bar.BottomBarType.home));
           // Navigator.push(
           //   context,
           //   MaterialPageRoute(builder: (context) => const BottomBar()),

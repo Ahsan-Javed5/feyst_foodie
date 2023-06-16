@@ -117,9 +117,13 @@ class AppRouter extends _i11.RootStackRouter {
       );
     },
     BottomBar.name: (routeData) {
+      final args = routeData.argsAs<BottomBarArgs>();
       return _i11.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i10.BottomBar(),
+        child: _i10.BottomBar(
+          key: args.key,
+          bottomBarType: args.bottomBarType,
+        ),
       );
     },
   };
@@ -435,12 +439,34 @@ class FoodProductBookingConfirmedDetailsArgs {
 
 /// generated route for
 /// [_i10.BottomBar]
-class BottomBar extends _i11.PageRouteInfo<void> {
-  const BottomBar()
-      : super(
+class BottomBar extends _i11.PageRouteInfo<BottomBarArgs> {
+  BottomBar({
+    _i12.Key? key,
+    required _i10.BottomBarType bottomBarType,
+  }) : super(
           BottomBar.name,
           path: '/bottomBar',
+          args: BottomBarArgs(
+            key: key,
+            bottomBarType: bottomBarType,
+          ),
         );
 
   static const String name = 'BottomBar';
+}
+
+class BottomBarArgs {
+  const BottomBarArgs({
+    this.key,
+    required this.bottomBarType,
+  });
+
+  final _i12.Key? key;
+
+  final _i10.BottomBarType bottomBarType;
+
+  @override
+  String toString() {
+    return 'BottomBarArgs{key: $key, bottomBarType: $bottomBarType}';
+  }
 }

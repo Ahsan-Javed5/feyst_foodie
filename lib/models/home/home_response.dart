@@ -8,7 +8,7 @@ class HomeResponse {
   HomeResponse({this.t, this.userId, this.message, this.error, this.code});
 
   HomeResponse.fromJson(Map<String, dynamic> json) {
-    t = json['t'] != null ? new T.fromJson(json['t']) : null;
+    t = json['t'] != null ? T.fromJson(json['t']) : null;
     userId = json['userId'];
     message = json['message'];
     error = json['error'];
@@ -16,47 +16,47 @@ class HomeResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.t != null) {
-      data['t'] = this.t!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (t != null) {
+      data['t'] = t!.toJson();
     }
-    data['userId'] = this.userId;
-    data['message'] = this.message;
-    data['error'] = this.error;
-    data['code'] = this.code;
+    data['userId'] = userId;
+    data['message'] = message;
+    data['error'] = error;
+    data['code'] = code;
     return data;
   }
 }
 
 class T {
-  List<Experiences>? experiences;
-  List<ExperienceMenus>? experienceMenus;
+  List<Experiences>? popularExperiences;
+  List<Experiences>? allExperiences;
 
-  T({this.experiences, this.experienceMenus});
+  T({this.popularExperiences, this.allExperiences});
 
   T.fromJson(Map<String, dynamic> json) {
-    if (json['experiences'] != null) {
-      experiences = <Experiences>[];
-      json['experiences'].forEach((v) {
-        experiences!.add(new Experiences.fromJson(v));
+    if (json['popularExperiences'] != null) {
+      popularExperiences = <Experiences>[];
+      json['popularExperiences'].forEach((v) {
+        popularExperiences!.add(Experiences.fromJson(v));
       });
     }
-    if (json['experienceMenus'] != null) {
-      experienceMenus = <ExperienceMenus>[];
-      json['experienceMenus'].forEach((v) {
-        experienceMenus!.add(new ExperienceMenus.fromJson(v));
+    if (json['allExperience'] != null) {
+      allExperiences = <Experiences>[];
+      json['allExperience'].forEach((v) {
+        allExperiences!.add(Experiences.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.experiences != null) {
-      data['experiences'] = this.experiences!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (popularExperiences != null) {
+      data['popularExperiences'] = popularExperiences!.map((v) => v.toJson()).toList();
     }
-    if (this.experienceMenus != null) {
-      data['experienceMenus'] =
-          this.experienceMenus!.map((v) => v.toJson()).toList();
+    if (allExperiences != null) {
+      data['allExperience'] =
+          allExperiences!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -165,40 +165,40 @@ class Experiences {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = id;
-    data['chefId'] = this.chefId;
-    data['chefName'] = this.chefName;
-    data['chefBrandName'] = this.chefBrandName;
-    data['chefAddress'] = this.chefAddress;
-    data['title'] = this.title;
-    data['description'] = this.description;
-    data['wowFactorId'] = this.wowFactorId;
-    data['preferenceId'] = this.preferenceId;
-    data['price'] = this.price;
-    data['priceTypeId'] = this.priceTypeId;
-    data['persons'] = this.persons;
-    data['personMaxLimit'] = this.personMaxLimit;
-    data['locationId'] = this.locationId;
-    data['subHostName'] = this.subHostName;
-    data['subHostMobileNo'] = this.subHostMobileNo;
-    if (this.experienceWowFactors != null) {
+    data['chefId'] = chefId;
+    data['chefName'] = chefName;
+    data['chefBrandName'] = chefBrandName;
+    data['chefAddress'] = chefAddress;
+    data['title'] = title;
+    data['description'] = description;
+    data['wowFactorId'] = wowFactorId;
+    data['preferenceId'] = preferenceId;
+    data['price'] = price;
+    data['priceTypeId'] = priceTypeId;
+    data['persons'] = persons;
+    data['personMaxLimit'] = personMaxLimit;
+    data['locationId'] = locationId;
+    data['subHostName'] = subHostName;
+    data['subHostMobileNo'] = subHostMobileNo;
+    if (experienceWowFactors != null) {
       data['experienceWowFactors'] =
-          this.experienceWowFactors!.map((v) => v.toJson()).toList();
+          experienceWowFactors!.map((v) => v.toJson()).toList();
     }
-    if (this.experiencePreferences != null) {
+    if (experiencePreferences != null) {
       data['experiencePreferences'] =
-          this.experiencePreferences!.map((v) => v.toJson()).toList();
+          experiencePreferences!.map((v) => v.toJson()).toList();
     }
-    if (this.experienceMedia != null) {
+    if (experienceMedia != null) {
       data['experienceMedia'] =
-          this.experienceMedia!.map((v) => v.toJson()).toList();
+          experienceMedia!.map((v) => v.toJson()).toList();
     }
-    data['cityId'] = this.cityId;
-    data['cityName'] = this.cityName;
-    data['townId'] = this.townId;
-    data['townName'] = this.townName;
-    data['latitude'] = this.latitude;
-    data['longitude'] = this.longitude;
-    data['placeId'] = this.placeId;
+    data['cityId'] = cityId;
+    data['cityName'] = cityName;
+    data['townId'] = townId;
+    data['townName'] = townName;
+    data['latitude'] = latitude;
+    data['longitude'] = longitude;
+    data['placeId'] = placeId;
     return data;
   }
 }
@@ -230,12 +230,12 @@ class ExperienceWowFactors {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['experienceId'] = this.experienceId;
-    data['wowFactorId'] = this.wowFactorId;
-    data['wowFactorName'] = this.wowFactorName;
-    data['wowFactorDescription'] = this.wowFactorDescription;
-    data['wowFactorIconPath'] = this.wowFactorIconPath;
+    data['id'] = id;
+    data['experienceId'] = experienceId;
+    data['wowFactorId'] = wowFactorId;
+    data['wowFactorName'] = wowFactorName;
+    data['wowFactorDescription'] = wowFactorDescription;
+    data['wowFactorIconPath'] = wowFactorIconPath;
     return data;
   }
 }
@@ -267,12 +267,12 @@ class ExperiencePreferences {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['experienceId'] = this.experienceId;
-    data['preferenceId'] = this.preferenceId;
-    data['preferenceName'] = this.preferenceName;
-    data['preferenceDescription'] = this.preferenceDescription;
-    data['preferenceIconPath'] = this.preferenceIconPath;
+    data['id'] = id;
+    data['experienceId'] = experienceId;
+    data['preferenceId'] = preferenceId;
+    data['preferenceName'] = preferenceName;
+    data['preferenceDescription'] = preferenceDescription;
+    data['preferenceIconPath'] = preferenceIconPath;
     return data;
   }
 }
@@ -316,16 +316,16 @@ class ExperienceMenus {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['dish'] = this.dish;
-    data['mealId'] = this.mealId;
-    data['mealName'] = this.mealName;
-    data['baseDishId'] = this.baseDishId;
-    data['baseDishName'] = this.baseDishName;
-    data['experienceId'] = this.experienceId;
-    data['description'] = this.description;
-    data['price'] = this.price;
-    data['pictureUrl'] = this.pictureUrl;
+    data['id'] = id;
+    data['dish'] = dish;
+    data['mealId'] = mealId;
+    data['mealName'] = mealName;
+    data['baseDishId'] = baseDishId;
+    data['baseDishName'] = baseDishName;
+    data['experienceId'] = experienceId;
+    data['description'] = description;
+    data['price'] = price;
+    data['pictureUrl'] = pictureUrl;
     return data;
   }
 }

@@ -4,9 +4,11 @@ import 'package:chef/helpers/helpers.dart';
 import 'package:chef/screens/sign_up/pin_input_field.dart';
 import 'package:chef/screens/sign_up/sign_up_screen_vm.dart';
 import 'package:chef/screens/sign_up/verify_phone_number.dart';
+import 'package:chef/ui_kit/widgets/general_new_appbar.dart';
 import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../models/signup/profession_response.dart';
 import '../../ui_kit/helpers/dialog_helper.dart';
@@ -18,7 +20,8 @@ import 'package:chef/screens/sign_up/sign_up_screen_m.dart';
 import 'dart:developer' as developer;
 
 class SignUpScreen extends BaseView<SignUpScreenViewModel> {
-  SignUpScreen({isVerified, Key? key}) : super(key: key);
+  SignUpScreen({isVerified,  this.isProfileDetails, Key? key}) : super(key: key);
+   bool? isProfileDetails;
 
   final baseURLs = [
     // Api.prodURL,
@@ -28,14 +31,14 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
 
   late List<DropdownMenuItem<String>> items = [];
 
-
   Gender selectedGender = Gender.male;
 
   final genderList = <String>['Male', 'Female'];
 
   late final ScrollController scrollController = ScrollController();
   bool isKeyboardVisible = false;
-
+  TextEditingController otpController = TextEditingController();
+  String enteredOtp = '';
   BuildContext? dcontext;
 
   void loadProfessionList(
@@ -50,9 +53,9 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     viewModel.professionID =
         viewModel.dropdownDetails[viewModel.dropdownItems[0]];
 
-    if(viewModel.checkAllInputAdded()){
+    if (viewModel.checkAllInputAdded()) {
       viewModel.changeButton(true);
-    }else{
+    } else {
       viewModel.changeButton(false);
     }
   }
@@ -69,7 +72,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
         builder: (_, state) {
           return Scaffold(
               backgroundColor: appTheme.colors.primaryBackground,
-              bottomNavigationBar: displayAlreadySignIn(appTheme, context),
+              bottomNavigationBar: displayAlreadySignIn(appTheme, context, isProfileDetails,),
               body: state.when(
                   loading: _loading,
                   loaded: (professionList) => _displayLoadedData(
@@ -77,7 +80,9 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                       appTheme: appTheme,
                       context: context,
                       professionList: professionList,
-                      screenSizeData: screenSizeData)));
+                      screenSizeData: screenSizeData,
+                      isProfileDetails: isProfileDetails,
+                  )));
         });
   }
 
@@ -88,14 +93,14 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     appTheme,
     required BuildContext context,
     required List<ProfessionData> professionList,
-    required ScreenSizeData screenSizeData,
+    required ScreenSizeData screenSizeData, bool? isProfileDetails,
   }) {
     final size = screenSizeData.size;
     dcontext = context;
     return SingleChildScrollView(
       child: SafeArea(
         child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
+            padding: const EdgeInsets.only(left: 10),
             child: Stack(
               children: [
                 screenSizeData.screenType == ScreenType.small
@@ -105,6 +110,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                         appTheme: appTheme,
                         size: size,
                         professionList: professionList,
+                        isProfileDetails : isProfileDetails,
                       )
                     : _buildTabletView(
                         context: context,
@@ -125,44 +131,67 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     required SignUpScreenState state,
     required IAppThemeData appTheme,
     required Size size,
-    required List<ProfessionData> professionList,
+    required List<ProfessionData> professionList, required isProfileDetails,
   }) {
+    if(isProfileDetails){
+      viewModel.loadFoodieData();
+    }
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(
-          height: 41,
+         SizedBox(
+          height: isProfileDetails ? 30 : 41,
         ),
-        _getStartedTitle(appTheme: appTheme),
-        Center(
-          child: GeneralText(
-            Strings.signUpTitle,
-            textAlign: TextAlign.center,
-            style: appTheme.typographies.interFontFamily.headline4.copyWith(
-                color: Colors.white, fontSize: 28, fontWeight: FontWeight.w500),
+        isProfileDetails ? const GeneralNewAppBar(
+        //   callBack:(context)=> Navigator.pushReplacement(
+        //   context,
+        //   MaterialPageRoute(
+        //       builder: (context) => const bb.BottomBar()),
+        // ),
+        rightIcon: Resources.homeIconSvg,
+        title: Strings.labelPersonalDetails,
+        titleColor: Colors.white,
+        ) : Column(
+          children: [
+            _getStartedTitle(appTheme: appTheme),
+            Center(
+              child: GeneralText(
+                Strings.signUpTitle,
+                textAlign: TextAlign.center,
+                style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                    color: Colors.white, fontSize: 28, fontWeight: FontWeight.w500),
+              ),
+            ),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 15, right: 30),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 30,
+              ),
+              displayFullName(appTheme, isProfileDetails),
+              const SizedBox(
+                height: 27,
+              ),
+              displayMobileNumber(appTheme, isProfileDetails),
+              const SizedBox(
+                height: 27,
+              ),
+              displayAgeGender(appTheme, isProfileDetails),
+              const SizedBox(
+                height: 10,
+              ),
+              professionList.isNotEmpty
+                  ? displayProfession(appTheme, professionList, isProfileDetails)
+                  : const CircularProgressIndicator(),
+              const SizedBox(
+                height: 140,
+              ),
+            ],
           ),
-        ),
-        const SizedBox(
-          height: 27,
-        ),
-        displayFullName(appTheme),
-        const SizedBox(
-          height: 27,
-        ),
-        displayMobileNumber(appTheme),
-        const SizedBox(
-          height: 27,
-        ),
-        displayAgeGender(appTheme),
-        const SizedBox(
-          height: 10,
-        ),
-        professionList.isNotEmpty
-            ? displayProfession(appTheme, professionList)
-            : const CircularProgressIndicator(),
-        const SizedBox(
-          height: 140,
         ),
       ],
     );
@@ -177,7 +206,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     return Container();
   }
 
-  Widget displayFullName(IAppThemeData appTheme) {
+  Widget displayFullName(IAppThemeData appTheme, isProfileDetails) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -197,16 +226,19 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             controller: viewModel.nameController,
             inputType: InputType.text,
             backgroundColor: appTheme.colors.textFieldFilledColor,
-            inputBorder: appTheme.focusedBorder,
+            inputBorder: isProfileDetails ? const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey, width: 2.0),
+              borderRadius: BorderRadius.all(Radius.circular(8.0)),
+            ) : appTheme.focusedBorder,
             valueStyle: const TextStyle(color: Colors.white),
             hint: 'Enter name',
             hintStyle:
                 TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
             // valueStyle: valueStyle,
             onChanged: (value) {
-              if(viewModel.checkAllInputAdded()){
+              if (viewModel.checkAllInputAdded()) {
                 viewModel.changeButton(true);
-              }else{
+              } else {
                 viewModel.changeButton(false);
               }
               // viewModel.onFormValuesChange(
@@ -216,7 +248,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     );
   }
 
-  Widget displayMobileNumber(IAppThemeData appTheme) {
+  Widget displayMobileNumber(IAppThemeData appTheme, isProfileDetails) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -235,17 +267,21 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
         GeneralTextInput(
             controller: viewModel.mobileNumberController,
             inputType: InputType.digit,
+            isEnable: isProfileDetails ? false : true,
             backgroundColor: appTheme.colors.textFieldFilledColor,
-            inputBorder: appTheme.focusedBorder,
+            inputBorder: isProfileDetails ? const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey, width: 2.0),
+              borderRadius: BorderRadius.all(Radius.circular(8.0)),
+            ) : appTheme.focusedBorder,
             valueStyle: const TextStyle(color: Colors.white),
             hint: '923*********',
             hintStyle:
                 TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
             // valueStyle: valueStyle,
             onChanged: (newValue) {
-              if(viewModel.checkAllInputAdded()){
+              if (viewModel.checkAllInputAdded()) {
                 viewModel.changeButton(true);
-              }else{
+              } else {
                 viewModel.changeButton(false);
               }
               // viewModel.onFormValuesChange(
@@ -255,7 +291,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     );
   }
 
-  Widget displayAgeGender(IAppThemeData appTheme) {
+  Widget displayAgeGender(IAppThemeData appTheme, isProfileDetails) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -282,7 +318,10 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                   controller: viewModel.ageController,
                   inputType: InputType.digit,
                   backgroundColor: appTheme.colors.textFieldFilledColor,
-                  inputBorder: appTheme.focusedBorder,
+                  inputBorder: isProfileDetails ? const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey, width: 2.0),
+                    borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                  ) : appTheme.focusedBorder,
                   valueStyle: const TextStyle(color: Colors.white),
                   hint: '18',
                   hintStyle: TextStyle(
@@ -293,9 +332,9 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                       developer.log(' Age Setup is ' + '${newValue}');
                       viewModel.ageController.text = newValue.toString();
                     }
-                    if(viewModel.checkAllInputAdded()){
+                    if (viewModel.checkAllInputAdded()) {
                       viewModel.changeButton(true);
-                    }else{
+                    } else {
                       viewModel.changeButton(false);
                     }
                     // viewModel.onFormValuesChange(
@@ -321,7 +360,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               const SizedBox(
                 height: 8,
               ),
-              _genderWidget(appTheme, Gender.male, Strings.signMaleLabel),
+              _genderWidget(appTheme, Gender.male, Strings.signMaleLabel, isProfileDetails),
               // Row(
               //   children: [
               //     _genderWidget(appTheme, Gender.male, Strings.signMaleLabel),
@@ -342,6 +381,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
   Widget displayProfession(
     IAppThemeData appTheme,
     List<ProfessionData> professionList,
+      isProfileDetails,
   ) {
     loadProfessionList(professionList);
     return viewModel.dropdownItems.isNotEmpty &&
@@ -364,7 +404,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               GeneralDropdown(
                 name: 'Select',
                 items: viewModel.dropdownItems,
-                borderColor: appTheme.colors.textFieldBorderColor,
+                borderColor: isProfileDetails ? Colors.grey : appTheme.colors.textFieldBorderColor,
                 // selectedItem: dropdownItems.first,
                 style: appTheme.typographies.interFontFamily.headline6.copyWith(
                     color: Colors.white,
@@ -374,7 +414,6 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                   required String key,
                   required dynamic value,
                 }) {
-
                   viewModel.professionID = viewModel.dropdownDetails[value];
                 },
               )
@@ -385,9 +424,9 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
 
   Widget displayAlreadySignIn(
     IAppThemeData appTheme,
-    BuildContext context,
+    BuildContext context, isProfileDetails,
   ) {
-    return Container(
+    return isProfileDetails ? SizedBox() : Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -412,56 +451,58 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
           ValueListenableBuilder(
             builder: (context, value, _) {
               return InkWell(
-                onTap: value == true? () async {
-                  //proceedVerification(context);
-                  if (viewModel.verifyInput(
-                    name: viewModel.nameController.text,
-                    mobileNumber: viewModel.mobileNumberController.text,
-                    age: int.parse(viewModel.ageController.text),
-                    professionId: viewModel.professionID,
-                    gender: viewModel.genderController.text,
-                    context: context,
-                    baseUrl: baseURLs[0],
-                  )) {
-                    // try{
-                    // await FirebaseAuth.instance.verifyPhoneNumber(
-                    //   phoneNumber: "+" + viewModel.mobileNumberController.text,
-                    //   verificationCompleted: (PhoneAuthCredential credential) {},
-                    //   verificationFailed: (FirebaseAuthException e) {},
-                    //   codeSent: (String verificationId, int? resendToken) {},
-                    //   codeAutoRetrievalTimeout: (String verificationId) {},
-                    // );
-                    // print('code sent');
-                    // }catch(e){
-                    //   print(e);
-                    // }
-                    // _showVerificati onPopup(context);
-                     //fireBaseAuth();
-                    // VerifyPhoneNumberScreen();
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => VerifyPhoneNumberScreen(
-                    //             phoneNumber: _mobileNumberController.text,
-                    //           )),
-                    // );
+                onTap: value == true
+                    ? () async {
+                        //proceedVerification(context);
+                        if (viewModel.verifyInput(
+                          name: viewModel.nameController.text,
+                          mobileNumber: viewModel.mobileNumberController.text,
+                          age: int.parse(viewModel.ageController.text),
+                          professionId: viewModel.professionID,
+                          gender: viewModel.genderController.text,
+                          context: context,
+                          baseUrl: baseURLs[0],
+                        )) {
+                          // try{
+                          // await FirebaseAuth.instance.verifyPhoneNumber(
+                          //   phoneNumber: "+" + viewModel.mobileNumberController.text,
+                          //   verificationCompleted: (PhoneAuthCredential credential) {},
+                          //   verificationFailed: (FirebaseAuthException e) {},
+                          //   codeSent: (String verificationId, int? resendToken) {},
+                          //   codeAutoRetrievalTimeout: (String verificationId) {},
+                          // );
+                          // print('code sent');
+                          // }catch(e){
+                          //   print(e);
+                          // }
+                          // _showVerificati onPopup(context);
+                          //fireBaseAuth();
+                          // VerifyPhoneNumberScreen();
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //       builder: (context) => VerifyPhoneNumberScreen(
+                          //             phoneNumber: _mobileNumberController.text,
+                          //           )),
+                          // );
 
-                    //displayVerificationDisplay(context);
-                    displayVerificationDisplayBackup(context);
-                    // testPopUp(context);
-                  }
-                }:null,
+                          //displayVerificationDisplay(context);
+                          displayVerificationDisplayBackup(context);
+
+                          // testPopUp(context);
+                        }
+                      }
+                    : null,
                 child: ValueListenableBuilder(
                   valueListenable: viewModel.buttonEnabled,
-                  builder: (context, value, _){
-                    return value == true?
-                    SvgPicture.asset(
-                      Resources.getSignInRightArrow,
-                    )
-                        :
-                    SvgPicture.asset(
-                      Resources.getRightArrow,
-                    );
+                  builder: (context, value, _) {
+                    return value == true
+                        ? SvgPicture.asset(
+                            Resources.getSignInRightArrow,
+                          )
+                        : SvgPicture.asset(
+                            Resources.getRightArrow,
+                          );
                   },
                 ),
               );
@@ -474,7 +515,8 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
   }
 
   Widget fireBaseAuth() {
-    developer.log(' Mobile Number is ' + '${viewModel.mobileNumberController.text}');
+    developer
+        .log(' Mobile Number is ' + '${viewModel.mobileNumberController.text}');
     return FirebasePhoneAuthHandler(
       phoneNumber: "+" + viewModel.mobileNumberController.text,
       // If true, the user is signed out before the onLoginSuccess callback is fired when the OTP is verified successfully.
@@ -507,17 +549,18 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     );
   }
 
-  Widget _genderWidget(IAppThemeData appTheme, Gender gender, String text) {
+  Widget _genderWidget(IAppThemeData appTheme, Gender gender, String text, isProfileDetails) {
     return GeneralGender(
       gender: gender,
       text: text,
       selectedItem: gender,
       items: genderList,
+      isProfileDetails: isProfileDetails,
       onTap: (value) {
         viewModel.genderController.text = value;
-        if(viewModel.checkAllInputAdded()){
+        if (viewModel.checkAllInputAdded()) {
           viewModel.changeButton(true);
-        }else{
+        } else {
           viewModel.changeButton(false);
         }
         developer.log(' Here Gender clicked ' + '$value');
@@ -820,7 +863,6 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
   }
 
   void displayVerificationDisplayBackup(BuildContext context) {
-
     DialogHelper.show(
         title: 'Verification code',
         isDismissible: true,
@@ -838,30 +880,19 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             log(VerifyPhoneNumberScreen.id, name: 'OTP sent!');
           },
           onLoginSuccess: (userCredential, autoVerified) async {
-            log(
-              VerifyPhoneNumberScreen.id,
-              name: autoVerified
-                  ? 'OTP was fetched automatically!'
-                  : 'OTP was verified manually!',
-            );
-
             // showSnackBar('Phone number verified successfully!');
-            Toaster.infoToast(
-                context: context,
-                message: 'Phone number verified successfully!');
-            log(
-              VerifyPhoneNumberScreen.id,
-              name: 'Login Success UID: ${userCredential.user?.uid}',
-            );
-            viewModel.saveFoodie(
-              name: viewModel.nameController.text,
-              mobileNumber: viewModel.mobileNumberController.text,
-              age: int.parse(viewModel.ageController.text),
-              professionId: viewModel.professionID,
-              gender: viewModel.genderController.text,
-              context: context,
-              baseUrl: baseURLs[0],
-            );
+            // Toaster.infoToast(
+            //     context: context,
+            //     message: 'Phone number verified successfully!');
+            // viewModel.saveFoodie(
+            //   name: viewModel.nameController.text,
+            //   mobileNumber: viewModel.mobileNumberController.text,
+            //   age: int.parse(viewModel.ageController.text),
+            //   professionId: viewModel.professionID,
+            //   gender: viewModel.genderController.text,
+            //   context: context,
+            //   baseUrl: baseURLs[0],
+            // );
           },
           onLoginFailed: (authException, stackTrace) {
             log(
@@ -909,7 +940,6 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
 
   Widget verificationDesign(BuildContext context, controller) {
     final appTheme = AppTheme.of(context).theme;
-    final TextController _otpController = TextController();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -945,8 +975,8 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 12),
             child: PinCodeTextField(
-              controller: _otpController,
-
+              controller: otpController,
+              //autoDisposeControllers: false,
               length: 6,
               cursorColor: appTheme.colors.secondaryBackground,
 
@@ -973,32 +1003,36 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               animationType: AnimationType.fade,
               animationDuration: const Duration(milliseconds: 300),
               //errorAnimationController: errorController, // Pass it here
-              onChanged: (value) {},
-
+              onChanged: (value) {
+                //otpController.text = value;
+              },
+              onCompleted: (value) {
+                enteredOtp = value;
+              },
               onSubmitted: (enteredOtp) async {
-                final verified = await controller.verifyOtp(enteredOtp);
-                //var verified = false;
-                if (verified) {
-                  viewModel.saveFoodie(
-                    name: viewModel.nameController.text,
-                    mobileNumber: viewModel.mobileNumberController.text,
-                    age: int.parse(viewModel.ageController.text),
-                    professionId: viewModel.professionID,
-                    gender: viewModel.genderController.text,
-                    context: context,
-                    baseUrl: baseURLs[0],
-                  );
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //       builder: (context) => SignUpScreen(
-                  //         isVerified: true,
-                  //       )),
-                  // );
-                } else {
-                  // phone verification failed
-                  // will call onLoginFailed or onError callbacks with the error
-                }
+                // final verified = await controller.verifyOtp(enteredOtp);
+                // //var verified = false;
+                // if (verified) {
+                //   viewModel.saveFoodie(
+                //     name: viewModel.nameController.text,
+                //     mobileNumber: viewModel.mobileNumberController.text,
+                //     age: int.parse(viewModel.ageController.text),
+                //     professionId: viewModel.professionID,
+                //     gender: viewModel.genderController.text,
+                //     context: context,
+                //     baseUrl: baseURLs[0],
+                //   );
+                //   // Navigator.push(
+                //   //   context,
+                //   //   MaterialPageRoute(
+                //   //       builder: (context) => SignUpScreen(
+                //   //         isVerified: true,
+                //   //       )),
+                //   // );
+                // } else {
+                //   // phone verification failed
+                //   // will call onLoginFailed or onError callbacks with the error
+                // }
               },
               appContext: context,
             ),
@@ -1010,25 +1044,32 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             title: Strings.verificationPopupButton.toUpperCase(),
             styleType: ButtonStyleType.fill,
             width: 170,
-            onTap: () {
-              if (viewModel.verifyInput(
-                name: viewModel.nameController.text,
-                mobileNumber: viewModel.mobileNumberController.text,
-                age: int.parse(viewModel.ageController.text),
-                professionId: viewModel.professionID,
-                gender: viewModel.genderController.text,
-                context: context,
-                baseUrl: baseURLs[0],
-              )) {
-                viewModel.saveFoodie(
-                  name: viewModel.nameController.text,
-                  mobileNumber: viewModel.mobileNumberController.text,
-                  age: int.parse(viewModel.ageController.text),
-                  professionId: viewModel.professionID,
-                  gender: viewModel.genderController.text,
-                  context: context,
-                  baseUrl: baseURLs[0],
-                );
+            onTap: () async {
+              print('a');
+              print('otp');
+              print(otpController.text);
+              otpController.value;
+              if (enteredOtp != '') {
+                final verified = await controller.verifyOtp(enteredOtp);
+                // //var verified = false;
+                // print(enteredOtp);
+                if (verified) {
+                  viewModel.saveFoodie(
+                    name: viewModel.nameController.text,
+                    mobileNumber: viewModel.mobileNumberController.text,
+                    age: int.parse(viewModel.ageController.text),
+                    professionId: viewModel.professionID,
+                    gender: viewModel.genderController.text,
+                    context: context,
+                    baseUrl: baseURLs[0],
+                  );
+                } else {
+                  // phone verification failed
+                  // will call onLoginFailed or onError callbacks with the error
+                }
+              } else {
+                Toaster.infoToast(
+                    context: context, message: 'Please Enter OTP!');
               }
 
               //  proceedVerification(context);
@@ -1037,6 +1078,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
           SizedBox(
             height: 22,
           ),
+
           ///resend code
           InkWell(
             onTap: () {
@@ -1046,7 +1088,6 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                   context: context, message: 'Verification Code Resent');
             },
             child: GeneralText(
-
               Strings.verificationPopupResendCode,
               textAlign: TextAlign.center,
               style: appTheme.typographies.interFontFamily.headline4.copyWith(

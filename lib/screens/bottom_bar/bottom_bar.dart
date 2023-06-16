@@ -6,23 +6,19 @@ import '../../constants/resources.dart';
 import '../../constants/strings.dart';
 import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/widgets/general_text.dart';
-import '../booking/food_item_booking.dart';
-import '../home/widget/food_details_screen.dart';
 import '../home/home_screen_v.dart';
 import '../user_account/edit_profie/edit_profile_screen_v.dart';
-import '../user_account/edit_profile.dart';
-import '../user_account/user_profile.dart';
 
 class BottomBar extends StatefulWidget {
-  const BottomBar({Key? key}) : super(key: key);
-
+  BottomBar({Key? key, this.bottomBarType = BottomBarType.home}) : super(key: key);
+  BottomBarType bottomBarType;
   @override
   State<BottomBar> createState() => _BottomBarState();
 }
 
 class _BottomBarState extends State<BottomBar> with WidgetsBindingObserver {
   final GlobalKey<ScaffoldState>? drawerKey = GlobalKey();
-  BottomBarType selectedType = BottomBarType.home;
+ // BottomBarType selectedType = widget.bottomBarType;
   List<Widget> screens = [
     HomeScreen(),
     // UserProfile(),
@@ -35,7 +31,7 @@ class _BottomBarState extends State<BottomBar> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: screens[selectedType.index],
+        body: screens[widget.bottomBarType.index],
         bottomNavigationBar: _bottomNavigationContainer(context));
   }
 
@@ -77,7 +73,7 @@ class _BottomBarState extends State<BottomBar> with WidgetsBindingObserver {
     return InkWell(
       onTap: () {
         setState(() {
-          selectedType = type;
+          widget.bottomBarType = type;
         });
       },
       child: Column(
@@ -108,7 +104,7 @@ class _BottomBarState extends State<BottomBar> with WidgetsBindingObserver {
               width: 18,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50), // radius of 10
-                  color: selectedType == type
+                  color: widget.bottomBarType == type
                       ? const Color(0xffb0c18b)
                       : Colors.transparent
 

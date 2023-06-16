@@ -73,6 +73,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   }
 
   bool isValidUrl(String url) => Uri.tryParse(url)?.hasAbsolutePath ?? false;
+
   void onFormValuesChange({
     String? email,
   }) {
@@ -270,6 +271,13 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   }
 
   void loading({required bool isBusy}) => emit(const Loading());
+
+  void loadFoodieData() {
+    nameController.text = _appService.state.userInfo!.t.name;
+    mobileNumberController.text = _appService.state.userInfo!.t.mobileNo;
+    ageController.text = _appService.state.userInfo!.t.age;
+    genderController.text = _appService.state.userInfo!.t.gender;
+  }
 
   // Future registerUser(String mobile, BuildContext context) async {
   //   FirebaseAuth _auth = FirebaseAuth.instance;

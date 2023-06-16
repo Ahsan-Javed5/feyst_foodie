@@ -22,7 +22,9 @@ import 'booking_in_process_screen.dart';
 import 'dart:developer' as developer;
 
 class FoodItemBooking extends StatefulWidget {
-  const FoodItemBooking({Key? key, this.bookingListModel, required this.isBookingScreen}) : super(key: key);
+  const FoodItemBooking(
+      {Key? key, this.bookingListModel, required this.isBookingScreen})
+      : super(key: key);
 
   final BookingListModel? bookingListModel;
   final bool isBookingScreen;
@@ -76,7 +78,9 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                   padding: const EdgeInsets.only(left: 12, top: 20, bottom: 20),
                   child: GeneralNewAppBar(
                     rightIcon: Resources.homeIconSvg,
-                    title: widget.isBookingScreen ? Strings.labelBookings : Strings.lableHistory,
+                    title: widget.isBookingScreen
+                        ? Strings.labelBookings
+                        : Strings.lableHistory,
                     titleColor: Colors.white,
                   ),
                 ),
@@ -166,7 +170,8 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                         //   return const FoodProductAdvancePendingDetails();
                         // }));
                       } else if (item.bookingStatus!.toUpperCase() ==
-                          Strings.confirmed) {
+                          Strings.confirmed || item.bookingStatus!.toUpperCase() ==
+                          Strings.requestedOrder) {
                         _navigation.navigateTo(
                             route: nav.BookingInProcessRouteView(
                                 bookingItem: item));
@@ -174,20 +179,22 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                         //     MaterialPageRoute(builder: (context) {
                         //   return const FoodItemInProcessBooking();
                         // }));
-                      } else if (index == 3) {
-                        // Navigator.push(context,
-                        //     MaterialPageRoute(builder: (context) {
-                        //   return const FoodProductBookingConfirmedDetails();
-                        // }));
                       }
-                      // else{
-                      //   _showGeneralPopup(context);
+                      // else if (index == 3) {
+                      //   // Navigator.push(context,
+                      //   //     MaterialPageRoute(builder: (context) {
+                      //   //   return const FoodProductBookingConfirmedDetails();
+                      //   // }));
                       // }
+                      else{
+                       //_showGeneralPopup(context);
+                      }
                     },
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          ///image, name, rating, price row
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -272,7 +279,9 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                           ),
                           Container(
                             padding: const EdgeInsets.only(right: 22),
-                            child: Column(children: [
+                            child: Column(
+                                children: [
+                                  ///brands name and persons row
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -300,6 +309,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                       : Container(),
                                 ],
                               ),
+                              ///date and preference row
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -334,6 +344,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                               const SizedBox(
                                 height: 23,
                               ),
+                              ///booking status
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -349,16 +360,19 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                   ),
                                 ],
                               ),
-                              item.bookingStatus?.toUpperCase() == Strings.acceptData? GeneralText(
-                                "Please pay advance to confirm booking",
-                                //  item.bookingStatus ?? "",
-                                style:appTheme
-                                    .typographies.interFontFamily.headline1
-                                    .copyWith(
-                                    fontSize: 13,
-                                    color: HexColor.fromHex('#909094'),),
-                              ):Container(),
-
+                              item.bookingStatus?.toUpperCase() ==
+                                      Strings.acceptData
+                                  ? GeneralText(
+                                      "Please pay advance to confirm booking",
+                                      //  item.bookingStatus ?? "",
+                                      style: appTheme.typographies
+                                          .interFontFamily.headline1
+                                          .copyWith(
+                                        fontSize: 13,
+                                        color: HexColor.fromHex('#909094'),
+                                      ),
+                                    )
+                                  : Container(),
                             ]),
                           )
                         ]),
@@ -462,8 +476,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
               color: HexColor.fromHex("#909094"), shape: BoxShape.circle),
         ),
       ]);
-    }
-    else if (bookingStatus.toUpperCase() == Strings.acceptData) {
+    } else if (bookingStatus.toUpperCase() == Strings.acceptData) {
       progressBar = Row(children: [
         Container(
           width: 12,
@@ -533,8 +546,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
               color: HexColor.fromHex("#909094"), shape: BoxShape.circle),
         ),
       ]);
-    }
-    else if (bookingStatus.toUpperCase() == Strings.billGenerated) {
+    } else if (bookingStatus.toUpperCase() == Strings.billGenerated) {
       progressBar = Row(children: [
         Container(
           width: 12,
@@ -605,8 +617,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
           ),
         ),
       ]);
-    }
-    else if (bookingStatus.toUpperCase() == Strings.inProgress) {
+    } else if (bookingStatus.toUpperCase() == Strings.inProgress) {
       progressBar = Row(children: [
         Container(
           width: 12,
@@ -677,8 +688,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
           ),
         ),
       ]);
-    }
-    else if (bookingStatus.toUpperCase() == Strings.confirmed.toUpperCase()) {
+    } else if (bookingStatus.toUpperCase() == Strings.confirmed.toUpperCase()) {
       progressBar = Row(children: [
         Container(
           width: 12,
@@ -747,8 +757,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
               color: HexColor.fromHex("#909094"), shape: BoxShape.circle),
         ),
       ]);
-    }
-    else if (index == 3) {
+    } else if (index == 3) {
       progressBar = Row(children: [
         Container(
           width: 12,

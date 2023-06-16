@@ -131,30 +131,32 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
                 padding: const EdgeInsets.only(left: 31),
                 child: ListView.builder(
                    // itemCount: 10,
-                    itemCount: homeResponseData.t?.experiences?.length,
+                    itemCount: homeResponseData.t?.allExperiences?.length,
                     physics: const BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       return _FoodContainer(
                         appTheme: appTheme,
-                        data: homeResponseData.t?.experiences![(homeResponseData.t!.experiences!.length - 1)-index],
+                        data: homeResponseData.t?.allExperiences![(homeResponseData.t!.allExperiences!.length - 1)-index],
                         //  foodMenuDetail: foodMenuDetail,
                       );
                     }),
               ),
+              const SizedBox(height: 10,),
               ///popular dishes label
               Container(
                 padding: const EdgeInsets.only(left: 31, bottom: 0),
                 child: GeneralText(
-                  Strings.labelPopularDishes,
+                  Strings.labelPopularExperiences,
                   style:
                       appTheme.typographies.interFontFamily.headline6.copyWith(
-                    fontSize: 18,
+                    fontSize: 20,
                     fontWeight: FontWeight.w700,
                     color: const Color(0xfff1c452),
                   ),
                 ),
               ),
+              const SizedBox(height: 10),
               ///popular dishes grid
               Container(
                 margin: const EdgeInsets.only(right: 20, left: 20, top: 4),
@@ -168,10 +170,10 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
                     crossAxisSpacing: 20.0,
                     mainAxisSpacing: 20.0,
                   ),
-                  itemCount: homeResponseData.t!.experienceMenus!.length,
+                  itemCount: homeResponseData.t!.popularExperiences!.length,
                   itemBuilder: (context, index) {
-                    return _PopularDishes(
-                        appTheme: appTheme, dishData: homeResponseData.t!.experienceMenus![index], experiencesList: homeResponseData.t!.experiences,);
+                    return _PopularExperience(
+                        appTheme: appTheme, popularExperience: homeResponseData.t!.popularExperiences![index], allExperiences: homeResponseData.t!.allExperiences,);
                   },
                 ),
               ),
@@ -187,17 +189,17 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
   }
 }
 
-class _PopularDishes extends StatelessWidget {
-  const _PopularDishes({
+class _PopularExperience extends StatelessWidget {
+  const _PopularExperience({
     Key? key,
     required this.appTheme,
-    required this.dishData,
-    required this.experiencesList,
+    required this.popularExperience,
+    required this.allExperiences,
   }) : super(key: key);
 
   final IAppThemeData appTheme;
-  final home_data.ExperienceMenus dishData;
-  final List<home_data.Experiences>? experiencesList;
+  final home_data.Experiences? popularExperience;
+  final List<home_data.Experiences>? allExperiences;
 
   @override
   Widget build(BuildContext context) {
@@ -205,8 +207,18 @@ class _PopularDishes extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const PopularFoodDetails()),
+          // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
+          MaterialPageRoute(
+              builder: (context) => FoodDetailScreenView(
+                selectedExperienceId: popularExperience!.id.toString(),
+                experienceData: popularExperience!,
+                //  foodMenuDetail: foodMenuDetail,
+              )),
         );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => const PopularFoodDetails()),
+        // );
       },
       child: Container(
         // height: 170,
@@ -240,9 +252,19 @@ class _PopularDishes extends StatelessWidget {
                     ),
                     shape: BoxShape.circle,
                   ),
-                  child: Image.network(
-                    dishData.pictureUrl.toString(),
-                    // height: 130,
+                  child: Container(
+                    width: 80,
+                    height: 100,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(
+                            Resources.seafoodPNG),
+                        fit: BoxFit.cover
+                        ,
+                      ),
+                    shape: BoxShape.circle,
+                  ),
+                    child: SizedBox(),
                   ),
                 ),
               ),
@@ -253,7 +275,7 @@ class _PopularDishes extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     GeneralText(
-                      dishData.dish.toString(), //'Sindhi\nBiryani',
+                      popularExperience!.title.toString(), //'Sindhi\nBiryani',
                       textAlign: TextAlign.left,
                       style: appTheme.typographies.interFontFamily.headline2
                           .copyWith(
@@ -263,13 +285,28 @@ class _PopularDishes extends StatelessWidget {
                       ),
                     ),
                     GeneralText(
-                      'by Zee Lounge',
+                      popularExperience!.chefBrandName.toString(),
                       style: appTheme.typographies.interFontFamily.headline2
                           .copyWith(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: const Color(0xff909094),
                       ),
+                    ),
+                    Row(
+                      children: [
+                        const Icon(Icons.location_on_outlined, color: Color(0xff909094), size: 16,),
+                        const SizedBox(width: 2),
+                        GeneralText(
+                          popularExperience?.cityName ?? 'Lahore',
+                          style: appTheme.typographies.interFontFamily.headline2
+                              .copyWith(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xff909094),
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(
                       height: 20,

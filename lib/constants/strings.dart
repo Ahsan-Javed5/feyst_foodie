@@ -90,6 +90,7 @@ abstract class Strings {
   static const yes = 'Yes';
   static const confirmationTitle = 'Confirmation';
   static const confirmMessage = 'Are you sure?';
+  static const confirmCancelMessage = 'Are you sure you want to cancel?';
   static const exitApplication = 'Do you want to exit Exto?';
   static const logoutApplication = 'Do you want to log out?';
 
@@ -375,6 +376,7 @@ abstract class Strings {
   static const labelSeaFoodExperience = 'SEAFOOD';
   static const labelSeaFood2Experience = 'EXPERIENCE';
   static const labelPopularDishes = 'POPULAR DISHES';
+  static const labelPopularExperiences = 'Popular Experiences';
 
   static const labelHeaderAccount = 'Account';
   static const labelHeaderOthers = 'Others';
@@ -418,9 +420,11 @@ abstract class Strings {
   static const ratingPopupBtnTitle = "Submit";
   static const ratingPopupSubTitle =
       "Kindly review your experience with Spicy Bites Bistro";
+
   static const generalPopupTitle = "We are sorry";
   static const generalSubTitle =
       "Your Experience has been canceled by our host";
+  static const experiencedCancelledByFoodie = "Your Experience has been Cancelled";
   static const generalButtonTitle = "okay";
   static const popularFoodDetailTitle = 'BBQ\nExperience';
   static const popularFoodDetailSubTitle = 'by Zee Lounge';

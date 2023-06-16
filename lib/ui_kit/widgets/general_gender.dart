@@ -17,6 +17,7 @@ class GeneralGender extends StatefulWidget {
     required Function(String) onTap,
     required List<String> items,
     IconData? icon,
+    required bool isProfileDetails,
     Key? key,
   })  : _text = text,
         _gender = gender,
@@ -24,6 +25,7 @@ class GeneralGender extends StatefulWidget {
         _icon = icon,
         _onTap = onTap,
         _items = items,
+  _isProfileDetails = isProfileDetails,
         super(key: key);
   final String _text;
   final Gender _gender;
@@ -31,6 +33,7 @@ class GeneralGender extends StatefulWidget {
   final IconData? _icon;
   final Function(String) _onTap;
   final List<String> _items;
+  final bool _isProfileDetails;
 
   @override
   _GeneralGenderState createState() => _GeneralGenderState();
@@ -81,7 +84,7 @@ class _GeneralGenderState extends State<GeneralGender> {
                               vertical: 15, horizontal: 3),
                           decoration: BoxDecoration(
                               border: Border.all(
-                                  color: appTheme.colors
+                                  color: widget._isProfileDetails ? Colors.grey : appTheme.colors
                                       .textFieldBorderColor // green as background color
 
                                   ),
@@ -89,8 +92,9 @@ class _GeneralGenderState extends State<GeneralGender> {
                                   BorderRadius.circular(8), // radius of 10
 
                               color: widget._items[index] == selectedValue
-                                  ? appTheme.colors.textFieldBorderColor
-                                  : appTheme.colors.primaryBackground),
+                                  ? (widget._isProfileDetails ? Colors.grey : appTheme.colors.textFieldBorderColor)
+                                  : appTheme.colors.primaryBackground
+                          ),
                           child: GeneralText(
                             item,
                             textAlign: TextAlign.center,

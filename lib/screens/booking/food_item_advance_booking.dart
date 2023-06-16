@@ -1,4 +1,5 @@
 import 'package:chef/helpers/helpers.dart';
+import 'package:chef/screens/booking/advance_payment/jazz_cash_webview.dart';
 import 'package:chef/services/renderer/field_renderer_helpers.dart';
 import 'package:chef/setup.dart';
 import 'package:chef/ui_kit/general_ui_kit.dart';
@@ -1087,10 +1088,16 @@ class _FoodProductAdvancePendingDetailsState
       title: Strings.foodItemBookingAdvancePendingButton.toUpperCase(),
       styleType: ButtonStyleType.fill,
       onTap: () {
-        final _foodItemAdvance =
-            locateService<FoodItemAdvancePaymentViewModel>();
-        _foodItemAdvance
-            .requestConfirmBooking(widget._advancePendingDetails.t.id);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) =>
+              JazzCashWebView(bookingId: widget._advancePendingDetails.t.id)
+          ),
+        );
+        // final _foodItemAdvance =
+        //     locateService<FoodItemAdvancePaymentViewModel>();
+        // _foodItemAdvance.updateBookingStatus(bookingId: widget._advancePendingDetails.t.id);
+           // .requestConfirmBooking(widget._advancePendingDetails.t.id);
         // Navigator.push(context,
         //     MaterialPageRoute(builder: (context) => FoodItemBooking()));
       },

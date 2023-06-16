@@ -69,6 +69,8 @@ dependencies:
   carousel_slider: ^4.2.1
   video_player: ^2.6.1
   collection: ^1.17.0
+  webview_flutter: ^4.2.2
+  url_launcher: ^6.1.11
 
 dev_dependencies:
   analyzer: 4.3.1

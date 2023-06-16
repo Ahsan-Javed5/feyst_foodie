@@ -3,21 +3,12 @@ import 'dart:async';
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/models/booking/booking_request.dart' as booking;
 import 'package:chef/models/home/home_response.dart' as home_data;
-import 'package:chef/screens/home/schedule_model.dart';
-import 'package:flutter_html/flutter_html.dart';
-
-import '../../../models/home/food_menu_request.dart';
 import '../../helpers/order_helper.dart';
 import '../../models/booking/booking_response.dart';
-import '../../models/food_details_screen/food_details_response_model.dart';
 import '../../models/food_details_screen/food_details_screen_by_id_request.dart' as foodRequest;
-import '../../models/perferences/perferences_request.dart';
 import '../../setup.dart';
-// import '../bottom_bar/bottom_bar.dart';
+import '../bottom_bar/bottom_bar.dart' as bottom_bar;
 import 'food_product_details_screen_m.dart';
-import 'package:chef/models/general_model.dart';
-
-import 'package:chef/models/perferences/perference_response.dart';
 import '../../../models/home/experience_list_response.dart' as experience_data;
 
 @injectable
@@ -108,7 +99,7 @@ class FoodProductExperienceDetailsViewModel
     if (bookingResponse.code == 200) {
       emit(const Loaded());
 
-      _navigation.navigateTo(route: const BottomBar());
+      _navigation.navigateTo(route: BottomBar(bottomBarType: bottom_bar.BottomBarType.home));
       // Navigator.push(
       //   context,
       //   // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),

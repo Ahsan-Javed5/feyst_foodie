@@ -1,16 +1,13 @@
 import 'package:chef/base/base_viewmodel.dart';
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/helpers/url_helper.dart';
-// import 'package:chef/models/booking/booking_list_request.dart' as baserequest;
-// import 'package:chef/models/booking/booking_list_response_model.dart';
-// import 'package:chef/screens/booking/booking_list/booking_list_screen_m.dart';
+import 'package:chef/screens/bottom_bar/bottom_bar.dart' as bottom_bar;
+import 'package:chef/models/booking/booking_status_update_request.dart' as booking_udpate;
 import 'package:chef/services/network/network_service.dart';
-import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../constants/api.dart';
 import '../../../models/booking/advance_pending_response.dart';
-// import '../../../models/booking/advance_pending_response.dart';
 import '../../../models/booking/confirmed_booking_response.dart';
 import '../../../models/signup/signup_request.dart' as request;
 import '../../../helpers/data_request.dart' as data;
@@ -34,6 +31,9 @@ class FoodItemAdvancePaymentViewModel
 
   late ConfirmedBookingResponse confirmedBookingResponse;
 
+  final _navigate = locateService<INavigationService>();
+
+
   Future<void> getBookingDetails(int _orderId) async {
     final url = InfininURLHelpers.getRestApiURL(
         Api.baseURL + Api.bookingDetailsAdvancePaymentPending);
@@ -54,8 +54,6 @@ class FoodItemAdvancePaymentViewModel
   Future<void> requestConfirmBooking(int bookingId) async {
     final url =
         InfininURLHelpers.getRestApiURL(Api.baseURL + Api.confirmBooking);
-    final _appService = locateService<ApplicationService>();
-    final _navigate = locateService<INavigationService>();
 
     emit(const Loading());
 
@@ -68,6 +66,25 @@ class FoodItemAdvancePaymentViewModel
 
     confirmedBookingResponse = confirmedBookingResponseFromJson(response.body);
 
-    _navigate.navigateTo(route: const BottomBar());
+    _navigate.navigateTo(route: BottomBar(bottomBarType: bottom_bar.BottomBarType.home));
   }
+
+  Future<void> updateBookingStatus({required int bookingId}) async {
+    final url =
+    InfininURLHelpers.getRestApiURL(Api.baseURL + Api.experienceMenuById);
+    //emit(const Loading());
+
+    final bookingUpdateRequest = booking_udpate.BookingUpdateRequest(
+      t: bookingId,
+    ).toJson();
+
+    final response = await _network.post(
+      path: url,
+      data: bookingUpdateRequest,
+    );
+
+   // var updatedBookingData = booking_udpate.bookingUpdateRequestFromJson(response.body);
+    _navigate.navigateTo(route: BottomBar(bottomBarType: bottom_bar.BottomBarType.bookings));
+  }
+
 }

@@ -32,28 +32,6 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
   final INetworkService _network;
   final IStorageService _storage;
   final ApplicationService _appService;
-
-  // Future<void> getExperienceMenu({
-  // }) async {
-  //   final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.experienceMenu);
-  //   // emit(const Loading());
-  //
-  //   emit(const Loading());
-  //   final professionDataRequest = prorequest.ProfessionRequest(
-  //     t: prorequest.T(),
-  //   ).toJson();
-  //
-  //   final response = await _network.post(
-  //     path: url,
-  //     data: professionDataRequest,
-  //   );
-  //
-  //   final foodMenuData = foodMenuModelFromJson(response.body);
-  //   emit(Loaded(foodMenuData));
-  //
-  //   // List<ProfessionData> data = currentProfessionData.t;
-  //   // emit(Loaded(currentProfessionData));
-  // }
   late FoodMenuModel foodMenuData;
   late String expId;
 
