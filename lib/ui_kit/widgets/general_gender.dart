@@ -72,10 +72,12 @@ class _GeneralGenderState extends State<GeneralGender> {
                       //  InkWell(
                       onTap: () {
                         developer.log(' Clicked on this ');
-                        setState(() {
-                          selectedValue = widget._items[index];
-                          widget._onTap.call(selectedValue);
-                        });
+                        if (widget._isProfileDetails == false) {
+                          setState(() {
+                            selectedValue = widget._items[index];
+                            widget._onTap.call(selectedValue);
+                          });
+                        }
                       },
                       child: Container(
                           height: 51,

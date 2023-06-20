@@ -36,6 +36,7 @@ class GeneralTextInput extends StatefulWidget {
     void Function()? onSuffixIconClick,
     Color? backgroundColor,
     InputBorder? inputBorder,
+    InputBorder? disabledBorder,
     EdgeInsetsGeometry? contentPadding,
     double? height,
     double? textFieldWidth,
@@ -58,6 +59,7 @@ class GeneralTextInput extends StatefulWidget {
         _onValidateChanged = onValidateChanged,
         _onSuffixIconClick = onSuffixIconClick,
         _inputBorder = inputBorder,
+        _disabledBorder = disabledBorder,
         _contentPadding = contentPadding,
         _textFieldHeight = height,
         _textFieldWidth = textFieldWidth,
@@ -83,6 +85,7 @@ class GeneralTextInput extends StatefulWidget {
   final String? Function(String?)? _validator;
   final ValueChanged<bool>? _onValidateChanged;
   final InputBorder? _inputBorder;
+  final InputBorder? _disabledBorder;
   final EdgeInsetsGeometry? _contentPadding;
   final double? _textFieldHeight;
   final double? _textFieldWidth;
@@ -151,6 +154,7 @@ class _GeneralTextInputState extends State<GeneralTextInput> {
         readOnly: !widget._isEnable,
         focusNode: focusNode,
         keyboardType: widget._keyboardType,
+
         obscureText: _isPasswordHidden,
         controller: widget._controller,
         maxLines: widget._isMultiline ? 3 : 1,
@@ -172,6 +176,7 @@ class _GeneralTextInputState extends State<GeneralTextInput> {
           floatingLabelStyle: widget._labelStyle,
           border: widget._inputBorder ?? appTheme.inputBorder,
           focusedBorder: widget._inputBorder ?? appTheme.inputBorder,
+          disabledBorder: widget._disabledBorder,
           enabledBorder: widget._inputBorder ?? appTheme.inputBorder,
           prefixIcon:
               widget._prefixIcon != null ? Icon(widget._prefixIcon) : null,

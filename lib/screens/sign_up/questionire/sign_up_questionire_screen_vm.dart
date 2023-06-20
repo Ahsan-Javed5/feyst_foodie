@@ -27,7 +27,7 @@ class  SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionna
 
 
   final INetworkService _network;
-
+  bool? isProfileUpdate;
   List<T1> foodieQuestionAnswersList = [];
 
   List<int> answerIdsUniqueFoodie = [];

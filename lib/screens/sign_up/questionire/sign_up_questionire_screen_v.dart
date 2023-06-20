@@ -12,13 +12,13 @@ import '../widget/sign_up_questionnaire.dart';
 
 class SignUpQuestionireScreen
     extends BaseView<SignUpQuestionnaireScreenViewModel> {
-  SignUpQuestionireScreen({Key? key}) : super(key: key);
-
+  SignUpQuestionireScreen({Key? key, required bool isProfileUpdate}) : super(key: key);
+  bool? isProfileUpdate;
   @override
   Widget buildScreen(
       {required BuildContext context, required ScreenSizeData screenSizeData}) {
     final appTheme = AppTheme.of(context).theme;
-
+    viewModel.isProfileUpdate = isProfileUpdate;
     return BlocBuilder<SignUpQuestionnaireScreenViewModel,
             SignUpQuestionnaireState>(
         bloc: viewModel..getQuestionnaireData(userId: '0'),
@@ -45,12 +45,16 @@ class SignUpQuestionireScreen
                                 baseUrl: Api.baseURL,
                                 context: context,
                                 completion: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                        const SignUpLetsStartScreen()),
-                                  );
+                                  if (isProfileUpdate == false) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                          const SignUpLetsStartScreen()),
+                                    );
+                                  }else{
+                                    Navigator.pop(context);
+                                  }
                                 });
                           });
                     },

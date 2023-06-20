@@ -6,6 +6,7 @@ import 'package:chef/screens/sign_up/sign_up_screen_vm.dart';
 import 'package:chef/screens/sign_up/verify_phone_number.dart';
 import 'package:chef/ui_kit/widgets/general_new_appbar.dart';
 import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -39,6 +40,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
   bool isKeyboardVisible = false;
   TextEditingController otpController = TextEditingController();
   String enteredOtp = '';
+  bool isLoading = false;
   BuildContext? dcontext;
 
   void loadProfessionList(
@@ -66,23 +68,27 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     required ScreenSizeData screenSizeData,
   }) {
     final appTheme = AppTheme.of(context).theme;
+    viewModel.isProfileDetails = isProfileDetails;
     return BlocBuilder<SignUpScreenViewModel, SignUpScreenState>(
         bloc: viewModel
           ..loadProfessions(baseUrl: baseURLs[0], context: context),
         builder: (_, state) {
-          return Scaffold(
-              backgroundColor: appTheme.colors.primaryBackground,
-              bottomNavigationBar: displayAlreadySignIn(appTheme, context, isProfileDetails,),
-              body: state.when(
-                  loading: _loading,
-                  loaded: (professionList) => _displayLoadedData(
-                      state: state,
-                      appTheme: appTheme,
-                      context: context,
-                      professionList: professionList,
-                      screenSizeData: screenSizeData,
-                      isProfileDetails: isProfileDetails,
-                  )));
+          return ValueListenableBuilder(
+            builder: (context, value, _)  {
+              return Scaffold(
+                backgroundColor: appTheme.colors.primaryBackground,
+                bottomNavigationBar: displayAlreadySignIn(appTheme, context,),
+                body: state.when(
+                    loading: _loading,
+                    loaded: (professionList) => _displayLoadedData(
+                        state: state,
+                        appTheme: appTheme,
+                        context: context,
+                        professionList: professionList,
+                        screenSizeData: screenSizeData,
+                    )));},
+            valueListenable: viewModel.isProfile,
+          );
         });
   }
 
@@ -93,7 +99,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     appTheme,
     required BuildContext context,
     required List<ProfessionData> professionList,
-    required ScreenSizeData screenSizeData, bool? isProfileDetails,
+    required ScreenSizeData screenSizeData,
   }) {
     final size = screenSizeData.size;
     dcontext = context;
@@ -110,7 +116,6 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                         appTheme: appTheme,
                         size: size,
                         professionList: professionList,
-                        isProfileDetails : isProfileDetails,
                       )
                     : _buildTabletView(
                         context: context,
@@ -131,9 +136,9 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     required SignUpScreenState state,
     required IAppThemeData appTheme,
     required Size size,
-    required List<ProfessionData> professionList, required isProfileDetails,
+    required List<ProfessionData> professionList,
   }) {
-    if(isProfileDetails){
+    if(viewModel.isProfileDetails!){
       viewModel.loadFoodieData();
     }
     return Column(
@@ -141,9 +146,9 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
          SizedBox(
-          height: isProfileDetails ? 30 : 41,
+          height: viewModel.isProfileDetails! ? 30 : 41,
         ),
-        isProfileDetails ? const GeneralNewAppBar(
+        isProfileDetails! ? const GeneralNewAppBar(
         //   callBack:(context)=> Navigator.pushReplacement(
         //   context,
         //   MaterialPageRoute(
@@ -172,24 +177,44 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               const SizedBox(
                 height: 30,
               ),
-              displayFullName(appTheme, isProfileDetails),
+              displayFullName(appTheme,),
               const SizedBox(
                 height: 27,
               ),
-              displayMobileNumber(appTheme, isProfileDetails),
+              displayMobileNumber(appTheme,),
               const SizedBox(
                 height: 27,
               ),
-              displayAgeGender(appTheme, isProfileDetails),
+              displayAgeGender(appTheme,),
               const SizedBox(
                 height: 10,
               ),
               professionList.isNotEmpty
-                  ? displayProfession(appTheme, professionList, isProfileDetails)
+                  ? displayProfession(appTheme, professionList,)
                   : const CircularProgressIndicator(),
-              const SizedBox(
-                height: 140,
+              SizedBox(
+                height: isProfileDetails! ? 75 : 140,
               ),
+              viewModel.isProfile.value == true ?
+                Align(
+                alignment: Alignment.centerRight,
+                child: GestureDetector(
+                  child: Container(
+                    padding: const EdgeInsets.all(15,),
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle,
+                    ),
+                      child: const Icon(Icons.edit, size: 17, color: Colors.white,)),
+                  onTap: (){
+                    viewModel.isProfileDetails = false;
+                    //viewModel.isProfile = ValueNotifier(true);
+                    viewModel.isProfile.value = false;
+
+                    print(viewModel.isProfileDetails);
+                  },
+                ),
+              ) : nextButton(context),
             ],
           ),
         ),
@@ -206,7 +231,25 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     return Container();
   }
 
-  Widget displayFullName(IAppThemeData appTheme, isProfileDetails) {
+  Widget nextButton(context) {
+    return GeneralButton.button(
+      width: 151,
+      title: Strings.nextButtonTitle.toUpperCase(),
+      styleType: ButtonStyleType.fill,
+      onTap: () async {
+        viewModel.updateFoodie(
+          name: viewModel.nameController.text,
+          age: int.parse(viewModel.ageController.text),
+          professionId: viewModel.professionID,
+          gender: viewModel.genderController.text,
+          context: context,
+          baseUrl: baseURLs[0],
+        );
+      },
+    );
+  }
+
+  Widget displayFullName(IAppThemeData appTheme,) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -226,7 +269,9 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             controller: viewModel.nameController,
             inputType: InputType.text,
             backgroundColor: appTheme.colors.textFieldFilledColor,
-            inputBorder: isProfileDetails ? const OutlineInputBorder(
+            isEnable: viewModel.isProfileDetails! ? false : true,
+            disabledBorder: viewModel.isProfileDetails! ? const OutlineInputBorder(borderSide: BorderSide(width: 2, color: Colors.grey)) : null,
+            inputBorder: viewModel.isProfileDetails! ? const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.grey, width: 2.0),
               borderRadius: BorderRadius.all(Radius.circular(8.0)),
             ) : appTheme.focusedBorder,
@@ -248,7 +293,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     );
   }
 
-  Widget displayMobileNumber(IAppThemeData appTheme, isProfileDetails) {
+  Widget displayMobileNumber(IAppThemeData appTheme,) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -267,9 +312,10 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
         GeneralTextInput(
             controller: viewModel.mobileNumberController,
             inputType: InputType.digit,
-            isEnable: isProfileDetails ? false : true,
             backgroundColor: appTheme.colors.textFieldFilledColor,
-            inputBorder: isProfileDetails ? const OutlineInputBorder(
+            isEnable: isProfileDetails! ? false : true,
+            disabledBorder: const OutlineInputBorder(borderSide: BorderSide(width: 2, color: Colors.grey)),
+            inputBorder: viewModel.isProfileDetails! ? const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.grey, width: 2.0),
               borderRadius: BorderRadius.all(Radius.circular(8.0)),
             ) : appTheme.focusedBorder,
@@ -291,7 +337,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     );
   }
 
-  Widget displayAgeGender(IAppThemeData appTheme, isProfileDetails) {
+  Widget displayAgeGender(IAppThemeData appTheme, ) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -318,7 +364,9 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                   controller: viewModel.ageController,
                   inputType: InputType.digit,
                   backgroundColor: appTheme.colors.textFieldFilledColor,
-                  inputBorder: isProfileDetails ? const OutlineInputBorder(
+                  isEnable: viewModel.isProfileDetails! ? false : true,
+                  disabledBorder: viewModel.isProfileDetails! ? const OutlineInputBorder(borderSide: BorderSide(width: 2, color: Colors.grey)) : null,
+                  inputBorder: viewModel.isProfileDetails! ? const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey, width: 2.0),
                     borderRadius: BorderRadius.all(Radius.circular(8.0)),
                   ) : appTheme.focusedBorder,
@@ -360,7 +408,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               const SizedBox(
                 height: 8,
               ),
-              _genderWidget(appTheme, Gender.male, Strings.signMaleLabel, isProfileDetails),
+              _genderWidget(appTheme, Gender.male, Strings.signMaleLabel, viewModel.isProfileDetails),
               // Row(
               //   children: [
               //     _genderWidget(appTheme, Gender.male, Strings.signMaleLabel),
@@ -381,7 +429,6 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
   Widget displayProfession(
     IAppThemeData appTheme,
     List<ProfessionData> professionList,
-      isProfileDetails,
   ) {
     loadProfessionList(professionList);
     return viewModel.dropdownItems.isNotEmpty &&
@@ -401,21 +448,24 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               const SizedBox(
                 height: 10,
               ),
-              GeneralDropdown(
-                name: 'Select',
-                items: viewModel.dropdownItems,
-                borderColor: isProfileDetails ? Colors.grey : appTheme.colors.textFieldBorderColor,
-                // selectedItem: dropdownItems.first,
-                style: appTheme.typographies.interFontFamily.headline6.copyWith(
-                    color: Colors.white,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w400),
-                onChange: ({
-                  required String key,
-                  required dynamic value,
-                }) {
-                  viewModel.professionID = viewModel.dropdownDetails[value];
-                },
+              IgnorePointer(
+                ignoring: viewModel.isProfileDetails! ? true : false,
+                child: GeneralDropdown(
+                  name: 'Select',
+                  items: viewModel.dropdownItems,
+                  borderColor: viewModel.isProfileDetails! ? Colors.grey : appTheme.colors.textFieldBorderColor,
+                  // selectedItem: dropdownItems.first,
+                  style: appTheme.typographies.interFontFamily.headline6.copyWith(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400),
+                  onChange: ({
+                    required String key,
+                    required dynamic value,
+                  }) {
+                    viewModel.professionID = viewModel.dropdownDetails[value];
+                  },
+                ),
               )
             ],
           )
@@ -424,9 +474,9 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
 
   Widget displayAlreadySignIn(
     IAppThemeData appTheme,
-    BuildContext context, isProfileDetails,
+    BuildContext context,
   ) {
-    return isProfileDetails ? SizedBox() : Container(
+    return isProfileDetails! ? SizedBox() : Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -553,17 +603,17 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     return GeneralGender(
       gender: gender,
       text: text,
-      selectedItem: gender,
+      selectedItem: viewModel.isProfileDetails! ? (viewModel.genderController.text == 'Male' ? Gender.male : Gender.female) : gender,
       items: genderList,
-      isProfileDetails: isProfileDetails,
+      isProfileDetails: viewModel.isProfileDetails!,
       onTap: (value) {
-        viewModel.genderController.text = value;
-        if (viewModel.checkAllInputAdded()) {
-          viewModel.changeButton(true);
-        } else {
-          viewModel.changeButton(false);
-        }
-        developer.log(' Here Gender clicked ' + '$value');
+          viewModel.genderController.text = value;
+          if (viewModel.checkAllInputAdded()) {
+            viewModel.changeButton(true);
+          } else {
+            viewModel.changeButton(false);
+          }
+          developer.log(' Here Gender clicked ' + '$value');
       },
     );
     // return Expanded(

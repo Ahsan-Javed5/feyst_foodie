@@ -68,6 +68,7 @@ abstract class Api {
       "experience-booking/find-by-id";
   static const confirmBooking = "experience-booking/confirm-booking";
   static const foodieSignUp = 'foodie/save';
+  static const foodieProfileUpdate = 'foodie/update';
   static const loginAPI = 'foodie/login';
 
   static const moduleSubMenuList = '$apiVersion2/menu/project/';

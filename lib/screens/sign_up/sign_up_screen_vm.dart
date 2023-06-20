@@ -8,7 +8,9 @@ import '../../models/signup/profession_response.dart';
 import 'dart:developer' as developer;
 
 import '../../helpers/data_request.dart' as signuprequest;
-// import '../../models/signup/signup_request.dart' as signuprequest;
+
+import '../../models/signup/sign_up_update_request.dart';
+import '../../models/signup/sign_up_update_request.dart' as signup_update_request;
 import '../../models/signup/signup_request.dart';
 import '../../models/signup/signup_response.dart';
 import 'package:chef/screens/sign_up/sign_up_screen_m.dart';
@@ -36,12 +38,17 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
    TextController mobileNumberController = TextController();
    TextController ageController = TextController(text: "");
    TextController genderController = TextController(text: 'male');
+  TextController idController = TextController(text: "");
 
   final dropdownItems = <String>[];
   Map<dynamic, dynamic> dropdownDetails = {};
   int professionID = 0;
   List<ProfessionData> _professionData = [];
   ValueNotifier<bool> buttonEnabled = ValueNotifier(false);
+  ValueNotifier<bool> isProfile = ValueNotifier(true);
+  bool? isProfileDetails;
+  ValueNotifier<bool> isLoading = ValueNotifier(false);
+  //bool isLoading = false;
 
   void changeButton(bool? value) {
 
@@ -103,6 +110,17 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
       age > 5 &&
       gender.isNotEmpty &&
       professionId != 0;
+
+  bool _validateUpdatedData({
+    required String name,
+    required int age,
+    required String gender,
+    required int professionId,
+  }) =>
+      name.trim().isNotEmpty &&
+          age > 5 &&
+          gender.isNotEmpty &&
+          professionId != 0;
 
   Future<void> _cacheData({
     required BuildContext context,
@@ -196,7 +214,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
           developer.log(' Sign up Response is ' + signupResponse.message);
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => SignUpQuestionireScreen()),
+            MaterialPageRoute(builder: (context) => SignUpQuestionireScreen(isProfileUpdate: false,)),
           );
         } else {
           Toaster.infoToast(
@@ -226,6 +244,98 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
         message: Strings.signUpFields,
       );
     }
+  }
+
+  void updateFoodie({
+    required String name,
+    required int age,
+    required String gender,
+    required int professionId,
+    required BuildContext context,
+    required String baseUrl,
+  }) async {
+    isLoading.value = true;
+    final isInputValid = _validateUpdatedData(
+      name: name,
+      age: age,
+      gender: gender,
+      professionId: professionId,
+    );
+
+    if (isInputValid) {
+      //loading(isBusy: true);
+      //emit(const Loading());
+      emit(Loaded(_professionData));
+      try {
+        final url =
+        InfininURLHelpers.getRestApiURL(Api.baseURL + Api.foodieProfileUpdate);
+        signup_update_request.T t = signup_update_request.T(
+          age: age.toString(),
+          name: name,
+          gender: gender,
+          id: int.parse(idController.text),
+          professionalId: professionId,
+        );
+
+        final signUpCredentials = SignupUpdateRequest(
+          t: t,
+        ).toJson();
+        final response = await _network
+            .post(
+          path: url,
+          data: signUpCredentials,
+          //   accessToken: false,
+        )
+            .whenComplete(() {});
+
+        // final response = await _network.get(
+        //   //below one is working
+        //   path: 'https://run.mocky.io/v3/80289cbe-aa47-491e-9eb2-56126289c8a4',
+        // );
+        if (response != null) {
+          developer.log(' Response of Signup body is ' + '${response.body}');
+
+          SignupResponse signupResponse = signupResponseFromJson(response.body);
+
+          Toaster.infoToast(context: context, message: signupResponse.message);
+
+          await _cacheData(
+            context: context,
+            loginData: response.body,
+            baseUrl: baseUrl,
+          );
+
+          developer.log(' Sign up update Response is ' + signupResponse.message);
+          Navigator.pop(context);
+        } else {
+          Toaster.infoToast(
+              context: context,
+              message: 'Something is wrong please content vendor');
+          developer.log(' Response of Signup is null ' + '$response');
+        }
+
+        //  loading(isBusy: false);
+        //   _navigation.replace(route: CustomerRoute());
+      } catch (error) {
+        developer.log(' Error in ' + '${error}');
+
+        Toaster.errorToast(context: context, message: '$error');
+        // emit(
+        //   // state.copyWith(
+        //   //   isBusy: false,
+        //   //   errorMessage: error.toString().contains(Api.unauthorizedRequest)
+        //   //       ? Strings.invalidUsernamePassword
+        //   //       : error.toString(),
+        //   // ),
+        // );
+      }
+    } else {
+      Toaster.errorToast(
+        context: context,
+        message: Strings.signUpFields,
+      );
+    }
+    isLoading.value = false;
   }
 
   bool verifyInput({
@@ -277,6 +387,8 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     mobileNumberController.text = _appService.state.userInfo!.t.mobileNo;
     ageController.text = _appService.state.userInfo!.t.age;
     genderController.text = _appService.state.userInfo!.t.gender;
+    idController.text = _appService.state.userInfo!.t.id.toString();
+    professionID = _appService.state.userInfo!.t.professionalId;
   }
 
   // Future registerUser(String mobile, BuildContext context) async {

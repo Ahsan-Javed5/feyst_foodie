@@ -87,7 +87,7 @@ class EditProfileScreen extends BaseView<EditProfileScreenViewModel> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SignUpQuestionireScreen()),
+                              builder: (context) => SignUpQuestionireScreen(isProfileUpdate: true)),
                         );
                       } else if (accountList.elementAt(index) == Strings.labelReviews) {
                         Navigator.push(
