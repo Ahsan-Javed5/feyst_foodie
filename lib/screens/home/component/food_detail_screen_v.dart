@@ -47,8 +47,8 @@ class FoodDetailScreenView extends BaseView<FoodDetailScreenViewModel> {
             // : Container(),
             body: state.when(
               loading: _loading,
-              loaded: (foodMenuDetail, scheduleModel) =>
-                  displayLoaded(foodMenuDetail, scheduleModel),
+              loaded: (foodMenuDetail, scheduleModel, chefData) =>
+                  displayLoaded(foodMenuDetail, scheduleModel, chefData),
             ));
       },
     );
@@ -58,11 +58,12 @@ class FoodDetailScreenView extends BaseView<FoodDetailScreenViewModel> {
     return const Center(child: CircularProgressIndicator());
   }
 
-  Widget displayLoaded(foodMenuDetail, scheduleModel) {
+  Widget displayLoaded(foodMenuDetail, scheduleModel, chefData) {
     return FoodDetailScreen(
       foodMenuDetail: foodMenuDetail,
       data: _experienceData,
       scheduleModel: scheduleModel,
+      chefData: chefData,
       // preferences:preferences,
     );
   }
@@ -73,7 +74,7 @@ class FoodDetailScreenView extends BaseView<FoodDetailScreenViewModel> {
       title: Strings.nextButtonTitle.toUpperCase(),
       styleType: ButtonStyleType.fill,
       onTap: () {
-        viewModel.verifyAction(context, _selectedExperienceId, _experienceData!);
+        //viewModel.verifyAction(context, _selectedExperienceId, _experienceData!);
       },
     );
   }

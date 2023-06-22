@@ -1,3 +1,4 @@
+import 'package:chef/models/home/chef_data_response.dart';
 import 'package:chef/models/home/home_response.dart' as home_data;
 import 'package:chef/screens/food_product_experience_details/widget/food_product_details_summary.dart';
 import 'package:chef/screens/home/food_details_menu_model.dart';
@@ -27,15 +28,18 @@ class FoodProductExperienceDetailsScreenView
     required String selectedExperienceId,
     required home_data.Experiences experienceData,
     required FoodMenuModel foodMenuDetail,
+    required ChefDataResponse chefData,
     Key? key,
   })  : _selectedExperienceId = selectedExperienceId,
         _experienceData = experienceData,
         _foodMenuDetail = foodMenuDetail,
+        _chefData = chefData,
         super(key: key);
 
   final String _selectedExperienceId;
   final home_data.Experiences? _experienceData;
   final FoodMenuModel _foodMenuDetail;
+  final ChefDataResponse _chefData;
 
   @override
   Widget buildScreen({
@@ -69,7 +73,8 @@ class FoodProductExperienceDetailsScreenView
       experienceData: _experienceData,
       selectedExperienceId: _selectedExperienceId,
       foodMenuDetail: _foodMenuDetail,
-      appService : _appService,
+      chefData: _chefData,
+      appService: _appService,
     );
   }
 

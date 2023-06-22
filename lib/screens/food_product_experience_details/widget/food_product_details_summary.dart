@@ -1,3 +1,4 @@
+import 'package:chef/models/home/chef_data_response.dart';
 import 'package:chef/models/home/home_response.dart' as home_data;
 import 'package:chef/screens/home/food_details_menu_model.dart';
 import 'package:chef/screens/home/home_screen_v.dart';
@@ -38,11 +39,13 @@ class FoodProductDetailsSummary extends StatefulWidget {
     required this.experienceData,
     required this.foodMenuDetail,
     required this.selectedExperienceId,
+    required this.chefData,
     required this.appService,
   }) : super(key: key);
 
   final home_data.Experiences? experienceData;
   final FoodMenuModel foodMenuDetail;
+  final ChefDataResponse chefData;
   final String selectedExperienceId;
   final appService;
 
@@ -399,25 +402,13 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
    OrderHelper orderHelper = (widget.appService.state.orderHelper)!;
     developer.log(' Schedule Id selected in Summary Page ' +
         orderHelper!.scheduleId);
-    // developer.log(' Schedule Id selected in Experience Price ' +
-    //     '${_appService.state.orderHelper!.selectedExperienceDetail.price}');
-    // developer.log(' Schedule Id selected in Experience Id ' +
-    //     '${_appService.state.orderHelper!.selectedExperienceDetail.id}');
-    // developer.log(' Foodie Id is ' + '${_appService.state.userInfo!.t.id}');
-    // developer.log(' Order Helper Id is ' +
-    //     '${_appService.state.orderHelper!.daysGroup.scheduledDate.month}');
+
     var _date = InfininURLHelpers.dayOfMonth(
         orderHelper!.daysGroup.scheduledDate);
     var dayOfMonth = orderHelper!.daysGroup.scheduledDate.day;
     var _month = InfininURLHelpers.months[
     orderHelper!.daysGroup.scheduledDate.month - 1];
     var _hourSelected = orderHelper!.hourSelected.startTime;
-
-    developer.log(' _Date for Summary Page is ' + '${_date}');
-    developer.log(' Month of Summary Page is ' + '${_month}');
-
-    developer.log(' Day of Month is ' + '${dayOfMonth}');
-    developer.log(' Hour selected of Month is ' + '${_hourSelected}');
 
     var _productDetailSelectionDate = _date.toUpperCase() +
         ',  ' +
@@ -748,7 +739,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       GeneralText(
-                        Strings.productDetailChefName,
+                        widget.chefData.t!.name.toString(),
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
                           fontSize: 18,
@@ -766,7 +757,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                             width: 5,
                           ),
                           GeneralText(
-                            widget.experienceData!.chefAddress!,
+                            widget.chefData.t!.cityName.toString(),
                             //Strings.productDetailChefLocation,
                             style: appTheme
                                 .typographies.interFontFamily.headline6
@@ -860,7 +851,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                     children: [
                       GeneralText(
                         // Strings.productDetailPriceValue,
-                        widget.experienceData!.price.toString(),
+                        'Rs. ${widget.experienceData!.price! + widget.experienceData!.price! * 0.17}',
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
                             fontSize: 36,
@@ -891,6 +882,31 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GeneralText(
+                      Strings.productDetailPriceTotal,
+                      style: appTheme.typographies.interFontFamily.headline6
+                          .copyWith(
+                        fontSize: 15,
+                        color: HexColor.fromHex('#ffffff'),
+                      ),
+                    ),
+                    GeneralText(
+                      // Strings.productDetailPriceTaxValue,
+                      'Rs. ${widget.experienceData!.price!}',
+                      style: appTheme.typographies.interFontFamily.headline6
+                          .copyWith(
+                        fontSize: 15,
+                        color: HexColor.fromHex('#ffffff'),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GeneralText(
                       Strings.productDetailPriceTax,
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
@@ -900,7 +916,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                     ),
                     GeneralText(
                       // Strings.productDetailPriceTaxValue,
-                      (widget.experienceData!.price! * 0.17).toStringAsFixed(2),
+                      'Rs. ${widget.experienceData!.price!  * 0.17}',
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -908,6 +924,9 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                       ),
                     ),
                   ],
+                ),
+                const SizedBox(
+                  height: 10,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -922,7 +941,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                     ),
                     GeneralText(
                       // Strings.productDetailAdvancePaymentValue,
-                      (widget.experienceData!.price! * 0.20).toStringAsFixed(2),
+                      'Rs.' '${(widget.experienceData!.price! + widget.experienceData!.price! * 0.17) * 0.20}',
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -993,10 +1012,10 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
       styleType: ButtonStyleType.fill,
       onTap: () {
         //viewModel.
-        // Navigator.push(
-        //     context,
-        //     //HomeScreen()
-        //     MaterialPageRoute(builder: (context) => BottomBar()));
+        Navigator.push(
+            context,
+            //HomeScreen()
+            MaterialPageRoute(builder: (context) => BottomBar()));
       },
     );
     // ExtoText(

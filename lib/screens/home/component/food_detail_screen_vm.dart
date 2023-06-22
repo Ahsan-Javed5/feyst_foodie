@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:chef/helpers/helpers.dart';
+import 'package:chef/models/home/chef_data_response.dart';
 import 'package:chef/models/home/food_menu_request.dart' as menurequest;
 import 'package:chef/screens/home/schedule_model.dart';
 import '../../../models/home/home_response.dart' as home_data;
@@ -77,68 +78,92 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
     //debugPrint("schedule response\n" + response.body.toString());
 
     final scheduleData = scheduleModelFromJson(response.body);
-    emit(Loaded(foodMenuModel, scheduleData));
+
+    getChefData(foodMenuModel, scheduleData , scheduleData.t.chefId);
+
+
     // loadPreference(foodMenuModel: foodMenuModel, scheduleData: scheduleData);
   }
 
-  void loadPreference({
-    required FoodMenuModel foodMenuModel,
-    required ScheduleModel scheduleData,
-  }) async {
-    final url =
-        InfininURLHelpers.getRestApiURL(Api.baseURL + Api.preferenceAPI);
+  Future<ChefDataResponse> getChefData(FoodMenuModel foodData, ScheduleModel scheduleData, chefId) async {
+    final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.chefData);
+    // emit(const Loading());
 
-    // T t = loginrequest.T(
-    //   mobileNo: mobileNumber,
-    // );
-
-    final requestPeference = PerferencesRequest(
-      t: DataRequest(),
+    final scheduleRequest = menurequest.FoodMenuRequest(
+      t: chefId,
     ).toJson();
 
-    final _header = <String, String>{
-      Api.headerAcceptKey: Api.headerAcceptTypeValue
-    };
+    final response = await _network.post(path: url, data: scheduleRequest);
 
-    // final questionsDataRequest = questionirerequest.QuestionireRequest(
-    //   t: questionirerequest.T(category: "CHEF_PROFILE"),
-    // ).toJson();
-    final response = await _network.post(
-      path: url,
-      data: requestPeference,
-    );
+    //debugPrint("schedule response\n" + response.body.toString());
 
-    final _preferenceResponse = perferenceResponseFromJson(response.body);
+    //final scheduleData = scheduleModelFromJson(response.body);
+    final chefData = chefModelFromJson(response.body);
+    emit(Loaded(foodData, scheduleData, chefData));
+    return chefData;
 
-    emit(Loaded(foodMenuModel, scheduleData));
+    //emit(Loaded(foodMenuModel, scheduleData));
   }
+
+  // void loadPreference({
+  //   required FoodMenuModel foodMenuModel,
+  //   required ScheduleModel scheduleData,
+  // }) async {
+  //   final url =
+  //       InfininURLHelpers.getRestApiURL(Api.baseURL + Api.preferenceAPI);
+  //
+  //   // T t = loginrequest.T(
+  //   //   mobileNo: mobileNumber,
+  //   // );
+  //
+  //   final requestPeference = PerferencesRequest(
+  //     t: DataRequest(),
+  //   ).toJson();
+  //
+  //   final _header = <String, String>{
+  //     Api.headerAcceptKey: Api.headerAcceptTypeValue
+  //   };
+  //
+  //   // final questionsDataRequest = questionirerequest.QuestionireRequest(
+  //   //   t: questionirerequest.T(category: "CHEF_PROFILE"),
+  //   // ).toJson();
+  //   final response = await _network.post(
+  //     path: url,
+  //     data: requestPeference,
+  //   );
+  //
+  //   final _preferenceResponse = perferenceResponseFromJson(response.body);
+  //
+  //   emit(Loaded(foodMenuModel, scheduleData,));
+  // }
 
   void loading({required bool isBusy}) => emit(const Loading());
 
-  void verifyAction(BuildContext context, String _selectedExperienceId,
-      home_data.Experiences _experienceData) {
-    final _appService = locateService<ApplicationService>();
-
-    var orderHelper = _appService.state.orderHelper;
-    if (orderHelper != null &&
-        orderHelper.scheduleId != null &&
-        orderHelper.scheduleId != '0' &&
-        orderHelper.daysGroup != null &&
-        orderHelper.daysGroup.dayOfMonth != 0) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => FoodProductExperienceDetailsScreenView(
-                  experienceData: _experienceData,
-                  selectedExperienceId: _selectedExperienceId,
-                  foodMenuDetail: foodMenuData,
-                )),
-      );
-    } else {
-      Toaster.infoToast(
-          context: context, message: 'Please select all the requisite data');
-    }
-  }
+  // void verifyAction(BuildContext context, String _selectedExperienceId,
+  //     home_data.Experiences _experienceData) {
+  //   final _appService = locateService<ApplicationService>();
+  //
+  //   var orderHelper = _appService.state.orderHelper;
+  //   if (orderHelper != null &&
+  //       orderHelper.scheduleId != null &&
+  //       orderHelper.scheduleId != '0' &&
+  //       orderHelper.daysGroup != null &&
+  //       orderHelper.daysGroup.dayOfMonth != 0) {
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //           builder: (context) => FoodProductExperienceDetailsScreenView(
+  //                 experienceData: _experienceData,
+  //                 selectedExperienceId: _selectedExperienceId,
+  //                 foodMenuDetail: foodMenuData,
+  //
+  //               )),
+  //     );
+  //   } else {
+  //     Toaster.infoToast(
+  //         context: context, message: 'Please select all the requisite data');
+  //   }
+  // }
 
   String getValidUrlForImages(String imagePath) {
     String baseUrl = Api.baseURL;

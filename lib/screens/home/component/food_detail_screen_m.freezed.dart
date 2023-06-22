@@ -20,21 +20,21 @@ mixin _$FoodDetailScreenState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(
-            FoodMenuModel foodMenuModel, ScheduleModel scheduleModel)
+            FoodMenuModel foodMenuModel, ScheduleModel scheduleModel, ChefDataResponse chefData)
         loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(FoodMenuModel foodMenuModel, ScheduleModel scheduleModel)?
+    TResult Function(FoodMenuModel foodMenuModel, ScheduleModel scheduleModel, ChefDataResponse chefData)?
         loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(FoodMenuModel foodMenuModel, ScheduleModel scheduleModel)?
+    TResult Function(FoodMenuModel foodMenuModel, ScheduleModel scheduleModel, ChefDataResponse chefData)?
         loaded,
     required TResult orElse(),
   }) =>
@@ -118,7 +118,7 @@ class _$Loading implements Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(
-            FoodMenuModel foodMenuModel, ScheduleModel scheduleModel)
+            FoodMenuModel foodMenuModel, ScheduleModel scheduleModel, ChefDataResponse chefData)
         loaded,
   }) {
     return loading();
@@ -128,7 +128,7 @@ class _$Loading implements Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(FoodMenuModel foodMenuModel, ScheduleModel scheduleModel)?
+    TResult Function(FoodMenuModel foodMenuModel, ScheduleModel scheduleModel, ChefDataResponse chefData)?
         loaded,
   }) {
     return loading?.call();
@@ -138,7 +138,7 @@ class _$Loading implements Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(FoodMenuModel foodMenuModel, ScheduleModel scheduleModel)?
+    TResult Function(FoodMenuModel foodMenuModel, ScheduleModel scheduleModel, ChefDataResponse chefData)?
         loaded,
     required TResult orElse(),
   }) {
@@ -205,6 +205,7 @@ class __$$LoadedCopyWithImpl<$Res>
   $Res call({
     Object? foodMenuModel = freezed,
     Object? scheduleModel = freezed,
+    Object? chefData = freezed,
   }) {
     return _then(_$Loaded(
       foodMenuModel == freezed
@@ -215,6 +216,10 @@ class __$$LoadedCopyWithImpl<$Res>
           ? _value.scheduleModel
           : scheduleModel // ignore: cast_nullable_to_non_nullable
               as ScheduleModel,
+      chefData == freezed
+          ? _value.chefData
+          : chefData // ignore: cast_nullable_to_non_nullable
+              as ChefDataResponse,
     ));
   }
 }
@@ -222,12 +227,14 @@ class __$$LoadedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$Loaded implements Loaded {
-  const _$Loaded(this.foodMenuModel, this.scheduleModel);
+  const _$Loaded(this.foodMenuModel, this.scheduleModel, this.chefData);
 
   @override
   final FoodMenuModel foodMenuModel;
   @override
   final ScheduleModel scheduleModel;
+  @override
+  final ChefDataResponse chefData;
 
   @override
   String toString() {
@@ -261,32 +268,32 @@ class _$Loaded implements Loaded {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(
-            FoodMenuModel foodMenuModel, ScheduleModel scheduleModel)
+            FoodMenuModel foodMenuModel, ScheduleModel scheduleModel, ChefDataResponse chefData)
         loaded,
   }) {
-    return loaded(foodMenuModel, scheduleModel);
+    return loaded(foodMenuModel, scheduleModel, chefData);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(FoodMenuModel foodMenuModel, ScheduleModel scheduleModel)?
+    TResult Function(FoodMenuModel foodMenuModel, ScheduleModel scheduleModel, ChefDataResponse chefData)?
         loaded,
   }) {
-    return loaded?.call(foodMenuModel, scheduleModel);
+    return loaded?.call(foodMenuModel, scheduleModel, chefData);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(FoodMenuModel foodMenuModel, ScheduleModel scheduleModel)?
+    TResult Function(FoodMenuModel foodMenuModel, ScheduleModel scheduleModel, ChefDataResponse chefData)?
         loaded,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(foodMenuModel, scheduleModel);
+      return loaded(foodMenuModel, scheduleModel, chefData);
     }
     return orElse();
   }
@@ -324,11 +331,14 @@ class _$Loaded implements Loaded {
 }
 
 abstract class Loaded implements FoodDetailScreenState {
-  const factory Loaded(final FoodMenuModel foodMenuModel,
-      final ScheduleModel scheduleModel) = _$Loaded;
+  const factory Loaded(
+      final FoodMenuModel foodMenuModel,
+      final ScheduleModel scheduleModel,
+      final ChefDataResponse chefData) = _$Loaded;
 
   FoodMenuModel get foodMenuModel;
   ScheduleModel get scheduleModel;
+  ChefDataResponse get chefData;
   @JsonKey(ignore: true)
   _$$LoadedCopyWith<_$Loaded> get copyWith =>
       throw _privateConstructorUsedError;

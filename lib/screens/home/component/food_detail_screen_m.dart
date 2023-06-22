@@ -1,3 +1,4 @@
+import 'package:chef/models/home/chef_data_response.dart';
 import 'package:chef/screens/home/food_details_menu_model.dart';
 import 'package:chef/screens/home/schedule_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -11,5 +12,5 @@ part 'food_detail_screen_m.freezed.dart';
 class FoodDetailScreenState extends BaseState with _$FoodDetailScreenState {
   const factory FoodDetailScreenState.loading() = Loading;
   const factory FoodDetailScreenState.loaded(
-      FoodMenuModel foodMenuModel, ScheduleModel scheduleModel) = Loaded;
+      FoodMenuModel foodMenuModel, ScheduleModel scheduleModel, ChefDataResponse chefData) = Loaded;
 }

@@ -5,14 +5,15 @@ import 'package:chef/screens/sign_up/questionire/sign_up_questionire_screen_m.da
 import 'package:chef/screens/sign_up/questionire/sign_up_questionire_screen_vm.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:mime/mime.dart';
 import '../../../models/signup/sign_up_questionnaire_response_model.dart';
 import '../widget/question_view.dart';
 import '../widget/sign_up_questionnaire.dart';
 
 class SignUpQuestionireScreen
     extends BaseView<SignUpQuestionnaireScreenViewModel> {
-  SignUpQuestionireScreen({Key? key, required bool isProfileUpdate}) : super(key: key);
+  SignUpQuestionireScreen({Key? key, required bool isProfileUpdate})
+      : super(key: key);
   bool? isProfileUpdate;
   @override
   Widget buildScreen(
@@ -50,9 +51,9 @@ class SignUpQuestionireScreen
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                          const SignUpLetsStartScreen()),
+                                              const SignUpLetsStartScreen()),
                                     );
-                                  }else{
+                                  } else {
                                     Navigator.pop(context);
                                   }
                                 });
@@ -67,8 +68,8 @@ class SignUpQuestionireScreen
             ),
             body: state.when(
                 loading: _loading,
-                loaded: (signUpQuestionsModel) =>
-                    displayLoaded(context, state, appTheme, signUpQuestionsModel)),
+                loaded: (signUpQuestionsModel) => displayLoaded(
+                    context, state, appTheme, signUpQuestionsModel)),
           );
         });
   }
@@ -89,7 +90,8 @@ class SignUpQuestionireScreen
     }
   }
 
-  Widget displayLoaded(context, state, IAppThemeData appTheme, SignUpQuestionsModel signUpQuestionsModel) {
+  Widget displayLoaded(context, state, IAppThemeData appTheme,
+      SignUpQuestionsModel signUpQuestionsModel) {
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -113,105 +115,116 @@ class SignUpQuestionireScreen
 
           ///question answers
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 17,),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 17,
+            ),
             child: Center(
                 child: Container(
-                  alignment: Alignment.center,
-                  //  padding: const EdgeInsets.only(left: 29),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      GeneralText(
-                        Strings.questionireLabel,
-                        textAlign: TextAlign.center,
-                        style: appTheme.typographies.interFontFamily.headline4
-                            .copyWith(
+              alignment: Alignment.center,
+              //  padding: const EdgeInsets.only(left: 29),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  GeneralText(
+                    Strings.questionireLabel,
+                    textAlign: TextAlign.center,
+                    style: appTheme.typographies.interFontFamily.headline4
+                        .copyWith(
                             color: Colors.white,
                             fontSize: 24,
                             fontWeight: FontWeight.w500),
-                      ),
+                  ),
 
-                      ///question answers list
-                      getQuestionWidgetsList(
-                          signUpQuestionsModel, appTheme, context),
+                  ///question answers list
+                  getQuestionWidgetsList(
+                      signUpQuestionsModel, appTheme, context),
 
-                      const SizedBox(
-                        height: 30,
-                      ),
+                  const SizedBox(
+                    height: 30,
+                  ),
 
-                      ///profile picture section
-                      InkWell(
-                        onTap: () async {
-                          File? selectedImage = await getImageFromGallery();
-                          // selectedImage != null
-                          //     ? () async {
-                          viewModel.updateSelectedImage(selectedImage);
-                          List<int> bytes = await selectedImage!.readAsBytes();
-                          String binaryString = bytes
-                              .map(
-                                  (byte) => byte.toRadixString(2).padLeft(8, '0'))
-                              .join();
-                          // developer
-                          //     .log("this is converted image + $binaryString");
-                          binaryString.isNotEmpty
-                              ? viewModel.savePicture(
-                              baseUrl: Api.baseURL,
-                              context: context,
-                              image: binaryString)
-                              : null;
-                          viewModel.isImageSelected = true;
-                          //   }
-                          // : Toaster.infoToast(
-                          //     context: context,
-                          //     message: "Please select picture");
-                        },
-                        child: Container(
-                          height: 70,
-                          padding: const EdgeInsets.symmetric(horizontal: 22),
-                          decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(12))),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              GeneralText(
-                                Strings.labelProfilePicture,
-                                textAlign: TextAlign.center,
-                                style: appTheme
-                                    .typographies.interFontFamily.headline4
-                                    .copyWith(
+                  ///profile picture section
+                  InkWell(
+                    onTap: () async {
+                      File? selectedImage = await getImageFromGallery();
+                      // selectedImage != null
+                      //     ? () async {
+                      viewModel.updateSelectedImage(selectedImage);
+                      //viewModel.uploadImage(selectedImage, Api.baseURL);
+                      viewModel.uploadFoodieImage(file: selectedImage, baseUrl: Api.baseURL);
+                      // var mimeType = lookupMimeType(selectedImage!.path);
+                      //  List<int> bytes = await selectedImage!.readAsBytes();
+                      // String binaryString = bytes
+                      //     .map((byte) => byte.toRadixString(2).padLeft(8, '0'))
+                      //     .join();
+                      // // developer
+                      // //     .log("this is converted image + $binaryString");
+                      // binaryString.isNotEmpty
+                      //     ?
+                      // // viewModel.savePicture(
+                      // //         baseUrl: Api.baseURL,
+                      // //         context: context,
+                      // //         image: binaryString,
+                      // //         path: selectedImage.path,
+                      // //         bytes: bytes,
+                      // //         mimeType: mimeType,
+                      // //       )
+                      // viewModel.upload(selectedImage, Api.baseURL)
+                      // //viewModel.uploadImage(selectedImage, Api.baseURL)
+                      // //viewModel.uploadImg(selectedImage, Api.baseURL)
+                      //     : null;
+                      viewModel.isImageSelected = true;
+                      //   }
+                      // : Toaster.infoToast(
+                      //     context: context,
+                      //     message: "Please select picture");
+                    },
+                    child: Container(
+                      height: 70,
+                      padding: const EdgeInsets.symmetric(horizontal: 22),
+                      decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(12))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GeneralText(
+                            Strings.labelProfilePicture,
+                            textAlign: TextAlign.center,
+                            style: appTheme
+                                .typographies.interFontFamily.headline4
+                                .copyWith(
                                     color: appTheme.colors.primaryBackground,
                                     fontSize: 15.0,
                                     fontWeight: FontWeight.w500),
-                              ),
-                              ValueListenableBuilder<File?>(
-                                valueListenable: viewModel.selectedImageNotifier,
-                                builder: (BuildContext context,
-                                    File? selectedImage, Widget? child) {
-                                  if (selectedImage != null) {
-                                    return CircleAvatar(
-                                      radius: 25,
-                                      backgroundImage: FileImage(selectedImage),
-                                    );
-                                  } else {
-                                    return Image.asset(
-                                      Resources.userProfileImageIcon,
-                                      height: 47,
-                                    );
-                                  }
-                                },
-                              )
-                            ],
                           ),
-                        ),
+                          ValueListenableBuilder<File?>(
+                            valueListenable: viewModel.selectedImageNotifier,
+                            builder: (BuildContext context, File? selectedImage,
+                                Widget? child) {
+                              if (selectedImage != null) {
+                                return CircleAvatar(
+                                  radius: 25,
+                                  backgroundImage: FileImage(selectedImage),
+                                );
+                              } else {
+                                return Image.asset(
+                                  Resources.userProfileImageIcon,
+                                  height: 47,
+                                );
+                              }
+                            },
+                          )
+                        ],
                       ),
-                      const SizedBox(
-                        height: 90,
-                      ),
-                    ],
+                    ),
                   ),
-                )),
+                  const SizedBox(
+                    height: 90,
+                  ),
+                ],
+              ),
+            )),
           )
         ],
       ),
@@ -227,7 +240,9 @@ class SignUpQuestionireScreen
       itemBuilder: (ctx, index) {
         var item = model.t![index];
         return Padding(
-          padding: const EdgeInsets.only(bottom: 20,),
+          padding: const EdgeInsets.only(
+            bottom: 20,
+          ),
           child: QuestionView(
             appTheme: appTheme,
             questionObj: item,
@@ -255,7 +270,7 @@ class SignUpQuestionireScreen
           //     element.isSelected=false;}
           // }
           item.isSelected = !currentItemSelectedStatus!;
-         // setState(() {});
+          // setState(() {});
         },
         child: ChipsWidget(
           appTheme: appTheme,
@@ -265,7 +280,6 @@ class SignUpQuestionireScreen
       );
     });
   }
-
 }
 
 class SignUpQuestionnaire extends StatefulWidget {
@@ -306,64 +320,64 @@ class _SignUpQuestionnaireState extends State<SignUpQuestionnaire> {
           ///question answers
           Center(
               child: Container(
-                alignment: Alignment.center,
-                //  padding: const EdgeInsets.only(left: 29),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    GeneralText(
-                      Strings.questionireLabel,
-                      textAlign: TextAlign.center,
-                      style: appTheme.typographies.interFontFamily.headline4
-                          .copyWith(
+            alignment: Alignment.center,
+            //  padding: const EdgeInsets.only(left: 29),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                GeneralText(
+                  Strings.questionireLabel,
+                  textAlign: TextAlign.center,
+                  style: appTheme.typographies.interFontFamily.headline4
+                      .copyWith(
                           color: Colors.white,
                           fontSize: 23,
                           fontWeight: FontWeight.w500),
-                    ),
+                ),
 
-                    ///question answers list
-                    getQuestionWidgetsList(
-                        widget.signUpQuestionsModel, appTheme, context),
-                    const SizedBox(
-                      height: 30,
-                    ),
+                ///question answers list
+                getQuestionWidgetsList(
+                    widget.signUpQuestionsModel, appTheme, context),
+                const SizedBox(
+                  height: 30,
+                ),
 
-                    ///profile picture section
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 35),
-                      height: 70,
-                      padding: const EdgeInsets.symmetric(horizontal: 22),
-                      decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(12))),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GeneralText(
-                            Strings.labelProfilePicture,
-                            textAlign: TextAlign.center,
-                            style: appTheme.typographies.interFontFamily.headline4
-                                .copyWith(
+                ///profile picture section
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 35),
+                  height: 70,
+                  padding: const EdgeInsets.symmetric(horizontal: 22),
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(12))),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GeneralText(
+                        Strings.labelProfilePicture,
+                        textAlign: TextAlign.center,
+                        style: appTheme.typographies.interFontFamily.headline4
+                            .copyWith(
                                 color: appTheme.colors.primaryBackground,
                                 fontSize: 15,
                                 fontWeight: FontWeight.w500),
-                          ),
-                          Image.asset(
-                            Resources.userProfilePicPng,
-                            height: 47,
-                          )
-                        ],
                       ),
-                    ),
-                    const SizedBox(
-                      height: 60,
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                  ],
+                      Image.asset(
+                        Resources.userProfilePicPng,
+                        height: 47,
+                      )
+                    ],
+                  ),
                 ),
-              ))
+                const SizedBox(
+                  height: 60,
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+              ],
+            ),
+          ))
         ],
       ),
     );
@@ -422,7 +436,7 @@ class _SignUpQuestionnaireState extends State<SignUpQuestionnaire> {
               alignment: WrapAlignment.start,
               crossAxisAlignment: WrapCrossAlignment.start,
               children:
-              getChipsWidgetsList(model, appTheme, item.answers, context),
+                  getChipsWidgetsList(model, appTheme, item.answers, context),
             ),
           ],
         );

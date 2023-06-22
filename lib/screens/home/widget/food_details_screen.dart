@@ -10,6 +10,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 
 import '../../../constants/temporary_data.dart';
+import '../../../models/home/chef_data_response.dart';
 import '../../../models/home/home_response.dart' as home_data;
 import '../../food_product_experience_details/food_product_details_screen_v.dart';
 import '/helpers/color_helper.dart';
@@ -29,12 +30,14 @@ class FoodDetailScreen extends StatefulWidget {
     required this.data,
     required this.foodMenuDetail,
     required this.scheduleModel,
+    required this.chefData,
 
     ///required this.preferences,
   }) : super(key: key);
   final home_data.Experiences? data;
   final FoodMenuModel foodMenuDetail;
   final ScheduleModel scheduleModel;
+  final ChefDataResponse chefData;
   //final PerferenceResponse preferences;
 
   @override
@@ -43,10 +46,10 @@ class FoodDetailScreen extends StatefulWidget {
 
 class _FoodDetailScreenState extends State<FoodDetailScreen> {
   List<int> foodItemQuantity = [];
-  String selectedDate = "13";
-  String selectedDay = "MON";
-  String selectedMonth = "OCT";
-  String selectedTime = "10 AM";
+  String selectedDate = "";
+  String selectedDay = "";
+  String selectedMonth = "";
+  String selectedTime = "";
   final TextController nOfPersons = TextController();
   final TextController notes = TextController();
   late List<DropdownMenuItem<String>> statusList = [];
@@ -92,6 +95,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       target: LatLng(37.43296265331129, -122.08832357078792),
       tilt: 59.440717697143555,
       zoom: 19.151926040649414);
+
+  bool isButtonEnable = true;
 
   @override
   void initState() {
@@ -467,9 +472,13 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                         AssetImage("assets/images/icons/user_image.png"),
                   ),
                 ),
-                onTap: () {
+                onTap: () async {
+                  // ChefDataResponse chefData = await foodDetailsViewModel.getChefData(
+                  //     //widget.scheduleModel.t.chefId
+                  //   1
+                  // );
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const UserProfile()));
+                      builder: (context) => UserProfile(chefData: widget.chefData)));
                 },
               ),
             ),
@@ -502,6 +511,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     return GeneralButton.button(
       width: 151,
       title: Strings.nextButtonTitle.toUpperCase(),
+      //isEnable:(!scheduleForm && selectedTime == "") ? true : false,
       styleType: ButtonStyleType.fill,
       onTap: () {
         setState(() {
@@ -530,6 +540,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           selectedExperienceId: widget.data!.id.toString(),
           experienceData: widget.data!,
           foodMenuDetail: widget.foodMenuDetail,
+          chefData: widget.chefData,
         ),
       ),
     );
@@ -1176,6 +1187,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   ///Schedule tab view
   Widget scheduleTabView(BuildContext context, IAppThemeData appTheme) {
     return scheduleForm
+          ///for notes page code see this padding widget
         ? Padding(
             padding: const EdgeInsetsDirectional.only(
               start: 20,
@@ -1472,6 +1484,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               ],
             ),
           )
+          ///for select time slot see this stack widget
         : Stack(
             children: [
               Padding(
@@ -1488,9 +1501,6 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                         children: [
                           InkWell(
                             onTap: () {
-                              developer.log(' Clicked on Schedule form is ' +
-                                  '${widget.scheduleModel.t.daysGroups![index]}');
-
                               _appService.state.orderHelper!.daysGroup =
                                   widget.scheduleModel.t.daysGroups![index];
 
@@ -1529,7 +1539,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                 //   width: 27,
                                 // ),
 
-                                displayScheduleTime(item.hours),
+                                displayScheduleTime(item.hours, item.scheduledDate,),
 
                                 // Expanded(
                                 //   child: Container(
@@ -1586,7 +1596,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     return dateData.substring(0, 3);
   }
 
-  Widget displayScheduleTime(List<Hour> _hours) {
+  Widget displayScheduleTime(List<Hour> _hours, DateTime scheduledDate) {
     final appTheme = AppTheme.of(context).theme;
     return Expanded(
       child: Container(
@@ -1598,6 +1608,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                   topLeft: Radius.circular(20),
                   bottomLeft: Radius.circular(20))),
           child: Wrap(
+            spacing: 10,
             direction: Axis.horizontal,
             children: [
               for (var i in _hours) //displayTimeData(i),
@@ -1605,6 +1616,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                   appTheme,
                   i.startTime.toString(),
                   i,
+                  scheduledDate,
                   showSelectedTime: _appService.state.orderHelper!.scheduleId ==
                           i.scheduleId.toString()
                       ? true
@@ -1622,19 +1634,19 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     return Container();
   }
 
-  Widget displayTimeData(i) {
-    final appTheme = AppTheme.of(context).theme;
-    return Row(
-      children: [
-        timeSelectorBox(
-          appTheme,
-          i.startTime.toString(),
-          i,
-          showSelectedTime: false,
-        ),
-      ],
-    );
-  }
+  // Widget displayTimeData(i) {
+  //   final appTheme = AppTheme.of(context).theme;
+  //   return Row(
+  //     children: [
+  //       timeSelectorBox(
+  //         appTheme,
+  //         i.startTime.toString(),
+  //         i,
+  //         showSelectedTime: false,
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Future<void> selectStartDate(
       BuildContext context, IAppThemeData appTheme) async {
@@ -2219,7 +2231,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
         ));
   }
 
-  Widget timeSelectorBox(IAppThemeData appTheme, String displayTime, Hour _hour,
+  Widget timeSelectorBox(IAppThemeData appTheme, String displayTime, Hour _hour, DateTime scheduledDate,
       {bool showSelectedTime = false}) {
     //  developer.log('Time Display is ' +
     //      DateFormat.jm().format(
@@ -2237,22 +2249,25 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
     return InkWell(
         onTap: () {
+          selectedDate = DateFormat("d").format(scheduledDate);
+          selectedDay = DateFormat('EEE').format(scheduledDate);
           developer.log(' Clicked on final date is ' + '$finalDate');
           selectedTime = finalDate;
           developer.log(' Schedule Id selected is ' + '${_hour.scheduleId}');
-          // final _appService = locateService<ApplicationService>();
+         // final _appService = locateService<ApplicationService>();
           OrderHelper orderHelper = OrderHelper();
           orderHelper.scheduleId = _hour.scheduleId.toString();
           orderHelper.selectedExperienceDetail = widget.data!;
+          //selectedDate = finalDate;
           orderHelper.hourSelected = _hour;
           orderHelper.daysGroup = DaysGroup(
-              scheduledDate: DateTime(1900 - 12 - 12),
+              scheduledDate: scheduledDate,
               dayOfMonth: 0,
               hours: []);
           orderHelper.numberOfPerson =
               int.parse(widget.data!.persons.toString()); //.data!.persons;
           _appService.updateOrderHelper(orderHelper);
-          //  _appService.updateScheduleId(scheduleId)
+          //_appService.updateScheduleId(scheduleId)
           setState(() {
             showSelectedTime = true;
           });
