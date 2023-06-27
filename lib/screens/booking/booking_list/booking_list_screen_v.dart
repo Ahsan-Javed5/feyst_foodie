@@ -15,7 +15,7 @@ class BookingListScreen extends BaseView<BookingListScreenViewModel> {
     final appTheme = AppTheme.of(context).theme;
 
     return BlocBuilder<BookingListScreenViewModel, BookingListState>(
-        bloc: viewModel..getBookingListData(),
+        bloc: viewModel..getBookingListData(isBookingScreen),
         builder: (context, state) {
           return Scaffold(
             backgroundColor: appTheme.colors.primaryBackground,

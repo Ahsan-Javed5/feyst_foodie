@@ -84,7 +84,7 @@ class FoodProductExperienceDetailsViewModel
         scheduleId: int.parse(orderHelper.scheduleId),
         persons: orderHelper.numberOfPerson.toString(),
         // preferenceId: experienceData.preferenceId,
-        preferenceId: 1,
+        preferenceId: 2,
       ),
     ).toJson();
 

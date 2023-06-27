@@ -464,6 +464,8 @@ abstract class Strings {
   static const billGeneratedLower = 'BILL_GENERATED';
   static const billGenerated = 'BILL_GENERATED';
   static const billGeneratedValue = 'BILL GENERATED';
+  static const completeStatus = 'COMPLETED';
+
   static const inProgress= 'IN_PROGRESS';
   static const inProgressValue = 'IN PROGRESS';
   static const pendingValue = 'PENDING';

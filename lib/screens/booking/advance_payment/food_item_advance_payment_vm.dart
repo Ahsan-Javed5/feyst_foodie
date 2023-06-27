@@ -87,4 +87,22 @@ class FoodItemAdvancePaymentViewModel
     _navigate.navigateTo(route: BottomBar(bottomBarType: bottom_bar.BottomBarType.bookings));
   }
 
+  Future<void> completeBookingStatus({required int bookingId}) async {
+    final url =
+    InfininURLHelpers.getRestApiURL(Api.baseURL + Api.experienceMenuById);
+    //emit(const Loading());
+
+    final bookingUpdateRequest = booking_udpate.BookingUpdateRequest(
+      t: bookingId,
+    ).toJson();
+
+    final response = await _network.post(
+      path: url,
+      data: bookingUpdateRequest,
+    );
+
+    // var updatedBookingData = booking_udpate.bookingUpdateRequestFromJson(response.body);
+    _navigate.navigateTo(route: BottomBar(bottomBarType: bottom_bar.BottomBarType.bookings));
+  }
+
 }

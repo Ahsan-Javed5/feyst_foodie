@@ -362,6 +362,7 @@ class _FoodContainer extends StatelessWidget {
                     height: 264,
                     width: 206,
                     child: Image.asset(
+                      //data!.experienceMedia![0].mediaUrl.toString(),
                       Resources.seafoodPNG,
                       fit: BoxFit.cover,
                     )),

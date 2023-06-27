@@ -47,6 +47,7 @@ class BookingItem {
   int? foodieId;
   String? comments;
   int? totalPrice;
+  int? verificationCode;
   int? priceTypeId;
   String? bookingStatus;
   int? scheduleId;
@@ -68,6 +69,7 @@ class BookingItem {
         this.foodieId,
         this.comments,
         this.totalPrice,
+        this.verificationCode,
         this.priceTypeId,
         this.bookingStatus,
         this.scheduleId,
@@ -89,6 +91,7 @@ class BookingItem {
     foodieId = json['foodieId'];
     comments = json['comments'];
     totalPrice = json['totalPrice'];
+    verificationCode = json['verificationCode'];
     priceTypeId = json['priceTypeId'];
     bookingStatus = json['bookingStatus'];
     scheduleId = json['scheduleId'];
@@ -112,6 +115,8 @@ class BookingItem {
     data['foodieId'] = this.foodieId;
     data['comments'] = this.comments;
     data['totalPrice'] = this.totalPrice;
+    data['verificationCode'] = this.verificationCode;
+
     data['priceTypeId'] = this.priceTypeId;
     data['bookingStatus'] = this.bookingStatus;
     data['scheduleId'] = this.scheduleId;

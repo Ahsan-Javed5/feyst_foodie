@@ -757,7 +757,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                             width: 5,
                           ),
                           GeneralText(
-                            widget.chefData.t!.cityName.toString(),
+                          widget.chefData.t!.townName.toString() + ', '+ widget.chefData.t!.cityName.toString(),
                             //Strings.productDetailChefLocation,
                             style: appTheme
                                 .typographies.interFontFamily.headline6
@@ -851,7 +851,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                     children: [
                       GeneralText(
                         // Strings.productDetailPriceValue,
-                        'Rs. ${widget.experienceData!.price! + widget.experienceData!.price! * 0.17}',
+                        'Rs. ' + (widget.experienceData!.price! + widget.experienceData!.price! * 0.17).toStringAsFixed(0),
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
                             fontSize: 36,
@@ -916,7 +916,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                     ),
                     GeneralText(
                       // Strings.productDetailPriceTaxValue,
-                      'Rs. ${widget.experienceData!.price!  * 0.17}',
+                      'Rs. ' + (widget.experienceData!.price!  * 0.17).toStringAsFixed(0),
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -941,7 +941,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                     ),
                     GeneralText(
                       // Strings.productDetailAdvancePaymentValue,
-                      'Rs.' '${(widget.experienceData!.price! + widget.experienceData!.price! * 0.17) * 0.20}',
+                      'Rs. ' + ((widget.experienceData!.price! + widget.experienceData!.price! * 0.17) * 0.20).toStringAsFixed(0),
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,

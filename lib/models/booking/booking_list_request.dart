@@ -9,17 +9,17 @@ String bookingListRequestToJson(BookingListRequest data) =>
 
 
 class BookingListRequest {
-  int? userId;
+  int? t;
 
-  BookingListRequest({this.userId});
+  BookingListRequest({this.t});
 
   BookingListRequest.fromJson(Map<String, dynamic> json) {
-    userId = json['userId'];
+    t = json['t'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['userId'] = this.userId;
+    data['t'] = this.t;
     return data;
   }
 }

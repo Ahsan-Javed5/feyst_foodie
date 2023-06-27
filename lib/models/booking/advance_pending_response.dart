@@ -399,7 +399,7 @@ class FoodieProfile {
   int foodieId;
   int questionId;
   String questionName;
-  String questionLabel;
+  String? questionLabel;
   List<Answer> answer;
   dynamic inputAnswer;
 

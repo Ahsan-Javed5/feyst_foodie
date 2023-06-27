@@ -171,7 +171,9 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                         // }));
                       } else if (item.bookingStatus!.toUpperCase() ==
                           Strings.confirmed || item.bookingStatus!.toUpperCase() ==
-                          Strings.requestedOrder) {
+                          Strings.requestedOrder || item.bookingStatus!.toUpperCase() ==
+                      Strings.inProgress || item.bookingStatus!.toUpperCase() ==
+                      Strings.billGenerated) {
                         _navigation.navigateTo(
                             route: nav.BookingInProcessRouteView(
                                 bookingItem: item));
@@ -349,7 +351,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   GeneralText(
-                                    getStatus(item.bookingStatus ?? ""),
+                                    getStatus(item.bookingStatus == '' ? 'COMPLETED' : item.bookingStatus.toString()),
                                     //  item.bookingStatus ?? "",
                                     style: appTheme
                                         .typographies.interFontFamily.headline1
@@ -396,6 +398,8 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
         return Strings.inProgressValue;
       case Strings.billGenerated:
         return Strings.billGeneratedValue;
+      case Strings.completeStatus:
+        return Strings.completeStatus;
       default:
         return "";
     }

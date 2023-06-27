@@ -33,6 +33,7 @@ abstract class Api {
  // static const baseURL = 'http://18.202.117.137:8080/feyst-service/';
   static const baseURL = 'https://dev.feyst.services/feyst-service/';
   static const baseURLForJazzCash = 'dev.feyst.services/feyst-service/';
+  static const baseURLForImages = 'http://18.202.117.137/feyst-media/';
   static const preferenceAPI = 'preference/list';
   static const devBaseURL = 'https://abc2.com/';
   static const dprBaseURL = 'https://abc.com/';

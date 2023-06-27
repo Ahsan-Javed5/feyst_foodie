@@ -4,7 +4,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/screens/home/schedule_model.dart';
 import 'package:chef/screens/user_account/user_profile.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
@@ -19,6 +18,7 @@ import '/setup.dart';
 import '/ui_kit/widgets/general_new_appbar.dart';
 import '../component/food_detail_screen_vm.dart';
 import '../food_details_menu_model.dart';
+import '../food_details_menu_model.dart' as menu;
 import '/models/home/experience_list_response.dart' as experience_data;
 import 'dart:developer' as developer;
 
@@ -84,17 +84,6 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
-
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
-
-  static const CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
 
   bool isButtonEnable = true;
 
@@ -210,7 +199,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     }
   }
 
-  TabBars selectedTab = TabBars.Menu;
+  TabBars selectedTab = TabBars.Details;
 
   updateTabView(TabBars tab) {
     setState(() {
@@ -463,13 +452,13 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             child: Align(
               alignment: Alignment.topRight,
               child: GestureDetector(
-                child: const CircleAvatar(
+                child: CircleAvatar(
                   backgroundColor: Colors.white,
                   radius: 32,
                   child: CircleAvatar(
                     radius: 30,
                     backgroundImage:
-                        AssetImage("assets/images/icons/user_image.png"),
+                        NetworkImage(Api.baseURLForImages + widget.chefData.t!.profileImageUrl.toString()),
                   ),
                 ),
                 onTap: () async {
@@ -603,7 +592,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           itemCount: headers.length,
           itemBuilder: (BuildContext context, int index) {
             foodItemQuantity.add(0);
-            List filteredList = widget.foodMenuDetail.t
+            List<menu.T> filteredList = widget.foodMenuDetail.t
                 .where((element) => element.mealName == headers[index])
                 .toList();
             return Column(
@@ -662,8 +651,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                         ),
                                         shape: BoxShape.circle,
                                       ),
-                                      child: Image.asset(
-                                        'assets/images/icons/food_item_sample.png',
+                                      child: Image.network(
+                                        filteredList[k].pictureUrl,
                                         fit: BoxFit.fill,
                                         height: 70,
                                         width: 70,
@@ -730,7 +719,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                       color: HexColor.fromHex('#f1c452'),
                                       thickness: 1,
                                     )
-                                  : SizedBox(),
+                                  : const SizedBox(),
                             ],
                           ),
                       ],
@@ -2109,12 +2098,15 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           ),
           child: GoogleMap(
             mapType: MapType.normal,
-            initialCameraPosition: _kGooglePlex,
-            zoomControlsEnabled: false,
+            initialCameraPosition: CameraPosition(
+              target: LatLng(widget.chefData.t!.latitude!.toDouble(), widget.chefData.t!.longitude!.toDouble(),),
+              zoom: 14.4746,
+            ),
+            zoomControlsEnabled: true,
             markers: <Marker>{
-              const Marker(
+              Marker(
                   markerId: MarkerId('SomeId'),
-                  position: LatLng(37.42796133580664, -122.085749655962),
+                  position: LatLng(widget.chefData.t!.latitude!.toDouble(), widget.chefData.t!.longitude!.toDouble(),),
                   infoWindow: InfoWindow(title: '')),
             },
             onMapCreated: (GoogleMapController controller) {
@@ -2157,9 +2149,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                     ),
                     child: SvgPicture.network(
                       items[i].name != null
-                          ? foodDetailsViewModel
-                                  .getValidUrlForImages(items[i].name!) ??
-                              ""
+                          ? items[i].name.toString()
                           : '',
                       fit: BoxFit.cover,
                     ),
@@ -2319,11 +2309,6 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
         }
       },
     );
-  }
-
-  Future<void> _goToTheLake() async {
-    final GoogleMapController controller = await _controller.future;
-    await controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
   }
 
   Widget notesField({

@@ -81,7 +81,7 @@ class Experiences {
   String? subHostMobileNo;
   List<ExperienceWowFactors>? experienceWowFactors;
   List<ExperiencePreferences>? experiencePreferences;
-  List<dynamic>? experienceMedia;
+  List<ExperienceMedia>? experienceMedia;
   dynamic cityId;
   dynamic cityName;
   dynamic townId;
@@ -236,6 +236,30 @@ class ExperienceWowFactors {
     data['wowFactorName'] = wowFactorName;
     data['wowFactorDescription'] = wowFactorDescription;
     data['wowFactorIconPath'] = wowFactorIconPath;
+    return data;
+  }
+}
+class ExperienceMedia {
+  int? experienceId;
+  int? id;
+  String? mediaUrl;
+  String? type;
+
+  ExperienceMedia({this.experienceId, this.id, this.mediaUrl, this.type});
+
+  ExperienceMedia.fromJson(Map<String, dynamic> json) {
+    experienceId = json['experienceId'];
+    id = json['id'];
+    mediaUrl = json['mediaUrl'];
+    type = json['type'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['experienceId'] = this.experienceId;
+    data['id'] = this.id;
+    data['mediaUrl'] = this.mediaUrl;
+    data['type'] = this.type;
     return data;
   }
 }

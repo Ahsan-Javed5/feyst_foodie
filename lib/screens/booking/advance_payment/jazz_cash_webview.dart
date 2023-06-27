@@ -1,12 +1,14 @@
 import 'package:chef/constants/api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import '../../../constants/strings.dart';
+import '../../../models/booking/advance_pending_response.dart';
 import '../../../setup.dart';
 import 'food_item_advance_payment_vm.dart';
 
 class JazzCashWebView extends StatefulWidget {
-  const JazzCashWebView({Key? key, required this.bookingId}) : super(key: key);
-  final bookingId;
+  const JazzCashWebView({Key? key, required this.bookindData}) : super(key: key);
+  final AdvancePendingResponse bookindData;
 
   @override
   _JazzCashWebViewState createState() => _JazzCashWebViewState();
@@ -46,7 +48,8 @@ class _JazzCashWebViewState extends State<JazzCashWebView> {
     final body = Padding(
       padding: const EdgeInsets.only(top: 30,),
       child: InAppWebView(
-        initialUrlRequest: URLRequest(url: Uri(path: '${Api.baseURLForJazzCash}experience-booking/confirm-booking/${widget.bookingId}',scheme: 'https'),),
+        initialUrlRequest: widget.bookindData.t.bookingStatus.toUpperCase() == Strings.acceptData  ?  URLRequest(url: Uri(path: '${Api.baseURLForJazzCash}experience-booking/confirm-booking/${widget.bookindData.t.id}',scheme: 'https'),) : URLRequest(url: Uri(path: '${Api.baseURLForJazzCash}experience-booking/complete-booking/${widget.bookindData.t.id}',scheme: 'https'),),
+
         //initialUrlRequest: URLRequest(url: Uri(path: 'www.google.com',),),
         initialOptions: InAppWebViewGroupOptions(
           crossPlatform: InAppWebViewOptions(
@@ -90,7 +93,14 @@ class _JazzCashWebViewState extends State<JazzCashWebView> {
   success() async {
     final _foodItemAdvance =
     locateService<FoodItemAdvancePaymentViewModel>();
-    await _foodItemAdvance.updateBookingStatus(bookingId: widget.bookingId);
+    if(widget.bookindData.t.bookingStatus.toUpperCase() == Strings.billGenerated){
+      await _foodItemAdvance.completeBookingStatus(
+          bookingId: widget.bookindData.t.id);
+    }else {
+      await _foodItemAdvance.updateBookingStatus(
+          bookingId: widget.bookindData.t.id);
+    }
+
     isLoading = false;
   }
 

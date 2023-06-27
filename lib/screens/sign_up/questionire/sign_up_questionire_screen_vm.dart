@@ -93,6 +93,7 @@ class  SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionna
      // log(_.toString());
       throw 'Something Went Wrong';
     }
+    return null;
   }
 
 

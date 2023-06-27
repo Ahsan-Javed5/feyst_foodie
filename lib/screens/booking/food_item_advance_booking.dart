@@ -1091,7 +1091,7 @@ class _FoodProductAdvancePendingDetailsState
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) =>
-              JazzCashWebView(bookingId: widget._advancePendingDetails.t.id)
+              JazzCashWebView(bookindData: widget._advancePendingDetails)
           ),
         );
         // final _foodItemAdvance =
