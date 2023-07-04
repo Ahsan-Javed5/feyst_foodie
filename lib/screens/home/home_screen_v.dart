@@ -131,13 +131,13 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
                 padding: const EdgeInsets.only(left: 31),
                 child: ListView.builder(
                    // itemCount: 10,
-                    itemCount: homeResponseData.t?.allExperiences?.length,
+                    itemCount: homeResponseData.t?.allExperience?.length,
                     physics: const BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       return _FoodContainer(
                         appTheme: appTheme,
-                        data: homeResponseData.t?.allExperiences![(homeResponseData.t!.allExperiences!.length - 1)-index],
+                        data: homeResponseData.t?.allExperience![(homeResponseData.t!.allExperience!.length - 1)-index],
                         //  foodMenuDetail: foodMenuDetail,
                       );
                     }),
@@ -173,7 +173,7 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
                   itemCount: homeResponseData.t!.popularExperiences!.length,
                   itemBuilder: (context, index) {
                     return _PopularExperience(
-                        appTheme: appTheme, popularExperience: homeResponseData.t!.popularExperiences![index], allExperiences: homeResponseData.t!.allExperiences,);
+                        appTheme: appTheme, popularExperience: homeResponseData.t!.popularExperiences![index], allExperiences: homeResponseData.t!.allExperience,);
                   },
                 ),
               ),

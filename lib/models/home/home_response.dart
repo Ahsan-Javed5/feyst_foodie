@@ -1,244 +1,209 @@
 class HomeResponse {
-  T? t;
-  dynamic userId;
-  dynamic message;
-  dynamic error;
   int? code;
+  String? error;
+  String? message;
+  T? t;
+  int? userId;
 
-  HomeResponse({this.t, this.userId, this.message, this.error, this.code});
+  HomeResponse({this.code, this.error, this.message, this.t, this.userId});
 
   HomeResponse.fromJson(Map<String, dynamic> json) {
-    t = json['t'] != null ? T.fromJson(json['t']) : null;
-    userId = json['userId'];
-    message = json['message'];
-    error = json['error'];
     code = json['code'];
+    error = json['error'];
+    message = json['message'];
+    t = json['t'] != null ? new T.fromJson(json['t']) : null;
+    userId = json['userId'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (t != null) {
-      data['t'] = t!.toJson();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['code'] = this.code;
+    data['error'] = this.error;
+    data['message'] = this.message;
+    if (this.t != null) {
+      data['t'] = this.t!.toJson();
     }
-    data['userId'] = userId;
-    data['message'] = message;
-    data['error'] = error;
-    data['code'] = code;
+    data['userId'] = this.userId;
     return data;
   }
 }
 
 class T {
+  List<Experiences>? allExperience;
   List<Experiences>? popularExperiences;
-  List<Experiences>? allExperiences;
 
-  T({this.popularExperiences, this.allExperiences});
+  T({this.allExperience, this.popularExperiences});
 
   T.fromJson(Map<String, dynamic> json) {
+    if (json['allExperience'] != null) {
+      allExperience = <Experiences>[];
+      json['allExperience'].forEach((v) {
+        allExperience!.add(Experiences.fromJson(v));
+      });
+    }
     if (json['popularExperiences'] != null) {
       popularExperiences = <Experiences>[];
       json['popularExperiences'].forEach((v) {
         popularExperiences!.add(Experiences.fromJson(v));
       });
     }
-    if (json['allExperience'] != null) {
-      allExperiences = <Experiences>[];
-      json['allExperience'].forEach((v) {
-        allExperiences!.add(Experiences.fromJson(v));
-      });
-    }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (popularExperiences != null) {
-      data['popularExperiences'] = popularExperiences!.map((v) => v.toJson()).toList();
-    }
-    if (allExperiences != null) {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.allExperience != null) {
       data['allExperience'] =
-          allExperiences!.map((v) => v.toJson()).toList();
+          this.allExperience!.map((v) => v.toJson()).toList();
+    }
+    if (this.popularExperiences != null) {
+      data['popularExperiences'] =
+          this.popularExperiences!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Experiences {
-  int? id;
+  String? chefAddress;
+  String? chefBrandName;
   int? chefId;
   String? chefName;
-  String? chefBrandName;
-  String? chefAddress;
-  String? title;
+  int? cityId;
+  String? cityName;
   String? description;
-  dynamic wowFactorId;
-  dynamic preferenceId;
+  List<ExperienceMedia>? experienceMedia;
+  List<ExperiencePreferences>? experiencePreferences;
+  List<ExperienceWowFactors>? experienceWowFactors;
+  int? id;
+  int? latitude;
+  int? locationId;
+  int? longitude;
+  int? personMaxLimit;
+  String? persons;
+  String? placeId;
+  int? preferenceId;
   int? price;
   int? priceTypeId;
-  String? persons;
-  int? personMaxLimit;
-  int? locationId;
-  String? subHostName;
   String? subHostMobileNo;
-  List<ExperienceWowFactors>? experienceWowFactors;
-  List<ExperiencePreferences>? experiencePreferences;
-  List<ExperienceMedia>? experienceMedia;
-  dynamic cityId;
-  dynamic cityName;
-  dynamic townId;
-  dynamic townName;
-  dynamic latitude;
-  dynamic longitude;
-  dynamic placeId;
+  String? subHostName;
+  String? title;
+  int? townId;
+  String? townName;
+  int? wowFactorId;
 
   Experiences(
-      {this.id,
+      {this.chefAddress,
+        this.chefBrandName,
         this.chefId,
         this.chefName,
-        this.chefBrandName,
-        this.chefAddress,
-        this.title,
+        this.cityId,
+        this.cityName,
         this.description,
-        this.wowFactorId,
+        this.experienceMedia,
+        this.experiencePreferences,
+        this.experienceWowFactors,
+        this.id,
+        this.latitude,
+        this.locationId,
+        this.longitude,
+        this.personMaxLimit,
+        this.persons,
+        this.placeId,
         this.preferenceId,
         this.price,
         this.priceTypeId,
-        this.persons,
-        this.personMaxLimit,
-        this.locationId,
-        this.subHostName,
         this.subHostMobileNo,
-        this.experienceWowFactors,
-        this.experiencePreferences,
-        this.experienceMedia,
-        this.cityId,
-        this.cityName,
+        this.subHostName,
+        this.title,
         this.townId,
         this.townName,
-        this.latitude,
-        this.longitude,
-        this.placeId});
+        this.wowFactorId});
 
   Experiences.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    chefAddress = json['chefAddress'];
+    chefBrandName = json['chefBrandName'];
     chefId = json['chefId'];
     chefName = json['chefName'];
-    chefBrandName = json['chefBrandName'];
-    chefAddress = json['chefAddress'];
-    title = json['title'];
+    cityId = json['cityId'];
+    cityName = json['cityName'];
     description = json['description'];
-    wowFactorId = json['wowFactorId'];
-    preferenceId = json['preferenceId'];
-    price = json['price'];
-    priceTypeId = json['priceTypeId'];
-    persons = json['persons'];
-    personMaxLimit = json['personMaxLimit'];
-    locationId = json['locationId'];
-    subHostName = json['subHostName'];
-    subHostMobileNo = json['subHostMobileNo'];
-    if (json['experienceWowFactors'] != null) {
-      experienceWowFactors = <ExperienceWowFactors>[];
-      json['experienceWowFactors'].forEach((v) {
-        experienceWowFactors!.add(ExperienceWowFactors.fromJson(v));
+    if (json['experienceMedia'] != null) {
+      experienceMedia = <ExperienceMedia>[];
+      json['experienceMedia'].forEach((v) {
+        experienceMedia!.add(new ExperienceMedia.fromJson(v));
       });
     }
     if (json['experiencePreferences'] != null) {
       experiencePreferences = <ExperiencePreferences>[];
       json['experiencePreferences'].forEach((v) {
-        experiencePreferences!.add(ExperiencePreferences.fromJson(v));
+        experiencePreferences!.add(new ExperiencePreferences.fromJson(v));
       });
     }
-    if (json['experienceMedia'] != null) {
-      experienceMedia = [];
-      json['experienceMedia'].forEach((v) {
-        experienceMedia!.add(v);
+    if (json['experienceWowFactors'] != null) {
+      experienceWowFactors = <ExperienceWowFactors>[];
+      json['experienceWowFactors'].forEach((v) {
+        experienceWowFactors!.add(new ExperienceWowFactors.fromJson(v));
       });
     }
-    cityId = json['cityId'];
-    cityName = json['cityName'];
+    id = json['id'];
+    latitude = json['latitude'];
+    locationId = json['locationId'];
+    longitude = json['longitude'];
+    personMaxLimit = json['personMaxLimit'];
+    persons = json['persons'];
+    placeId = json['placeId'];
+    preferenceId = json['preferenceId'];
+    price = json['price'];
+    priceTypeId = json['priceTypeId'];
+    subHostMobileNo = json['subHostMobileNo'];
+    subHostName = json['subHostName'];
+    title = json['title'];
     townId = json['townId'];
     townName = json['townName'];
-    latitude = json['latitude'];
-    longitude = json['longitude'];
-    placeId = json['placeId'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = id;
-    data['chefId'] = chefId;
-    data['chefName'] = chefName;
-    data['chefBrandName'] = chefBrandName;
-    data['chefAddress'] = chefAddress;
-    data['title'] = title;
-    data['description'] = description;
-    data['wowFactorId'] = wowFactorId;
-    data['preferenceId'] = preferenceId;
-    data['price'] = price;
-    data['priceTypeId'] = priceTypeId;
-    data['persons'] = persons;
-    data['personMaxLimit'] = personMaxLimit;
-    data['locationId'] = locationId;
-    data['subHostName'] = subHostName;
-    data['subHostMobileNo'] = subHostMobileNo;
-    if (experienceWowFactors != null) {
-      data['experienceWowFactors'] =
-          experienceWowFactors!.map((v) => v.toJson()).toList();
-    }
-    if (experiencePreferences != null) {
-      data['experiencePreferences'] =
-          experiencePreferences!.map((v) => v.toJson()).toList();
-    }
-    if (experienceMedia != null) {
-      data['experienceMedia'] =
-          experienceMedia!.map((v) => v.toJson()).toList();
-    }
-    data['cityId'] = cityId;
-    data['cityName'] = cityName;
-    data['townId'] = townId;
-    data['townName'] = townName;
-    data['latitude'] = latitude;
-    data['longitude'] = longitude;
-    data['placeId'] = placeId;
-    return data;
-  }
-}
-
-class ExperienceWowFactors {
-  int? id;
-  int? experienceId;
-  int? wowFactorId;
-  String? wowFactorName;
-  String? wowFactorDescription;
-  String? wowFactorIconPath;
-
-  ExperienceWowFactors(
-      {this.id,
-        this.experienceId,
-        this.wowFactorId,
-        this.wowFactorName,
-        this.wowFactorDescription,
-        this.wowFactorIconPath});
-
-  ExperienceWowFactors.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    experienceId = json['experienceId'];
     wowFactorId = json['wowFactorId'];
-    wowFactorName = json['wowFactorName'];
-    wowFactorDescription = json['wowFactorDescription'];
-    wowFactorIconPath = json['wowFactorIconPath'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = id;
-    data['experienceId'] = experienceId;
-    data['wowFactorId'] = wowFactorId;
-    data['wowFactorName'] = wowFactorName;
-    data['wowFactorDescription'] = wowFactorDescription;
-    data['wowFactorIconPath'] = wowFactorIconPath;
+    data['chefAddress'] = this.chefAddress;
+    data['chefBrandName'] = this.chefBrandName;
+    data['chefId'] = this.chefId;
+    data['chefName'] = this.chefName;
+    data['cityId'] = this.cityId;
+    data['cityName'] = this.cityName;
+    data['description'] = this.description;
+    if (this.experienceMedia != null) {
+      data['experienceMedia'] =
+          this.experienceMedia!.map((v) => v.toJson()).toList();
+    }
+    if (this.experiencePreferences != null) {
+      data['experiencePreferences'] =
+          this.experiencePreferences!.map((v) => v.toJson()).toList();
+    }
+    if (this.experienceWowFactors != null) {
+      data['experienceWowFactors'] =
+          this.experienceWowFactors!.map((v) => v.toJson()).toList();
+    }
+    data['id'] = this.id;
+    data['latitude'] = this.latitude;
+    data['locationId'] = this.locationId;
+    data['longitude'] = this.longitude;
+    data['personMaxLimit'] = this.personMaxLimit;
+    data['persons'] = this.persons;
+    data['placeId'] = this.placeId;
+    data['preferenceId'] = this.preferenceId;
+    data['price'] = this.price;
+    data['priceTypeId'] = this.priceTypeId;
+    data['subHostMobileNo'] = this.subHostMobileNo;
+    data['subHostName'] = this.subHostName;
+    data['title'] = this.title;
+    data['townId'] = this.townId;
+    data['townName'] = this.townName;
+    data['wowFactorId'] = this.wowFactorId;
     return data;
   }
 }
+
 class ExperienceMedia {
   int? experienceId;
   int? id;
@@ -265,91 +230,75 @@ class ExperienceMedia {
 }
 
 class ExperiencePreferences {
-  int? id;
   int? experienceId;
-  int? preferenceId;
-  String? preferenceName;
+  int? id;
   String? preferenceDescription;
   String? preferenceIconPath;
+  int? preferenceId;
+  String? preferenceName;
 
   ExperiencePreferences(
-      {this.id,
-        this.experienceId,
-        this.preferenceId,
-        this.preferenceName,
+      {this.experienceId,
+        this.id,
         this.preferenceDescription,
-        this.preferenceIconPath});
+        this.preferenceIconPath,
+        this.preferenceId,
+        this.preferenceName});
 
   ExperiencePreferences.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
     experienceId = json['experienceId'];
-    preferenceId = json['preferenceId'];
-    preferenceName = json['preferenceName'];
+    id = json['id'];
     preferenceDescription = json['preferenceDescription'];
     preferenceIconPath = json['preferenceIconPath'];
+    preferenceId = json['preferenceId'];
+    preferenceName = json['preferenceName'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = id;
-    data['experienceId'] = experienceId;
-    data['preferenceId'] = preferenceId;
-    data['preferenceName'] = preferenceName;
-    data['preferenceDescription'] = preferenceDescription;
-    data['preferenceIconPath'] = preferenceIconPath;
+    data['experienceId'] = this.experienceId;
+    data['id'] = this.id;
+    data['preferenceDescription'] = this.preferenceDescription;
+    data['preferenceIconPath'] = this.preferenceIconPath;
+    data['preferenceId'] = this.preferenceId;
+    data['preferenceName'] = this.preferenceName;
     return data;
   }
 }
 
-class ExperienceMenus {
-  int? id;
-  String? dish;
-  int? mealId;
-  String? mealName;
-  int? baseDishId;
-  String? baseDishName;
+class ExperienceWowFactors {
   int? experienceId;
-  String? description;
-  int? price;
-  String? pictureUrl;
+  int? id;
+  String? wowFactorDescription;
+  String? wowFactorIconPath;
+  int? wowFactorId;
+  String? wowFactorName;
 
-  ExperienceMenus(
-      {this.id,
-        this.dish,
-        this.mealId,
-        this.mealName,
-        this.baseDishId,
-        this.baseDishName,
-        this.experienceId,
-        this.description,
-        this.price,
-        this.pictureUrl});
+  ExperienceWowFactors(
+      {this.experienceId,
+        this.id,
+        this.wowFactorDescription,
+        this.wowFactorIconPath,
+        this.wowFactorId,
+        this.wowFactorName});
 
-  ExperienceMenus.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    dish = json['dish'];
-    mealId = json['mealId'];
-    mealName = json['mealName'];
-    baseDishId = json['baseDishId'];
-    baseDishName = json['baseDishName'];
+  ExperienceWowFactors.fromJson(Map<String, dynamic> json) {
     experienceId = json['experienceId'];
-    description = json['description'];
-    price = json['price'];
-    pictureUrl = json['pictureUrl'];
+    id = json['id'];
+    wowFactorDescription = json['wowFactorDescription'];
+    wowFactorIconPath = json['wowFactorIconPath'];
+    wowFactorId = json['wowFactorId'];
+    wowFactorName = json['wowFactorName'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = id;
-    data['dish'] = dish;
-    data['mealId'] = mealId;
-    data['mealName'] = mealName;
-    data['baseDishId'] = baseDishId;
-    data['baseDishName'] = baseDishName;
-    data['experienceId'] = experienceId;
-    data['description'] = description;
-    data['price'] = price;
-    data['pictureUrl'] = pictureUrl;
+    data['experienceId'] = this.experienceId;
+    data['id'] = this.id;
+    data['wowFactorDescription'] = this.wowFactorDescription;
+    data['wowFactorIconPath'] = this.wowFactorIconPath;
+    data['wowFactorId'] = this.wowFactorId;
+    data['wowFactorName'] = this.wowFactorName;
     return data;
   }
 }

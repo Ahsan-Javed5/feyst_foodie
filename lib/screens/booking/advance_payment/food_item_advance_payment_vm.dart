@@ -2,7 +2,8 @@ import 'package:chef/base/base_viewmodel.dart';
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/helpers/url_helper.dart';
 import 'package:chef/screens/bottom_bar/bottom_bar.dart' as bottom_bar;
-import 'package:chef/models/booking/booking_status_update_request.dart' as booking_udpate;
+import 'package:chef/models/booking/booking_status_update_request.dart'
+    as booking_udpate;
 import 'package:chef/services/network/network_service.dart';
 import 'package:injectable/injectable.dart';
 
@@ -13,6 +14,7 @@ import '../../../models/signup/signup_request.dart' as request;
 import '../../../helpers/data_request.dart' as data;
 import '../../../services/application_state.dart';
 import '../../../setup.dart';
+import '../../../ui_kit/widgets/custom_dialog.dart';
 import 'food_item_advance_payment_m.dart';
 
 import 'dart:developer' as developer;
@@ -30,9 +32,8 @@ class FoodItemAdvancePaymentViewModel
   late AdvancePendingResponse advancePendingResponse;
 
   late ConfirmedBookingResponse confirmedBookingResponse;
-
+  final _appService = locateService<ApplicationService>();
   final _navigate = locateService<INavigationService>();
-
 
   Future<void> getBookingDetails(int _orderId) async {
     final url = InfininURLHelpers.getRestApiURL(
@@ -42,6 +43,10 @@ class FoodItemAdvancePaymentViewModel
     final response = await _network.post(
       path: url,
       data: {'t': _orderId},
+      header: {
+        'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+        'Content-Type': 'application/json'
+      },
     );
 
     advancePendingResponse = advancePendingResponseFromJson(response.body);
@@ -66,12 +71,13 @@ class FoodItemAdvancePaymentViewModel
 
     confirmedBookingResponse = confirmedBookingResponseFromJson(response.body);
 
-    _navigate.navigateTo(route: BottomBar(bottomBarType: bottom_bar.BottomBarType.home));
+    _navigate.navigateTo(
+        route: BottomBar(bottomBarType: bottom_bar.BottomBarType.home));
   }
 
-  Future<void> updateBookingStatus({required int bookingId}) async {
+  Future<void> updateBookingStatus(context, brandName, {required int bookingId}) async {
     final url =
-    InfininURLHelpers.getRestApiURL(Api.baseURL + Api.experienceMenuById);
+        InfininURLHelpers.getRestApiURL(Api.baseURL + Api.experienceMenuById);
     //emit(const Loading());
 
     final bookingUpdateRequest = booking_udpate.BookingUpdateRequest(
@@ -81,15 +87,32 @@ class FoodItemAdvancePaymentViewModel
     final response = await _network.post(
       path: url,
       data: bookingUpdateRequest,
+      header: {
+        'Authorization':
+        'Bearer ${_appService.state.userInfo?.t.authToken}',
+        'Content-Type': 'application/json'
+      },
     );
-
-   // var updatedBookingData = booking_udpate.bookingUpdateRequestFromJson(response.body);
-    _navigate.navigateTo(route: BottomBar(bottomBarType: bottom_bar.BottomBarType.bookings));
+    // CustomDialog.getDialog(ctx: context, title: 'Booking Confirmed', description: 'Advance have been received by Zee Lounge', iconUrl: 'assets/images/tick_icon.png');
+    Navigator.pop(context);
+    CustomDialog.getDialog(
+      ctx: context,
+      title: 'Booking Confirmed',
+      description: 'Advance have been received by $brandName',
+      iconUrl: 'assets/images/tick_icon.png',
+      onTap: () {
+        _navigate.navigateTo(
+            route: BottomBar(bottomBarType: bottom_bar.BottomBarType.bookings));
+      },
+    );
+    // var updatedBookingData = booking_udpate.bookingUpdateRequestFromJson(response.body);
+    // _navigate.navigateTo(
+    //     route: BottomBar(bottomBarType: bottom_bar.BottomBarType.bookings));
   }
 
-  Future<void> completeBookingStatus({required int bookingId}) async {
+  Future<void> completeBookingStatus(context, brandName, {required int bookingId}) async {
     final url =
-    InfininURLHelpers.getRestApiURL(Api.baseURL + Api.experienceMenuById);
+        InfininURLHelpers.getRestApiURL(Api.baseURL + Api.experienceMenuById);
     //emit(const Loading());
 
     final bookingUpdateRequest = booking_udpate.BookingUpdateRequest(
@@ -99,10 +122,26 @@ class FoodItemAdvancePaymentViewModel
     final response = await _network.post(
       path: url,
       data: bookingUpdateRequest,
+      header: {
+        'Authorization':
+        'Bearer ${_appService.state.userInfo?.t.authToken}',
+        'Content-Type': 'application/json'
+      },
+    );
+    Navigator.pop(context);
+    CustomDialog.getDialog(
+      ctx: context,
+      title: 'Booking Confirmed',
+      description: 'Advance have been received by $brandName',
+      iconUrl: 'assets/images/tick_icon.png',
+      onTap: () {
+        _navigate.navigateTo(
+            route: BottomBar(bottomBarType: bottom_bar.BottomBarType.bookings));
+      },
     );
 
     // var updatedBookingData = booking_udpate.bookingUpdateRequestFromJson(response.body);
-    _navigate.navigateTo(route: BottomBar(bottomBarType: bottom_bar.BottomBarType.bookings));
+    // _navigate.navigateTo(
+    //     route: BottomBar(bottomBarType: bottom_bar.BottomBarType.bookings));
   }
-
 }

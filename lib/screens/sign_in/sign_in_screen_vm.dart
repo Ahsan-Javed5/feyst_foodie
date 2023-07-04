@@ -159,7 +159,7 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
           developer.log(' Response of login body is ' + '${response.body}');
 
           SignupResponse signupResponse = signupResponseFromJson(response.body);
-
+          print(signupResponse);
           Toaster.infoToast(context: context, message: 'Welcome back');
 
           await _cacheData(

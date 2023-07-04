@@ -17,7 +17,6 @@ import '../../ui_kit/helpers/toaster_helper.dart';
 import 'dart:developer' as developer;
 import '../../helpers/data_request.dart' as data_request;
 
-
 @injectable
 class HomeScreenViewModel extends BaseViewModel<HomeScreenState> {
   HomeScreenViewModel({
@@ -65,17 +64,22 @@ class HomeScreenViewModel extends BaseViewModel<HomeScreenState> {
     //   loading(isBusy: true);
     emit(const Loading());
     try {
-      final url =
-          InfininURLHelpers.getRestApiURL(Api.baseURL + Api.homeApis);
+      final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.homeApis);
       data_request.T t = data_request.T();
 
       final dataRequest = data_request.DataRequest(
         t: t,
       ).toJson();
+      final _header = <String, String>{
+        'Authorization':
+            'Bearer ${_appService.state.userInfo?.t.authToken}',
+        'Content-Type': 'application/json'
+      };
       final response = await _network
           .post(
             path: url,
             data: dataRequest,
+            header: _header,
             //   accessToken: false,
           )
           .whenComplete(() {});
@@ -86,7 +90,8 @@ class HomeScreenViewModel extends BaseViewModel<HomeScreenState> {
       // );
       if (response != null) {
         //developer.log(' Response experience is ' + '${response.body}');
-        HomeResponse homeResponse = HomeResponse.fromJson(json.decode(response.body));
+        HomeResponse homeResponse =
+            HomeResponse.fromJson(json.decode(response.body));
         print(homeResponse);
         //ExperienceListResponse experienceListResponse = experienceListResponseFromJson(response.body);
         // developer.log(' experienceListResponse up Response is ' +

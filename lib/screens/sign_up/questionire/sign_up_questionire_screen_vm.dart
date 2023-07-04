@@ -96,153 +96,6 @@ class  SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionna
     return null;
   }
 
-
-  Future<String> uploadImage(asset,baseUrl) async {
-    final url = InfininURLHelpers.getRestApiURL(
-        baseUrl + "foodie/profile-image/${_appService.state.userInfo!.t.id}");
-    // String to uri
-    Uri uri = Uri.parse(url);
-
-    // create multipart request
-    http.MultipartRequest request = http.MultipartRequest("POST", uri);
-
-    ByteData byteData = await asset.getByteData();
-    List<int> imageData = byteData.buffer.asUint8List();
-
-
-
-    http.MultipartFile multipartFile =  http.MultipartFile.fromBytes(
-      'image',
-      imageData,
-      filename: '${DateTime.now().millisecondsSinceEpoch}.jpg',
-      contentType: MediaType("image", "jpg"),
-    );
-
-    // Add field to your request
-    //request.fields['FieldName'] = fieldValue;
-
-    // add file to multipart
-    request.files.add(multipartFile);
-    // send
-    var response = await request.send();
-
-    // Decode response
-    final respStr = await response.stream.bytesToString();
-
-    return respStr;
-  }
-
-
-  Future<void> savePicture({
-    required String baseUrl,
-    required BuildContext context,
-    required String image,
-    required path,
-    required bytes,
-    required mimeType,
-    Function? completion,
-  }) async {
-    final url = InfininURLHelpers.getRestApiURL(
-        baseUrl + "foodie/profile-image/${_appService.state.userInfo!.t.id}");
-
-    final savePicRequest = {
-      "image": image,
-    };
-    developer.log("this is savePicReq" "$savePicRequest");
-
-    try {
-      final uri = Uri.parse(url);
-      var request = http.MultipartRequest('POST', uri);
-      final httpImage = http.MultipartFile.fromBytes(path, bytes,
-          contentType: MediaType.parse(mimeType),);
-      request.files.add(httpImage);
-      final response = await request.send();
-      print(response);
-      // final response = await _network.post(
-      //   path: url,
-      //   data: savePicRequest,
-      // );
-
-      // if (response != null) {
-      //  // developer.log(' Response of Save Pic is  ' '${response.body}');
-      //   //Toaster.infoToast(context: context, message: response.message);
-      //   //completion!();
-      // } else {
-      //   Toaster.infoToast(context: context, message: 'Error in calling the Api');
-      // }
-    }catch (e) {
-      // TODO
-      print(e);
-    }
-  }
-
-
-  upload(File imageFile, String baseUrl) async {
-    // open a bytestream
-    try {
-      var stream = http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
-      // get file length
-      var length = await imageFile.length();
-      final url = InfininURLHelpers.getRestApiURL(
-          baseUrl + "foodie/profile-image/${_appService.state.userInfo!.t.id}");
-      // string to uri
-      var uri = Uri.parse(url);
-
-      // create multipart request
-      var request = http.MultipartRequest("POST", uri);
-
-      // multipart that takes file
-      var multipartFile = http.MultipartFile('file', stream, length,
-          filename: basename(imageFile.path));
-
-      // add file to multipart
-      request.files.add(multipartFile);
-
-      // send
-      var response = await request.send();
-      print(response.statusCode);
-
-      // listen for response
-      response.stream.transform(utf8.decoder).listen((value) {
-        print(value);
-      });
-    } catch (e) {
-      print(e);
-      // TODO
-    }
-  }
-
-  // Future<String> uploadImage(File file, baseUrl) async {
-  //   Dio dio = Dio();
-  //   final url = InfininURLHelpers.getRestApiURL(
-  //       baseUrl + "foodie/profile-image/${_appService.state.userInfo!.t.id}");
-  //  // String fileName = file.path.split('/').last;
-  //   var formData = dio.FormData.fromMap({
-  //     "file":
-  //     await MultipartFile.fromFile(file.path,contentType: MediaType("image", "jpg")),
-  //   });
-  //
-  //   var response = await dio.post(url, data: formData).then((response) {
-  //     print(response);
-  //   }).catchError((error) => print(error));
-  //   return response.data;
-  // }
-
-  Future<dynamic> uploadImg(file, baseUrl) async {
-    final url = InfininURLHelpers.getRestApiURL(
-        baseUrl + "foodie/profile-image/${_appService.state.userInfo!.t.id}");
-    if (file == null) return;
-    String fileName = file.path.split('/').last;
-    Map<String, dynamic> formData = {
-      "image": await MultipartFile.fromFile(file.path,filename: fileName, contentType: MediaType('image', fileName.split(".").last)),
-    };
-    return await Dio()
-        .post(url,data:formData).
-    then((dynamic result){
-      print(result.toString());
-    });
-  }
-
   Future<void> getQuestionnaireData({required String userId}) async {
     final url =
     InfininURLHelpers.getRestApiURL(Api.baseURL + Api.singUpQuestionnaireList);
@@ -252,10 +105,14 @@ class  SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionna
     final signUpQuestionnaireRequest = baserequest.SignUpQuestionsRequest(
       t: baserequest.T(userId: int.parse(userId), category: 'FOODIE',),
     ).toJson();
-
+    final _header = <String, String>{
+      'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+      'Content-Type': 'application/json'
+    };
     final response = await _network.post(
       path: url,
       data: signUpQuestionnaireRequest,
+      header: _header,
     );
 
     signUpQuestionsModel = signUpQuestionsModelFromJson(response.body);
@@ -286,9 +143,14 @@ class  SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionna
       userId: _appService.state.userInfo?.t.id,
       t: foodieQuestionAnswersList,
     ).toJson();
+    final _header = <String, String>{
+      'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+      'Content-Type': 'application/json'
+    };
     final response = await _network.post(
       path: url,
       data: saveFoodieRequest,
+      header: _header,
     );
     developer.log("$saveFoodieRequest");
     // final currentQuestionirData = questionireResponseFromJson(response.body);

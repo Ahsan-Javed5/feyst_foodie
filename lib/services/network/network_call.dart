@@ -53,7 +53,7 @@ class NetworkCall extends INetworkService {
       final _response = await _client
           .post(
             Uri.parse(path),
-            headers: _header,
+            headers: path == 'https://dev.feyst.services/feyst-service/foodie/login' ? _header:  header,
             body: jsonEncode(data),
           )
           .timeout(_timeout);

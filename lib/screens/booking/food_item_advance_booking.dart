@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/screens/booking/advance_payment/jazz_cash_webview.dart';
 import 'package:chef/services/renderer/field_renderer_helpers.dart';
@@ -13,6 +15,7 @@ import '../../models/booking/advance_pending_response.dart';
 import '../../models/booking/booking_list_response_model.dart';
 import '../../theme/app_theme_data/app_theme_data.dart';
 import '../../theme/app_theme_widget.dart';
+import '../../ui_kit/widgets/custom_dialog.dart';
 import '../../ui_kit/widgets/general_button.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
@@ -220,7 +223,7 @@ class _FoodProductAdvancePendingDetailsState
                               color: HexColor.fromHex("#b0c18b"),
                               borderRadius: BorderRadius.circular(20)),
                           child: GeneralText(
-                            Strings.foodItemBookingAdvancePendingHeader
+                            widget._advancePendingDetails.t.bookingStatus
                                 .toUpperCase(),
                             style: appTheme
                                 .typographies.interFontFamily.headline6
@@ -397,7 +400,7 @@ class _FoodProductAdvancePendingDetailsState
                       //     : ''),
 
                       child: SvgPicture.network(wowFactorsList[i].icon != null
-                          ? wowFactorsList[i].icon ?? ""
+                          ? Api.baseURLForImages+wowFactorsList[i].icon.toString() ?? ""
                           : ''),
                     ),
                   ),
@@ -603,31 +606,35 @@ class _FoodProductAdvancePendingDetailsState
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    widget._advancePendingDetails.t.priceTypeId == 2 ? Column(
                       children: [
-                        GeneralText(
-                          Strings.productDetailSelectionMenuQuantity,
-                          style: appTheme.typographies.interFontFamily.headline2
-                              .copyWith(
-                            fontSize: 16,
-                            color: HexColor.fromHex('#f89f84'),
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GeneralText(
+                              Strings.productDetailSelectionMenuQuantity,
+                              style: appTheme.typographies.interFontFamily.headline2
+                                  .copyWith(
+                                fontSize: 16,
+                                color: HexColor.fromHex('#f89f84'),
+                              ),
+                            ),
+                            GeneralText(
+                              // Strings.productDetailSelectionMenuAmount,
+                              menuListItems[index].price.toString(),
+                              style: appTheme.typographies.interFontFamily.headline2
+                                  .copyWith(
+                                fontSize: 16,
+                                color: HexColor.fromHex('#909094'),
+                              ),
+                            ),
+                          ],
                         ),
-                        GeneralText(
-                          // Strings.productDetailSelectionMenuAmount,
-                          menuListItems[index].price.toString(),
-                          style: appTheme.typographies.interFontFamily.headline2
-                              .copyWith(
-                            fontSize: 16,
-                            color: HexColor.fromHex('#909094'),
-                          ),
+                        SizedBox(
+                          height: 5,
                         ),
                       ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
+                    ) : SizedBox(),
                     GeneralText(
                       menuListItems[index].name ?? "",
                       style: appTheme.typographies.interFontFamily.headline2
@@ -750,7 +757,8 @@ class _FoodProductAdvancePendingDetailsState
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.white, width: 2),
                           shape: BoxShape.circle),
-                      child: Image.asset("assets/images/icons/user_image.png")),
+                      ///static chef image because image not available in api response (by ahsan)
+                      child: Image.network("assets/images/icons/user_image.png")),
                   SizedBox(
                     width: 11.5,
                   ),
@@ -835,7 +843,7 @@ class _FoodProductAdvancePendingDetailsState
 
   Widget productPriceInformation(IAppThemeData appTheme) {
     return Container(
-      padding: EdgeInsetsDirectional.only(start: 25, end: 25),
+      padding: const EdgeInsetsDirectional.only(start: 25, end: 25),
       child: Column(
         children: [
           Row(
@@ -846,7 +854,7 @@ class _FoodProductAdvancePendingDetailsState
                 height: 1,
               ),
               const SizedBox(
-                width: 7.2,
+                width: 2,
               ),
               GeneralText(
                 Strings.productDetailPriceLabel,
@@ -857,12 +865,12 @@ class _FoodProductAdvancePendingDetailsState
               ),
             ],
           ),
-          SizedBox(
-            height: 12.1,
+          const SizedBox(
+            height: 13.1,
           ),
           Container(
             width: double.infinity,
-            padding: EdgeInsetsDirectional.only(
+            padding: const EdgeInsetsDirectional.only(
                 top: 22, bottom: 22, start: 23, end: 23),
             decoration: BoxDecoration(
                 color: HexColor.fromHex("#4b4b52"),
@@ -874,15 +882,15 @@ class _FoodProductAdvancePendingDetailsState
                     children: [
                       GeneralText(
                         // Strings.productDetailPriceValue,
-                        widget._advancePendingDetails.t.totalPrice.toString(),
+                        'Rs. ' + (widget._advancePendingDetails.t.totalPrice + widget._advancePendingDetails.t.totalPrice * 0.17).toStringAsFixed(0),
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
-                                fontSize: 36,
-                                color: HexColor.fromHex('#f89f84'),
-                                fontWeight: FontWeight.w300),
+                            fontSize: 36,
+                            color: HexColor.fromHex('#f89f84'),
+                            fontWeight: FontWeight.w300),
                       ),
                       GeneralText(
-                        Strings.productDetailPriceTotal,
+                        'Total Amount',
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
                           fontSize: 15,
@@ -890,7 +898,7 @@ class _FoodProductAdvancePendingDetailsState
                         ),
                       ),
                     ]),
-                SizedBox(
+                const SizedBox(
                   height: 18.1,
                 ),
                 Container(
@@ -898,7 +906,32 @@ class _FoodProductAdvancePendingDetailsState
                   width: double.infinity,
                   height: 1,
                 ),
-                SizedBox(
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GeneralText(
+                      Strings.productDetailPriceTotal,
+                      style: appTheme.typographies.interFontFamily.headline6
+                          .copyWith(
+                        fontSize: 15,
+                        color: HexColor.fromHex('#ffffff'),
+                      ),
+                    ),
+                    GeneralText(
+                      // Strings.productDetailPriceTaxValue,
+                      'Rs. ' + widget._advancePendingDetails.t.totalPrice.toString(),
+                      style: appTheme.typographies.interFontFamily.headline6
+                          .copyWith(
+                        fontSize: 15,
+                        color: HexColor.fromHex('#ffffff'),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
@@ -914,9 +947,7 @@ class _FoodProductAdvancePendingDetailsState
                     ),
                     GeneralText(
                       // Strings.productDetailPriceTaxValue,
-
-                      widget._advancePendingDetails.t.tax.toString(),
-                      // .chefBrandName,
+                      'Rs. ' + (widget._advancePendingDetails.t.totalPrice * 0.17).toStringAsFixed(0),
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -924,6 +955,9 @@ class _FoodProductAdvancePendingDetailsState
                       ),
                     ),
                   ],
+                ),
+                const SizedBox(
+                  height: 10,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -938,7 +972,7 @@ class _FoodProductAdvancePendingDetailsState
                     ),
                     GeneralText(
                       // Strings.productDetailAdvancePaymentValue,
-                      widget._advancePendingDetails.t.advancePayment.toString(),
+                      'Rs. ' + ((widget._advancePendingDetails.t.totalPrice + widget._advancePendingDetails.t.totalPrice * 0.17) * 0.20).toStringAsFixed(0),
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -1088,6 +1122,8 @@ class _FoodProductAdvancePendingDetailsState
       title: Strings.foodItemBookingAdvancePendingButton.toUpperCase(),
       styleType: ButtonStyleType.fill,
       onTap: () {
+
+       // CustomDialog.getDialog(ctx: context, title: 'Booking Confirmed', description: 'Advance have been received by Zee Lounge', iconUrl: 'assets/images/tick_icon.png');
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) =>

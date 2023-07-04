@@ -1,13 +1,17 @@
 import 'package:chef/constants/api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import '../../../constants/strings.dart';
 import '../../../models/booking/advance_pending_response.dart';
+import '../../../services/application_state.dart';
 import '../../../setup.dart';
+import '../../../ui_kit/widgets/custom_dialog.dart';
 import 'food_item_advance_payment_vm.dart';
 
 class JazzCashWebView extends StatefulWidget {
-  const JazzCashWebView({Key? key, required this.bookindData}) : super(key: key);
+  const JazzCashWebView({Key? key, required this.bookindData})
+      : super(key: key);
   final AdvancePendingResponse bookindData;
 
   @override
@@ -19,6 +23,7 @@ class _JazzCashWebViewState extends State<JazzCashWebView> {
   var url;
   double progress = 0;
   bool isLoading = false;
+  final _appService = locateService<ApplicationService>();
 
   @override
   void initState() {
@@ -32,38 +37,47 @@ class _JazzCashWebViewState extends State<JazzCashWebView> {
 
   @override
   Widget build(BuildContext context) {
-    final appBar = AppBar(
-      elevation: 1.0,
-      backgroundColor: Colors.orangeAccent,
-      title: const Text('JazzCash Payment'),
-      centerTitle: true,
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back),
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-      ),
-    );
-
+    final header = {
+      'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+      'Content-Type': 'application/json'
+    };
     final body = Padding(
-      padding: const EdgeInsets.only(top: 30,),
+      padding: const EdgeInsets.only(
+        top: 30,
+      ),
       child: InAppWebView(
-        initialUrlRequest: widget.bookindData.t.bookingStatus.toUpperCase() == Strings.acceptData  ?  URLRequest(url: Uri(path: '${Api.baseURLForJazzCash}experience-booking/confirm-booking/${widget.bookindData.t.id}',scheme: 'https'),) : URLRequest(url: Uri(path: '${Api.baseURLForJazzCash}experience-booking/complete-booking/${widget.bookindData.t.id}',scheme: 'https'),),
+        initialUrlRequest: widget.bookindData.t.bookingStatus.toUpperCase() ==
+                Strings.acceptData
+            ? URLRequest(
+                url: Uri(
+                  path:
+                      '${Api.baseURLForJazzCash}experience-booking/confirm-booking/${widget.bookindData.t.id}',
+                  scheme: 'https',
+                ),
+                headers: header,
+              )
+            : URLRequest(
+                url: Uri(
+                    path:
+                        '${Api.baseURLForJazzCash}experience-booking/complete-booking/${widget.bookindData.t.id}',
+                    scheme: 'https'),
+                headers: header,
+              ),
 
         //initialUrlRequest: URLRequest(url: Uri(path: 'www.google.com',),),
         initialOptions: InAppWebViewGroupOptions(
           crossPlatform: InAppWebViewOptions(
-          //  debuggingEnabled: true,
-          ),
+              //  debuggingEnabled: true,
+              ),
         ),
         onWebViewCreated: (InAppWebViewController controller) {
           webView = controller;
         },
         onLoadStart: (InAppWebViewController controller, var url) {
-          if(url.toString().contains('feyst://paymentredirect/status=')){
+          if (url.toString().contains('feyst://paymentredirect/status=')) {
             isLoading = true;
-            var parts  = url.toString().split('=');
-            parts[1] == 'SUCCESS' ? success(): failed();
+            var parts = url.toString().split('=');
+            parts[1] == 'SUCCESS' ? success(context) : failed(context);
           }
           setState(() {
             this.url = url;
@@ -86,23 +100,37 @@ class _JazzCashWebViewState extends State<JazzCashWebView> {
     );
 
     return Scaffold(
-      body: isLoading ? const Center(child: CircularProgressIndicator()):body,
+      body: isLoading ? const Center(child: CircularProgressIndicator()) : body,
     );
   }
 
-  success() async {
-    final _foodItemAdvance =
-    locateService<FoodItemAdvancePaymentViewModel>();
-    if(widget.bookindData.t.bookingStatus.toUpperCase() == Strings.billGenerated){
+  success(context) async {
+    final _foodItemAdvance = locateService<FoodItemAdvancePaymentViewModel>();
+    if (widget.bookindData.t.bookingStatus.toUpperCase() ==
+        Strings.billGenerated) {
       await _foodItemAdvance.completeBookingStatus(
+          context, widget.bookindData.t.brandName,
           bookingId: widget.bookindData.t.id);
-    }else {
+    } else {
       await _foodItemAdvance.updateBookingStatus(
+          context, widget.bookindData.t.brandName,
           bookingId: widget.bookindData.t.id);
     }
-
     isLoading = false;
   }
 
-  failed(){}
+  failed(context) {
+    //Navigator.pop(context);
+    CustomDialog.getDialog(
+      ctx: context,
+      title: 'We are sorry',
+      titleColor: Colors.white,
+      descColor: const Color(0xFFfee4a4),
+      description: 'Your transaction is not completed',
+      iconUrl: 'assets/images/cancel_icon.png',
+      onTap: () {
+        Navigator.of(context, rootNavigator: true).pop();
+      },
+    );
+  }
 }

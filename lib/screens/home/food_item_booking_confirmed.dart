@@ -215,8 +215,11 @@ class _FoodProductBookingConfirmedDetailsState
                                                     .toUpperCase() ==
                                                 Strings.billGenerated
                                             ? Strings.billGenerated
-                                            : Strings.pendingValue)
-                                .toUpperCase(),
+                                            : widget._advancePendingDetails.t
+                                .bookingStatus
+                                .toUpperCase() ==
+                                Strings.completeStatus
+                                .toUpperCase() ? Strings.completeStatus : Strings.pendingValue),
                             style: appTheme
                                 .typographies.interFontFamily.headline6
                                 .copyWith(

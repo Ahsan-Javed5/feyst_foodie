@@ -67,10 +67,15 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
       final professionDataRequest = prorequest.ProfessionRequest(
         t: prorequest.T(),
       ).toJson();
-
+      final _header = <String, String>{
+        'Authorization':
+        'Bearer ${_appService.state.userInfo?.t.authToken}',
+        'Content-Type': 'application/json'
+      };
       final response = await _network.post(
         path: url,
         data: professionDataRequest,
+        header: _header,
       );
       final currentProfessionData = professionFromJson(response.body);
       _professionData = currentProfessionData.t;
@@ -280,10 +285,16 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
         final signUpCredentials = SignupUpdateRequest(
           t: t,
         ).toJson();
+        final _header = <String, String>{
+          'Authorization':
+          'Bearer ${_appService.state.userInfo?.t.authToken}',
+          'Content-Type': 'application/json'
+        };
         final response = await _network
             .post(
           path: url,
           data: signUpCredentials,
+          header: _header,
           //   accessToken: false,
         )
             .whenComplete(() {});

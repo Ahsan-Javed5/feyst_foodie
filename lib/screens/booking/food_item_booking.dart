@@ -173,7 +173,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                           Strings.confirmed || item.bookingStatus!.toUpperCase() ==
                           Strings.requestedOrder || item.bookingStatus!.toUpperCase() ==
                       Strings.inProgress || item.bookingStatus!.toUpperCase() ==
-                      Strings.billGenerated) {
+                      Strings.billGenerated || item.bookingStatus!.toUpperCase() == Strings.completeStatus) {
                         _navigation.navigateTo(
                             route: nav.BookingInProcessRouteView(
                                 bookingItem: item));
@@ -351,7 +351,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   GeneralText(
-                                    getStatus(item.bookingStatus == '' ? 'COMPLETED' : item.bookingStatus.toString()),
+                                    getStatus(item.bookingStatus.toString()),
                                     //  item.bookingStatus ?? "",
                                     style: appTheme
                                         .typographies.interFontFamily.headline1

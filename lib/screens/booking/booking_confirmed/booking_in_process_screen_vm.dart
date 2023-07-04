@@ -69,6 +69,10 @@ class BookingInProcessScreenViewModel
     final response = await _network.post(
       path: url,
       data: {'t': _orderId},
+      header: {
+        'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+        'Content-Type': 'application/json'
+      },
     );
 
     advancePendingResponse = advancePendingResponseFromJson(response.body);

@@ -23,7 +23,7 @@ class SignupResponse {
   dynamic userId;
   dynamic totalRecords;
   dynamic currentPage;
-  String message;
+  dynamic message;
   dynamic error;
   int code;
 
@@ -46,6 +46,7 @@ class SignupResponse {
           mobileNo: '',
           name: '',
           professionalId: 0,
+          authToken: '',
           id: 0),
       message: '',
       code: 0,
@@ -73,6 +74,7 @@ class T {
     required this.age,
     required this.professionalId,
     this.profileImageUrl,
+    required this.authToken,
   });
 
   int id;
@@ -82,6 +84,7 @@ class T {
   String age;
   int professionalId;
   dynamic profileImageUrl;
+  dynamic authToken;
 
   factory T.fromJson(Map<String, dynamic> json) => T(
         id: json["id"],
@@ -91,6 +94,7 @@ class T {
         age: json["age"],
         professionalId: json["professionalId"],
         profileImageUrl: json["profileImageUrl"],
+        authToken: json["authToken"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -101,5 +105,6 @@ class T {
         "age": age,
         "professionalId": professionalId,
         "profileImageUrl": profileImageUrl,
+        "authToken": authToken,
       };
 }
