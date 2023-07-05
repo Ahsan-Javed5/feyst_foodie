@@ -70,6 +70,7 @@ abstract class Api {
   static const bookingDetailsAdvancePaymentPending =
       "experience-booking/find-by-id";
   static const confirmBooking = "experience-booking/confirm-booking";
+  static const saveRating = "foodie-feedback/save";
   static const foodieSignUp = 'foodie/save';
   static const foodieProfileUpdate = 'foodie/update';
   static const loginAPI = 'foodie/login';

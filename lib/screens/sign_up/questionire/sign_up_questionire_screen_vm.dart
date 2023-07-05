@@ -106,7 +106,7 @@ class  SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionna
       t: baserequest.T(userId: int.parse(userId), category: 'FOODIE',),
     ).toJson();
     final _header = <String, String>{
-      'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+      //'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
       'Content-Type': 'application/json'
     };
     final response = await _network.post(
@@ -144,7 +144,7 @@ class  SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionna
       t: foodieQuestionAnswersList,
     ).toJson();
     final _header = <String, String>{
-      'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+     'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
       'Content-Type': 'application/json'
     };
     final response = await _network.post(

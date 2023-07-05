@@ -39,7 +39,7 @@ class _JazzCashWebViewState extends State<JazzCashWebView> {
   Widget build(BuildContext context) {
     final header = {
       'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
-      'Content-Type': 'application/json'
+      //'Content-Type': 'application/json'
     };
     final body = Padding(
       padding: const EdgeInsets.only(
@@ -54,7 +54,7 @@ class _JazzCashWebViewState extends State<JazzCashWebView> {
                       '${Api.baseURLForJazzCash}experience-booking/confirm-booking/${widget.bookindData.t.id}',
                   scheme: 'https',
                 ),
-                headers: header,
+               // headers: header,
               )
             : URLRequest(
                 url: Uri(
@@ -105,6 +105,7 @@ class _JazzCashWebViewState extends State<JazzCashWebView> {
   }
 
   success(context) async {
+    print('jazzcash success function call');
     final _foodItemAdvance = locateService<FoodItemAdvancePaymentViewModel>();
     if (widget.bookindData.t.bookingStatus.toUpperCase() ==
         Strings.billGenerated) {
@@ -121,6 +122,7 @@ class _JazzCashWebViewState extends State<JazzCashWebView> {
 
   failed(context) {
     //Navigator.pop(context);
+    print('jazzcash failed function call');
     CustomDialog.getDialog(
       ctx: context,
       title: 'We are sorry',

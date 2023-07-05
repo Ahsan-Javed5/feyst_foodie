@@ -90,7 +90,7 @@ class FoodItemAdvancePaymentViewModel
       header: {
         'Authorization':
         'Bearer ${_appService.state.userInfo?.t.authToken}',
-        'Content-Type': 'application/json'
+        //'Content-Type': 'application/json'
       },
     );
     // CustomDialog.getDialog(ctx: context, title: 'Booking Confirmed', description: 'Advance have been received by Zee Lounge', iconUrl: 'assets/images/tick_icon.png');

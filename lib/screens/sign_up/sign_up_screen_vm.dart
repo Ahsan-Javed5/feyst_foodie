@@ -68,8 +68,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
         t: prorequest.T(),
       ).toJson();
       final _header = <String, String>{
-        'Authorization':
-        'Bearer ${_appService.state.userInfo?.t.authToken}',
+        //'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
         'Content-Type': 'application/json'
       };
       final response = await _network.post(
@@ -286,8 +285,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
           t: t,
         ).toJson();
         final _header = <String, String>{
-          'Authorization':
-          'Bearer ${_appService.state.userInfo?.t.authToken}',
+          'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
           'Content-Type': 'application/json'
         };
         final response = await _network
@@ -310,11 +308,11 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
 
           Toaster.infoToast(context: context, message: signupResponse.message);
 
-          await _cacheData(
-            context: context,
-            loginData: response.body,
-            baseUrl: baseUrl,
-          );
+          // await _cacheData(
+          //   context: context,
+          //   loginData: response.body,
+          //   baseUrl: baseUrl,
+          // );
 
           developer.log(' Sign up update Response is ' + signupResponse.message);
           Navigator.pop(context);

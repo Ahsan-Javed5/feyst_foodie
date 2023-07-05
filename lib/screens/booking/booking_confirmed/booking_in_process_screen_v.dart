@@ -1,9 +1,7 @@
 import 'package:chef/helpers/helpers.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../models/booking/booking_list_response_model.dart';
-import '../../../setup.dart';
-// import '../booking_in_process_screen.dart';
+import '/models/booking/booking_list_response_model.dart';
+import '/setup.dart';
 import 'booking_in_process_screen_m.dart';
 import 'booking_in_process_screen_vm.dart';
 

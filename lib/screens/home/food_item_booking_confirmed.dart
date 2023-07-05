@@ -5,7 +5,9 @@ import 'package:chef/screens/booking/booking_list/booking_list_screen_vm.dart'
     as booking_vm;
 import 'package:chef/screens/bottom_bar/bottom_bar.dart' as bottom_bar;
 import 'package:chef/ui_kit/general_ui_kit.dart';
+import 'package:chef/ui_kit/widgets/custom_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../../constants/resources.dart';
 import '../../constants/strings.dart';
@@ -19,6 +21,7 @@ import '../../ui_kit/widgets/general_button.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
 import '../booking/advance_payment/jazz_cash_webview.dart';
+import '../booking/booking_confirmed/booking_in_process_screen_vm.dart';
 import '../booking/food_item_booking.dart';
 import '../custom_form/widgets/exto_field_option.dart';
 
@@ -41,6 +44,10 @@ class FoodProductBookingConfirmedDetails extends StatefulWidget {
 
 class _FoodProductBookingConfirmedDetailsState
     extends State<FoodProductBookingConfirmedDetails> {
+  late final _ratingController;
+  late double _rating;
+  double _initialRating = 2.0;
+  IconData? _selectedIcon;
   List<CustomModel> wowFactorsList = [];
   List<CustomModel> menuListItems = [];
   late List<ExperienceMenu> menu;
@@ -52,10 +59,13 @@ class _FoodProductBookingConfirmedDetailsState
   dynamic group1Value;
   double _sigmaX = 5; // from 0-10
   double _sigmaY = 5;
+  final viewModel = locateService<BookingInProcessScreenViewModel>();
 
   @override
   void initState() {
     // TODO: implement initState
+    _ratingController = TextEditingController(text: '3.0');
+    _rating = _initialRating;
     menu = widget._advancePendingDetails.t.experienceMenu;
     menuListItems.addAll([
       CustomModel(name: "Sindhi Biryani"),
@@ -202,24 +212,25 @@ class _FoodProductBookingConfirmedDetailsState
                               borderRadius: BorderRadius.circular(20)),
                           child: GeneralText(
                             (widget._advancePendingDetails.t.bookingStatus
+                                        .toUpperCase() ==
+                                    Strings.confirmed
+                                ? Strings.foodItemBookingConfirmedStatus
+                                : widget._advancePendingDetails.t.bookingStatus
                                             .toUpperCase() ==
-                                        Strings.confirmed
-                                    ? Strings.foodItemBookingConfirmedStatus
+                                        Strings.inProgress
+                                    ? Strings.inProgress
                                     : widget._advancePendingDetails.t
                                                 .bookingStatus
                                                 .toUpperCase() ==
-                                            Strings.inProgress
-                                        ? Strings.inProgress
+                                            Strings.billGenerated
+                                        ? Strings.billGenerated
                                         : widget._advancePendingDetails.t
                                                     .bookingStatus
                                                     .toUpperCase() ==
-                                                Strings.billGenerated
-                                            ? Strings.billGenerated
-                                            : widget._advancePendingDetails.t
-                                .bookingStatus
-                                .toUpperCase() ==
-                                Strings.completeStatus
-                                .toUpperCase() ? Strings.completeStatus : Strings.pendingValue),
+                                                Strings.completeStatus
+                                                    .toUpperCase()
+                                            ? Strings.completeStatus
+                                            : Strings.pendingValue),
                             style: appTheme
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
@@ -420,9 +431,189 @@ class _FoodProductBookingConfirmedDetailsState
                     ],
                   ),
                 ),
-              )
+              ),
+
+              ///rating button for completed status
+              widget._advancePendingDetails.t.bookingStatus.toUpperCase() ==
+                      Strings.completeStatus
+                  ? Column(
+                      children: [
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          height: 45,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 35,
+                            ),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFFbb3127),
+                              ),
+                              child: const Text(
+                                'Rate Your Experience',
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              onPressed: () {
+                                getDialog(
+                                  ctx: context,
+                                  title: 'Booking Completed!',
+                                  //titleColor: Colors.white,
+                                  //descColor: const Color(0xFFfee4a4),
+                                  description:
+                                      'Kindly review your experience with ${widget._advancePendingDetails.t.brandName}',
+                                  iconUrl: 'assets/images/tick_icon.png',
+                                  onTap: () async {
+                                    var item = widget._advancePendingDetails.t;
+                                    String? selectedStars = _rating.toString();
+                                    await viewModel.saveRating(
+                                        bookingId: item.id,
+                                        experienceId: item.experience.id,
+                                        stars: selectedStars,
+                                        context: context);
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                      ],
+                    )
+                  : const SizedBox(),
             ],
           )),
+    );
+  }
+
+  getDialog(
+      {required BuildContext ctx,
+      required String title,
+      required String description,
+      Color? titleColor,
+      Color? descColor,
+      required String iconUrl,
+      required void Function()? onTap}) {
+    return showDialog(
+        context: ctx,
+        barrierColor: const Color(0xFF212129).withOpacity(0.1),
+        builder: (BuildContext context) {
+          return BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+            child: AlertDialog(
+              backgroundColor: const Color(0xFF212129),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Image.asset(
+                    iconUrl,
+                    height: 50,
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Text(
+                    title,
+                    style: TextStyle(
+                        color: titleColor ?? const Color(0xFF8ea659),
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(description,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: descColor ?? Colors.white,
+                      )),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  RatingBar.builder(
+                    initialRating: 3,
+                    minRating: 1,
+                    direction: Axis.horizontal,
+                    allowHalfRating: false,
+                    unratedColor: Colors.amber.withAlpha(50),
+                    itemCount: 5,
+                    itemSize: 42.0,
+                    wrapAlignment: WrapAlignment.spaceEvenly,
+                    //itemPadding: const EdgeInsets.symmetric(horizontal: 2.5),
+                    itemBuilder: (context, _) => Icon(
+                      _selectedIcon ?? Icons.star,
+                      color: Colors.amber,
+                    ),
+                    onRatingUpdate: (rating) {
+                      setState(() {
+                        _rating = rating;
+                      });
+                    },
+                    updateOnDrag: true,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  _buildTextField(),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  SizedBox(
+                    width: 110,
+                    height: 40,
+                    child: ElevatedButton(
+                      onPressed: onTap,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xffbb3127),
+                      ),
+                      child: const Text('Submit'),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  Widget _buildTextField() {
+    const maxLines = 5;
+    return Container(
+      margin: const EdgeInsets.symmetric(
+        vertical: 10,
+        horizontal: 5,
+      ),
+      height: maxLines * 24.0,
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.1),
+        border: Border.all(color: const Color(0xfff1c452), width: 1.5),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: TextField(
+        controller: viewModel.ratingController,
+        maxLines: maxLines,
+        keyboardType: TextInputType.multiline,
+        decoration: InputDecoration(
+            filled: true,
+            hintText: 'Write Something',
+            hintStyle: TextStyle(
+              color: Colors.white.withOpacity(0.3),
+            )),
+      ),
     );
   }
 
@@ -564,11 +755,21 @@ class _FoodProductBookingConfirmedDetailsState
                         children: [
                           GeneralText(
                             InfininURLHelpers.dayOfMonth(
-                              widget._advancePendingDetails.t
-                                  .scheduleScheduledDate,
-                            ).toUpperCase() + ', '+ widget._advancePendingDetails.t
-                                .scheduleScheduledDate.day.toString() + ' '+ InfininURLHelpers.months[widget._advancePendingDetails.t
-                                .scheduleScheduledDate.month].toString().toUpperCase(),
+                                  widget._advancePendingDetails.t
+                                      .scheduleScheduledDate,
+                                ).toUpperCase() +
+                                ', ' +
+                                widget._advancePendingDetails.t
+                                    .scheduleScheduledDate.day
+                                    .toString() +
+                                ' ' +
+                                InfininURLHelpers.months[widget
+                                        ._advancePendingDetails
+                                        .t
+                                        .scheduleScheduledDate
+                                        .month]
+                                    .toString()
+                                    .toUpperCase(),
                             // Strings.productDetailSelectionDate,
                             style: appTheme
                                 .typographies.interFontFamily.headline2
@@ -578,8 +779,8 @@ class _FoodProductBookingConfirmedDetailsState
                             ),
                           ),
                           GeneralText(
-                            InfininURLHelpers.getAmPm(widget._advancePendingDetails.t
-                                .scheduleStartTime),
+                            InfininURLHelpers.getAmPm(widget
+                                ._advancePendingDetails.t.scheduleStartTime),
                             style: appTheme
                                 .typographies.interFontFamily.headline2
                                 .copyWith(
@@ -681,12 +882,16 @@ class _FoodProductBookingConfirmedDetailsState
                     children: [
                       GeneralText(
                         // Strings.productDetailPriceValue,
-                        'Rs. ' + (widget._advancePendingDetails.t.totalPrice + widget._advancePendingDetails.t.totalPrice * 0.17).toStringAsFixed(0),
+                        'Rs. ' +
+                            (widget._advancePendingDetails.t.totalPrice +
+                                    widget._advancePendingDetails.t.totalPrice *
+                                        0.17)
+                                .toStringAsFixed(0),
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
-                            fontSize: 36,
-                            color: HexColor.fromHex('#f89f84'),
-                            fontWeight: FontWeight.w300),
+                                fontSize: 36,
+                                color: HexColor.fromHex('#f89f84'),
+                                fontWeight: FontWeight.w300),
                       ),
                       GeneralText(
                         'Total Amount',
@@ -721,7 +926,8 @@ class _FoodProductBookingConfirmedDetailsState
                     ),
                     GeneralText(
                       // Strings.productDetailPriceTaxValue,
-                      'Rs. ' + widget._advancePendingDetails.t.totalPrice.toString(),
+                      'Rs. ' +
+                          widget._advancePendingDetails.t.totalPrice.toString(),
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -746,7 +952,9 @@ class _FoodProductBookingConfirmedDetailsState
                     ),
                     GeneralText(
                       // Strings.productDetailPriceTaxValue,
-                      'Rs. ' + (widget._advancePendingDetails.t.totalPrice * 0.17).toStringAsFixed(0),
+                      'Rs. ' +
+                          (widget._advancePendingDetails.t.totalPrice * 0.17)
+                              .toStringAsFixed(0),
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -771,7 +979,13 @@ class _FoodProductBookingConfirmedDetailsState
                     ),
                     GeneralText(
                       // Strings.productDetailAdvancePaymentValue,
-                      'Rs. ' + ((widget._advancePendingDetails.t.totalPrice + widget._advancePendingDetails.t.totalPrice * 0.17) * 0.20).toStringAsFixed(0),
+                      'Rs. ' +
+                          ((widget._advancePendingDetails.t.totalPrice +
+                                      widget._advancePendingDetails.t
+                                              .totalPrice *
+                                          0.17) *
+                                  0.20)
+                              .toStringAsFixed(0),
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -1365,8 +1579,10 @@ class _FoodProductBookingConfirmedDetailsState
               const SizedBox(
                 height: 28,
               ),
-             // productPriceInformation(appTheme),
-              productPriceInfo(appTheme,),
+              // productPriceInformation(appTheme),
+              productPriceInfo(
+                appTheme,
+              ),
               const SizedBox(
                 height: 209,
               ),
