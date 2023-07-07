@@ -51,6 +51,10 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
     final response = await _network.post(
       path: url,
       data: foodMenuRequest,
+      header: {
+        'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+        'Content-Type': 'application/json'
+      }
     );
 
     foodMenuData = foodMenuModelFromJson(response.body);
@@ -73,7 +77,10 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
       t: int.parse(experienceId),
     ).toJson();
 
-    final response = await _network.post(path: url, data: scheduleRequest);
+    final response = await _network.post(path: url, data: scheduleRequest, header: {
+      'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+      'Content-Type': 'application/json'
+    });
 
     //debugPrint("schedule response\n" + response.body.toString());
 
@@ -93,7 +100,10 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
       t: chefId,
     ).toJson();
 
-    final response = await _network.post(path: url, data: scheduleRequest);
+    final response = await _network.post(path: url, data: scheduleRequest, header: {
+      'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+      'Content-Type': 'application/json'
+    });
 
     //debugPrint("schedule response\n" + response.body.toString());
 

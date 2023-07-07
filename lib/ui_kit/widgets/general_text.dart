@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import 'package:chef/theme/app_theme_data/app_theme_data.dart';
@@ -44,6 +46,16 @@ class GeneralText extends StatelessWidget {
       style: _style ?? defaultStyle,
       overflow: TextOverflow.ellipsis,
       textAlign: _textAlign,
+      textScaleFactor: ScaleSize.textScaleFactor(context),
     );
+  }
+}
+
+
+class ScaleSize {
+  static double textScaleFactor(BuildContext context, {double maxTextScaleFactor = 2}) {
+    final width = MediaQuery.of(context).size.width;
+    double val = (width / 1400) * maxTextScaleFactor;
+    return max(1, min(val, maxTextScaleFactor));
   }
 }

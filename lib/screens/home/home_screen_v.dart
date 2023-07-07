@@ -1,17 +1,13 @@
 import 'package:chef/constants/constants.dart';
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/models/home/home_response.dart' as home_data;
-import 'package:chef/screens/home/popular_food_detail.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../helpers/color_helper.dart';
 import '../../models/home/experience_list_response.dart' as experience_data;
-import '../../theme/app_theme_widget.dart';
-import '../../ui_kit/widgets/general_new_appbar.dart';
-import '../../ui_kit/widgets/general_text.dart';
 import 'component/food_detail_screen_v.dart';
-import 'food_details_menu_model.dart';
 import 'home_screen_m.dart';
 import 'home_screen_vm.dart';
 import 'package:marqueer/marqueer.dart';
@@ -53,7 +49,7 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
   }
 
   Widget displayLoading() {
-    return Container();
+    return const Center(child: CircularProgressIndicator());
   }
 
   Widget displayLoaded({
@@ -63,128 +59,142 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
     // required
   }) {
     final appTheme = AppTheme.of(context).theme;
-    return Stack(
-      children: [
-        SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.only(bottom: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ///explore container
+          Stack(
             children: [
-              ///explore container
-              Stack(
+              Column(
                 children: [
-                  Column(
-                    children: [
-                      Container(
-                        height: 250,
-                        width: double.infinity,
-                        child: Image.asset(
-                          Resources.homeScreenBG,
-                          fit: BoxFit.cover,
-                        ),
-                      )
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        height: 80,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(left: 31),
-                        child: GeneralText(
-                          Strings.labelExplore,
-                          style: appTheme.typographies.interFontFamily.headline6
-                              .copyWith(
-                            fontSize: 35,
-                            // fontFamily: 'Poppins-Medium',
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(left: 31),
-                        child: GeneralText(
-                          Strings.labelFoodExperience,
-                          style: appTheme.typographies.interFontFamily.headline4
-                              .copyWith(
-                            fontSize: 29,
-                            fontFamily: 'Poppins-Medium',
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ],
+                  SizedBox(
+                    height: DeviceHelper.height * 0.30,
+                    //height: 250,
+                    width: double.infinity,
+                    child: Image.asset(
+                      Resources.homeScreenBG,
+                      fit: BoxFit.cover,
+                    ),
                   )
                 ],
               ),
-              ///experiences horizontal list
-              Container(
-                height: 250,
-                padding: const EdgeInsets.only(left: 31),
-                child: ListView.builder(
-                   // itemCount: 10,
-                    itemCount: homeResponseData.t?.allExperience?.length,
-                    physics: const BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return _FoodContainer(
-                        appTheme: appTheme,
-                        data: homeResponseData.t?.allExperience![(homeResponseData.t!.allExperience!.length - 1)-index],
-                        //  foodMenuDetail: foodMenuDetail,
-                      );
-                    }),
-              ),
-              const SizedBox(height: 10,),
-              ///popular dishes label
-              Container(
-                padding: const EdgeInsets.only(left: 31, bottom: 0),
-                child: GeneralText(
-                  Strings.labelPopularExperiences,
-                  style:
-                      appTheme.typographies.interFontFamily.headline6.copyWith(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: const Color(0xfff1c452),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: DeviceHelper.height * 0.10,
                   ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              ///popular dishes grid
-              Container(
-                margin: const EdgeInsets.only(right: 20, left: 20, top: 4),
-                child: GridView.builder(
-                  padding: EdgeInsets.zero,
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.61,
-                    crossAxisSpacing: 20.0,
-                    mainAxisSpacing: 20.0,
+                  Container(
+                    padding: const EdgeInsets.only(left: 31),
+                    child: GeneralText(
+                      Strings.labelExplore,
+                      style: appTheme.typographies.interFontFamily.headline6
+                          .copyWith(
+                        fontSize: 32,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
-                  itemCount: homeResponseData.t!.popularExperiences!.length,
-                  itemBuilder: (context, index) {
-                    return _PopularExperience(
-                        appTheme: appTheme, popularExperience: homeResponseData.t!.popularExperiences![index], allExperiences: homeResponseData.t!.allExperience,);
-                  },
-                ),
-              ),
-              // Center(child: _letsStartedButtonTitle(appTheme: appTheme)),
-              // const SizedBox(
-              //   height: 20,
-              // ),
+                  SizedBox(
+                    height: DeviceHelper.height * 0.005,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(left: 31),
+                    child: GeneralText(
+                      Strings.labelFoodExperience,
+                      style: appTheme.typographies.interFontFamily.headline4
+                          .copyWith(
+                        fontSize: 25,
+                        fontFamily: 'Poppins-Medium',
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
-        )
-      ],
+
+          ///experiences horizontal list
+          Container(
+            height: DeviceHelper.height * 0.37,
+            padding: const EdgeInsets.only(left: 31),
+            child: ListView.separated(
+                // itemCount: 10,
+                itemCount: homeResponseData.t!.allExperience!.length,
+                physics: const BouncingScrollPhysics(),
+                //itemExtent: DeviceHelper.width * 0.52,
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: EdgeInsets.only(right: DeviceHelper.width * 0.05),
+                    child: _FoodContainer(
+                      appTheme: appTheme,
+                      data: homeResponseData.t?.allExperience![
+                          (homeResponseData.t!.allExperience!.length - 1) -
+                              index],
+                      //  foodMenuDetail: foodMenuDetail,
+                    ),
+                  );
+                },
+              separatorBuilder: (context, index) => const SizedBox(width: 10,),
+            ),
+          ),
+          SizedBox(
+            height: DeviceHelper.height * 0.008,
+          ),
+
+          ///popular dishes label
+          Container(
+            padding: const EdgeInsets.only(left: 31, bottom: 0),
+            child: GeneralText(
+              Strings.labelPopularExperiences,
+              style:
+                  appTheme.typographies.interFontFamily.headline6.copyWith(
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+                color: const Color(0xfff1c452),
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+
+          ///popular dishes grid
+          Container(
+            margin: const EdgeInsets.only(right: 20, left: 20, top: 4),
+            child: GridView.builder(
+              padding: EdgeInsets.zero,
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.61,
+                crossAxisSpacing: 20.0,
+                mainAxisSpacing: 20.0,
+              ),
+              itemCount: homeResponseData.t!.popularExperiences!.length,
+              itemBuilder: (context, index) {
+                return _PopularExperience(
+                  appTheme: appTheme,
+                  popularExperience:
+                      homeResponseData.t!.popularExperiences![index],
+                  allExperiences: homeResponseData.t!.allExperience,
+                );
+              },
+            ),
+          ),
+          // Center(child: _letsStartedButtonTitle(appTheme: appTheme)),
+          // const SizedBox(
+          //   height: 20,
+          // ),
+        ],
+      ),
     );
   }
 }
@@ -210,10 +220,10 @@ class _PopularExperience extends StatelessWidget {
           // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
           MaterialPageRoute(
               builder: (context) => FoodDetailScreenView(
-                selectedExperienceId: popularExperience!.id.toString(),
-                experienceData: popularExperience!,
-                //  foodMenuDetail: foodMenuDetail,
-              )),
+                    selectedExperienceId: popularExperience!.id.toString(),
+                    experienceData: popularExperience!,
+                    //  foodMenuDetail: foodMenuDetail,
+                  )),
         );
         // Navigator.push(
         //   context,
@@ -257,13 +267,11 @@ class _PopularExperience extends StatelessWidget {
                     height: 100,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage(
-                            Resources.seafoodPNG),
-                        fit: BoxFit.cover
-                        ,
+                        image: AssetImage(Resources.seafoodPNG),
+                        fit: BoxFit.cover,
                       ),
-                    shape: BoxShape.circle,
-                  ),
+                      shape: BoxShape.circle,
+                    ),
                     child: SizedBox(),
                   ),
                 ),
@@ -295,7 +303,11 @@ class _PopularExperience extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        const Icon(Icons.location_on_outlined, color: Color(0xff909094), size: 16,),
+                        const Icon(
+                          Icons.location_on_outlined,
+                          color: Color(0xff909094),
+                          size: 16,
+                        ),
                         const SizedBox(width: 2),
                         GeneralText(
                           popularExperience?.cityName ?? 'Lahore',
@@ -350,37 +362,42 @@ class _FoodContainer extends StatelessWidget {
                   )),
         );
       },
-      child: ClipRRect(
-          borderRadius: BorderRadius.circular(20.0),
+      child: SizedBox(
+          height: DeviceHelper.height * 0.35,
+          width: DeviceHelper.width * 0.55,
+          //color: Colors.red,
+          //alignment: Alignment.centerRight,
           child: Stack(
             children: [
-              Container(
-                height: 264,
-                width: 206,
-                padding: const EdgeInsets.all(12),
-                child: Container(
-                    height: 264,
-                    width: 206,
+              Align(
+                alignment: Alignment.centerRight,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(DeviceHelper.width * 0.07),
+                  child: SizedBox(
+                    height: DeviceHelper.height * 0.35,
+                    width: DeviceHelper.width * 0.52,
+                    //padding: const EdgeInsets.only(left: 12),
                     child: Image.asset(
-                      //data!.experienceMedia![0].mediaUrl.toString(),
                       Resources.seafoodPNG,
                       fit: BoxFit.cover,
-                    )),
+                    ),
+                  ),
+                ),
               ),
               Positioned.fill(
                 top: 70,
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Container(
-                    width: 198,
-                    height: 85,
+                    width: DeviceHelper.width * 0.55,
+                    height: DeviceHelper.height * 0.12,
                     padding: const EdgeInsets.all(4),
-                    decoration: const BoxDecoration(
-                        color: Color(0xffbb3127),
+                    decoration: BoxDecoration(
+                        color: const Color(0xffbb3127),
                         borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(12.0),
-                          topRight: Radius.circular(12.0),
-                          bottomLeft: Radius.circular(12.0),
+                          topLeft: Radius.circular(DeviceHelper.width * 0.03),
+                          topRight: Radius.circular(DeviceHelper.width * 0.03),
+                          bottomLeft: Radius.circular(DeviceHelper.width * 0.03),
                         )),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -389,56 +406,26 @@ class _FoodContainer extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    width:45,
-                                    child: displayMarque(data!.title! +" ", appTheme
-                                            .typographies.interFontFamily.headline2
-                                            .copyWith(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.white,
-                                        ),),
-                                    // GeneralText(
-                                    //   data.title,
-                                    //   // 'test',
-                                    //   style: appTheme
-                                    //       .typographies.interFontFamily.headline2
-                                    //       .copyWith(
-                                    //     fontSize: 14,
-                                    //     fontWeight: FontWeight.w400,
-                                    //     color: Colors.white,
-                                    //   ),
-                                    // ),
+                              SizedBox(
+                                width: DeviceHelper.width * 0.45,
+                                child: GeneralText(
+                                  data!.title!, // Strings.labelSeaFood2Experience,
+                                  style: appTheme
+                                      .typographies.interFontFamily.headline2
+                                      .copyWith(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.white,
                                   ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                     displayMarque(data!.description!+" ",appTheme
-                                             .typographies.interFontFamily.headline2
-                                             .copyWith(
-                                           fontSize: 14,
-                                           fontWeight: FontWeight.bold,
-                                           color: Colors.white,
-                                         ),),
-                                  // GeneralText(
-                                  //   data.description, // Strings.labelSeaFood2Experience,
-                                  //   style: appTheme
-                                  //       .typographies.interFontFamily.headline2
-                                  //       .copyWith(
-                                  //     fontSize: 14,
-                                  //     fontWeight: FontWeight.bold,
-                                  //     color: Colors.white,
-                                  //   ),
-                                  // ),
-                                ],
+                                ),
                               ),
-                              //    displayMarque(data.description),
-                              const SizedBox(height: 10),
+                              SizedBox(height: DeviceHelper.height * 0.01),
                               GeneralText(
-                                "by " + data!.chefBrandName.toString(), // Strings.labelSeaFood2Experience,
-                                style:appTheme.typographies.interFontFamily.headline2
+                                "by " +
+                                    data!.chefBrandName
+                                        .toString(), // Strings.labelSeaFood2Experience,
+                                style: appTheme
+                                    .typographies.interFontFamily.headline2
                                     .copyWith(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
@@ -446,7 +433,8 @@ class _FoodContainer extends StatelessWidget {
                                 ),
                               ),
                               GeneralText(
-                                data!.chefAddress.toString(), // Strings.labelSeaFood2Experience,
+                                data!.chefAddress
+                                    .toString(), // Strings.labelSeaFood2Experience,
                                 style: appTheme
                                     .typographies.interFontFamily.headline2
                                     .copyWith(
@@ -455,7 +443,6 @@ class _FoodContainer extends StatelessWidget {
                                   color: Colors.white,
                                 ),
                               ),
-
                             ],
                           ),
                         ),
@@ -487,11 +474,11 @@ class _FoodContainer extends StatelessWidget {
           // /// optional
           // controller: _controller,
           //
-          // /// optional
-          // restartAfterInteractionDuration: const Duration(seconds: 6),
+          /// optional
+          restartAfterInteractionDuration: const Duration(seconds: 2),
           //
-          // /// optional
-          // restartAfterInteraction: false,
+          /// optional
+          restartAfterInteraction: true,
           //
           // /// optional
           // onChangeItemInViewPort: (index) {

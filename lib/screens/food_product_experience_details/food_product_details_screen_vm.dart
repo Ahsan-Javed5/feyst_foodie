@@ -91,6 +91,10 @@ class FoodProductExperienceDetailsViewModel
     final response = await _network.post(
       path: url,
       data: bookingRequest,
+      header: {
+        'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+        'Content-Type': 'application/json'
+      }
     );
 
     bookingResponse = bookingResponseFromJson(response.body);

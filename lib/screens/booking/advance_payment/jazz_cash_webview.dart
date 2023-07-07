@@ -54,7 +54,7 @@ class _JazzCashWebViewState extends State<JazzCashWebView> {
                       '${Api.baseURLForJazzCash}experience-booking/confirm-booking/${widget.bookindData.t.id}',
                   scheme: 'https',
                 ),
-               // headers: header,
+                headers: header,
               )
             : URLRequest(
                 url: Uri(

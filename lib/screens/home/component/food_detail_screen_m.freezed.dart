@@ -19,22 +19,24 @@ mixin _$FoodDetailScreenState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(
-            FoodMenuModel foodMenuModel, ScheduleModel scheduleModel, ChefDataResponse chefData)
+    required TResult Function(FoodMenuModel foodMenuModel,
+            ScheduleModel scheduleModel, ChefDataResponse chefData)
         loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(FoodMenuModel foodMenuModel, ScheduleModel scheduleModel, ChefDataResponse chefData)?
+    TResult Function(FoodMenuModel foodMenuModel, ScheduleModel scheduleModel,
+            ChefDataResponse chefData)?
         loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(FoodMenuModel foodMenuModel, ScheduleModel scheduleModel, ChefDataResponse chefData)?
+    TResult Function(FoodMenuModel foodMenuModel, ScheduleModel scheduleModel,
+            ChefDataResponse chefData)?
         loaded,
     required TResult orElse(),
   }) =>
@@ -117,8 +119,8 @@ class _$Loading implements Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(
-            FoodMenuModel foodMenuModel, ScheduleModel scheduleModel, ChefDataResponse chefData)
+    required TResult Function(FoodMenuModel foodMenuModel,
+            ScheduleModel scheduleModel, ChefDataResponse chefData)
         loaded,
   }) {
     return loading();
@@ -128,7 +130,8 @@ class _$Loading implements Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(FoodMenuModel foodMenuModel, ScheduleModel scheduleModel, ChefDataResponse chefData)?
+    TResult Function(FoodMenuModel foodMenuModel, ScheduleModel scheduleModel,
+            ChefDataResponse chefData)?
         loaded,
   }) {
     return loading?.call();
@@ -138,7 +141,8 @@ class _$Loading implements Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(FoodMenuModel foodMenuModel, ScheduleModel scheduleModel, ChefDataResponse chefData)?
+    TResult Function(FoodMenuModel foodMenuModel, ScheduleModel scheduleModel,
+            ChefDataResponse chefData)?
         loaded,
     required TResult orElse(),
   }) {
@@ -188,7 +192,10 @@ abstract class Loading implements FoodDetailScreenState {
 abstract class _$$LoadedCopyWith<$Res> {
   factory _$$LoadedCopyWith(_$Loaded value, $Res Function(_$Loaded) then) =
       __$$LoadedCopyWithImpl<$Res>;
-  $Res call({FoodMenuModel foodMenuModel, ScheduleModel scheduleModel});
+  $Res call(
+      {FoodMenuModel foodMenuModel,
+      ScheduleModel scheduleModel,
+      ChefDataResponse chefData});
 }
 
 /// @nodoc
@@ -238,7 +245,7 @@ class _$Loaded implements Loaded {
 
   @override
   String toString() {
-    return 'FoodDetailScreenState.loaded(foodMenuModel: $foodMenuModel, scheduleModel: $scheduleModel)';
+    return 'FoodDetailScreenState.loaded(foodMenuModel: $foodMenuModel, scheduleModel: $scheduleModel, chefData: $chefData)';
   }
 
   @override
@@ -249,14 +256,16 @@ class _$Loaded implements Loaded {
             const DeepCollectionEquality()
                 .equals(other.foodMenuModel, foodMenuModel) &&
             const DeepCollectionEquality()
-                .equals(other.scheduleModel, scheduleModel));
+                .equals(other.scheduleModel, scheduleModel) &&
+            const DeepCollectionEquality().equals(other.chefData, chefData));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(foodMenuModel),
-      const DeepCollectionEquality().hash(scheduleModel));
+      const DeepCollectionEquality().hash(scheduleModel),
+      const DeepCollectionEquality().hash(chefData));
 
   @JsonKey(ignore: true)
   @override
@@ -267,8 +276,8 @@ class _$Loaded implements Loaded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(
-            FoodMenuModel foodMenuModel, ScheduleModel scheduleModel, ChefDataResponse chefData)
+    required TResult Function(FoodMenuModel foodMenuModel,
+            ScheduleModel scheduleModel, ChefDataResponse chefData)
         loaded,
   }) {
     return loaded(foodMenuModel, scheduleModel, chefData);
@@ -278,7 +287,8 @@ class _$Loaded implements Loaded {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(FoodMenuModel foodMenuModel, ScheduleModel scheduleModel, ChefDataResponse chefData)?
+    TResult Function(FoodMenuModel foodMenuModel, ScheduleModel scheduleModel,
+            ChefDataResponse chefData)?
         loaded,
   }) {
     return loaded?.call(foodMenuModel, scheduleModel, chefData);
@@ -288,7 +298,8 @@ class _$Loaded implements Loaded {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(FoodMenuModel foodMenuModel, ScheduleModel scheduleModel, ChefDataResponse chefData)?
+    TResult Function(FoodMenuModel foodMenuModel, ScheduleModel scheduleModel,
+            ChefDataResponse chefData)?
         loaded,
     required TResult orElse(),
   }) {

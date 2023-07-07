@@ -111,37 +111,58 @@ class BookingInProcessScreenViewModel
       comments: ratingController.text,
       experienceId: experienceId,
       foodieId: _appService.state.userInfo?.t.id,
-      stars: stars.toString()
+      stars: stars
     );
 
     final ratingRequest = rating_request.RatingRequest(
       t: t,
     ).toJson();
 
-    final response = await _network.post(
-      path: url,
-      data: ratingRequest,
-      header: {
-        'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
-        'Content-Type': 'application/json'
-      },
-    );
+    try {
+      final response = await _network.post(
+        path: url,
+        data: {
+          "t": {
+            "bookingId": bookingId,
+            "comments": ratingController.text,
+            "experienceId": experienceId,
+            "foodieId": _appService.state.userInfo?.t.id,
+            "stars": stars
+          }
+        },
 
-    if (response != null) {
-      developer.log(' Response of Rating body is ' + '${response.body}');
 
-      RatingResponse ratingResponse = ratingResponseFromJson(response.body);
+        // {
+        //   'bookingId': bookingId,
+        //   'comments': ratingController.text,
+        //   'experienceId': experienceId,
+        //   'foodieId': _appService.state.userInfo?.t.id,
+        //   'stars': stars
+        // },
+        header: {
+          'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+          'Content-Type': 'application/json'
+        },
+      );
 
-      Toaster.infoToast(context: context, message: ratingResponse.message.toString());
+      if (response != null) {
+        developer.log(' Response of Rating body is ' + '${response.body}');
 
-      _navigate.navigateTo(
-          route: BottomBar(bottomBarType: bottom_bar.BottomBarType.history));
+        RatingResponse ratingResponse = ratingResponseFromJson(response.body);
 
-    } else {
-      Toaster.infoToast(
-          context: context,
-          message: 'Something is wrong please content vendor');
-      developer.log(' Response of Signup is null ' + '$response');
+        Toaster.infoToast(context: context, message: ratingResponse.message.toString());
+
+        _navigate.navigateTo(
+            route: BottomBar(bottomBarType: bottom_bar.BottomBarType.history));
+
+      } else {
+        Toaster.infoToast(
+            context: context,
+            message: 'Something is wrong please content vendor');
+        developer.log(' Response of Signup is null ' + '$response');
+      }
+    } catch (e) {
+      print(e);
     }
   }
 

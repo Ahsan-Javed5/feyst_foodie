@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:chef/models/home/home_response.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
@@ -71,8 +72,7 @@ class HomeScreenViewModel extends BaseViewModel<HomeScreenState> {
         t: t,
       ).toJson();
       final _header = <String, String>{
-        'Authorization':
-            'Bearer ${_appService.state.userInfo?.t.authToken}',
+        'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
         'Content-Type': 'application/json'
       };
       final response = await _network
@@ -84,21 +84,13 @@ class HomeScreenViewModel extends BaseViewModel<HomeScreenState> {
           )
           .whenComplete(() {});
 
-      // final response = await _network.get(
-      //   //below one is working
-      //   path: 'https://run.mocky.io/v3/80289cbe-aa47-491e-9eb2-56126289c8a4',
-      // );
       if (response != null) {
-        //developer.log(' Response experience is ' + '${response.body}');
-        HomeResponse homeResponse =
-            HomeResponse.fromJson(json.decode(response.body));
-        print(homeResponse);
-        //ExperienceListResponse experienceListResponse = experienceListResponseFromJson(response.body);
-        // developer.log(' experienceListResponse up Response is ' +
-        //     '${experienceListResponse.code}');
-        // getExperienceMenu(
-        //   experienceListResponse: experienceListResponse,
-        // );
+        HomeResponse homeResponse = homeResponseFromJson(response.body);
+
+        if (kDebugMode) {
+          print(homeResponse);
+        }
+
         emit(Loaded(homeResponse));
       } else {
         Toaster.infoToast(
@@ -106,46 +98,10 @@ class HomeScreenViewModel extends BaseViewModel<HomeScreenState> {
             message: 'Something is wrong please content vendor');
         developer.log(' Response of Signup is null ' + '$response');
       }
-
-      //  loading(isBusy: false);
-      //   _navigation.replace(route: CustomerRoute());
     } catch (error) {
-      // emit(
-      //   // state.copyWith(
-      //   //   isBusy: false,
-      //   //   errorMessage: error.toString().contains(Api.unauthorizedRequest)
-      //   //       ? Strings.invalidUsernamePassword
-      //   //       : error.toString(),
-      //   // ),
-      // );
+      print(error);
     }
-    // }
   }
-
-  // Future<void> getExperienceMenu({
-  //   required ExperienceListResponse experienceListResponse,
-  // }) async {
-  //   final url =
-  //       InfininURLHelpers.getRestApiURL(Api.baseURL + Api.experienceMenu);
-  //   // emit(const Loading());
-  //
-  //   //  emit(const Loading());
-  //
-  //   final foodMenuRequest = menurequest.FoodMenuRequest(
-  //     t: 8,
-  //   ).toJson();
-  //
-  //   final response = await _network.post(
-  //     path: url,
-  //     data: foodMenuRequest,
-  //   );
-  //
-  //   final foodMenuData = foodMenuModelFromJson(response.body);
-  //   emit(Loaded(experienceListResponse));
-  //
-  //   // List<ProfessionData> data = currentProfessionData.t;
-  //   // emit(Loaded(currentProfessionData));
-  // }
 
   void navigateToProjectScreen() async {
     //_navigation.replace(route: ProjectsRoute());

@@ -48,6 +48,7 @@ class AppRouter extends _i11.RootStackRouter {
         routeData: routeData,
         child: _i2.SignUpScreen(
           isVerified: args.isVerified,
+          isProfileDetails: args.isProfileDetails,
           key: args.key,
         ),
       );
@@ -117,7 +118,8 @@ class AppRouter extends _i11.RootStackRouter {
       );
     },
     BottomBar.name: (routeData) {
-      final args = routeData.argsAs<BottomBarArgs>();
+      final args =
+          routeData.argsAs<BottomBarArgs>(orElse: () => const BottomBarArgs());
       return _i11.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i10.BottomBar(
@@ -197,12 +199,14 @@ class GetStartedRoute extends _i11.PageRouteInfo<void> {
 class SignUpRoute extends _i11.PageRouteInfo<SignUpRouteArgs> {
   SignUpRoute({
     dynamic isVerified,
+    bool? isProfileDetails,
     _i12.Key? key,
   }) : super(
           SignUpRoute.name,
           path: '/signUp',
           args: SignUpRouteArgs(
             isVerified: isVerified,
+            isProfileDetails: isProfileDetails,
             key: key,
           ),
         );
@@ -213,16 +217,19 @@ class SignUpRoute extends _i11.PageRouteInfo<SignUpRouteArgs> {
 class SignUpRouteArgs {
   const SignUpRouteArgs({
     this.isVerified,
+    this.isProfileDetails,
     this.key,
   });
 
   final dynamic isVerified;
 
+  final bool? isProfileDetails;
+
   final _i12.Key? key;
 
   @override
   String toString() {
-    return 'SignUpRouteArgs{isVerified: $isVerified, key: $key}';
+    return 'SignUpRouteArgs{isVerified: $isVerified, isProfileDetails: $isProfileDetails, key: $key}';
   }
 }
 
@@ -442,7 +449,7 @@ class FoodProductBookingConfirmedDetailsArgs {
 class BottomBar extends _i11.PageRouteInfo<BottomBarArgs> {
   BottomBar({
     _i12.Key? key,
-    required _i10.BottomBarType bottomBarType,
+    _i10.BottomBarType bottomBarType = _i10.BottomBarType.home,
   }) : super(
           BottomBar.name,
           path: '/bottomBar',
@@ -458,7 +465,7 @@ class BottomBar extends _i11.PageRouteInfo<BottomBarArgs> {
 class BottomBarArgs {
   const BottomBarArgs({
     this.key,
-    required this.bottomBarType,
+    this.bottomBarType = _i10.BottomBarType.home,
   });
 
   final _i12.Key? key;

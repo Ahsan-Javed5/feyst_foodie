@@ -90,7 +90,7 @@ class FoodItemAdvancePaymentViewModel
       header: {
         'Authorization':
         'Bearer ${_appService.state.userInfo?.t.authToken}',
-        //'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
       },
     );
     // CustomDialog.getDialog(ctx: context, title: 'Booking Confirmed', description: 'Advance have been received by Zee Lounge', iconUrl: 'assets/images/tick_icon.png');
@@ -131,12 +131,12 @@ class FoodItemAdvancePaymentViewModel
     Navigator.pop(context);
     CustomDialog.getDialog(
       ctx: context,
-      title: 'Booking Confirmed',
-      description: 'Advance have been received by $brandName',
+      title: 'Cash Received',
+      description: 'Full amount has been received by $brandName',
       iconUrl: 'assets/images/tick_icon.png',
       onTap: () {
         _navigate.navigateTo(
-            route: BottomBar(bottomBarType: bottom_bar.BottomBarType.bookings));
+            route: BottomBar(bottomBarType: bottom_bar.BottomBarType.history));
       },
     );
 

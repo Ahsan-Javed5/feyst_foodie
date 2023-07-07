@@ -16,4 +16,7 @@ class DeviceHelper {
       screenType: _screenType,
     );
   }
+
+  static double height = MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.height;
+  static double width = MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.width;
 }

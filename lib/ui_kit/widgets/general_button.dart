@@ -176,6 +176,7 @@ class GeneralButton extends StatelessWidget {
         isDisabled: isDisabled,
         onPressed: onPressed,
         textStyle: _textStyle,
+        context: context,
       ),
     );
   }
@@ -185,6 +186,7 @@ class GeneralButton extends StatelessWidget {
     required bool isDisabled,
     required Function()? onPressed,
     required TextStyle? textStyle,
+    required BuildContext context,
   }) {
     switch (_buttonType) {
       case ButtonType.button:
@@ -193,6 +195,7 @@ class GeneralButton extends StatelessWidget {
           isDisabled: isDisabled,
           onPressed: onPressed,
           textStyle: textStyle,
+          context: context,
         );
       case ButtonType.fab:
         return _fabButtonBuilder(
@@ -210,6 +213,7 @@ class GeneralButton extends StatelessWidget {
     required bool isDisabled,
     required Function()? onPressed,
     required TextStyle? textStyle,
+    required BuildContext context,
   }) {
     final ButtonStyle buttonStyle;
     switch (_styleType) {
@@ -239,6 +243,7 @@ class GeneralButton extends StatelessWidget {
         appTheme: appTheme,
         isDisabled: isDisabled,
         textStyle: textStyle,
+        context: context,
       ),
       style: _style ?? buttonStyle,
     );
@@ -304,10 +309,12 @@ class GeneralButton extends StatelessWidget {
     required IAppThemeData appTheme,
     required bool isDisabled,
     required TextStyle? textStyle,
+    required BuildContext context,
   }) {
     final buttonText = Text(
       _title ?? '',
       style: textStyle,
+      textScaleFactor: ScaleSize.textScaleFactor(context),
     );
     const iconMargin = EdgeInsets.only(right: 12);
     return _isBusy

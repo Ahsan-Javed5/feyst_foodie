@@ -46,7 +46,7 @@ class _FoodProductBookingConfirmedDetailsState
     extends State<FoodProductBookingConfirmedDetails> {
   late final _ratingController;
   late double _rating;
-  double _initialRating = 2.0;
+  double _initialRating = 3;
   IconData? _selectedIcon;
   List<CustomModel> wowFactorsList = [];
   List<CustomModel> menuListItems = [];
@@ -470,11 +470,10 @@ class _FoodProductBookingConfirmedDetailsState
                                   iconUrl: 'assets/images/tick_icon.png',
                                   onTap: () async {
                                     var item = widget._advancePendingDetails.t;
-                                    String? selectedStars = _rating.toString();
                                     await viewModel.saveRating(
                                         bookingId: item.id,
                                         experienceId: item.experience.id,
-                                        stars: selectedStars,
+                                        stars: int.parse(_rating.toStringAsFixed(0)).toString(),
                                         context: context);
                                   },
                                 );
@@ -501,6 +500,7 @@ class _FoodProductBookingConfirmedDetailsState
       Color? descColor,
       required String iconUrl,
       required void Function()? onTap}) {
+    final appTheme = AppTheme.of(context).theme;
     return showDialog(
         context: ctx,
         barrierColor: const Color(0xFF212129).withOpacity(0.1),
@@ -522,13 +522,22 @@ class _FoodProductBookingConfirmedDetailsState
                   const SizedBox(
                     height: 25,
                   ),
-                  Text(
+                  GeneralText(
                     title,
-                    style: TextStyle(
-                        color: titleColor ?? const Color(0xFF8ea659),
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500),
+                    style: appTheme.typographies.interFontFamily.headline6
+                        .copyWith(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w300,
+                      color: titleColor ?? const Color(0xFF8ea659),
+                    ),
                   ),
+                  // Text(
+                  //   title,
+                  //   style: TextStyle(
+                  //       color: titleColor ?? const Color(0xFF8ea659),
+                  //       fontSize: 20,
+                  //       fontWeight: FontWeight.w500),
+                  // ),
                   const SizedBox(
                     height: 20,
                   ),
@@ -560,7 +569,7 @@ class _FoodProductBookingConfirmedDetailsState
                         _rating = rating;
                       });
                     },
-                    updateOnDrag: true,
+                    //updateOnDrag: true,
                   ),
                   const SizedBox(
                     height: 20,
