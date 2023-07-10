@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../constants/resources.dart';
 import '../../constants/strings.dart';
+import '../../helpers/device_helper.dart';
 import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/widgets/general_text.dart';
 import '../home/home_screen_v.dart';
@@ -40,8 +41,8 @@ class _BottomBarState extends State<BottomBar> with WidgetsBindingObserver {
       // color: Color(0xff212129),
       color: Colors.black,
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 15),
-      height: 64,
+      padding: EdgeInsets.symmetric(horizontal: DeviceHelper.width * 0.040,),
+      height: DeviceHelper.height * 0.08,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -81,10 +82,10 @@ class _BottomBarState extends State<BottomBar> with WidgetsBindingObserver {
         children: [
           SvgPicture.asset(
             imagePath,
-            height: 18,
+            height: DeviceHelper.height * 0.025,
           ),
           SizedBox(
-            height: 3,
+            height: DeviceHelper.height * 0.005,
           ),
           GeneralText(
             title,
@@ -95,13 +96,13 @@ class _BottomBarState extends State<BottomBar> with WidgetsBindingObserver {
             ),
           ),
           SizedBox(
-            height: 10,
+            height: DeviceHelper.height * 0.010,
           ),
           AnimatedContainer(
               duration: const Duration(milliseconds: 400),
               curve: Curves.easeInToLinear,
-              height: 3,
-              width: 18,
+              height: DeviceHelper.height * 0.005,
+              width: DeviceHelper.width * 0.050,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50), // radius of 10
                   color: widget.bottomBarType == type

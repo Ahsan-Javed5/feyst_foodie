@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import '../../constants/resources.dart';
 import '../../constants/strings.dart';
 import '../../helpers/color_helper.dart';
+import '../../helpers/device_helper.dart';
 import '../../services/navigation/navigation_service.dart';
 import '../../services/navigation/router.gr.dart' as nav;
 import '../../setup.dart';
@@ -71,11 +72,15 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
               crossAxisAlignment: CrossAxisAlignment.start,
               // mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const SizedBox(
-                  height: 40,
+                SizedBox(
+                  height: DeviceHelper.height * 0.065,
                 ),
                 Container(
-                  padding: const EdgeInsets.only(left: 12, top: 20, bottom: 20),
+                  padding: EdgeInsets.only(
+                    left: DeviceHelper.height * 0.015,
+                    top: DeviceHelper.height * 0.0025,
+                    bottom: DeviceHelper.height * 0.025,
+                  ),
                   child: GeneralNewAppBar(
                     rightIcon: Resources.homeIconSvg,
                     title: widget.isBookingScreen
@@ -113,7 +118,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
 
   Widget bookingDetails(IAppThemeData appTheme) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
+      margin: EdgeInsets.symmetric(horizontal: DeviceHelper.height * 0.025),
       child: ListView.builder(
           padding: EdgeInsets.zero,
           shrinkWrap: true,
@@ -142,14 +147,14 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                           color: HexColor.fromHex('#fee4a4'),
                           fontWeight: FontWeight.w400),
                 ),
-                const SizedBox(
-                  height: 8,
+                SizedBox(
+                  height: DeviceHelper.height * 0.015,
                 ),
                 Container(
-                  padding: const EdgeInsets.only(left: 22, bottom: 40),
+                  padding: EdgeInsets.only(left: DeviceHelper.width * 0.04, bottom: DeviceHelper.height * 0.05),
                   margin: const EdgeInsets.only(bottom: 20),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(DeviceHelper.width * 0.05),
                       color: HexColor.fromHex("#4b4b52")),
                   child: InkWell(
                     onTap: () {
@@ -170,10 +175,15 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                         //   return const FoodProductAdvancePendingDetails();
                         // }));
                       } else if (item.bookingStatus!.toUpperCase() ==
-                          Strings.confirmed || item.bookingStatus!.toUpperCase() ==
-                          Strings.requestedOrder || item.bookingStatus!.toUpperCase() ==
-                      Strings.inProgress || item.bookingStatus!.toUpperCase() ==
-                      Strings.billGenerated || item.bookingStatus!.toUpperCase() == Strings.completeStatus) {
+                              Strings.confirmed ||
+                          item.bookingStatus!.toUpperCase() ==
+                              Strings.requestedOrder ||
+                          item.bookingStatus!.toUpperCase() ==
+                              Strings.inProgress ||
+                          item.bookingStatus!.toUpperCase() ==
+                              Strings.billGenerated ||
+                          item.bookingStatus!.toUpperCase() ==
+                              Strings.completeStatus) {
                         _navigation.navigateTo(
                             route: nav.BookingInProcessRouteView(
                                 bookingItem: item));
@@ -188,8 +198,8 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                       //   //   return const FoodProductBookingConfirmedDetails();
                       //   // }));
                       // }
-                      else{
-                       //_showGeneralPopup(context);
+                      else {
+                        //_showGeneralPopup(context);
                       }
                     },
                     child: Column(
@@ -210,9 +220,16 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                       errorBuilder: (context, error, stackTrace) => noImage,
                     )
                         : noImage;*/
-                                  Image.asset(noImage),
+                                  Column(
+                                    children: [
+                                      SizedBox(
+                                        height: DeviceHelper.height * 0.01,
+                                      ),
+                                      Image.asset(noImage),
+                                    ],
+                                  ),
                                   SizedBox(
-                                    width: 7.2,
+                                    width: DeviceHelper.width * 0.02,
                                   ),
                                   Column(
                                     crossAxisAlignment:
@@ -232,13 +249,13 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                         // mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           SizedBox(
-                                            width: 13.9,
+                                            width: DeviceHelper.width * 0.040,
                                             child: Image.asset(
                                                 Resources.bookingStarPNG,
                                                 fit: BoxFit.fill),
                                           ),
-                                          const SizedBox(
-                                            width: 5,
+                                          SizedBox(
+                                            width: DeviceHelper.width * 0.015,
                                           ),
                                           GeneralText(
                                             Strings.foodItemBookingReviews,
@@ -256,7 +273,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                 ],
                               ),
                               Container(
-                                padding: const EdgeInsets.all(25),
+                                padding: EdgeInsets.all(DeviceHelper.height * 0.032),
                                 decoration: BoxDecoration(
                                   color: HexColor.fromHex("#bb3127"),
                                   borderRadius: const BorderRadius.only(
@@ -276,14 +293,13 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                               ),
                             ],
                           ),
-                          const SizedBox(
-                            height: 17,
+                          SizedBox(
+                            height: DeviceHelper.height * 0.025,
                           ),
                           Container(
                             padding: const EdgeInsets.only(right: 22),
-                            child: Column(
-                                children: [
-                                  ///brands name and persons row
+                            child: Column(children: [
+                              ///brands name and persons row
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -311,6 +327,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                       : Container(),
                                 ],
                               ),
+
                               ///date and preference row
                               Row(
                                 mainAxisAlignment:
@@ -336,16 +353,17 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(
-                                height: 25,
+                              SizedBox(
+                                height: DeviceHelper.height * 0.032,
                               ),
                               progressBar(
                                   appTheme,
                                   getBookingIconData(item.bookingStatus),
                                   item.bookingStatus!),
-                              const SizedBox(
-                                height: 23,
+                              SizedBox(
+                                height: DeviceHelper.height * 0.0375,
                               ),
+
                               ///booking status
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,

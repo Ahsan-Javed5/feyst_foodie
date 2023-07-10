@@ -24,6 +24,9 @@ class GeneralNewAppBar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
+        SizedBox(
+          width: DeviceHelper.width * 0.015,
+        ),
         // Image.asset(Resources.appBackIcon,height: 35,),
         InkWell(
             onTap: () {
@@ -37,7 +40,7 @@ class GeneralNewAppBar extends StatelessWidget {
             },
             child: SvgPicture.asset(
               Resources.appBackIconSVG,
-              height: 33,
+              height: DeviceHelper.height * 0.0425,
             ),
         ),
         if (title != null) ...[
@@ -55,11 +58,11 @@ class GeneralNewAppBar extends StatelessWidget {
             onTap: ()=> _navigationService.navigateTo(route: BottomBar(bottomBarType: bottom_bar.BottomBarType.home),),
             child: SvgPicture.asset(
               rightIcon!,
-              height: 25,
+              height: DeviceHelper.height * 0.0345,
             ),
           ),
           SizedBox(
-            width: 26,
+            width: DeviceHelper.width * 0.035,
           ),
         ]
       ],

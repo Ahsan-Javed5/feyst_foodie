@@ -150,7 +150,7 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
             height: DeviceHelper.height * 0.008,
           ),
 
-          ///popular dishes label
+          ///popular Experiences
           Container(
             padding: const EdgeInsets.only(left: 31, bottom: 0),
             child: GeneralText(
@@ -163,20 +163,20 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
               ),
             ),
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: DeviceHelper.height * 0.02),
 
-          ///popular dishes grid
+          ///popular experiences grid
           Container(
             margin: const EdgeInsets.only(right: 20, left: 20, top: 4),
             child: GridView.builder(
               padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 childAspectRatio: 0.61,
-                crossAxisSpacing: 20.0,
-                mainAxisSpacing: 20.0,
+                crossAxisSpacing: DeviceHelper.height * 0.025,
+                mainAxisSpacing: DeviceHelper.height * 0.025,
               ),
               itemCount: homeResponseData.t!.popularExperiences!.length,
               itemBuilder: (context, index) {
@@ -189,10 +189,6 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
               },
             ),
           ),
-          // Center(child: _letsStartedButtonTitle(appTheme: appTheme)),
-          // const SizedBox(
-          //   height: 20,
-          // ),
         ],
       ),
     );
@@ -232,28 +228,23 @@ class _PopularExperience extends StatelessWidget {
       },
       child: Container(
         // height: 170,
-        width: 170,
-        padding: const EdgeInsets.only(left: 13),
+        width: DeviceHelper.width * 0.46,
+        padding: EdgeInsets.only(left: DeviceHelper.height * 0.012),
         decoration: BoxDecoration(
           color: HexColor.fromHex("#4b4b52"),
-          borderRadius: const BorderRadius.only(
-            bottomRight: Radius.circular(40),
-            bottomLeft: Radius.circular(40),
-            topLeft: Radius.circular(40),
-            topRight: Radius.circular(40),
-          ),
+          borderRadius: BorderRadius.all(Radius.circular(DeviceHelper.height * 0.05,),),
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(40),
+          borderRadius: BorderRadius.circular(DeviceHelper.height * 0.05),
           child: Stack(
             children: [
               Positioned(
-                right: -50,
-                top: -20,
+                right: -55,
+                top: -25,
                 child: Container(
-                  height: 180,
-                  width: 180,
-                  padding: const EdgeInsetsDirectional.only(bottom: 20),
+                  height: DeviceHelper.height * 0.25,
+                  width: DeviceHelper.height * 0.25,
+                  padding: EdgeInsetsDirectional.only(bottom: DeviceHelper.height * 0.025),
                   decoration: const BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage(
@@ -263,8 +254,8 @@ class _PopularExperience extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   child: Container(
-                    width: 80,
-                    height: 100,
+                    width: DeviceHelper.width * 0.22,
+                    height: DeviceHelper.height * 0.18,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(Resources.seafoodPNG),
@@ -272,12 +263,12 @@ class _PopularExperience extends StatelessWidget {
                       ),
                       shape: BoxShape.circle,
                     ),
-                    child: SizedBox(),
+                    child: const SizedBox(),
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 8.0),
+                padding: EdgeInsets.only(left: DeviceHelper.height * 0.015, top: DeviceHelper.height * 0.07,),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -308,7 +299,7 @@ class _PopularExperience extends StatelessWidget {
                           color: Color(0xff909094),
                           size: 16,
                         ),
-                        const SizedBox(width: 2),
+                        SizedBox(width: DeviceHelper.width * 0.015,),
                         GeneralText(
                           popularExperience?.cityName ?? 'Lahore',
                           style: appTheme.typographies.interFontFamily.headline2
@@ -320,8 +311,8 @@ class _PopularExperience extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: DeviceHelper.height * 0.015,
                     ),
                   ],
                 ),
