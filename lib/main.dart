@@ -6,6 +6,7 @@ import 'package:chef/setup.dart';
 
 void main() async {
   await configureDependencies();
-  await Firebase.initializeApp();
   runApp(locateService<App>());
 }
+
+

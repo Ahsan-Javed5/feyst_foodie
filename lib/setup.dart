@@ -1,6 +1,8 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:chef/services/renderer/field_renderer.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
@@ -13,12 +15,30 @@ import 'package:chef/theme/theme.dart';
 import 'package:chef/setup.config.dart';
 
 final getIt = GetIt.instance;
-
+// Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   print("${message.data['message']}");
+// }
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  log('Handling a background message ${message. messageId}');
+}
 Future<dynamic> configureDependencies() async {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = DevHttpOverrides(); // to ignore ssl certification
+  await Firebase.initializeApp();
+  await FirebaseMessaging.instance.getInitialMessage();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+ // requestPermission();
   return $initGetIt(getIt);
 }
+
+// Future<Map<Permission, PermissionStatus>> requestPermission() async {
+//   Map<Permission, PermissionStatus> statuses =
+//   await [Permission.notification].request();
+//   return statuses;
+// }
 
 T locateService<T extends Object>() => getIt.get<T>();
 

@@ -17,16 +17,20 @@ class LoginRequest {
 }
 
 class DataRequest {
-  DataRequest({
-    this.mobileNo,
-  });
+  DataRequest({this.mobileNo, this.fcmToken, this.deviceType});
   String? mobileNo;
+  String? fcmToken;
+  String? deviceType;
 
   factory DataRequest.fromJson(Map<String, dynamic> json) => DataRequest(
         mobileNo: json["mobileNumber"],
+        fcmToken: json["fcmToken"],
+        deviceType: json["deviceType"],
       );
 
   Map<String, dynamic> toJson() => {
         "mobileNumber": mobileNo,
+        "fcmToken": fcmToken,
+        "deviceType": deviceType,
       };
 }

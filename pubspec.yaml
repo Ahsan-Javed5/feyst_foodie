@@ -73,6 +73,8 @@ dependencies:
   url_launcher: ^6.1.11
   mime: ^1.0.4
   dio: ^5.2.1+1
+  firebase_messaging: ^14.2.2
+  firebase_analytics: ^10.1.1
 
 dev_dependencies:
   analyzer: 4.3.1

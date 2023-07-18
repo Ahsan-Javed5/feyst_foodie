@@ -248,21 +248,23 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               Expanded(
                 child: SingleChildScrollView(
                   child: Container(
-                    padding: const EdgeInsetsDirectional.only(start: 24),
+                    padding: EdgeInsetsDirectional.only(
+                      start: DeviceHelper.width * 0.10,
+                    ),
                     color: HexColor.fromHex('#212129'),
                     child: Column(
                       children: [
                         if (selectedTab != TabBars.Schedule)
-                          const SizedBox(
-                            height: 60,
+                          SizedBox(
+                            height: DeviceHelper.height * 0.10,
                           ),
                         if (selectedTab == TabBars.Schedule)
-                          const SizedBox(
-                            height: 40,
+                          SizedBox(
+                            height: DeviceHelper.height * 0.05,
                           ),
                         if (selectedTab == TabBars.Menu)
-                          const SizedBox(
-                            height: 10,
+                          SizedBox(
+                            height: DeviceHelper.height * 0.01,
                           ),
                         if (selectedTab == TabBars.Details)
                           detailsTabViewForm(context, appTheme),
@@ -277,38 +279,38 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               ),
             ],
           ),
-          const Positioned.fill(
-            top: 70,
-            left: 20,
+          Positioned.fill(
+            top: DeviceHelper.height * 0.10,
+            left: DeviceHelper.width * 0.05,
             child:
-                Align(alignment: Alignment.topLeft, child: GeneralNewAppBar()),
+                const Align(alignment: Alignment.topLeft, child: GeneralNewAppBar()),
           ),
           Positioned(
-              top: 140,
+              top: DeviceHelper.height * 0.19,
               width: MediaQuery.of(context).size.width,
               child: Padding(
-                padding: const EdgeInsetsDirectional.only(start: 25),
+                padding: EdgeInsetsDirectional.only(start: DeviceHelper.width * 0.07),
                 child: Column(children: [
                   Container(
                       decoration: BoxDecoration(
                           color: HexColor.fromHex("#4b4b52"),
-                          borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              bottomLeft: Radius.circular(30))),
-                      height: 118,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(DeviceHelper.height * 0.03,),
+                              bottomLeft: Radius.circular(DeviceHelper.height * 0.03,),),),
+                      height: DeviceHelper.height * 0.14,
                       padding: const EdgeInsetsDirectional.only(bottom: 0),
                       child: Padding(
                         padding:
-                            const EdgeInsetsDirectional.only(end: 14, top: 30),
+                            EdgeInsetsDirectional.only(top: DeviceHelper.height * 0.025),
                         child: Column(children: [
                           getFoodMainHeading(
                               appTheme: appTheme, title: widget.data!.title),
-                          const SizedBox(
-                            height: 5,
+                          SizedBox(
+                            height: DeviceHelper.height * 0.01,
                           ),
                           Padding(
-                            padding: const EdgeInsetsDirectional.only(
-                                start: 36, end: 36),
+                            padding: EdgeInsetsDirectional.only(
+                                start: DeviceHelper.width * 0.10, end: DeviceHelper.width * 0.10),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -329,8 +331,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                                     '#f1c452')),
                                       ),
                                       Container(
-                                        height: 9,
-                                        width: 9,
+                                        height: DeviceHelper.height * 0.012,
+                                        width: DeviceHelper.height * 0.012,
                                         decoration: BoxDecoration(
                                             color: selectedTab ==
                                                     TabBars.Details
@@ -364,8 +366,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                                     '#f1c452')),
                                       ),
                                       Container(
-                                        height: 9,
-                                        width: 9,
+                                        height: DeviceHelper.height * 0.012,
+                                        width: DeviceHelper.height * 0.012,
                                         decoration: BoxDecoration(
                                             color: selectedTab == TabBars.Menu
                                                 ? HexColor.fromHex('#f1c452')
@@ -395,8 +397,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                                     '#f1c452')),
                                       ),
                                       Container(
-                                        height: 9,
-                                        width: 9,
+                                        height: DeviceHelper.height * 0.012,
+                                        width: DeviceHelper.height * 0.012,
                                         decoration: BoxDecoration(
                                             color: selectedTab ==
                                                     TabBars.Schedule
@@ -448,17 +450,18 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           // if (selectedTab != TabBars.Details)
           ///chef image
           Positioned.fill(
-            top: 105,
+            top: DeviceHelper.height * 0.14,
+            right: DeviceHelper.width * 0.02,
             child: Align(
               alignment: Alignment.topRight,
               child: GestureDetector(
                 child: CircleAvatar(
                   backgroundColor: Colors.white,
-                  radius: 32,
+                  radius: DeviceHelper.width * 0.09,
                   child: CircleAvatar(
-                    radius: 30,
-                    backgroundImage:
-                        NetworkImage(Api.baseURLForImages + widget.chefData.t!.profileImageUrl.toString()),
+                    radius: DeviceHelper.width * 0.085,
+                    backgroundImage: NetworkImage(Api.baseURLForImages +
+                        widget.chefData.t!.profileImageUrl.toString()),
                   ),
                 ),
                 onTap: () async {
@@ -467,7 +470,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                   //   1
                   // );
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => UserProfile(chefData: widget.chefData)));
+                      builder: (context) =>
+                          UserProfile(chefData: widget.chefData)));
                 },
               ),
             ),
@@ -498,7 +502,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   Widget experienceNextButton() {
     return GeneralButton.button(
-      width: 151,
+      width: DeviceHelper.width * 0.37,
       title: Strings.nextButtonTitle.toUpperCase(),
       //isEnable:(!scheduleForm && selectedTime == "") ? true : false,
       styleType: ButtonStyleType.fill,
@@ -521,7 +525,6 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   }
 
   void goToRequestToBookScreen() {
-
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -1176,7 +1179,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   ///Schedule tab view
   Widget scheduleTabView(BuildContext context, IAppThemeData appTheme) {
     return scheduleForm
-          ///for notes page code see this padding widget
+
+        ///for notes page code see this padding widget
         ? Padding(
             padding: const EdgeInsetsDirectional.only(
               start: 20,
@@ -1473,7 +1477,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               ],
             ),
           )
-          ///for select time slot see this stack widget
+
+        ///for select time slot see this stack widget
         : Stack(
             children: [
               Padding(
@@ -1528,7 +1533,10 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                 //   width: 27,
                                 // ),
 
-                                displayScheduleTime(item.hours, item.scheduledDate,),
+                                displayScheduleTime(
+                                  item.hours,
+                                  item.scheduledDate,
+                                ),
 
                                 // Expanded(
                                 //   child: Container(
@@ -2099,14 +2107,20 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           child: GoogleMap(
             mapType: MapType.normal,
             initialCameraPosition: CameraPosition(
-              target: LatLng(widget.chefData.t!.latitude!.toDouble(), widget.chefData.t!.longitude!.toDouble(),),
+              target: LatLng(
+                widget.chefData.t!.latitude!.toDouble(),
+                widget.chefData.t!.longitude!.toDouble(),
+              ),
               zoom: 14.4746,
             ),
             zoomControlsEnabled: true,
             markers: <Marker>{
               Marker(
                   markerId: MarkerId('SomeId'),
-                  position: LatLng(widget.chefData.t!.latitude!.toDouble(), widget.chefData.t!.longitude!.toDouble(),),
+                  position: LatLng(
+                    widget.chefData.t!.latitude!.toDouble(),
+                    widget.chefData.t!.longitude!.toDouble(),
+                  ),
                   infoWindow: InfoWindow(title: '')),
             },
             onMapCreated: (GoogleMapController controller) {
@@ -2148,9 +2162,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                       shape: BoxShape.circle,
                     ),
                     child: SvgPicture.network(
-                      items[i].name != null
-                          ? items[i].name.toString()
-                          : '',
+                      items[i].name != null ? items[i].name.toString() : '',
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -2221,7 +2233,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
         ));
   }
 
-  Widget timeSelectorBox(IAppThemeData appTheme, String displayTime, Hour _hour, DateTime scheduledDate,
+  Widget timeSelectorBox(IAppThemeData appTheme, String displayTime, Hour _hour,
+      DateTime scheduledDate,
       {bool showSelectedTime = false}) {
     //  developer.log('Time Display is ' +
     //      DateFormat.jm().format(
@@ -2244,16 +2257,14 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           developer.log(' Clicked on final date is ' + '$finalDate');
           selectedTime = finalDate;
           developer.log(' Schedule Id selected is ' + '${_hour.scheduleId}');
-         // final _appService = locateService<ApplicationService>();
+          // final _appService = locateService<ApplicationService>();
           OrderHelper orderHelper = OrderHelper();
           orderHelper.scheduleId = _hour.scheduleId.toString();
           orderHelper.selectedExperienceDetail = widget.data!;
           //selectedDate = finalDate;
           orderHelper.hourSelected = _hour;
-          orderHelper.daysGroup = DaysGroup(
-              scheduledDate: scheduledDate,
-              dayOfMonth: 0,
-              hours: []);
+          orderHelper.daysGroup =
+              DaysGroup(scheduledDate: scheduledDate, dayOfMonth: 0, hours: []);
           orderHelper.numberOfPerson =
               int.parse(widget.data!.persons.toString()); //.data!.persons;
           _appService.updateOrderHelper(orderHelper);

@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/models/signup/profession_request.dart' as prorequest;
 import 'package:chef/screens/bottom_bar/bottom_bar.dart' as bottom_bar;
 import 'package:chef/screens/sign_in/sign_in_screen_m.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart';
 
 // import '../../models/signup/profession_response.dart';
@@ -138,6 +141,8 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
 
         DataRequest t = DataRequest(
           mobileNo: mobileNumber,
+          fcmToken:   await FirebaseMessaging.instance.getToken(),
+          deviceType: Platform.isAndroid ? 'ANDROID' : 'IOS'
         );
 
         final loginCredentials = LoginRequest(
