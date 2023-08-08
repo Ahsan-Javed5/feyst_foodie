@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:chef/constants/api.dart';
 import 'package:chef/helpers/color_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../constants/resources.dart';
 import '../../constants/strings.dart';
@@ -32,16 +33,24 @@ class _UserProfileState extends State<UserProfile> {
     handlesList.addAll([
       SocialMediaHandles(
           socialMediaName: widget.chefData.t!.instagram.toString(),
-          socialMediaIcon: "assets/images/icons/instagram_1.png"),
+          socialMediaIcon: "assets/images/icons/instagram_1.png",
+          socialMediaLink: 'https://www.instagram.com/',
+      ),
       SocialMediaHandles(
           socialMediaName: widget.chefData.t!.facebook.toString(),
-          socialMediaIcon: "assets/images/icons/facebook.png"),
+          socialMediaIcon: "assets/images/icons/facebook.png",
+        socialMediaLink: 'https://www.facebook.com/',
+      ),
       SocialMediaHandles(
           socialMediaName: widget.chefData.t!.twitter.toString(),
-          socialMediaIcon: "assets/images/icons/twitter.png"),
+          socialMediaIcon: "assets/images/icons/twitter.png",
+        socialMediaLink: 'https://www.twitter.com/',
+      ),
       SocialMediaHandles(
           socialMediaName: widget.chefData.t!.tiktok.toString(),
-          socialMediaIcon: "assets/images/icons/tiktok.png")
+          socialMediaIcon: "assets/images/icons/tiktok.png",
+        socialMediaLink: 'https://www.tiktok.com/',
+      )
     ]);
     super.initState();
   }
@@ -120,32 +129,6 @@ class _UserProfileState extends State<UserProfile> {
                           ),
                           const SizedBox(
                             height: 38,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 18.9,
-                                child: Image.asset(
-                                    'assets/images/icons/star.png',
-                                    fit: BoxFit.fill),
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              GeneralText(
-                                Strings.userProfileReviews,
-                                style: appTheme
-                                    .typographies.interFontFamily.headline6
-                                    .copyWith(
-                                        decoration: TextDecoration.underline,
-                                        fontSize: 12,
-                                        color: HexColor.fromHex('#8ea659')),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 17,
                           ),
                         ],
                       ),
@@ -357,34 +340,39 @@ class _UserProfileState extends State<UserProfile> {
             ),
             itemCount: handlesList.length,
             itemBuilder: (BuildContext context, int index) {
-              return Row(
-                children: [
-                  Container(
-                    width: 38,
-                    padding: const EdgeInsetsDirectional.all(6),
-                    decoration: BoxDecoration(
-                        color: HexColor.fromHex("#4b4b52"),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Image.asset(
-                      handlesList[index].socialMediaIcon ?? "",
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Flexible(
-                    child: GeneralText(
-                      handlesList[index].socialMediaName ?? "",
-                      style: appTheme.typographies.interFontFamily.headline6
-                          .copyWith(
-                        fontSize: 14,
-                        color: HexColor.fromHex('#ffffff'),
-                        decoration: TextDecoration.underline,
+              return GestureDetector(
+                child: Row(
+                  children: [
+                    Container(
+                      width: 38,
+                      padding: const EdgeInsetsDirectional.all(6),
+                      decoration: BoxDecoration(
+                          color: HexColor.fromHex("#4b4b52"),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Image.asset(
+                        handlesList[index].socialMediaIcon ?? "",
                       ),
-                      maxLines: 2,
                     ),
-                  ),
-                ],
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Flexible(
+                      child: GeneralText(
+                        handlesList[index].socialMediaName ?? "",
+                        style: appTheme.typographies.interFontFamily.headline6
+                            .copyWith(
+                          fontSize: 14,
+                          color: HexColor.fromHex('#ffffff'),
+                          decoration: TextDecoration.underline,
+                        ),
+                        maxLines: 2,
+                      ),
+                    ),
+                  ],
+                ),
+                onTap: () async {
+                  await launchUrl(Uri.parse('${handlesList[index].socialMediaLink}${handlesList[index].socialMediaName}'),);
+                },
               );
             }),
       ],
@@ -395,6 +383,7 @@ class _UserProfileState extends State<UserProfile> {
 class SocialMediaHandles {
   String? socialMediaName;
   String? socialMediaIcon;
+  String? socialMediaLink;
 
-  SocialMediaHandles({this.socialMediaIcon, this.socialMediaName});
+  SocialMediaHandles({this.socialMediaIcon, this.socialMediaName, this.socialMediaLink});
 }

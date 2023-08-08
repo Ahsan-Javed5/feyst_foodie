@@ -75,42 +75,46 @@ class FoodProductExperienceDetailsViewModel
     OrderHelper orderHelper = (_appService.state.orderHelper)!;
     emit(const Loading());
 
-    final bookingRequest = booking.BookingRequest(
-      t: booking.T(
-        comments: orderHelper.noteAdded,
-        experienceId: orderHelper.selectedExperienceDetail.id!.toInt(),
-        foodieId: (_appService.state.userInfo!.t.id),
-        totalPrice: orderHelper.selectedExperienceDetail.price!.toInt(),
-        scheduleId: int.parse(orderHelper.scheduleId),
-        persons: orderHelper.numberOfPerson.toString(),
-        // preferenceId: experienceData.preferenceId,
-        preferenceId: 2,
-      ),
-    ).toJson();
+    try {
+      final bookingRequest = booking.BookingRequest(
+        t: booking.T(
+          comments: orderHelper.noteAdded,
+          experienceId: orderHelper.selectedExperienceDetail.id!.toInt(),
+          foodieId: (_appService.state.userInfo!.t.id),
+          totalPrice: orderHelper.selectedExperienceDetail.price!.toInt(),
+          scheduleId: int.parse(orderHelper.scheduleId),
+          persons: orderHelper.numberOfPerson.toString(),
+          // preferenceId: experienceData.preferenceId,
+          preferenceId: 1
+        ),
+      ).toJson();
 
-    final response = await _network.post(
-      path: url,
-      data: bookingRequest,
-      header: {
-        'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
-        'Content-Type': 'application/json'
+      final response = await _network.post(
+        path: url,
+        data: bookingRequest,
+        header: {
+          'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+          'Content-Type': 'application/json'
+        }
+      );
+
+      bookingResponse = bookingResponseFromJson(response.body);
+      Toaster.infoToast(context: context, message: bookingResponse.message);
+
+      if (bookingResponse.code == 200) {
+        emit(const Loaded());
+
+        _navigation.navigateTo(route: BottomBar(bottomBarType: bottom_bar.BottomBarType.home));
+        // Navigator.push(
+        //   context,
+        //   // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
+        //   MaterialPageRoute(builder: (context) => const BottomBar()),
+        // );
+      } else {
+        emit(const Loaded());
       }
-    );
-
-    bookingResponse = bookingResponseFromJson(response.body);
-    Toaster.infoToast(context: context, message: bookingResponse.message);
-
-    if (bookingResponse.code == 200) {
-      emit(const Loaded());
-
-      _navigation.navigateTo(route: BottomBar(bottomBarType: bottom_bar.BottomBarType.home));
-      // Navigator.push(
-      //   context,
-      //   // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
-      //   MaterialPageRoute(builder: (context) => const BottomBar()),
-      // );
-    } else {
-      emit(const Loaded());
+    } catch (e) {
+      print(e);
     }
   }
 }

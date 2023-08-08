@@ -140,7 +140,7 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
         final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.loginAPI);
 
         DataRequest t = DataRequest(
-          mobileNo: mobileNumber,
+          mobileNo: '+' + mobileNumber,
           fcmToken:   await FirebaseMessaging.instance.getToken(),
           deviceType: Platform.isAndroid ? 'ANDROID' : 'IOS'
         );
@@ -150,18 +150,17 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
         ).toJson();
 
         final _header = <String, String>{
-          Api.headerAcceptKey: Api.headerAcceptTypeValue
+          Api.headerAcceptKey: Api.headerAcceptTypeValue,
+          'Content-Type' : 'application/json'
         };
 
         final response = await _network.post(
           path: url,
-          //   data: {'mobileNo': '$mobileNumber'},
           data: loginCredentials,
           header: _header,
-          //   accessToken: false,
         );
         if (response != null) {
-          developer.log(' Response of login body is ' + '${response.body}');
+          developer.log(' Response of login body is ' '${response.body}');
 
           SignupResponse signupResponse = signupResponseFromJson(response.body);
           print(signupResponse);

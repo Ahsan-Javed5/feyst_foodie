@@ -1,14 +1,11 @@
 import 'dart:async';
 
 import 'package:chef/helpers/helpers.dart';
+import 'package:chef/models/food_details_screen/slider_images_response.dart';
 import 'package:chef/models/home/chef_data_response.dart';
 import 'package:chef/models/home/food_menu_request.dart' as menurequest;
 import 'package:chef/screens/home/schedule_model.dart';
 import '../../../models/home/home_response.dart' as home_data;
-import '/models/perferences/perference_response.dart';
-import '/models/perferences/perferences_request.dart';
-import '/setup.dart';
-import '../../food_product_experience_details/food_product_details_screen_v.dart';
 import '../food_details_menu_model.dart';
 import 'food_detail_screen_m.dart';
 
@@ -33,10 +30,11 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
   final INetworkService _network;
   final IStorageService _storage;
   final ApplicationService _appService;
+  //late final SliderImagesResponse sliderImages;
   late FoodMenuModel foodMenuData;
   late String expId;
 
-  Future<void> getExperienceMenu({required String experienceId}) async {
+  Future<void> getExperienceMenu({required String experienceId,required chefId}) async {
     final url =
         InfininURLHelpers.getRestApiURL(Api.baseURL + Api.experienceMenu);
     // emit(const Loading());
@@ -58,8 +56,8 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
     );
 
     foodMenuData = foodMenuModelFromJson(response.body);
-
-    getScheduleData(experienceId: experienceId, foodMenuModel: foodMenuData);
+    //getSliderImages(experienceId: experienceId);
+    getScheduleData(experienceId: experienceId, foodMenuModel: foodMenuData,chefId: chefId);
     //  emit(Loaded(foodMenuData));
 
     // List<ProfessionData> data = currentProfessionData.t;
@@ -69,9 +67,9 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
   Future<void> getScheduleData({
     required String experienceId,
     required FoodMenuModel foodMenuModel,
+    required int chefId
   }) async {
     final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.scheduleData);
-    // emit(const Loading());
 
     final scheduleRequest = menurequest.FoodMenuRequest(
       t: int.parse(experienceId),
@@ -82,14 +80,10 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
       'Content-Type': 'application/json'
     });
 
-    //debugPrint("schedule response\n" + response.body.toString());
-
     final scheduleData = scheduleModelFromJson(response.body);
 
-    getChefData(foodMenuModel, scheduleData , scheduleData.t.chefId);
+    getChefData(foodMenuModel, scheduleData , chefId);
 
-
-    // loadPreference(foodMenuModel: foodMenuModel, scheduleData: scheduleData);
   }
 
   Future<ChefDataResponse> getChefData(FoodMenuModel foodData, ScheduleModel scheduleData, chefId) async {
@@ -105,75 +99,41 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
       'Content-Type': 'application/json'
     });
 
-    //debugPrint("schedule response\n" + response.body.toString());
-
-    //final scheduleData = scheduleModelFromJson(response.body);
     final chefData = chefModelFromJson(response.body);
     emit(Loaded(foodData, scheduleData, chefData));
     return chefData;
 
-    //emit(Loaded(foodMenuModel, scheduleData));
   }
 
-  // void loadPreference({
-  //   required FoodMenuModel foodMenuModel,
-  //   required ScheduleModel scheduleData,
-  // }) async {
-  //   final url =
-  //       InfininURLHelpers.getRestApiURL(Api.baseURL + Api.preferenceAPI);
-  //
-  //   // T t = loginrequest.T(
-  //   //   mobileNo: mobileNumber,
-  //   // );
-  //
-  //   final requestPeference = PerferencesRequest(
-  //     t: DataRequest(),
-  //   ).toJson();
-  //
-  //   final _header = <String, String>{
-  //     Api.headerAcceptKey: Api.headerAcceptTypeValue
-  //   };
-  //
-  //   // final questionsDataRequest = questionirerequest.QuestionireRequest(
-  //   //   t: questionirerequest.T(category: "CHEF_PROFILE"),
-  //   // ).toJson();
-  //   final response = await _network.post(
-  //     path: url,
-  //     data: requestPeference,
-  //   );
-  //
-  //   final _preferenceResponse = perferenceResponseFromJson(response.body);
-  //
-  //   emit(Loaded(foodMenuModel, scheduleData,));
-  // }
+
+  Future<SliderImagesResponse?> getSliderImages({required experienceId}) async {
+    final url =
+    InfininURLHelpers.getRestApiURL(Api.baseURL + Api.sliderImages);
+
+    try {
+      final response = await _network.post(
+          path: url,
+          data: {
+            "t": {
+              "experienceId" : experienceId
+            }
+          },
+          header: {
+            'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+            'Content-Type': 'application/json'
+          }
+      );
+    final sliderImages = sliderImagesFromJson(response.body);
+    // print(sliderImages);
+      return sliderImages;
+    } catch (e) {
+      print(e);
+    }
+    return null;
+  }
 
   void loading({required bool isBusy}) => emit(const Loading());
 
-  // void verifyAction(BuildContext context, String _selectedExperienceId,
-  //     home_data.Experiences _experienceData) {
-  //   final _appService = locateService<ApplicationService>();
-  //
-  //   var orderHelper = _appService.state.orderHelper;
-  //   if (orderHelper != null &&
-  //       orderHelper.scheduleId != null &&
-  //       orderHelper.scheduleId != '0' &&
-  //       orderHelper.daysGroup != null &&
-  //       orderHelper.daysGroup.dayOfMonth != 0) {
-  //     Navigator.push(
-  //       context,
-  //       MaterialPageRoute(
-  //           builder: (context) => FoodProductExperienceDetailsScreenView(
-  //                 experienceData: _experienceData,
-  //                 selectedExperienceId: _selectedExperienceId,
-  //                 foodMenuDetail: foodMenuData,
-  //
-  //               )),
-  //     );
-  //   } else {
-  //     Toaster.infoToast(
-  //         context: context, message: 'Please select all the requisite data');
-  //   }
-  // }
 
   String getValidUrlForImages(String imagePath) {
     String baseUrl = Api.baseURL;

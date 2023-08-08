@@ -21,8 +21,9 @@ final getIt = GetIt.instance;
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  log('Handling a background message ${message. messageId}');
+  log('Handling a background message ${message.data['title']}');
 }
+
 Future<dynamic> configureDependencies() async {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = DevHttpOverrides(); // to ignore ssl certification

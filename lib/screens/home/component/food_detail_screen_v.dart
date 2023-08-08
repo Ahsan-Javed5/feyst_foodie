@@ -37,14 +37,13 @@ class FoodDetailScreenView extends BaseView<FoodDetailScreenViewModel> {
       bloc: viewModel
         ..getExperienceMenu(
           experienceId: _selectedExperienceId,
+          chefId: _experienceData.chefId,
         ),
       builder: (_, state) {
         return Scaffold(
             backgroundColor: HexColor.fromHex('#212129'),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
-           //floatingActionButton: getStartedButtonTitle(context: context),
-            // : Container(),
             body: state.when(
               loading: _loading,
               loaded: (foodMenuDetail, scheduleModel, chefData) =>

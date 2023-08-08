@@ -46,8 +46,8 @@ class T {
   String? facebook;
   int? id;
   String? instagram;
-  double? latitude;
-  double? longitude;
+  dynamic latitude;
+  dynamic longitude;
   String? mobileNo;
   String? name;
   String? placeId;

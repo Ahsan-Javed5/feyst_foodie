@@ -36,18 +36,15 @@ class _QuestionViewState extends State<QuestionView> {
         // const SizedBox(
         //   height: 27,
         // ),
-        Container(
-          // padding: EdgeInsets.only(left: 30),
-          child: GeneralText(
-            widget.questionObj.name,
-            maxLines: 2,
-            textAlign: TextAlign.left,
-            style: widget.appTheme.typographies.interFontFamily.headline6
-                .copyWith(
-                    color: const Color(0xfffbeccb),
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold),
-          ),
+        GeneralText(
+          widget.questionObj.name,
+          maxLines: 2,
+          textAlign: TextAlign.left,
+          style: widget.appTheme.typographies.interFontFamily.headline6
+              .copyWith(
+                  color: const Color(0xfffbeccb),
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold),
         ),
         const SizedBox(
           height: 5,
@@ -142,40 +139,44 @@ class _MultiChipViewState extends State<MultiChipView> {
                           true;
                     }
                   }
-                  ///interest answers list
-                  widget.answerIdsInterests
-                          .contains(widget.answerList[index].id)
-                      ? widget.answerIdsInterests
-                          .remove(widget.answerList[index].id)
-                      : widget.answerIdsInterests
-                          .add((widget.answerList[index].id)!.toInt());
-                 ///perfect ambience answers list
-                  widget.answerIdPerfectAmbience
-                      .contains(widget.answerList[index].id)
-                      ? widget.answerIdPerfectAmbience
-                      .remove(widget.answerList[index].id)
-                      : widget.answerIdPerfectAmbience
-                      .add((widget.answerList[index].id)!.toInt());
 
-                  ///cuisine food answers list
-                  widget.answerIdsCuisineTaste
-                      .contains(widget.answerList[index].id)
-                      ? widget.answerIdsCuisineTaste
-                      .remove(widget.answerList[index].id)
-                      : widget.answerIdsCuisineTaste
-                      .add((widget.answerList[index].id)!.toInt());
-
+                  if(widget.answerList[index].questionId == 1) {
                   ///unique food answers list
                   widget.answerIdsUniqueFoodie
                       .contains(widget.answerList[index].id)
-                      ? widget.answerIdsUniqueFoodie
+                  ? widget.answerIdsUniqueFoodie
                       .remove(widget.answerList[index].id)
                       : widget.answerIdsUniqueFoodie
                       .add((widget.answerList[index].id)!.toInt());
+                  }
+                  else if(widget.answerList[index].questionId == 2) {
+                  ///perfect ambience answers list
+                  widget.answerIdPerfectAmbience
+                      .contains(widget.answerList[index].id)
+                  ? widget.answerIdPerfectAmbience
+                      .remove(widget.answerList[index].id)
+                      : widget.answerIdPerfectAmbience
+                      .add((widget.answerList[index].id)!.toInt());
+                  }
+                  else if(widget.answerList[index].questionId == 12) {
+                  ///cuisine food answers list
+                  widget.answerIdsCuisineTaste
+                      .contains(widget.answerList[index].id)
+                  ? widget.answerIdsCuisineTaste
+                      .remove(widget.answerList[index].id)
+                      : widget.answerIdsCuisineTaste
+                      .add((widget.answerList[index].id)!.toInt());
+                  }
+                  ///interest answers list
+                  else if(widget.answerList[index].questionId == 13) {
+                    widget.answerIdsInterests
+                        .contains(widget.answerList[index].id)
+                        ? widget.answerIdsInterests
+                        .remove(widget.answerList[index].id)
+                        : widget.answerIdsInterests
+                        .add((widget.answerList[index].id)!.toInt());
+                  }
                   //  _selectedInterests.value.addAll(selectedData);
-                  developer.log("$selectedData"
-                      ' Here test '
-                      "${widget.answerIdsInterests}");
                 });
               },
               child: SizedBox(

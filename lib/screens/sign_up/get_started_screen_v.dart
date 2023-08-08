@@ -1,9 +1,5 @@
 import 'package:chef/helpers/helpers.dart';
-import 'package:chef/screens/booking/advance_payment/jazz_cash_webview.dart';
 import 'package:video_player/video_player.dart';
-
-import '../home/home_screen_v.dart';
-
 
 class GetStartedScreen extends StatefulWidget {
   const GetStartedScreen({Key? key}) : super(key: key);
@@ -57,17 +53,9 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
       body: Stack(
         children: [
           VideoPlayer(videoController),
-          Container(
+          SizedBox(
             width: double.infinity,
             height: double.infinity,
-            // decoration: const BoxDecoration(
-            //   image: DecorationImage(
-            //     image: AssetImage(
-            //       Resources.getStartedBgPng,
-            //     ),
-            //     fit: BoxFit.cover,
-            //   ),
-            // ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -87,7 +75,7 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                 Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: Text(
-                      ' Version ' + '${_packageInfo.version}',
+                      ' Version ' + _packageInfo.version,
                       style: appTheme.typographies.interFontFamily.headline6,
                     )),
               ],
@@ -118,7 +106,7 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
         height: 1.5,
         shadows: <Shadow>[
           Shadow(
-            offset: Offset(10.0, 5.0),
+            offset: const Offset(10.0, 5.0),
             blurRadius: 10.0,
             color: Colors.black.withOpacity(0.4),
           ),
@@ -138,11 +126,6 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
 
         fontWeight: FontWeight.w500,
         fontSize: 16,
-        //color: _IColors.white,
-        // fontSize: 15,
-        // fontWeight: FontWeight.w500,
-        // fontStyle:
-        // fontWeight:
         shadows: <Shadow>[
           Shadow(
             offset: const Offset(10.0, 5.0),

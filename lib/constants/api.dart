@@ -31,8 +31,14 @@ abstract class Api {
   static const client = 'client/';
   static const rest = 'rest/';
  // static const baseURL = 'http://18.202.117.137:8080/feyst-service/';
+  ///DEV BASEURL
   static const baseURL = 'https://dev.feyst.services/feyst-service/';
   static const baseURLForJazzCash = 'dev.feyst.services/feyst-service/';
+
+  ///STAGING BASEURL
+    //static const baseURL = 'https://stag.feyst.services:443/feyst-service/';
+  //static const baseURLForJazzCash = 'stag.feyst.services/feyst-service/';
+
   static const baseURLForImages = 'http://18.202.117.137/feyst-media/';
   static const preferenceAPI = 'preference/list';
   static const devBaseURL = 'https://abc2.com/';
@@ -58,7 +64,7 @@ abstract class Api {
   static const experienceList = 'experience/list';
   static const experienceMenuById = 'experience-booking/find-by-id';
   static const experienceMenu = 'experience-menu/find-by-experience-id';
-
+  static const sliderImages = 'experience-media/list';
   static const experienceBooking = 'experience-booking/save';
 
   static const scheduleData = 'experience-schedule/find-by-experience-id';

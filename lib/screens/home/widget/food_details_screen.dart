@@ -9,6 +9,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 
 import '../../../constants/temporary_data.dart';
+import '../../../models/food_details_screen/slider_images_response.dart';
 import '../../../models/home/chef_data_response.dart';
 import '../../../models/home/home_response.dart' as home_data;
 import '../../food_product_experience_details/food_product_details_screen_v.dart';
@@ -88,7 +89,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   bool isButtonEnable = true;
 
   @override
-  void initState() {
+  void initState()  {
     developer.log(' Price Id is }');
     headers = widget.foodMenuDetail.t
         .map((element) => element.mealName)
@@ -109,19 +110,12 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       value: 'Single',
       alignment: Alignment.centerLeft,
     );
-    // items.add(newItem);
-    // items.add(newItem1);
-    // items.add(newItem2);
 
-    //   items.add('Scientist');
     items.add('Couple');
     items.add('Single');
     items.add('Family');
 
-    //widget.preferences.t
     nOfPersons.text = widget.data?.persons;
-    // _appService.state.orderHelper = OrderHelper();
-    //  _appService.state.orderHelper = OrderHelper();
     if (_appService.state.orderHelper != null) {
       _appService.state.orderHelper!.selectedCategory = items.first;
       _appService.state.orderHelper!.noteAdded = '';
@@ -129,14 +123,11 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
       _appService.state.orderHelper!.daysGroup = DaysGroup(
           scheduledDate: DateTime(1900 - 12 - 12), dayOfMonth: 0, hours: []);
-      // _appService.u
     } else {
       OrderHelper orderHelper = OrderHelper();
-      // orderHelper.selectedCategory
       orderHelper.selectedCategory = items.first;
       orderHelper.noteAdded = '';
       orderHelper.scheduleId = 0.toString();
-
       orderHelper.daysGroup = DaysGroup(
           scheduledDate: DateTime(1900 - 12 - 12), dayOfMonth: 0, hours: []);
       _appService.updateOrderHelper(orderHelper);
@@ -215,36 +206,42 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //   return Container();
-    // }
-    // @override
-    // Widget buildScreen(
-    //     {required BuildContext context, required ScreenSizeData screenSizeData}) {
     final appTheme = AppTheme.of(context).theme;
+    //SliderImagesResponse imagesData = getImagesList();
     return Scaffold(
       backgroundColor: HexColor.fromHex('#212129'),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: experienceNextButton(),
       body: Stack(
-        // return Stack(
-        // clipBehavior: Clip.none,
         children: [
           Column(
             children: [
-              CarouselSlider(
-                options: CarouselOptions(
-                  //height: 400.0,
-                  autoPlay: true,
-                ),
-                items: foodDetailsBgImages.map((i) {
-                  return Builder(
-                    builder: (BuildContext context) {
-                      return Image.asset(i, fit: BoxFit.fill);
-                    },
-                  );
-                }).toList(),
+              FutureBuilder<SliderImagesResponse?>(
+                  future: foodDetailsViewModel.getSliderImages(experienceId: widget.scheduleModel.t.experienceId),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      var imagesList = snapshot.data?.t;
+                      List images = [];
+                      for(var item in imagesList!){
+                        images.add(item.mediaUrl);
+                      }
+                      return CarouselSlider(
+                        options: CarouselOptions(
+                          autoPlay: true,
+                        ),
+                        items: (images.isEmpty ? foodDetailsBgImages : images).map((i) {
+                          return Builder(
+                            builder: (BuildContext context) {
+                              return Image.network('${Api.baseURLForImages}$i', fit: BoxFit.fill);
+                            },
+                          );
+                        }).toList(),
+                      );
+                    }else {
+                      return const CircularProgressIndicator();
+                    }
+                  }
               ),
-              // Image.asset('assets/images/icons/food_detail_bg.png', fit: BoxFit.fill),
               Expanded(
                 child: SingleChildScrollView(
                   child: Container(
@@ -416,33 +413,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                       )),
                   if (selectedTab == TabBars.Menu ||
                       selectedTab == TabBars.Details) ...[
-                    //  displayPriceOption(appTheme),
-                    // ]
                     displayPriceOption(),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.end,
-                    //   children: [
-                    //     Container(
-                    //       padding: EdgeInsetsDirectional.only(
-                    //           start: 25, end: 25, bottom: 15, top: 15),
-                    //       decoration: BoxDecoration(
-                    //           color: HexColor.fromHex("#8ea659"),
-                    //           borderRadius: const BorderRadius.only(
-                    //               bottomLeft: Radius.circular(40))),
-                    //       child: GeneralText(
-                    //         Strings.appCurrency +
-                    //             "." +
-                    //             " " +
-                    //             widget.data.price.toString(),
-                    //         style: appTheme.typographies.interFontFamily.headline4
-                    //             .copyWith(
-                    //                 fontSize: 18,
-                    //                 fontWeight: FontWeight.bold,
-                    //                 color: HexColor.fromHex('#ffffff')),
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
                   ]
                   //),
                 ]),
@@ -2108,8 +2079,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             mapType: MapType.normal,
             initialCameraPosition: CameraPosition(
               target: LatLng(
-                widget.chefData.t!.latitude!.toDouble(),
-                widget.chefData.t!.longitude!.toDouble(),
+                widget.chefData.t!.latitude ?? 0.0,
+                widget.chefData.t!.longitude ?? 0.0,
               ),
               zoom: 14.4746,
             ),
@@ -2118,8 +2089,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               Marker(
                   markerId: MarkerId('SomeId'),
                   position: LatLng(
-                    widget.chefData.t!.latitude!.toDouble(),
-                    widget.chefData.t!.longitude!.toDouble(),
+                    widget.chefData.t!.latitude ?? 0.0,
+                    widget.chefData.t!.longitude ?? 0.0,
                   ),
                   infoWindow: InfoWindow(title: '')),
             },

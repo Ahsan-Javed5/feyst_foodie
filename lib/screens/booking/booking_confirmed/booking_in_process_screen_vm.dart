@@ -106,18 +106,6 @@ class BookingInProcessScreenViewModel
 
     emit(const Loading());
 
-    rating_request.T t = rating_request.T(
-      bookingId: bookingId,
-      comments: ratingController.text,
-      experienceId: experienceId,
-      foodieId: _appService.state.userInfo?.t.id,
-      stars: stars
-    );
-
-    final ratingRequest = rating_request.RatingRequest(
-      t: t,
-    ).toJson();
-
     try {
       final response = await _network.post(
         path: url,
@@ -131,14 +119,6 @@ class BookingInProcessScreenViewModel
           }
         },
 
-
-        // {
-        //   'bookingId': bookingId,
-        //   'comments': ratingController.text,
-        //   'experienceId': experienceId,
-        //   'foodieId': _appService.state.userInfo?.t.id,
-        //   'stars': stars
-        // },
         header: {
           'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
           'Content-Type': 'application/json'

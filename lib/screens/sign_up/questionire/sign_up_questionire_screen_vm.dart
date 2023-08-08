@@ -123,10 +123,10 @@ class  SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionna
 
   void addModelsFromQuestions({Function? completion, required BuildContext context}){
     if(answerIdsUniqueFoodie.isNotEmpty && answerIdPerfectAmbience.isNotEmpty && answerIdsCuisineTaste.isNotEmpty && answerIdInterest.isNotEmpty){
-      foodieQuestionAnswersList.add(T1(answerIds: answerIdsUniqueFoodie, foodieId: _appService.state.userInfo!.t.id,id: 7,inputAnswer: '',questionId: 7));
-      foodieQuestionAnswersList.add(T1(answerIds: answerIdPerfectAmbience,foodieId: _appService.state.userInfo!.t.id,id: 4,inputAnswer: '',questionId: 4));
-      foodieQuestionAnswersList.add(T1(answerIds: answerIdsCuisineTaste, foodieId: _appService.state.userInfo!.t.id,id: 7,inputAnswer: '',questionId: 7));
-      foodieQuestionAnswersList.add(T1(answerIds: answerIdInterest,foodieId: _appService.state.userInfo!.t.id,id: 4,inputAnswer: '',questionId: 4));
+      foodieQuestionAnswersList.add(T1(answerIds: answerIdsUniqueFoodie, foodieId: _appService.state.userInfo!.t.id,id: 1,inputAnswer: '',questionId: 1));
+      foodieQuestionAnswersList.add(T1(answerIds: answerIdPerfectAmbience,foodieId: _appService.state.userInfo!.t.id,id: 2,inputAnswer: '',questionId: 2));
+      foodieQuestionAnswersList.add(T1(answerIds: answerIdsCuisineTaste, foodieId: _appService.state.userInfo!.t.id,id: 12,inputAnswer: '',questionId: 12));
+      foodieQuestionAnswersList.add(T1(answerIds: answerIdInterest,foodieId: _appService.state.userInfo!.t.id,id: 13,inputAnswer: '',questionId: 13));
       completion!();
     }else{
       Toaster.errorToast(context: context, message: 'Please fill all the fields');
@@ -140,7 +140,6 @@ class  SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionna
   }) async {
     final url = InfininURLHelpers.getRestApiURL(baseUrl + Api.saveFoodieAnswers);
     final saveFoodieRequest = save_foodie_request.SaveFoodieRequest(
-      userId: _appService.state.userInfo?.t.id,
       t: foodieQuestionAnswersList,
     ).toJson();
     final _header = <String, String>{

@@ -12,9 +12,9 @@ import '../widget/sign_up_questionnaire.dart';
 
 class SignUpQuestionireScreen
     extends BaseView<SignUpQuestionnaireScreenViewModel> {
-  SignUpQuestionireScreen({Key? key, required bool isProfileUpdate})
+  SignUpQuestionireScreen(this.isProfileUpdate, {Key? key,})
       : super(key: key);
-  bool? isProfileUpdate;
+  final bool isProfileUpdate;
   @override
   Widget buildScreen(
       {required BuildContext context, required ScreenSizeData screenSizeData}) {
@@ -46,7 +46,7 @@ class SignUpQuestionireScreen
                                 baseUrl: Api.baseURL,
                                 context: context,
                                 completion: () {
-                                  if (isProfileUpdate == false) {
+                                  if (!isProfileUpdate) {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(

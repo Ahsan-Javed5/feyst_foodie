@@ -75,10 +75,13 @@ class T {
 
 class Experiences {
   String? chefAddress;
+  String? address;
   String? chefBrandName;
   int? chefId;
+  int? averageRating;
   String? chefName;
   int? cityId;
+  bool? isHomeAddress;
   String? cityName;
   String? description;
   List<ExperienceMedia>? experienceMedia;
@@ -105,6 +108,9 @@ class Experiences {
       {this.chefAddress,
         this.chefBrandName,
         this.chefId,
+        this.address,
+        this.averageRating,
+        this.isHomeAddress,
         this.chefName,
         this.cityId,
         this.cityName,
@@ -132,7 +138,10 @@ class Experiences {
   Experiences.fromJson(Map<String, dynamic> json) {
     chefAddress = json['chefAddress'];
     chefBrandName = json['chefBrandName'];
+    address = json['address'];
     chefId = json['chefId'];
+    isHomeAddress = json['isHomeAddress'];
+    averageRating = json['averageRating'];
     chefName = json['chefName'];
     cityId = json['cityId'];
     cityName = json['cityName'];
@@ -178,6 +187,9 @@ class Experiences {
     data['chefAddress'] = chefAddress;
     data['chefBrandName'] = chefBrandName;
     data['chefId'] = chefId;
+    data['address'] = address;
+    data['isHomeAddress'] = isHomeAddress;
+    data['averageRating'] = averageRating;
     data['chefName'] = chefName;
     data['cityId'] = cityId;
     data['cityName'] = cityName;

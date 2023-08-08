@@ -1,20 +1,20 @@
-// import 'package:chef/base/screen_layout_base/screen_layout_base_m.dart';
+import 'dart:io';
+
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/models/signup/profession_request.dart' as prorequest;
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:chef/screens/sign_up/questionire/sign_up_questionire_screen_vm.dart';
+import 'package:chef/setup.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
-// import '../../base/screen_layout_base/screen_layout_base_m.dart';
 import '../../models/signup/profession_response.dart';
 import 'dart:developer' as developer;
 
-import '../../helpers/data_request.dart' as signuprequest;
-
+import '../../models/signup/signup_request.dart' as signuprequest;
 import '../../models/signup/sign_up_update_request.dart';
 import '../../models/signup/sign_up_update_request.dart' as signup_update_request;
 import '../../models/signup/signup_request.dart';
 import '../../models/signup/signup_response.dart';
 import 'package:chef/screens/sign_up/sign_up_screen_m.dart';
-import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 
 @injectable
 class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
@@ -171,8 +171,6 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
       professionId: professionId,
     );
     if (isInputValid) {
-      //loading(isBusy: true);
-      //emit(const Loading());
       emit(Loaded(_professionData));
       try {
         final url =
@@ -180,6 +178,8 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
         signuprequest.T t = signuprequest.T(
           age: age.toString(),
           name: name,
+          deviceType: Platform.isAndroid ? 'ANDROID' : 'IOS',
+          fcmToken:   await FirebaseMessaging.instance.getToken(),
           gender: gender,
           mobileNo: mobileNumber,
           professionalId: professionId,
@@ -193,6 +193,10 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
             .post(
               path: url,
               data: signUpCredentials,
+              header: {
+                Api.headerAcceptKey: Api.headerAcceptTypeValue,
+                'Content-Type' : 'application/json'
+              },
               //   accessToken: false,
             )
             .whenComplete(() {});
@@ -218,7 +222,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
           developer.log(' Sign up Response is ' + signupResponse.message);
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => SignUpQuestionireScreen(isProfileUpdate: false,)),
+            MaterialPageRoute(builder: (context) => SignUpQuestionireScreen(false,)),
           );
         } else {
           Toaster.infoToast(

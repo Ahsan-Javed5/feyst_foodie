@@ -72,6 +72,7 @@ class HomeScreenViewModel extends BaseViewModel<HomeScreenState> {
         t: t,
       ).toJson();
       final _header = <String, String>{
+        Api.headerAcceptKey: Api.headerAcceptTypeValue,
         'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
         'Content-Type': 'application/json'
       };
