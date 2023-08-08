@@ -316,14 +316,16 @@ class _FoodProductBookingConfirmedDetailsState
                                                 SizedBox(
                                                     width: 181,
                                                     height: 185,
-                                                    child: QrImage(
+                                                    child:
+                                                    QrImage(
                                                       data: widget
                                                           ._advancePendingDetails
                                                           .t
                                                           .qrRequest!
                                                           .toJson()
                                                           .toString(),
-                                                    ))
+                                                    ),
+                                                ),
 
                                                 // Image.asset(
                                                 //   "assets/images/icons/qr_code_sample.jpeg",

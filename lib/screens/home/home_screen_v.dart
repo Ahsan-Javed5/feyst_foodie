@@ -1,4 +1,5 @@
 import 'package:chef/constants/constants.dart';
+import 'package:chef/firebase_messaging/notification_services.dart';
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/models/home/home_response.dart' as home_data;
 
@@ -20,6 +21,9 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
   @override
   Widget buildScreen(
       {required BuildContext context, required ScreenSizeData screenSizeData}) {
+    NotificationServices().fireBaseInit(context);
+    NotificationServices().setupInteractMessage(context);
+    NotificationServices().getDeviceToken();
     return BlocBuilder<HomeScreenViewModel, HomeScreenState>(
         bloc: viewModel..fetchData(context: context),
         builder: (_, state) {

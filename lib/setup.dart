@@ -13,15 +13,19 @@ import 'package:http/http.dart';
 import 'package:chef/services/services.dart';
 import 'package:chef/theme/theme.dart';
 import 'package:chef/setup.config.dart';
+import 'dart:developer' as developer;
 
 final getIt = GetIt.instance;
 // Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 //   print("${message.data['message']}");
 // }
+
 @pragma('vm:entry-point')
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+Future <void> _firebaseMessagingBackgroundHandler(RemoteMessage message)async {
   await Firebase.initializeApp();
-  log('Handling a background message ${message.data['title']}');
+  developer.log(' the hahahaahahahahaha \n\n\n\n\n\n\n${message.notification!.title.toString()}');
+  developer.log('${message.notification!.title.toString()}');
+  developer.log('${message.data.toString()}');
 }
 
 Future<dynamic> configureDependencies() async {
