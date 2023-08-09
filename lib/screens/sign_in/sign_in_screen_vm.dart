@@ -140,7 +140,7 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
         final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.loginAPI);
 
         DataRequest t = DataRequest(
-          mobileNo: '+' + mobileNumber,
+          mobileNo:  mobileNumber,
           fcmToken:   await FirebaseMessaging.instance.getToken(),
           deviceType: Platform.isAndroid ? 'ANDROID' : 'IOS'
         );

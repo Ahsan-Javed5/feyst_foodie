@@ -317,6 +317,7 @@ class _FoodProductBookingConfirmedDetailsState
                                                     width: 181,
                                                     height: 185,
                                                     child:
+                                                    //Container(),
                                                     QrImage(
                                                       data: widget
                                                           ._advancePendingDetails

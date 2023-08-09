@@ -23,7 +23,7 @@ final getIt = GetIt.instance;
 @pragma('vm:entry-point')
 Future <void> _firebaseMessagingBackgroundHandler(RemoteMessage message)async {
   await Firebase.initializeApp();
-  developer.log(' the hahahaahahahahaha \n\n\n\n\n\n\n${message.notification!.title.toString()}');
+  developer.log('the notification title is ${message.notification!.title.toString()}');
   developer.log('${message.notification!.title.toString()}');
   developer.log('${message.data.toString()}');
 }
