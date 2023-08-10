@@ -78,7 +78,7 @@ class Experiences {
   String? address;
   String? chefBrandName;
   int? chefId;
-  int? averageRating;
+  double? averageRating;
   String? chefName;
   int? cityId;
   bool? isHomeAddress;
