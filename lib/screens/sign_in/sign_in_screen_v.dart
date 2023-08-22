@@ -96,7 +96,7 @@ class SignInScreen extends BaseView<SignInScreenViewModel> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SignUpScreen()),
+                                  builder: (context) => SignUpScreen(false,)),
                             );
                           },
                           child: SvgPicture.asset(

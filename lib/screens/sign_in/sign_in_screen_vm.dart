@@ -5,19 +5,8 @@ import 'package:chef/models/signup/profession_request.dart' as prorequest;
 import 'package:chef/screens/bottom_bar/bottom_bar.dart' as bottom_bar;
 import 'package:chef/screens/sign_in/sign_in_screen_m.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:http/http.dart';
-
-// import '../../models/signup/profession_response.dart';
 import 'dart:developer' as developer;
-
-import '../../models/login/login_request.dart' as loginrequest;
-import '../../models/signup/signup_response.dart';
-
-import 'package:chef/screens/sign_in/sign_in_screen_m.dart';
-
-// import '../bottom_bar/bottom_bar.dart';
-import '../home/home_screen_v.dart';
-import 'package:chef/models/general_model.dart';
+import '/models/signup/signup_response.dart';
 
 @injectable
 class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
@@ -184,7 +173,7 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
           Toaster.infoToast(
               context: context,
               message: 'Not found foodie [ ' +
-                  '${'${mobileNumber}'}' +
+                  mobileNumber +
                   '], Please enter registered number or SignUp');
         }
 

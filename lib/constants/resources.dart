@@ -67,5 +67,5 @@ abstract class Resources {
   ///food details screen
   static const String foodDetailsBg = 'assets/images/icons/food_detail_bg.png';
 
-
+static const String cashWaitingIcon = 'assets/images/icons/cash_waiting.png';
 }

@@ -156,7 +156,7 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) =>
-          SignUpScreen(isProfileDetails: false),
+          SignUpScreen(false),
           //  HomeScreen(),
           ),
         );

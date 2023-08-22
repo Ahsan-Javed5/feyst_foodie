@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:chef/helpers/color_helper.dart';
 import 'package:chef/helpers/helpers.dart';
-import 'package:chef/screens/bottom_bar/bottom_bar.dart' as bb;
+import 'package:chef/screens/bottom_bar/bottom_bar.dart' as bottom_bar;
 import 'package:chef/screens/screen.dart';
 import 'package:chef/screens/user_account/reviews.dart';
 import 'package:chef/screens/user_account/user_profile.dart';
@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 
 import '../../../constants/resources.dart';
 import '../../../constants/strings.dart';
+import '../../../setup.dart';
 import '../../../theme/app_theme_data/app_theme_data.dart';
 import '../../../theme/app_theme_widget.dart';
 import '../../../ui_kit/widgets/general_new_appbar.dart';
@@ -32,6 +33,8 @@ class EditProfileScreen extends BaseView<EditProfileScreenViewModel> {
     Strings.labelTermsCond,
     Strings.labelLogOut,
   ];
+  final _navigation = locateService<INavigationService>();
+
 
   Future<bool> onWillPop() async {
     return false;
@@ -50,7 +53,7 @@ class EditProfileScreen extends BaseView<EditProfileScreenViewModel> {
           child: Column(children: [
             Container(
               padding: EdgeInsets.only(left: 12, top: 20, bottom: 20),
-              child:const GeneralNewAppBar(
+              child: GeneralNewAppBar(
               //   callBack:(context)=> Navigator.pushReplacement(
               //   context,
               //   MaterialPageRoute(
@@ -59,6 +62,10 @@ class EditProfileScreen extends BaseView<EditProfileScreenViewModel> {
                 rightIcon: Resources.homeIconSvg,
                 title: Strings.labelProfile,
                 titleColor: Colors.white,
+                callBack: (){
+                  _navigation.navigateTo(route:BottomBar(bottomBarType: bottom_bar.BottomBarType.home));
+
+                }
               ),
             ),
             SizedBox(
@@ -81,7 +88,7 @@ class EditProfileScreen extends BaseView<EditProfileScreenViewModel> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SignUpScreen(isProfileDetails: true,)),
+                              builder: (context) => SignUpScreen(true,)),
                         );
                       } else if (accountList.elementAt(index) == Strings.labelProfile) {
                         Navigator.push(

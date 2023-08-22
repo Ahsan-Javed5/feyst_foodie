@@ -89,7 +89,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   bool isButtonEnable = true;
 
   @override
-  void initState()  {
+  void initState() {
     developer.log(' Price Id is }');
     headers = widget.foodMenuDetail.t
         .map((element) => element.mealName)
@@ -217,31 +217,33 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           Column(
             children: [
               FutureBuilder<SliderImagesResponse?>(
-                  future: foodDetailsViewModel.getSliderImages(experienceId: widget.scheduleModel.t.experienceId),
+                  future: foodDetailsViewModel.getSliderImages(
+                      experienceId: widget.scheduleModel.t.experienceId),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       var imagesList = snapshot.data?.t;
                       List images = [];
-                      for(var item in imagesList!){
+                      for (var item in imagesList!) {
                         images.add(item.mediaUrl);
                       }
                       return CarouselSlider(
                         options: CarouselOptions(
-                          autoPlay: true,
+                          autoPlay: false,
                         ),
-                        items: (images.isEmpty ? foodDetailsBgImages : images).map((i) {
+                        items: (images.isEmpty ? foodDetailsBgImages : images)
+                            .map((i) {
                           return Builder(
                             builder: (BuildContext context) {
-                              return Image.network('${Api.baseURLForImages}$i', fit: BoxFit.fill);
+                              return Image.network('${Api.baseURLForImages}$i',
+                                  fit: BoxFit.fill);
                             },
                           );
                         }).toList(),
                       );
-                    }else {
+                    } else {
                       return const CircularProgressIndicator();
                     }
-                  }
-              ),
+                  }),
               Expanded(
                 child: SingleChildScrollView(
                   child: Container(
@@ -279,26 +281,45 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           Positioned.fill(
             top: DeviceHelper.height * 0.10,
             left: DeviceHelper.width * 0.05,
-            child:
-                const Align(alignment: Alignment.topLeft, child: GeneralNewAppBar()),
+            child: Align(
+                alignment: Alignment.topLeft, child: GeneralNewAppBar(
+              callBack: (){
+                setState(() {
+                  selectedTab == TabBars.Details
+                      ? Navigator.pop(context)
+                      : (selectedTab == TabBars.Menu
+                      ? setTab(TabBars.Details)
+                      : scheduleForm
+                      ? scheduleForm = false
+                      : setTab(TabBars.Menu));
+                });
+              },
+            )),
           ),
           Positioned(
               top: DeviceHelper.height * 0.19,
               width: MediaQuery.of(context).size.width,
               child: Padding(
-                padding: EdgeInsetsDirectional.only(start: DeviceHelper.width * 0.07),
+                padding: EdgeInsetsDirectional.only(
+                    start: DeviceHelper.width * 0.07),
                 child: Column(children: [
                   Container(
                       decoration: BoxDecoration(
-                          color: HexColor.fromHex("#4b4b52"),
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(DeviceHelper.height * 0.03,),
-                              bottomLeft: Radius.circular(DeviceHelper.height * 0.03,),),),
+                        color: HexColor.fromHex("#4b4b52"),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(
+                            DeviceHelper.height * 0.03,
+                          ),
+                          bottomLeft: Radius.circular(
+                            DeviceHelper.height * 0.03,
+                          ),
+                        ),
+                      ),
                       height: DeviceHelper.height * 0.14,
                       padding: const EdgeInsetsDirectional.only(bottom: 0),
                       child: Padding(
-                        padding:
-                            EdgeInsetsDirectional.only(top: DeviceHelper.height * 0.025),
+                        padding: EdgeInsetsDirectional.only(
+                            top: DeviceHelper.height * 0.025),
                         child: Column(children: [
                           getFoodMainHeading(
                               appTheme: appTheme, title: widget.data!.title),
@@ -307,7 +328,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.only(
-                                start: DeviceHelper.width * 0.10, end: DeviceHelper.width * 0.10),
+                                start: DeviceHelper.width * 0.10,
+                                end: DeviceHelper.width * 0.10),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -475,17 +497,24 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     return GeneralButton.button(
       width: DeviceHelper.width * 0.37,
       title: Strings.nextButtonTitle.toUpperCase(),
-      //isEnable:(!scheduleForm && selectedTime == "") ? true : false,
+      //isEnable: (!scheduleForm && selectedTime == "") ? true : false,
       styleType: ButtonStyleType.fill,
       onTap: () {
         setState(() {
-          selectedTab == TabBars.Details
-              ? setTab(TabBars.Menu)
-              : (selectedTab == TabBars.Menu
-                  ? setTab(TabBars.Schedule)
-                  : scheduleForm
-                      ? goToRequestToBookScreen()
-                      : setScheduleFormValue());
+          if (!scheduleForm &&
+              selectedTime == "" &&
+              selectedTab == TabBars.Schedule) {
+            Toaster.infoToast(
+                context: context, message: 'Please Select Schedule Slot!');
+          } else {
+            selectedTab == TabBars.Details
+                ? setTab(TabBars.Menu)
+                : (selectedTab == TabBars.Menu
+                    ? setTab(TabBars.Schedule)
+                    : scheduleForm
+                        ? goToRequestToBookScreen()
+                        : setScheduleFormValue());
+          }
         });
       },
     );
@@ -1263,7 +1292,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                       Row(
                                         children: [
                                           Container(
-                                            width: 61,
+                                            width: 58,
                                             height: 51,
                                             decoration: BoxDecoration(
                                                 color:
@@ -1327,6 +1356,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                         onChange: ({required key, value}) {},
                                       ),*/
                                                 GeneralDropdown(
+                                                  selectedItemId: 1,
                                               borderColor: Colors.transparent,
                                               name: 'Select',
                                               //     dropDownHeight: 51.0,
@@ -2133,7 +2163,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                       shape: BoxShape.circle,
                     ),
                     child: SvgPicture.network(
-                      items[i].name != null ? items[i].name.toString() : '',
+                      items[i].name != null
+                          ? Api.baseURLForImages + items[i].name.toString()
+                          : '',
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -2237,7 +2269,14 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           orderHelper.daysGroup =
               DaysGroup(scheduledDate: scheduledDate, dayOfMonth: 0, hours: []);
           orderHelper.numberOfPerson =
-              int.parse(widget.data!.persons.toString()); //.data!.persons;
+              int.parse(widget.data!.persons.toString());
+          // orderHelper.selectedCategory = widget
+          //     .data!
+          //     .experiencePreferences![
+          //         int.parse(widget.data?.preferenceId as String)]
+          //     .preferenceName
+          //     .toString();
+          //.data!.persons;
           _appService.updateOrderHelper(orderHelper);
           //_appService.updateScheduleId(scheduleId)
           setState(() {

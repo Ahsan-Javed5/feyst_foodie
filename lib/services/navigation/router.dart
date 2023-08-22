@@ -1,18 +1,12 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 
-import 'package:chef/constants/constants.dart';
-import 'package:chef/screens/bottom_bar/bottom_bar.dart';
+import 'package:chef/helpers/helpers.dart';
 import 'package:chef/screens/screen.dart';
 import 'package:chef/screens/sign_in/sign_in_screen_v.dart';
 import 'package:chef/screens/sign_up/get_started_screen_v.dart';
-
-import '../../screens/booking/advance_payment/food_item_advance_payment_v.dart';
-import '../../screens/booking/booking_confirmed/booking_in_process_screen_v.dart';
-import '../../screens/booking/booking_in_process_screen.dart';
-import '../../screens/booking/food_item_advance_booking.dart';
-import '../../screens/home/food_item_booking_confirmed.dart';
-import '../../screens/sign_up/sign_up_screen_v.dart';
+import '/screens/booking/advance_payment/food_item_advance_payment_v.dart';
+import '/screens/booking/booking_confirmed/booking_in_process_screen_v.dart';
 
 export 'router.gr.dart';
 

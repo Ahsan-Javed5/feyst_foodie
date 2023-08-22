@@ -54,9 +54,9 @@ class NotificationServices {
   void fireBaseInit(BuildContext context) {
     FirebaseMessaging.onMessage.listen((message) {
       if (kDebugMode){
-        developer.log('\n\n\n\n\nfirebaseinit\n${message.notification!.title.toString()}');
-        developer.log('firebase init body:${message.notification!.body.toString()}');
-        developer.log('firebase init payload is:\n\n${message.data.toString()}');
+        //developer.log('\n\n\n\n\nfirebaseinit\n${message.notification!.title.toString()}');
+        //developer.log('firebase init body:${message.notification!.body.toString()}');
+       // developer.log('firebase init payload is:\n\n${message.data.toString()}');
 
       }
       if(Platform.isAndroid ){

@@ -232,9 +232,7 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SignUpScreen(
-                                        isVerified: true,
-                                      )),
+                                  builder: (context) => SignUpScreen(false,)),
                             );
                           } else {
                             // phone verification failed

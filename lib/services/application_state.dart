@@ -16,6 +16,7 @@ import 'package:chef/services/services.dart';
 import 'package:chef/models/custom_forms/workflow_v3.dart' as workflow_v3;
 import 'package:chef/models/custom_forms/workflow_template_current_step.dart'
     as cs;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'dart:developer' as developer;
 
@@ -280,6 +281,8 @@ class ApplicationService extends Cubit<ApplicationState> {
   void logout({BuildContext? context}) async {
     clearUserInfo();
     await _storage.clear();
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.clear();
     if (context != null) {
       developer.log(' Sending');
       // Navigator.push(

@@ -1,17 +1,13 @@
-import 'package:chef/base/base_viewmodel.dart';
-import 'package:chef/helpers/url_helper.dart';
+import 'package:chef/helpers/helpers.dart';
+
 import 'package:chef/models/booking/booking_list_request.dart' as baserequest;
 import 'package:chef/models/booking/booking_status_update_request.dart'
     as booking_udpate;
+import '../../bottom_bar/bottom_bar.dart' as bottom_bar;
+
 import 'package:chef/models/booking/booking_list_response_model.dart';
 import 'package:chef/screens/booking/booking_list/booking_list_screen_m.dart';
-import 'package:chef/services/network/network_service.dart';
-import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
-
-import '../../../constants/api.dart';
-import '../../../services/application_state.dart';
-import '../../../setup.dart';
+import '/setup.dart';
 
 import 'dart:developer' as developer;
 
@@ -25,6 +21,8 @@ class BookingListScreenViewModel extends BaseViewModel<BookingListState> {
   final INetworkService _network;
 
   late BookingListModel bookingListModel;
+  final _navigate = locateService<INavigationService>();
+  final _appService = locateService<ApplicationService>();
 
   Future<void> getBookingListData(isBookingScreen) async {
     // final url =
@@ -36,11 +34,9 @@ class BookingListScreenViewModel extends BaseViewModel<BookingListState> {
     // final url = InfininURLHelpers.getRestApiURL(
     //     baseUrl + "foodie/profile-image/${_appService.state.userInfo!.t.id}");
 
-    final _appService = locateService<ApplicationService>();
-
     String _userId = (_appService.state.userInfo?.t.id.toString()) ?? '45';
 
-    developer.log(' User Id is ' + '${_appService.state.userInfo?.t.id}');
+    developer.log(' User Id is ${_appService.state.userInfo?.t.id}');
 
     emit(const Loading());
 
@@ -61,7 +57,7 @@ class BookingListScreenViewModel extends BaseViewModel<BookingListState> {
     );
 
     bookingListModel = bookingListModelFromJson(response.body);
-
+    //developer.log('booking id: ' + bookingListModel.t![0].id.toString());
     response.body != "" || response.body != null
         ? emit(Loaded(bookingListModel))
         : emit(const Loading());
@@ -69,7 +65,7 @@ class BookingListScreenViewModel extends BaseViewModel<BookingListState> {
 
   Future<void> cancelBooking({required int bookingId}) async {
     final url =
-        InfininURLHelpers.getRestApiURL(Api.baseURL + Api.experienceMenuById);
+        InfininURLHelpers.getRestApiURL(Api.baseURL + Api.cancelBooking);
     //emit(const Loading());
 
     final bookingUpdateRequest = booking_udpate.BookingUpdateRequest(
@@ -79,9 +75,16 @@ class BookingListScreenViewModel extends BaseViewModel<BookingListState> {
     final response = await _network.post(
       path: url,
       data: bookingUpdateRequest,
+      header: {
+        'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+        'Content-Type': 'application/json'
+      },
     );
-
+  print(response);
     // var updatedBookingData = booking_udpate.bookingUpdateRequestFromJson(response.body);
-    // _navigate.navigateTo(route: BottomBar(bottomBarType: bottom_bar.BottomBarType.bookings));
+    // if(response != null) {
+    //   _navigate.navigateTo(
+    //       route: BottomBar(bottomBarType: bottom_bar.BottomBarType.history));
+    // }
   }
 }

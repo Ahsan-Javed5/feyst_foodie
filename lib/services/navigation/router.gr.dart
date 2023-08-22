@@ -42,13 +42,11 @@ class AppRouter extends _i11.RootStackRouter {
       );
     },
     SignUpRoute.name: (routeData) {
-      final args = routeData.argsAs<SignUpRouteArgs>(
-          orElse: () => const SignUpRouteArgs());
+      final args = routeData.argsAs<SignUpRouteArgs>();
       return _i11.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i2.SignUpScreen(
-          isVerified: args.isVerified,
-          isProfileDetails: args.isProfileDetails,
+          args.isProfileDetails,
           key: args.key,
         ),
       );
@@ -198,14 +196,12 @@ class GetStartedRoute extends _i11.PageRouteInfo<void> {
 /// [_i2.SignUpScreen]
 class SignUpRoute extends _i11.PageRouteInfo<SignUpRouteArgs> {
   SignUpRoute({
-    dynamic isVerified,
-    bool? isProfileDetails,
+    required bool isProfileDetails,
     _i12.Key? key,
   }) : super(
           SignUpRoute.name,
           path: '/signUp',
           args: SignUpRouteArgs(
-            isVerified: isVerified,
             isProfileDetails: isProfileDetails,
             key: key,
           ),
@@ -216,20 +212,17 @@ class SignUpRoute extends _i11.PageRouteInfo<SignUpRouteArgs> {
 
 class SignUpRouteArgs {
   const SignUpRouteArgs({
-    this.isVerified,
-    this.isProfileDetails,
+    required this.isProfileDetails,
     this.key,
   });
 
-  final dynamic isVerified;
-
-  final bool? isProfileDetails;
+  final bool isProfileDetails;
 
   final _i12.Key? key;
 
   @override
   String toString() {
-    return 'SignUpRouteArgs{isVerified: $isVerified, isProfileDetails: $isProfileDetails, key: $key}';
+    return 'SignUpRouteArgs{isProfileDetails: $isProfileDetails, key: $key}';
   }
 }
 

@@ -372,8 +372,10 @@ class _FoodContainer extends StatelessWidget {
                     height: DeviceHelper.height * 0.35,
                     width: DeviceHelper.width * 0.52,
                     //padding: const EdgeInsets.only(left: 12),
-                    child: Image.asset(
-                      Resources.seafoodPNG,
+                    child: data!.experienceMedia!.isEmpty ?
+                    Image.asset(Resources.seafoodPNG,fit: BoxFit.cover,):
+                    Image.network(
+                      Api.baseURLForImages+data!.experienceMedia![0].mediaUrl.toString(),
                       fit: BoxFit.cover,
                     ),
                   ),

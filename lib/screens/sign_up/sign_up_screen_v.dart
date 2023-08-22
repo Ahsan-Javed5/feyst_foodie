@@ -21,8 +21,8 @@ import 'package:chef/screens/sign_up/sign_up_screen_m.dart';
 import 'dart:developer' as developer;
 
 class SignUpScreen extends BaseView<SignUpScreenViewModel> {
-  SignUpScreen({isVerified,  this.isProfileDetails, Key? key}) : super(key: key);
-   bool? isProfileDetails;
+  SignUpScreen(this.isProfileDetails, {Key? key}) : super(key: key);
+   final bool isProfileDetails;
 
   final baseURLs = [
     // Api.prodURL,
@@ -52,8 +52,9 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
         viewModel.dropdownItems.add(professionList[i].name);
       }
     }
+    if(viewModel.isProfileDetails == false){
     viewModel.professionID =
-        viewModel.dropdownDetails[viewModel.dropdownItems[0]];
+        viewModel.dropdownDetails[viewModel.dropdownItems[0]];}
 
     if (viewModel.checkAllInputAdded()) {
       viewModel.changeButton(true);
@@ -196,7 +197,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                 height: isProfileDetails! ? 75 : 140,
               ),
               viewModel.isProfile.value == true ?
-                Align(
+                isProfileDetails ? Align(
                 alignment: Alignment.centerRight,
                 child: GestureDetector(
                   child: Container(
@@ -210,11 +211,10 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                     viewModel.isProfileDetails = false;
                     //viewModel.isProfile = ValueNotifier(true);
                     viewModel.isProfile.value = false;
-
                     print(viewModel.isProfileDetails);
                   },
                 ),
-              ) : nextButton(context),
+              ) : const SizedBox() : nextButton(context),
             ],
           ),
         ),
@@ -245,6 +245,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
           context: context,
           baseUrl: baseURLs[0],
         );
+        //viewModel.nameController.clear();
       },
     );
   }
@@ -408,7 +409,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               const SizedBox(
                 height: 8,
               ),
-              _genderWidget(appTheme, Gender.male, Strings.signMaleLabel, viewModel.isProfileDetails),
+              _genderWidget(appTheme, Gender.male, Strings.signMaleLabel, isProfileDetails),
               // Row(
               //   children: [
               //     _genderWidget(appTheme, Gender.male, Strings.signMaleLabel),
@@ -453,8 +454,9 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                 child: GeneralDropdown(
                   name: 'Select',
                   items: viewModel.dropdownItems,
+                  selectedItemId: viewModel.professionID,
                   borderColor: viewModel.isProfileDetails! ? Colors.grey : appTheme.colors.textFieldBorderColor,
-                  // selectedItem: dropdownItems.first,
+                  selectedItem: viewModel.dropdownItems[viewModel.professionID-1],
                   style: appTheme.typographies.interFontFamily.headline6.copyWith(
                       color: Colors.white,
                       fontSize: 15,

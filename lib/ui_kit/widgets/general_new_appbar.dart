@@ -12,7 +12,7 @@ class GeneralNewAppBar extends StatelessWidget {
   final String? title;
   final Color? titleColor;
   final String? rightIcon;
-  final Function? callBack;
+  final Function()? callBack;
   const GeneralNewAppBar({Key? key, this.title, this.titleColor, this.rightIcon, this.callBack})
       : super(key: key);
 
@@ -29,22 +29,23 @@ class GeneralNewAppBar extends StatelessWidget {
         ),
         // Image.asset(Resources.appBackIcon,height: 35,),
         InkWell(
-            onTap: () {
-               Navigator.pop(context);
-              //_navigationService.navigateTo(route:const BottomBar());
-
-              // _navigationService.replace(context);
-
-              // _navigationService.replace(route: BottomBar());
-              //    Navigator.p
-            },
+            onTap: callBack ?? (){Navigator.pop(context);},
+            //     () {
+            //    //Navigator.pop(context);
+            //   //_navigationService.navigateTo(route:BottomBar());
+            //
+            //   // _navigationService.replace(context);
+            //
+            //   // _navigationService.replace(route: BottomBar());
+            //   //    Navigator.p
+            // },
             child: SvgPicture.asset(
               Resources.appBackIconSVG,
               height: DeviceHelper.height * 0.0425,
             ),
         ),
         if (title != null) ...[
-          Spacer(),
+          const Spacer(),
           GeneralText(
             title ?? '',
             textAlign: TextAlign.center,

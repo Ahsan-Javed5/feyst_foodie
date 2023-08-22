@@ -18,6 +18,7 @@ class GeneralDropdown<T> extends StatefulWidget {
     Color? borderColor,
     List<String>? selectedItems,
     String? selectedItem,
+    int? selectedItemId,
     bool isSearchable = false,
     bool isMultiSelect = false,
     bool isMandatory = false,
@@ -35,6 +36,7 @@ class GeneralDropdown<T> extends StatefulWidget {
         _borderColor = borderColor,
         _isMandatory = isMandatory,
         _isExpanded = isExpanded,
+        _selectedItemId = selectedItemId,
         _margin = margin,
         _selectedItems = selectedItems,
         _selectedItem = selectedItem,
@@ -54,6 +56,7 @@ class GeneralDropdown<T> extends StatefulWidget {
   final Color? _borderColor;
   final FieldOnChange _onChange;
   final double _margin;
+  final int? _selectedItemId;
   final List<String>? _selectedItems;
   final String? _selectedItem;
   final String? Function(List<String>?)? _validator;
@@ -72,7 +75,7 @@ class _GeneralDropdownState extends State<GeneralDropdown> {
   @override
   void initState() {
     selectedValue = widget._selectedItem ?? '';
-    currentChoice = widget._items[0];
+    currentChoice = widget._items[int.parse(widget._selectedItemId.toString())-1];
     super.initState();
   }
 
@@ -130,7 +133,7 @@ class _GeneralDropdownState extends State<GeneralDropdown> {
                         child: DropdownButton<String>(
                           isExpanded: true,
                           dropdownColor: appTheme.colors.textFieldFilledColor,
-                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                          borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                           style: widget._style,
                           value: currentChoice,
                           iconEnabledColor: widget._borderColor,

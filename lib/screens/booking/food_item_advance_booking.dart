@@ -1,29 +1,15 @@
-import 'dart:ui';
 
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/screens/booking/advance_payment/jazz_cash_webview.dart';
-import 'package:chef/services/renderer/field_renderer_helpers.dart';
 import 'package:chef/setup.dart';
-import 'package:chef/ui_kit/general_ui_kit.dart';
-import 'package:flutter/material.dart';
-
-import '../../constants/resources.dart';
-import '../../constants/strings.dart';
+import 'package:chef/screens/bottom_bar/bottom_bar.dart' as bottom_bar;
 import '../../helpers/color_helper.dart';
 import '../../helpers/function_helper.dart';
 import '../../models/booking/advance_pending_response.dart';
-import '../../models/booking/booking_list_response_model.dart';
-import '../../theme/app_theme_data/app_theme_data.dart';
-import '../../theme/app_theme_widget.dart';
-import '../../ui_kit/widgets/custom_dialog.dart';
-import '../../ui_kit/widgets/general_button.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
-import '../../ui_kit/widgets/general_text.dart';
-import '../booking/food_item_booking.dart';
 
 import 'dart:developer' as developer;
 
-import 'advance_payment/food_item_advance_payment_vm.dart';
 
 class FoodProductAdvancePendingDetails extends StatefulWidget {
   const FoodProductAdvancePendingDetails(
@@ -48,7 +34,6 @@ class _FoodProductAdvancePendingDetailsState
   void initState() {
     developer.log(' Booking bookingStatus here is ' +
         widget._advancePendingDetails.t.bookingStatus);
-
     loadMenu();
     loadWowFactor();
     // wowFactorsList.addAll([
@@ -236,12 +221,16 @@ class _FoodProductAdvancePendingDetailsState
                         ),
                       ),
                     ),
-                    const Positioned.fill(
+                    Positioned.fill(
                       top: 40,
                       child: Align(
                           alignment: Alignment.topLeft,
                           child: GeneralNewAppBar(
                             rightIcon: Resources.homeIconSvg,
+                            callBack: (){
+                              locateService<INavigationService>().navigateTo(route: BottomBar(bottomBarType: bottom_bar.BottomBarType.bookings));
+                              Navigator.pop(context);
+                            },
                           )),
                     ),
                   ],

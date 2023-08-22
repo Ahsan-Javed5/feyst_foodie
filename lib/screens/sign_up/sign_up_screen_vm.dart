@@ -2,8 +2,6 @@ import 'dart:io';
 
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/models/signup/profession_request.dart' as prorequest;
-import 'package:chef/screens/sign_up/questionire/sign_up_questionire_screen_vm.dart';
-import 'package:chef/setup.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 import '../../models/signup/profession_response.dart';
@@ -51,7 +49,6 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   //bool isLoading = false;
 
   void changeButton(bool? value) {
-
     buttonEnabled.value =  value??!buttonEnabled.value;
   }
 
@@ -289,7 +286,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
           t: t,
         ).toJson();
         final _header = <String, String>{
-          'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+          'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6IkZvb2RpZSIsInN1YiI6IjkyMzAzMDEyNDU2NyIsImp0aSI6IjMiLCJpYXQiOjE2OTE3NDk2NDh9.9ZAKshx2c_ZawYJwIyp9kcr_IyoVcS3KZzGDrmu6gUbtMIof9Orfkm_yEkaaYMGdFMDRCZRHolx4d8C0b5NsZg',
           'Content-Type': 'application/json'
         };
         final response = await _network
@@ -312,11 +309,11 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
 
           Toaster.infoToast(context: context, message: signupResponse.message);
 
-          // await _cacheData(
-          //   context: context,
-          //   loginData: response.body,
-          //   baseUrl: baseUrl,
-          // );
+          await _cacheData(
+            context: context,
+            loginData: response.body,
+            baseUrl: baseUrl,
+          );
 
           developer.log(' Sign up update Response is ' + signupResponse.message);
           Navigator.pop(context);
@@ -402,6 +399,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     genderController.text = _appService.state.userInfo!.t.gender;
     idController.text = _appService.state.userInfo!.t.id.toString();
     professionID = _appService.state.userInfo!.t.professionalId;
+    print(professionID);
   }
 
   // Future registerUser(String mobile, BuildContext context) async {

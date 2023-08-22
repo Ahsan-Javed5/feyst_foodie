@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:chef/app.dart';
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/screens/sign_up/questionire/sign_up_questionire_screen_m.dart';
 import 'package:chef/screens/sign_up/questionire/sign_up_questionire_screen_vm.dart';
+import 'package:chef/setup.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
@@ -208,9 +210,19 @@ class SignUpQuestionireScreen
                                   backgroundImage: FileImage(selectedImage),
                                 );
                               } else {
-                                return Image.asset(
-                                  Resources.userProfileImageIcon,
-                                  height: 47,
+                                return CircleAvatar(
+                                  radius: 25,
+                                  child: locateService<ApplicationService>().state.userInfo!.t.profileImageUrl == null ?
+                                      Image.asset(
+                                        Resources.userProfileImageIcon,
+                                        height: 47,
+                                        fit: BoxFit.fill,
+                                      ) :
+                                  Image.network(
+                                    Api.baseURLForImages+locateService<ApplicationService>().state.userInfo!.t.profileImageUrl,
+                                    height: 47,
+                                    fit: BoxFit.fill,
+                                  ),
                                 );
                               }
                             },

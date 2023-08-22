@@ -77,7 +77,7 @@ class SplashScreenViewModel extends BaseViewModel<SplashScreenState> {
 
   void navigateToSignUp() {
     Future.delayed(const Duration(seconds: 2), () {
-      _navigationService.replace(route: SignUpRoute());
+      _navigationService.replace(route: SignUpRoute(isProfileDetails: false));
     });
   }
 }

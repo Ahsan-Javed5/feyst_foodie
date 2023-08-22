@@ -22,6 +22,7 @@ import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
 import '../booking/advance_payment/jazz_cash_webview.dart';
 import '../booking/booking_confirmed/booking_in_process_screen_vm.dart';
+import '../booking/booking_list/booking_list_screen_vm.dart';
 import '../booking/food_item_booking.dart';
 import '../custom_form/widgets/exto_field_option.dart';
 
@@ -60,6 +61,7 @@ class _FoodProductBookingConfirmedDetailsState
   double _sigmaX = 5; // from 0-10
   double _sigmaY = 5;
   final viewModel = locateService<BookingInProcessScreenViewModel>();
+  final bookingsListViewModel = locateService<BookingListScreenViewModel>();
 
   @override
   void initState() {
@@ -218,12 +220,12 @@ class _FoodProductBookingConfirmedDetailsState
                                 : widget._advancePendingDetails.t.bookingStatus
                                             .toUpperCase() ==
                                         Strings.inProgress
-                                    ? Strings.inProgress
+                                    ? Strings.inProgressValue
                                     : widget._advancePendingDetails.t
                                                 .bookingStatus
                                                 .toUpperCase() ==
                                             Strings.billGenerated
-                                        ? Strings.billGenerated
+                                        ? Strings.billGeneratedValue
                                         : widget._advancePendingDetails.t
                                                     .bookingStatus
                                                     .toUpperCase() ==
@@ -981,13 +983,25 @@ class _FoodProductBookingConfirmedDetailsState
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    GeneralText(
-                      Strings.productDetailAdvancePayment,
-                      style: appTheme.typographies.interFontFamily.headline6
-                          .copyWith(
-                        fontSize: 15,
-                        color: HexColor.fromHex('#ffffff'),
-                      ),
+                    Row(
+                      children: [
+                        GeneralText(
+                          Strings.productDetailAdvancePayment,
+                          style: appTheme.typographies.interFontFamily.headline6
+                              .copyWith(
+                            fontSize: 15,
+                            color: HexColor.fromHex(widget._advancePendingDetails.t
+                                .bookingStatus
+                                .toUpperCase() !=
+                                Strings.pendingValue ? '#8ea659' : '#ffffff'),
+                          ),
+                        ),
+                        const SizedBox(width:2),
+                        widget._advancePendingDetails.t
+                            .bookingStatus
+                            .toUpperCase() !=
+                            Strings.pendingValue ? const Icon(Icons.check_circle, size: 15, color: Color(0xff8ea659),) : SizedBox(),
+                      ],
                     ),
                     GeneralText(
                       // Strings.productDetailAdvancePaymentValue,
@@ -1001,7 +1015,10 @@ class _FoodProductBookingConfirmedDetailsState
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
-                        color: HexColor.fromHex('#ffffff'),
+                        color: HexColor.fromHex(widget._advancePendingDetails.t
+                            .bookingStatus
+                            .toUpperCase() !=
+                            Strings.pendingValue ? '#8ea659' : '#ffffff'),
                       ),
                     ),
                   ],
@@ -1503,6 +1520,19 @@ class _FoodProductBookingConfirmedDetailsState
             title: 'PAY CASH',
             styleType: ButtonStyleType.fill,
             onTap: () {
+              CustomDialog.getDialog(
+                ctx: context,
+                title: 'Please Wait',
+                //titleColor: Colors.white,
+                //descColor: const Color(0xFFfee4a4),
+                description: 'Awaiting bistro approval of cash received',
+                iconUrl: Resources.cashWaitingIcon,
+                onTap: () {
+                  setState(() {
+                    Navigator.pop(context);
+                  });
+                },
+              );
               //_showGeneralPopup(context, title: Strings.confirmationTitle, description: Strings.confirmCancelMessage);
             },
           )
@@ -1857,14 +1887,14 @@ class _FoodProductBookingConfirmedDetailsState
               title: Strings.generalButtonTitle.toUpperCase(),
               styleType: ButtonStyleType.fill,
               onTap: () {
+                bookingsListViewModel.cancelBooking(bookingId: widget._advancePendingDetails.t.id);
                 Toaster.infoToast(
                     context: context,
                     message: 'Your Experience has been Cancelled');
                 Navigator.pop(context);
                 _navigate.navigateTo(
                     route: BottomBar(
-                        bottomBarType: bottom_bar.BottomBarType.bookings));
-
+                        bottomBarType: bottom_bar.BottomBarType.history));
                 ///Here need to call cancel api
                 // Navigator.push(
                 //   context,

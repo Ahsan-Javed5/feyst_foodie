@@ -121,7 +121,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context).theme;
-    return isLoading ? CircularProgressIndicator() : Scaffold(
+    return isLoading ? const CircularProgressIndicator() : Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       //floatingActionButton: getStartedButtonTitle(appTheme: appTheme),
       body: SingleChildScrollView(
@@ -418,7 +418,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
     var _productDetailSelectionTime = InfininURLHelpers.getAmPm(
         orderHelper!.hourSelected.startTime);
     var _productDetailSelectionType =
-        orderHelper!.selectedCategory;
+        orderHelper!.selectedExperienceDetail.experiencePreferences?[1].preferenceName ?? 'Not available';
     var _numberOfPerson =
         orderHelper!.numberOfPerson ?? 4.toString();
     return Padding(

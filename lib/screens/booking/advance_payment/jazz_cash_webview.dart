@@ -131,8 +131,11 @@ class _JazzCashWebViewState extends State<JazzCashWebView> {
       description: 'Your transaction is not completed',
       iconUrl: 'assets/images/cancel_icon.png',
       onTap: () {
-        Navigator.of(context, rootNavigator: true).pop();
+        setState(() {
+          Navigator.pop(context);
+        });
       },
     );
+    isLoading = false;
   }
 }

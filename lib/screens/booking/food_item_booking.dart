@@ -9,6 +9,8 @@ import '../../helpers/color_helper.dart';
 import '../../helpers/device_helper.dart';
 import '../../services/navigation/navigation_service.dart';
 import '../../services/navigation/router.gr.dart' as nav;
+import 'package:chef/screens/bottom_bar/bottom_bar.dart' as bottom_bar;
+import '../../services/navigation/router.gr.dart';
 import '../../setup.dart';
 import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/helpers/dialog_helper.dart';
@@ -87,6 +89,9 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                         ? Strings.labelBookings
                         : Strings.lableHistory,
                     titleColor: Colors.white,
+                    callBack: (){
+                      _navigation.navigateTo(route:BottomBar(bottomBarType: bottom_bar.BottomBarType.home));
+                    },
                   ),
                 ),
                 Expanded(child: bookingDetails(appTheme)),
@@ -532,7 +537,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -540,7 +545,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
             // width: MediaQuery.of(context).size.width / 5,
             height: 1,
             color: HexColor.fromHex("#909094")),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -549,7 +554,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
           decoration: BoxDecoration(
               color: HexColor.fromHex("#909094"), shape: BoxShape.circle),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -558,7 +563,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
           height: 1,
           color: HexColor.fromHex("#909094"),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -585,7 +590,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
           height: 1,
           color: HexColor.fromHex("#f1c452"),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -603,7 +608,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
           height: 1,
           color: HexColor.fromHex("#f1c452"),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -656,7 +661,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
           height: 1,
           color: HexColor.fromHex("#f1c452"),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -674,7 +679,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
           height: 1,
           color: HexColor.fromHex("#f1c452"),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -718,7 +723,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
           decoration: BoxDecoration(
               color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
         ),
-        SizedBox(
+        const SizedBox(
           width: 7.5,
         ),
         Container(
@@ -727,7 +732,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
           height: 1,
           color: HexColor.fromHex("#f1c452"),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -736,7 +741,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
           decoration: BoxDecoration(
               color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -744,12 +749,12 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
             // width: MediaQuery.of(context).size.width / 5,
             height: 1,
             color: HexColor.fromHex("#f1c452")),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Flexible(
           child: Container(
-            padding: EdgeInsets.only(top: 8.0, bottom: 8.8),
+            padding: const EdgeInsets.only(top: 8.0, bottom: 8.8),
             width: 36,
             decoration: BoxDecoration(
                 color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
@@ -760,7 +765,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -769,7 +774,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
           height: 1,
           color: HexColor.fromHex("#909094"),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -787,7 +792,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
           decoration: BoxDecoration(
               color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
         ),
-        SizedBox(
+        const SizedBox(
           width: 7.5,
         ),
         Container(
@@ -796,7 +801,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
           height: 1,
           color: HexColor.fromHex("#f1c452"),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -805,7 +810,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
           decoration: BoxDecoration(
               color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -813,7 +818,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
             // width: MediaQuery.of(context).size.width / 5,
             height: 1,
             color: HexColor.fromHex("#f1c452")),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -822,7 +827,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
           decoration: BoxDecoration(
               color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -831,12 +836,12 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
           height: 1,
           color: HexColor.fromHex("#f1c452"),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Flexible(
           child: Container(
-            padding: EdgeInsets.only(top: 8.0, bottom: 8.8),
+            padding: const EdgeInsets.only(top: 8.0, bottom: 8.8),
             width: 36,
             decoration: BoxDecoration(
                 color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
@@ -883,7 +888,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                   fontSize: 20,
                   fontWeight: FontWeight.bold),
             ),
-            SizedBox(
+            const SizedBox(
               height: 19,
             ),
             Padding(
@@ -893,12 +898,12 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                 textAlign: TextAlign.center,
                 maxLines: 2,
                 style: appTheme.typographies.interFontFamily.headline4.copyWith(
-                    color: Color(0xfffee4a4),
+                    color: const Color(0xfffee4a4),
                     fontSize: 15,
                     fontWeight: FontWeight.w500),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 31,
             ),
             GeneralButton.button(
@@ -912,7 +917,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                 //    viewModel.goToForgotPasswordScreen();
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
           ],

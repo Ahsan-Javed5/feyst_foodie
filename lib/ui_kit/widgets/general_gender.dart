@@ -44,7 +44,7 @@ class _GeneralGenderState extends State<GeneralGender> {
 
   @override
   void initState() {
-    selectedValue = 'Male';
+    selectedValue = widget._gender == Gender.male ? 'Male' : 'Female';
     developer.log(' Selected Value is ' + '$selectedValue');
     super.initState();
   }
@@ -88,7 +88,6 @@ class _GeneralGenderState extends State<GeneralGender> {
                               border: Border.all(
                                   color: widget._isProfileDetails ? Colors.grey : appTheme.colors
                                       .textFieldBorderColor // green as background color
-
                                   ),
                               borderRadius:
                                   BorderRadius.circular(8), // radius of 10
