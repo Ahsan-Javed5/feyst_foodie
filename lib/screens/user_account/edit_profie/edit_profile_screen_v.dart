@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:chef/helpers/color_helper.dart';
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/screens/bottom_bar/bottom_bar.dart' as bottom_bar;
+import 'package:chef/screens/privacy_policy/privacy_policy.dart';
 import 'package:chef/screens/screen.dart';
 import 'package:chef/screens/user_account/reviews.dart';
 import 'package:chef/screens/user_account/user_profile.dart';
@@ -141,6 +142,20 @@ class EditProfileScreen extends BaseView<EditProfileScreenViewModel> {
                       if (othersList.elementAt(index) == Strings.labelLogOut) {
                         developer.log(' Clicked on logout ');
                         viewModel.logout(context);
+                      }
+                      else if (othersList.elementAt(index) == Strings.labelPrivacyPolicy) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const PrivacyPolicy('privacy')),
+                        );
+                      }
+                      else if (othersList.elementAt(index) == Strings.labelTermsCond) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const PrivacyPolicy('terms')),
+                        );
                       }
                     },
                     child: Padding(

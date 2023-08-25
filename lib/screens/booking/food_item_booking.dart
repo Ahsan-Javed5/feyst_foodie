@@ -1,3 +1,4 @@
+import 'package:chef/constants/api.dart';
 import 'package:chef/models/booking/booking_list_response_model.dart';
 import 'package:chef/theme/app_theme_data/app_theme_data.dart';
 import 'package:flutter/material.dart';
@@ -17,10 +18,6 @@ import '../../ui_kit/helpers/dialog_helper.dart';
 import '../../ui_kit/widgets/general_button.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
-import '../home/food_item_booking_confirmed.dart';
-import 'advance_payment/food_item_advance_payment_v.dart';
-import 'booking_in_process_screen.dart';
-// import 'food_item_advance_booking.dart';
 
 import 'dart:developer' as developer;
 
@@ -166,45 +163,13 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                       //if (index == 1) {
                       if (item.bookingStatus.toString().toUpperCase() ==
                           Strings.acceptData) {
-                        // _navigation.navigateTo(
-                        //     route: FoodProductAdvancePendingDetails(
-                        //         bookingItem: item));
-
                         _navigation.navigateTo(
                             route: nav.FoodItemAdvancePaymentRoute(
                                 bookingItem: item));
-
-                        //     Navigator
-                        //     .push(context,
-                        //         MaterialPageRoute(builder: (context) {
-                        //   return const FoodProductAdvancePendingDetails();
-                        // }));
-                      } else if (item.bookingStatus!.toUpperCase() ==
-                              Strings.confirmed ||
-                          item.bookingStatus!.toUpperCase() ==
-                              Strings.requestedOrder ||
-                          item.bookingStatus!.toUpperCase() ==
-                              Strings.inProgress ||
-                          item.bookingStatus!.toUpperCase() ==
-                              Strings.billGenerated ||
-                          item.bookingStatus!.toUpperCase() ==
-                              Strings.completeStatus) {
+                      } else {
                         _navigation.navigateTo(
                             route: nav.BookingInProcessRouteView(
                                 bookingItem: item));
-                        // Navigator.push(context,
-                        //     MaterialPageRoute(builder: (context) {
-                        //   return const FoodItemInProcessBooking();
-                        // }));
-                      }
-                      // else if (index == 3) {
-                      //   // Navigator.push(context,
-                      //   //     MaterialPageRoute(builder: (context) {
-                      //   //   return const FoodProductBookingConfirmedDetails();
-                      //   // }));
-                      // }
-                      else {
-                        //_showGeneralPopup(context);
                       }
                     },
                     child: Column(
@@ -217,21 +182,20 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                             children: [
                               Row(
                                 children: [
-                                  /* (imageUrl != null) // Only use the network image if the url is not null
-                        ? Image.network(
-                      imageUrl,
-                      loadingBuilder: (context, child, loadingProgress) =>
-                      (loadingProgress == null) ? child : CircularProgressIndicator(),
-                      errorBuilder: (context, error, stackTrace) => noImage,
-                    )
-                        : noImage;*/
-                                  Column(
-                                    children: [
-                                      SizedBox(
-                                        height: DeviceHelper.height * 0.01,
-                                      ),
-                                      Image.asset(noImage),
-                                    ],
+                                  ClipOval(
+                                    child: item.chefProfileImageUrl != null ?
+                                    Image.network(
+                                      Api.baseURLForImages+item.chefProfileImageUrl.toString(),
+                                      width: DeviceHelper.width * 0.10,
+                                      height: DeviceHelper.width * 0.10,
+                                      fit: BoxFit.cover,
+                                    ) :
+                                    Image.asset(
+                                      noImage,
+                                      width: DeviceHelper.width * 0.10,
+                                      height: DeviceHelper.width * 0.10,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                   SizedBox(
                                     width: DeviceHelper.width * 0.02,
@@ -424,7 +388,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
       case Strings.completeStatus:
         return Strings.completeStatus;
       default:
-        return "";
+        return "CANCELLED";
     }
   }
 

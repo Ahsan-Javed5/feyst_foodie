@@ -115,7 +115,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     items.add('Single');
     items.add('Family');
 
-    nOfPersons.text = widget.data?.persons;
+    nOfPersons.text = '0';
     if (_appService.state.orderHelper != null) {
       _appService.state.orderHelper!.selectedCategory = items.first;
       _appService.state.orderHelper!.noteAdded = '';
@@ -525,17 +525,23 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   }
 
   void goToRequestToBookScreen() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => FoodProductExperienceDetailsScreenView(
-          selectedExperienceId: widget.data!.id.toString(),
-          experienceData: widget.data!,
-          foodMenuDetail: widget.foodMenuDetail,
-          chefData: widget.chefData,
+    if(int.parse(nOfPersons.text) <= 0 || int.parse(nOfPersons.text) > int.parse(widget.data!.persons.toString())){
+      Toaster.infoToast(context: context, message: 'Number of Persons must between 1 and ${widget.data!.persons}');
+    }
+    else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              FoodProductExperienceDetailsScreenView(
+                selectedExperienceId: widget.data!.id.toString(),
+                experienceData: widget.data!,
+                foodMenuDetail: widget.foodMenuDetail,
+                chefData: widget.chefData,
+              ),
         ),
-      ),
-    );
+      );
+    }
   }
 
   void setScheduleFormValue() {

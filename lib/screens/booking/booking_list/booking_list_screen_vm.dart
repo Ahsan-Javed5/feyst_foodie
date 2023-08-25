@@ -25,24 +25,16 @@ class BookingListScreenViewModel extends BaseViewModel<BookingListState> {
   final _appService = locateService<ApplicationService>();
 
   Future<void> getBookingListData(isBookingScreen) async {
-    // final url =
-    //     InfininURLHelpers.getRestApiURL(Api.baseURL + Api.bookingListData);
     final type = isBookingScreen ? 'UPCOMING' : 'HISTORY';
     final url = InfininURLHelpers.getRestApiURL(
-        Api.baseURL + Api.bookingListData + '?type=$type');
-    //final url = 'http://18.202.117.137:8080/feyst-service/experience-booking/find-by-foodie-id?type=UPCOMING';
-    // final url = InfininURLHelpers.getRestApiURL(
-    //     baseUrl + "foodie/profile-image/${_appService.state.userInfo!.t.id}");
+        Api.baseURL + Api.bookingListData + '?type=$type');;
 
     String _userId = (_appService.state.userInfo?.t.id.toString()) ?? '45';
-
-    developer.log(' User Id is ${_appService.state.userInfo?.t.id}');
 
     emit(const Loading());
 
     final bookingListRequest = baserequest.BookingListRequest(
       t: int.parse(_userId),
-      //t: 63,
     ).toJson();
 
     final _header = <String, String>{

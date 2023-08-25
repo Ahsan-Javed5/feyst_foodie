@@ -102,6 +102,10 @@ class  SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionna
 
     emit(const Loading());
 
+    if(isProfileUpdate == true){
+      getFoodieAnswers();
+    }
+
     final signUpQuestionnaireRequest = baserequest.SignUpQuestionsRequest(
       t: baserequest.T(userId: int.parse(userId), category: 'FOODIE',),
     ).toJson();
@@ -163,5 +167,7 @@ class  SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionna
       Toaster.infoToast(context: context, message: 'Error in calling the Api');
     }
   }
+
+  void getFoodieAnswers() {}
 
 }

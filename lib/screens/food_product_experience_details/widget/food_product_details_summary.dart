@@ -418,7 +418,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
     var _productDetailSelectionTime = InfininURLHelpers.getAmPm(
         orderHelper!.hourSelected.startTime);
     var _productDetailSelectionType =
-        orderHelper!.selectedExperienceDetail.experiencePreferences?[1].preferenceName ?? 'Not available';
+        orderHelper!.selectedExperienceDetail.experiencePreferences?[0].preferenceName ?? 'Not available';
     var _numberOfPerson =
         orderHelper!.numberOfPerson ?? 4.toString();
     return Padding(
@@ -811,6 +811,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
   }
 
   Widget productPriceInformation(IAppThemeData appTheme) {
+    num price = widget.experienceData!.priceTypeId == 1 ? widget.experienceData!.price! * widget.appService.state.orderHelper.numberOfPerson : widget.experienceData!.price!;
     return Container(
       padding: const EdgeInsetsDirectional.only(start: 25, end: 25),
       child: Column(
@@ -851,7 +852,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                     children: [
                       GeneralText(
                         // Strings.productDetailPriceValue,
-                        'Rs. ' + (widget.experienceData!.price! + widget.experienceData!.price! * 0.17).toStringAsFixed(0),
+                        'Rs. ' + (price + price * 0.17).toStringAsFixed(0),
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
                             fontSize: 36,
@@ -859,7 +860,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                             fontWeight: FontWeight.w300),
                       ),
                       GeneralText(
-                        Strings.productDetailPriceTotal,
+                        'Total Amount',
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
                           fontSize: 15,
@@ -891,7 +892,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                     ),
                     GeneralText(
                       // Strings.productDetailPriceTaxValue,
-                      'Rs. ${widget.experienceData!.price!}',
+                      'Rs. $price',
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -916,7 +917,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                     ),
                     GeneralText(
                       // Strings.productDetailPriceTaxValue,
-                      'Rs. ' + (widget.experienceData!.price!  * 0.17).toStringAsFixed(0),
+                      'Rs. ' + (price  * 0.17).toStringAsFixed(0),
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -941,7 +942,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                     ),
                     GeneralText(
                       // Strings.productDetailAdvancePaymentValue,
-                      'Rs. ' + ((widget.experienceData!.price! + widget.experienceData!.price! * 0.17) * 0.20).toStringAsFixed(0),
+                      'Rs. ' + ((price + price * 0.17) * 0.20).toStringAsFixed(0),
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,

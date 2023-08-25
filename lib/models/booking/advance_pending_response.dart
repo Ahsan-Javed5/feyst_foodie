@@ -57,6 +57,7 @@ class T {
   String scheduleStartTime;
   int scheduleDayOfMonth;
   String persons;
+  String? chefProfileImageUrl;
   int preferenceId;
   String preferenceName;
   String preferenceDescription;
@@ -78,6 +79,7 @@ class T {
     required this.experienceMenu,
     required this.foodieProfile,
     required this.comments,
+    required this.chefProfileImageUrl,
     required this.totalPrice,
     required this.advancePayment,
     required this.priceTypeId,
@@ -115,6 +117,7 @@ class T {
             json["foodieProfile"].map((x) => FoodieProfile.fromJson(x))),
         comments: json["comments"],
         totalPrice: json["totalPrice"],
+        chefProfileImageUrl: json["chefProfileImageUrl"],
         advancePayment: json["advancePayment"],
         priceTypeId: json["priceTypeId"],
         bookingStatus: json["bookingStatus"],
@@ -153,6 +156,7 @@ class T {
         "foodieProfile":
             List<dynamic>.from(foodieProfile.map((x) => x.toJson())),
         "comments": comments,
+    "chefProfileImageUrl" : chefProfileImageUrl,
         "totalPrice": totalPrice,
         "advancePayment": advancePayment,
         "priceTypeId": priceTypeId,

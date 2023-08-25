@@ -105,395 +105,403 @@ class _FoodProductBookingConfirmedDetailsState
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context).theme;
-    return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: getStartedButtonTitle(appTheme: appTheme),
-      body: Container(
-          color: HexColor.fromHex("#212129"),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 18,
-              ),
-              Container(
-                height: 217,
-                padding: const EdgeInsets.only(bottom: 17),
-                decoration: BoxDecoration(
-                  color: HexColor.fromHex("#4b4b52"),
-                  borderRadius: const BorderRadius.only(
-                      bottomRight: Radius.circular(50),
-                      bottomLeft: Radius.circular(50)),
+    final _navigation = locateService<INavigationService>();
+    return WillPopScope(
+      onWillPop: () => onWillPop(),
+      child: Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: getStartedButtonTitle(appTheme: appTheme),
+        body: Container(
+            color: HexColor.fromHex("#212129"),
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 18,
                 ),
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Positioned(
-                      right: -40,
-                      top: -20,
-                      child: Container(
-                        width: 200,
-                        padding: const EdgeInsetsDirectional.all(20),
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(
-                                'assets/images/icons/food_product_ring.png'),
-                            fit: BoxFit.fill,
-                          ),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Image.asset(
-                          'assets/images/icons/food_product_experience.png',
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 33),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            GeneralText(
-                              // Strings.productDetailTitle,
-                              widget._advancePendingDetails.t.experienceName,
-                              style: appTheme
-                                  .typographies.interFontFamily.headline6
-                                  .copyWith(
-                                fontSize: 22,
-                                color: HexColor.fromHex('#f1c452'),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 3,
-                            ),
-                            GeneralText(
-                              // Strings.productDetailSubTitle,
-                              widget._advancePendingDetails.t.brandName,
-                              style: appTheme
-                                  .typographies.interFontFamily.headline6
-                                  .copyWith(
-                                fontSize: 14,
-                                color: HexColor.fromHex('#909094'),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 5.8,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: 13.9,
-                                  child: Image.asset(
-                                      'assets/images/icons/star.png',
-                                      fit: BoxFit.fill),
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                GeneralText(
-                                  Strings.productDetailReview,
-                                  style: appTheme
-                                      .typographies.interFontFamily.headline6
-                                      .copyWith(
-                                          fontSize: 12,
-                                          color: HexColor.fromHex('#8ea659')),
-                                ),
-                              ],
-                            ),
-                          ]),
-                    ),
-                    Positioned.fill(
-                      bottom: -30,
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          padding: const EdgeInsetsDirectional.only(
-                              start: 19.5, end: 19.5, top: 7, bottom: 7),
-                          decoration: BoxDecoration(
-                              color: HexColor.fromHex("#b0c18b"),
-                              borderRadius: BorderRadius.circular(20)),
-                          child: GeneralText(
-                            (widget._advancePendingDetails.t.bookingStatus
-                                        .toUpperCase() ==
-                                    Strings.confirmed
-                                ? Strings.foodItemBookingConfirmedStatus
-                                : widget._advancePendingDetails.t.bookingStatus
-                                            .toUpperCase() ==
-                                        Strings.inProgress
-                                    ? Strings.inProgressValue
-                                    : widget._advancePendingDetails.t
-                                                .bookingStatus
-                                                .toUpperCase() ==
-                                            Strings.billGenerated
-                                        ? Strings.billGeneratedValue
-                                        : widget._advancePendingDetails.t
-                                                    .bookingStatus
-                                                    .toUpperCase() ==
-                                                Strings.completeStatus
-                                                    .toUpperCase()
-                                            ? Strings.completeStatus
-                                            : Strings.pendingValue),
-                            style: appTheme
-                                .typographies.interFontFamily.headline6
-                                .copyWith(
-                              fontSize: 12,
-                              color: HexColor.fromHex('#212129'),
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned.fill(
-                      top: 40,
-                      child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Container(
-                            margin: const EdgeInsets.only(left: 29),
-                            child: const GeneralNewAppBar(
-                              rightIcon: Resources.homeIconSvg,
-                            ),
-                          )),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
+                Container(
+                  height: 217,
+                  padding: const EdgeInsets.only(bottom: 17),
+                  decoration: BoxDecoration(
+                    color: HexColor.fromHex("#4b4b52"),
+                    borderRadius: const BorderRadius.only(
+                        bottomRight: Radius.circular(50),
+                        bottomLeft: Radius.circular(50)),
+                  ),
+                  child: Stack(
+                    clipBehavior: Clip.none,
                     children: [
-                      widget._advancePendingDetails.t.bookingStatus
-                                  .toUpperCase() ==
-                              Strings.confirmed
-                          ? Column(
-                              children: [
-                                GeneralText(
-                                  Strings.foodItemBookingConfirmedOrderNo +
-                                          widget._advancePendingDetails.t
-                                              .verificationCode
-                                              .toString() ??
-                                      '',
-                                  style: appTheme
-                                      .typographies.interFontFamily.headline2
-                                      .copyWith(
-                                    fontSize: 17,
-                                    color: HexColor.fromHex('#f1c452'),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 14,
-                                ),
-                                GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        if (qr_code_scanned) {
-                                          qr_code_scanned = false;
-                                        } else {
-                                          qr_code_scanned = true;
-                                        }
-                                      });
-                                    },
-                                    child: Stack(
-                                      children: [
-                                        Container(
-                                            decoration: BoxDecoration(
-                                              border: qr_code_scanned
-                                                  ? Border.all(
-                                                      color: HexColor.fromHex(
-                                                          "#8ea659"),
-                                                      width: 10)
-                                                  : Border.all(
-                                                      color: Colors.white,
-                                                      width: 10),
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              color: Colors.white,
-                                            ),
-                                            padding: const EdgeInsets.all(5),
-                                            child: Stack(
-                                              children: [
-                                                SizedBox(
-                                                    width: 181,
-                                                    height: 185,
-                                                    child:
-                                                    //Container(),
-                                                    QrImage(
-                                                      data: widget
-                                                          ._advancePendingDetails
-                                                          .t
-                                                          .qrRequest!
-                                                          .toJson()
-                                                          .toString(),
-                                                    ),
-                                                ),
-
-                                                // Image.asset(
-                                                //   "assets/images/icons/qr_code_sample.jpeg",
-                                                //
-                                                // ),
-
-                                                // Positioned.fill(
-                                                //     top: 10,
-                                                //     right: 20,
-                                                //     child: Container(
-                                                //         width: 24,
-                                                //         height: 24,
-                                                //         decoration: BoxDecoration(
-                                                //           shape: BoxShape.circle,
-                                                //           color: HexColor.fromHex("#8ea659"),
-                                                //         ),
-                                                //         child: Icon(
-                                                //           Icons.check,
-                                                //           color: Colors.white,
-                                                //           size: 23,
-                                                //         ))),
-                                              ],
-                                            )),
-                                        if (qr_code_scanned)
-                                          Positioned.fill(
-                                            child: Align(
-                                                alignment: Alignment.topRight,
-                                                child: Image.asset(
-                                                  Resources.bookingCheckboxPNG,
-                                                  height: 24,
-                                                )),
-                                          ),
-                                      ],
-                                    )),
-                                const SizedBox(
-                                  height: 18,
-                                ),
-                                GeneralText(
-                                  widget._advancePendingDetails.t.comments,
-                                  style: appTheme
-                                      .typographies.interFontFamily.headline6
-                                      .copyWith(
-                                    fontSize: 16,
-                                    color: HexColor.fromHex('#ffffff'),
-                                  ),
-                                  textAlign: TextAlign.center,
-                                  maxLines: 3,
-                                ),
-                              ],
-                            )
-                          : const SizedBox(),
-                      const SizedBox(
-                        height: 28,
-                      ),
-                      chefInformation(appTheme),
-                      const SizedBox(
-                        height: 33.9,
-                      ),
-                      Container(
-                        padding: const EdgeInsetsDirectional.only(
-                            start: 25, end: 25),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            GeneralText(
-                              Strings.bookingConfirmedDetailsLabel,
-                              style: appTheme
-                                  .typographies.interFontFamily.headline2
-                                  .copyWith(
-                                fontSize: 20,
-                                color: HexColor.fromHex('#f1c452'),
-                              ),
+                      Positioned(
+                        right: -40,
+                        top: -20,
+                        child: Container(
+                          width: 200,
+                          padding: const EdgeInsetsDirectional.all(20),
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(
+                                  'assets/images/icons/food_product_ring.png'),
+                              fit: BoxFit.fill,
                             ),
-                            InkWell(
-                              onTap: () {
-                                setState(() {
-                                  if (showDetailsView) {
-                                    showDetailsView = false;
-                                  } else {
-                                    showDetailsView = true;
-                                  }
-                                });
-                              },
-                              child: showDetailsView
-                                  ? Container(
-                                      width: 26,
-                                      child: Image.asset(
-                                        "assets/images/icons/showData.png",
-                                      ),
-                                    )
-                                  : Container(
-                                      width: 26,
-                                      child: Image.asset(
-                                        "assets/images/icons/hideData.png",
-                                      ),
-                                    ),
-                            )
-                          ],
+                            shape: BoxShape.circle,
+                          ),
+                          child: Image.asset(
+                            'assets/images/icons/food_product_experience.png',
+                          ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 32.3,
+                      Padding(
+                        padding: const EdgeInsets.only(left: 33),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              GeneralText(
+                                // Strings.productDetailTitle,
+                                widget._advancePendingDetails.t.experienceName,
+                                style: appTheme
+                                    .typographies.interFontFamily.headline6
+                                    .copyWith(
+                                  fontSize: 22,
+                                  color: HexColor.fromHex('#f1c452'),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 3,
+                              ),
+                              GeneralText(
+                                // Strings.productDetailSubTitle,
+                                widget._advancePendingDetails.t.brandName,
+                                style: appTheme
+                                    .typographies.interFontFamily.headline6
+                                    .copyWith(
+                                  fontSize: 14,
+                                  color: HexColor.fromHex('#909094'),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 5.8,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    width: 13.9,
+                                    child: Image.asset(
+                                        'assets/images/icons/star.png',
+                                        fit: BoxFit.fill),
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  GeneralText(
+                                    Strings.productDetailReview,
+                                    style: appTheme
+                                        .typographies.interFontFamily.headline6
+                                        .copyWith(
+                                            fontSize: 12,
+                                            color: HexColor.fromHex('#8ea659')),
+                                  ),
+                                ],
+                              ),
+                            ]),
                       ),
-                      showDetails(appTheme),
+                      Positioned.fill(
+                        bottom: -30,
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Container(
+                            padding: const EdgeInsetsDirectional.only(
+                                start: 19.5, end: 19.5, top: 7, bottom: 7),
+                            decoration: BoxDecoration(
+                                color: HexColor.fromHex("#b0c18b"),
+                                borderRadius: BorderRadius.circular(20)),
+                            child: GeneralText(
+                              (widget._advancePendingDetails.t.bookingStatus
+                                          .toUpperCase() ==
+                                      Strings.confirmed
+                                  ? Strings.foodItemBookingConfirmedStatus
+                                  : widget._advancePendingDetails.t.bookingStatus
+                                              .toUpperCase() ==
+                                          Strings.inProgress
+                                      ? Strings.inProgressValue
+                                      : widget._advancePendingDetails.t
+                                                  .bookingStatus
+                                                  .toUpperCase() ==
+                                              Strings.billGenerated
+                                          ? Strings.billGeneratedValue
+                                          : widget._advancePendingDetails.t
+                                                      .bookingStatus
+                                                      .toUpperCase() ==
+                                                  Strings.completeStatus
+                                                      .toUpperCase()
+                                              ? Strings.completeStatus
+                                              : Strings.pendingValue),
+                              style: appTheme
+                                  .typographies.interFontFamily.headline6
+                                  .copyWith(
+                                fontSize: 12,
+                                color: HexColor.fromHex('#212129'),
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned.fill(
+                        top: 40,
+                        child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Container(
+                              margin: const EdgeInsets.only(left: 29),
+                              child: GeneralNewAppBar(
+                                rightIcon: Resources.homeIconSvg,
+                                callBack: (){
+                                 _navigation.navigateTo(route:BottomBar(bottomBarType:
+                                  bottom_bar.BottomBarType.bookings));
+                                },
+                              ),
+                            )),
+                      ),
                     ],
                   ),
                 ),
-              ),
-
-              ///rating button for completed status
-              widget._advancePendingDetails.t.bookingStatus.toUpperCase() ==
-                      Strings.completeStatus
-                  ? Column(
+                const SizedBox(
+                  height: 20,
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
                       children: [
+                        widget._advancePendingDetails.t.bookingStatus
+                                    .toUpperCase() ==
+                                Strings.confirmed
+                            ? Column(
+                                children: [
+                                  GeneralText(
+                                    Strings.foodItemBookingConfirmedOrderNo +
+                                            widget._advancePendingDetails.t
+                                                .verificationCode
+                                                .toString() ??
+                                        '',
+                                    style: appTheme
+                                        .typographies.interFontFamily.headline2
+                                        .copyWith(
+                                      fontSize: 17,
+                                      color: HexColor.fromHex('#f1c452'),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 14,
+                                  ),
+                                  GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          if (qr_code_scanned) {
+                                            qr_code_scanned = false;
+                                          } else {
+                                            qr_code_scanned = true;
+                                          }
+                                        });
+                                      },
+                                      child: Stack(
+                                        children: [
+                                          Container(
+                                              decoration: BoxDecoration(
+                                                border: qr_code_scanned
+                                                    ? Border.all(
+                                                        color: HexColor.fromHex(
+                                                            "#8ea659"),
+                                                        width: 10)
+                                                    : Border.all(
+                                                        color: Colors.white,
+                                                        width: 10),
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                color: Colors.white,
+                                              ),
+                                              padding: const EdgeInsets.all(5),
+                                              child: Stack(
+                                                children: [
+                                                  SizedBox(
+                                                      width: 181,
+                                                      height: 185,
+                                                      child:
+                                                      //Container(),
+                                                      QrImage(
+                                                        data: widget
+                                                            ._advancePendingDetails
+                                                            .t
+                                                            .qrRequest!
+                                                            .toJson()
+                                                            .toString(),
+                                                      ),
+                                                  ),
+
+                                                  // Image.asset(
+                                                  //   "assets/images/icons/qr_code_sample.jpeg",
+                                                  //
+                                                  // ),
+
+                                                  // Positioned.fill(
+                                                  //     top: 10,
+                                                  //     right: 20,
+                                                  //     child: Container(
+                                                  //         width: 24,
+                                                  //         height: 24,
+                                                  //         decoration: BoxDecoration(
+                                                  //           shape: BoxShape.circle,
+                                                  //           color: HexColor.fromHex("#8ea659"),
+                                                  //         ),
+                                                  //         child: Icon(
+                                                  //           Icons.check,
+                                                  //           color: Colors.white,
+                                                  //           size: 23,
+                                                  //         ))),
+                                                ],
+                                              )),
+                                          if (qr_code_scanned)
+                                            Positioned.fill(
+                                              child: Align(
+                                                  alignment: Alignment.topRight,
+                                                  child: Image.asset(
+                                                    Resources.bookingCheckboxPNG,
+                                                    height: 24,
+                                                  )),
+                                            ),
+                                        ],
+                                      )),
+                                  const SizedBox(
+                                    height: 18,
+                                  ),
+                                  GeneralText(
+                                    widget._advancePendingDetails.t.comments,
+                                    style: appTheme
+                                        .typographies.interFontFamily.headline6
+                                        .copyWith(
+                                      fontSize: 16,
+                                      color: HexColor.fromHex('#ffffff'),
+                                    ),
+                                    textAlign: TextAlign.center,
+                                    maxLines: 3,
+                                  ),
+                                ],
+                              )
+                            : const SizedBox(),
                         const SizedBox(
-                          height: 15,
+                          height: 28,
                         ),
-                        SizedBox(
-                          width: double.infinity,
-                          height: 45,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 35,
-                            ),
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFFbb3127),
-                              ),
-                              child: const Text(
-                                'Rate Your Experience',
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w400,
+                        chefInformation(appTheme),
+                        const SizedBox(
+                          height: 33.9,
+                        ),
+                        Container(
+                          padding: const EdgeInsetsDirectional.only(
+                              start: 25, end: 25),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GeneralText(
+                                Strings.bookingConfirmedDetailsLabel,
+                                style: appTheme
+                                    .typographies.interFontFamily.headline2
+                                    .copyWith(
+                                  fontSize: 20,
+                                  color: HexColor.fromHex('#f1c452'),
                                 ),
                               ),
-                              onPressed: () {
-                                getDialog(
-                                  ctx: context,
-                                  title: 'Booking Completed!',
-                                  //titleColor: Colors.white,
-                                  //descColor: const Color(0xFFfee4a4),
-                                  description:
-                                      'Kindly review your experience with ${widget._advancePendingDetails.t.brandName}',
-                                  iconUrl: 'assets/images/tick_icon.png',
-                                  onTap: () async {
-                                    var item = widget._advancePendingDetails.t;
-                                    await viewModel.saveRating(
-                                        bookingId: item.id,
-                                        experienceId: item.experience.id,
-                                        stars: int.parse(_rating.toStringAsFixed(0)).toString(),
-                                        context: context);
-                                  },
-                                );
-                              },
-                            ),
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    if (showDetailsView) {
+                                      showDetailsView = false;
+                                    } else {
+                                      showDetailsView = true;
+                                    }
+                                  });
+                                },
+                                child: showDetailsView
+                                    ? Container(
+                                        width: 26,
+                                        child: Image.asset(
+                                          "assets/images/icons/showData.png",
+                                        ),
+                                      )
+                                    : Container(
+                                        width: 26,
+                                        child: Image.asset(
+                                          "assets/images/icons/hideData.png",
+                                        ),
+                                      ),
+                              )
+                            ],
                           ),
                         ),
                         const SizedBox(
-                          height: 30,
+                          height: 32.3,
                         ),
+                        showDetails(appTheme),
                       ],
-                    )
-                  : const SizedBox(),
-            ],
-          )),
+                    ),
+                  ),
+                ),
+
+                ///rating button for completed status
+                widget._advancePendingDetails.t.bookingStatus.toUpperCase() ==
+                        Strings.completeStatus
+                    ? Column(
+                        children: [
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          SizedBox(
+                            width: double.infinity,
+                            height: 45,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 35,
+                              ),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0xFFbb3127),
+                                ),
+                                child: const Text(
+                                  'Rate Your Experience',
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                onPressed: () {
+                                  getDialog(
+                                    ctx: context,
+                                    title: 'Booking Completed!',
+                                    //titleColor: Colors.white,
+                                    //descColor: const Color(0xFFfee4a4),
+                                    description:
+                                        'Kindly review your experience with ${widget._advancePendingDetails.t.brandName}',
+                                    iconUrl: 'assets/images/tick_icon.png',
+                                    onTap: () async {
+                                      var item = widget._advancePendingDetails.t;
+                                      await viewModel.saveRating(
+                                          bookingId: item.id,
+                                          experienceId: item.experience.id,
+                                          stars: int.parse(_rating.toStringAsFixed(0)).toString(),
+                                          context: context);
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                        ],
+                      )
+                    : const SizedBox(),
+              ],
+            )),
+      ),
     );
   }
 
@@ -856,6 +864,7 @@ class _FoodProductBookingConfirmedDetailsState
   }
 
   Widget productPriceInfo(IAppThemeData appTheme) {
+    int price = widget._advancePendingDetails.t.totalPrice;
     return Container(
       padding: const EdgeInsetsDirectional.only(start: 25, end: 25),
       child: Column(
@@ -1248,7 +1257,7 @@ class _FoodProductBookingConfirmedDetailsState
 
                       ///chef image
                       child:
-                          Image.network("assets/images/icons/user_image.png")),
+                          Image.network(Api.baseURLForImages+widget._advancePendingDetails.t.chefProfileImageUrl.toString())),
                   const SizedBox(
                     width: 11.5,
                   ),
@@ -1916,6 +1925,10 @@ class _FoodProductBookingConfirmedDetailsState
       //   bottomSheetType: BottomSheetType.dateFormat,
       // ),
     );
+  }
+
+  Future<bool> onWillPop() async {
+    return false;
   }
 }
 

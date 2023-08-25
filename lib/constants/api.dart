@@ -34,12 +34,12 @@ abstract class Api {
   ///DEV BASEURL
   //static const baseURL = 'https://dev.feyst.services/feyst-service/';
   //static const baseURLForJazzCash = 'dev.feyst.services/feyst-service/';
-
+  //static const baseURLForImages = 'http://18.202.117.137/feyst-media'; //for dev
   ///STAGING BASEURL
     static const baseURL = 'https://stag.feyst.services:443/feyst-service/';
     static const baseURLForJazzCash = 'stag.feyst.services/feyst-service/';
+    static const baseURLForImages = 'http://34.249.62.92/feyst-media/'; //for staging environment
 
-  static const baseURLForImages = 'http://18.202.117.137/feyst-media';
   static const preferenceAPI = 'preference/list';
   static const devBaseURL = 'https://abc2.com/';
   static const dprBaseURL = 'https://abc.com/';

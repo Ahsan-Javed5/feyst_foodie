@@ -99,6 +99,8 @@ flutter:
     - assets/images/icons/
     - assets/json/
     - assets/videos/
+    - assets/privacy.html
+    - assets/terms.html
   fonts:
     - family: Roboto
       fonts:
