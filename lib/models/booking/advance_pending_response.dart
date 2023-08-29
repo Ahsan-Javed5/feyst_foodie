@@ -156,7 +156,7 @@ class T {
         "foodieProfile":
             List<dynamic>.from(foodieProfile.map((x) => x.toJson())),
         "comments": comments,
-    "chefProfileImageUrl" : chefProfileImageUrl,
+        "chefProfileImageUrl": chefProfileImageUrl,
         "totalPrice": totalPrice,
         "advancePayment": advancePayment,
         "priceTypeId": priceTypeId,
@@ -197,6 +197,8 @@ class Experience {
   String description;
   dynamic wowFactorId;
   dynamic preferenceId;
+  dynamic latitude;
+  dynamic longitude;
   int price;
   int priceTypeId;
   String persons;
@@ -209,6 +211,8 @@ class Experience {
   Experience({
     required this.id,
     required this.chefId,
+    required this.longitude,
+    required this.latitude,
     required this.chefName,
     required this.chefBrandName,
     required this.chefAddress,
@@ -232,6 +236,8 @@ class Experience {
         chefName: json["chefName"],
         chefBrandName: json["chefBrandName"],
         chefAddress: json["chefAddress"],
+        latitude: json["latitude"],
+        longitude: json["longitude"],
         title: json["title"],
         description: json["description"],
         wowFactorId: json["wowFactorId"],
@@ -257,6 +263,8 @@ class Experience {
         "chefBrandName": chefBrandName,
         "chefAddress": chefAddress,
         "title": title,
+        "latitude": latitude,
+        "longitude": longitude,
         "description": description,
         "wowFactorId": wowFactorId,
         "preferenceId": preferenceId,

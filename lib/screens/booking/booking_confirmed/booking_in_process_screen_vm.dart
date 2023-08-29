@@ -37,26 +37,6 @@ class BookingInProcessScreenViewModel
     // String _userId = (_appService.state.userInfo?.t.id.toString())! ?? '45';
 
     emit(const Loading());
-    data.T dataRequest = data.T(id: _orderId);
-
-    // signuprequest.T t = signuprequest.T(
-    //   age: age.toString(),
-    //   name: name,
-    //   gender: gender,
-    //   mobileNo: mobileNumber,
-    //   professionalId: professionId,
-    //   profileImageUrl: null,
-    // );
-
-    // final signUpCredentials = SignupRequest(
-    //   t: t,
-    // ).toJson();
-    //SignupRequest
-    // final bookingListRequest = request.SignupRequest(
-    //   //  userId: int.parse(_userId),
-    //
-    //   t: dataRequest,
-    // ).toJson();
 
     final response = await _network.post(
       path: url,

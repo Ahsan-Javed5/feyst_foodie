@@ -8,6 +8,7 @@ import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:chef/ui_kit/widgets/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../constants/resources.dart';
 import '../../constants/strings.dart';
@@ -27,6 +28,8 @@ import '../booking/food_item_booking.dart';
 import '../custom_form/widgets/exto_field_option.dart';
 
 import 'package:qr_flutter/qr_flutter.dart';
+
+import '../google_map/google_map_screen.dart';
 
 class FoodProductBookingConfirmedDetails extends StatefulWidget {
   // const FoodProductBookingConfirmedDetails({Key? key}) : super(key: key);
@@ -220,7 +223,8 @@ class _FoodProductBookingConfirmedDetailsState
                                           .toUpperCase() ==
                                       Strings.confirmed
                                   ? Strings.foodItemBookingConfirmedStatus
-                                  : widget._advancePendingDetails.t.bookingStatus
+                                  : widget._advancePendingDetails.t
+                                              .bookingStatus
                                               .toUpperCase() ==
                                           Strings.inProgress
                                       ? Strings.inProgressValue
@@ -255,9 +259,11 @@ class _FoodProductBookingConfirmedDetailsState
                               margin: const EdgeInsets.only(left: 29),
                               child: GeneralNewAppBar(
                                 rightIcon: Resources.homeIconSvg,
-                                callBack: (){
-                                 _navigation.navigateTo(route:BottomBar(bottomBarType:
-                                  bottom_bar.BottomBarType.bookings));
+                                callBack: () {
+                                  _navigation.navigateTo(
+                                      route: BottomBar(
+                                          bottomBarType: bottom_bar
+                                              .BottomBarType.bookings));
                                 },
                               ),
                             )),
@@ -323,18 +329,18 @@ class _FoodProductBookingConfirmedDetailsState
                                               child: Stack(
                                                 children: [
                                                   SizedBox(
-                                                      width: 181,
-                                                      height: 185,
-                                                      child:
-                                                      //Container(),
-                                                      QrImage(
-                                                        data: widget
-                                                            ._advancePendingDetails
-                                                            .t
-                                                            .qrRequest!
-                                                            .toJson()
-                                                            .toString(),
-                                                      ),
+                                                    width: 181,
+                                                    height: 185,
+                                                    child:
+                                                        //Container(),
+                                                        QrImage(
+                                                      data: widget
+                                                          ._advancePendingDetails
+                                                          .t
+                                                          .qrRequest!
+                                                          .toJson()
+                                                          .toString(),
+                                                    ),
                                                   ),
 
                                                   // Image.asset(
@@ -364,7 +370,8 @@ class _FoodProductBookingConfirmedDetailsState
                                               child: Align(
                                                   alignment: Alignment.topRight,
                                                   child: Image.asset(
-                                                    Resources.bookingCheckboxPNG,
+                                                    Resources
+                                                        .bookingCheckboxPNG,
                                                     height: 24,
                                                   )),
                                             ),
@@ -481,11 +488,14 @@ class _FoodProductBookingConfirmedDetailsState
                                         'Kindly review your experience with ${widget._advancePendingDetails.t.brandName}',
                                     iconUrl: 'assets/images/tick_icon.png',
                                     onTap: () async {
-                                      var item = widget._advancePendingDetails.t;
+                                      var item =
+                                          widget._advancePendingDetails.t;
                                       await viewModel.saveRating(
                                           bookingId: item.id,
                                           experienceId: item.experience.id,
-                                          stars: int.parse(_rating.toStringAsFixed(0)).toString(),
+                                          stars: int.parse(
+                                                  _rating.toStringAsFixed(0))
+                                              .toString(),
                                           context: context);
                                     },
                                   );
@@ -999,17 +1009,24 @@ class _FoodProductBookingConfirmedDetailsState
                           style: appTheme.typographies.interFontFamily.headline6
                               .copyWith(
                             fontSize: 15,
-                            color: HexColor.fromHex(widget._advancePendingDetails.t
-                                .bookingStatus
-                                .toUpperCase() !=
-                                Strings.pendingValue ? '#8ea659' : '#ffffff'),
+                            color: HexColor.fromHex(widget
+                                        ._advancePendingDetails.t.bookingStatus
+                                        .toUpperCase() !=
+                                    Strings.pendingValue
+                                ? '#8ea659'
+                                : '#ffffff'),
                           ),
                         ),
-                        const SizedBox(width:2),
-                        widget._advancePendingDetails.t
-                            .bookingStatus
-                            .toUpperCase() !=
-                            Strings.pendingValue ? const Icon(Icons.check_circle, size: 15, color: Color(0xff8ea659),) : SizedBox(),
+                        const SizedBox(width: 2),
+                        widget._advancePendingDetails.t.bookingStatus
+                                    .toUpperCase() !=
+                                Strings.pendingValue
+                            ? const Icon(
+                                Icons.check_circle,
+                                size: 15,
+                                color: Color(0xff8ea659),
+                              )
+                            : SizedBox(),
                       ],
                     ),
                     GeneralText(
@@ -1024,10 +1041,12 @@ class _FoodProductBookingConfirmedDetailsState
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
-                        color: HexColor.fromHex(widget._advancePendingDetails.t
-                            .bookingStatus
-                            .toUpperCase() !=
-                            Strings.pendingValue ? '#8ea659' : '#ffffff'),
+                        color: HexColor.fromHex(widget
+                                    ._advancePendingDetails.t.bookingStatus
+                                    .toUpperCase() !=
+                                Strings.pendingValue
+                            ? '#8ea659'
+                            : '#ffffff'),
                       ),
                     ),
                   ],
@@ -1257,7 +1276,18 @@ class _FoodProductBookingConfirmedDetailsState
 
                       ///chef image
                       child:
-                          Image.network(Api.baseURLForImages+widget._advancePendingDetails.t.chefProfileImageUrl.toString())),
+                          widget._advancePendingDetails.t.chefProfileImageUrl ==
+                                  null
+                              ? Image.asset(Resources.userProfileImageIcon)
+                              : CircleAvatar(
+                                  radius: 40, // Image radius
+                                  backgroundImage: NetworkImage(
+                                      Api.baseURLForImages +
+                                          widget._advancePendingDetails.t
+                                              .chefProfileImageUrl
+                                              .toString()),
+                                )),
+                  // Image.network(Api.baseURLForImages+widget._advancePendingDetails.t.chefProfileImageUrl.toString())),
                   const SizedBox(
                     width: 11.5,
                   ),
@@ -1273,29 +1303,47 @@ class _FoodProductBookingConfirmedDetailsState
                           color: HexColor.fromHex('#f1c452'),
                         ),
                       ),
-                      Row(
-                        children: [
-                          SizedBox(
-                              width: 10.8,
-                              child: Image.asset(
-                                  "assets/images/icons/location_pin.png")),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          SizedBox(
-                              width: 150,
-                              child: GeneralText(
-                                // Strings.productDetailChefLocation,
-                                widget._advancePendingDetails.t.address,
-                                maxLines: 2,
-                                style: appTheme
-                                    .typographies.interFontFamily.headline6
-                                    .copyWith(
-                                        fontSize: 14,
-                                        color: Colors.white,
-                                        decoration: TextDecoration.underline),
-                              )),
-                        ],
+                      InkWell(
+                        onTap: () {
+                          navigateToGoogleMap(widget._advancePendingDetails.t
+                              .experience.latitude, widget._advancePendingDetails.t
+                              .experience.longitude);
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => GoogleMapScreen(
+                          //       longitude: widget._advancePendingDetails.t
+                          //           .experience.longitude,
+                          //       latitude: widget._advancePendingDetails.t
+                          //           .experience.latitude,
+                          //     ),
+                          //   ),
+                          // );
+                        },
+                        child: Row(
+                          children: [
+                            SizedBox(
+                                width: 10.8,
+                                child: Image.asset(
+                                    "assets/images/icons/location_pin.png")),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            SizedBox(
+                                width: 150,
+                                child: GeneralText(
+                                  // Strings.productDetailChefLocation,
+                                  widget._advancePendingDetails.t.address,
+                                  maxLines: 2,
+                                  style: appTheme
+                                      .typographies.interFontFamily.headline6
+                                      .copyWith(
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                          decoration: TextDecoration.underline),
+                                )),
+                          ],
+                        ),
                       )
                     ],
                   )
@@ -1896,7 +1944,8 @@ class _FoodProductBookingConfirmedDetailsState
               title: Strings.generalButtonTitle.toUpperCase(),
               styleType: ButtonStyleType.fill,
               onTap: () {
-                bookingsListViewModel.cancelBooking(bookingId: widget._advancePendingDetails.t.id);
+                bookingsListViewModel.cancelBooking(
+                    bookingId: widget._advancePendingDetails.t.id);
                 Toaster.infoToast(
                     context: context,
                     message: 'Your Experience has been Cancelled');
@@ -1904,6 +1953,7 @@ class _FoodProductBookingConfirmedDetailsState
                 _navigate.navigateTo(
                     route: BottomBar(
                         bottomBarType: bottom_bar.BottomBarType.history));
+
                 ///Here need to call cancel api
                 // Navigator.push(
                 //   context,
@@ -1926,7 +1976,14 @@ class _FoodProductBookingConfirmedDetailsState
       // ),
     );
   }
-
+  static void navigateToGoogleMap(double lat, double lng) async {
+    var uri = Uri.parse("google.navigation:q=$lat,$lng&mode=d");
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      throw 'Could not launch ${uri.toString()}';
+    }
+  }
   Future<bool> onWillPop() async {
     return false;
   }

@@ -97,6 +97,7 @@ class Hour {
     required this.hourOfDay,
     required this.startTime,
     required this.endTime,
+    required this.openCapacity,
     required this.reservedStatus,
   });
 
@@ -105,6 +106,7 @@ class Hour {
   int hourOfDay;
   String startTime;
   String endTime;
+  int openCapacity;
   String reservedStatus;
 
   factory Hour.fromJson(Map<String, dynamic> json) => Hour(
@@ -114,6 +116,7 @@ class Hour {
         startTime: json["startTime"],
         endTime: json["endTime"],
         reservedStatus: json["reservedStatus"],
+        openCapacity: json["openCapacity"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -123,5 +126,6 @@ class Hour {
         "startTime": startTime,
         "endTime": endTime,
         "reservedStatus": reservedStatus,
+    "openCapacity": openCapacity,
       };
 }

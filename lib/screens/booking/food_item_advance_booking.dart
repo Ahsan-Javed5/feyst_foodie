@@ -36,26 +36,6 @@ class _FoodProductAdvancePendingDetailsState
         widget._advancePendingDetails.t.bookingStatus);
     loadMenu();
     loadWowFactor();
-    // wowFactorsList.addAll([
-    //   CustomModel(
-    //       name: Strings.productDetailWowFactorGarden,
-    //       icon: "assets/images/icons/garden.png"),
-    //   CustomModel(
-    //       name: Strings.productDetailWowFactorFireworks,
-    //       icon: "assets/images/icons/fireworks.png"),
-    //   CustomModel(
-    //       name: Strings.productDetailWowFactorPetFriendly,
-    //       icon: "assets/images/icons/pet_friendly.png"),
-    //   CustomModel(
-    //       name: Strings.productDetailWowFactorWifi,
-    //       icon: "assets/images/icons/wifi_2.png"),
-    //   CustomModel(
-    //       name: Strings.productDetailWowFactorMusic,
-    //       icon: "assets/images/icons/music.png"),
-    //   CustomModel(
-    //       name: Strings.productDetailWowFactorParking,
-    //       icon: "assets/images/icons/parking.png")
-    // ]);
     super.initState();
   }
 
@@ -69,10 +49,6 @@ class _FoodProductAdvancePendingDetailsState
           price: widget._advancePendingDetails.t.experienceMenu[i].price
               .toString(),
         ),
-        // CustomModel(name: "Buritto"),
-        // CustomModel(name: "Vegetable Salad"),
-        // CustomModel(name: "Hyderabadi Rice"),
-        // CustomModel(name: "Soft Drinks"),
       ]);
     }
   }
@@ -157,7 +133,7 @@ class _FoodProductAdvancePendingDetailsState
                               color: HexColor.fromHex('#f1c452'),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 3,
                           ),
                           GeneralText(
@@ -171,7 +147,7 @@ class _FoodProductAdvancePendingDetailsState
                               color: HexColor.fromHex('#909094'),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 4,
                           ),
                           Row(
@@ -202,7 +178,7 @@ class _FoodProductAdvancePendingDetailsState
                       child: Align(
                         alignment: Alignment.bottomCenter,
                         child: Container(
-                          padding: EdgeInsetsDirectional.only(
+                          padding: const EdgeInsetsDirectional.only(
                               start: 19.5, end: 19.5, top: 7, bottom: 7),
                           decoration: BoxDecoration(
                               color: HexColor.fromHex("#b0c18b"),
@@ -244,7 +220,7 @@ class _FoodProductAdvancePendingDetailsState
                   child: Column(
                     children: [
                       Container(
-                        padding: EdgeInsetsDirectional.only(start: 25, end: 25),
+                        padding: const EdgeInsetsDirectional.only(start: 25, end: 25),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -335,11 +311,11 @@ class _FoodProductAdvancePendingDetailsState
                         height: 32.9,
                       ),
                       extraPaymentNotes(appTheme),
-                      SizedBox(
+                      const SizedBox(
                         height: 42,
                       ),
                       checkTermsConditions(appTheme),
-                      SizedBox(
+                      const SizedBox(
                         height: 209.1,
                       ),
                     ],
@@ -354,7 +330,7 @@ class _FoodProductAdvancePendingDetailsState
   Widget wowFactors(IAppThemeData appTheme) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsetsDirectional.only(
+      padding: const EdgeInsetsDirectional.only(
           top: 20, bottom: 20, start: 11.8, end: 11.8),
       decoration: BoxDecoration(
           color: HexColor.fromHex("#4b4b52"),
@@ -370,8 +346,8 @@ class _FoodProductAdvancePendingDetailsState
                     width: 58,
                     height: 63.3,
                     padding: const EdgeInsetsDirectional.all(10),
-                    decoration: BoxDecoration(
-                      image: const DecorationImage(
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
                         image: AssetImage(
                             'assets/images/icons/food_item_circle.png'),
                         fit: BoxFit.fill,
@@ -517,11 +493,11 @@ class _FoodProductAdvancePendingDetailsState
                       ),
                     ]),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 29,
               ),
               productRelatedNotes(appTheme),
-              SizedBox(
+              const SizedBox(
                 height: 29,
               ),
               productMenuDetails(appTheme),
@@ -541,12 +517,12 @@ class _FoodProductAdvancePendingDetailsState
             color: HexColor.fromHex('#f1c452'),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 4,
         ),
         Container(
           width: double.infinity,
-          padding: EdgeInsetsDirectional.only(
+          padding: const EdgeInsetsDirectional.only(
               top: 15, bottom: 15, start: 14, end: 14),
           decoration: BoxDecoration(
               color: HexColor.fromHex("#212129"),
@@ -577,7 +553,7 @@ class _FoodProductAdvancePendingDetailsState
             color: HexColor.fromHex('#f1c452'),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 7,
         ),
         Wrap(
@@ -588,7 +564,7 @@ class _FoodProductAdvancePendingDetailsState
                 // height: 67,
                 padding: const EdgeInsetsDirectional.only(
                     top: 10, bottom: 10, start: 14, end: 14),
-                margin: EdgeInsets.only(right: 5, bottom: 7),
+                margin: const EdgeInsets.only(right: 5, bottom: 7),
                 decoration: BoxDecoration(
                     color: HexColor.fromHex("#212129"),
                     borderRadius: BorderRadius.circular(11)),
@@ -619,11 +595,11 @@ class _FoodProductAdvancePendingDetailsState
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                       ],
-                    ) : SizedBox(),
+                    ) : const SizedBox(),
                     GeneralText(
                       menuListItems[index].name ?? "",
                       style: appTheme.typographies.interFontFamily.headline2
@@ -638,74 +614,13 @@ class _FoodProductAdvancePendingDetailsState
               ),
           ],
         )
-        /* GridView.builder(
-            padding: EdgeInsets.zero,
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 1.5,
-              mainAxisSpacing: 7,
-              crossAxisSpacing: 5,
-              // mainAxisExtent: 67,
-            ),
-            itemCount: menuListItems.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Container(
-                padding: const EdgeInsetsDirectional.only(
-                    top: 10, bottom: 10, start: 14, end: 14),
-                decoration: BoxDecoration(
-                    color: HexColor.fromHex("#212129"),
-                    borderRadius: BorderRadius.circular(11)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GeneralText(
-                          Strings.productDetailSelectionMenuQuantity,
-                          style: appTheme.typographies.interFontFamily.headline2
-                              .copyWith(
-                            fontSize: 16,
-                            color: HexColor.fromHex('#f89f84'),
-                          ),
-                        ),
-                        GeneralText(
-                          Strings.productDetailSelectionMenuAmount,
-                          style: appTheme.typographies.interFontFamily.headline2
-                              .copyWith(
-                            fontSize: 16,
-                            color: HexColor.fromHex('#909094'),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Expanded(
-                      child: GeneralText(
-                        menuListItems[index].name ?? "",
-                        style: appTheme.typographies.interFontFamily.headline2
-                            .copyWith(
-                                fontSize: 14,
-                                color: HexColor.fromHex('#ffffff'),
-                                fontWeight: FontWeight.w400),
-                        maxLines: 3,
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }),*/
       ],
     );
   }
 
   Widget chefInformation(IAppThemeData appTheme) {
     return Container(
-      padding: EdgeInsetsDirectional.only(start: 25, end: 25),
+      padding: const EdgeInsetsDirectional.only(start: 25, end: 25),
       child: Column(
         children: [
           Row(
@@ -727,12 +642,12 @@ class _FoodProductAdvancePendingDetailsState
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 13.1,
           ),
           Container(
             width: double.infinity,
-            padding: EdgeInsetsDirectional.only(
+            padding: const EdgeInsetsDirectional.only(
                 top: 22, bottom: 22, start: 23, end: 23),
             decoration: BoxDecoration(
                 color: HexColor.fromHex("#4b4b52"),
@@ -748,7 +663,7 @@ class _FoodProductAdvancePendingDetailsState
                           shape: BoxShape.circle),
                       ///static chef image because image not available in api response (by ahsan)
                       child: Image.network("assets/images/icons/user_image.png")),
-                  SizedBox(
+                  const SizedBox(
                     width: 11.5,
                   ),
                   Expanded(
@@ -771,7 +686,7 @@ class _FoodProductAdvancePendingDetailsState
                                 width: 10.8,
                                 child: Image.asset(
                                     "assets/images/icons/location_pin.png")),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
                             Expanded(
@@ -794,7 +709,7 @@ class _FoodProductAdvancePendingDetailsState
                     ),
                   )
                 ]),
-                SizedBox(
+                const SizedBox(
                   height: 18.1,
                 ),
                 Container(
@@ -802,7 +717,7 @@ class _FoodProductAdvancePendingDetailsState
                   width: double.infinity,
                   height: 1,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 GeneralText(
@@ -980,7 +895,7 @@ class _FoodProductAdvancePendingDetailsState
 
   Widget extraPaymentNotes(IAppThemeData appTheme) {
     return Container(
-      padding: EdgeInsetsDirectional.only(start: 25, end: 25),
+      padding: const EdgeInsetsDirectional.only(start: 25, end: 25),
       child: Column(
         children: [
           Row(
@@ -1002,12 +917,12 @@ class _FoodProductAdvancePendingDetailsState
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 13.1,
           ),
           Container(
             width: double.infinity,
-            padding: EdgeInsetsDirectional.only(
+            padding: const EdgeInsetsDirectional.only(
                 top: 22, bottom: 22, start: 23, end: 23),
             decoration: BoxDecoration(
                 color: HexColor.fromHex("#bb3127"),
@@ -1037,7 +952,7 @@ class _FoodProductAdvancePendingDetailsState
               unselectedWidgetColor: HexColor.fromHex('#f1c452'),
             ),
             child: Checkbox(
-              shape: RoundedRectangleBorder(
+              shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(5.0))),
               checkColor: HexColor.fromHex('#f1c452'),
               activeColor: Colors.red,

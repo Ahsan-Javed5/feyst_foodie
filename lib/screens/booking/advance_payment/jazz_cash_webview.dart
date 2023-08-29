@@ -46,12 +46,12 @@ class _JazzCashWebViewState extends State<JazzCashWebView> {
         top: 30,
       ),
       child: InAppWebView(
-        initialUrlRequest: widget.bookindData.t.bookingStatus.toUpperCase() ==
+        initialUrlRequest: widget.bookindData.t?.bookingStatus?.toUpperCase() ==
                 Strings.acceptData
             ? URLRequest(
                 url: Uri(
                   path:
-                      '${Api.baseURLForJazzCash}experience-booking/confirm-booking/${widget.bookindData.t.id}',
+                      '${Api.baseURLForJazzCash}experience-booking/confirm-booking/${widget.bookindData.t?.id}',
                   scheme: 'https',
                 ),
                 headers: header,
@@ -59,7 +59,7 @@ class _JazzCashWebViewState extends State<JazzCashWebView> {
             : URLRequest(
                 url: Uri(
                     path:
-                        '${Api.baseURLForJazzCash}experience-booking/complete-booking/${widget.bookindData.t.id}',
+                        '${Api.baseURLForJazzCash}experience-booking/complete-booking/${widget.bookindData.t?.id}',
                     scheme: 'https'),
                 headers: header,
               ),
@@ -107,15 +107,15 @@ class _JazzCashWebViewState extends State<JazzCashWebView> {
   success(context) async {
     print('jazzcash success function call');
     final _foodItemAdvance = locateService<FoodItemAdvancePaymentViewModel>();
-    if (widget.bookindData.t.bookingStatus.toUpperCase() ==
+    if (widget.bookindData.t?.bookingStatus?.toUpperCase() ==
         Strings.billGenerated) {
       await _foodItemAdvance.completeBookingStatus(
-          context, widget.bookindData.t.brandName,
-          bookingId: widget.bookindData.t.id);
+          context, widget.bookindData.t?.brandName,
+          bookingId: int.parse(widget.bookindData.t!.id.toString()));
     } else {
       await _foodItemAdvance.updateBookingStatus(
-          context, widget.bookindData.t.brandName,
-          bookingId: widget.bookindData.t.id);
+          context, widget.bookindData.t?.brandName,
+          bookingId: int.parse(widget.bookindData.t!.id.toString()));
     }
     isLoading = false;
   }

@@ -8,6 +8,7 @@ class OrderHelper {
   late Hour hourSelected;
   late home_data.Experiences selectedExperienceDetail;
   String noteAdded = '';
+  late int openCapacity;
   String selectedCategory = 'Couple';
   int numberOfPerson = 4;
 

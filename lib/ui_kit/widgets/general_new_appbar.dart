@@ -1,12 +1,6 @@
-import 'package:chef/constants/constants.dart';
 import 'package:chef/helpers/helpers.dart';
-//import 'package:chef/screens/bottom_bar/bottom_bar.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:chef/screens/bottom_bar/bottom_bar.dart' as bottom_bar;
-import '../../services/navigation/navigation_service.dart';
-import '../../setup.dart';
-import 'general_text.dart';
+import '/setup.dart';
 
 class GeneralNewAppBar extends StatelessWidget {
   final String? title;
