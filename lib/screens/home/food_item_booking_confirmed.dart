@@ -218,28 +218,30 @@ class _FoodProductBookingConfirmedDetailsState
                             decoration: BoxDecoration(
                                 color: HexColor.fromHex("#b0c18b"),
                                 borderRadius: BorderRadius.circular(20)),
-                            child: GeneralText(
-                              (widget._advancePendingDetails.t.bookingStatus
-                                          .toUpperCase() ==
-                                      Strings.confirmed
-                                  ? Strings.foodItemBookingConfirmedStatus
-                                  : widget._advancePendingDetails.t
-                                              .bookingStatus
-                                              .toUpperCase() ==
-                                          Strings.inProgress
-                                      ? Strings.inProgressValue
-                                      : widget._advancePendingDetails.t
-                                                  .bookingStatus
-                                                  .toUpperCase() ==
-                                              Strings.billGenerated
-                                          ? Strings.billGeneratedValue
-                                          : widget._advancePendingDetails.t
-                                                      .bookingStatus
-                                                      .toUpperCase() ==
-                                                  Strings.completeStatus
-                                                      .toUpperCase()
-                                              ? Strings.completeStatus
-                                              : Strings.pendingValue),
+                            child: GeneralText(widget._advancePendingDetails.t.bookingStatus.toUpperCase(),
+                              // (
+                              //     widget._advancePendingDetails.t.bookingStatus
+                              //             .toUpperCase() ==
+                              //         Strings.confirmed
+                              //     ? Strings.foodItemBookingConfirmedStatus
+                              //     : widget._advancePendingDetails.t
+                              //                 .bookingStatus
+                              //                 .toUpperCase() ==
+                              //             Strings.inProgress
+                              //         ? Strings.inProgressValue
+                              //         : widget._advancePendingDetails.t
+                              //                     .bookingStatus
+                              //                     .toUpperCase() ==
+                              //                 Strings.billGenerated
+                              //             ? Strings.billGeneratedValue
+                              //             : widget._advancePendingDetails.t
+                              //                         .bookingStatus
+                              //                         .toUpperCase() ==
+                              //                     Strings.completeStatus
+                              //                         .toUpperCase()
+                              //                 ? Strings.completeStatus
+                              //                 : Strings.pendingValue
+                              // ),
                               style: appTheme
                                   .typographies.interFontFamily.headline6
                                   .copyWith(
@@ -874,7 +876,6 @@ class _FoodProductBookingConfirmedDetailsState
   }
 
   Widget productPriceInfo(IAppThemeData appTheme) {
-    int price = widget._advancePendingDetails.t.totalPrice;
     return Container(
       padding: const EdgeInsetsDirectional.only(start: 25, end: 25),
       child: Column(
@@ -916,9 +917,7 @@ class _FoodProductBookingConfirmedDetailsState
                       GeneralText(
                         // Strings.productDetailPriceValue,
                         'Rs. ' +
-                            (widget._advancePendingDetails.t.totalPrice +
-                                    widget._advancePendingDetails.t.totalPrice *
-                                        0.17)
+                            (widget._advancePendingDetails.t.totalAmount)
                                 .toStringAsFixed(0),
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
@@ -986,7 +985,7 @@ class _FoodProductBookingConfirmedDetailsState
                     GeneralText(
                       // Strings.productDetailPriceTaxValue,
                       'Rs. ' +
-                          (widget._advancePendingDetails.t.totalPrice * 0.17)
+                          (widget._advancePendingDetails.t.tax)
                               .toStringAsFixed(0),
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
@@ -1032,11 +1031,7 @@ class _FoodProductBookingConfirmedDetailsState
                     GeneralText(
                       // Strings.productDetailAdvancePaymentValue,
                       'Rs. ' +
-                          ((widget._advancePendingDetails.t.totalPrice +
-                                      widget._advancePendingDetails.t
-                                              .totalPrice *
-                                          0.17) *
-                                  0.20)
+                          (widget._advancePendingDetails.t.advancePayment)
                               .toStringAsFixed(0),
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
@@ -1683,7 +1678,7 @@ class _FoodProductBookingConfirmedDetailsState
                 appTheme,
               ),
               const SizedBox(
-                height: 209,
+                height: 70,
               ),
             ],
           )

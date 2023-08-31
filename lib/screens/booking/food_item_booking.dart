@@ -338,8 +338,8 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   GeneralText(
-                                    getStatus(item.bookingStatus.toString()),
-                                    //  item.bookingStatus ?? "",
+                                    //getStatus(item.bookingStatus.toString()),
+                                      item.bookingStatus ?? "",
                                     style: appTheme
                                         .typographies.interFontFamily.headline1
                                         .copyWith(

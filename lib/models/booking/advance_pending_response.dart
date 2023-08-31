@@ -47,6 +47,10 @@ class T {
   String comments;
   int totalPrice;
   double advancePayment;
+  double tax;
+  int advancePercentage;
+  dynamic taxPercentage;
+  double totalAmount;
   int priceTypeId;
   String bookingStatus;
   String foodieName;
@@ -68,8 +72,6 @@ class T {
   String subHost;
   String subHostMobileNo;
   String address;
-  double tax;
-  int advancePercentage;
   int? verificationCode;
   QrRequest? qrRequest;
 
@@ -82,6 +84,8 @@ class T {
     required this.chefProfileImageUrl,
     required this.totalPrice,
     required this.advancePayment,
+    required this.totalAmount,
+    required this.taxPercentage,
     required this.priceTypeId,
     required this.bookingStatus,
     required this.foodieName,
@@ -117,6 +121,8 @@ class T {
             json["foodieProfile"].map((x) => FoodieProfile.fromJson(x))),
         comments: json["comments"],
         totalPrice: json["totalPrice"],
+        totalAmount: json["totalAmount"],
+        taxPercentage: json["taxPercentage"],
         chefProfileImageUrl: json["chefProfileImageUrl"],
         advancePayment: json["advancePayment"],
         priceTypeId: json["priceTypeId"],
@@ -159,6 +165,8 @@ class T {
         "chefProfileImageUrl": chefProfileImageUrl,
         "totalPrice": totalPrice,
         "advancePayment": advancePayment,
+        "totalAmount": totalAmount,
+        "taxPercentage": taxPercentage,
         "priceTypeId": priceTypeId,
         "bookingStatus": bookingStatus,
         "foodieName": foodieName,

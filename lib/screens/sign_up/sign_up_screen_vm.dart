@@ -178,7 +178,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
           deviceType: Platform.isAndroid ? 'ANDROID' : 'IOS',
           fcmToken:   await FirebaseMessaging.instance.getToken(),
           gender: gender,
-          mobileNo: mobileNumber,
+          mobileNo: '+' + mobileNumber,
           professionalId: professionId,
           profileImageUrl: null,
         );

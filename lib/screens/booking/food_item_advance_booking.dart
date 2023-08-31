@@ -312,12 +312,12 @@ class _FoodProductAdvancePendingDetailsState
                       ),
                       extraPaymentNotes(appTheme),
                       const SizedBox(
-                        height: 42,
+                        height: 70,
                       ),
-                      checkTermsConditions(appTheme),
-                      const SizedBox(
-                        height: 209.1,
-                      ),
+                      //checkTermsConditions(appTheme),
+                      // const SizedBox(
+                      //   height: 209.1,
+                      // ),
                     ],
                   ),
                 ),
@@ -786,7 +786,7 @@ class _FoodProductAdvancePendingDetailsState
                     children: [
                       GeneralText(
                         // Strings.productDetailPriceValue,
-                        'Rs. ' + (widget._advancePendingDetails.t.totalPrice + widget._advancePendingDetails.t.totalPrice * 0.17).toStringAsFixed(0),
+                        'Rs. ' + (widget._advancePendingDetails.t.totalAmount).toStringAsFixed(0),
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
                             fontSize: 36,
@@ -851,7 +851,7 @@ class _FoodProductAdvancePendingDetailsState
                     ),
                     GeneralText(
                       // Strings.productDetailPriceTaxValue,
-                      'Rs. ' + (widget._advancePendingDetails.t.totalPrice * 0.17).toStringAsFixed(0),
+                      'Rs. ' + (widget._advancePendingDetails.t.tax).toStringAsFixed(0),
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -876,7 +876,7 @@ class _FoodProductAdvancePendingDetailsState
                     ),
                     GeneralText(
                       // Strings.productDetailAdvancePaymentValue,
-                      'Rs. ' + ((widget._advancePendingDetails.t.totalPrice + widget._advancePendingDetails.t.totalPrice * 0.17) * 0.20).toStringAsFixed(0),
+                      'Rs. ' + (widget._advancePendingDetails.t.advancePayment).toStringAsFixed(0),
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,

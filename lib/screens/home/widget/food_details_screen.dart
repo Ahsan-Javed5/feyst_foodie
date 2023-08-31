@@ -1796,7 +1796,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
         ///preferences and no of persons section in this row
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -1826,52 +1826,52 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                   height: 12,
                 ),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.50,
+                  //width: MediaQuery.of(context).size.width * 0.50,
                   child: wowFactors(appTheme, preferencesList),
                 ),
               ],
             ),
-            Container(
-              color: Colors.white.withOpacity(0.8),
-              width: 0.5,
-              height: 110,
-            ),
-            //Spacer(),
-            Padding(
-              padding: const EdgeInsets.only(
-                right: 30,
-              ),
-              child: Column(
-                children: [
-                  GeneralText(
-                    widget.data!.persons.toString(),
-                    style: appTheme.typographies.interFontFamily.headline6
-                        .copyWith(
-                      fontSize: 35,
-                      color: HexColor.fromHex('#b0c18b'),
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Image.asset(
-                        Resources.userIconPNG,
-                        height: 10,
-                        color: Colors.white,
-                      ),
-                      const SizedBox(width: 6),
-                      GeneralText(
-                        'Persons',
-                        style: appTheme.typographies.interFontFamily.headline6
-                            .copyWith(
-                          fontSize: 14,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            // Container(
+            //   color: Colors.white.withOpacity(0.8),
+            //   width: 0.5,
+            //   height: 110,
+            // ),
+            // //Spacer(),
+            // Padding(
+            //   padding: const EdgeInsets.only(
+            //     right: 30,
+            //   ),
+            //   child: Column(
+            //     children: [
+            //       GeneralText(
+            //         widget.data!.persons.toString(),
+            //         style: appTheme.typographies.interFontFamily.headline6
+            //             .copyWith(
+            //           fontSize: 35,
+            //           color: HexColor.fromHex('#b0c18b'),
+            //         ),
+            //       ),
+            //       Row(
+            //         children: [
+            //           Image.asset(
+            //             Resources.userIconPNG,
+            //             height: 10,
+            //             color: Colors.white,
+            //           ),
+            //           const SizedBox(width: 6),
+            //           GeneralText(
+            //             'Persons',
+            //             style: appTheme.typographies.interFontFamily.headline6
+            //                 .copyWith(
+            //               fontSize: 14,
+            //               color: Colors.white,
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
         const SizedBox(
@@ -1915,6 +1915,11 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           child: GoogleMap(
             mapType: MapType.normal,
             zoomControlsEnabled: false,
+            zoomGesturesEnabled: false,
+            scrollGesturesEnabled: false,
+            rotateGesturesEnabled: false,
+            compassEnabled: false,
+            mapToolbarEnabled: false,
             initialCameraPosition: CameraPosition(
               target: LatLng(
                 widget.chefData.t!.latitude ?? 0.0,

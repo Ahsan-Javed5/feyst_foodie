@@ -33,10 +33,15 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
                 body: state.when(
                   initialized: displayInitialized,
                   loading: displayLoading,
-                  loaded: (homeResponse) => displayLoaded(
-                    context: context,
-                    homeResponseData: homeResponse,
-                    //foodMenuDetail: foodMenuDetail,
+                  loaded: (homeResponse) => GestureDetector(
+                    onVerticalDragEnd: (d){
+                      viewModel.fetchData(context: context);
+                    },
+                    child: displayLoaded(
+                      context: context,
+                      homeResponseData: homeResponse,
+                      //foodMenuDetail: foodMenuDetail,
+                    ),
                   ),
                 )),
             onWillPop: () => onWillPop(),
