@@ -58,6 +58,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   // late List<DropdownMenuItem<String>> items = [];
 
   final items = <String>[];
+  final preferenceIds = <int>[];
 
   bool scheduleForm = false;
 
@@ -96,25 +97,15 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
         .map((element) => element.mealName)
         .toSet()
         .toList();
-    var newItem = const DropdownMenuItem(
-      child: Text('Family'),
-      value: 'Family',
-      alignment: Alignment.centerLeft,
-    );
-    var newItem1 = const DropdownMenuItem(
-      child: Text('Couple'),
-      value: 'Couple',
-      alignment: Alignment.centerLeft,
-    );
-    var newItem2 = const DropdownMenuItem(
-      child: Text('Single'),
-      value: 'Single',
-      alignment: Alignment.centerLeft,
-    );
 
-    items.add('Couple');
-    items.add('Single');
-    items.add('Family');
+    widget.data?.experiencePreferences?.forEach((element) {
+      items.add(element.preferenceName.toString());
+      preferenceIds.add(int.parse(element.id.toString()));
+    });
+
+   // items.add('Couple');
+   // items.add('Single');
+  //  items.add('Family');
 
     nOfPersons.text = '0';
     if (_appService.state.orderHelper != null) {
@@ -1150,9 +1141,6 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                                   selectedItemId: 1,
                                               borderColor: Colors.transparent,
                                               name: 'Select',
-                                              //     dropDownHeight: 51.0,
-
-                                              // borderColor: appTheme.colors.textFieldBorderColor,
                                               style: appTheme.typographies
                                                   .interFontFamily.headline6
                                                   .copyWith(
@@ -1171,6 +1159,12 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                                         '${value}');
                                                 _appService.state.orderHelper!
                                                     .selectedCategory = value;
+                                                widget.data?.experiencePreferences?.forEach((element) {
+                                                  if(element.preferenceName == value)
+                                                    {
+                                                      _appService.state.orderHelper?.selectedPreferenceId = int.parse(element.preferenceId.toString());
+                                                    }
+                                                });
                                               },
                                             ),
                                             /*GeneralDropdown(
@@ -1796,83 +1790,31 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
         ///preferences and no of persons section in this row
         Row(
-          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      color: HexColor.fromHex('#f1c452'),
-                      width: 16,
-                      height: 1,
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    GeneralText(
-                      Strings.foodDetailPreferences,
-                      style: appTheme.typographies.interFontFamily.headline6
-                          .copyWith(
-                        fontSize: 20,
-                        color: HexColor.fromHex('#f1c452'),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                SizedBox(
-                  //width: MediaQuery.of(context).size.width * 0.50,
-                  child: wowFactors(appTheme, preferencesList),
-                ),
-              ],
+            Container(
+              color: HexColor.fromHex('#f1c452'),
+              width: 16,
+              height: 1,
             ),
-            // Container(
-            //   color: Colors.white.withOpacity(0.8),
-            //   width: 0.5,
-            //   height: 110,
-            // ),
-            // //Spacer(),
-            // Padding(
-            //   padding: const EdgeInsets.only(
-            //     right: 30,
-            //   ),
-            //   child: Column(
-            //     children: [
-            //       GeneralText(
-            //         widget.data!.persons.toString(),
-            //         style: appTheme.typographies.interFontFamily.headline6
-            //             .copyWith(
-            //           fontSize: 35,
-            //           color: HexColor.fromHex('#b0c18b'),
-            //         ),
-            //       ),
-            //       Row(
-            //         children: [
-            //           Image.asset(
-            //             Resources.userIconPNG,
-            //             height: 10,
-            //             color: Colors.white,
-            //           ),
-            //           const SizedBox(width: 6),
-            //           GeneralText(
-            //             'Persons',
-            //             style: appTheme.typographies.interFontFamily.headline6
-            //                 .copyWith(
-            //               fontSize: 14,
-            //               color: Colors.white,
-            //             ),
-            //           ),
-            //         ],
-            //       ),
-            //     ],
-            //   ),
-            // ),
+            const SizedBox(
+              width: 5,
+            ),
+            GeneralText(
+              Strings.foodDetailPreferences,
+              style: appTheme.typographies.interFontFamily.headline6
+                  .copyWith(
+                fontSize: 20,
+                color: HexColor.fromHex('#f1c452'),
+              ),
+            ),
           ],
+        ),
+        const SizedBox(
+          height: 12,
+        ),
+        SizedBox(
+          //width: MediaQuery.of(context).size.width * 0.50,
+          child: wowFactors(appTheme, preferencesList),
         ),
         const SizedBox(
           height: 12,

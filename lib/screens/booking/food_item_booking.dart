@@ -205,7 +205,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       GeneralText(
-                                        item.preferenceName ?? "",
+                                        item.experienceName ?? "",
                                         style: appTheme.typographies
                                             .interFontFamily.headline6
                                             .copyWith(

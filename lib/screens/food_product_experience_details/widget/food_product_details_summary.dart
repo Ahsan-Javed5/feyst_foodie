@@ -418,7 +418,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
     var _productDetailSelectionTime = InfininURLHelpers.getAmPm(
         orderHelper!.hourSelected.startTime);
     var _productDetailSelectionType =
-        orderHelper!.selectedExperienceDetail.experiencePreferences?[0].preferenceName ?? 'Not available';
+        orderHelper!.selectedCategory;
     var _numberOfPerson =
         orderHelper!.numberOfPerson ?? 4.toString();
     return Padding(

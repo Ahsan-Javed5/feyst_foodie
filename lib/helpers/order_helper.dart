@@ -10,6 +10,7 @@ class OrderHelper {
   String noteAdded = '';
   late int openCapacity;
   String selectedCategory = 'Couple';
+  late int selectedPreferenceId;
   int numberOfPerson = 4;
 
   OrderHelper updateChecklist({

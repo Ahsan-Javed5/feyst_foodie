@@ -661,8 +661,7 @@ class _FoodProductAdvancePendingDetailsState
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.white, width: 2),
                           shape: BoxShape.circle),
-                      ///static chef image because image not available in api response (by ahsan)
-                      child: Image.network("assets/images/icons/user_image.png")),
+                      child: Image.network(widget._advancePendingDetails.t.chefProfileImageUrl.toString())),
                   const SizedBox(
                     width: 11.5,
                   ),
@@ -692,8 +691,7 @@ class _FoodProductAdvancePendingDetailsState
                             Expanded(
                               child: GeneralText(
                                 // Strings.productDetailChefLocation,
-                                widget._advancePendingDetails.t.experience
-                                    .chefAddress,
+                                widget._advancePendingDetails.t.townName +', '+ widget._advancePendingDetails.t.cityName ,
                                 style: appTheme
                                     .typographies.interFontFamily.headline6
                                     .copyWith(

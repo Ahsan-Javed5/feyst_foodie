@@ -72,6 +72,8 @@ class T {
   String subHost;
   String subHostMobileNo;
   String address;
+  String cityName;
+  String townName;
   int? verificationCode;
   QrRequest? qrRequest;
 
@@ -106,6 +108,8 @@ class T {
     required this.subHost,
     required this.subHostMobileNo,
     required this.address,
+    required this.cityName,
+    required this.townName,
     required this.tax,
     required this.advancePercentage,
     this.verificationCode,
@@ -145,6 +149,8 @@ class T {
         subHost: json["subHost"],
         subHostMobileNo: json["subHostMobileNo"] ?? '',
         address: json["address"],
+        cityName: json["cityName"],
+        townName: json["townName"],
         tax: json["tax"],
         advancePercentage: json["advancePercentage"],
         verificationCode:
@@ -188,6 +194,8 @@ class T {
         "subHost": subHost,
         "subHostMobileNo": subHostMobileNo,
         "address": address,
+    "cityName": cityName,
+    "townName": townName,
         "tax": tax,
         "advancePercentage": advancePercentage,
         "verificationCode": verificationCode,
