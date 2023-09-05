@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:chef/models/home/home_response.dart';
+import 'package:chef/screens/sign_up/questionire/sign_up_questionire_screen_vm.dart';
+import 'package:chef/setup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -71,6 +73,7 @@ class HomeScreenViewModel extends BaseViewModel<HomeScreenState> {
       final dataRequest = data_request.DataRequest(
         t: t,
       ).toJson();
+      //await locateService<SignUpQuestionnaireScreenViewModel>().getFoodieAnswers();
       final _header = <String, String>{
         Api.headerAcceptKey: Api.headerAcceptTypeValue,
         'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',

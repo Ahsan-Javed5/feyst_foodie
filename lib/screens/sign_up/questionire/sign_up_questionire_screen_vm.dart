@@ -19,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../constants/api.dart';
+import '../../../models/answers_response.dart';
 import '../../../models/signup/question_answer_response.dart';
 import '../../../models/signup/save_foodie_answers_request.dart' as save_foodie_request;
 import '../../../models/signup/save_foodie_answers_request.dart';
@@ -45,6 +46,7 @@ class  SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionna
   ValueNotifier<File?> selectedImageNotifier = ValueNotifier<File?>(null);
   final ApplicationService _appService;
   late SignUpQuestionsModel signUpQuestionsModel;
+  late AnswersResponse foodieAnswers;
 
   bool isImageSelected = false;
   void updateSelectedImage(File? image) {
@@ -96,16 +98,11 @@ class  SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionna
     return null;
   }
 
-  Future<void> getQuestionnaireData({required String userId}) async {
+  Future<void> getQuestionnaireData(bool isProfileUpdate, {required String userId}) async {
     final url =
     InfininURLHelpers.getRestApiURL(Api.baseURL + Api.singUpQuestionnaireList);
 
     emit(const Loading());
-
-    if(isProfileUpdate == true){
-      getFoodieAnswers();
-    }
-
     final signUpQuestionnaireRequest = baserequest.SignUpQuestionsRequest(
       t: baserequest.T(userId: int.parse(userId), category: 'FOODIE',),
     ).toJson();
@@ -118,10 +115,9 @@ class  SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionna
       data: signUpQuestionnaireRequest,
       header: _header,
     );
-
     signUpQuestionsModel = signUpQuestionsModelFromJson(response.body);
+    if(isProfileUpdate == true) await getFoodieAnswers();
     debugPrint("${response.body}");
-
     response.body != "" || response.body != null ?  emit(Loaded(signUpQuestionsModel)) : emit(const Loading());
   }
 
@@ -168,6 +164,19 @@ class  SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionna
     }
   }
 
-  void getFoodieAnswers() {}
-
+  Future<void> getFoodieAnswers() async {
+    final url =
+    InfininURLHelpers.getRestApiURL(Api.baseURL + Api.foodieAnswers);
+    final response = await _network.post(
+      path: url,
+      data: {
+        "t": _appService.state.userInfo!.t.id
+      },
+      header: {
+    'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+    'Content-Type': 'application/json'
+    },
+    );
+    foodieAnswers = answersResponseFromJson(response.body);
+  }
 }

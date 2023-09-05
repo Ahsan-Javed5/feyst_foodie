@@ -1,8 +1,9 @@
-import '../../../../helpers/helpers.dart';
-import 'dart:developer' as developer;
-
-import '../../../models/signup/questionire_response.dart';
-import '../../../models/signup/sign_up_questionnaire_response_model.dart';
+import 'package:chef/models/answers_response.dart';
+import 'package:chef/screens/sign_up/questionire/sign_up_questionire_screen_vm.dart';
+import '/helpers/helpers.dart';
+import '/models/signup/questionire_response.dart' as questionnaireResp;
+import '/models/signup/sign_up_questionnaire_response_model.dart';
+import '/setup.dart';
 
 class QuestionView extends StatefulWidget {
   QuestionView({
@@ -12,7 +13,7 @@ class QuestionView extends StatefulWidget {
     required this.answerIdsCuisineTaste,
     required this.answerIdsPerfectAmbience,
     required this.answerIdsUniqueFood,
-    required this.answerIdsYourInterests,
+    required this.answerIdsYourInterests,  this.foodieAnswers, required this.isProfileUpdate,
   }) : super(key: key);
 
   final IAppThemeData appTheme;
@@ -22,6 +23,8 @@ class QuestionView extends StatefulWidget {
   List<int> answerIdsPerfectAmbience;
   List<int> answerIdsCuisineTaste;
   List<int> answerIdsYourInterests;
+  AnswersResponse? foodieAnswers;
+  bool isProfileUpdate;
 
   @override
   _QuestionViewState createState() => _QuestionViewState();
@@ -49,13 +52,25 @@ class _QuestionViewState extends State<QuestionView> {
         const SizedBox(
           height: 5,
         ),
-        MultiChipView(
+        widget.isProfileUpdate == true ? MultiChipView(
           answerIdsInterests: widget.answerIdsYourInterests,
           appTheme: widget.appTheme,
+          foodieAnswers: widget.foodieAnswers,
           answerList: widget.questionObj.answers,
           answerIdsUniqueFoodie: widget.answerIdsUniqueFood,
           answerIdPerfectAmbience: widget.answerIdsPerfectAmbience,
           answerIdsCuisineTaste: widget.answerIdsCuisineTaste,
+          isProfileUpdate: widget.isProfileUpdate,
+        ):
+        MultiChipView(
+          answerIdsInterests: widget.answerIdsYourInterests,
+          appTheme: widget.appTheme,
+          foodieAnswers: widget.foodieAnswers,
+          answerList: widget.questionObj.answers,
+          answerIdsUniqueFoodie: widget.answerIdsUniqueFood,
+          answerIdPerfectAmbience: widget.answerIdsPerfectAmbience,
+          answerIdsCuisineTaste: widget.answerIdsCuisineTaste,
+          isProfileUpdate: widget.isProfileUpdate,
         ),
       ],
     );
@@ -86,7 +101,7 @@ class MultiChipView extends StatefulWidget {
     required this.answerIdsInterests,
     required this.answerIdsUniqueFoodie,
     required this.answerIdPerfectAmbience,
-    required this.answerIdsCuisineTaste,
+    required this.answerIdsCuisineTaste, required this.foodieAnswers, required this.isProfileUpdate,
   }) : super(key: key);
 
   final IAppThemeData appTheme;
@@ -95,6 +110,8 @@ class MultiChipView extends StatefulWidget {
   List<int> answerIdPerfectAmbience;
   List<int> answerIdsCuisineTaste;
   List<int> answerIdsInterests;
+  AnswersResponse? foodieAnswers;
+  bool isProfileUpdate;
 
   @override
   _MultiChipViewState createState() => _MultiChipViewState();
@@ -102,6 +119,44 @@ class MultiChipView extends StatefulWidget {
 
 class _MultiChipViewState extends State<MultiChipView> {
   Map<String, bool> selectedData = {};
+  var questionnaireViewModel = locateService<SignUpQuestionnaireScreenViewModel>();
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    if(widget.isProfileUpdate == true){
+      widget.foodieAnswers?.t?.forEach((element) {
+        setState(() {
+          element.answer?.forEach((answerElement) {
+            selectedData[answerElement.name.toString()] =
+            true;
+            if(answerElement.questionId == 1) {
+              ///unique food answers list
+              widget.answerIdsUniqueFoodie
+                  .add((answerElement.id)!.toInt());
+            }
+            else if(answerElement.questionId == 2) {
+              ///perfect ambience answers list
+              widget.answerIdPerfectAmbience
+                  .add((answerElement.id)!.toInt());
+            }
+            else if(answerElement.questionId== 12) {
+              ///cuisine food answers list
+              widget.answerIdsCuisineTaste
+                  .add((answerElement.id)!.toInt());
+            }
+            ///interest answers list
+            else if(answerElement.questionId == 13) {
+              widget.answerIdsInterests
+                  .add((answerElement.id)!.toInt());
+            }
+          });
+        });
+      });
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +202,7 @@ class _MultiChipViewState extends State<MultiChipView> {
                   ? widget.answerIdsUniqueFoodie
                       .remove(widget.answerList[index].id)
                       : widget.answerIdsUniqueFoodie
-                      .add((widget.answerList[index].id)!.toInt());
+                      .add((int.parse(widget.answerList[index].id.toString())));
                   }
                   else if(widget.answerList[index].questionId == 2) {
                   ///perfect ambience answers list
@@ -156,7 +211,7 @@ class _MultiChipViewState extends State<MultiChipView> {
                   ? widget.answerIdPerfectAmbience
                       .remove(widget.answerList[index].id)
                       : widget.answerIdPerfectAmbience
-                      .add((widget.answerList[index].id)!.toInt());
+                      .add((int.parse(widget.answerList[index].id.toString())));
                   }
                   else if(widget.answerList[index].questionId == 12) {
                   ///cuisine food answers list
@@ -184,8 +239,7 @@ class _MultiChipViewState extends State<MultiChipView> {
                   child: ChipsWidget(
                     appTheme: widget.appTheme,
                     title: widget.answerList[index].name.toString(),
-                    selected: selectedData != null &&
-                            selectedData.isNotEmpty &
+                    selected: selectedData.isNotEmpty &
                                 selectedData
                                     .containsKey(widget.answerList[index].name)
                         ? selectedData[widget.answerList[index].name]!
@@ -235,7 +289,7 @@ class SingleOption extends StatefulWidget {
     this.widthContainer = 130,
   }) : super(key: key);
   final IAppThemeData appTheme;
-  List<Answer> answerList;
+  List<questionnaireResp.Answer> answerList;
   List<int> answersIds;
 
   final String title;

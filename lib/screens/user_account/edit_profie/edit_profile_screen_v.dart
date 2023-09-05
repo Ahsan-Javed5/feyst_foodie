@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:chef/helpers/color_helper.dart';
 import 'package:chef/helpers/helpers.dart';
@@ -7,18 +6,13 @@ import 'package:chef/screens/privacy_policy/privacy_policy.dart';
 import 'package:chef/screens/screen.dart';
 import 'package:chef/screens/user_account/reviews.dart';
 import 'package:chef/screens/user_account/user_profile.dart';
-import 'package:flutter/material.dart';
 
-import '../../../constants/resources.dart';
-import '../../../constants/strings.dart';
 import '../../../setup.dart';
-import '../../../theme/app_theme_data/app_theme_data.dart';
-import '../../../theme/app_theme_widget.dart';
 import '../../../ui_kit/widgets/general_new_appbar.dart';
-import '../../../ui_kit/widgets/general_text.dart';
 
 import 'dart:developer' as developer;
 
+import '../../sign_up/questionire/sign_up_questionire_screen_vm.dart';
 import 'edit_profile_screen_vm.dart';
 
 class EditProfileScreen extends BaseView<EditProfileScreenViewModel> {
@@ -35,6 +29,7 @@ class EditProfileScreen extends BaseView<EditProfileScreenViewModel> {
     Strings.labelLogOut,
   ];
   final _navigation = locateService<INavigationService>();
+  final signUpQuestionnaireViewModel = locateService<SignUpQuestionnaireScreenViewModel>();
 
 
   Future<bool> onWillPop() async {
@@ -45,6 +40,7 @@ class EditProfileScreen extends BaseView<EditProfileScreenViewModel> {
   Widget buildScreen(
       {required BuildContext context, required ScreenSizeData screenSizeData}) {
     final appTheme = AppTheme.of(context).theme;
+    //signUpQuestionnaireViewModel.getFoodieAnswers();
     return WillPopScope(
         onWillPop: () => onWillPop(),
         child:SafeArea(
@@ -84,7 +80,7 @@ class EditProfileScreen extends BaseView<EditProfileScreenViewModel> {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 18.0, vertical: 12),
                   child: InkWell(
-                    onTap: () {
+                    onTap: () async {
                       if (accountList.elementAt(index) == Strings.labelPersonalDetails) {
                         Navigator.push(
                           context,
@@ -92,6 +88,7 @@ class EditProfileScreen extends BaseView<EditProfileScreenViewModel> {
                               builder: (context) => SignUpScreen(true,)),
                         );
                       } else if (accountList.elementAt(index) == Strings.labelProfile) {
+                       // await signUpQuestionnaireViewModel.getFoodieAnswers();
                         Navigator.push(
                           context,
                           MaterialPageRoute(

@@ -24,7 +24,7 @@ class SignUpQuestionireScreen
     viewModel.isProfileUpdate = isProfileUpdate;
     return BlocBuilder<SignUpQuestionnaireScreenViewModel,
             SignUpQuestionnaireState>(
-        bloc: viewModel..getQuestionnaireData(userId: '0'),
+        bloc: viewModel..getQuestionnaireData(isProfileUpdate , userId: '0',),
         builder: (context, state) {
           return Scaffold(
             backgroundColor: appTheme.colors.primaryBackground,
@@ -255,14 +255,26 @@ class SignUpQuestionireScreen
           padding: const EdgeInsets.only(
             bottom: 20,
           ),
-          child: QuestionView(
+          child: isProfileUpdate == true ? QuestionView(
+            appTheme: appTheme,
+            questionObj: item,
+            foodieAnswers: viewModel.foodieAnswers,
+            answerIdsCuisineTaste: viewModel.answerIdsCuisineTaste,
+            answerIdsPerfectAmbience: viewModel.answerIdPerfectAmbience,
+            answerIdsUniqueFood: viewModel.answerIdsUniqueFoodie,
+            answerIdsYourInterests: viewModel.answerIdInterest,
+            isProfileUpdate: isProfileUpdate,
+          ) :
+          QuestionView(
             appTheme: appTheme,
             questionObj: item,
             answerIdsCuisineTaste: viewModel.answerIdsCuisineTaste,
             answerIdsPerfectAmbience: viewModel.answerIdPerfectAmbience,
             answerIdsUniqueFood: viewModel.answerIdsUniqueFoodie,
             answerIdsYourInterests: viewModel.answerIdInterest,
-          ),
+            isProfileUpdate: isProfileUpdate,
+          )
+          ,
         );
       },
     );
