@@ -30,6 +30,7 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
   final INetworkService _network;
   final IStorageService _storage;
   final ApplicationService _appService;
+  String countryCode = '+92';
 
   void test() {}
 
@@ -129,7 +130,7 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
         final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.loginAPI);
 
         DataRequest t = DataRequest(
-          mobileNo:  mobileNumber,
+          mobileNo:  countryCode+mobileNumber,
           fcmToken:   await FirebaseMessaging.instance.getToken(),
           deviceType: Platform.isAndroid ? 'ANDROID' : 'IOS'
         );
@@ -160,6 +161,9 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
             loginData: response.body,
             baseUrl: Api.baseURL,
           );
+          await _storage.writeString(key: 'profile_image', data: signupResponse.t.profileImageUrl);
+
+          await _storage.writeString(key: 'auth_token' , data: signupResponse.t.authToken);
 
           developer.log(' Sign up Response is ' + signupResponse.message);
 

@@ -2,6 +2,8 @@
 //import 'dart:html';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:chef/helpers/helpers.dart';
+import 'package:chef/models/profile_image_response.dart';
 import 'package:dio/dio.dart';
 import 'package:path/path.dart';
 import 'package:async/async.dart';
@@ -24,6 +26,7 @@ import '../../../models/signup/question_answer_response.dart';
 import '../../../models/signup/save_foodie_answers_request.dart' as save_foodie_request;
 import '../../../models/signup/save_foodie_answers_request.dart';
 import '../../../services/application_state.dart';
+import '../../../setup.dart';
 import '../../../ui_kit/helpers/toaster_helper.dart';
 import 'dart:developer' as developer;
 
@@ -70,12 +73,15 @@ class  SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionna
         options: Options(
           headers: {
             'Content-Type': 'multipart/form-data',
+            'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}'
           },
         ),
         data: formData,
       );
       if (response.statusCode == 200) {
         var map = response.data as Map;
+        ProfileImageResponse profileImageResponse = ProfileImageResponse.fromJson(response.data);
+        await locateService<IStorageService>().writeString(key: 'profile_image', data: profileImageResponse.t!.profileImageUrl.toString());
         print('success');
         if (map['status'] == 'Successfully registered') {
           return true;

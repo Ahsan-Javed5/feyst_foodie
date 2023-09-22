@@ -44,6 +44,7 @@ class GeneralText extends StatelessWidget {
       _text,
       maxLines: _maxLines,
       style: _style ?? defaultStyle,
+      softWrap: true,
       overflow: TextOverflow.ellipsis,
       textAlign: _textAlign,
       textScaleFactor: ScaleSize.textScaleFactor(context),

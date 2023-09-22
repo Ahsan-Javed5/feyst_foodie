@@ -302,9 +302,6 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
 
       if (response != null) {
         reviews = reviewResponseFromJson(response.body);
-        if (kDebugMode) {
-         print(reviews);
-        }
 
       }
     } catch (e) {

@@ -1,15 +1,17 @@
 import 'dart:io';
 import 'dart:math';
+import 'package:chef/screens/bottom_bar/bottom_bar.dart' as bottom_bar;
 
 import 'package:chef/helpers/helpers.dart';
-import 'package:chef/screens/food_product_experience_details/food_product_details_screen_v.dart';
-import 'package:chef/screens/home/home_screen_v.dart';
-
+import 'package:chef/models/booking/booking_list_response_model.dart';
+import '../../services/navigation/router.gr.dart' as nav;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:developer' as developer;
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+import '../setup.dart';
 
 class NotificationServices {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
@@ -72,38 +74,42 @@ class NotificationServices {
   }
 
   Future<void> showNotification(RemoteMessage message) async {
-    AndroidNotificationChannel channel = AndroidNotificationChannel(
-        Random.secure().nextInt(100000).toString(),
-        'High Importance Notifications',
-        importance: Importance.high,
-    );
+    try {
+      AndroidNotificationChannel channel = AndroidNotificationChannel(
+          Random.secure().nextInt(100000).toString(),
+          'High Importance Notifications',
+          importance: Importance.high,
+      );
 
-    AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
-            channel.id.toString(),
-            channel.name.toString(),
-            channelDescription: 'your channel description',
-            importance: Importance.high,
-            priority: Priority.high,
-            ticker: 'ticker');
+      AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
+              channel.id.toString(),
+              channel.name.toString(),
+              channelDescription: 'your channel description',
+              importance: Importance.high,
+              priority: Priority.high,
+              ticker: 'ticker');
 
-    IOSNotificationDetails iosNotificationDetails =  const IOSNotificationDetails(
-      presentAlert: true,
-      presentBadge: true,
-      presentSound: true,
-    );
+      IOSNotificationDetails iosNotificationDetails =  const IOSNotificationDetails(
+        presentAlert: true,
+        presentBadge: true,
+        presentSound: true,
+      );
 
-    NotificationDetails notificationDetails = NotificationDetails(
-        android: androidNotificationDetails,
-        iOS: iosNotificationDetails,
-    );
+      NotificationDetails notificationDetails = NotificationDetails(
+          android: androidNotificationDetails,
+          iOS: iosNotificationDetails,
+      );
+       print('before notification show function');
+        _flutterLocalNotificationsPlugin.show(
+            0,
+            message.data['title'].toString() ?? 'title is null',
+            message.data['body'].toString() ?? 'body is null',
+            notificationDetails);
+        print('after notification show function');
+    } catch (e) {
+      print(e);
+    }
 
-    Future.delayed(Duration.zero, () {
-      _flutterLocalNotificationsPlugin.show(
-          0,
-          message.notification?.title.toString(),
-          message.notification?.body.toString(),
-          notificationDetails);
-    });
   }
 
   Future<String> getDeviceToken() async {
@@ -128,40 +134,31 @@ class NotificationServices {
   }
 
   void handleMessage(BuildContext context, RemoteMessage message){
-
-    if(message.data['type'] == ['msj']){
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context)=>HomeScreen())
-      );
-    }
-    else{
-      Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context)=>HomeScreen())
-      );
-    }
+   BookingItem item = BookingItem(id: int.parse(message.data['bookingId']));
+    //locateService<INavigationService>().navigateTo(route:BottomBar(bottomBarType: bottom_bar.BottomBarType.bookings));
+    // if(message.data['scenario'] == 'BOOKING_ACCEPTED'){
+      locateService<INavigationService>().navigateTo(
+          route: nav.FoodItemAdvancePaymentRoute(
+              bookingItem: item));
+    //   CustomDialog.getDialog(
+    //     ctx: context,
+    //     title: 'Booking Accepted',
+    //     //titleColor: Colors.white,
+    //     //descColor: const Color(0xFFfee4a4),
+    //     description: message.data['body'],
+    //     iconUrl: Resources.cashWaitingIcon,
+    //     onTap: () {
+    //         Navigator.pop(context);
+    //     },
+    //   );
+    // }
+    // else{
+    //   Navigator.push(
+    //       context,
+    //       MaterialPageRoute(builder: (context)=>HomeScreen())
+    //   );
+    // }
 
   }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

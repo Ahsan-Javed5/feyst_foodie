@@ -210,18 +210,17 @@ class SignUpQuestionireScreen
                                   backgroundImage: FileImage(selectedImage),
                                 );
                               } else {
-                                return CircleAvatar(
-                                  radius: 25,
-                                  child: locateService<ApplicationService>().state.userInfo!.t.profileImageUrl == null ?
-                                      Image.asset(
-                                        Resources.userProfileImageIcon,
-                                        height: 47,
-                                        fit: BoxFit.fill,
-                                      ) :
-                                  Image.network(
-                                    Api.baseURLForImages+locateService<ApplicationService>().state.userInfo!.t.profileImageUrl,
-                                    height: 47,
-                                    fit: BoxFit.fill,
+                                return locateService<IStorageService>().readString(key: 'profile_image') == null || locateService<IStorageService>().readString(key: 'profile_image') == '' ?
+                                Image.asset(
+                                  Api.baseURLForImages+locateService<IStorageService>().readString(key: 'profile_image'),
+                                  // height: 47,
+                                  // fit: BoxFit.fill,
+                                ) :
+                                    CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                  Api.baseURLForImages+locateService<IStorageService>().readString(key: 'profile_image'),
+                                   // height: 47,
+                                   // fit: BoxFit.fill,
                                   ),
                                 );
                               }

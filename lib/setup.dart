@@ -1,10 +1,10 @@
-import 'dart:developer';
 import 'dart:io';
+import 'package:chef/firebase_messaging/notification_services.dart';
 import 'package:chef/services/renderer/field_renderer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-
+import '../../services/navigation/router.gr.dart' as nav;
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,18 +15,23 @@ import 'package:chef/theme/theme.dart';
 import 'package:chef/setup.config.dart';
 import 'dart:developer' as developer;
 
+import 'models/booking/booking_list_response_model.dart';
+
 final getIt = GetIt.instance;
 // Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 //   print("${message.data['message']}");
 // }
 
 @pragma('vm:entry-point')
-Future <void> _firebaseMessagingBackgroundHandler(RemoteMessage message)async {
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  developer.log('the notification title is ${message.notification!.title.toString()}');
-  developer.log('${message.notification!.title.toString()}');
-  developer.log('${message.data.toString()}');
+  developer.log(
+      message.notification?.title.toString() ?? 'notification with no title');
+  developer.log(message.data.toString());
+  NotificationServices().showNotification(message);
 }
+
+int notificationCounter = 0;
 
 Future<dynamic> configureDependencies() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,8 +39,15 @@ Future<dynamic> configureDependencies() async {
   await Firebase.initializeApp();
   await FirebaseMessaging.instance.getInitialMessage();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
- // requestPermission();
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
+    print('helloooo');
+    print("onMessageOpenedApp: $message");
+    BookingItem item = BookingItem(id: int.parse(message.data['bookingId']));
+    locateService<INavigationService>().navigateTo(
+        route: nav.FoodItemAdvancePaymentRoute(
+            bookingItem: item));
+  });
+  // requestPermission();
   return $initGetIt(getIt);
 }
 

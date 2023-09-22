@@ -103,9 +103,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       preferenceIds.add(int.parse(element.id.toString()));
     });
 
-   // items.add('Couple');
-   // items.add('Single');
-  //  items.add('Family');
+    // items.add('Couple');
+    // items.add('Single');
+    //  items.add('Family');
 
     nOfPersons.text = '0';
     if (_appService.state.orderHelper != null) {
@@ -226,7 +226,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                             .map((i) {
                           return Builder(
                             builder: (BuildContext context) {
-                              return Image.network('${Api.baseURLForImages}$i',
+                              return Image.network(Api.baseURLForImages + i,
                                   fit: BoxFit.fill);
                             },
                           );
@@ -274,19 +274,20 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             top: DeviceHelper.height * 0.10,
             left: DeviceHelper.width * 0.05,
             child: Align(
-                alignment: Alignment.topLeft, child: GeneralNewAppBar(
-              callBack: (){
-                setState(() {
-                  selectedTab == TabBars.Details
-                      ? Navigator.pop(context)
-                      : (selectedTab == TabBars.Menu
-                      ? setTab(TabBars.Details)
-                      : scheduleForm
-                      ? scheduleForm = false
-                      : setTab(TabBars.Menu));
-                });
-              },
-            )),
+                alignment: Alignment.topLeft,
+                child: GeneralNewAppBar(
+                  callBack: () {
+                    setState(() {
+                      selectedTab == TabBars.Details
+                          ? Navigator.pop(context)
+                          : (selectedTab == TabBars.Menu
+                              ? setTab(TabBars.Details)
+                              : scheduleForm
+                                  ? scheduleForm = false
+                                  : setTab(TabBars.Menu));
+                    });
+                  },
+                )),
           ),
           Positioned(
               top: DeviceHelper.height * 0.19,
@@ -307,7 +308,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                           ),
                         ),
                       ),
-                      height: DeviceHelper.height * 0.14,
+                      height: DeviceHelper.height * 0.15,
                       padding: const EdgeInsetsDirectional.only(bottom: 0),
                       child: Padding(
                         padding: EdgeInsetsDirectional.only(
@@ -517,20 +518,21 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   }
 
   void goToRequestToBookScreen() {
-    if(int.parse(nOfPersons.text) <= 0 || int.parse(nOfPersons.text) > openCapacity){
-      Toaster.infoToast(context: context, message: 'Number of Persons must between 1 and $openCapacity');
-    }
-    else {
+    if (int.parse(nOfPersons.text) <= 0 ||
+        int.parse(nOfPersons.text) > openCapacity) {
+      Toaster.infoToast(
+          context: context,
+          message: 'Number of Persons must between 1 and $openCapacity');
+    } else {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) =>
-              FoodProductExperienceDetailsScreenView(
-                selectedExperienceId: widget.data!.id.toString(),
-                experienceData: widget.data!,
-                foodMenuDetail: widget.foodMenuDetail,
-                chefData: widget.chefData,
-              ),
+          builder: (context) => FoodProductExperienceDetailsScreenView(
+            selectedExperienceId: widget.data!.id.toString(),
+            experienceData: widget.data!,
+            foodMenuDetail: widget.foodMenuDetail,
+            chefData: widget.chefData,
+          ),
         ),
       );
     }
@@ -608,14 +610,14 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                         width: 16,
                         height: 1,
                       ),
-                      const SizedBox(
-                        width: 2,
+                      SizedBox(
+                        width: DeviceHelper.width * 0.05,
                       ),
                       getFoodItemHeading(
                           appTheme: appTheme, mealTitle: headers[index]),
                     ],
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: DeviceHelper.height * 0.05),
                   Container(
                     padding: const EdgeInsetsDirectional.only(
                       start: 10,
@@ -653,15 +655,16 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                         shape: BoxShape.circle,
                                       ),
                                       child: CircleAvatar(
-                                        radius: 40,
+                                        radius: DeviceHelper.height * 0.05,
                                         backgroundImage: NetworkImage(
-                                          Api.baseURLForImages+filteredList[k].pictureUrl,
+                                          Api.baseURLForImages +
+                                              filteredList[k].pictureUrl,
                                         ),
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(
-                                    width: 7.7,
+                                  SizedBox(
+                                    width: DeviceHelper.width * 0.07,
                                   ),
                                   Expanded(
                                     flex: 4,
@@ -712,8 +715,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                       widget.foodMenuDetail.t[index].price,
                                       index)
                                   : Container(),
-                              const SizedBox(
-                                height: 15,
+                              SizedBox(
+                                height: DeviceHelper.height * 0.03,
                               ),
                               filteredList.length - 2 == k
                                   ? Divider(
@@ -744,13 +747,13 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           children: [
             SvgPicture.asset(
               Resources.userIconMenu,
-              height: 15,
+              height: DeviceHelper.height * 0.06,
               color: foodItemQuantity[index] == 0
                   ? HexColor.fromHex('#909094')
                   : HexColor.fromHex('#ffffff'),
             ),
-            const SizedBox(
-              width: 4,
+            SizedBox(
+              width: DeviceHelper.width * 0.02,
             ),
             getFoodItemUsers(appTheme: appTheme, index: index),
           ],
@@ -767,8 +770,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
         Row(
           children: [
             getFoodItemQuantityLabel(appTheme: appTheme),
-            const SizedBox(
-              width: 4,
+            SizedBox(
+              width: DeviceHelper.width * 0.01,
             ),
             InkWell(
               onTap: () {
@@ -786,8 +789,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                 child: const Icon(Icons.remove, color: Colors.black, size: 18),
               ),
             ),
-            const SizedBox(
-              width: 44,
+            SizedBox(
+              width: DeviceHelper.width * 0.15,
             ),
             InkWell(
               onTap: () {
@@ -802,10 +805,10 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                 ),
                 padding: const EdgeInsetsDirectional.only(
                     start: 8, end: 8, top: 6, bottom: 6),
-                child: const Icon(
+                child: Icon(
                   Icons.add,
                   color: Colors.black,
-                  size: 18,
+                  size: DeviceHelper.height * 0.05,
                 ),
               ),
             )
@@ -831,7 +834,6 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       ),
     );
   }
-
 
   Widget getFoodItemHeading(
       {required IAppThemeData appTheme, required mealTitle}) {
@@ -965,7 +967,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
         ///for notes page code see this padding widget
         ? Padding(
             padding: const EdgeInsetsDirectional.only(
-              start: 20,
+              start: 15,
               top: 30,
             ),
             child: Column(
@@ -1002,12 +1004,15 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                 appTheme.typographies.interFontFamily.label12,
                           )
                         ]),
-                    const SizedBox(
-                      width: 27,
+
+                    ///space between date and other details
+                    SizedBox(
+                      width: DeviceHelper.width * 0.07,
                     ),
                     Expanded(
                       child: Column(
                         children: [
+                          /// time and day container
                           Container(
                               width: double.infinity,
                               padding: const EdgeInsetsDirectional.only(
@@ -1041,13 +1046,13 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                               fontWeight: FontWeight.normal)),
                                 ],
                               )),
-                          const SizedBox(
-                            height: 14,
+                          SizedBox(
+                            height: DeviceHelper.height * 0.02,
                           ),
                           Container(
                               width: double.infinity,
                               padding: const EdgeInsetsDirectional.only(
-                                  start: 14, top: 15, bottom: 15, end: 25),
+                                  start: 14, top: 15, bottom: 15, end: 15),
                               decoration: BoxDecoration(
                                   color: HexColor.fromHex('#2b2b33'),
                                   borderRadius: const BorderRadius.only(
@@ -1068,14 +1073,17 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                                       '#fee4a4'),
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w700)),
-                                      const SizedBox(
-                                        height: 9,
+                                      SizedBox(
+                                        height: DeviceHelper.height * 0.01,
                                       ),
+
+                                      ///no of persons and preference
                                       Row(
                                         children: [
+                                          ///persons text-field
                                           Container(
-                                            width: 58,
-                                            height: 51,
+                                            width: DeviceHelper.width * 0.16,
+                                            height: DeviceHelper.height * 0.065,
                                             decoration: BoxDecoration(
                                                 color:
                                                     HexColor.fromHex('#2b2b33'),
@@ -1106,16 +1114,17 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                               ),
                                             ),
                                           ),
-                                          const SizedBox(
-                                            width: 12,
+                                          SizedBox(
+                                            width: DeviceHelper.width * 0.05,
                                           ),
+
+                                          ///preference dropdown
                                           Container(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                2.8,
-                                            height: 51,
+                                            width: DeviceHelper.width * 0.33,
+                                            height: DeviceHelper.height * 0.07,
+                                            alignment: Alignment.center,
                                             decoration: BoxDecoration(
+                                                //color: Colors.red,
                                                 color:
                                                     HexColor.fromHex('#2b2b33'),
                                                 border: Border.all(
@@ -1124,60 +1133,53 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                                 borderRadius:
                                                     BorderRadius.circular(10)),
                                             margin: const EdgeInsetsDirectional
-                                                .only(bottom: 8),
-                                            padding: const EdgeInsetsDirectional
-                                                    .only(
-                                                top: 8,
-                                                bottom: 8,
-                                                start: 8,
-                                                end: 8),
-                                            child: /*ExtoDropdown(
-                                        name: _wfActions.first ?? "",
-                                        items: _wfActions,
-                                        // isMandatory: true,
-                                        onChange: ({required key, value}) {},
-                                      ),*/
-                                                GeneralDropdown(
-                                                  selectedItemId: 1,
-                                              borderColor: Colors.transparent,
-                                              name: 'Select',
-                                              style: appTheme.typographies
-                                                  .interFontFamily.headline6
-                                                  .copyWith(
-                                                      color: Colors.white,
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.w400),
-                                              // margin: 22.0,
-                                              items: items,
-                                              onChange: ({
-                                                required String key,
-                                                required dynamic value,
-                                              }) {
-                                                developer.log(
-                                                    ' Selected value from Drop Down is ' +
-                                                        '${value}');
-                                                _appService.state.orderHelper!
-                                                    .selectedCategory = value;
-                                                widget.data?.experiencePreferences?.forEach((element) {
-                                                  if(element.preferenceName == value)
-                                                    {
-                                                      _appService.state.orderHelper?.selectedPreferenceId = int.parse(element.preferenceId.toString());
+                                                .only(bottom: 6),
+                                            // padding: const EdgeInsetsDirectional
+                                            //         .only(
+                                            //     top: 8,
+                                            //     bottom: 8,
+                                            //     start: 0,
+                                            //     end: 0),
+                                            child: Center(
+                                              child: GeneralDropdown(
+                                                selectedItemId: 1,
+                                                borderColor: Colors.transparent,
+                                                name: 'Select',
+                                                style: appTheme.typographies
+                                                    .interFontFamily.headline6
+                                                    .copyWith(
+                                                        color: Colors.white,
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.w400),
+                                                // margin: 22.0,
+                                                items: items,
+                                                onChange: ({
+                                                  required String key,
+                                                  required dynamic value,
+                                                }) {
+                                                  developer.log(
+                                                      ' Selected value from Drop Down is ' +
+                                                          '${value}');
+                                                  _appService.state.orderHelper!
+                                                      .selectedCategory = value;
+                                                  widget
+                                                      .data?.experiencePreferences
+                                                      ?.forEach((element) {
+                                                    if (element.preferenceName ==
+                                                        value) {
+                                                      _appService
+                                                              .state
+                                                              .orderHelper
+                                                              ?.selectedPreferenceId =
+                                                          int.parse(element
+                                                              .preferenceId
+                                                              .toString());
                                                     }
-                                                });
-                                              },
+                                                  });
+                                                },
+                                              ),
                                             ),
-                                            /*GeneralDropdown(
-                                          borderColor: Colors.transparent,
-                                          name: 'Select',
-                                          // margin: 22.0,
-                                          items: statusList,
-                                          onChange: ({
-                                            required String key,
-                                            required dynamic value,
-                                          }) {
-                                          },
-                                        )*/
                                           ),
                                         ],
                                       ),
@@ -1186,17 +1188,28 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                       ),
                                       Row(
                                         children: [
-                                          SvgPicture.asset(Resources.peopleIconSvg, height: 12.5,color: HexColor.fromHex('#ea7458'),),
+                                          SvgPicture.asset(
+                                            Resources.peopleIconSvg,
+                                            height: 12.5,
+                                            color: HexColor.fromHex('#ea7458'),
+                                          ),
                                           const SizedBox(width: 4),
                                           GeneralText('MAX LIMIT : ',
-                                              style: appTheme.typographies.interFontFamily.headline6.copyWith(
-                                                  color: HexColor.fromHex('#ea7458'),
-                                                  fontSize: 14)),
+                                              style: appTheme.typographies
+                                                  .interFontFamily.headline6
+                                                  .copyWith(
+                                                      color: HexColor.fromHex(
+                                                          '#ea7458'),
+                                                      fontSize: 14)),
                                           GeneralText(openCapacity.toString(),
-                                              style: appTheme.typographies.interFontFamily.headline6.copyWith(
-                                                  color: HexColor.fromHex('#ea7458'),
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 14)),
+                                              style: appTheme.typographies
+                                                  .interFontFamily.headline6
+                                                  .copyWith(
+                                                      color: HexColor.fromHex(
+                                                          '#ea7458'),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 14)),
                                         ],
                                       ),
                                     ],
@@ -1320,7 +1333,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                               fontSize: 14,
                                               fontWeight: FontWeight.w700)),
                                   SizedBox(
-                                    width: 70,
+                                    width: DeviceHelper.width * 0.25,
                                     child: GeneralText(
                                         item.scheduledDate.day.toString(),
                                         textAlign: TextAlign.center,
@@ -1377,8 +1390,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                               ],
                             ),
                           ),
-                          const SizedBox(
-                            height: 27,
+                          SizedBox(
+                            height: DeviceHelper.height * 0.05,
                           ),
                         ],
                       );
@@ -1729,8 +1742,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               width: 16,
               height: 1,
             ),
-            const SizedBox(
-              width: 5,
+            SizedBox(
+              width: DeviceHelper.width * 0.01,
             ),
             GeneralText(
               Strings.foodDetailAboutTitle,
@@ -1741,8 +1754,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             ),
           ],
         ),
-        const SizedBox(
-          height: 5,
+        SizedBox(
+          height: DeviceHelper.height * 0.01,
         ),
         Padding(
           padding: const EdgeInsets.only(left: 23),
@@ -1756,8 +1769,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                 fontWeight: FontWeight.w400),
           ),
         ),
-        const SizedBox(
-          height: 27,
+        SizedBox(
+          height: DeviceHelper.height * 0.05,
         ),
         Row(
           children: [
@@ -1766,8 +1779,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               width: 16,
               height: 1,
             ),
-            const SizedBox(
-              width: 5,
+            SizedBox(
+              width: DeviceHelper.width * 0.01,
             ),
             GeneralText(
               Strings.productDetailWowFactorTitle,
@@ -1778,14 +1791,14 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             ),
           ],
         ),
-        const SizedBox(
-          height: 28,
+        SizedBox(
+          height: DeviceHelper.height * 0.03,
         ),
 
         ///wow factors
         wowFactors(appTheme, wowFactorsList),
-        const SizedBox(
-          height: 12,
+        SizedBox(
+          height: DeviceHelper.height * 0.03,
         ),
 
         ///preferences and no of persons section in this row
@@ -1796,28 +1809,27 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               width: 16,
               height: 1,
             ),
-            const SizedBox(
-              width: 5,
+            SizedBox(
+              width: DeviceHelper.width * 0.01,
             ),
             GeneralText(
               Strings.foodDetailPreferences,
-              style: appTheme.typographies.interFontFamily.headline6
-                  .copyWith(
+              style: appTheme.typographies.interFontFamily.headline6.copyWith(
                 fontSize: 20,
                 color: HexColor.fromHex('#f1c452'),
               ),
             ),
           ],
         ),
-        const SizedBox(
-          height: 12,
+        SizedBox(
+          height: DeviceHelper.height * 0.012,
         ),
         SizedBox(
           //width: MediaQuery.of(context).size.width * 0.50,
           child: wowFactors(appTheme, preferencesList),
         ),
-        const SizedBox(
-          height: 12,
+        SizedBox(
+          height: DeviceHelper.height * 0.012,
         ),
         Row(
           children: [
@@ -1826,8 +1838,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               width: 16,
               height: 1,
             ),
-            const SizedBox(
-              width: 5,
+            SizedBox(
+              width: DeviceHelper.width * 0.01,
             ),
             GeneralText(
               Strings.foodDetailLocation,
@@ -1838,11 +1850,13 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             ),
           ],
         ),
-        const SizedBox(height: 90),
+        SizedBox(
+          height: DeviceHelper.height * 0.08,
+        ),
 
         ///Google map
         Container(
-          height: 400,
+          height: DeviceHelper.height * 0.60,
           width: MediaQuery.of(context).size.width,
           transform: Matrix4.translationValues(-12.0, 0, 0.0),
           decoration: BoxDecoration(
@@ -1884,7 +1898,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             },
           ),
         ),
-        const SizedBox(height: 80),
+        SizedBox(
+          height: DeviceHelper.height * 0.15,
+        ),
       ],
     );
   }
@@ -1899,7 +1915,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             child: Column(
               children: [
                 Container(
-                  width: 58,
+                  width: DeviceHelper.width * 0.15,
                   padding: const EdgeInsetsDirectional.all(10),
                   decoration: const BoxDecoration(
                     image: DecorationImage(
@@ -1910,7 +1926,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                     shape: BoxShape.circle,
                   ),
                   child: Container(
-                    height: 50,
+                    height: DeviceHelper.height * 0.10,
                     padding: const EdgeInsetsDirectional.all(10),
                     decoration: BoxDecoration(
                       color: HexColor.fromHex("#f1c452"),
@@ -2043,11 +2059,12 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           children: [
             Container(
               child: GeneralText(finalDate,
-                  style: appTheme.typographies.interFontFamily.headline6.copyWith(
-                      color: showSelectedTime
-                          ? HexColor.fromHex('#212129')
-                          : HexColor.fromHex('#f1c452'),
-                      fontSize: 14)),
+                  style: appTheme.typographies.interFontFamily.headline6
+                      .copyWith(
+                          color: showSelectedTime
+                              ? HexColor.fromHex('#212129')
+                              : HexColor.fromHex('#f1c452'),
+                          fontSize: 14)),
               decoration: BoxDecoration(
                   border: Border.all(color: HexColor.fromHex('#f1c452')),
                   color: showSelectedTime
@@ -2059,20 +2076,27 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               margin: const EdgeInsetsDirectional.only(bottom: 2),
             ),
             SizedBox(
-              width: 23,
+              width: DeviceHelper.width * 0.12,
               child: Row(
                 children: [
-                  SvgPicture.asset(Resources.peopleIconSvg, height: 12, color:
-                  HexColor.fromHex(showSelectedTime ? '#fbeccb' : '#909094'),),
-                  const SizedBox(width:3),
+                  SvgPicture.asset(
+                    Resources.peopleIconSvg,
+                    height: 12,
+                    color: HexColor.fromHex(
+                        showSelectedTime ? '#fbeccb' : '#909094'),
+                  ),
+                  SizedBox(
+                    width: DeviceHelper.width * 0.02,
+                  ),
                   GeneralText(_hour.openCapacity.toString(),
-                      style: appTheme.typographies
-                          .interFontFamily.headline6
+                      style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
-                          color:
-                          HexColor.fromHex(showSelectedTime ? '#fbeccb' : '#909094'),
-                          fontSize: 14,
-                          fontWeight: showSelectedTime ? FontWeight.w700 : FontWeight.normal)),
+                              color: HexColor.fromHex(
+                                  showSelectedTime ? '#fbeccb' : '#909094'),
+                              fontSize: 14,
+                              fontWeight: showSelectedTime
+                                  ? FontWeight.w700
+                                  : FontWeight.normal)),
                 ],
               ),
             ),

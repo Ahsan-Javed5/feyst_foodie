@@ -49,6 +49,7 @@ class BookingInProcessScreenViewModel
 
     advancePendingResponse = advancePendingResponseFromJson(response.body);
 
+
     // advancePendingResponse
 
     response.body != "" || response.body != null

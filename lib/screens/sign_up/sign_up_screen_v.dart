@@ -5,6 +5,7 @@ import 'package:chef/screens/sign_up/pin_input_field.dart';
 import 'package:chef/screens/sign_up/sign_up_screen_vm.dart';
 import 'package:chef/screens/sign_up/verify_phone_number.dart';
 import 'package:chef/ui_kit/widgets/general_new_appbar.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,7 +23,7 @@ import 'dart:developer' as developer;
 
 class SignUpScreen extends BaseView<SignUpScreenViewModel> {
   SignUpScreen(this.isProfileDetails, {Key? key}) : super(key: key);
-   final bool isProfileDetails;
+  final bool isProfileDetails;
 
   final baseURLs = [
     // Api.prodURL,
@@ -52,9 +53,10 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
         viewModel.dropdownItems.add(professionList[i].name);
       }
     }
-    if(viewModel.isProfileDetails == false){
-    viewModel.professionID =
-        viewModel.dropdownDetails[viewModel.dropdownItems[0]];}
+    if (viewModel.isProfileDetails == false) {
+      viewModel.professionID =
+          viewModel.dropdownDetails[viewModel.dropdownItems[0]];
+    }
 
     if (viewModel.checkAllInputAdded()) {
       viewModel.changeButton(true);
@@ -75,19 +77,23 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
           ..loadProfessions(baseUrl: baseURLs[0], context: context),
         builder: (_, state) {
           return ValueListenableBuilder(
-            builder: (context, value, _)  {
+            builder: (context, value, _) {
               return Scaffold(
-                backgroundColor: appTheme.colors.primaryBackground,
-                bottomNavigationBar: displayAlreadySignIn(appTheme, context,),
-                body: state.when(
-                    loading: _loading,
-                    loaded: (professionList) => _displayLoadedData(
-                        state: state,
-                        appTheme: appTheme,
-                        context: context,
-                        professionList: professionList,
-                        screenSizeData: screenSizeData,
-                    )));},
+                  backgroundColor: appTheme.colors.primaryBackground,
+                  bottomNavigationBar: displayAlreadySignIn(
+                    appTheme,
+                    context,
+                  ),
+                  body: state.when(
+                      loading: _loading,
+                      loaded: (professionList) => _displayLoadedData(
+                            state: state,
+                            appTheme: appTheme,
+                            context: context,
+                            professionList: professionList,
+                            screenSizeData: screenSizeData,
+                          )));
+            },
             valueListenable: viewModel.isProfile,
           );
         });
@@ -139,38 +145,43 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     required Size size,
     required List<ProfessionData> professionList,
   }) {
-    if(viewModel.isProfileDetails!){
+    if (viewModel.isProfileDetails!) {
       viewModel.loadFoodieData();
     }
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-         SizedBox(
+        SizedBox(
           height: viewModel.isProfileDetails! ? 30 : 41,
         ),
-        isProfileDetails! ? const GeneralNewAppBar(
-        //   callBack:(context)=> Navigator.pushReplacement(
-        //   context,
-        //   MaterialPageRoute(
-        //       builder: (context) => const bb.BottomBar()),
-        // ),
-        rightIcon: Resources.homeIconSvg,
-        title: Strings.labelPersonalDetails,
-        titleColor: Colors.white,
-        ) : Column(
-          children: [
-            _getStartedTitle(appTheme: appTheme),
-            Center(
-              child: GeneralText(
-                Strings.signUpTitle,
-                textAlign: TextAlign.center,
-                style: appTheme.typographies.interFontFamily.headline4.copyWith(
-                    color: Colors.white, fontSize: 28, fontWeight: FontWeight.w500),
+        isProfileDetails!
+            ? const GeneralNewAppBar(
+                //   callBack:(context)=> Navigator.pushReplacement(
+                //   context,
+                //   MaterialPageRoute(
+                //       builder: (context) => const bb.BottomBar()),
+                // ),
+                rightIcon: Resources.homeIconSvg,
+                title: Strings.labelPersonalDetails,
+                titleColor: Colors.white,
+              )
+            : Column(
+                children: [
+                  _getStartedTitle(appTheme: appTheme),
+                  Center(
+                    child: GeneralText(
+                      Strings.signUpTitle,
+                      textAlign: TextAlign.center,
+                      style: appTheme.typographies.interFontFamily.headline4
+                          .copyWith(
+                              color: Colors.white,
+                              fontSize: 28,
+                              fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
         Padding(
           padding: const EdgeInsets.only(left: 15, right: 30),
           child: Column(
@@ -178,43 +189,61 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               const SizedBox(
                 height: 30,
               ),
-              displayFullName(appTheme,),
+              displayFullName(
+                appTheme,
+              ),
               const SizedBox(
                 height: 27,
               ),
-              displayMobileNumber(appTheme,),
+              displayMobileNumber(
+                appTheme,
+              ),
               const SizedBox(
                 height: 27,
               ),
-              displayAgeGender(appTheme,),
+              displayAgeGender(
+                appTheme,
+              ),
               const SizedBox(
                 height: 10,
               ),
               professionList.isNotEmpty
-                  ? displayProfession(appTheme, professionList,)
+                  ? displayProfession(
+                      appTheme,
+                      professionList,
+                    )
                   : const CircularProgressIndicator(),
               SizedBox(
-                height: isProfileDetails! ? 75 : 140,
+                height: isProfileDetails ? 75 : 140,
               ),
-              viewModel.isProfile.value == true ?
-                isProfileDetails ? Align(
-                alignment: Alignment.centerRight,
-                child: GestureDetector(
-                  child: Container(
-                    padding: const EdgeInsets.all(15,),
-                    decoration: const BoxDecoration(
-                      color: Colors.red,
-                      shape: BoxShape.circle,
-                    ),
-                      child: const Icon(Icons.edit, size: 17, color: Colors.white,)),
-                  onTap: (){
-                    viewModel.isProfileDetails = false;
-                    //viewModel.isProfile = ValueNotifier(true);
-                    viewModel.isProfile.value = false;
-                    print(viewModel.isProfileDetails);
-                  },
-                ),
-              ) : const SizedBox() : nextButton(context),
+              viewModel.isProfile.value == true
+                  ? isProfileDetails
+                      ? Align(
+                          alignment: Alignment.centerRight,
+                          child: GestureDetector(
+                            child: Container(
+                                padding: const EdgeInsets.all(
+                                  15,
+                                ),
+                                decoration: const BoxDecoration(
+                                  color: Colors.red,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Icon(
+                                  Icons.edit,
+                                  size: 17,
+                                  color: Colors.white,
+                                )),
+                            onTap: () {
+                              viewModel.isProfileDetails = false;
+                              //viewModel.isProfile = ValueNotifier(true);
+                              viewModel.isProfile.value = false;
+                              print(viewModel.isProfileDetails);
+                            },
+                          ),
+                        )
+                      : const SizedBox()
+                  : nextButton(context),
             ],
           ),
         ),
@@ -250,7 +279,9 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     );
   }
 
-  Widget displayFullName(IAppThemeData appTheme,) {
+  Widget displayFullName(
+    IAppThemeData appTheme,
+  ) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -271,11 +302,16 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             inputType: InputType.text,
             backgroundColor: appTheme.colors.textFieldFilledColor,
             isEnable: viewModel.isProfileDetails! ? false : true,
-            disabledBorder: viewModel.isProfileDetails! ? const OutlineInputBorder(borderSide: BorderSide(width: 2, color: Colors.grey)) : null,
-            inputBorder: viewModel.isProfileDetails! ? const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey, width: 2.0),
-              borderRadius: BorderRadius.all(Radius.circular(8.0)),
-            ) : appTheme.focusedBorder,
+            disabledBorder: viewModel.isProfileDetails!
+                ? const OutlineInputBorder(
+                    borderSide: BorderSide(width: 2, color: Colors.grey))
+                : null,
+            inputBorder: viewModel.isProfileDetails!
+                ? const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey, width: 2.0),
+                    borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                  )
+                : appTheme.focusedBorder,
             valueStyle: const TextStyle(color: Colors.white),
             hint: 'Enter name',
             hintStyle:
@@ -294,7 +330,9 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     );
   }
 
-  Widget displayMobileNumber(IAppThemeData appTheme,) {
+  Widget displayMobileNumber(
+    IAppThemeData appTheme,
+  ) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -314,18 +352,41 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             controller: viewModel.mobileNumberController,
             inputType: InputType.digit,
             backgroundColor: appTheme.colors.textFieldFilledColor,
-            isEnable: isProfileDetails! ? false : true,
-            disabledBorder: const OutlineInputBorder(borderSide: BorderSide(width: 2, color: Colors.grey)),
-            inputBorder: viewModel.isProfileDetails! ? const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey, width: 2.0),
-              borderRadius: BorderRadius.all(Radius.circular(8.0)),
-            ) : appTheme.focusedBorder,
+            isEnable: isProfileDetails ? false : true,
+            disabledBorder: const OutlineInputBorder(
+                borderSide: BorderSide(width: 2, color: Colors.grey)),
+            inputBorder: viewModel.isProfileDetails!
+                ? const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey, width: 2.0),
+                    borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                  )
+                : appTheme.focusedBorder,
             valueStyle: const TextStyle(color: Colors.white),
-            hint: '923*********',
+            hint: '3xxxxxxxxx',
             hintStyle:
-                TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
+                TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 16),
+            prefixIcon: isProfileDetails ? null : CountryCodePicker(
+              onChanged: (value){
+                viewModel.countryCode = value.dialCode!;
+              },
+              textStyle: const TextStyle(color: Colors.white),
+              // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
+              initialSelection: 'PK',
+              enabled: isProfileDetails ? false : true,
+              favorite: const ['+92', 'PK'],
+              // optional. Shows only country name and flag
+              showCountryOnly: false,
+              // optional. Shows only country name and flag when popup is closed.
+              showOnlyCountryWhenClosed: false,
+              // optional. aligns the flag and the Text left
+              alignLeft: false,
+              hideSearch: true,
+            ),
             // valueStyle: valueStyle,
             onChanged: (newValue) {
+              if(newValue.length == 1 && newValue == '0'){
+                viewModel.mobileNumberController.clear();
+              }
               if (viewModel.checkAllInputAdded()) {
                 viewModel.changeButton(true);
               } else {
@@ -338,7 +399,9 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     );
   }
 
-  Widget displayAgeGender(IAppThemeData appTheme, ) {
+  Widget displayAgeGender(
+    IAppThemeData appTheme,
+  ) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -366,11 +429,17 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                   inputType: InputType.digit,
                   backgroundColor: appTheme.colors.textFieldFilledColor,
                   isEnable: viewModel.isProfileDetails! ? false : true,
-                  disabledBorder: viewModel.isProfileDetails! ? const OutlineInputBorder(borderSide: BorderSide(width: 2, color: Colors.grey)) : null,
-                  inputBorder: viewModel.isProfileDetails! ? const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey, width: 2.0),
-                    borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                  ) : appTheme.focusedBorder,
+                  disabledBorder: viewModel.isProfileDetails!
+                      ? const OutlineInputBorder(
+                          borderSide: BorderSide(width: 2, color: Colors.grey))
+                      : null,
+                  inputBorder: viewModel.isProfileDetails!
+                      ? const OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.grey, width: 2.0),
+                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                        )
+                      : appTheme.focusedBorder,
                   valueStyle: const TextStyle(color: Colors.white),
                   hint: '18',
                   hintStyle: TextStyle(
@@ -409,7 +478,12 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               const SizedBox(
                 height: 8,
               ),
-              _genderWidget(appTheme, Gender.male, Strings.signMaleLabel, isProfileDetails),
+              _genderWidget(appTheme, viewModel.isProfileDetails!
+                  ? (viewModel.genderController.text == 'Male'
+                  ? Gender.male
+                  : Gender.female)
+                  : Gender.male, Strings.signMaleLabel,
+                  isProfileDetails),
               // Row(
               //   children: [
               //     _genderWidget(appTheme, Gender.male, Strings.signMaleLabel),
@@ -455,12 +529,16 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                   name: 'Select',
                   items: viewModel.dropdownItems,
                   selectedItemId: viewModel.professionID,
-                  borderColor: viewModel.isProfileDetails! ? Colors.grey : appTheme.colors.textFieldBorderColor,
-                  selectedItem: viewModel.dropdownItems[viewModel.professionID-1],
-                  style: appTheme.typographies.interFontFamily.headline6.copyWith(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w400),
+                  borderColor: viewModel.isProfileDetails!
+                      ? Colors.grey
+                      : appTheme.colors.textFieldBorderColor,
+                  selectedItem:
+                      viewModel.dropdownItems[viewModel.professionID - 1],
+                  style: appTheme.typographies.interFontFamily.headline6
+                      .copyWith(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400),
                   onChange: ({
                     required String key,
                     required dynamic value,
@@ -478,92 +556,96 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     IAppThemeData appTheme,
     BuildContext context,
   ) {
-    return isProfileDetails! ? SizedBox() : Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SignInScreen()),
-              );
-            },
-            child: GeneralText(
-              Strings.signAlreadyUserLabel,
-              textAlign: TextAlign.center,
-              style: appTheme.typographies.interFontFamily.headline4.copyWith(
-                  color: const Color(0xfff7dc99),
-                  fontSize: 15,
-                  decoration: TextDecoration.underline,
-                  fontWeight: FontWeight.w500),
-            ),
-          ),
-          ValueListenableBuilder(
-            builder: (context, value, _) {
-              return InkWell(
-                onTap: value == true
-                    ? () async {
-                        //proceedVerification(context);
-                        if (viewModel.verifyInput(
-                          name: viewModel.nameController.text,
-                          mobileNumber: viewModel.mobileNumberController.text,
-                          age: int.parse(viewModel.ageController.text),
-                          professionId: viewModel.professionID,
-                          gender: viewModel.genderController.text,
-                          context: context,
-                          baseUrl: baseURLs[0],
-                        )) {
-                          // try{
-                          // await FirebaseAuth.instance.verifyPhoneNumber(
-                          //   phoneNumber: "+" + viewModel.mobileNumberController.text,
-                          //   verificationCompleted: (PhoneAuthCredential credential) {},
-                          //   verificationFailed: (FirebaseAuthException e) {},
-                          //   codeSent: (String verificationId, int? resendToken) {},
-                          //   codeAutoRetrievalTimeout: (String verificationId) {},
-                          // );
-                          // print('code sent');
-                          // }catch(e){
-                          //   print(e);
-                          // }
-                          // _showVerificati onPopup(context);
-                          //fireBaseAuth();
-                          // VerifyPhoneNumberScreen();
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //       builder: (context) => VerifyPhoneNumberScreen(
-                          //             phoneNumber: _mobileNumberController.text,
-                          //           )),
-                          // );
-
-                          //displayVerificationDisplay(context);
-                          displayVerificationDisplayBackup(context);
-
-                          // testPopUp(context);
-                        }
-                      }
-                    : null,
-                child: ValueListenableBuilder(
-                  valueListenable: viewModel.buttonEnabled,
-                  builder: (context, value, _) {
-                    return value == true
-                        ? SvgPicture.asset(
-                            Resources.getSignInRightArrow,
-                          )
-                        : SvgPicture.asset(
-                            Resources.getRightArrow,
-                          );
+    return isProfileDetails!
+        ? const SizedBox()
+        : Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignInScreen()),
+                    );
                   },
+                  child: GeneralText(
+                    Strings.signAlreadyUserLabel,
+                    textAlign: TextAlign.center,
+                    style: appTheme.typographies.interFontFamily.headline4
+                        .copyWith(
+                            color: const Color(0xfff7dc99),
+                            fontSize: 15,
+                            decoration: TextDecoration.underline,
+                            fontWeight: FontWeight.w500),
+                  ),
                 ),
-              );
-            },
-            valueListenable: viewModel.buttonEnabled,
-          )
-        ],
-      ),
-    );
+                ValueListenableBuilder(
+                  builder: (context, value, _) {
+                    return InkWell(
+                      onTap: value == true
+                          ? () async {
+                              //proceedVerification(context);
+                              if (viewModel.verifyInput(
+                                name: viewModel.nameController.text,
+                                mobileNumber:
+                                    viewModel.mobileNumberController.text,
+                                age: int.parse(viewModel.ageController.text),
+                                professionId: viewModel.professionID,
+                                gender: viewModel.genderController.text,
+                                context: context,
+                                baseUrl: baseURLs[0],
+                              )) {
+                                // try{
+                                // await FirebaseAuth.instance.verifyPhoneNumber(
+                                //   phoneNumber: "+" + viewModel.mobileNumberController.text,
+                                //   verificationCompleted: (PhoneAuthCredential credential) {},
+                                //   verificationFailed: (FirebaseAuthException e) {},
+                                //   codeSent: (String verificationId, int? resendToken) {},
+                                //   codeAutoRetrievalTimeout: (String verificationId) {},
+                                // );
+                                // print('code sent');
+                                // }catch(e){
+                                //   print(e);
+                                // }
+                                // _showVerificati onPopup(context);
+                                //fireBaseAuth();
+                                // VerifyPhoneNumberScreen();
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //       builder: (context) => VerifyPhoneNumberScreen(
+                                //             phoneNumber: _mobileNumberController.text,
+                                //           )),
+                                // );
+
+                                //displayVerificationDisplay(context);
+                                displayVerificationDisplayBackup(context);
+
+                                // testPopUp(context);
+                              }
+                            }
+                          : null,
+                      child: ValueListenableBuilder(
+                        valueListenable: viewModel.buttonEnabled,
+                        builder: (context, value, _) {
+                          return value == true
+                              ? SvgPicture.asset(
+                                  Resources.getSignInRightArrow,
+                                )
+                              : SvgPicture.asset(
+                                  Resources.getRightArrow,
+                                );
+                        },
+                      ),
+                    );
+                  },
+                  valueListenable: viewModel.buttonEnabled,
+                )
+              ],
+            ),
+          );
   }
 
   Widget fireBaseAuth() {
@@ -576,7 +658,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
 
       linkWithExistingUser: false,
       builder: (context, controller) {
-        return SizedBox.shrink();
+        return const SizedBox.shrink();
       },
       onLoginSuccess: (userCredential, autoVerified) {
         debugPrint("autoVerified: $autoVerified");
@@ -601,21 +683,26 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     );
   }
 
-  Widget _genderWidget(IAppThemeData appTheme, Gender gender, String text, isProfileDetails) {
+  Widget _genderWidget(
+      IAppThemeData appTheme, Gender gender, String text, isProfileDetails) {
     return GeneralGender(
       gender: gender,
       text: text,
-      selectedItem: viewModel.isProfileDetails! ? (viewModel.genderController.text == 'Male' ? Gender.male : Gender.female) : gender,
+      selectedItem: viewModel.isProfileDetails!
+          ? (viewModel.genderController.text == 'Male'
+              ? Gender.male
+              : Gender.female)
+          : gender,
       items: genderList,
       isProfileDetails: viewModel.isProfileDetails!,
       onTap: (value) {
-          viewModel.genderController.text = value;
-          if (viewModel.checkAllInputAdded()) {
-            viewModel.changeButton(true);
-          } else {
-            viewModel.changeButton(false);
-          }
-          developer.log(' Here Gender clicked ' + '$value');
+        viewModel.genderController.text = value;
+        if (viewModel.checkAllInputAdded()) {
+          viewModel.changeButton(true);
+        } else {
+          viewModel.changeButton(false);
+        }
+        developer.log(' Here Gender clicked ' + '$value');
       },
     );
     // return Expanded(
@@ -826,9 +913,9 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
       context: context,
       builder: (context) {
         dcontext = context;
-        return AlertDialog(
+        return const AlertDialog(
           //backgroundColor: ,
-          title: const Text('Verification'),
+          title: Text('Verification'),
           actions: [
             // verificationDesign(context),
           ],
@@ -923,7 +1010,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
         context: context,
         maxHeight: MediaQuery.of(context).size.height * 0.6,
         body: FirebasePhoneAuthHandler(
-          phoneNumber: "+" + viewModel.mobileNumberController.text,
+          phoneNumber: viewModel.countryCode + viewModel.mobileNumberController.text,
           signOutOnSuccessfulVerification: false,
           linkWithExistingUser: false,
           autoRetrievalTimeOutDuration: const Duration(seconds: 60),
@@ -1013,7 +1100,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
           GeneralText(
             Strings.verificationPopupSubtitle +
                 " " +
-                viewModel.mobileNumberController.text,
+                viewModel.countryCode+viewModel.mobileNumberController.text,
             textAlign: TextAlign.center,
             maxLines: 3,
             style: appTheme.typographies.interFontFamily.headline4.copyWith(
@@ -1037,16 +1124,16 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               ),
               pinTheme: PinTheme(
                 shape: PinCodeFieldShape.underline,
-                selectedColor: Color(0xfff1c452),
-                disabledColor: Color(0xfff1c452),
-                inactiveColor: Color(0xfff1c452),
-                inactiveFillColor: Color(0xff35353C),
-                activeColor: Color(0xff35353C),
+                selectedColor: const Color(0xfff1c452),
+                disabledColor: const Color(0xfff1c452),
+                inactiveColor: const Color(0xfff1c452),
+                inactiveFillColor: const Color(0xff35353C),
+                activeColor: const Color(0xff35353C),
                 borderRadius: BorderRadius.circular(8),
                 // fieldHeight: 58,
                 fieldWidth: 39,
-                selectedFillColor: Color(0xff35353C),
-                activeFillColor: Color(0xff35353C),
+                selectedFillColor: const Color(0xff35353C),
+                activeFillColor: const Color(0xff35353C),
               ),
               obscureText: false,
               keyboardType: TextInputType.number,
@@ -1097,8 +1184,6 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             styleType: ButtonStyleType.fill,
             width: 170,
             onTap: () async {
-              print('a');
-              print('otp');
               print(otpController.text);
               otpController.value;
               if (enteredOtp != '') {
@@ -1127,7 +1212,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               //  proceedVerification(context);
             },
           ),
-          SizedBox(
+          const SizedBox(
             height: 22,
           ),
 

@@ -121,15 +121,17 @@ class _GeneralDropdownState extends State<GeneralDropdown> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Container(
+                      //alignment: Alignment.center,
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: widget._borderColor ??
                               const Color.fromRGBO(0, 0, 0, 0.57),
                           width: 2,
                         ),
+                        //color: Colors.green,
                         borderRadius: BorderRadius.circular(12),
                       ),
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: DropdownButton<String>(
                           isExpanded: true,
                           dropdownColor: appTheme.colors.textFieldFilledColor,
@@ -150,6 +152,7 @@ class _GeneralDropdownState extends State<GeneralDropdown> {
                                   value: data,
                                   child: Text(
                                     data,
+                                    overflow: TextOverflow.ellipsis,
                                   )))
                               .toList(),
                         )))));

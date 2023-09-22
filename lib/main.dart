@@ -9,7 +9,8 @@ import 'helpers/notification_service.dart';
 
 //final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-InAppLocalhostServer localhostServer = new InAppLocalhostServer();
+InAppLocalhostServer localhostServer = InAppLocalhostServer();
+
 void main() async {
   await configureDependencies();
  //await NotificationService().init();

@@ -46,6 +46,7 @@ class T {
   List<FoodieProfile> foodieProfile;
   String comments;
   int totalPrice;
+  bool chefRated;
   double advancePayment;
   double tax;
   int advancePercentage;
@@ -93,6 +94,7 @@ class T {
     required this.foodieName,
     required this.foodieProfession,
     required this.foodieAge,
+    required this.chefRated,
     required this.scheduleId,
     required this.scheduleScheduledDate,
     required this.scheduleStartTime,
@@ -125,6 +127,7 @@ class T {
             json["foodieProfile"].map((x) => FoodieProfile.fromJson(x))),
         comments: json["comments"],
         totalPrice: json["totalPrice"],
+        chefRated: json["chefRated"],
         totalAmount: json["totalAmount"],
         taxPercentage: json["taxPercentage"],
         chefProfileImageUrl: json["chefProfileImageUrl"],
@@ -174,6 +177,7 @@ class T {
         "totalAmount": totalAmount,
         "taxPercentage": taxPercentage,
         "priceTypeId": priceTypeId,
+        "chefRated" : chefRated,
         "bookingStatus": bookingStatus,
         "foodieName": foodieName,
         "foodieProfession": foodieProfession,

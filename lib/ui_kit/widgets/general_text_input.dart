@@ -31,7 +31,7 @@ class GeneralTextInput extends StatefulWidget {
     TextStyle? labelStyle,
     TextStyle? valueStyle,
     TextStyle? hintStyle,
-    IconData? prefixIcon,
+    Widget? prefixIcon,
     IconData? suffixIcon,
     void Function()? onSuffixIconClick,
     Color? backgroundColor,
@@ -73,7 +73,7 @@ class GeneralTextInput extends StatefulWidget {
   final TextStyle? _valueStyle;
   final TextStyle? _hintStyle;
   final InputType _inputType;
-  final IconData? _prefixIcon;
+  final Widget? _prefixIcon;
   final IconData? _suffixIcon;
   final void Function()? _onSuffixIconClick;
   final ValueChanged<String>? _onChanged;
@@ -179,7 +179,7 @@ class _GeneralTextInputState extends State<GeneralTextInput> {
           disabledBorder: widget._disabledBorder,
           enabledBorder: widget._inputBorder ?? appTheme.inputBorder,
           prefixIcon:
-              widget._prefixIcon != null ? Icon(widget._prefixIcon) : null,
+              widget._prefixIcon,
           //  suffixIcon: _buildSuffixIcon(appTheme),
           contentPadding:
         widget._contentPadding?? EdgeInsets.symmetric(vertical: 18,horizontal: 13)

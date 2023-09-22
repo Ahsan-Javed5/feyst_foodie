@@ -204,15 +204,21 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      GeneralText(
-                                        item.experienceName ?? "",
-                                        style: appTheme.typographies
-                                            .interFontFamily.headline6
-                                            .copyWith(
-                                                fontSize: 15,
-                                                color:
-                                                    HexColor.fromHex('#ffffff'),
-                                                fontWeight: FontWeight.bold),
+                                      Container(
+                                        //color: Colors.green,
+                                        width: DeviceHelper.width * 0.34,
+                                        child: GeneralText(
+                                          item.experienceName ?? "",
+                                          maxLines: 2,
+                                          style: appTheme.typographies
+                                              .interFontFamily.headline6
+                                              .copyWith(
+                                                  //overflow: TextOverflow.ellipsis,
+                                                  fontSize: 15,
+                                                  color:
+                                                      HexColor.fromHex('#ffffff'),
+                                                  fontWeight: FontWeight.bold),
+                                        ),
                                       ),
                                       Row(
                                         // mainAxisAlignment: MainAxisAlignment.center,
@@ -242,7 +248,8 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                 ],
                               ),
                               Container(
-                                padding: EdgeInsets.all(DeviceHelper.height * 0.032),
+                                alignment: Alignment.center,
+                                padding: EdgeInsets.all(DeviceHelper.height * 0.025),
                                 decoration: BoxDecoration(
                                   color: HexColor.fromHex("#bb3127"),
                                   borderRadius: const BorderRadius.only(
@@ -251,11 +258,11 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                   ),
                                 ),
                                 child: GeneralText(
-                                  Strings.rsLabel + item.totalPrice.toString(),
+                                  Strings.rsLabel+'' + item.totalPrice.toString(),
                                   style: appTheme
                                       .typographies.interFontFamily.headline1
                                       .copyWith(
-                                          fontSize: 19,
+                                          fontSize: 18,
                                           color: HexColor.fromHex('#ffffff'),
                                           fontWeight: FontWeight.bold),
                                 ),

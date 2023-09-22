@@ -456,7 +456,7 @@ class _FoodProductBookingConfirmedDetailsState
 
                 ///rating button for completed status
                 widget._advancePendingDetails.t.bookingStatus.toUpperCase() ==
-                        Strings.completeStatus
+                        Strings.completeStatus && widget._advancePendingDetails.t.chefRated == false
                     ? Column(
                         children: [
                           const SizedBox(
@@ -1362,16 +1362,32 @@ class _FoodProductBookingConfirmedDetailsState
                     color: HexColor.fromHex('#909094'),
                   ),
                 ),
-                GeneralText(
-                  // Strings.productDetailChefSubHostName,
-                  widget._advancePendingDetails.t.subHost,
-                  //+
-                  //     widget._advancePendingDetails.t.subHostMobileNo,
-                  style:
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GeneralText(
+                      // Strings.productDetailChefSubHostName,
+                      widget._advancePendingDetails.t.subHost,
+                      //+
+                      //     widget._advancePendingDetails.t.subHostMobileNo,
+                      style:
+                          appTheme.typographies.interFontFamily.headline6.copyWith(
+                        fontSize: 18,
+                        color: HexColor.fromHex('#f1c452'),
+                      ),
+                    ),
+                    GeneralText(
+                      // Strings.productDetailChefSubHostName,
+                      widget._advancePendingDetails.t.subHostMobileNo,
+                      //+
+                      //     widget._advancePendingDetails.t.subHostMobileNo,
+                      style:
                       appTheme.typographies.interFontFamily.headline6.copyWith(
-                    fontSize: 18,
-                    color: HexColor.fromHex('#f1c452'),
-                  ),
+                        fontSize: 16,
+                        color: HexColor.fromHex('#f1c452'),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

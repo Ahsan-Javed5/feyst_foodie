@@ -661,7 +661,7 @@ class _FoodProductAdvancePendingDetailsState
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.white, width: 2),
                           shape: BoxShape.circle),
-                      child: Image.network(widget._advancePendingDetails.t.chefProfileImageUrl.toString())),
+                      child: Image.network(Api.baseURLForImages+widget._advancePendingDetails.t.chefProfileImageUrl.toString())),
                   const SizedBox(
                     width: 11.5,
                   ),

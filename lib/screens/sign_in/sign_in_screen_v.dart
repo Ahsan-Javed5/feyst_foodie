@@ -1,6 +1,7 @@
 import 'package:chef/screens/sign_in/sign_in_screen_vm.dart';
 import 'package:chef/services/device/device_service.dart';
 import 'package:chef/ui_kit/widgets/general_text_input.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -82,10 +83,31 @@ class SignInScreen extends BaseView<SignInScreenViewModel> {
                       backgroundColor: appTheme.colors.textFieldFilledColor,
                       valueStyle: const TextStyle(color: Colors.white),
                       inputBorder: appTheme.focusedBorder,
-                      hint: '+92 345 000 0000',
+                      prefixIcon: CountryCodePicker(
+                        onChanged: (value){
+                          viewModel.countryCode = value.dialCode!;
+                        },
+                        textStyle: const TextStyle(color: Colors.white),
+                        // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
+                        initialSelection: 'PK',
+                        //enabled: isProfileDetails ? false : true,
+                        favorite: const ['+92', 'PK'],
+                        // optional. Shows only country name and flag
+                        showCountryOnly: false,
+                        // optional. Shows only country name and flag when popup is closed.
+                        showOnlyCountryWhenClosed: false,
+                        // optional. aligns the flag and the Text left
+                        alignLeft: false,
+                        hideSearch: true,
+                      ),
+                      hint: '3xx xxx xxxx',
                       hintStyle:
-                          const TextStyle(color: Colors.white, fontSize: 14),
-                      onChanged: (newValue) {}),
+                          const TextStyle(color: Colors.white, fontSize: 15),
+                      onChanged: (newValue) {
+                        if(newValue.length == 1 && newValue == '0'){
+                          _mobileNumberController.clear();
+                        }
+                      }),
                   const Spacer(),
                   Expanded(
                     child: Row(

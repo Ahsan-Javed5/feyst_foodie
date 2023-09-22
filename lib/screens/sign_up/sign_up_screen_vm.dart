@@ -37,6 +37,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
    TextController ageController = TextController(text: "");
    TextController genderController = TextController(text: 'male');
   TextController idController = TextController(text: "");
+  String countryCode = '+92';
 
   final dropdownItems = <String>[];
   Map<dynamic, dynamic> dropdownDetails = {};
@@ -178,7 +179,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
           deviceType: Platform.isAndroid ? 'ANDROID' : 'IOS',
           fcmToken:   await FirebaseMessaging.instance.getToken(),
           gender: gender,
-          mobileNo: '+' + mobileNumber,
+          mobileNo: countryCode + mobileNumber,
           professionalId: professionId,
           profileImageUrl: null,
         );
@@ -215,6 +216,9 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
             loginData: response.body,
             baseUrl: baseUrl,
           );
+
+          await _storage.writeString(key: 'profile_image', data: signupResponse.t.profileImageUrl);
+          await _storage.writeString(key: 'auth_token' , data: signupResponse.t.authToken);
 
           developer.log(' Sign up Response is ' + signupResponse.message);
           Navigator.push(
@@ -286,7 +290,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
           t: t,
         ).toJson();
         final _header = <String, String>{
-          'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6IkZvb2RpZSIsInN1YiI6IjkyMzAzMDEyNDU2NyIsImp0aSI6IjMiLCJpYXQiOjE2OTE3NDk2NDh9.9ZAKshx2c_ZawYJwIyp9kcr_IyoVcS3KZzGDrmu6gUbtMIof9Orfkm_yEkaaYMGdFMDRCZRHolx4d8C0b5NsZg',
+          'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
           'Content-Type': 'application/json'
         };
         final response = await _network
@@ -298,10 +302,6 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
         )
             .whenComplete(() {});
 
-        // final response = await _network.get(
-        //   //below one is working
-        //   path: 'https://run.mocky.io/v3/80289cbe-aa47-491e-9eb2-56126289c8a4',
-        // );
         if (response != null) {
           developer.log(' Response of Signup body is ' + '${response.body}');
 
@@ -314,6 +314,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
             loginData: response.body,
             baseUrl: baseUrl,
           );
+          _appService.state.userInfo!.t.authToken = _storage.readString(key: 'auth_token');
 
           developer.log(' Sign up update Response is ' + signupResponse.message);
           Navigator.pop(context);
@@ -324,20 +325,9 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
           developer.log(' Response of Signup is null ' + '$response');
         }
 
-        //  loading(isBusy: false);
-        //   _navigation.replace(route: CustomerRoute());
       } catch (error) {
         developer.log(' Error in ' + '${error}');
-
         Toaster.errorToast(context: context, message: '$error');
-        // emit(
-        //   // state.copyWith(
-        //   //   isBusy: false,
-        //   //   errorMessage: error.toString().contains(Api.unauthorizedRequest)
-        //   //       ? Strings.invalidUsernamePassword
-        //   //       : error.toString(),
-        //   // ),
-        // );
       }
     } else {
       Toaster.errorToast(

@@ -21,9 +21,6 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
   @override
   Widget buildScreen(
       {required BuildContext context, required ScreenSizeData screenSizeData}) {
-    NotificationServices().fireBaseInit(context);
-    NotificationServices().setupInteractMessage(context);
-    NotificationServices().getDeviceToken();
     return BlocBuilder<HomeScreenViewModel, HomeScreenState>(
         bloc: viewModel..fetchData(context: context),
         builder: (_, state) {
@@ -67,6 +64,9 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
     //  required FoodMenuModel foodMenuDetail,
     // required
   }) {
+    NotificationServices().fireBaseInit(context);
+    NotificationServices().setupInteractMessage(context);
+    NotificationServices().getDeviceToken();
     final appTheme = AppTheme.of(context).theme;
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
@@ -392,7 +392,7 @@ class _FoodContainer extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Container(
                     width: DeviceHelper.width * 0.55,
-                    height: DeviceHelper.height * 0.12,
+                    height: DeviceHelper.height * 0.14,
                     padding: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
                         color: const Color(0xffbb3127),
@@ -448,8 +448,8 @@ class _FoodContainer extends StatelessWidget {
                             ],
                           ),
                         ),
-                        const SizedBox(
-                          width: 1,
+                        SizedBox(
+                          width: DeviceHelper.width * 0.01,
                         ),
                         SvgPicture.asset(
                           Resources.arrowRT,

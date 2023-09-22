@@ -99,14 +99,13 @@ class _UserProfileState extends State<UserProfile> {
                           const SizedBox(
                             height: 40,
                           ),
-                          SizedBox(
-                            width: 129,
-                            child: Image.asset(
-                                'assets/images/icons/userProfile.png',
-                                fit: BoxFit.fill),
+                          CircleAvatar(
+                            radius: 55,
+                            backgroundImage: NetworkImage(Api.baseURLForImages+widget.chefData.t!.profileImageUrl.toString(),
+                            ),
                           ),
                           const SizedBox(
-                            height: 10,
+                            height: 15,
                           ),
                           InkWell(
                             onTap: () {

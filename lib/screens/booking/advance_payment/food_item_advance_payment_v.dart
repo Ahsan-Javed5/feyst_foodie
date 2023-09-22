@@ -15,7 +15,7 @@ class FoodItemAdvancePaymentScreen
       : _bookingItem = bookingItem,
         super(key: key);
 
-  BookingItem _bookingItem;
+  final BookingItem _bookingItem;
 
   @override
   Widget buildScreen(

@@ -1,6 +1,8 @@
 import 'package:chef/helpers/helpers.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../firebase_messaging/notification_services.dart';
+
 class GetStartedScreen extends StatefulWidget {
   const GetStartedScreen({Key? key}) : super(key: key);
 
