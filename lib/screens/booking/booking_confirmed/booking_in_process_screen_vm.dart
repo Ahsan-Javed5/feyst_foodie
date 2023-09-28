@@ -22,6 +22,7 @@ class BookingInProcessScreenViewModel
 
   late AdvancePendingResponse advancePendingResponse;
   final ratingController = TextEditingController();
+  final _storage = locateService<IStorageService>();
 
   // void initialize() {
   //   developer.log(' Initialized the data ');
@@ -29,7 +30,8 @@ class BookingInProcessScreenViewModel
   // }
 
   Future<void> getBookingDetails(int _orderId) async {
-    final url = InfininURLHelpers.getRestApiURL(
+    developer.log('order id is: $_orderId');
+    final url = InfininURLHelpers.  getRestApiURL(
         Api.baseURL + Api.bookingDetailsAdvancePaymentPending);
     final _appService = locateService<ApplicationService>();
     final _navigate = locateService<INavigationService>();
@@ -42,7 +44,7 @@ class BookingInProcessScreenViewModel
       path: url,
       data: {'t': _orderId},
       header: {
-        'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+        'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
         'Content-Type': 'application/json'
       },
     );
@@ -101,7 +103,7 @@ class BookingInProcessScreenViewModel
         },
 
         header: {
-          'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+          'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
           'Content-Type': 'application/json'
         },
       );

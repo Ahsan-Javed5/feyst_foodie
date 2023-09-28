@@ -84,7 +84,7 @@ class FoodProductExperienceDetailsViewModel
           totalPrice: orderHelper.selectedExperienceDetail.price!.toInt(),
           scheduleId: int.parse(orderHelper.scheduleId),
           persons: orderHelper.numberOfPerson.toString(),
-          // preferenceId: experienceData.preferenceId,
+         //  preferenceId: 1
           preferenceId: orderHelper.selectedPreferenceId
         ),
       ).toJson();
@@ -93,7 +93,7 @@ class FoodProductExperienceDetailsViewModel
         path: url,
         data: bookingRequest,
         header: {
-          'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+          'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
           'Content-Type': 'application/json'
         }
       );

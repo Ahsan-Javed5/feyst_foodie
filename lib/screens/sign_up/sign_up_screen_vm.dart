@@ -290,7 +290,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
           t: t,
         ).toJson();
         final _header = <String, String>{
-          'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+          'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
           'Content-Type': 'application/json'
         };
         final response = await _network
@@ -314,7 +314,8 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
             loginData: response.body,
             baseUrl: baseUrl,
           );
-          _appService.state.userInfo!.t.authToken = _storage.readString(key: 'auth_token');
+          //_appService.state.userInfo!.t.authToken = 'ghgfrdesaa';
+        _appService.state.userInfo!.t.authToken = _storage.readString(key: 'auth_token');
 
           developer.log(' Sign up update Response is ' + signupResponse.message);
           Navigator.pop(context);

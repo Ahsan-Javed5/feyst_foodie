@@ -141,6 +141,9 @@ class EditProfileScreen extends BaseView<EditProfileScreenViewModel> {
                         viewModel.logout(context);
                       }
                       else if (othersList.elementAt(index) == Strings.labelPrivacyPolicy) {
+                        Future.delayed(const Duration(seconds: 3), (){
+
+                        });
                         Navigator.push(
                           context,
                           MaterialPageRoute(

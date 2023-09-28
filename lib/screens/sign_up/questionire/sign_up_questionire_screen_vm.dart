@@ -50,6 +50,7 @@ class  SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionna
   final ApplicationService _appService;
   late SignUpQuestionsModel signUpQuestionsModel;
   late AnswersResponse foodieAnswers;
+  final _storage = locateService<IStorageService>();
 
   bool isImageSelected = false;
   void updateSelectedImage(File? image) {
@@ -149,7 +150,7 @@ class  SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionna
       t: foodieQuestionAnswersList,
     ).toJson();
     final _header = <String, String>{
-     'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+     'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
       'Content-Type': 'application/json'
     };
     final response = await _network.post(
@@ -179,7 +180,7 @@ class  SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionna
         "t": _appService.state.userInfo!.t.id
       },
       header: {
-    'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+    'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
     'Content-Type': 'application/json'
     },
     );

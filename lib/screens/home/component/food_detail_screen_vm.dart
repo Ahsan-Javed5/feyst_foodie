@@ -50,7 +50,7 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
       path: url,
       data: foodMenuRequest,
       header: {
-        'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+        'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
         'Content-Type': 'application/json'
       }
     );
@@ -76,7 +76,7 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
     ).toJson();
 
     final response = await _network.post(path: url, data: scheduleRequest, header: {
-      'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+      'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
       'Content-Type': 'application/json'
     });
 
@@ -95,7 +95,7 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
     ).toJson();
 
     final response = await _network.post(path: url, data: scheduleRequest, header: {
-      'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+      'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
       'Content-Type': 'application/json'
     });
 
@@ -119,7 +119,7 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
             }
           },
           header: {
-            'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+            'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
             'Content-Type': 'application/json'
           }
       );

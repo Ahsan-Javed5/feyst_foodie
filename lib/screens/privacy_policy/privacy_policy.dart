@@ -16,8 +16,12 @@ class PrivacyPolicy extends StatefulWidget {
 }
 
 class _PrivacyPolicyState extends State<PrivacyPolicy> {
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      isLoading = true;
+    });
     return Scaffold(
       backgroundColor: HexColor.fromHex("#212129"),
       body: Column(

@@ -161,11 +161,12 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
             loginData: response.body,
             baseUrl: Api.baseURL,
           );
-          await _storage.writeString(key: 'profile_image', data: signupResponse.t.profileImageUrl);
+          if(signupResponse.t.profileImageUrl != null){
+          await _storage.writeString(key: 'profile_image', data: signupResponse.t.profileImageUrl);}
 
           await _storage.writeString(key: 'auth_token' , data: signupResponse.t.authToken);
 
-          developer.log(' Sign up Response is ' + signupResponse.message);
+          developer.log(' Sign up Response is ' + signupResponse.message ?? '');
 
           //    Navigator.pushReplacementNamed(context, '/BottomBar');
           _navigation.replace(route: BottomBar(bottomBarType: bottom_bar.BottomBarType.home));

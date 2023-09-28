@@ -34,6 +34,7 @@ class FoodItemAdvancePaymentViewModel
   late ConfirmedBookingResponse confirmedBookingResponse;
   final _appService = locateService<ApplicationService>();
   final _navigate = locateService<INavigationService>();
+  final _storage = locateService<IStorageService>();
 
   Future<void> getBookingDetails(int _orderId) async {
     final url = InfininURLHelpers.getRestApiURL(
@@ -44,7 +45,7 @@ class FoodItemAdvancePaymentViewModel
       path: url,
       data: {'t': _orderId},
       header: {
-        'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+        'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
         'Content-Type': 'application/json'
       },
     );
@@ -89,7 +90,7 @@ class FoodItemAdvancePaymentViewModel
       data: bookingUpdateRequest,
       header: {
         'Authorization':
-        'Bearer ${_appService.state.userInfo?.t.authToken}',
+        'Bearer ${_storage.readString(key: 'auth_token')}',
         'Content-Type': 'application/json'
       },
     );
@@ -124,7 +125,7 @@ class FoodItemAdvancePaymentViewModel
       data: bookingUpdateRequest,
       header: {
         'Authorization':
-        'Bearer ${_appService.state.userInfo?.t.authToken}',
+        'Bearer ${_storage.readString(key: 'auth_token')}',
         'Content-Type': 'application/json'
       },
     );

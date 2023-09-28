@@ -76,7 +76,7 @@ class HomeScreenViewModel extends BaseViewModel<HomeScreenState> {
       //await locateService<SignUpQuestionnaireScreenViewModel>().getFoodieAnswers();
       final _header = <String, String>{
         Api.headerAcceptKey: Api.headerAcceptTypeValue,
-        'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+        'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
         'Content-Type': 'application/json'
       };
       final response = await _network

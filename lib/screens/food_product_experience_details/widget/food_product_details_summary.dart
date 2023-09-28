@@ -401,26 +401,26 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
   Widget foodProductDetails(IAppThemeData appTheme) {
    OrderHelper orderHelper = (widget.appService.state.orderHelper)!;
     developer.log(' Schedule Id selected in Summary Page ' +
-        orderHelper!.scheduleId);
+        orderHelper.scheduleId);
 
     var _date = InfininURLHelpers.dayOfMonth(
-        orderHelper!.daysGroup.scheduledDate);
-    var dayOfMonth = orderHelper!.daysGroup.scheduledDate.day;
+        orderHelper.daysGroup.scheduledDate);
+    var dayOfMonth = orderHelper.daysGroup.scheduledDate.day;
     var _month = InfininURLHelpers.months[
-    orderHelper!.daysGroup.scheduledDate.month - 1];
-    var _hourSelected = orderHelper!.hourSelected.startTime;
+    orderHelper.daysGroup.scheduledDate.month - 1];
+    var _hourSelected = orderHelper.hourSelected.startTime;
 
     var _productDetailSelectionDate = _date.toUpperCase() +
         ',  ' +
-        (dayOfMonth.toString())! +
+        (dayOfMonth.toString())+
         "   " +
         _month.toString().toUpperCase();
     var _productDetailSelectionTime = InfininURLHelpers.getAmPm(
-        orderHelper!.hourSelected.startTime);
+        orderHelper.hourSelected.startTime);
     var _productDetailSelectionType =
-        orderHelper!.selectedCategory;
+        orderHelper.selectedCategory;
     var _numberOfPerson =
-        orderHelper!.numberOfPerson ?? 4.toString();
+        orderHelper.numberOfPerson ?? 4.toString();
     return Padding(
       padding: const EdgeInsetsDirectional.only(start: 25, end: 25),
       child: Container(

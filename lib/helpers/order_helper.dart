@@ -9,7 +9,7 @@ class OrderHelper {
   late home_data.Experiences selectedExperienceDetail;
   String noteAdded = '';
   late int openCapacity;
-  String selectedCategory = 'Couple';
+  late String selectedCategory;
   late int selectedPreferenceId;
   int numberOfPerson = 4;
 

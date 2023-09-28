@@ -23,6 +23,7 @@ class BookingListScreenViewModel extends BaseViewModel<BookingListState> {
   late BookingListModel bookingListModel;
   final _navigate = locateService<INavigationService>();
   final _appService = locateService<ApplicationService>();
+  final _storage = locateService<IStorageService>();
 
   Future<void> getBookingListData(isBookingScreen) async {
     final type = isBookingScreen ? 'UPCOMING' : 'HISTORY';
@@ -38,7 +39,7 @@ class BookingListScreenViewModel extends BaseViewModel<BookingListState> {
     ).toJson();
 
     final _header = <String, String>{
-      'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+      'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
       'Content-Type': 'application/json'
     };
 
@@ -68,7 +69,7 @@ class BookingListScreenViewModel extends BaseViewModel<BookingListState> {
       path: url,
       data: bookingUpdateRequest,
       header: {
-        'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+        'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
         'Content-Type': 'application/json'
       },
     );

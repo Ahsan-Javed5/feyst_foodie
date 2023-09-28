@@ -102,6 +102,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       items.add(element.preferenceName.toString());
       preferenceIds.add(int.parse(element.id.toString()));
     });
+    //_appService.state.orderHelper!.selectedCategory = widget.data!.experiencePreferences![0].preferenceName.toString();
 
     // items.add('Couple');
     // items.add('Single');
@@ -1163,10 +1164,11 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                                           '${value}');
                                                   _appService.state.orderHelper!
                                                       .selectedCategory = value;
-                                                  widget
-                                                      .data?.experiencePreferences
+                                                  widget.data
+                                                      ?.experiencePreferences
                                                       ?.forEach((element) {
-                                                    if (element.preferenceName ==
+                                                    if (element
+                                                            .preferenceName ==
                                                         value) {
                                                       _appService
                                                               .state
@@ -2042,12 +2044,10 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               DaysGroup(scheduledDate: scheduledDate, dayOfMonth: 0, hours: []);
           orderHelper.numberOfPerson =
               int.parse(widget.data!.persons.toString());
-          // orderHelper.selectedCategory = widget
-          //     .data!
-          //     .experiencePreferences![
-          //         int.parse(widget.data?.preferenceId as String)]
-          //     .preferenceName
-          //     .toString();
+          orderHelper.selectedCategory =
+              widget.data!.experiencePreferences![0].preferenceName.toString();
+          orderHelper.selectedPreferenceId =
+              int.parse(widget.data!.experiencePreferences![0].preferenceId.toString());
           //.data!.persons;
           _appService.updateOrderHelper(orderHelper);
           //_appService.updateScheduleId(scheduleId)

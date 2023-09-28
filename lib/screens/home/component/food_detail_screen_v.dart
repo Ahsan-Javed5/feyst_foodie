@@ -58,6 +58,8 @@ class FoodDetailScreenView extends BaseView<FoodDetailScreenViewModel> {
   }
 
   Widget displayLoaded(foodMenuDetail, scheduleModel, chefData) {
+    //final _appService = locateService<ApplicationService>();
+   // _appService.state.orderHelper!.selectedCategory = _experienceData.experiencePreferences?[0].preferenceName.toString() ?? 'no pref';
     return FoodDetailScreen(
       foodMenuDetail: foodMenuDetail,
       data: _experienceData,
