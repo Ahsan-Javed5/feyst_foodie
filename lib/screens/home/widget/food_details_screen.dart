@@ -748,7 +748,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           children: [
             SvgPicture.asset(
               Resources.userIconMenu,
-              height: DeviceHelper.height * 0.06,
+              height: DeviceHelper.height * 0.02,
               color: foodItemQuantity[index] == 0
                   ? HexColor.fromHex('#909094')
                   : HexColor.fromHex('#ffffff'),
@@ -786,12 +786,12 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                       topLeft: Radius.circular(8)),
                 ),
                 padding: const EdgeInsetsDirectional.only(
-                    start: 8, end: 8, top: 6, bottom: 6),
-                child: const Icon(Icons.remove, color: Colors.black, size: 18),
+                    start: 6, end: 6, top: 4, bottom: 4),
+                child: const Icon(Icons.remove, color: Colors.black, size: 16),
               ),
             ),
             SizedBox(
-              width: DeviceHelper.width * 0.15,
+              width: DeviceHelper.width * 0.08,
             ),
             InkWell(
               onTap: () {
@@ -805,11 +805,11 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                       bottomRight: Radius.circular(8)),
                 ),
                 padding: const EdgeInsetsDirectional.only(
-                    start: 8, end: 8, top: 6, bottom: 6),
-                child: Icon(
+                    start: 6, end: 6, top: 4, bottom: 4),
+                child: const Icon(
                   Icons.add,
                   color: Colors.black,
-                  size: DeviceHelper.height * 0.05,
+                  size: 16,
                 ),
               ),
             )
@@ -830,7 +830,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(8)),
             padding: const EdgeInsetsDirectional.only(
-                start: 21, end: 21, top: 5, bottom: 5),
+                start: 15, end: 15, top: 1, bottom: 5.5),
             child: getFoodItemQuantityValue(appTheme: appTheme, index: index)),
       ),
     );
@@ -1826,10 +1826,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
         SizedBox(
           height: DeviceHelper.height * 0.012,
         ),
-        SizedBox(
-          //width: MediaQuery.of(context).size.width * 0.50,
-          child: wowFactors(appTheme, preferencesList),
-        ),
+        wowFactors(appTheme, preferencesList),
         SizedBox(
           height: DeviceHelper.height * 0.012,
         ),
@@ -1853,7 +1850,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           ],
         ),
         SizedBox(
-          height: DeviceHelper.height * 0.08,
+          height: DeviceHelper.height * 0.10,
         ),
 
         ///Google map
@@ -1912,24 +1909,25 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       children: [
         for (int i = 0; i < items.length; i++)
           Container(
-            width: MediaQuery.of(context).size.width * 0.23,
+            //color: Colors.red,
+            width: MediaQuery.of(context).size.width * 0.22,
             padding: const EdgeInsets.only(bottom: 7.7),
             child: Column(
               children: [
                 Container(
-                  width: DeviceHelper.width * 0.15,
+                  width: DeviceHelper.width * 0.17,
                   padding: const EdgeInsetsDirectional.all(10),
                   decoration: const BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage(
                           'assets/images/icons/food_item_circle.png'),
-                      fit: BoxFit.fill,
+                      fit: BoxFit.contain,
                     ),
                     shape: BoxShape.circle,
                   ),
                   child: Container(
-                    height: DeviceHelper.height * 0.10,
-                    padding: const EdgeInsetsDirectional.all(10),
+                    height: DeviceHelper.height * 0.08,
+                    padding: const EdgeInsetsDirectional.all(12),
                     decoration: BoxDecoration(
                       color: HexColor.fromHex("#f1c452"),
                       shape: BoxShape.circle,

@@ -44,7 +44,7 @@ class SignUpQuestionireScreen
                       viewModel.addModelsFromQuestions(
                           context: context,
                           completion: () {
-                            viewModel.saveFoodie(
+                            viewModel.saveFoodieQuestionAnswerAndProfileImage(
                                 baseUrl: Api.baseURL,
                                 context: context,
                                 completion: () {
@@ -153,7 +153,7 @@ class SignUpQuestionireScreen
                       //     ? () async {
                       viewModel.updateSelectedImage(selectedImage);
                       //viewModel.uploadImage(selectedImage, Api.baseURL);
-                      viewModel.uploadFoodieImage(file: selectedImage, baseUrl: Api.baseURL);
+                      await viewModel.uploadFoodieImage(file: selectedImage, baseUrl: Api.baseURL);
                       // var mimeType = lookupMimeType(selectedImage!.path);
                       //  List<int> bytes = await selectedImage!.readAsBytes();
                       // String binaryString = bytes
@@ -212,7 +212,7 @@ class SignUpQuestionireScreen
                               } else {
                                 return locateService<IStorageService>().readString(key: 'profile_image') == null || locateService<IStorageService>().readString(key: 'profile_image') == '' ?
                                 Image.asset(
-                                  Api.baseURLForImages+locateService<IStorageService>().readString(key: 'profile_image'),
+                                  Resources.userProfileImageIcon,
                                   // height: 47,
                                   // fit: BoxFit.fill,
                                 ) :

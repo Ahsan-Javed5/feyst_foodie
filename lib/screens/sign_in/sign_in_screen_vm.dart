@@ -162,7 +162,7 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
             baseUrl: Api.baseURL,
           );
           if(signupResponse.t.profileImageUrl != null){
-          await _storage.writeString(key: 'profile_image', data: signupResponse.t.profileImageUrl);}
+          await _storage.writeString(key: 'profile_image', data: signupResponse.t.profileImageUrl ?? '');}
 
           await _storage.writeString(key: 'auth_token' , data: signupResponse.t.authToken);
 

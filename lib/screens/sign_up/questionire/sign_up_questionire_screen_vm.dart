@@ -140,7 +140,7 @@ class  SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionna
     }
   }
 
-  Future<void> saveFoodie({
+  Future<void> saveFoodieQuestionAnswerAndProfileImage({
     required String baseUrl,
     required BuildContext context,
     Function? completion,

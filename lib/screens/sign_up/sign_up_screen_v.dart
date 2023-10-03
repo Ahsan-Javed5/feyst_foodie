@@ -648,40 +648,40 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
           );
   }
 
-  Widget fireBaseAuth() {
-    developer
-        .log(' Mobile Number is ' + '${viewModel.mobileNumberController.text}');
-    return FirebasePhoneAuthHandler(
-      phoneNumber: "+" + viewModel.mobileNumberController.text,
-      // If true, the user is signed out before the onLoginSuccess callback is fired when the OTP is verified successfully.
-      signOutOnSuccessfulVerification: false,
-
-      linkWithExistingUser: false,
-      builder: (context, controller) {
-        return const SizedBox.shrink();
-      },
-      onLoginSuccess: (userCredential, autoVerified) {
-        debugPrint("autoVerified: $autoVerified");
-        debugPrint("Login success UID: ${userCredential.user?.uid}");
-      },
-      onLoginFailed: (authException, stackTrace) {
-        debugPrint("An error occurred: ${authException.message}");
-      },
-      onError: (error, stackTrace) {},
-    );
-  }
-
-  void proceedVerification(context) {
-    viewModel.saveFoodie(
-      name: viewModel.nameController.text,
-      mobileNumber: viewModel.mobileNumberController.text,
-      age: int.parse(viewModel.ageController.text),
-      professionId: viewModel.professionID,
-      gender: viewModel.genderController.text,
-      context: context,
-      baseUrl: baseURLs[0],
-    );
-  }
+  // Widget fireBaseAuth() {
+  //   developer
+  //       .log(' Mobile Number is ' + '${viewModel.mobileNumberController.text}');
+  //   return FirebasePhoneAuthHandler(
+  //     phoneNumber: "+" + viewModel.mobileNumberController.text,
+  //     // If true, the user is signed out before the onLoginSuccess callback is fired when the OTP is verified successfully.
+  //     signOutOnSuccessfulVerification: false,
+  //
+  //     linkWithExistingUser: false,
+  //     builder: (context, controller) {
+  //       return const SizedBox.shrink();
+  //     },
+  //     onLoginSuccess: (userCredential, autoVerified) {
+  //       debugPrint("autoVerified: $autoVerified");
+  //       debugPrint("Login success UID: ${userCredential.user?.uid}");
+  //     },
+  //     onLoginFailed: (authException, stackTrace) {
+  //       debugPrint("An error occurred: ${authException.message}");
+  //     },
+  //     onError: (error, stackTrace) {},
+  //   );
+  // }
+  //
+  // void proceedVerification(context) {
+  //   viewModel.saveFoodie(
+  //     name: viewModel.nameController.text,
+  //     mobileNumber: viewModel.mobileNumberController.text,
+  //     age: int.parse(viewModel.ageController.text),
+  //     professionId: viewModel.professionID,
+  //     gender: viewModel.genderController.text,
+  //     context: context,
+  //     baseUrl: baseURLs[0],
+  //   );
+  // }
 
   Widget _genderWidget(
       IAppThemeData appTheme, Gender gender, String text, isProfileDetails) {

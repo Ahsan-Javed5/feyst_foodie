@@ -81,8 +81,8 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
   void loadMenuSelected() {
     for (var i = 0; i < widget.foodMenuDetail.t.length; i++) {
       developer.log(
-          ' Widget  Food Menu Detail ' + '${widget.foodMenuDetail.t[i].dish}');
-      menuListItems.add(CustomModel(name: widget.foodMenuDetail.t[i].dish));
+          ' Widget  Food Menu Detail ' + widget.foodMenuDetail.t[i].dish);
+      menuListItems.add(CustomModel(name: widget.foodMenuDetail.t[i].dish, price: widget.foodMenuDetail.t[i].price));
     }
   }
 
@@ -555,6 +555,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
   Widget productMenuDetails(IAppThemeData appTheme) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      //mainAxisAlignment: MainAxisAlignment.start,
       children: [
         GeneralText(
           Strings.productDetailSelectionMenuLabel,
@@ -567,6 +568,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
           height: 7,
         ),
         Wrap(
+          runAlignment: WrapAlignment.start,
           children: [
             for (int index = 0; index < menuListItems.length; index++)
               Container(
@@ -594,7 +596,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                         ):const SizedBox(),
                         widget.experienceData!.priceTypeId != 1
                             ? GeneralText(
-                          Strings.productDetailSelectionMenuAmount,
+                          menuListItems[index].price.toString(),
                           style: appTheme
                               .typographies.interFontFamily.headline2
                               .copyWith(
@@ -1029,6 +1031,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
 class CustomModel {
   String? name;
   String? icon;
+  int? price;
 
-  CustomModel({this.name, this.icon});
+  CustomModel({this.name, this.icon, this.price});
 }

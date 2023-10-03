@@ -217,7 +217,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
             baseUrl: baseUrl,
           );
 
-          await _storage.writeString(key: 'profile_image', data: signupResponse.t.profileImageUrl);
+          await _storage.writeString(key: 'profile_image', data: signupResponse.t.profileImageUrl ?? '');
           await _storage.writeString(key: 'auth_token' , data: signupResponse.t.authToken);
 
           developer.log(' Sign up Response is ' + signupResponse.message);

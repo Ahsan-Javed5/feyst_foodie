@@ -455,8 +455,8 @@ class _FoodProductBookingConfirmedDetailsState
                 ),
 
                 ///rating button for completed status
-                widget._advancePendingDetails.t.bookingStatus.toUpperCase() ==
-                        Strings.completeStatus && widget._advancePendingDetails.t.chefRated == false
+                (widget._advancePendingDetails.t.bookingStatus.toUpperCase() ==
+                        Strings.completeStatus && widget._advancePendingDetails.t.chefRated == false)
                     ? Column(
                         children: [
                           const SizedBox(
@@ -638,10 +638,12 @@ class _FoodProductBookingConfirmedDetailsState
         borderRadius: BorderRadius.circular(10),
       ),
       child: TextField(
+        style: const TextStyle(color: Colors.white,),
         controller: viewModel.ratingController,
         maxLines: maxLines,
         keyboardType: TextInputType.multiline,
         decoration: InputDecoration(
+          border: InputBorder.none,
             filled: true,
             hintText: 'Write Something',
             hintStyle: TextStyle(
