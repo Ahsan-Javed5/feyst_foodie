@@ -1555,7 +1555,7 @@ class _FoodProductBookingConfirmedDetailsState
                   description: Strings.confirmCancelMessage);
             },
           )
-        : widget._advancePendingDetails.t.bookingStatus.toUpperCase() ==
+        : widget._advancePendingDetails.t.bookingStatus ==
                 Strings.billGenerated
             ? getBillGeneratedButtons()
             : const SizedBox();

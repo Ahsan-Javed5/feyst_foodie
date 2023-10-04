@@ -76,16 +76,31 @@ class FoodProductExperienceDetailsViewModel
     emit(const Loading());
 
     try {
-      final bookingRequest = booking.BookingRequest(
+      final bookingRequest = orderHelper.selectedExperienceDetail.priceTypeId == 2 ? booking.BookingRequest(
         t: booking.T(
           comments: orderHelper.noteAdded,
           experienceId: orderHelper.selectedExperienceDetail.id!.toInt(),
           foodieId: (_appService.state.userInfo!.t.id),
+          bookingDetails: orderHelper.bookingMenuDetails,
           totalPrice: orderHelper.selectedExperienceDetail.price!.toInt(),
           scheduleId: int.parse(orderHelper.scheduleId),
           persons: orderHelper.numberOfPerson.toString(),
          //  preferenceId: 1
           preferenceId: orderHelper.selectedPreferenceId
+        ),
+      ).toJson()
+      :
+      booking.BookingRequest(
+        t: booking.T(
+            comments: orderHelper.noteAdded,
+            experienceId: orderHelper.selectedExperienceDetail.id!.toInt(),
+            foodieId: (_appService.state.userInfo!.t.id),
+            //bookingDetails: orderHelper.bookingMenuDetails,
+            totalPrice: orderHelper.selectedExperienceDetail.price!.toInt(),
+            scheduleId: int.parse(orderHelper.scheduleId),
+            persons: orderHelper.numberOfPerson.toString(),
+            //  preferenceId: 1
+            preferenceId: orderHelper.selectedPreferenceId
         ),
       ).toJson();
 

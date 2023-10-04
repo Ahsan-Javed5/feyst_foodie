@@ -461,8 +461,8 @@ abstract class Strings {
   static const requestedOrder = 'REQUESTED';
   static const acceptData = 'ACCEPTED';
   static const confirmed = 'CONFIRMED';
-  static const billGeneratedLower = 'BILL_GENERATED';
-  static const billGenerated = 'BILL_GENERATED';
+  static const billGeneratedLower = 'BILL-GENERATED';
+  static const billGenerated = 'BILL-GENERATED';
   static const billGeneratedValue = 'BILL GENERATED';
   static const completeStatus = 'COMPLETED';
 

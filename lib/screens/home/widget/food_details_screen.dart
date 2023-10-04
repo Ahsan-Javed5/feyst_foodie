@@ -9,6 +9,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 
 import '../../../constants/temporary_data.dart';
+import '../../../models/booking/booking_request.dart';
 import '../../../models/food_details_screen/slider_images_response.dart';
 import '../../../models/home/chef_data_response.dart';
 import '../../../models/home/home_response.dart' as home_data;
@@ -46,7 +47,7 @@ class FoodDetailScreen extends StatefulWidget {
 }
 
 class _FoodDetailScreenState extends State<FoodDetailScreen> {
-  List<int> foodItemQuantity = [];
+  List<BookingDetails> bookingMenuDetails = [];
   String selectedDate = "";
   String selectedDay = "";
   String selectedMonth = "";
@@ -97,7 +98,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
         .map((element) => element.mealName)
         .toSet()
         .toList();
-
+    for (var element in widget.foodMenuDetail.t) {
+      bookingMenuDetails.add(BookingDetails(menuId: element.id, quantity: 0));
+    }
     widget.data?.experiencePreferences?.forEach((element) {
       items.add(element.preferenceName.toString());
       preferenceIds.add(int.parse(element.id.toString()));
@@ -165,19 +168,18 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   }
 
   addQuantity(int itemPrice, int index) {
-    if (foodItemQuantity[index] != null &&
-        foodItemQuantity[index].toString().isNotEmpty) {
+    if (bookingMenuDetails[index].quantity.toString().isNotEmpty) {
       setState(() {
-        foodItemQuantity[index]++;
+        bookingMenuDetails[index].quantity = (bookingMenuDetails[index].quantity ?? 0) + 1;
         widget.data?.price = widget.data!.price! + itemPrice;
       });
     }
   }
 
   removeQuantity(int itemPrice, int index) {
-    if (foodItemQuantity[index] != null && foodItemQuantity[index] > 0) {
+    if (bookingMenuDetails[index].quantity! > 0) {
       setState(() {
-        foodItemQuantity[index]--;
+        bookingMenuDetails[index].quantity = (bookingMenuDetails[index].quantity ?? 0) - 1;
         widget.data?.price = widget.data!.price! - itemPrice;
       });
     }
@@ -525,6 +527,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           context: context,
           message: 'Number of Persons must between 1 and $openCapacity');
     } else {
+      bookingMenuDetails.removeWhere((element) => element.quantity == 0);
+      _appService.state.orderHelper?.bookingMenuDetails = bookingMenuDetails;
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -595,7 +599,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           shrinkWrap: true,
           itemCount: headers.length,
           itemBuilder: (BuildContext context, int index) {
-            foodItemQuantity.add(0);
+            bookingMenuDetails.add(BookingDetails(menuId: widget.foodMenuDetail.t[0].id, quantity: 0));
             List<menu.T> filteredList = widget.foodMenuDetail.t
                 .where((element) => element.mealName == headers[index])
                 .toList();
@@ -749,7 +753,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             SvgPicture.asset(
               Resources.userIconMenu,
               height: DeviceHelper.height * 0.02,
-              color: foodItemQuantity[index] == 0
+              color: bookingMenuDetails[index].quantity == 0
                   ? HexColor.fromHex('#909094')
                   : HexColor.fromHex('#ffffff'),
             ),
@@ -875,7 +879,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       style: appTheme.typographies.interFontFamily.headline6.copyWith(
         fontSize: 22,
         fontWeight: FontWeight.bold,
-        color: foodItemQuantity[quantityIndex] == 0
+        color: bookingMenuDetails[quantityIndex] == 0
             ? HexColor.fromHex('#909094')
             : HexColor.fromHex('#f1c452'),
       ),
@@ -899,7 +903,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       Strings.foodProductItemUsers,
       style: appTheme.typographies.interFontFamily.headline6.copyWith(
         fontSize: 16,
-        color: foodItemQuantity[index] == 0
+        color: bookingMenuDetails[index] == 0
             ? HexColor.fromHex('#909094')
             : HexColor.fromHex('#ffffff'),
       ),
@@ -920,12 +924,13 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   Widget getFoodItemQuantityValue(
       {required IAppThemeData appTheme, required int index}) {
     return GeneralText(
-      (foodItemQuantity[index] <= 9 && foodItemQuantity[index] > 0)
-          ? "0" + foodItemQuantity[index].toString()
-          : foodItemQuantity[index].toString(),
+      (bookingMenuDetails[index].quantity! <= 9 && bookingMenuDetails[index].quantity! > 0)
+          ? "0" + bookingMenuDetails[index].quantity
+          .toString()
+          : bookingMenuDetails[index].quantity.toString(),
       style: appTheme.typographies.interFontFamily.headline6.copyWith(
           fontSize: 15,
-          color: foodItemQuantity[index].toString() == "0"
+          color: bookingMenuDetails[index].quantity.toString() == "0"
               ? HexColor.fromHex('#212129').withOpacity(0.4)
               : HexColor.fromHex('#212129')),
     );
@@ -2163,4 +2168,11 @@ class CustomModel {
   String? icon;
 
   CustomModel({this.name, this.icon});
+}
+
+class MenuItem {
+  int menuId;
+  int quantity;
+
+  MenuItem({required this.menuId, required this.quantity});
 }
