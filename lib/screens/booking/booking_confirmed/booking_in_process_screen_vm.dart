@@ -33,30 +33,28 @@ class BookingInProcessScreenViewModel
     developer.log('order id is: $_orderId');
     final url = InfininURLHelpers.  getRestApiURL(
         Api.baseURL + Api.bookingDetailsAdvancePaymentPending);
-    final _appService = locateService<ApplicationService>();
-    final _navigate = locateService<INavigationService>();
-
-    // String _userId = (_appService.state.userInfo?.t.id.toString())! ?? '45';
 
     emit(const Loading());
 
-    final response = await _network.post(
-      path: url,
-      data: {'t': _orderId},
-      header: {
-        'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
-        'Content-Type': 'application/json'
-      },
-    );
+    try {
+      final response = await _network.post(
+        path: url,
+        data: {'t': _orderId},
+        header: {
+          'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
+          'Content-Type': 'application/json'
+        },
+      );
 
-    advancePendingResponse = advancePendingResponseFromJson(response.body);
+      advancePendingResponse = advancePendingResponseFromJson(response.body);
 
-
-    // advancePendingResponse
-
-    response.body != "" || response.body != null
-        ? emit(Loaded(advancePendingResponse))
-        : emit(const Loading());
+      response.body != "" || response.body != null
+          ? emit(Loaded(advancePendingResponse))
+          : emit(const Loading());
+    } catch (e) {
+      print(e);
+      // TODO
+    }
   }
 
   Future<void> requestConfirmBooking(int bookingId) async {

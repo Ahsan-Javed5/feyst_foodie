@@ -46,7 +46,7 @@ class T {
   List<FoodieProfile> foodieProfile;
   String comments;
   int totalPrice;
-  bool chefRated;
+  bool foodieRated;
   double advancePayment;
   double tax;
   int advancePercentage;
@@ -63,7 +63,7 @@ class T {
   int scheduleDayOfMonth;
   String persons;
   String? chefProfileImageUrl;
-  int preferenceId;
+  dynamic preferenceId;
   String preferenceName;
   String preferenceDescription;
   String preferenceIconPath;
@@ -75,7 +75,7 @@ class T {
   String address;
   String cityName;
   String townName;
-  int? verificationCode;
+  dynamic verificationCode;
   QrRequest? qrRequest;
 
   T({
@@ -94,7 +94,7 @@ class T {
     required this.foodieName,
     required this.foodieProfession,
     required this.foodieAge,
-    required this.chefRated,
+    required this.foodieRated,
     required this.scheduleId,
     required this.scheduleScheduledDate,
     required this.scheduleStartTime,
@@ -127,7 +127,7 @@ class T {
             json["foodieProfile"].map((x) => FoodieProfile.fromJson(x))),
         comments: json["comments"],
         totalPrice: json["totalPrice"],
-        chefRated: json["chefRated"],
+    foodieRated: json["foodieRated"],
         totalAmount: json["totalAmount"],
         taxPercentage: json["taxPercentage"],
         chefProfileImageUrl: json["chefProfileImageUrl"],
@@ -177,7 +177,7 @@ class T {
         "totalAmount": totalAmount,
         "taxPercentage": taxPercentage,
         "priceTypeId": priceTypeId,
-        "chefRated" : chefRated,
+        "foodieRated" : foodieRated,
         "bookingStatus": bookingStatus,
         "foodieName": foodieName,
         "foodieProfession": foodieProfession,
@@ -304,7 +304,7 @@ class Experience {
 class ExperiencePreference {
   int id;
   int experienceId;
-  int preferenceId;
+  dynamic preferenceId;
   String preferenceName;
   String preferenceDescription;
   String preferenceIconPath;
@@ -341,7 +341,7 @@ class ExperiencePreference {
 class ExperienceWowFactor {
   int id;
   int experienceId;
-  int wowFactorId;
+  dynamic wowFactorId;
   String wowFactorName;
   String wowFactorDescription;
   String? wowFactorIconPath;
@@ -501,7 +501,7 @@ class QrRequest {
   int chefId;
   int foodieId;
   int experienceId;
-  int verificationCode;
+  dynamic verificationCode;
 
   QrRequest({
     required this.bookingId,

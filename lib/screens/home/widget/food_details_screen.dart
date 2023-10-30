@@ -62,7 +62,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   final preferenceIds = <int>[];
 
   bool scheduleForm = false;
-
+  int menuCounter = 0;
   List<CustomModel> wowFactorsList = [];
   List<CustomModel> preferencesList = [];
   List<CustomModel> menuListItems = [];
@@ -105,11 +105,6 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       items.add(element.preferenceName.toString());
       preferenceIds.add(int.parse(element.id.toString()));
     });
-    //_appService.state.orderHelper!.selectedCategory = widget.data!.experiencePreferences![0].preferenceName.toString();
-
-    // items.add('Couple');
-    // items.add('Single');
-    //  items.add('Family');
 
     nOfPersons.text = '0';
     if (_appService.state.orderHelper != null) {
@@ -170,7 +165,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   addQuantity(int itemPrice, int index) {
     if (bookingMenuDetails[index].quantity.toString().isNotEmpty) {
       setState(() {
-        bookingMenuDetails[index].quantity = (bookingMenuDetails[index].quantity ?? 0) + 1;
+        bookingMenuDetails[index].quantity =
+            (bookingMenuDetails[index].quantity ?? 0) + 1;
         widget.data?.price = widget.data!.price! + itemPrice;
       });
     }
@@ -179,7 +175,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   removeQuantity(int itemPrice, int index) {
     if (bookingMenuDetails[index].quantity! > 0) {
       setState(() {
-        bookingMenuDetails[index].quantity = (bookingMenuDetails[index].quantity ?? 0) - 1;
+        bookingMenuDetails[index].quantity =
+            (bookingMenuDetails[index].quantity ?? 0) - 1;
         widget.data?.price = widget.data!.price! - itemPrice;
       });
     }
@@ -436,7 +433,6 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                   //),
                 ]),
               )),
-          // if (selectedTab != TabBars.Details)
           ///chef image
           Positioned.fill(
             top: DeviceHelper.height * 0.14,
@@ -454,10 +450,6 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                   ),
                 ),
                 onTap: () async {
-                  // ChefDataResponse chefData = await foodDetailsViewModel.getChefData(
-                  //     //widget.scheduleModel.t.chefId
-                  //   1
-                  // );
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) =>
                           UserProfile(chefData: widget.chefData)));
@@ -465,25 +457,6 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               ),
             ),
           ),
-          // if (selectedTab == TabBars.Schedule)
-          //   Positioned.fill(
-          //     right: 20,
-          //     bottom: 60,
-          //     child: Align(
-          //       alignment: Alignment.bottomRight,
-          //       child: FloatingActionButton(
-          //         elevation: 6,
-          //         onPressed: () {
-          //           selectStartDate(context, appTheme);
-          //         },
-          //         child: Image.asset(
-          //           Resources.calendarPNG,
-          //           height: 23,
-          //         ),
-          //         backgroundColor: appTheme.colors.filledButtonColor,
-          //       ),
-          //     ),
-          //   ),
         ],
       ),
     );
@@ -529,17 +502,21 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     } else {
       bookingMenuDetails.removeWhere((element) => element.quantity == 0);
       _appService.state.orderHelper?.bookingMenuDetails = bookingMenuDetails;
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => FoodProductExperienceDetailsScreenView(
-            selectedExperienceId: widget.data!.id.toString(),
-            experienceData: widget.data!,
-            foodMenuDetail: widget.foodMenuDetail,
-            chefData: widget.chefData,
-          ),
-        ),
-      );
+      widget.data?.priceTypeId == 2 && bookingMenuDetails.isEmpty
+          ? Toaster.errorToast(
+              context: context,
+              message: 'Please select at least one quantity in menu')
+          : Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => FoodProductExperienceDetailsScreenView(
+                  selectedExperienceId: widget.data!.id.toString(),
+                  experienceData: widget.data!,
+                  foodMenuDetail: widget.foodMenuDetail,
+                  chefData: widget.chefData,
+                ),
+              ),
+            );
     }
   }
 
@@ -599,7 +576,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           shrinkWrap: true,
           itemCount: headers.length,
           itemBuilder: (BuildContext context, int index) {
-            bookingMenuDetails.add(BookingDetails(menuId: widget.foodMenuDetail.t[0].id, quantity: 0));
+            // bookingMenuDetails.add(BookingDetails(menuId: widget.foodMenuDetail.t[0].id, quantity: 0));
             List<menu.T> filteredList = widget.foodMenuDetail.t
                 .where((element) => element.mealName == headers[index])
                 .toList();
@@ -622,7 +599,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                           appTheme: appTheme, mealTitle: headers[index]),
                     ],
                   ),
-                  SizedBox(height: DeviceHelper.height * 0.05),
+                  SizedBox(height: DeviceHelper.height * 0.03),
                   Container(
                     padding: const EdgeInsetsDirectional.only(
                       start: 10,
@@ -639,136 +616,128 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                     child: Column(
                       children: [
                         for (int k = 0; k < filteredList.length; k++)
-                          Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                    flex: 2,
-                                    child: Container(
-                                      padding:
-                                          const EdgeInsetsDirectional.all(16),
-                                      decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                          image: AssetImage(
-                                              'assets/images/icons/food_item_circle.png'),
-                                          fit: BoxFit.fill,
-                                        ),
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: CircleAvatar(
-                                        radius: DeviceHelper.height * 0.05,
-                                        backgroundImage: NetworkImage(
-                                          Api.baseURLForImages +
-                                              filteredList[k].pictureUrl,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: DeviceHelper.width * 0.07,
-                                  ),
-                                  Expanded(
-                                    flex: 4,
-                                    child: Padding(
-                                      padding: const EdgeInsetsDirectional.only(
-                                          top: 15),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              getFoodItemTitle(
-                                                  appTheme: appTheme,
-                                                  foodItemTitle:
-                                                      filteredList[k].dish),
-                                              widget.data!.priceTypeId != 1
-                                                  ? getFoodItemAmount(
-                                                      appTheme: appTheme,
-                                                      foodItemPrice:
-                                                          filteredList[k]
-                                                              .price
-                                                              .toString(),
-                                                      quantityIndex: index)
-                                                  : Container(),
-                                            ],
-                                          ),
-                                          getFoodItemSubTitle(
-                                              appTheme: appTheme,
-                                              subTitle:
-                                                  filteredList[k].baseDishName),
-                                          getFoodItemDescription(
-                                              appTheme: appTheme,
-                                              foodItemDescription:
-                                                  filteredList[k].description),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              widget.data!.priceTypeId != 1
-                                  ? displayQuantityData(
-                                      widget.foodMenuDetail.t[index].price,
-                                      index)
-                                  : Container(),
-                              SizedBox(
-                                height: DeviceHelper.height * 0.03,
-                              ),
-                              filteredList.length - 2 == k
-                                  ? Divider(
-                                      color: HexColor.fromHex('#f1c452'),
-                                      thickness: 1,
-                                    )
-                                  : const SizedBox(),
-                            ],
-                          ),
+                          getMenuItem(filteredList, k, appTheme, index,
+                              filteredList[k]),
                       ],
                     ),
                   ),
                 ]);
           },
-        )
-        // )
-        );
-
-    //);
+        ));
   }
 
-  Widget displayQuantityData(int price, int index) {
-    final appTheme = AppTheme.of(context).theme;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  getMenuItem(List filteredList, int k, IAppThemeData appTheme, int index,
+      menu.T menuItem) {
+    return Column(
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SvgPicture.asset(
-              Resources.userIconMenu,
-              height: DeviceHelper.height * 0.02,
-              color: bookingMenuDetails[index].quantity == 0
-                  ? HexColor.fromHex('#909094')
-                  : HexColor.fromHex('#ffffff'),
+            Expanded(
+              flex: 2,
+              child: Container(
+                padding: const EdgeInsetsDirectional.all(16),
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image:
+                        AssetImage('assets/images/icons/food_item_circle.png'),
+                    fit: BoxFit.fill,
+                  ),
+                  shape: BoxShape.circle,
+                ),
+                child: CircleAvatar(
+                  radius: DeviceHelper.height * 0.05,
+                  backgroundImage: NetworkImage(
+                    Api.baseURLForImages + menuItem.pictureUrl,
+                  ),
+                ),
+              ),
             ),
             SizedBox(
-              width: DeviceHelper.width * 0.02,
+              width: DeviceHelper.width * 0.04,
             ),
-            getFoodItemUsers(appTheme: appTheme, index: index),
+            Expanded(
+              flex: 4,
+              child: Padding(
+                padding: const EdgeInsetsDirectional.only(top: 15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        getFoodItemTitle(
+                            appTheme: appTheme, foodItemTitle: menuItem.dish),
+                        widget.data!.priceTypeId != 1
+                            ? getFoodItemAmount(
+                                appTheme: appTheme,
+                                foodItemPrice: menuItem.price.toString(),
+                                quantityIndex: k,
+                                menuItem : menuItem,
+                        )
+                            : Container(),
+                      ],
+                    ),
+                    getFoodItemSubTitle(
+                        appTheme: appTheme, subTitle: menuItem.baseDishName),
+                    getFoodItemDescription(
+                        appTheme: appTheme,
+                        foodItemDescription: menuItem.description),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
-        displayQuantityDetails(price, index),
+        widget.data!.priceTypeId != 1
+            ? displayQuantityData(filteredList[k].price, k, menuItem)
+            : Container(),
+        SizedBox(
+          height: DeviceHelper.height * 0.03,
+        ),
+        filteredList.length - 2 == k
+            ? Divider(
+                color: HexColor.fromHex('#f1c452'),
+                thickness: 1,
+              )
+            : const SizedBox(),
       ],
     );
   }
 
-  Widget displayQuantityDetails(int itemPrice, int index) {
+  Widget displayQuantityData(int price, int index, menu.T menuItem) {
+    final appTheme = AppTheme.of(context).theme;
+    for (var element in bookingMenuDetails) {
+      if(element.menuId == menuItem.id){
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                SvgPicture.asset(
+                  Resources.userIconMenu,
+                  height: DeviceHelper.height * 0.02,
+                  color: element.quantity == 0
+                      ? HexColor.fromHex('#909094')
+                      : HexColor.fromHex('#ffffff'),
+                ),
+                SizedBox(
+                  width: DeviceHelper.width * 0.02,
+                ),
+                Container(child: getFoodItemUsers(appTheme: appTheme, index: index, menuItem: menuItem)),
+              ],
+            ),
+            displayQuantityDetails(price, index, menuItem),
+          ],
+        );
+      }
+    }
+    return const SizedBox();
+  }
+
+  Widget displayQuantityDetails(int itemPrice, int index, menu.T menuItem) {
     final appTheme = AppTheme.of(context).theme;
     return Stack(
       children: [
@@ -780,7 +749,17 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             ),
             InkWell(
               onTap: () {
-                removeQuantity(itemPrice, index);
+                for (var element in bookingMenuDetails) {
+                  if (element.menuId == menuItem.id) {
+                    if (element.quantity != 0) {
+                      setState(() {
+                        element.quantity = (element.quantity ?? 0) - 1;
+                        widget.data?.price =
+                            widget.data!.price! - menuItem.price;
+                      });
+                    }
+                  }
+                }
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -799,7 +778,23 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             ),
             InkWell(
               onTap: () {
-                addQuantity(itemPrice, index);
+                for (var element in bookingMenuDetails) {
+                  if (element.menuId == menuItem.id) {
+                    if (element.quantity.toString().isNotEmpty) {
+                      setState(() {
+                        element.quantity = (element.quantity ?? 0) + 1;
+                        widget.data?.price =
+                            widget.data!.price! + menuItem.price;
+                      });
+                    }
+                  }
+                }
+                // if (bookingMenuDetails[index].quantity.toString().isNotEmpty) {
+                //   setState(() {
+                //     bookingMenuDetails[index].quantity = (bookingMenuDetails[index].quantity ?? 0) + 1;
+                //     widget.data?.price = widget.data!.price! + itemPrice;
+                //   });
+                // }
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -819,12 +814,12 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             )
           ],
         ),
-        displayQuantityNumber(index),
+        displayQuantityNumber(index, menuItem),
       ],
     );
   }
 
-  Widget displayQuantityNumber(int index) {
+  Widget displayQuantityNumber(int index, menu.T menuItem) {
     final appTheme = AppTheme.of(context).theme;
     return Positioned.fill(
       left: 60,
@@ -835,7 +830,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                 color: Colors.white, borderRadius: BorderRadius.circular(8)),
             padding: const EdgeInsetsDirectional.only(
                 start: 15, end: 15, top: 1, bottom: 5.5),
-            child: getFoodItemQuantityValue(appTheme: appTheme, index: index)),
+            child: getFoodItemQuantityValue(
+                appTheme: appTheme, index: index, menuItem: menuItem)),
       ),
     );
   }
@@ -852,11 +848,16 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   Widget getFoodItemTitle(
       {required IAppThemeData appTheme, required String foodItemTitle}) {
-    return GeneralText(
-      //  Strings.foodProductTitle,
-      foodItemTitle,
-      style: appTheme.typographies.interFontFamily.headline6
-          .copyWith(fontSize: 15, color: HexColor.fromHex('#f7dc99')),
+    return SizedBox(
+      //color: Colors.red,
+      width: DeviceHelper.width * 0.25,
+      child: GeneralText(
+        //  Strings.foodProductTitle,
+        foodItemTitle,
+        maxLines: 2,
+        style: appTheme.typographies.interFontFamily.headline6
+            .copyWith(fontSize: 15, color: HexColor.fromHex('#f7dc99')),
+      ),
     );
   }
 
@@ -872,18 +873,24 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   Widget getFoodItemAmount(
       {required IAppThemeData appTheme,
       required String foodItemPrice,
-      required int quantityIndex}) {
-    return GeneralText(
-      //   Strings.appCurrency + "." + Strings.foodProductItemPrice,
-      Strings.appCurrency + "." + foodItemPrice,
-      style: appTheme.typographies.interFontFamily.headline6.copyWith(
-        fontSize: 22,
-        fontWeight: FontWeight.bold,
-        color: bookingMenuDetails[quantityIndex] == 0
-            ? HexColor.fromHex('#909094')
-            : HexColor.fromHex('#f1c452'),
-      ),
-    );
+      required int quantityIndex,
+      required menu.T menuItem}) {
+    for (var element in bookingMenuDetails) {
+      if(element.menuId == menuItem.id){
+        return GeneralText(
+          //   Strings.appCurrency + "." + Strings.foodProductItemPrice,
+          Strings.appCurrency + "." + foodItemPrice,
+          style: appTheme.typographies.interFontFamily.headline6.copyWith(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+            color: element.quantity == 0
+                ? HexColor.fromHex('#909094')
+                : HexColor.fromHex('#f1c452'),
+          ),
+        );
+      }
+    }
+    return const SizedBox();
   }
 
   Widget getFoodItemDescription(
@@ -898,16 +905,21 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     );
   }
 
-  Widget getFoodItemUsers({required IAppThemeData appTheme, required index}) {
-    return GeneralText(
-      Strings.foodProductItemUsers,
-      style: appTheme.typographies.interFontFamily.headline6.copyWith(
-        fontSize: 16,
-        color: bookingMenuDetails[index] == 0
-            ? HexColor.fromHex('#909094')
-            : HexColor.fromHex('#ffffff'),
-      ),
-    );
+  Widget getFoodItemUsers({required IAppThemeData appTheme, required index, required menu.T menuItem}) {
+    for (var element in bookingMenuDetails) {
+      if(element.menuId == menuItem.id){
+        return GeneralText(
+        Strings.foodProductItemUsers,
+        style: appTheme.typographies.interFontFamily.headline6.copyWith(
+          fontSize: 16,
+          color: element.quantity == 0
+              ? HexColor.fromHex('#909094')
+              : HexColor.fromHex('#ffffff'),
+        ),
+        );
+      }
+    }
+    return const GeneralText('');
   }
 
   Widget getFoodItemQuantityLabel({required IAppThemeData appTheme}) {
@@ -921,43 +933,27 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     );
   }
 
-  Widget getFoodItemQuantityValue(
-      {required IAppThemeData appTheme, required int index}) {
-    return GeneralText(
-      (bookingMenuDetails[index].quantity! <= 9 && bookingMenuDetails[index].quantity! > 0)
-          ? "0" + bookingMenuDetails[index].quantity
-          .toString()
-          : bookingMenuDetails[index].quantity.toString(),
-      style: appTheme.typographies.interFontFamily.headline6.copyWith(
-          fontSize: 15,
-          color: bookingMenuDetails[index].quantity.toString() == "0"
-              ? HexColor.fromHex('#212129').withOpacity(0.4)
-              : HexColor.fromHex('#212129')),
-    );
+  Widget? getFoodItemQuantityValue(
+      {required IAppThemeData appTheme,
+      required int index,
+      required menu.T menuItem}) {
+    for (var element in bookingMenuDetails) {
+      if (element.menuId == menuItem.id) {
+        return GeneralText(
+          (element.quantity! <= 9 && element.quantity! > 0)
+              ? "0" + element.quantity.toString()
+              : element.quantity.toString(),
+          style: appTheme.typographies.interFontFamily.headline6.copyWith(
+              fontSize: 15,
+              color: element.quantity.toString() == "0"
+                  ? HexColor.fromHex('#212129').withOpacity(0.4)
+                  : HexColor.fromHex('#212129')),
+        );
+      }
+    }
+    return null;
   }
 
-  // Widget getStartedButtonTitle({required IAppThemeData appTheme}) {
-  //   return GeneralButton.button(
-  //     width: 151,
-  //     title: Strings.nextButtonTitle.toUpperCase(),
-  //     styleType: ButtonStyleType.fill,
-  //     onTap: () {
-  //       // Navigator.push(
-  //       //   context,
-  //       //   MaterialPageRoute(builder: (context) => UserProfile()),
-  //       // );
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(
-  //             builder: (context) => FoodProductExperienceDetails()),
-  //       );
-  //     },
-  //   );
-  //   // ExtoText(
-  //   //   Strings.getStartedButtonTitle,
-  //   //   style: appTheme.typographies.interFontFamily.headline2,
-  //   // );
-  // }
 
   Widget getFoodMainHeading({required IAppThemeData appTheme, required title}) {
     return GeneralText(title,
@@ -2049,8 +2045,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               int.parse(widget.data!.persons.toString());
           orderHelper.selectedCategory =
               widget.data!.experiencePreferences![0].preferenceName.toString();
-          orderHelper.selectedPreferenceId =
-              int.parse(widget.data!.experiencePreferences![0].preferenceId.toString());
+          orderHelper.selectedPreferenceId = int.parse(
+              widget.data!.experiencePreferences![0].preferenceId.toString());
           //.data!.persons;
           _appService.updateOrderHelper(orderHelper);
           //_appService.updateScheduleId(scheduleId)

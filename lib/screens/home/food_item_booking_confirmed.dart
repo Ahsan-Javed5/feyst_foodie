@@ -456,7 +456,7 @@ class _FoodProductBookingConfirmedDetailsState
 
                 ///rating button for completed status
                 (widget._advancePendingDetails.t.bookingStatus.toUpperCase() ==
-                        Strings.completeStatus && widget._advancePendingDetails.t.chefRated == false)
+                        Strings.completeStatus && widget._advancePendingDetails.t.foodieRated == false)
                     ? Column(
                         children: [
                           const SizedBox(
@@ -1305,17 +1305,6 @@ class _FoodProductBookingConfirmedDetailsState
                           navigateToGoogleMap(widget._advancePendingDetails.t
                               .experience.latitude, widget._advancePendingDetails.t
                               .experience.longitude);
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => GoogleMapScreen(
-                          //       longitude: widget._advancePendingDetails.t
-                          //           .experience.longitude,
-                          //       latitude: widget._advancePendingDetails.t
-                          //           .experience.latitude,
-                          //     ),
-                          //   ),
-                          // );
                         },
                         child: Row(
                           children: [
@@ -1329,8 +1318,7 @@ class _FoodProductBookingConfirmedDetailsState
                             SizedBox(
                                 width: 150,
                                 child: GeneralText(
-                                  // Strings.productDetailChefLocation,
-                                  widget._advancePendingDetails.t.address,
+                                  widget._advancePendingDetails.t.address+', '+widget._advancePendingDetails.t.townName+', '+widget._advancePendingDetails.t.cityName,
                                   maxLines: 2,
                                   style: appTheme
                                       .typographies.interFontFamily.headline6
@@ -1368,10 +1356,7 @@ class _FoodProductBookingConfirmedDetailsState
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GeneralText(
-                      // Strings.productDetailChefSubHostName,
                       widget._advancePendingDetails.t.subHost,
-                      //+
-                      //     widget._advancePendingDetails.t.subHostMobileNo,
                       style:
                           appTheme.typographies.interFontFamily.headline6.copyWith(
                         fontSize: 18,

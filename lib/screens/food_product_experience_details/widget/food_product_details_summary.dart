@@ -9,6 +9,7 @@ import '../../../constants/strings.dart';
 import '../../../helpers/color_helper.dart';
 import '../../../helpers/order_helper.dart';
 import '../../../helpers/url_helper.dart';
+import '../../../models/booking/booking_request.dart';
 import '../../../services/application_state.dart';
 import '../../../setup.dart';
 import '../../../theme/app_theme_data/app_theme_data.dart';
@@ -61,17 +62,6 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
 
   @override
   void initState() {
-    //widget.foodMenuModel;
-    // TODO: implement initState
-    //widget.foodMenuDetail.t
-
-    // menuListItems.addAll([
-    //   CustomModel(name: "Sindhi Biryani"),
-    //   CustomModel(name: "Buritto"),
-    //   CustomModel(name: "Vegetable Salad"),
-    //   CustomModel(name: "Hyderabadi Rice"),
-    //   CustomModel(name: "Soft Drinks"),
-    // ]);
     loadMenuSelected();
     loadWowFactors();
     super.initState();
@@ -82,7 +72,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
     for (var i = 0; i < widget.foodMenuDetail.t.length; i++) {
       developer.log(
           ' Widget  Food Menu Detail ' + widget.foodMenuDetail.t[i].dish);
-      menuListItems.add(CustomModel(name: widget.foodMenuDetail.t[i].dish, price: widget.foodMenuDetail.t[i].price));
+      menuListItems.add(CustomModel(name: widget.foodMenuDetail.t[i].dish, price: widget.foodMenuDetail.t[i].price, id: widget.foodMenuDetail.t[i].id));
     }
   }
 
@@ -123,7 +113,6 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
     final appTheme = AppTheme.of(context).theme;
     return isLoading ? const CircularProgressIndicator() : Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      //floatingActionButton: getStartedButtonTitle(appTheme: appTheme),
       body: SingleChildScrollView(
         child: Container(
             color: HexColor.fromHex("#212129"),
@@ -444,7 +433,6 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                       Column(
                         children: [
                           GeneralText(
-                            //    Strings.productDetailSelectionDate,
                             _productDetailSelectionDate,
                             style: appTheme
                                 .typographies.interFontFamily.headline2
@@ -454,7 +442,6 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                             ),
                           ),
                           GeneralText(
-                            //   Strings.productDetailSelectionTime,
                             _productDetailSelectionTime,
                             style: appTheme
                                 .typographies.interFontFamily.headline2
@@ -473,7 +460,6 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                       Column(
                         children: [
                           GeneralText(
-                            // Strings.productDetailSelectionType,
                             _productDetailSelectionType,
                             style: appTheme
                                 .typographies.interFontFamily.headline2
@@ -483,7 +469,6 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                             ),
                           ),
                           GeneralText(
-                            //   Strings.productDetailSelectionTotalPersons,
                             _numberOfPerson.toString(),
                             style: appTheme
                                 .typographies.interFontFamily.headline2
@@ -512,7 +497,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
               const SizedBox(
                 height: 29,
               ),
-              productMenuDetails(appTheme),
+              widget.experienceData?.priceTypeId == 2 ? perItemProductMenuDetails(appTheme) : productMenuDetails(appTheme),
             ],
           )),
     );
@@ -555,7 +540,6 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
   Widget productMenuDetails(IAppThemeData appTheme) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      //mainAxisAlignment: MainAxisAlignment.start,
       children: [
         GeneralText(
           Strings.productDetailSelectionMenuLabel,
@@ -624,22 +608,39 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
               ),
           ],
         )
-        /*     GridView.builder(
-            padding: EdgeInsets.zero,
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 1.5,
-              mainAxisSpacing: 7,
-              crossAxisSpacing: 5,
-              // mainAxisExtent: 67,
-            ),
-            itemCount: menuListItems.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Container(
+      ],
+    );
+  }
+
+  Widget perItemProductMenuDetails(IAppThemeData appTheme) {
+
+    List<BookingDetails> bookingDetails = locateService<ApplicationService>().state.orderHelper!.bookingMenuDetails;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GeneralText(
+          Strings.productDetailSelectionMenuLabel,
+          style: appTheme.typographies.interFontFamily.headline6.copyWith(
+            fontSize: 16,
+            color: HexColor.fromHex('#f1c452'),
+          ),
+        ),
+        const SizedBox(
+          height: 7,
+        ),
+
+        Wrap(
+          runAlignment: WrapAlignment.start,
+          children: [
+            for (var menuItem in menuListItems)
+              for(var bookingMenuItem in bookingDetails)
+                bookingMenuItem.menuId == menuItem.id ?
+                  Container(
+                width: 140,
                 padding: const EdgeInsetsDirectional.only(
                     top: 10, bottom: 10, start: 14, end: 14),
+                margin: const EdgeInsets.only(right: 5, bottom: 7),
                 decoration: BoxDecoration(
                     color: HexColor.fromHex("#212129"),
                     borderRadius: BorderRadius.circular(11)),
@@ -650,7 +651,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         GeneralText(
-                          Strings.productDetailSelectionMenuQuantity,
+                          bookingMenuItem.quantity.toString() + 'x',
                           style: appTheme.typographies.interFontFamily.headline2
                               .copyWith(
                             fontSize: 16,
@@ -658,33 +659,33 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                           ),
                         ),
                         GeneralText(
-                          Strings.productDetailSelectionMenuAmount,
-                          style: appTheme.typographies.interFontFamily.headline2
+                          (menuItem.price! * int.parse(bookingMenuItem.quantity.toString())).toString(),
+                          style: appTheme
+                              .typographies.interFontFamily.headline2
                               .copyWith(
                             fontSize: 16,
                             color: HexColor.fromHex('#909094'),
                           ),
-                        ),
+                        )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
-                    Expanded(
-                      child: GeneralText(
-                        menuListItems[index].name ?? "",
-                        style: appTheme.typographies.interFontFamily.headline2
-                            .copyWith(
-                                fontSize: 14,
-                                color: HexColor.fromHex('#ffffff'),
-                                fontWeight: FontWeight.w400),
-                        maxLines: 3,
-                      ),
+                    GeneralText(
+                      menuItem.name ?? "",
+                      style: appTheme.typographies.interFontFamily.headline2
+                          .copyWith(
+                          fontSize: 14,
+                          color: HexColor.fromHex('#ffffff'),
+                          fontWeight: FontWeight.w400),
+                      maxLines: 3,
                     ),
                   ],
                 ),
-              );
-            }),*/
+              ) : const SizedBox(),
+          ],
+        )
       ],
     );
   }
@@ -1032,6 +1033,7 @@ class CustomModel {
   String? name;
   String? icon;
   int? price;
+  int? id;
 
-  CustomModel({this.name, this.icon, this.price});
+  CustomModel({this.name, this.icon, this.price, this.id});
 }

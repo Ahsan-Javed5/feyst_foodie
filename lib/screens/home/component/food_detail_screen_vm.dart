@@ -88,7 +88,6 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
 
   Future<ChefDataResponse> getChefData(FoodMenuModel foodData, ScheduleModel scheduleData, chefId) async {
     final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.chefData);
-    // emit(const Loading());
 
     final scheduleRequest = menurequest.FoodMenuRequest(
       t: chefId,
@@ -102,7 +101,6 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
     final chefData = chefModelFromJson(response.body);
     emit(Loaded(foodData, scheduleData, chefData));
     return chefData;
-
   }
 
 

@@ -204,7 +204,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Container(
+                                      SizedBox(
                                         //color: Colors.green,
                                         width: DeviceHelper.width * 0.34,
                                         child: GeneralText(

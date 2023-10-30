@@ -45,7 +45,7 @@ class _GeneralGenderState extends State<GeneralGender> {
   @override
   void initState() {
     selectedValue = widget._gender == Gender.male ? 'Male' : 'Female';
-    developer.log(' Selected Value is ' + '$selectedValue');
+    developer.log(' Selected Value is ' + selectedValue);
     super.initState();
   }
 

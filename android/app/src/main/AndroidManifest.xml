@@ -6,7 +6,9 @@
         android:label="Feyst"
         android:name="${applicationName}"
         android:usesCleartextTraffic="true"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:allowBackup="false"
+        android:fullBackupOnly="false">
         android:name=".Application"
         <activity
             android:name=".MainActivity"
