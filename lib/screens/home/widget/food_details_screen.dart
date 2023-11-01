@@ -1878,8 +1878,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             mapToolbarEnabled: false,
             initialCameraPosition: CameraPosition(
               target: LatLng(
-                widget.chefData.t!.latitude ?? 0.0,
-                widget.chefData.t!.longitude ?? 0.0,
+                widget.data!.latitude ?? 0.0,
+                widget.data!.longitude ?? 0.0,
               ),
               zoom: 14.4746,
             ),
@@ -1887,8 +1887,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               Marker(
                   markerId: const MarkerId('SomeId'),
                   position: LatLng(
-                    widget.chefData.t!.latitude ?? 0.0,
-                    widget.chefData.t!.longitude ?? 0.0,
+                    widget.data!.latitude ?? 0.0,
+                    widget.data!.longitude ?? 0.0,
                   ),
                   infoWindow: const InfoWindow(title: '')),
             },

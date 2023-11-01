@@ -48,6 +48,7 @@ class _FoodProductAdvancePendingDetailsState
           name: widget._advancePendingDetails.t.experienceMenu[i].dish,
           price: widget._advancePendingDetails.t.experienceMenu[i].price
               .toString(),
+          quantity: widget._advancePendingDetails.t.experienceMenu[i].quantity,
         ),
       ]);
     }
@@ -577,7 +578,7 @@ class _FoodProductAdvancePendingDetailsState
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             GeneralText(
-                              Strings.productDetailSelectionMenuQuantity,
+                              menuListItems[index].quantity.toString() + 'x',
                               style: appTheme.typographies.interFontFamily.headline2
                                   .copyWith(
                                 fontSize: 16,
@@ -586,7 +587,7 @@ class _FoodProductAdvancePendingDetailsState
                             ),
                             GeneralText(
                               // Strings.productDetailSelectionMenuAmount,
-                              menuListItems[index].price.toString(),
+                              (menuListItems[index].price! * int.parse(menuListItems[index].quantity.toString())).toString(),
                               style: appTheme.typographies.interFontFamily.headline2
                                   .copyWith(
                                 fontSize: 16,
@@ -691,7 +692,7 @@ class _FoodProductAdvancePendingDetailsState
                             Expanded(
                               child: GeneralText(
                                 // Strings.productDetailChefLocation,
-                                widget._advancePendingDetails.t.townName +', '+ widget._advancePendingDetails.t.cityName ,
+                                (widget._advancePendingDetails.t.townName ?? 'null') +', '+ (widget._advancePendingDetails.t.cityName ?? 'null') ,
                                 style: appTheme
                                     .typographies.interFontFamily.headline6
                                     .copyWith(
@@ -1051,6 +1052,7 @@ class CustomModel {
   String? name;
   String? icon;
   String? price;
+  int? quantity;
 
-  CustomModel({this.name, this.icon, this.price});
+  CustomModel({this.name, this.icon, this.price, this.quantity});
 }

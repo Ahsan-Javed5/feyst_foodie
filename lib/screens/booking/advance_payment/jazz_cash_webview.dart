@@ -5,6 +5,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import '../../../constants/strings.dart';
 import '../../../models/booking/advance_pending_response.dart';
 import '../../../services/application_state.dart';
+import '../../../services/storage/storage_service.dart';
 import '../../../setup.dart';
 import '../../../ui_kit/widgets/custom_dialog.dart';
 import 'food_item_advance_payment_vm.dart';
@@ -24,6 +25,7 @@ class _JazzCashWebViewState extends State<JazzCashWebView> {
   double progress = 0;
   bool isLoading = false;
   final _appService = locateService<ApplicationService>();
+  final _storage = locateService<IStorageService>();
 
   @override
   void initState() {
@@ -38,7 +40,7 @@ class _JazzCashWebViewState extends State<JazzCashWebView> {
   @override
   Widget build(BuildContext context) {
     final header = {
-      'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+      'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
       //'Content-Type': 'application/json'
     };
     final body = Padding(

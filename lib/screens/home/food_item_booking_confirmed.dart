@@ -1123,7 +1123,7 @@ class _FoodProductBookingConfirmedDetailsState
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               GeneralText(
-                                Strings.productDetailSelectionMenuQuantity,
+                                menu[index].quantity.toString() + 'x',
                                 style: appTheme
                                     .typographies.interFontFamily.headline2
                                     .copyWith(
@@ -1132,7 +1132,7 @@ class _FoodProductBookingConfirmedDetailsState
                                 ),
                               ),
                               GeneralText(
-                                menu[index].price.toString(),
+                                (menu[index].price * int.parse(menu[index].quantity.toString())).toString(),
                                 style: appTheme
                                     .typographies.interFontFamily.headline2
                                     .copyWith(
@@ -1318,7 +1318,7 @@ class _FoodProductBookingConfirmedDetailsState
                             SizedBox(
                                 width: 150,
                                 child: GeneralText(
-                                  widget._advancePendingDetails.t.address+', '+widget._advancePendingDetails.t.townName+', '+widget._advancePendingDetails.t.cityName,
+                                  widget._advancePendingDetails.t.address+', '+(widget._advancePendingDetails.t.townName ?? 'null')+', '+(widget._advancePendingDetails.t.cityName ?? 'null'),
                                   maxLines: 2,
                                   style: appTheme
                                       .typographies.interFontFamily.headline6

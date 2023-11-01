@@ -73,8 +73,8 @@ class T {
   String subHost;
   String subHostMobileNo;
   String address;
-  String cityName;
-  String townName;
+  dynamic cityName;
+  dynamic townName;
   dynamic verificationCode;
   QrRequest? qrRequest;
 
@@ -385,6 +385,7 @@ class ExperienceMenu {
   int experienceId;
   String description;
   int price;
+  int? quantity;
   String pictureUrl;
 
   ExperienceMenu({
@@ -398,6 +399,7 @@ class ExperienceMenu {
     required this.description,
     required this.price,
     required this.pictureUrl,
+    this.quantity,
   });
 
   factory ExperienceMenu.fromJson(Map<String, dynamic> json) => ExperienceMenu(
@@ -410,6 +412,7 @@ class ExperienceMenu {
         experienceId: json["experienceId"],
         description: json["description"],
         price: json["price"],
+        quantity: json["quantity"],
         pictureUrl: json["pictureUrl"],
       );
 
@@ -423,6 +426,7 @@ class ExperienceMenu {
         "experienceId": experienceId,
         "description": description,
         "price": price,
+        "quantity" : quantity,
         "pictureUrl": pictureUrl,
       };
 }
