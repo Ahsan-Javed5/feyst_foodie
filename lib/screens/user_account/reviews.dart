@@ -4,6 +4,7 @@ import 'package:chef/models/review_response.dart';
 import 'package:chef/models/review_response.dart' as review;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:intl/intl.dart';
 import '../../setup.dart';
 import '/ui_kit/helpers/dialog_helper.dart';
 import '/ui_kit/widgets/general_new_appbar.dart';
@@ -33,7 +34,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: HexColor.fromHex("#212129"),
-        body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        body: isReviewLoading ? const Center(child: CircularProgressIndicator(),) : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Container(
             padding: const EdgeInsets.only(left: 12, top: 20, bottom: 30),
             child: const GeneralNewAppBar(
@@ -42,7 +43,18 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
               titleColor: Colors.white,
             ),
           ),
-          isReviewLoading ? const Center(child: CircularProgressIndicator(),) : Expanded(
+          reviews.t!.isEmpty ? Padding(
+            padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.35),
+            child: Center(child: GeneralText(
+              'No Reviews Yet!',
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                  color: const Color(0xff8ea659),
+                  fontSize: 27,
+                  fontWeight: FontWeight.bold),
+            ),),
+          ):Expanded(
             child: ListView.separated(
               itemCount: reviews.t?.length ?? 0,
               shrinkWrap: true,
@@ -58,18 +70,19 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // GeneralText(
-                        //   '11-04-2022',
-                        //   style: appTheme
-                        //       .typographies.interFontFamily.headline6
-                        //       .copyWith(
-                        //           fontSize: 12,
-                        //           color: Colors.white.withOpacity(0.4),
-                        //           fontWeight: FontWeight.w400),
-                        // ),
-                        // const SizedBox(
-                        //   height: 20,
-                        // ),
+                        GeneralText(
+                        DateFormat('yyyy-MM-dd').parse(reviewItem.dateCreated.toString()).toString().replaceRange(11, 23, '').trim(),
+                   // reviewItem.dateCreated.toString(),
+                          style: appTheme
+                              .typographies.interFontFamily.headline6
+                              .copyWith(
+                                  fontSize: 12,
+                                  color: Colors.white.withOpacity(0.4),
+                                  fontWeight: FontWeight.w400),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -159,7 +172,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                 return const Divider(
                   color: Color(0xfff1c452),
                   indent: 20,
-                  thickness: 0.1,
+                  thickness: 0.3,
                   endIndent: 20,
                 );
               },
@@ -279,10 +292,12 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
   }
 
   Future<void> getReviews() async {
-    isReviewLoading = true;
+    setState(() {
+      isReviewLoading = true;
+    });
     var _network = locateService<INetworkService>();
     final url =
-    InfininURLHelpers.getRestApiURL(Api.baseURL + 'foodie-feedback/list');
+    InfininURLHelpers.getRestApiURL(Api.baseURL + 'chef-feedback/list');
 
     final _appService = locateService<ApplicationService>();
 
@@ -302,16 +317,15 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
 
       if (response != null) {
         reviews = reviewResponseFromJson(response.body);
-
+        setState(() {
+          isReviewLoading = false;
+        });
       }
     } catch (e) {
       if (kDebugMode) {
         print(e);
       }
     }
-    setState(() {
-      isReviewLoading = false;
-    });
   }
 
 }

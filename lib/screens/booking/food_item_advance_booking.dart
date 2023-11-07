@@ -662,7 +662,10 @@ class _FoodProductAdvancePendingDetailsState
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.white, width: 2),
                           shape: BoxShape.circle),
-                      child: Image.network(Api.baseURLForImages+widget._advancePendingDetails.t.chefProfileImageUrl.toString())),
+                      child: CircleAvatar(
+                        radius: 27,
+                        backgroundImage: NetworkImage(Api.baseURLForImages+widget._advancePendingDetails.t.chefProfileImageUrl.toString()),
+                          )),
                   const SizedBox(
                     width: 11.5,
                   ),
@@ -682,7 +685,7 @@ class _FoodProductAdvancePendingDetailsState
                         ),
                         Row(
                           children: [
-                            Container(
+                            SizedBox(
                                 width: 10.8,
                                 child: Image.asset(
                                     "assets/images/icons/location_pin.png")),

@@ -1,3 +1,4 @@
+import 'package:chef/constants/api.dart';
 import 'package:chef/models/home/chef_data_response.dart';
 import 'package:chef/models/home/home_response.dart' as home_data;
 import 'package:chef/screens/home/food_details_menu_model.dart';
@@ -734,7 +735,10 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.white, width: 2),
                           shape: BoxShape.circle),
-                      child: Image.asset("assets/images/icons/user_image.png")),
+                      child: CircleAvatar(
+                        radius: 27,
+                        backgroundImage: NetworkImage(Api.baseURLForImages+widget.chefData.t!.profileImageUrl.toString()),
+                          )),
                   const SizedBox(
                     width: 11.5,
                   ),

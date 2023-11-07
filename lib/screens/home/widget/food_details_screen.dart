@@ -130,6 +130,13 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     super.initState();
   }
 
+  getBack(){
+    if(widget.data!.priceTypeId == 2){
+      widget.data!.price = 0;
+    }
+    Navigator.pop(context);
+  }
+
   Future _loadMapStyles() async {
     darkMapStyle =
         await rootBundle.loadString('assets/json/dark_mode_style.json');
@@ -200,264 +207,272 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context).theme;
     //SliderImagesResponse imagesData = getImagesList();
-    return Scaffold(
-      backgroundColor: HexColor.fromHex('#212129'),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: experienceNextButton(),
-      body: Stack(
-        children: [
-          Column(
-            children: [
-              FutureBuilder<SliderImagesResponse?>(
-                  future: foodDetailsViewModel.getSliderImages(
-                      experienceId: widget.data!.id),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      var imagesList = snapshot.data?.t;
-                      List images = [];
-                      for (var item in imagesList!) {
-                        images.add(item.mediaUrl);
+    return WillPopScope(
+      onWillPop: (){
+        if(widget.data!.priceTypeId == 2){
+          widget.data!.price = 0;
+        }
+        return Future(() => true);
+      },
+      child: Scaffold(
+        backgroundColor: HexColor.fromHex('#212129'),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: experienceNextButton(),
+        body: Stack(
+          children: [
+            Column(
+              children: [
+                FutureBuilder<SliderImagesResponse?>(
+                    future: foodDetailsViewModel.getSliderImages(
+                        experienceId: widget.data!.id),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        var imagesList = snapshot.data?.t;
+                        List images = [];
+                        for (var item in imagesList!) {
+                          images.add(item.mediaUrl);
+                        }
+                        return CarouselSlider(
+                          options: CarouselOptions(
+                            autoPlay: true,
+                          ),
+                          items: (images.isEmpty ? foodDetailsBgImages : images)
+                              .map((i) {
+                            return Builder(
+                              builder: (BuildContext context) {
+                                return Image.network(Api.baseURLForImages + i,
+                                    fit: BoxFit.fill);
+                              },
+                            );
+                          }).toList(),
+                        );
+                      } else {
+                        return const CircularProgressIndicator();
                       }
-                      return CarouselSlider(
-                        options: CarouselOptions(
-                          autoPlay: true,
-                        ),
-                        items: (images.isEmpty ? foodDetailsBgImages : images)
-                            .map((i) {
-                          return Builder(
-                            builder: (BuildContext context) {
-                              return Image.network(Api.baseURLForImages + i,
-                                  fit: BoxFit.fill);
-                            },
-                          );
-                        }).toList(),
-                      );
-                    } else {
-                      return const CircularProgressIndicator();
-                    }
-                  }),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Container(
-                    padding: EdgeInsetsDirectional.only(
-                      start: DeviceHelper.width * 0.10,
-                    ),
-                    color: HexColor.fromHex('#212129'),
-                    child: Column(
-                      children: [
-                        if (selectedTab != TabBars.Schedule)
-                          SizedBox(
-                            height: DeviceHelper.height * 0.10,
-                          ),
-                        if (selectedTab == TabBars.Schedule)
-                          SizedBox(
-                            height: DeviceHelper.height * 0.05,
-                          ),
-                        if (selectedTab == TabBars.Menu)
-                          SizedBox(
-                            height: DeviceHelper.height * 0.01,
-                          ),
-                        if (selectedTab == TabBars.Details)
-                          detailsTabViewForm(context, appTheme),
-                        if (selectedTab == TabBars.Menu)
-                          menuTabView(context, appTheme),
-                        if (selectedTab == TabBars.Schedule)
-                          scheduleTabView(context, appTheme)
-                      ],
+                    }),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Container(
+                      padding: EdgeInsetsDirectional.only(
+                        start: DeviceHelper.width * 0.10,
+                      ),
+                      color: HexColor.fromHex('#212129'),
+                      child: Column(
+                        children: [
+                          if (selectedTab != TabBars.Schedule)
+                            SizedBox(
+                              height: DeviceHelper.height * 0.10,
+                            ),
+                          if (selectedTab == TabBars.Schedule)
+                            SizedBox(
+                              height: DeviceHelper.height * 0.05,
+                            ),
+                          if (selectedTab == TabBars.Menu)
+                            SizedBox(
+                              height: DeviceHelper.height * 0.01,
+                            ),
+                          if (selectedTab == TabBars.Details)
+                            detailsTabViewForm(context, appTheme),
+                          if (selectedTab == TabBars.Menu)
+                            menuTabView(context, appTheme),
+                          if (selectedTab == TabBars.Schedule)
+                            scheduleTabView(context, appTheme)
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          Positioned.fill(
-            top: DeviceHelper.height * 0.10,
-            left: DeviceHelper.width * 0.05,
-            child: Align(
-                alignment: Alignment.topLeft,
-                child: GeneralNewAppBar(
-                  callBack: () {
-                    setState(() {
-                      selectedTab == TabBars.Details
-                          ? Navigator.pop(context)
-                          : (selectedTab == TabBars.Menu
-                              ? setTab(TabBars.Details)
-                              : scheduleForm
-                                  ? scheduleForm = false
-                                  : setTab(TabBars.Menu));
-                    });
-                  },
-                )),
-          ),
-          Positioned(
-              top: DeviceHelper.height * 0.19,
-              width: MediaQuery.of(context).size.width,
-              child: Padding(
-                padding: EdgeInsetsDirectional.only(
-                    start: DeviceHelper.width * 0.07),
-                child: Column(children: [
-                  Container(
-                      decoration: BoxDecoration(
-                        color: HexColor.fromHex("#4b4b52"),
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(
-                            DeviceHelper.height * 0.03,
-                          ),
-                          bottomLeft: Radius.circular(
-                            DeviceHelper.height * 0.03,
-                          ),
-                        ),
-                      ),
-                      height: DeviceHelper.height * 0.15,
-                      padding: const EdgeInsetsDirectional.only(bottom: 0),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.only(
-                            top: DeviceHelper.height * 0.025),
-                        child: Column(children: [
-                          getFoodMainHeading(
-                              appTheme: appTheme, title: widget.data!.title),
-                          SizedBox(
-                            height: DeviceHelper.height * 0.01,
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.only(
-                                start: DeviceHelper.width * 0.10,
-                                end: DeviceHelper.width * 0.10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                InkWell(
-                                  child: Column(
-                                    children: [
-                                      GeneralText(
-                                        Strings.foodItemDetails,
-                                        style: appTheme.typographies
-                                            .interFontFamily.headline6
-                                            .copyWith(
-                                                fontSize: 14,
-                                                fontWeight: selectedTab ==
-                                                        TabBars.Details
-                                                    ? FontWeight.bold
-                                                    : FontWeight.w400,
-                                                color: HexColor.fromHex(
-                                                    '#f1c452')),
-                                      ),
-                                      Container(
-                                        height: DeviceHelper.height * 0.012,
-                                        width: DeviceHelper.height * 0.012,
-                                        decoration: BoxDecoration(
-                                            color: selectedTab ==
-                                                    TabBars.Details
-                                                ? HexColor.fromHex('#f1c452')
-                                                : Colors.transparent,
-                                            shape: BoxShape.circle),
-                                      ),
-                                    ],
-                                  ),
-                                  onTap: () {
-                                    updateTabView(TabBars.Details);
-                                  },
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    updateTabView(TabBars.Menu);
-                                  },
-                                  child: Column(
-                                    children: [
-                                      GeneralText(
-                                        Strings.foodItemMenu,
-                                        style: appTheme.typographies
-                                            .interFontFamily.headline6
-                                            .copyWith(
-                                                fontSize: 14,
-                                                fontWeight:
-                                                    selectedTab == TabBars.Menu
-                                                        ? FontWeight.bold
-                                                        : FontWeight.w400,
-                                                color: HexColor.fromHex(
-                                                    '#f1c452')),
-                                      ),
-                                      Container(
-                                        height: DeviceHelper.height * 0.012,
-                                        width: DeviceHelper.height * 0.012,
-                                        decoration: BoxDecoration(
-                                            color: selectedTab == TabBars.Menu
-                                                ? HexColor.fromHex('#f1c452')
-                                                : Colors.transparent,
-                                            shape: BoxShape.circle),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    updateTabView(TabBars.Schedule);
-                                  },
-                                  child: Column(
-                                    children: [
-                                      GeneralText(
-                                        Strings.foodItemSchedule,
-                                        style: appTheme.typographies
-                                            .interFontFamily.headline6
-                                            .copyWith(
-                                                fontSize: 14,
-                                                fontWeight: selectedTab ==
-                                                        TabBars.Schedule
-                                                    ? FontWeight.bold
-                                                    : FontWeight.w400,
-                                                color: HexColor.fromHex(
-                                                    '#f1c452')),
-                                      ),
-                                      Container(
-                                        height: DeviceHelper.height * 0.012,
-                                        width: DeviceHelper.height * 0.012,
-                                        decoration: BoxDecoration(
-                                            color: selectedTab ==
-                                                    TabBars.Schedule
-                                                ? HexColor.fromHex('#f1c452')
-                                                : Colors.transparent,
-                                            shape: BoxShape.circle),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
+              ],
+            ),
+            Positioned.fill(
+              top: DeviceHelper.height * 0.10,
+              left: DeviceHelper.width * 0.05,
+              child: Align(
+                  alignment: Alignment.topLeft,
+                  child: GeneralNewAppBar(
+                    callBack: () {
+                      setState(() {
+                        selectedTab == TabBars.Details
+                            ? getBack()
+                            : (selectedTab == TabBars.Menu
+                                ? setTab(TabBars.Details)
+                                : scheduleForm
+                                    ? scheduleForm = false
+                                    : setTab(TabBars.Menu));
+                      });
+                    },
+                  )),
+            ),
+            Positioned(
+                top: DeviceHelper.height * 0.19,
+                width: MediaQuery.of(context).size.width,
+                child: Padding(
+                  padding: EdgeInsetsDirectional.only(
+                      start: DeviceHelper.width * 0.07),
+                  child: Column(children: [
+                    Container(
+                        decoration: BoxDecoration(
+                          color: HexColor.fromHex("#4b4b52"),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(
+                              DeviceHelper.height * 0.03,
+                            ),
+                            bottomLeft: Radius.circular(
+                              DeviceHelper.height * 0.03,
                             ),
                           ),
-                        ]),
-                      )),
-                  if (selectedTab == TabBars.Menu ||
-                      selectedTab == TabBars.Details) ...[
-                    displayPriceOption(),
-                  ]
-                  //),
-                ]),
-              )),
-          ///chef image
-          Positioned.fill(
-            top: DeviceHelper.height * 0.14,
-            right: DeviceHelper.width * 0.02,
-            child: Align(
-              alignment: Alignment.topRight,
-              child: GestureDetector(
-                child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: DeviceHelper.width * 0.09,
+                        ),
+                        height: DeviceHelper.height * 0.15,
+                        padding: const EdgeInsetsDirectional.only(bottom: 0),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.only(
+                              top: DeviceHelper.height * 0.025),
+                          child: Column(children: [
+                            getFoodMainHeading(
+                                appTheme: appTheme, title: widget.data!.title),
+                            SizedBox(
+                              height: DeviceHelper.height * 0.01,
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.only(
+                                  start: DeviceHelper.width * 0.10,
+                                  end: DeviceHelper.width * 0.10),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  InkWell(
+                                    child: Column(
+                                      children: [
+                                        GeneralText(
+                                          Strings.foodItemDetails,
+                                          style: appTheme.typographies
+                                              .interFontFamily.headline6
+                                              .copyWith(
+                                                  fontSize: 14,
+                                                  fontWeight: selectedTab ==
+                                                          TabBars.Details
+                                                      ? FontWeight.bold
+                                                      : FontWeight.w400,
+                                                  color: HexColor.fromHex(
+                                                      '#f1c452')),
+                                        ),
+                                        Container(
+                                          height: DeviceHelper.height * 0.012,
+                                          width: DeviceHelper.height * 0.012,
+                                          decoration: BoxDecoration(
+                                              color: selectedTab ==
+                                                      TabBars.Details
+                                                  ? HexColor.fromHex('#f1c452')
+                                                  : Colors.transparent,
+                                              shape: BoxShape.circle),
+                                        ),
+                                      ],
+                                    ),
+                                    onTap: () {
+                                      updateTabView(TabBars.Details);
+                                    },
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      updateTabView(TabBars.Menu);
+                                    },
+                                    child: Column(
+                                      children: [
+                                        GeneralText(
+                                          Strings.foodItemMenu,
+                                          style: appTheme.typographies
+                                              .interFontFamily.headline6
+                                              .copyWith(
+                                                  fontSize: 14,
+                                                  fontWeight:
+                                                      selectedTab == TabBars.Menu
+                                                          ? FontWeight.bold
+                                                          : FontWeight.w400,
+                                                  color: HexColor.fromHex(
+                                                      '#f1c452')),
+                                        ),
+                                        Container(
+                                          height: DeviceHelper.height * 0.012,
+                                          width: DeviceHelper.height * 0.012,
+                                          decoration: BoxDecoration(
+                                              color: selectedTab == TabBars.Menu
+                                                  ? HexColor.fromHex('#f1c452')
+                                                  : Colors.transparent,
+                                              shape: BoxShape.circle),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      updateTabView(TabBars.Schedule);
+                                    },
+                                    child: Column(
+                                      children: [
+                                        GeneralText(
+                                          Strings.foodItemSchedule,
+                                          style: appTheme.typographies
+                                              .interFontFamily.headline6
+                                              .copyWith(
+                                                  fontSize: 14,
+                                                  fontWeight: selectedTab ==
+                                                          TabBars.Schedule
+                                                      ? FontWeight.bold
+                                                      : FontWeight.w400,
+                                                  color: HexColor.fromHex(
+                                                      '#f1c452')),
+                                        ),
+                                        Container(
+                                          height: DeviceHelper.height * 0.012,
+                                          width: DeviceHelper.height * 0.012,
+                                          decoration: BoxDecoration(
+                                              color: selectedTab ==
+                                                      TabBars.Schedule
+                                                  ? HexColor.fromHex('#f1c452')
+                                                  : Colors.transparent,
+                                              shape: BoxShape.circle),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ]),
+                        )),
+                    if (selectedTab == TabBars.Menu ||
+                        selectedTab == TabBars.Details) ...[
+                      displayPriceOption(),
+                    ]
+                    //),
+                  ]),
+                )),
+            ///chef image
+            Positioned.fill(
+              top: DeviceHelper.height * 0.14,
+              right: DeviceHelper.width * 0.02,
+              child: Align(
+                alignment: Alignment.topRight,
+                child: GestureDetector(
                   child: CircleAvatar(
-                    radius: DeviceHelper.width * 0.085,
-                    backgroundImage: NetworkImage(Api.baseURLForImages +
-                        widget.chefData.t!.profileImageUrl.toString()),
+                    backgroundColor: Colors.white,
+                    radius: DeviceHelper.width * 0.09,
+                    child: CircleAvatar(
+                      radius: DeviceHelper.width * 0.085,
+                      backgroundImage: NetworkImage(Api.baseURLForImages +
+                          widget.chefData.t!.profileImageUrl.toString()),
+                    ),
                   ),
+                  onTap: () async {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>
+                            UserProfile(chefData: widget.chefData)));
+                  },
                 ),
-                onTap: () async {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) =>
-                          UserProfile(chefData: widget.chefData)));
-                },
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -494,29 +509,39 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   }
 
   void goToRequestToBookScreen() {
-    if (int.parse(nOfPersons.text) <= 0 ||
+    if (nOfPersons.text.isEmpty || int.parse(nOfPersons.text) <= 0 ||
         int.parse(nOfPersons.text) > openCapacity) {
       Toaster.infoToast(
           context: context,
           message: 'Number of Persons must between 1 and $openCapacity');
-    } else {
-      bookingMenuDetails.removeWhere((element) => element.quantity == 0);
-      _appService.state.orderHelper?.bookingMenuDetails = bookingMenuDetails;
-      widget.data?.priceTypeId == 2 && bookingMenuDetails.isEmpty
-          ? Toaster.errorToast(
-              context: context,
-              message: 'Please select at least one quantity in menu')
-          : Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => FoodProductExperienceDetailsScreenView(
-                  selectedExperienceId: widget.data!.id.toString(),
-                  experienceData: widget.data!,
-                  foodMenuDetail: widget.foodMenuDetail,
-                  chefData: widget.chefData,
-                ),
-              ),
-            );
+    }
+    else {
+      int a = 0;
+      for (var element in bookingMenuDetails) {
+        if(element.quantity != 0){
+          a = 1;
+        }
+      }
+      if(a == 1){
+        bookingMenuDetails.removeWhere((element) => element.quantity == 0);
+        _appService.state.orderHelper?.bookingMenuDetails = bookingMenuDetails;
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => FoodProductExperienceDetailsScreenView(
+              selectedExperienceId: widget.data!.id.toString(),
+              experienceData: widget.data!,
+              foodMenuDetail: widget.foodMenuDetail,
+              chefData: widget.chefData,
+            ),
+          ),
+        );
+      }
+      else{
+        Toaster.errorToast(
+            context: context,
+            message: 'Please select at least one quantity in menu');
+      }
     }
   }
 
@@ -670,7 +695,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                       children: [
                         getFoodItemTitle(
                             appTheme: appTheme, foodItemTitle: menuItem.dish),
-                        widget.data!.priceTypeId != 1
+                        widget.data!.priceTypeId == 2
                             ? getFoodItemAmount(
                                 appTheme: appTheme,
                                 foodItemPrice: menuItem.price.toString(),
@@ -691,7 +716,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             ),
           ],
         ),
-        widget.data!.priceTypeId != 1
+        widget.data!.priceTypeId == 2
             ? displayQuantityData(filteredList[k].price, k, menuItem)
             : Container(),
         SizedBox(
@@ -1766,6 +1791,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             //  Strings.productDetailAboutSubTitle,
             // 'Test',
             widget.data!.description.toString(),
+            maxLines: 3,
             style: appTheme.typographies.interFontFamily.headline6.copyWith(
                 fontSize: 14,
                 color: HexColor.fromHex('#ffffff'),
@@ -1773,7 +1799,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           ),
         ),
         SizedBox(
-          height: DeviceHelper.height * 0.05,
+          height: DeviceHelper.height * 0.04,
         ),
         Row(
           children: [

@@ -42,54 +42,65 @@ class ReviewResponse {
 }
 
 class T {
-  int? bookingId;
   String? chefBrandName;
+  int? chefId;
   String? comments;
-  int? experienceId;
+  String? dateCreated;
+  int? experienceBookingId;
   String? experienceImage;
   String? experienceTitle;
   int? foodieId;
   int? id;
+  String? lastUpdated;
   String? stars;
   String? status;
 
   T(
-      {this.bookingId,
-        this.chefBrandName,
+      {this.chefBrandName,
+        this.chefId,
         this.comments,
-        this.experienceId,
+        this.dateCreated,
+        this.experienceBookingId,
         this.experienceImage,
         this.experienceTitle,
         this.foodieId,
         this.id,
+        this.lastUpdated,
         this.stars,
         this.status});
 
   T.fromJson(Map<String, dynamic> json) {
-    bookingId = json['bookingId'];
     chefBrandName = json['chefBrandName'];
+    chefId = json['chefId'];
     comments = json['comments'];
-    experienceId = json['experienceId'];
+    dateCreated = json['dateCreated'];
+    experienceBookingId = json['experienceBookingId'];
     experienceImage = json['experienceImage'];
     experienceTitle = json['experienceTitle'];
     foodieId = json['foodieId'];
     id = json['id'];
+    lastUpdated = json['lastUpdated'];
     stars = json['stars'];
     status = json['status'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['bookingId'] = this.bookingId;
     data['chefBrandName'] = this.chefBrandName;
+    data['chefId'] = this.chefId;
     data['comments'] = this.comments;
-    data['experienceId'] = this.experienceId;
+    data['dateCreated'] = this.dateCreated;
+    data['experienceBookingId'] = this.experienceBookingId;
     data['experienceImage'] = this.experienceImage;
     data['experienceTitle'] = this.experienceTitle;
     data['foodieId'] = this.foodieId;
     data['id'] = this.id;
+    data['lastUpdated'] = this.lastUpdated;
     data['stars'] = this.stars;
     data['status'] = this.status;
     return data;
   }
 }
+
+
+

@@ -162,7 +162,8 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                     onTap: () {
                       //if (index == 1) {
                       if (item.bookingStatus.toString().toUpperCase() ==
-                          Strings.acceptData) {
+                          Strings.acceptData || item.bookingStatus.toString().toUpperCase() ==
+                          Strings.pendingValue) {
                         _navigation.navigateTo(
                             route: nav.FoodItemAdvancePaymentRoute(
                                 bookingItem: item));

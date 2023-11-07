@@ -54,6 +54,7 @@ class T {
   double totalAmount;
   int priceTypeId;
   String bookingStatus;
+  dynamic chefMobileNo;
   String foodieName;
   String foodieProfession;
   String foodieAge;
@@ -90,6 +91,7 @@ class T {
     required this.totalAmount,
     required this.taxPercentage,
     required this.priceTypeId,
+    required this.chefMobileNo,
     required this.bookingStatus,
     required this.foodieName,
     required this.foodieProfession,
@@ -134,6 +136,7 @@ class T {
         advancePayment: json["advancePayment"],
         priceTypeId: json["priceTypeId"],
         bookingStatus: json["bookingStatus"],
+        chefMobileNo: json["chefMobileNo"],
         foodieName: json["foodieName"],
         foodieProfession: json["foodieProfession"],
         foodieAge: json["foodieAge"],
@@ -176,6 +179,7 @@ class T {
         "advancePayment": advancePayment,
         "totalAmount": totalAmount,
         "taxPercentage": taxPercentage,
+    "chefMobileNo" : chefMobileNo,
         "priceTypeId": priceTypeId,
         "foodieRated" : foodieRated,
         "bookingStatus": bookingStatus,

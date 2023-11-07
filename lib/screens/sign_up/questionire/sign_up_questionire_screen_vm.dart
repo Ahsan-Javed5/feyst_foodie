@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/models/profile_image_response.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:path/path.dart';
 import 'package:async/async.dart';
 import 'package:dio/dio.dart';
@@ -46,14 +47,14 @@ class  SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionna
   List<int> answerIdPerfectAmbience = [];
   List<int> answerIdsCuisineTaste = [];
   List<int> answerIdInterest = [];
-  ValueNotifier<File?> selectedImageNotifier = ValueNotifier<File?>(null);
+  ValueNotifier<XFile?> selectedImageNotifier = ValueNotifier<XFile?>(null);
   final ApplicationService _appService;
   late SignUpQuestionsModel signUpQuestionsModel;
   late AnswersResponse foodieAnswers;
   final _storage = locateService<IStorageService>();
 
   bool isImageSelected = false;
-  void updateSelectedImage(File? image) {
+  void updateSelectedImage(XFile? image) {
     isImageSelected = false;
     if (image != null) {
       selectedImageNotifier.value = image;

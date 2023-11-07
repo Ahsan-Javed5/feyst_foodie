@@ -6,6 +6,7 @@ import 'package:chef/screens/sign_up/questionire/sign_up_questionire_screen_m.da
 import 'package:chef/screens/sign_up/questionire/sign_up_questionire_screen_vm.dart';
 import 'package:chef/setup.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
 import '../../../models/signup/sign_up_questionnaire_response_model.dart';
@@ -80,16 +81,38 @@ class SignUpQuestionireScreen
     return const Center(child: CircularProgressIndicator());
   }
 
-  Future<File?> getImageFromGallery() async {
+  Future<XFile?> getImageFromGallery() async {
     final picker = ImagePicker();
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
-      return File(pickedFile.path);
+      XFile? img = XFile(pickedFile.path);
+      var mb = ((await img.readAsBytes()).lengthInBytes / 1024 ) / 1024;
+      while(mb > 3){
+        img = await compressFile(file: img);
+        mb = ((await img?.readAsBytes())!.lengthInBytes / 1024 ) / 1024;
+      }
+      return img;
     } else {
       // User cancelled the selection
       return null;
     }
+  }
+
+  Future<XFile?> compressFile({required XFile? file}) async {
+    final filePath = file!.path;
+
+    // Create output file path
+    // eg:- "Volume/VM/abcd_out.jpeg"
+    final lastIndex = filePath.lastIndexOf(RegExp(r'.jp'));
+    final splitted = filePath.substring(0, (lastIndex));
+    final outPath = '${splitted}_out${filePath.substring(lastIndex)}';
+    var result = await FlutterImageCompress.compressAndGetFile(
+      file.path,
+      outPath,
+      quality: 95,
+    );
+    return result!;
   }
 
   Widget displayLoaded(context, state, IAppThemeData appTheme,
@@ -148,7 +171,7 @@ class SignUpQuestionireScreen
                   ///profile picture section
                   InkWell(
                     onTap: () async {
-                      File? selectedImage = await getImageFromGallery();
+                      XFile? selectedImage = await getImageFromGallery();
                       // selectedImage != null
                       //     ? () async {
                       viewModel.updateSelectedImage(selectedImage);
@@ -200,17 +223,17 @@ class SignUpQuestionireScreen
                                     fontSize: 15.0,
                                     fontWeight: FontWeight.w500),
                           ),
-                          ValueListenableBuilder<File?>(
+                          ValueListenableBuilder<XFile?>(
                             valueListenable: viewModel.selectedImageNotifier,
-                            builder: (BuildContext context, File? selectedImage,
+                            builder: (BuildContext context, XFile? selectedImage,
                                 Widget? child) {
                               if (selectedImage != null) {
                                 return CircleAvatar(
                                   radius: 25,
-                                  backgroundImage: FileImage(selectedImage),
+                                  backgroundImage: FileImage(File(selectedImage.path)),
                                 );
                               } else {
-                                return locateService<IStorageService>().readString(key: 'profile_image') == null || locateService<IStorageService>().readString(key: 'profile_image') == '' ?
+                                return locateService<IStorageService>().readString(key: 'profile_image') == '' ?
                                 Image.asset(
                                   Resources.userProfileImageIcon,
                                   // height: 47,

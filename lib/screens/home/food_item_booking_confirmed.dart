@@ -1333,6 +1333,47 @@ class _FoodProductBookingConfirmedDetailsState
                     ],
                   )
                 ]),
+                Column(
+                  children: [
+                    Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                      SizedBox(
+                          width: 14,
+                          height: 18.8,
+                          child: Image.asset(
+                              "assets/images/mobile_icon.png")),
+                      const SizedBox(
+                        width: 13.5,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          GeneralText(
+                            'Mobile',
+                            style: appTheme
+                                .typographies.interFontFamily.headline6
+                                .copyWith(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: HexColor.fromHex('#909094'),
+                            ),
+                          ),
+                          GeneralText(
+                            // Strings.foodieInfoProfessionValue,
+                            widget._advancePendingDetails.t.chefMobileNo.toString(),
+                            style: appTheme
+                                .typographies.interFontFamily.headline6
+                                .copyWith(
+                              fontSize: 14,
+                              color: HexColor.fromHex('#ffffff'),
+                            ),
+                          ),
+                        ],
+                      )
+                    ]),
+                  ],
+                ),
                 const SizedBox(
                   height: 18.1,
                 ),

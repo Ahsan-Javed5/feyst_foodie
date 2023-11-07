@@ -265,9 +265,9 @@ class _PopularExperience extends StatelessWidget {
                   child: Container(
                     width: DeviceHelper.width * 0.22,
                     height: DeviceHelper.height * 0.18,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage(Resources.seafoodPNG),
+                        image: NetworkImage(Api.baseURLForImages+popularExperience!.experienceMedia![0].mediaUrl.toString()),
                         fit: BoxFit.cover,
                       ),
                       shape: BoxShape.circle,
@@ -435,7 +435,7 @@ class _FoodContainer extends StatelessWidget {
                                 ),
                               ),
                               GeneralText(
-                                data!.chefAddress
+                                data!.townName.toString()+data!.cityName
                                     .toString(), // Strings.labelSeaFood2Experience,
                                 style: appTheme
                                     .typographies.interFontFamily.headline2
