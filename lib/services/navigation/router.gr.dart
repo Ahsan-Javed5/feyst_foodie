@@ -15,7 +15,9 @@ import 'package:auto_route/auto_route.dart' as _i11;
 import 'package:flutter/material.dart' as _i12;
 
 import '../../models/booking/advance_pending_response.dart' as _i13;
+
 import '../../models/booking/booking_list_response_model.dart' as _i14;
+import '../../models/home/chef_data_response.dart' as _i20;
 import '../../screens/booking/advance_payment/food_item_advance_payment_v.dart'
     as _i6;
 import '../../screens/booking/booking_confirmed/booking_in_process_screen_v.dart'
@@ -32,7 +34,6 @@ import '../../screens/sign_up/sign_up_screen_v.dart' as _i2;
 class AppRouter extends _i11.RootStackRouter {
   AppRouter([_i12.GlobalKey<_i12.NavigatorState>? navigatorKey])
       : super(navigatorKey);
-
   @override
   final Map<String, _i11.PageFactory> pagesMap = {
     GetStartedRoute.name: (routeData) {
@@ -112,6 +113,7 @@ class AppRouter extends _i11.RootStackRouter {
         child: _i9.FoodProductBookingConfirmedDetails(
           key: args.key,
           advancePendingDetails: args.advancePendingDetails,
+          chefData:  args.chefData,
         ),
       );
     },
@@ -408,6 +410,7 @@ class FoodProductBookingConfirmedDetails
   FoodProductBookingConfirmedDetails({
     _i12.Key? key,
     required _i13.AdvancePendingResponse advancePendingDetails,
+    required _i20.ChefDataResponse chefData,
   }) : super(
           FoodProductBookingConfirmedDetails.name,
           path:
@@ -415,6 +418,7 @@ class FoodProductBookingConfirmedDetails
           args: FoodProductBookingConfirmedDetailsArgs(
             key: key,
             advancePendingDetails: advancePendingDetails,
+            chefData: chefData,
           ),
         );
 
@@ -425,11 +429,13 @@ class FoodProductBookingConfirmedDetailsArgs {
   const FoodProductBookingConfirmedDetailsArgs({
     this.key,
     required this.advancePendingDetails,
+    required this.chefData,
   });
 
   final _i12.Key? key;
 
   final _i13.AdvancePendingResponse advancePendingDetails;
+  final _i20.ChefDataResponse chefData;
 
   @override
   String toString() {

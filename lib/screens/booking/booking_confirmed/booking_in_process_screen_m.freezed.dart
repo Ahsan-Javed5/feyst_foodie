@@ -19,7 +19,7 @@ mixin _$BookingInProcessScreenState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(AdvancePendingResponse advancePendingResponse)
+    required TResult Function(AdvancePendingResponse advancePendingResponse, ChefDataResponse chefData)
         loaded,
   }) =>
       throw _privateConstructorUsedError;
@@ -115,7 +115,7 @@ class _$Loading implements Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(AdvancePendingResponse advancePendingResponse)
+    required TResult Function(AdvancePendingResponse advancePendingResponse, ChefDataResponse chefData)
         loaded,
   }) {
     return loading();
@@ -250,10 +250,10 @@ class _$Loaded implements Loaded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(AdvancePendingResponse advancePendingResponse)
+    required TResult Function(AdvancePendingResponse advancePendingResponse, ChefDataResponse chefData)
         loaded,
   }) {
-    return loaded(advancePendingResponse);
+    return loaded(advancePendingResponse, chefData);
   }
 
   @override

@@ -26,8 +26,8 @@ class BookingInProcessScreenView
             backgroundColor: appTheme.colors.primaryBackground,
             body: state.when(
                 loading: _loading,
-                loaded: (bookingConfirmedDetails) =>
-                    displayLoaded(bookingConfirmedDetails)),
+                loaded: (bookingConfirmedDetails, chefData) =>
+                    displayLoaded(bookingConfirmedDetails, chefData)),
           );
         });
   }
@@ -36,7 +36,7 @@ class BookingInProcessScreenView
     return const Center(child: CircularProgressIndicator());
   }
 
-  Widget displayLoaded(bookingConfirmedDetails) {
+  Widget displayLoaded(bookingConfirmedDetails, chefData) {
     // return Container();
     // return Container();
     final _navigate = locateService<INavigationService>();
@@ -47,7 +47,7 @@ class BookingInProcessScreenView
     // }));
     _navigate.navigateTo(
         route: FoodProductBookingConfirmedDetails(
-            advancePendingDetails: viewModel.advancePendingResponse));
+            advancePendingDetails: viewModel.advancePendingResponse, chefData: chefData));
     return Container();
     //   return FoodProductAdvancePendingDetails(advancePendingDetails: );
   }

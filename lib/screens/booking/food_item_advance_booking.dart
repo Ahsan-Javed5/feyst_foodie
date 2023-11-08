@@ -1,4 +1,3 @@
-
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/screens/booking/advance_payment/jazz_cash_webview.dart';
 import 'package:chef/setup.dart';
@@ -12,7 +11,6 @@ import 'dart:developer' as developer;
 
 import '../user_account/user_profile.dart';
 import 'booking_confirmed/booking_in_process_screen_vm.dart';
-
 
 class FoodProductAdvancePendingDetails extends StatefulWidget {
   const FoodProductAdvancePendingDetails(
@@ -207,8 +205,11 @@ class _FoodProductAdvancePendingDetailsState
                           alignment: Alignment.topLeft,
                           child: GeneralNewAppBar(
                             rightIcon: Resources.homeIconSvg,
-                            callBack: (){
-                              locateService<INavigationService>().navigateTo(route: BottomBar(bottomBarType: bottom_bar.BottomBarType.bookings));
+                            callBack: () {
+                              locateService<INavigationService>().navigateTo(
+                                  route: BottomBar(
+                                      bottomBarType:
+                                          bottom_bar.BottomBarType.bookings));
                               Navigator.pop(context);
                             },
                           )),
@@ -224,7 +225,8 @@ class _FoodProductAdvancePendingDetailsState
                   child: Column(
                     children: [
                       Container(
-                        padding: const EdgeInsetsDirectional.only(start: 25, end: 25),
+                        padding: const EdgeInsetsDirectional.only(
+                            start: 25, end: 25),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -370,7 +372,9 @@ class _FoodProductAdvancePendingDetailsState
                       //     : ''),
 
                       child: SvgPicture.network(wowFactorsList[i].icon != null
-                          ? Api.baseURLForImages+wowFactorsList[i].icon.toString() ?? ""
+                          ? Api.baseURLForImages +
+                                  wowFactorsList[i].icon.toString() ??
+                              ""
                           : ''),
                     ),
                   ),
@@ -576,35 +580,45 @@ class _FoodProductAdvancePendingDetailsState
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    widget._advancePendingDetails.t.priceTypeId == 2 ? Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            GeneralText(
-                              menuListItems[index].quantity.toString() + 'x',
-                              style: appTheme.typographies.interFontFamily.headline2
-                                  .copyWith(
-                                fontSize: 16,
-                                color: HexColor.fromHex('#f89f84'),
+                    widget._advancePendingDetails.t.priceTypeId == 2
+                        ? Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  GeneralText(
+                                    menuListItems[index].quantity.toString() +
+                                        'x',
+                                    style: appTheme
+                                        .typographies.interFontFamily.headline2
+                                        .copyWith(
+                                      fontSize: 16,
+                                      color: HexColor.fromHex('#f89f84'),
+                                    ),
+                                  ),
+                                  GeneralText(
+                                    // Strings.productDetailSelectionMenuAmount,
+                                    (int.parse(menuListItems[index].price!) *
+                                            int.parse(menuListItems[index]
+                                                .quantity
+                                                .toString()))
+                                        .toString(),
+                                    style: appTheme
+                                        .typographies.interFontFamily.headline2
+                                        .copyWith(
+                                      fontSize: 16,
+                                      color: HexColor.fromHex('#909094'),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                            GeneralText(
-                              // Strings.productDetailSelectionMenuAmount,
-                              (int.parse(menuListItems[index].price!) * int.parse(menuListItems[index].quantity.toString())).toString(),
-                              style: appTheme.typographies.interFontFamily.headline2
-                                  .copyWith(
-                                fontSize: 16,
-                                color: HexColor.fromHex('#909094'),
+                              const SizedBox(
+                                height: 5,
                               ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                      ],
-                    ) : const SizedBox(),
+                            ],
+                          )
+                        : const SizedBox(),
                     GeneralText(
                       menuListItems[index].name ?? "",
                       style: appTheme.typographies.interFontFamily.headline2
@@ -669,14 +683,12 @@ class _FoodProductAdvancePendingDetailsState
                       child: GestureDetector(
                         child: CircleAvatar(
                           radius: 27,
-                          backgroundImage: NetworkImage(Api.baseURLForImages+widget._advancePendingDetails.t.chefProfileImageUrl.toString()),
-                            ),
-                     onTap: (){
-                          locateService<BookingInProcessScreenViewModel>().chefData;
-                       Navigator.of(context).push(MaterialPageRoute(
-                           builder: (context) =>
-                               UserProfile(chefData: locateService<BookingInProcessScreenViewModel>().chefData,)));
-                     },
+                          backgroundImage: NetworkImage(Api.baseURLForImages +
+                              widget
+                                  ._advancePendingDetails.t.chefProfileImageUrl
+                                  .toString()),
+                        ),
+                        onTap: () {},
                       )),
                   const SizedBox(
                     width: 11.5,
@@ -707,7 +719,11 @@ class _FoodProductAdvancePendingDetailsState
                             Expanded(
                               child: GeneralText(
                                 // Strings.productDetailChefLocation,
-                                (widget._advancePendingDetails.t.townName ?? 'null') +', '+ (widget._advancePendingDetails.t.cityName ?? 'null') ,
+                                (widget._advancePendingDetails.t.townName ??
+                                        'null') +
+                                    ', ' +
+                                    (widget._advancePendingDetails.t.cityName ??
+                                        'null'),
                                 style: appTheme
                                     .typographies.interFontFamily.headline6
                                     .copyWith(
@@ -800,12 +816,14 @@ class _FoodProductAdvancePendingDetailsState
                     children: [
                       GeneralText(
                         // Strings.productDetailPriceValue,
-                        'Rs. ' + (widget._advancePendingDetails.t.totalAmount).toStringAsFixed(0),
+                        'Rs. ' +
+                            (widget._advancePendingDetails.t.totalAmount)
+                                .toStringAsFixed(0),
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
-                            fontSize: 36,
-                            color: HexColor.fromHex('#f89f84'),
-                            fontWeight: FontWeight.w300),
+                                fontSize: 36,
+                                color: HexColor.fromHex('#f89f84'),
+                                fontWeight: FontWeight.w300),
                       ),
                       GeneralText(
                         'Total Amount',
@@ -840,7 +858,8 @@ class _FoodProductAdvancePendingDetailsState
                     ),
                     GeneralText(
                       // Strings.productDetailPriceTaxValue,
-                      'Rs. ' + widget._advancePendingDetails.t.totalPrice.toString(),
+                      'Rs. ' +
+                          widget._advancePendingDetails.t.totalPrice.toString(),
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -865,7 +884,9 @@ class _FoodProductAdvancePendingDetailsState
                     ),
                     GeneralText(
                       // Strings.productDetailPriceTaxValue,
-                      'Rs. ' + (widget._advancePendingDetails.t.tax).toStringAsFixed(0),
+                      'Rs. ' +
+                          (widget._advancePendingDetails.t.tax)
+                              .toStringAsFixed(0),
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -890,7 +911,9 @@ class _FoodProductAdvancePendingDetailsState
                     ),
                     GeneralText(
                       // Strings.productDetailAdvancePaymentValue,
-                      'Rs. ' + (widget._advancePendingDetails.t.advancePayment).toStringAsFixed(0),
+                      'Rs. ' +
+                          (widget._advancePendingDetails.t.advancePayment)
+                              .toStringAsFixed(0),
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -1040,18 +1063,17 @@ class _FoodProductAdvancePendingDetailsState
       title: Strings.foodItemBookingAdvancePendingButton.toUpperCase(),
       styleType: ButtonStyleType.fill,
       onTap: () {
-
-       // CustomDialog.getDialog(ctx: context, title: 'Booking Confirmed', description: 'Advance have been received by Zee Lounge', iconUrl: 'assets/images/tick_icon.png');
+        // CustomDialog.getDialog(ctx: context, title: 'Booking Confirmed', description: 'Advance have been received by Zee Lounge', iconUrl: 'assets/images/tick_icon.png');
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) =>
-              JazzCashWebView(bookindData: widget._advancePendingDetails)
-          ),
+          MaterialPageRoute(
+              builder: (context) =>
+                  JazzCashWebView(bookindData: widget._advancePendingDetails)),
         );
         // final _foodItemAdvance =
         //     locateService<FoodItemAdvancePaymentViewModel>();
         // _foodItemAdvance.updateBookingStatus(bookingId: widget._advancePendingDetails.t.id);
-           // .requestConfirmBooking(widget._advancePendingDetails.t.id);
+        // .requestConfirmBooking(widget._advancePendingDetails.t.id);
         // Navigator.push(context,
         //     MaterialPageRoute(builder: (context) => FoodItemBooking()));
       },

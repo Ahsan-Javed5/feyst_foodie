@@ -1,8 +1,6 @@
 import 'dart:ui';
 
 import 'package:chef/helpers/helpers.dart';
-import 'package:chef/screens/booking/booking_list/booking_list_screen_vm.dart'
-    as booking_vm;
 import 'package:chef/screens/bottom_bar/bottom_bar.dart' as bottom_bar;
 import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:chef/ui_kit/widgets/custom_dialog.dart';
@@ -14,6 +12,7 @@ import '../../constants/resources.dart';
 import '../../constants/strings.dart';
 import '../../helpers/color_helper.dart';
 import '../../models/booking/advance_pending_response.dart';
+import '../../models/home/chef_data_response.dart';
 import '../../setup.dart';
 import '../../theme/app_theme_data/app_theme_data.dart';
 import '../../theme/app_theme_widget.dart';
@@ -24,22 +23,23 @@ import '../../ui_kit/widgets/general_text.dart';
 import '../booking/advance_payment/jazz_cash_webview.dart';
 import '../booking/booking_confirmed/booking_in_process_screen_vm.dart';
 import '../booking/booking_list/booking_list_screen_vm.dart';
-import '../booking/food_item_booking.dart';
 import '../custom_form/widgets/exto_field_option.dart';
 
 import 'package:qr_flutter/qr_flutter.dart';
 
-import '../google_map/google_map_screen.dart';
+import '../user_account/user_profile.dart';
 
 class FoodProductBookingConfirmedDetails extends StatefulWidget {
-  // const FoodProductBookingConfirmedDetails({Key? key}) : super(key: key);
-
   const FoodProductBookingConfirmedDetails(
-      {Key? key, required AdvancePendingResponse advancePendingDetails})
+      {Key? key,
+      required AdvancePendingResponse advancePendingDetails,
+      required ChefDataResponse chefData})
       : _advancePendingDetails = advancePendingDetails,
+        _chefData = chefData,
         super(key: key);
 
   final AdvancePendingResponse _advancePendingDetails;
+  final ChefDataResponse _chefData;
 
   @override
   State<FoodProductBookingConfirmedDetails> createState() =>
@@ -218,7 +218,9 @@ class _FoodProductBookingConfirmedDetailsState
                             decoration: BoxDecoration(
                                 color: HexColor.fromHex("#b0c18b"),
                                 borderRadius: BorderRadius.circular(20)),
-                            child: GeneralText(widget._advancePendingDetails.t.bookingStatus.toUpperCase(),
+                            child: GeneralText(
+                              widget._advancePendingDetails.t.bookingStatus
+                                  .toUpperCase(),
                               // (
                               //     widget._advancePendingDetails.t.bookingStatus
                               //             .toUpperCase() ==
@@ -456,7 +458,8 @@ class _FoodProductBookingConfirmedDetailsState
 
                 ///rating button for completed status
                 (widget._advancePendingDetails.t.bookingStatus.toUpperCase() ==
-                        Strings.completeStatus && widget._advancePendingDetails.t.foodieRated == false)
+                            Strings.completeStatus &&
+                        widget._advancePendingDetails.t.foodieRated == false)
                     ? Column(
                         children: [
                           const SizedBox(
@@ -638,12 +641,14 @@ class _FoodProductBookingConfirmedDetailsState
         borderRadius: BorderRadius.circular(10),
       ),
       child: TextField(
-        style: const TextStyle(color: Colors.white,),
+        style: const TextStyle(
+          color: Colors.white,
+        ),
         controller: viewModel.ratingController,
         maxLines: maxLines,
         keyboardType: TextInputType.multiline,
         decoration: InputDecoration(
-          border: InputBorder.none,
+            border: InputBorder.none,
             filled: true,
             hintText: 'Write Something',
             hintStyle: TextStyle(
@@ -1132,7 +1137,10 @@ class _FoodProductBookingConfirmedDetailsState
                                 ),
                               ),
                               GeneralText(
-                                (menu[index].price * int.parse(menu[index].quantity.toString())).toString(),
+                                (menu[index].price *
+                                        int.parse(
+                                            menu[index].quantity.toString()))
+                                    .toString(),
                                 style: appTheme
                                     .typographies.interFontFamily.headline2
                                     .copyWith(
@@ -1265,25 +1273,32 @@ class _FoodProductBookingConfirmedDetailsState
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Container(
-                      width: 40,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white, width: 2),
-                          shape: BoxShape.circle),
+                  GestureDetector(
+                    onTap: () {
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (context) =>
+                      //         UserProfile(chefData: widget._chefData,)));
+                    },
+                    child: Container(
+                        width: 40,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white, width: 2),
+                            shape: BoxShape.circle),
 
-                      ///chef image
-                      child:
-                          widget._advancePendingDetails.t.chefProfileImageUrl ==
-                                  null
-                              ? Image.asset(Resources.userProfileImageIcon)
-                              : CircleAvatar(
-                                  radius: 40, // Image radius
-                                  backgroundImage: NetworkImage(
-                                      Api.baseURLForImages +
-                                          widget._advancePendingDetails.t
-                                              .chefProfileImageUrl
-                                              .toString()),
-                                )),
+                        ///chef image
+                        child: widget._advancePendingDetails.t
+                                    .chefProfileImageUrl ==
+                                null
+                            ? Image.asset(Resources.userProfileImageIcon)
+                            : CircleAvatar(
+                                radius: 40, // Image radius
+                                backgroundImage: NetworkImage(
+                                    Api.baseURLForImages +
+                                        widget._advancePendingDetails.t
+                                            .chefProfileImageUrl
+                                            .toString()),
+                              )),
+                  ),
                   // Image.network(Api.baseURLForImages+widget._advancePendingDetails.t.chefProfileImageUrl.toString())),
                   const SizedBox(
                     width: 11.5,
@@ -1302,9 +1317,11 @@ class _FoodProductBookingConfirmedDetailsState
                       ),
                       InkWell(
                         onTap: () {
-                          navigateToGoogleMap(widget._advancePendingDetails.t
-                              .experience.latitude, widget._advancePendingDetails.t
-                              .experience.longitude);
+                          navigateToGoogleMap(
+                              widget
+                                  ._advancePendingDetails.t.experience.latitude,
+                              widget._advancePendingDetails.t.experience
+                                  .longitude);
                         },
                         child: Row(
                           children: [
@@ -1318,7 +1335,15 @@ class _FoodProductBookingConfirmedDetailsState
                             SizedBox(
                                 width: 150,
                                 child: GeneralText(
-                                  widget._advancePendingDetails.t.address+', '+(widget._advancePendingDetails.t.townName ?? 'null')+', '+(widget._advancePendingDetails.t.cityName ?? 'null'),
+                                  widget._advancePendingDetails.t.address +
+                                      ', ' +
+                                      (widget._advancePendingDetails.t
+                                              .townName ??
+                                          'null') +
+                                      ', ' +
+                                      (widget._advancePendingDetails.t
+                                              .cityName ??
+                                          'null'),
                                   maxLines: 2,
                                   style: appTheme
                                       .typographies.interFontFamily.headline6
@@ -1335,14 +1360,11 @@ class _FoodProductBookingConfirmedDetailsState
                 ]),
                 Column(
                   children: [
-                    Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
+                    Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
                       SizedBox(
                           width: 14,
                           height: 18.8,
-                          child: Image.asset(
-                              "assets/images/mobile_icon.png")),
+                          child: Image.asset("assets/images/mobile_icon.png")),
                       const SizedBox(
                         width: 13.5,
                       ),
@@ -1361,7 +1383,8 @@ class _FoodProductBookingConfirmedDetailsState
                           ),
                           GeneralText(
                             // Strings.foodieInfoProfessionValue,
-                            widget._advancePendingDetails.t.chefMobileNo.toString(),
+                            widget._advancePendingDetails.t.chefMobileNo
+                                .toString(),
                             style: appTheme
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
@@ -1398,8 +1421,8 @@ class _FoodProductBookingConfirmedDetailsState
                   children: [
                     GeneralText(
                       widget._advancePendingDetails.t.subHost,
-                      style:
-                          appTheme.typographies.interFontFamily.headline6.copyWith(
+                      style: appTheme.typographies.interFontFamily.headline6
+                          .copyWith(
                         fontSize: 18,
                         color: HexColor.fromHex('#f1c452'),
                       ),
@@ -1409,8 +1432,8 @@ class _FoodProductBookingConfirmedDetailsState
                       widget._advancePendingDetails.t.subHostMobileNo,
                       //+
                       //     widget._advancePendingDetails.t.subHostMobileNo,
-                      style:
-                      appTheme.typographies.interFontFamily.headline6.copyWith(
+                      style: appTheme.typographies.interFontFamily.headline6
+                          .copyWith(
                         fontSize: 16,
                         color: HexColor.fromHex('#f1c452'),
                       ),
@@ -1581,8 +1604,7 @@ class _FoodProductBookingConfirmedDetailsState
                   description: Strings.confirmCancelMessage);
             },
           )
-        : widget._advancePendingDetails.t.bookingStatus ==
-                Strings.billGenerated
+        : widget._advancePendingDetails.t.bookingStatus == Strings.billGenerated
             ? getBillGeneratedButtons()
             : const SizedBox();
     // ExtoText(
@@ -2016,6 +2038,7 @@ class _FoodProductBookingConfirmedDetailsState
       // ),
     );
   }
+
   static void navigateToGoogleMap(double lat, double lng) async {
     var uri = Uri.parse("google.navigation:q=$lat,$lng&mode=d");
     if (await canLaunchUrl(uri)) {
@@ -2024,6 +2047,7 @@ class _FoodProductBookingConfirmedDetailsState
       throw 'Could not launch ${uri.toString()}';
     }
   }
+
   Future<bool> onWillPop() async {
     return false;
   }
