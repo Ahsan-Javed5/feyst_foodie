@@ -1673,6 +1673,7 @@ class _FoodProductBookingConfirmedDetailsState
                       padding: const EdgeInsets.only(left: 23),
                       child: GeneralText(
                         widget._advancePendingDetails.t.experience.description,
+                        maxLines: 4,
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
                                 fontSize: 14,

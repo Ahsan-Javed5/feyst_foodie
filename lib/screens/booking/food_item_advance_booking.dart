@@ -10,6 +10,9 @@ import '../../ui_kit/widgets/general_new_appbar.dart';
 
 import 'dart:developer' as developer;
 
+import '../user_account/user_profile.dart';
+import 'booking_confirmed/booking_in_process_screen_vm.dart';
+
 
 class FoodProductAdvancePendingDetails extends StatefulWidget {
   const FoodProductAdvancePendingDetails(
@@ -257,6 +260,7 @@ class _FoodProductAdvancePendingDetailsState
                                 //   Strings.productDetailAboutSubTitle,
                                 widget._advancePendingDetails.t.experience
                                     .description,
+                                maxLines: 4,
                                 style: appTheme
                                     .typographies.interFontFamily.headline6
                                     .copyWith(
@@ -587,7 +591,7 @@ class _FoodProductAdvancePendingDetailsState
                             ),
                             GeneralText(
                               // Strings.productDetailSelectionMenuAmount,
-                              (menuListItems[index].price! * int.parse(menuListItems[index].quantity.toString())).toString(),
+                              (int.parse(menuListItems[index].price!) * int.parse(menuListItems[index].quantity.toString())).toString(),
                               style: appTheme.typographies.interFontFamily.headline2
                                   .copyWith(
                                 fontSize: 16,
@@ -662,10 +666,18 @@ class _FoodProductAdvancePendingDetailsState
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.white, width: 2),
                           shape: BoxShape.circle),
-                      child: CircleAvatar(
-                        radius: 27,
-                        backgroundImage: NetworkImage(Api.baseURLForImages+widget._advancePendingDetails.t.chefProfileImageUrl.toString()),
-                          )),
+                      child: GestureDetector(
+                        child: CircleAvatar(
+                          radius: 27,
+                          backgroundImage: NetworkImage(Api.baseURLForImages+widget._advancePendingDetails.t.chefProfileImageUrl.toString()),
+                            ),
+                     onTap: (){
+                          locateService<BookingInProcessScreenViewModel>().chefData;
+                       Navigator.of(context).push(MaterialPageRoute(
+                           builder: (context) =>
+                               UserProfile(chefData: locateService<BookingInProcessScreenViewModel>().chefData,)));
+                     },
+                      )),
                   const SizedBox(
                     width: 11.5,
                   ),

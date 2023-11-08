@@ -1,5 +1,6 @@
 import 'package:chef/base/base.dart';
 import 'package:chef/models/booking/booking_list_response_model.dart';
+import 'package:chef/models/home/chef_data_response.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../models/booking/advance_pending_response.dart';
@@ -11,5 +12,5 @@ class BookingInProcessScreenState extends BaseState
     with _$BookingInProcessScreenState {
   const factory BookingInProcessScreenState.loading() = Loading;
   const factory BookingInProcessScreenState.loaded(
-      AdvancePendingResponse advancePendingResponse) = Loaded;
+      AdvancePendingResponse advancePendingResponse, ChefDataResponse chefData) = Loaded;
 }

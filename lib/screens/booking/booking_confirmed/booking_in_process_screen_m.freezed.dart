@@ -199,12 +199,17 @@ class __$$LoadedCopyWithImpl<$Res>
   @override
   $Res call({
     Object? advancePendingResponse = freezed,
+Object? chefData = freezed
   }) {
     return _then(_$Loaded(
       advancePendingResponse == freezed
           ? _value.advancePendingResponse
           : advancePendingResponse // ignore: cast_nullable_to_non_nullable
               as AdvancePendingResponse,
+chefData == freezed
+? _value.chefData
+    : chefData // ignore: cast_nullable_to_non_nullable
+as ChefDataResponse,
     ));
   }
 }
@@ -212,10 +217,11 @@ class __$$LoadedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$Loaded implements Loaded {
-  const _$Loaded(this.advancePendingResponse);
+  const _$Loaded(this.advancePendingResponse, this.chefData);
 
   @override
   final AdvancePendingResponse advancePendingResponse;
+  final ChefDataResponse chefData;
 
   @override
   String toString() {
@@ -305,11 +311,14 @@ class _$Loaded implements Loaded {
 }
 
 abstract class Loaded implements BookingInProcessScreenState {
-  const factory Loaded(final AdvancePendingResponse advancePendingResponse) =
+  const factory Loaded(final AdvancePendingResponse advancePendingResponse, ChefDataResponse chefData) =
       _$Loaded;
 
   AdvancePendingResponse get advancePendingResponse;
-  @JsonKey(ignore: true)
+  ChefDataResponse get chefData;
+
+@JsonKey(ignore: true)
   _$$LoadedCopyWith<_$Loaded> get copyWith =>
       throw _privateConstructorUsedError;
+
 }

@@ -516,15 +516,34 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           message: 'Number of Persons must between 1 and $openCapacity');
     }
     else {
-      int a = 0;
-      for (var element in bookingMenuDetails) {
-        if(element.quantity != 0){
-          a = 1;
+      if (widget.data!.priceTypeId == 2) {
+        int a = 0;
+        for (var element in bookingMenuDetails) {
+          if(element.quantity != 0){
+            a = 1;
+          }
         }
-      }
-      if(a == 1){
-        bookingMenuDetails.removeWhere((element) => element.quantity == 0);
-        _appService.state.orderHelper?.bookingMenuDetails = bookingMenuDetails;
+        if(a == 1){
+          bookingMenuDetails.removeWhere((element) => element.quantity == 0);
+          _appService.state.orderHelper?.bookingMenuDetails = bookingMenuDetails;
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => FoodProductExperienceDetailsScreenView(
+                selectedExperienceId: widget.data!.id.toString(),
+                experienceData: widget.data!,
+                foodMenuDetail: widget.foodMenuDetail,
+                chefData: widget.chefData,
+              ),
+            ),
+          );
+        }
+        else{
+          Toaster.errorToast(
+              context: context,
+              message: 'Please select at least one quantity in menu');
+        }
+      }else{
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -536,11 +555,6 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             ),
           ),
         );
-      }
-      else{
-        Toaster.errorToast(
-            context: context,
-            message: 'Please select at least one quantity in menu');
       }
     }
   }

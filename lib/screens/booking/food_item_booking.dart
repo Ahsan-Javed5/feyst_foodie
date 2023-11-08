@@ -163,7 +163,8 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                       //if (index == 1) {
                       if (item.bookingStatus.toString().toUpperCase() ==
                           Strings.acceptData || item.bookingStatus.toString().toUpperCase() ==
-                          Strings.pendingValue) {
+                          Strings.pendingValue || item.bookingStatus.toString().toUpperCase() == 'DECLINED' ||
+                          item.bookingStatus.toString().toUpperCase() == 'MISSED') {
                         _navigation.navigateTo(
                             route: nav.FoodItemAdvancePaymentRoute(
                                 bookingItem: item));

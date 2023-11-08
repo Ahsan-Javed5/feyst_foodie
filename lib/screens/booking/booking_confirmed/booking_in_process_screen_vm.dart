@@ -3,6 +3,7 @@ import 'package:chef/models/booking/rating_request.dart' as rating_request;
 import 'package:chef/models/booking/rating_resposne.dart';
 import 'package:chef/screens/bottom_bar/bottom_bar.dart' as bottom_bar;
 import '../../../models/booking/rating_request.dart';
+import '../../../models/home/chef_data_response.dart';
 import '/models/booking/advance_pending_response.dart';
 import '/models/signup/signup_request.dart' as request;
 import '/helpers/data_request.dart' as data;
@@ -21,6 +22,7 @@ class BookingInProcessScreenViewModel
   final INetworkService _network;
 
   late AdvancePendingResponse advancePendingResponse;
+  late ChefDataResponse chefData;
   final ratingController = TextEditingController();
   final _storage = locateService<IStorageService>();
 
@@ -49,12 +51,34 @@ class BookingInProcessScreenViewModel
       advancePendingResponse = advancePendingResponseFromJson(response.body);
 
       response.body != "" || response.body != null
-          ? emit(Loaded(advancePendingResponse))
+          ? getChefData(advancePendingResponse)
           : emit(const Loading());
     } catch (e) {
       print(e);
       // TODO
     }
+  }
+
+  Future<ChefDataResponse?> getChefData(AdvancePendingResponse advancePendingResponse) async {
+    final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.chefData);
+
+    final response = await _network.post(
+        path: url,
+        data: {
+          "t": int.parse(advancePendingResponse.t.chefId.toString())
+        },
+        header: {
+      'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
+      'Content-Type': 'application/json'
+    });
+
+    chefData = chefModelFromJson(response.body);
+    response.body != "" || response.body != null
+        ? emit(Loaded(advancePendingResponse, chefData))
+        : emit(const Loading());
+    return null;
+   // emit(Loaded(foodData, scheduleData, chefData));
+    //return chefData;
   }
 
   Future<void> requestConfirmBooking(int bookingId) async {
