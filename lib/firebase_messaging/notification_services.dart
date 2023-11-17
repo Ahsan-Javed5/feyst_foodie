@@ -1,0 +1,166 @@
+import 'dart:io';
+import 'dart:math';
+import 'package:chef/screens/bottom_bar/bottom_bar.dart' as bottom_bar;
+
+import 'package:chef/helpers/helpers.dart';
+import 'package:chef/models/booking/booking_list_response_model.dart';
+import '../../services/navigation/router.gr.dart' as nav;
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
+import 'dart:developer' as developer;
+
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+import '../setup.dart';
+
+class NotificationServices {
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+
+  void requestNotificationPermission() async {
+    NotificationSettings settings = await messaging.requestPermission(
+        alert: true,
+        announcement: true,
+        badge: true,
+        carPlay: true,
+        criticalAlert: true,
+        provisional: true,
+        sound: true);
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      print('user granted permission');
+    } else if (settings.authorizationStatus ==
+        AuthorizationStatus.provisional) {
+      print('user granted provisiona permission');
+    } else {
+      print('user denied permission');
+    }
+  }
+
+  void initLocalNotifications(BuildContext context, RemoteMessage message) async {
+    var androidInitializationSettings = const AndroidInitializationSettings('@drawable/ic_launcher');
+    var iosInitializationSettings = const IOSInitializationSettings();
+
+    var initializationSetting = InitializationSettings(
+        android: androidInitializationSettings,
+        iOS: iosInitializationSettings,
+    );
+    await _flutterLocalNotificationsPlugin.initialize(
+      initializationSetting,
+      onSelectNotification: (payload) {
+        handleMessage(context, message);
+      },
+    );
+  }
+
+  void fireBaseInit(BuildContext context) {
+    FirebaseMessaging.onMessage.listen((message) {
+      if (kDebugMode){
+
+      }
+      if(Platform.isAndroid ){
+        initLocalNotifications(context, message);
+        showNotification(message);
+      }
+      else{
+        showNotification(message);
+      }
+
+
+    });
+  }
+
+  Future<void> showNotification(RemoteMessage message) async {
+    try {
+      AndroidNotificationChannel channel = AndroidNotificationChannel(
+          Random.secure().nextInt(100000).toString(),
+          'High Importance Notifications',
+          importance: Importance.high,
+      );
+
+      AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
+              channel.id.toString(),
+              channel.name.toString(),
+              channelDescription: 'your channel description',
+              importance: Importance.high,
+              priority: Priority.high,
+              ticker: 'ticker');
+
+      IOSNotificationDetails iosNotificationDetails =  const IOSNotificationDetails(
+        presentAlert: true,
+        presentBadge: true,
+        presentSound: true,
+      );
+
+      NotificationDetails notificationDetails = NotificationDetails(
+          android: androidNotificationDetails,
+          iOS: iosNotificationDetails,
+      );
+       print('before notification show function');
+        _flutterLocalNotificationsPlugin.show(
+            0,
+            message.data['title'].toString() ?? 'title is null',
+            message.data['body'].toString() ?? 'body is null',
+            notificationDetails);
+        print('after notification show function');
+    } catch (e) {
+      print(e);
+    }
+
+  }
+
+  Future<String> getDeviceToken() async {
+    String? token = await messaging.getToken();
+    developer.log('FCM token is \n ${token}');
+    return token!;
+  }
+
+
+
+  Future<void> setupInteractMessage(BuildContext context) async{
+
+    // when app is terminated
+    RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+    if (initialMessage != null){
+      handleMessage(context, initialMessage);
+    }
+    // when app is in the background
+    FirebaseMessaging.onMessageOpenedApp.listen((event) {
+      handleMessage(context, event);
+    });
+  }
+
+  void handleMessage(BuildContext context, RemoteMessage message){
+   BookingItem item = BookingItem(id: int.parse(message.data['bookingId']));
+    //locateService<INavigationService>().navigateTo(route:BottomBar(bottomBarType: bottom_bar.BottomBarType.bookings));
+    if(message.data['scenario'] == 'BOOKING_ACCEPTED'){
+      locateService<INavigationService>().navigateTo(
+          route: nav.FoodItemAdvancePaymentRoute(
+              bookingItem: item));
+    }else {
+      locateService<INavigationService>().navigateTo(
+          route: nav.BookingInProcessRouteView(
+              bookingItem: item));
+    }
+    //   CustomDialog.getDialog(
+    //     ctx: context,
+    //     title: 'Booking Accepted',
+    //     //titleColor: Colors.white,
+    //     //descColor: const Color(0xFFfee4a4),
+    //     description: message.data['body'],
+    //     iconUrl: Resources.cashWaitingIcon,
+    //     onTap: () {
+    //         Navigator.pop(context);
+    //     },
+    //   );
+    // }
+    // else{
+    //   Navigator.push(
+    //       context,
+    //       MaterialPageRoute(builder: (context)=>HomeScreen())
+    //   );
+    // }
+
+  }
+
+}
