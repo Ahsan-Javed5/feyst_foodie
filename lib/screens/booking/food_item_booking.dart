@@ -56,6 +56,12 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
       BookingProgress(
           bookingStatusIcon: Resources.paymentPNG,
           statusName: Strings.foodItemBookingBookingConfirmed),
+      BookingProgress(
+          bookingStatusIcon: Resources.completedPNG,
+          statusName: Strings.completeStatus),
+      BookingProgress(
+          bookingStatusIcon: Resources.declinedPNG,
+          statusName: Strings.declined),
     ]);
     super.initState();
   }
@@ -69,7 +75,6 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
           backgroundColor: HexColor.fromHex("#212129"),
           body: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              // mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(
                   height: DeviceHelper.height * 0.065,
@@ -235,7 +240,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                             width: DeviceHelper.width * 0.015,
                                           ),
                                           GeneralText(
-                                            Strings.foodItemBookingReviews,
+                                            item.experienceAverageRating?.toString() ?? 'no reviews',
                                             style: appTheme.typographies
                                                 .interFontFamily.headline6
                                                 .copyWith(
@@ -405,7 +410,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
     var progressBar;
     developer.log(' Booking Status is ' + bookingStatus);
 
-    if (bookingStatus.toUpperCase() == Strings.requestedOrder) {
+    if (bookingStatus.toUpperCase() == Strings.pendingValue) {
       progressBar = Row(children: [
         Flexible(
           child: Container(
@@ -757,7 +762,8 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
               color: HexColor.fromHex("#909094"), shape: BoxShape.circle),
         ),
       ]);
-    } else if (index == 3) {
+    }
+    else if (bookingStatus.toUpperCase() == Strings.completeStatus) {
       progressBar = Row(children: [
         Container(
           width: 12,
@@ -826,7 +832,78 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
           ),
         ),
       ]);
-    } else {
+    }
+    else if (bookingStatus.toUpperCase() == Strings.declined || bookingStatus.toUpperCase() == 'MISSED') {
+      progressBar = Row(children: [
+        Container(
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(
+              color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
+        ),
+        const SizedBox(
+          width: 7.5,
+        ),
+        Container(
+          width: 64,
+          // width: MediaQuery.of(context).size.width / 6,
+          height: 1,
+          color: HexColor.fromHex("#f1c452"),
+        ),
+        const SizedBox(
+          width: 2,
+        ),
+        Container(
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(
+              color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
+        ),
+        const SizedBox(
+          width: 2,
+        ),
+        Container(
+            width: 64,
+            // width: MediaQuery.of(context).size.width / 5,
+            height: 1,
+            color: HexColor.fromHex("#f1c452")),
+        const SizedBox(
+          width: 2,
+        ),
+        Container(
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(
+              color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
+        ),
+        const SizedBox(
+          width: 2,
+        ),
+        Container(
+          width: 64,
+          // width: MediaQuery.of(context).size.width / 5,
+          height: 1,
+          color: HexColor.fromHex("#f1c452"),
+        ),
+        const SizedBox(
+          width: 2,
+        ),
+        Flexible(
+          child: Container(
+            padding: const EdgeInsets.only(top: 8.0, bottom: 8.8),
+            width: 36,
+            decoration: BoxDecoration(
+                color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
+            child: Image.asset(
+              bookingProgres[index].bookingStatusIcon!,
+              width: 18.5,
+              height: 18.5,
+            ),
+          ),
+        ),
+      ]);
+    }
+    else {
       return Container();
     }
 

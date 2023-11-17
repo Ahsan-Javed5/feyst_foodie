@@ -120,6 +120,7 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
 
   void verifyUser({
     required String mobileNumber,
+    required String password,
     required BuildContext context,
   }) async {
     final isInputValid = _validateInput(
@@ -146,7 +147,14 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
 
         final response = await _network.post(
           path: url,
-          data: loginCredentials,
+          data: {
+            "t": {
+              "deviceType": Platform.isAndroid ? 'ANDROID' : 'IOS',
+              "fcmToken": await FirebaseMessaging.instance.getToken(),
+              "mobileNumber": countryCode+mobileNumber,
+              "password": password
+            }
+          },
           header: _header,
         );
         if (response != null) {

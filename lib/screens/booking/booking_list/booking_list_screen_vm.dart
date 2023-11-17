@@ -28,7 +28,7 @@ class BookingListScreenViewModel extends BaseViewModel<BookingListState> {
   Future<void> getBookingListData(isBookingScreen) async {
     final type = isBookingScreen ? 'UPCOMING' : 'HISTORY';
     final url = InfininURLHelpers.getRestApiURL(
-        Api.baseURL + Api.bookingListData + '?type=$type');;
+        Api.baseURL + Api.bookingListData + '?type=$type');
 
     String _userId = (_appService.state.userInfo?.t.id.toString()) ?? '45';
 

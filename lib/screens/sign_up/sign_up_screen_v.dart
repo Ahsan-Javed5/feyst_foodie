@@ -201,6 +201,18 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               const SizedBox(
                 height: 27,
               ),
+              isProfileDetails ? const SizedBox() : Column(
+                children: [
+                  displayPassword(appTheme),
+                  const SizedBox(
+                    height: 27,
+                  ),
+                  displayConfirmPassword(appTheme),
+                  const SizedBox(
+                    height: 27,
+                  ),
+                ],
+              ),
               displayAgeGender(
                 appTheme,
               ),
@@ -329,6 +341,112 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
       ],
     );
   }
+
+  Widget displayPassword(
+      IAppThemeData appTheme,
+      ) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GeneralText(
+          'Password',
+          textAlign: TextAlign.center,
+          style: appTheme.typographies.interFontFamily.headline4.copyWith(
+              color: const Color(0xfffbeccb),
+              fontSize: 18,
+              fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(
+          height: 8,
+        ),
+        GeneralTextInput(
+            controller: viewModel.passwordController,
+            inputType: InputType.password,
+            backgroundColor: appTheme.colors.textFieldFilledColor,
+            isEnable: viewModel.isProfileDetails! ? false : true,
+            disabledBorder: viewModel.isProfileDetails!
+                ? const OutlineInputBorder(
+                borderSide: BorderSide(width: 2, color: Colors.grey))
+                : null,
+            inputBorder: viewModel.isProfileDetails!
+                ? const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey, width: 2.0),
+              borderRadius: BorderRadius.all(Radius.circular(8.0)),
+            )
+                : appTheme.focusedBorder,
+            valueStyle: const TextStyle(color: Colors.white),
+            hint: 'Enter Password',
+            validator: (pass){
+              if(pass!.length < 6){
+                return 'Password must contain at least 6 characters';
+              }
+              return null;
+            },
+            hintStyle:
+            TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
+            // valueStyle: valueStyle,
+            onChanged: (value) {
+
+            }),
+      ],
+    );
+  }
+
+  Widget displayConfirmPassword(
+      IAppThemeData appTheme,
+      ) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GeneralText(
+          'Confirm Password',
+          textAlign: TextAlign.center,
+          style: appTheme.typographies.interFontFamily.headline4.copyWith(
+              color: const Color(0xfffbeccb),
+              fontSize: 18,
+              fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(
+          height: 8,
+        ),
+        GeneralTextInput(
+            controller: viewModel.confirmPasswordController,
+            inputType: InputType.password,
+            backgroundColor: appTheme.colors.textFieldFilledColor,
+            isEnable: viewModel.isProfileDetails! ? false : true,
+            disabledBorder: viewModel.isProfileDetails!
+                ? const OutlineInputBorder(
+                borderSide: BorderSide(width: 2, color: Colors.grey))
+                : null,
+            inputBorder: viewModel.isProfileDetails!
+                ? const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey, width: 2.0),
+              borderRadius: BorderRadius.all(Radius.circular(8.0)),
+            )
+                : appTheme.focusedBorder,
+            valueStyle: const TextStyle(color: Colors.white),
+            hint: 'Re enter Password',
+            validator: (pass){
+              if(pass!.length < 6){
+                return 'Password must contain at least 6 characters';
+              }else if(pass != viewModel.passwordController.text)
+                {
+                  return 'Password not same';
+                }
+              return null;
+            },
+            hintStyle:
+            TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
+            // valueStyle: valueStyle,
+            onChanged: (value) {
+
+            }),
+      ],
+    );
+  }
+
 
   Widget displayMobileNumber(
     IAppThemeData appTheme,
@@ -556,7 +674,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     IAppThemeData appTheme,
     BuildContext context,
   ) {
-    return isProfileDetails!
+    return isProfileDetails
         ? const SizedBox()
         : Container(
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -597,33 +715,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                                 context: context,
                                 baseUrl: baseURLs[0],
                               )) {
-                                // try{
-                                // await FirebaseAuth.instance.verifyPhoneNumber(
-                                //   phoneNumber: "+" + viewModel.mobileNumberController.text,
-                                //   verificationCompleted: (PhoneAuthCredential credential) {},
-                                //   verificationFailed: (FirebaseAuthException e) {},
-                                //   codeSent: (String verificationId, int? resendToken) {},
-                                //   codeAutoRetrievalTimeout: (String verificationId) {},
-                                // );
-                                // print('code sent');
-                                // }catch(e){
-                                //   print(e);
-                                // }
-                                // _showVerificati onPopup(context);
-                                //fireBaseAuth();
-                                // VerifyPhoneNumberScreen();
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //       builder: (context) => VerifyPhoneNumberScreen(
-                                //             phoneNumber: _mobileNumberController.text,
-                                //           )),
-                                // );
-
-                                //displayVerificationDisplay(context);
                                 displayVerificationDisplayBackup(context);
-
-                                // testPopUp(context);
                               }
                             }
                           : null,
@@ -1188,13 +1280,12 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               otpController.value;
               if (enteredOtp != '') {
                 final verified = await controller.verifyOtp(enteredOtp);
-                // //var verified = false;
-                // print(enteredOtp);
                 if (verified) {
                   viewModel.saveFoodie(
                     name: viewModel.nameController.text,
                     mobileNumber: viewModel.mobileNumberController.text,
                     age: int.parse(viewModel.ageController.text),
+                    password: viewModel.passwordController.text,
                     professionId: viewModel.professionID,
                     gender: viewModel.genderController.text,
                     context: context,

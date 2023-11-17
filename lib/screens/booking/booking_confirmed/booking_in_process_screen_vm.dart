@@ -33,7 +33,7 @@ class BookingInProcessScreenViewModel
 
   Future<void> getBookingDetails(int _orderId) async {
     developer.log('order id is: $_orderId');
-    final url = InfininURLHelpers.  getRestApiURL(
+    final url = InfininURLHelpers.getRestApiURL(
         Api.baseURL + Api.bookingDetailsAdvancePaymentPending);
 
     emit(const Loading());

@@ -216,6 +216,10 @@ class Experience {
   int chefId;
   String chefName;
   String chefBrandName;
+  dynamic cityName;
+  dynamic averageRating;
+  dynamic townName;
+  dynamic address;
   String chefAddress;
   String title;
   String description;
@@ -239,6 +243,10 @@ class Experience {
     required this.latitude,
     required this.chefName,
     required this.chefBrandName,
+    required this.cityName,
+    required this.averageRating,
+    required this.townName,
+    required this.address,
     required this.chefAddress,
     required this.title,
     required this.description,
@@ -257,8 +265,12 @@ class Experience {
   factory Experience.fromJson(Map<String, dynamic> json) => Experience(
         id: json["id"],
         chefId: json["chefId"],
+        cityName: json["cityName"],
+        townName: json["townName"],
+        address: json["address"],
         chefName: json["chefName"],
         chefBrandName: json["chefBrandName"],
+        averageRating: json['averageRating'],
         chefAddress: json["chefAddress"],
         latitude: json["latitude"],
         longitude: json["longitude"],
@@ -292,6 +304,7 @@ class Experience {
         "description": description,
         "wowFactorId": wowFactorId,
         "preferenceId": preferenceId,
+    'averageRating' : averageRating,
         "price": price,
         "priceTypeId": priceTypeId,
         "persons": persons,

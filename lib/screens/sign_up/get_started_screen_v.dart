@@ -77,7 +77,7 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                 Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: Text(
-                      ' Version ' + _packageInfo.version,
+                      ' Version 1.0',
                       style: appTheme.typographies.interFontFamily.headline6,
                     )),
               ],

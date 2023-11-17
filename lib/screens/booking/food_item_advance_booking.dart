@@ -165,7 +165,7 @@ class _FoodProductAdvancePendingDetailsState
                                 width: 5,
                               ),
                               GeneralText(
-                                Strings.productDetailReview,
+                                widget._advancePendingDetails.t.experience.averageRating.toString(),
                                 style: appTheme
                                     .typographies.interFontFamily.headline6
                                     .copyWith(
@@ -317,7 +317,9 @@ class _FoodProductAdvancePendingDetailsState
                       const SizedBox(
                         height: 32.9,
                       ),
-                      extraPaymentNotes(appTheme),
+                      widget._advancePendingDetails.t.bookingStatus
+                          .toUpperCase() == 'MISSED' || widget._advancePendingDetails.t.bookingStatus
+                          .toUpperCase() == 'DECLINED' ? const SizedBox() : extraPaymentNotes(appTheme),
                       const SizedBox(
                         height: 70,
                       ),
@@ -719,10 +721,10 @@ class _FoodProductAdvancePendingDetailsState
                             Expanded(
                               child: GeneralText(
                                 // Strings.productDetailChefLocation,
-                                (widget._advancePendingDetails.t.townName ??
+                                (widget._advancePendingDetails.t.experience.townName ??
                                         'null') +
                                     ', ' +
-                                    (widget._advancePendingDetails.t.cityName ??
+                                    (widget._advancePendingDetails.t.experience.cityName ??
                                         'null'),
                                 style: appTheme
                                     .typographies.interFontFamily.headline6
@@ -730,7 +732,7 @@ class _FoodProductAdvancePendingDetailsState
                                         fontSize: 14,
                                         color: Colors.white,
                                         decoration: TextDecoration.underline),
-                                maxLines: 2,
+                                maxLines: 3,
                               ),
                             ),
                           ],

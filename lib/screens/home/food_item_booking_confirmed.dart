@@ -2,32 +2,22 @@ import 'dart:ui';
 
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/screens/bottom_bar/bottom_bar.dart' as bottom_bar;
-import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:chef/ui_kit/widgets/custom_dialog.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../constants/resources.dart';
-import '../../constants/strings.dart';
 import '../../helpers/color_helper.dart';
 import '../../models/booking/advance_pending_response.dart';
 import '../../models/home/chef_data_response.dart';
 import '../../setup.dart';
-import '../../theme/app_theme_data/app_theme_data.dart';
-import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/helpers/dialog_helper.dart';
-import '../../ui_kit/widgets/general_button.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
-import '../../ui_kit/widgets/general_text.dart';
 import '../booking/advance_payment/jazz_cash_webview.dart';
 import '../booking/booking_confirmed/booking_in_process_screen_vm.dart';
 import '../booking/booking_list/booking_list_screen_vm.dart';
 import '../custom_form/widgets/exto_field_option.dart';
 
 import 'package:qr_flutter/qr_flutter.dart';
-
-import '../user_account/user_profile.dart';
 
 class FoodProductBookingConfirmedDetails extends StatefulWidget {
   const FoodProductBookingConfirmedDetails(
@@ -48,7 +38,6 @@ class FoodProductBookingConfirmedDetails extends StatefulWidget {
 
 class _FoodProductBookingConfirmedDetailsState
     extends State<FoodProductBookingConfirmedDetails> {
-  late final _ratingController;
   late double _rating;
   double _initialRating = 3;
   IconData? _selectedIcon;
@@ -69,7 +58,6 @@ class _FoodProductBookingConfirmedDetailsState
   @override
   void initState() {
     // TODO: implement initState
-    _ratingController = TextEditingController(text: '3.0');
     _rating = _initialRating;
     menu = widget._advancePendingDetails.t.experienceMenu;
     menuListItems.addAll([
@@ -197,7 +185,7 @@ class _FoodProductBookingConfirmedDetailsState
                                     width: 5,
                                   ),
                                   GeneralText(
-                                    Strings.productDetailReview,
+                                    widget._advancePendingDetails.t.experience.averageRating.toString(),
                                     style: appTheme
                                         .typographies.interFontFamily.headline6
                                         .copyWith(
@@ -305,13 +293,13 @@ class _FoodProductBookingConfirmedDetailsState
                                   ),
                                   GestureDetector(
                                       onTap: () {
-                                        setState(() {
-                                          if (qr_code_scanned) {
-                                            qr_code_scanned = false;
-                                          } else {
-                                            qr_code_scanned = true;
-                                          }
-                                        });
+                                        // setState(() {
+                                        //   if (qr_code_scanned) {
+                                        //     qr_code_scanned = false;
+                                        //   } else {
+                                        //     qr_code_scanned = true;
+                                        //   }
+                                        // });
                                       },
                                       child: Stack(
                                         children: [
@@ -1157,7 +1145,7 @@ class _FoodProductBookingConfirmedDetailsState
                           : 0,
                     ),
                     GeneralText(
-                      menu[index].baseDishName ?? "",
+                      menu[index].dish ?? "",
                       style: appTheme.typographies.interFontFamily.headline2
                           .copyWith(
                               fontSize: 14,
@@ -1299,21 +1287,24 @@ class _FoodProductBookingConfirmedDetailsState
                                             .toString()),
                               )),
                   ),
-                  // Image.network(Api.baseURLForImages+widget._advancePendingDetails.t.chefProfileImageUrl.toString())),
                   const SizedBox(
                     width: 11.5,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      GeneralText(
-                        // Strings.productDetailChefName,
-                        widget._advancePendingDetails.t.brandName,
-                        style: appTheme.typographies.interFontFamily.headline6
-                            .copyWith(
-                          fontSize: 18,
-                          color: HexColor.fromHex('#f1c452'),
-                        ),
+                      Row(
+                        children: [
+                          GeneralText(
+                            // Strings.productDetailChefName,
+                            widget._advancePendingDetails.t.brandName,
+                            style: appTheme.typographies.interFontFamily.headline6
+                                .copyWith(
+                              fontSize: 18,
+                              color: HexColor.fromHex('#f1c452'),
+                            ),
+                          ),
+                        ],
                       ),
                       InkWell(
                         onTap: () {
@@ -1324,27 +1315,30 @@ class _FoodProductBookingConfirmedDetailsState
                                   .longitude);
                         },
                         child: Row(
+                          //crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                                width: 10.8,
+                                //width: 10.8,
                                 child: Image.asset(
-                                    "assets/images/icons/location_pin.png")),
+                                    "assets/images/icons/location_pin.png", width: 14,)),
                             const SizedBox(
                               width: 5,
                             ),
                             SizedBox(
-                                width: 150,
+                                width: 190,
                                 child: GeneralText(
-                                  widget._advancePendingDetails.t.address +
+                                  widget._advancePendingDetails.t.experience.address
+                                      +
                                       ', ' +
-                                      (widget._advancePendingDetails.t
-                                              .townName ??
+                                      (widget._advancePendingDetails.t.
+                                              experience.townName ??
                                           'null') +
                                       ', ' +
-                                      (widget._advancePendingDetails.t
+                                      (widget._advancePendingDetails.t.experience
                                               .cityName ??
-                                          'null'),
-                                  maxLines: 2,
+                                          'null'
+                                      ),
+                                  maxLines: 3,
                                   style: appTheme
                                       .typographies.interFontFamily.headline6
                                       .copyWith(
@@ -1354,49 +1348,36 @@ class _FoodProductBookingConfirmedDetailsState
                                 )),
                           ],
                         ),
-                      )
+                      ),
+                      const SizedBox(height: 10),
+                      Column(
+                        children: [
+                          Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
+                            SizedBox(
+                                width: 14,
+                                height: 18.8,
+                                child: Image.asset("assets/images/mobile_icon.png")),
+                            const SizedBox(
+                              width: 13.5,
+                            ),
+                            GeneralText(
+                              // Strings.foodieInfoProfessionValue,
+                              widget._advancePendingDetails.t.chefMobileNo
+                                  .toString(),
+                              style: appTheme
+                                  .typographies.interFontFamily.headline6
+                                  .copyWith(
+                                fontSize: 14,
+                                color: HexColor.fromHex('#ffffff'),
+                              ),
+                            )
+                          ]),
+                        ],
+                      ),
                     ],
                   )
                 ]),
-                Column(
-                  children: [
-                    Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
-                      SizedBox(
-                          width: 14,
-                          height: 18.8,
-                          child: Image.asset("assets/images/mobile_icon.png")),
-                      const SizedBox(
-                        width: 13.5,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          GeneralText(
-                            'Mobile',
-                            style: appTheme
-                                .typographies.interFontFamily.headline6
-                                .copyWith(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: HexColor.fromHex('#909094'),
-                            ),
-                          ),
-                          GeneralText(
-                            // Strings.foodieInfoProfessionValue,
-                            widget._advancePendingDetails.t.chefMobileNo
-                                .toString(),
-                            style: appTheme
-                                .typographies.interFontFamily.headline6
-                                .copyWith(
-                              fontSize: 14,
-                              color: HexColor.fromHex('#ffffff'),
-                            ),
-                          ),
-                        ],
-                      )
-                    ]),
-                  ],
-                ),
+
                 const SizedBox(
                   height: 18.1,
                 ),

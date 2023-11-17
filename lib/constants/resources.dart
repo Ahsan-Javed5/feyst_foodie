@@ -62,6 +62,8 @@ abstract class Resources {
   static const timeLapsePNG = 'assets/images/icons/timelapse.png';
   static const reviewCheckPNG = 'assets/images/icons/review_check.png';
   static const infoPNG = 'assets/images/icons/info.png';
+  static const completedPNG = 'assets/images/icons/payment_1.png';
+  static const declinedPNG = 'assets/images/icons/declined.png';
   static const bookingCheckboxPNG = 'assets/images/icons/booking_checkbox.png';
 
   ///food details screen

@@ -197,7 +197,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                                   width: 5,
                                 ),
                                 GeneralText(
-                                  Strings.productDetailReview,
+                                  widget.experienceData?.averageRating.toString() ?? '0.0',
                                   style: appTheme
                                       .typographies.interFontFamily.headline6
                                       .copyWith(
@@ -268,6 +268,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                         child: GeneralText(
                           // Strings.productDetailAboutSubTitle,
                           widget.experienceData!.description!,
+                          maxLines: 4,
                           style: appTheme.typographies.interFontFamily.headline6
                               .copyWith(
                               fontSize: 14,
@@ -764,7 +765,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                             width: 5,
                           ),
                           GeneralText(
-                          widget.chefData.t!.townName.toString() + ', '+ widget.chefData.t!.cityName.toString(),
+                          (widget.experienceData?.townName.toString() ?? 'null') + ', '+ (widget.experienceData?.cityName.toString() ?? 'null'),
                             //Strings.productDetailChefLocation,
                             style: appTheme
                                 .typographies.interFontFamily.headline6

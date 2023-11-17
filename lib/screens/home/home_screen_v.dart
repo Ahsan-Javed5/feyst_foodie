@@ -435,7 +435,7 @@ class _FoodContainer extends StatelessWidget {
                                 ),
                               ),
                               GeneralText(
-                                data!.townName.toString()+data!.cityName
+                                data!.townName.toString()+', '+data!.cityName
                                     .toString(), // Strings.labelSeaFood2Experience,
                                 style: appTheme
                                     .typographies.interFontFamily.headline2

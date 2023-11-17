@@ -37,7 +37,7 @@ abstract class Api {
   //static const baseURLForImages = 'http://18.202.117.137/feyst-media'; //for dev
   ///STAGING BASEURL
     //static const baseURL = 'https://stag.feyst.services:443/feyst-service/';
-    //static const baseURLForJazzCash = 'stag.feyst.services/feyst-service/';
+   //static const baseURLForJazzCash = 'stag.feyst.services/feyst-service/';
     //static const baseURLForImages = 'http://34.249.62.92/feyst-media/'; //for staging environment
 
   ///LIVE BASEURL

@@ -52,6 +52,7 @@ class BookingItem {
   String? bookingStatus;
   int? scheduleId;
   String? scheduleScheduledDate;
+  String? experienceAverageRating;
   String? scheduleStartTime;
   int? scheduleDayOfMonth;
   String? persons;
@@ -74,6 +75,7 @@ class BookingItem {
         this.verificationCode,
         this.priceTypeId,
         this.bookingStatus,
+        this.experienceAverageRating,
         this.scheduleId,
         this.scheduleScheduledDate,
         this.scheduleStartTime,
@@ -98,6 +100,7 @@ class BookingItem {
     bookingStatus = json['bookingStatus'];
     chefProfileImageUrl = json['chefProfileImageUrl'];
     scheduleId = json['scheduleId'];
+    experienceAverageRating = json['experienceAverageRating'];
     scheduleScheduledDate = json['scheduleScheduledDate'];
     scheduleStartTime = json['scheduleStartTime'];
     scheduleDayOfMonth = json['scheduleDayOfMonth'];
@@ -118,6 +121,7 @@ class BookingItem {
     data['foodieId'] = this.foodieId;
     data['comments'] = this.comments;
     data['totalPrice'] = this.totalPrice;
+    data['experienceAverageRating'] = this.experienceAverageRating;
     data['verificationCode'] = this.verificationCode;
     data['chefProfileImageUrl'] = this.chefProfileImageUrl;
     data['priceTypeId'] = this.priceTypeId;

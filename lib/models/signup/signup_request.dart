@@ -23,6 +23,7 @@ class T {
     this.fcmToken,
     this.gender,
     this.mobileNo,
+    this.password,
     this.name,
     this.professionalId,
     this.profileImageUrl,
@@ -34,6 +35,7 @@ class T {
   String? fcmToken;
   String? gender;
   String? mobileNo;
+  String? password;
   String? name;
   int? professionalId;
   String? profileImageUrl;
@@ -42,6 +44,7 @@ class T {
     id: json["id"],
     age: json["age"],
     deviceType: json["deviceType"],
+    password: json["password"],
     fcmToken: json["fcmToken"],
     gender: json["gender"],
     mobileNo: json["mobileNo"],
@@ -55,6 +58,7 @@ class T {
     "age": age,
     "deviceType" : deviceType,
     "fcmToken" : fcmToken,
+    "password" : password,
     "gender": gender,
     "mobileNo": mobileNo,
     "name": name,

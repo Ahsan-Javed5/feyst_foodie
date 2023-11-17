@@ -19,6 +19,7 @@ import '../sign_up/sign_up_screen_v.dart';
 class SignInScreen extends BaseView<SignInScreenViewModel> {
   SignInScreen({Key? key}) : super(key: key);
   final TextController _mobileNumberController = TextController();
+  final TextController _passwordController = TextController();
 
   @override
   Widget buildScreen(
@@ -57,7 +58,7 @@ class SignInScreen extends BaseView<SignInScreenViewModel> {
                       textAlign: TextAlign.center,
                       style: appTheme.typographies.interFontFamily.headline4
                           .copyWith(
-                              color: Color(0xfff1c452),
+                              color: const Color(0xfff1c452),
                               fontSize: 28,
                               fontWeight: FontWeight.w500),
                     ),
@@ -108,6 +109,50 @@ class SignInScreen extends BaseView<SignInScreenViewModel> {
                           _mobileNumberController.clear();
                         }
                       }),
+                  const SizedBox(height: 25,),
+                  GeneralText(
+                    "Password",
+                    textAlign: TextAlign.center,
+                    style: appTheme.typographies.interFontFamily.headline4
+                        .copyWith(
+                        color: const Color(0xfffbeccb),
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  GeneralTextInput(
+                      controller: _passwordController,
+                      inputType: InputType.password,
+                      backgroundColor: appTheme.colors.textFieldFilledColor,
+                      valueStyle: const TextStyle(color: Colors.white),
+                      inputBorder: appTheme.focusedBorder,
+                      hint: 'Enter Your Password',
+                      hintStyle:
+                      const TextStyle(color: Colors.white, fontSize: 15),
+                      onChanged: (newValue) {
+                      }),
+                  const SizedBox(height: 10,),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: GestureDetector(
+                      onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SignUpScreen(false)),
+                        );
+                      },
+                      child: GeneralText(
+                        "Create New Account?",
+                        textAlign: TextAlign.center,
+                        style: appTheme.typographies.interFontFamily.headline7
+                            .copyWith(
+                            color: const Color(0xfffbeccb),
+                            fontSize: 14,),
+                      ),
+                    ),
+                  ),
                   const Spacer(),
                   Expanded(
                     child: Row(
@@ -131,6 +176,7 @@ class SignInScreen extends BaseView<SignInScreenViewModel> {
                               mobileNumber: _mobileNumberController.text
                                   .toString()
                                   .trim(),
+                              password: _passwordController.text.toString().trim(),
                               context: context,
                             );
                           },

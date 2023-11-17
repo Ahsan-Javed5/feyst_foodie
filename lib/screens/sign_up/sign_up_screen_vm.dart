@@ -33,7 +33,9 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   final ApplicationService _appService;
 
    TextController nameController = TextController();
-   TextController mobileNumberController = TextController();
+  TextController passwordController = TextController();
+  TextController confirmPasswordController = TextController();
+  TextController mobileNumberController = TextController();
    TextController ageController = TextController(text: "");
    TextController genderController = TextController(text: 'male');
   TextController idController = TextController(text: "");
@@ -157,6 +159,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     required String mobileNumber,
     required int age,
     required String gender,
+    required String password,
     required int professionId,
     required BuildContext context,
     required String baseUrl,
@@ -179,6 +182,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
           deviceType: Platform.isAndroid ? 'ANDROID' : 'IOS',
           fcmToken:   await FirebaseMessaging.instance.getToken(),
           gender: gender,
+          password: password,
           mobileNo: countryCode + mobileNumber,
           professionalId: professionId,
           profileImageUrl: null,
@@ -195,14 +199,8 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
                 Api.headerAcceptKey: Api.headerAcceptTypeValue,
                 'Content-Type' : 'application/json'
               },
-              //   accessToken: false,
             )
             .whenComplete(() {});
-
-        // final response = await _network.get(
-        //   //below one is working
-        //   path: 'https://run.mocky.io/v3/80289cbe-aa47-491e-9eb2-56126289c8a4',
-        // );
 
         if (response != null) {
           developer.log(' Response of Signup body is ' + '${response.body}');
