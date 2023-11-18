@@ -1,4 +1,4 @@
-package com.feyst.foodie;
+package com.feyst.foodies;
 
 import io.flutter.embedding.android.FlutterActivity;
 
