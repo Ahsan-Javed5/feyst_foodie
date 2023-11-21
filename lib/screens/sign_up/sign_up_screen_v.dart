@@ -1111,6 +1111,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             log(VerifyPhoneNumberScreen.id, name: 'OTP sent!');
           },
           onLoginSuccess: (userCredential, autoVerified) async {
+            print('on login success');
             // showSnackBar('Phone number verified successfully!');
             // Toaster.infoToast(
             //     context: context,
@@ -1276,7 +1277,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             styleType: ButtonStyleType.fill,
             width: 170,
             onTap: () async {
-              print(otpController.text);
+              //print(otpController.text);
               otpController.value;
               if (enteredOtp != '') {
                 final verified = await controller.verifyOtp(enteredOtp);

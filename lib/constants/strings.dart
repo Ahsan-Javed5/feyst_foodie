@@ -383,6 +383,7 @@ abstract class Strings {
   static const labelPersonalDetails = 'Personal Details';
   static const labelProfile = 'Profile';
   static const labelReviews = 'Reviews';
+  static const updatePassword = 'Update Password';
   static const labelPrivacyPolicy = 'Privacy Policy';
   static const labelTermsCond = 'Terms & Conditions';
   static const labelLogOut = 'Logout';

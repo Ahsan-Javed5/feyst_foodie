@@ -13,6 +13,7 @@ import '../../../ui_kit/widgets/general_new_appbar.dart';
 import 'dart:developer' as developer;
 
 import '../../sign_up/questionire/sign_up_questionire_screen_vm.dart';
+import '../../update_password/update_password_v.dart';
 import 'edit_profile_screen_vm.dart';
 
 class EditProfileScreen extends BaseView<EditProfileScreenViewModel> {
@@ -20,7 +21,8 @@ class EditProfileScreen extends BaseView<EditProfileScreenViewModel> {
   List<String> accountList = [
     Strings.labelPersonalDetails,
     Strings.labelProfile,
-    Strings.labelReviews
+    Strings.labelReviews,
+    //Strings.updatePassword,
   ];
 
   List<String> othersList = [
@@ -100,8 +102,13 @@ class EditProfileScreen extends BaseView<EditProfileScreenViewModel> {
                           MaterialPageRoute(
                               builder: (context) => const ReviewsScreen()),
                         );
+                      }else if (accountList.elementAt(index) == Strings.updatePassword) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const UpdatePassword()),
+                        );
                       }
-
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -122,10 +129,11 @@ class EditProfileScreen extends BaseView<EditProfileScreenViewModel> {
               },
               separatorBuilder: (BuildContext context, int index) {
                 return Divider(
-                  color: Color(0xfff1c452).withOpacity(0.3),
+                  color: const Color(0xfff1c452).withOpacity(0.3),
                 );
               },
             ),
+            const SizedBox(height: 7,),
             _Header(
               appTheme: appTheme,
               title: Strings.labelHeaderOthers,
