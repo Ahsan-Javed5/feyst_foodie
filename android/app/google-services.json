@@ -51,6 +51,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1096756273832-5qa5atkj43qf4cnl7podtnnv7bgi3j4r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.feyst.foodies",
+            "certificate_hash": "e7d1d1c8b5828efcc93562292a655ab8b17c9791"
+          }
+        },
+        {
           "client_id": "1096756273832-lqsccomvqv8lmt9ih6o940uur53vq9o2.apps.googleusercontent.com",
           "client_type": 3
         }
