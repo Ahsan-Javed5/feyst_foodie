@@ -21,6 +21,9 @@
       ],
       "api_key": [
         {
+          "current_key": "AIzaSyCSBvgdZQHeJX_f5tejxmtpztqal0w6eHQ"
+        },
+        {
           "current_key": "AIzaSyBFIbCytMuhsfLpuxVEkQQXeOIClneFMHA"
         }
       ],
@@ -32,10 +35,10 @@
               "client_type": 3
             },
             {
-              "client_id": "1096756273832-2ehvj9t6amjpe0jn403tf1hus83dtgk9.apps.googleusercontent.com",
+              "client_id": "1096756273832-gmd1jd3nisjq83lhc41tg71e1rgdt559.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.feyst.foodie"
+                "bundle_id": "com.feyst.chef"
               }
             }
           ]
@@ -59,11 +62,22 @@
           }
         },
         {
+          "client_id": "1096756273832-bca7k88vg8kgkrgtcm8gvc2hj959hf4u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.feyst.foodies",
+            "certificate_hash": "b076e312084159997993ce23f90e1115aad73c6f"
+          }
+        },
+        {
           "client_id": "1096756273832-lqsccomvqv8lmt9ih6o940uur53vq9o2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
+        {
+          "current_key": "AIzaSyCSBvgdZQHeJX_f5tejxmtpztqal0w6eHQ"
+        },
         {
           "current_key": "AIzaSyBFIbCytMuhsfLpuxVEkQQXeOIClneFMHA"
         }
@@ -76,10 +90,10 @@
               "client_type": 3
             },
             {
-              "client_id": "1096756273832-2ehvj9t6amjpe0jn403tf1hus83dtgk9.apps.googleusercontent.com",
+              "client_id": "1096756273832-gmd1jd3nisjq83lhc41tg71e1rgdt559.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.feyst.foodie"
+                "bundle_id": "com.feyst.chef"
               }
             }
           ]
