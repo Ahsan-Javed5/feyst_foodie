@@ -11,7 +11,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import '../../models/signup/profession_response.dart';
 import '../../ui_kit/helpers/dialog_helper.dart';
 import '../../ui_kit/widgets/general_gender.dart';
@@ -1115,6 +1115,20 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
           },
           onLoginSuccess: (userCredential, autoVerified) async {
             print('on login success');
+            if (autoVerified) {
+              Toaster.infoToast(
+                  context: context, message: 'Verified Automatically');
+              viewModel.saveFoodie(
+                name: viewModel.nameController.text,
+                mobileNumber: viewModel.mobileNumberController.text,
+                age: int.parse(viewModel.ageController.text),
+                password: viewModel.passwordController.text,
+                professionId: viewModel.professionID,
+                gender: viewModel.genderController.text,
+                context: context,
+                baseUrl: baseURLs[0],
+              );
+            }
             // showSnackBar('Phone number verified successfully!');
             // Toaster.infoToast(
             //     context: context,
@@ -1136,7 +1150,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             //   error: authException,
             //   stackTrace: stackTrace,
             // );
-
+            FirebaseCrashlytics.instance.recordError(authException, stackTrace);
             switch (authException.code) {
               case 'invalid-phone-number':
                 // invalid phone number
@@ -1163,7 +1177,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               error: error,
               stackTrace: stackTrace,
             );
-
+            FirebaseCrashlytics.instance.recordError(error, stackTrace);
             // showSnackBar('An error occurred!');
             Toaster.infoToast(context: context, message: 'An error occurred!');
           },
