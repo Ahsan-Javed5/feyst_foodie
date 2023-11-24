@@ -52,7 +52,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   //bool isLoading = false;
 
   void changeButton(bool? value) {
-    buttonEnabled.value =  value??!buttonEnabled.value;
+    buttonEnabled.value =  value ?? !buttonEnabled.value;
   }
 
   Future<void> loadProfessions({
@@ -389,6 +389,41 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     idController.text = _appService.state.userInfo!.t.id.toString();
     professionID = _appService.state.userInfo!.t.professionalId;
     print(professionID);
+  }
+
+  Future<bool?> checkUserExist(context) async {
+
+    try {
+      final url =
+      InfininURLHelpers.getRestApiURL(Api.baseURL + Api.checkUserExist);
+
+      final _header = <String, String>{
+        'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
+        'Content-Type': 'application/json'
+      };
+      final response = await _network
+          .post(
+        path: url,
+        data: {
+          "t": countryCode + mobileNumberController.text
+        },
+        header: _header,
+        //   accessToken: false,
+      )
+          .whenComplete(() {});
+
+      if (response.statusCode == 400) {
+        Toaster.errorToast(
+            context: context,
+            message: 'User Already Exists.');
+        return false;
+      } else {
+        return true;
+      }
+    } catch (error) {
+      Toaster.errorToast(context: context, message: '$error');
+    }
+    return null;
   }
 
   // Future registerUser(String mobile, BuildContext context) async {
