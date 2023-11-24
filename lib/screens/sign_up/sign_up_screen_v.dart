@@ -704,18 +704,21 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                     return InkWell(
                       onTap: value == true
                           ? () async {
-                              //proceedVerification(context);
-                              if (viewModel.verifyInput(
-                                name: viewModel.nameController.text,
-                                mobileNumber:
-                                    viewModel.mobileNumberController.text,
-                                age: int.parse(viewModel.ageController.text),
-                                professionId: viewModel.professionID,
-                                gender: viewModel.genderController.text,
-                                context: context,
-                                baseUrl: baseURLs[0],
-                              )) {
-                                displayVerificationDisplayBackup(context);
+                              var isUserExist = await viewModel.checkUserExist(context);
+                              if (isUserExist == null || isUserExist == false) {}
+                              else{
+                                if (viewModel.verifyInput(
+                                  name: viewModel.nameController.text,
+                                  mobileNumber:
+                                      viewModel.mobileNumberController.text,
+                                  age: int.parse(viewModel.ageController.text),
+                                  professionId: viewModel.professionID,
+                                  gender: viewModel.genderController.text,
+                                  context: context,
+                                  baseUrl: baseURLs[0],
+                                )) {
+                                  displayVerificationDisplayBackup(context);
+                                }
                               }
                             }
                           : null,
@@ -1127,12 +1130,12 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             // );
           },
           onLoginFailed: (authException, stackTrace) {
-            log(
-              VerifyPhoneNumberScreen.id,
-              name: (authException.message)!,
-              error: authException,
-              stackTrace: stackTrace,
-            );
+            // log(
+            //   VerifyPhoneNumberScreen.id,
+            //   name: (authException.message),
+            //   error: authException,
+            //   stackTrace: stackTrace,
+            // );
 
             switch (authException.code) {
               case 'invalid-phone-number':
@@ -1150,7 +1153,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               default:
                 // showSnackBar('Something went wrong!');
                 Toaster.infoToast(
-                    context: context, message: 'Something went wrong!');
+                    context: context, message: authException.code);
               // handle error further if needed
             }
           },

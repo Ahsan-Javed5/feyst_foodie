@@ -87,6 +87,7 @@ abstract class Api {
   static const foodieSignUp = 'foodie/save';
   static const foodieProfileUpdate = 'foodie/update';
   static const loginAPI = 'foodie/login';
+  static const checkUserExist = 'foodie/check-mobile-number';
 
   static const moduleSubMenuList = '$apiVersion2/menu/project/';
 
