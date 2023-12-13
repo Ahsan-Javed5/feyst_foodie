@@ -164,7 +164,7 @@ class  SignUpQuestionnaireScreenViewModel extends BaseViewModel<SignUpQuestionna
     if (response != null) {
       developer.log(' Response of Save Foodie is  ' '${response.body}');
       FoodieQuestionAnswerResponse foodieQuestionAnswerResponse = foodieQuestionAnswerResponseFromJson(response.body);
-      Toaster.infoToast(
+      Toaster.successToast(
           context: context, message: foodieQuestionAnswerResponse.message.toString());
       completion!();
     } else {

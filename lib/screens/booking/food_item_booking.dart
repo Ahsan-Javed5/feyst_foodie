@@ -124,7 +124,15 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
   }
 
   Widget bookingDetails(IAppThemeData appTheme) {
-    return Container(
+    return bookingProgressStatus.isEmpty?  Center(child: GeneralText(
+      widget.isBookingScreen ? 'No Bookings Yet!' : 'No History Yet!',
+      maxLines: 2,
+      textAlign: TextAlign.center,
+      style: appTheme.typographies.interFontFamily.headline4.copyWith(
+          color: const Color(0xff8ea659),
+          fontSize: 27,
+          fontWeight: FontWeight.bold),
+    ),): Container(
       margin: EdgeInsets.symmetric(horizontal: DeviceHelper.height * 0.025),
       child: ListView.builder(
           padding: EdgeInsets.zero,

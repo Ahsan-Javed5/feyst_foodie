@@ -51,14 +51,14 @@ class Toaster {
     );
     Future.delayed(
       Duration.zero,
-      () {
+          () {
         showFlash(
           context: context,
           duration: !isPositionFixed ? duration : null,
           builder: (
-            context,
-            controller,
-          ) {
+              context,
+              controller,
+              ) {
             return Flash.bar(
               horizontalDismissDirection: dismissByHorizontalDrag
                   ? HorizontalDismissDirection.horizontal
@@ -69,7 +69,7 @@ class Toaster {
               position: position ?? FlashPosition.bottom,
               enableVerticalDrag: enableVerticalDismiss,
               borderRadius: _appTheme.defaultBorderRadius,
-              backgroundColor: toastDecorationData.primaryColor,
+              backgroundColor: toastDecorationData.backgroundColor,
               controller: controller,
               margin: const EdgeInsets.all(_toastMargin),
               child: _buildToastContent(
@@ -118,7 +118,8 @@ class Toaster {
                       ),
                     TextSpan(
                       text: message,
-                      style: appTheme.typographies.interFontFamily.label13,
+                      style: appTheme.typographies.interFontFamily.label1.copyWith(color: decorationData.captionColor),
+
                     )
                   ],
                 ),
@@ -141,9 +142,9 @@ class Toaster {
         shouldIconPulse: false,
         primaryAction: hasDismissOption
             ? _buildDismissOption(
-                controller: controller,
-                decorationData: decorationData,
-              )
+          controller: controller,
+          decorationData: decorationData,
+        )
             : null,
       ),
     );
@@ -314,25 +315,25 @@ class _ToastDecorationData {
 
   factory _ToastDecorationData.success(IColors colors) {
     return _ToastDecorationData(
-      icon: Icon(
+      icon: const Icon(
         Icons.arrow_forward_rounded,
-        color: colors.successCaption,
+        color: Colors.green,
       ),
-      backgroundColor: colors.successBackground,
-      captionColor: colors.successCaption,
-      primaryColor: colors.successDark,
-      secondaryColor: colors.successLight,
+      backgroundColor: Colors.black,
+      captionColor: Colors.green,
+      primaryColor: Colors.black,
+      secondaryColor: Colors.green,
     );
   }
 
   factory _ToastDecorationData.error(IColors colors) {
     return _ToastDecorationData(
-      icon: Icon(
+      icon: const Icon(
         Icons.bolt,
-        color: colors.errorCaption,
+        color: Colors.red,
       ),
-      backgroundColor: colors.errorBackground,
-      captionColor: colors.errorCaption,
+      backgroundColor: Colors.black,
+      captionColor: Colors.red,
       primaryColor: colors.errorDark,
       secondaryColor: colors.errorLight,
     );
@@ -340,12 +341,12 @@ class _ToastDecorationData {
 
   factory _ToastDecorationData.info(IColors colors) {
     return _ToastDecorationData(
-      icon: Icon(
+      icon: const Icon(
         Icons.arrow_forward_rounded,
-        color: colors.primaryCaption,
+        color: Colors.white,
       ),
       backgroundColor: colors.primaryBackground,
-      captionColor: colors.primaryCaption,
+      captionColor: Colors.white,
       primaryColor: colors.primaryDark,
       secondaryColor: colors.primaryLight,
     );

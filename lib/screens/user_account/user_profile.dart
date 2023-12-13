@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:chef/constants/api.dart';
 import 'package:chef/helpers/color_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../constants/resources.dart';
@@ -162,7 +163,7 @@ class _UserProfileState extends State<UserProfile> {
                       const SizedBox(
                         height: 38,
                       ),
-                      getQuestion(
+                      getSecondQuestion(
                           appTheme, widget.chefData.t!.chefQuestionAnswers![1]),
                       const SizedBox(
                         height: 38,
@@ -174,6 +175,9 @@ class _UserProfileState extends State<UserProfile> {
                         height: 38,
                       ),
                       socialMediaHandles(appTheme),
+                      const SizedBox(
+                        height: 20,
+                      ),
                     ],
                   )),
             ]),
@@ -198,6 +202,7 @@ class _UserProfileState extends State<UserProfile> {
         ),
         GeneralText(
           chefQuestionAnswer.answers![0].name.toString(),
+          maxLines: 2,
           style: appTheme.typographies.interFontFamily.headline6.copyWith(
               fontSize: 15,
               color: HexColor.fromHex('#909094'),
@@ -207,12 +212,13 @@ class _UserProfileState extends State<UserProfile> {
     );
   }
 
-  Widget secondQuestioner(IAppThemeData appTheme) {
+  Widget getSecondQuestion(
+      IAppThemeData appTheme, ChefQuestionAnswers chefQuestionAnswer) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GeneralText(
-          Strings.userProfileSecondQuestioner,
+          chefQuestionAnswer.question!.name.toString(),
           style: appTheme.typographies.interFontFamily.headline6.copyWith(
               fontSize: 16,
               color: HexColor.fromHex('#fee4a4'),
@@ -222,7 +228,8 @@ class _UserProfileState extends State<UserProfile> {
           height: 10,
         ),
         GeneralText(
-          Strings.userProfileSecondQuestionerAnswer,
+          chefQuestionAnswer.inputAnswer.toString(),
+          maxLines: 2,
           style: appTheme.typographies.interFontFamily.headline6.copyWith(
               fontSize: 15,
               color: HexColor.fromHex('#909094'),
@@ -246,71 +253,86 @@ class _UserProfileState extends State<UserProfile> {
         const SizedBox(
           height: 10,
         ),
-        Row(
-          children: [
-            Column(
-              children: [
-                Container(
-                  width: 58,
-                  padding: const EdgeInsetsDirectional.all(10),
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(
-                          'assets/images/icons/food_item_circle.png'),
-                      fit: BoxFit.fill,
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              for(int k = 0; k < widget.chefData.t!.chefQuestionAnswers![2]
+                  .answers!.length; k++ )
+              Padding(
+                padding: const EdgeInsets.only(right: 15,),
+                child: Column(
+                  children: [
+                    Container(
+                      width : 60,
+                      height: 60,
+                      padding: const EdgeInsetsDirectional.all(10),
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                              'assets/images/icons/food_item_circle.png'),
+                          fit: BoxFit.fill,
+                        ),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: HexColor.fromHex("#f1c452"),
+                          shape: BoxShape.circle,
+                        ),
+                        child: SvgPicture.network(
+                            Api.baseURLForImages + widget.chefData.t!.chefQuestionAnswers![2]
+                                .answers![k].iconPath
+                                .toString(),
+                        ),
+                      ),
                     ),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Image.network(
-                      Api.baseURL + widget.chefData.t!.chefQuestionAnswers![2]
-                          .answers![0].iconPath
+                    GeneralText(
+                      widget.chefData.t!.chefQuestionAnswers![2]
+                          .answers![k].name
                           .toString(),
-                  ),
-                ),
-                GeneralText(
-                  widget.chefData.t!.chefQuestionAnswers![2]
-                      .answers![0].name
-                      .toString(),
-                  style:
-                      appTheme.typographies.interFontFamily.headline6.copyWith(
-                    fontSize: 14,
-                    color: HexColor.fromHex('#ffffff'),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              width: 30,
-            ),
-            Column(
-              children: [
-                Container(
-                  width: 58,
-                  padding: const EdgeInsetsDirectional.all(10),
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(
-                          'assets/images/icons/food_item_circle.png'),
-                      fit: BoxFit.fill,
+                      style:
+                          appTheme.typographies.interFontFamily.headline6.copyWith(
+                        fontSize: 14,
+                        color: HexColor.fromHex('#ffffff'),
+                      ),
                     ),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Image.asset(
-                    'assets/images/icons/food_item_sample.png',
-                  ),
+                  ],
                 ),
-                GeneralText(
-                  widget.chefData.t!.chefQuestionAnswers![2].answers![1].name
-                      .toString(),
-                  style:
-                      appTheme.typographies.interFontFamily.headline6.copyWith(
-                    fontSize: 14,
-                    color: HexColor.fromHex('#ffffff'),
-                  ),
-                ),
-              ],
-            ),
-          ],
+              ),
+              // const SizedBox(
+              //   width: 30,
+              // ),
+              // Column(
+              //   children: [
+              //     Container(
+              //       width: 58,
+              //       padding: const EdgeInsetsDirectional.all(10),
+              //       decoration: const BoxDecoration(
+              //         image: DecorationImage(
+              //           image: AssetImage(
+              //               'assets/images/icons/food_item_circle.png'),
+              //           fit: BoxFit.fill,
+              //         ),
+              //         shape: BoxShape.circle,
+              //       ),
+              //       child: Image.asset(
+              //         'assets/images/icons/food_item_sample.png',
+              //       ),
+              //     ),
+              //     GeneralText(
+              //       widget.chefData.t!.chefQuestionAnswers![2].answers![1].name
+              //           .toString(),
+              //       style:
+              //           appTheme.typographies.interFontFamily.headline6.copyWith(
+              //         fontSize: 14,
+              //         color: HexColor.fromHex('#ffffff'),
+              //       ),
+              //     ),
+              //   ],
+              // ),
+            ],
+          ),
         )
       ],
     );
@@ -327,50 +349,58 @@ class _UserProfileState extends State<UserProfile> {
               color: HexColor.fromHex('#fee4a4'),
               fontWeight: FontWeight.w400),
         ),
+        SizedBox(height: 15,),
         GridView.builder(
             padding: EdgeInsets.zero,
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
+              crossAxisCount: 1,
               mainAxisSpacing: 19,
               crossAxisSpacing: 20,
-              childAspectRatio: 2,
+              childAspectRatio: 5.5,
             ),
             itemCount: handlesList.length,
             itemBuilder: (BuildContext context, int index) {
               return GestureDetector(
-                child: Row(
-                  children: [
-                    Container(
-                      width: 38,
-                      padding: const EdgeInsetsDirectional.all(6),
-                      decoration: BoxDecoration(
-                          color: HexColor.fromHex("#4b4b52"),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Image.asset(
-                        handlesList[index].socialMediaIcon ?? "",
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Flexible(
-                      child: GeneralText(
-                        handlesList[index].socialMediaName ?? "",
-                        style: appTheme.typographies.interFontFamily.headline6
-                            .copyWith(
-                          fontSize: 14,
-                          color: HexColor.fromHex('#ffffff'),
-                          decoration: TextDecoration.underline,
+                child: Container(
+                  padding: const EdgeInsets.only(left: 10,top: 10,bottom: 10,),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Colors.yellow,),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 38,
+                        padding: const EdgeInsetsDirectional.all(6),
+                        decoration: BoxDecoration(
+                            color: HexColor.fromHex("#4b4b52"),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Image.asset(
+                          handlesList[index].socialMediaIcon ?? "",
                         ),
-                        maxLines: 2,
                       ),
-                    ),
-                  ],
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Flexible(
+                        child: GeneralText(
+                          handlesList[index].socialMediaName ?? "",
+                          style: appTheme.typographies.interFontFamily.headline6
+                              .copyWith(
+                            fontSize: 14,
+                            color: HexColor.fromHex('#ffffff'),
+                            decoration: TextDecoration.underline,
+                          ),
+                          //maxLines: 2,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 onTap: () async {
-                  await launchUrl(Uri.parse('${handlesList[index].socialMediaLink}${handlesList[index].socialMediaName}'),);
+                  await launchUrl(Uri.parse('${handlesList[index].socialMediaName}'),);
                 },
               );
             }),

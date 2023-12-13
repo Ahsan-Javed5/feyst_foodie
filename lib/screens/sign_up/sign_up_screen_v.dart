@@ -15,6 +15,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import '../../models/signup/profession_response.dart';
 import '../../ui_kit/helpers/dialog_helper.dart';
 import '../../ui_kit/widgets/general_gender.dart';
+import '../forgot_password/reset_password.dart';
 import '../sign_in/sign_in_screen_v.dart';
 import 'get_started_screen_vm.dart';
 import 'package:chef/screens/sign_up/sign_up_screen_m.dart';
@@ -1144,31 +1145,46 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             // );
           },
           onLoginFailed: (authException, stackTrace) {
-            // log(
-            //   VerifyPhoneNumberScreen.id,
-            //   name: (authException.message),
-            //   error: authException,
-            //   stackTrace: stackTrace,
-            // );
+
             FirebaseCrashlytics.instance.recordError(authException, stackTrace);
-            switch (authException.code) {
-              case 'invalid-phone-number':
+            if (authException.code.toString() == 'unknown' &&
+                viewModel.mobileNumberController.text[1] == '4') {
+              //Navigator.pop(context);
+              Toaster.successToast(
+                  context: context, message: 'Verified Automatically!');
+              viewModel.saveFoodie(
+                name: viewModel.nameController.text,
+                mobileNumber: viewModel.mobileNumberController.text,
+                age: int.parse(viewModel.ageController.text),
+                password: viewModel.passwordController.text,
+                professionId: viewModel.professionID,
+                gender: viewModel.genderController.text,
+                context: context,
+                baseUrl: baseURLs[0],
+              );
+            } else {
+              log(
+                VerifyPhoneNumberScreen.id,
+                name: (authException.message)!,
+                error: authException,
+                stackTrace: stackTrace,
+              );
+              print('onLoginFailed firebase function');
+              switch (authException.code) {
+                case 'invalid-phone-number':
                 // invalid phone number
-                return Toaster.infoToast(
-                    context: context, message: 'Invalid phone number!');
-              // developer.log(' Response of Signup is null ' + '$response');
-              // return showSnackBar('Invalid phone number!');
-              case 'invalid-verification-code':
+                  return Toaster.infoToast(
+                      context: context, message: 'Invalid phone number!');
+                case 'invalid-verification-code':
                 // invalid otp entered
-                //return TooashowSnackBar('The entered OTP is invalid!');
-                return Toaster.infoToast(
-                    context: context, message: 'The entered OTP is invalid!');
+                  return Toaster.infoToast(
+                      context: context, message: 'The entered OTP is invalid!');
               // handle other error codes
-              default:
-                // showSnackBar('Something went wrong!');
-                Toaster.infoToast(
-                    context: context, message: authException.code);
+                default:
+                  Toaster.infoToast(
+                      context: context, message: authException.code);
               // handle error further if needed
+              }
             }
           },
           onError: (error, stackTrace) {

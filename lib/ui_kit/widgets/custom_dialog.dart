@@ -5,7 +5,7 @@ import '../../theme/app_theme_widget.dart';
 import 'general_text.dart';
 
 class CustomDialog{
-  static getDialog({required BuildContext ctx, required String title, required String description, Color? titleColor, Color? descColor, required String iconUrl, required void Function()? onTap}){
+  static getDialog({required BuildContext ctx, required String title, required String description, Color? titleColor, Color? descColor, String? highlightedName, required String iconUrl, required void Function()? onTap}){
     final appTheme = AppTheme.of(ctx).theme;
     return showDialog(
         context: ctx,
@@ -32,7 +32,17 @@ class CustomDialog{
                   ),
                  // Text(title, style:  TextStyle(color: titleColor ?? const Color(0xFF8ea659), fontSize: 20, fontWeight: FontWeight.w500),),
                   const SizedBox(height: 20,),
-                  Text(description, textAlign: TextAlign.center, style: TextStyle(color: descColor ?? Colors.white,)),
+                  highlightedName == null ? Text(description, textAlign: TextAlign.center, style: TextStyle(color: descColor ?? Colors.white,)):
+                  RichText(
+                    text: TextSpan(
+                      text: description,
+                      style: TextStyle(color: descColor ?? Colors.white,),
+                      children: <TextSpan>[
+                        TextSpan(text: highlightedName, style: const TextStyle( fontSize: 16, color: Color(0xfff1c452), fontWeight: FontWeight.bold),),
+                      ],
+                    ),
+                  )
+                  ,
                   const SizedBox(height: 30,),
                   SizedBox(
                     width: 90,

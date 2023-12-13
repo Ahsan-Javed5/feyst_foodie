@@ -6,7 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
-import 'firebase_options.dart';
+//import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import '../../services/navigation/router.gr.dart' as nav;
 import 'package:get_it/get_it.dart';
@@ -40,7 +40,8 @@ int notificationCounter = 0;
 Future<dynamic> configureDependencies() async {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = DevHttpOverrides(); // to ignore ssl certification
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+ // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp();
   FlutterError.onError = (errorDetails) {
     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
   };

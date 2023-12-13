@@ -219,6 +219,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: experienceNextButton(),
         body: Stack(
+          fit: StackFit.expand,
           children: [
             Column(
               children: [
@@ -232,22 +233,28 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                         for (var item in imagesList!) {
                           images.add(item.mediaUrl);
                         }
-                        return CarouselSlider(
-                          options: CarouselOptions(
-                            autoPlay: true,
+                        return SizedBox(
+                          height: 220,
+                          child: CarouselSlider(
+                            options: CarouselOptions(
+                              autoPlay: true,
+                            ),
+                            items: (images.isEmpty ? foodDetailsBgImages : images)
+                                .map((i) {
+                              return Builder(
+                                builder: (BuildContext context) {
+                                  return Image.network(Api.baseURLForImages + i,
+                                      fit: BoxFit.fill);
+                                },
+                              );
+                            }).toList(),
                           ),
-                          items: (images.isEmpty ? foodDetailsBgImages : images)
-                              .map((i) {
-                            return Builder(
-                              builder: (BuildContext context) {
-                                return Image.network(Api.baseURLForImages + i,
-                                    fit: BoxFit.fill);
-                              },
-                            );
-                          }).toList(),
                         );
                       } else {
-                        return const CircularProgressIndicator();
+                        return Container(
+                          margin: const EdgeInsets.only(bottom: 90, top: 100),
+                          child: const CircularProgressIndicator(),
+                        );
                       }
                     }),
                 Expanded(
@@ -255,6 +262,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                     child: Container(
                       padding: EdgeInsetsDirectional.only(
                         start: DeviceHelper.width * 0.10,
+                        top: DeviceHelper.height * 0.07,
                       ),
                       color: HexColor.fromHex('#212129'),
                       child: Column(
@@ -304,7 +312,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                   )),
             ),
             Positioned(
-                top: DeviceHelper.height * 0.19,
+                top: DeviceHelper.height * 0.27,
                 width: MediaQuery.of(context).size.width,
                 child: Padding(
                   padding: EdgeInsetsDirectional.only(
@@ -449,7 +457,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                 )),
             ///chef image
             Positioned.fill(
-              top: DeviceHelper.height * 0.14,
+              top: DeviceHelper.height * 0.23,
               right: DeviceHelper.width * 0.02,
               child: Align(
                 alignment: Alignment.topRight,
@@ -1003,6 +1011,11 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   ///Schedule tab view
   Widget scheduleTabView(BuildContext context, IAppThemeData appTheme) {
+
+    widget.scheduleModel.t.daysGroups.sort((a,b) {
+    return a.scheduledDate.compareTo(b.scheduledDate);
+    });
+
     return scheduleForm
 
         ///for notes page code see this padding widget
@@ -1366,7 +1379,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Column(children: [
-                                  GeneralText(dayOfMonth(item.scheduledDate),
+                                  GeneralText(getMonth(item.scheduledDate),
                                       style: appTheme.typographies
                                           .interFontFamily.headline6
                                           .copyWith(
@@ -1443,11 +1456,10 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           );
   }
 
-  String dayOfMonth(DateTime _date) {
-    var dateData = DateFormat('EEEE').format(_date);
+  String getMonth(DateTime _date) {
+    //var dateData = DateFormat('EEEE').format(_date);
     selectedMonth = months[_date.month - 1];
-
-    return dateData.substring(0, 3);
+    return selectedMonth;
   }
 
   Widget displayScheduleTime(List<Hour> _hours, DateTime scheduledDate) {
@@ -1891,6 +1903,17 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           ],
         ),
         SizedBox(
+          height: DeviceHelper.height * 0.01,
+        ),
+        GeneralText(
+          Strings.locationAfterOrderConfirm,
+          maxLines: 2,
+          style: appTheme.typographies.interFontFamily.headline6.copyWith(
+            fontSize: 11,
+            color: Colors.white,
+          ),
+        ),
+        SizedBox(
           height: DeviceHelper.height * 0.10,
         ),
 
@@ -1904,7 +1927,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               BoxShadow(
                 color: appTheme.colors.primary,
                 blurRadius: 400.0,
-                spreadRadius: 70,
+                spreadRadius: 0,
               ),
             ],
           ),

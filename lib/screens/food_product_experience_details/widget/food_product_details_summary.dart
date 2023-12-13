@@ -2,7 +2,6 @@ import 'package:chef/constants/api.dart';
 import 'package:chef/models/home/chef_data_response.dart';
 import 'package:chef/models/home/home_response.dart' as home_data;
 import 'package:chef/screens/home/food_details_menu_model.dart';
-import 'package:chef/screens/home/home_screen_v.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants/resources.dart';
@@ -15,28 +14,16 @@ import '../../../services/application_state.dart';
 import '../../../setup.dart';
 import '../../../theme/app_theme_data/app_theme_data.dart';
 import '../../../theme/app_theme_widget.dart';
-import '../../../ui_kit/widgets/general_button.dart';
 import '../../../ui_kit/widgets/general_new_appbar.dart';
 import '../../../ui_kit/widgets/general_text.dart';
 import '../../bottom_bar/bottom_bar.dart';
-import '../../../models/home/experience_list_response.dart' as experience_data;
 
 import 'dart:developer' as developer;
 
 class FoodProductDetailsSummary extends StatefulWidget {
-  //const FoodProductExperienceDetails({Key? key}) : super(key: key);
-  // const FoodProductExperienceDetails({
-  //   required String selectedExperienceId,
-  //   required experience_data.T experienceData,
-  //   required FoodMenuModel foodMenuModel,
-  //   Key? key,
-  // });
 
   const FoodProductDetailsSummary({
     Key? key,
-    // required String selectedExperienceId,
-    // required experience_data.T experienceData,
-    // required FoodMenuModel foodMenuModel,
 
     required this.experienceData,
     required this.foodMenuDetail,
@@ -86,27 +73,6 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
               .wowFactorName, //   Strings.productDetailWowFactorGarden,
           icon: "assets/images/icons/garden.png"));
     }
-
-    // wowFactorsList.addAll([
-    //   CustomModel(
-    //       name: Strings.productDetailWowFactorGarden,
-    //       icon: "assets/images/icons/garden.png"),
-    //   CustomModel(
-    //       name: Strings.productDetailWowFactorFireworks,
-    //       icon: "assets/images/icons/fireworks.png"),
-    //   CustomModel(
-    //       name: Strings.productDetailWowFactorPetFriendly,
-    //       icon: "assets/images/icons/pet_friendly.png"),
-    //   CustomModel(
-    //       name: Strings.productDetailWowFactorWifi,
-    //       icon: "assets/images/icons/wifi_2.png"),
-    //   CustomModel(
-    //       name: Strings.productDetailWowFactorMusic,
-    //       icon: "assets/images/icons/music.png"),
-    //   CustomModel(
-    //       name: Strings.productDetailWowFactorParking,
-    //       icon: "assets/images/icons/parking.png")
-    // ]);
   }
 
   @override
@@ -197,7 +163,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                                   width: 5,
                                 ),
                                 GeneralText(
-                                  widget.experienceData?.averageRating.toString() ?? '0.0',
+                                  widget.experienceData?.averageRating?.toString() ?? 'no reviews',
                                   style: appTheme
                                       .typographies.interFontFamily.headline6
                                       .copyWith(
@@ -1002,7 +968,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                 color: HexColor.fromHex("#bb3127"),
                 borderRadius: BorderRadius.circular(15)),
             child: GeneralText(
-              Strings.productDetailExtraNoteValue,
+              Strings.noPaymentRequired,
               style: appTheme.typographies.interFontFamily.headline6.copyWith(
                 fontSize: 14,
                 color: HexColor.fromHex('#ffffff'),
@@ -1015,23 +981,6 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
     );
   }
 
-  Widget getStartedButtonTitle({required IAppThemeData appTheme}) {
-    return GeneralButton.button(
-      title: Strings.productDetailButtonTitle.toUpperCase(),
-      styleType: ButtonStyleType.fill,
-      onTap: () {
-        //viewModel.
-        Navigator.push(
-            context,
-            //HomeScreen()
-            MaterialPageRoute(builder: (context) => BottomBar()));
-      },
-    );
-    // ExtoText(
-    //   Strings.getStartedButtonTitle,
-    //   style: appTheme.typographies.interFontFamily.headline2,
-    // );
-  }
 }
 
 class CustomModel {

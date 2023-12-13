@@ -185,7 +185,7 @@ class _FoodProductBookingConfirmedDetailsState
                                     width: 5,
                                   ),
                                   GeneralText(
-                                    widget._advancePendingDetails.t.experience.averageRating.toString(),
+                                    widget._advancePendingDetails.t.experience.averageRating?.toString() ?? 'no reviews',
                                     style: appTheme
                                         .typographies.interFontFamily.headline6
                                         .copyWith(
@@ -390,51 +390,6 @@ class _FoodProductBookingConfirmedDetailsState
                           height: 28,
                         ),
                         chefInformation(appTheme),
-                        const SizedBox(
-                          height: 33.9,
-                        ),
-                        Container(
-                          padding: const EdgeInsetsDirectional.only(
-                              start: 25, end: 25),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              GeneralText(
-                                Strings.bookingConfirmedDetailsLabel,
-                                style: appTheme
-                                    .typographies.interFontFamily.headline2
-                                    .copyWith(
-                                  fontSize: 20,
-                                  color: HexColor.fromHex('#f1c452'),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    if (showDetailsView) {
-                                      showDetailsView = false;
-                                    } else {
-                                      showDetailsView = true;
-                                    }
-                                  });
-                                },
-                                child: showDetailsView
-                                    ? Container(
-                                        width: 26,
-                                        child: Image.asset(
-                                          "assets/images/icons/showData.png",
-                                        ),
-                                      )
-                                    : Container(
-                                        width: 26,
-                                        child: Image.asset(
-                                          "assets/images/icons/hideData.png",
-                                        ),
-                                      ),
-                              )
-                            ],
-                          ),
-                        ),
                         const SizedBox(
                           height: 32.3,
                         ),
@@ -796,7 +751,7 @@ class _FoodProductBookingConfirmedDetailsState
                                         ._advancePendingDetails
                                         .t
                                         .scheduleScheduledDate
-                                        .month]
+                                        .month-1]
                                     .toString()
                                     .toUpperCase(),
                             // Strings.productDetailSelectionDate,
@@ -1040,7 +995,48 @@ class _FoodProductBookingConfirmedDetailsState
                       ),
                     ),
                   ],
-                )
+                ),
+                widget._advancePendingDetails.t.bookingStatus == Strings.billGenerated
+                    ? Column(
+                  children: [
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                      color: HexColor.fromHex("#ffffff").withOpacity(0.3),
+                      width: double.infinity,
+                      height: 1,
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GeneralText(
+                          'Amount Due',
+                          style: appTheme.typographies.interFontFamily.headline6
+                              .copyWith(
+                            fontSize: 18,
+                            color: HexColor.fromHex('#f1c452'),
+                          ),
+                        ),
+                        GeneralText(
+                          //     Strings.productDetailPriceTaxValue,
+                          "Rs " +
+                              (widget._advancePendingDetails.t.totalAmount-widget._advancePendingDetails.t.advancePayment)
+                                  .toStringAsFixed(0),
+                          style: appTheme.typographies.interFontFamily.headline6
+                              .copyWith(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: HexColor.fromHex('#f1c452'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ):const SizedBox(),
               ],
             ),
           )
@@ -1641,8 +1637,7 @@ class _FoodProductBookingConfirmedDetailsState
   }
 
   Widget showDetails(IAppThemeData appTheme) {
-    return showDetailsView
-        ? Column(
+    return Column(
             children: [
               Container(
                 padding: const EdgeInsetsDirectional.only(start: 25, end: 25),
@@ -1729,8 +1724,7 @@ class _FoodProductBookingConfirmedDetailsState
                 height: 70,
               ),
             ],
-          )
-        : Container();
+          );
   }
 
   List<ExtoFieldOption> listOfRadio = [

@@ -135,7 +135,7 @@ class BookingInProcessScreenViewModel
 
         RatingResponse ratingResponse = ratingResponseFromJson(response.body);
 
-        Toaster.infoToast(context: context, message: ratingResponse.message.toString());
+        Toaster.successToast(context: context, message: ratingResponse.message.toString());
 
         _navigate.navigateTo(
             route: BottomBar(bottomBarType: bottom_bar.BottomBarType.history));

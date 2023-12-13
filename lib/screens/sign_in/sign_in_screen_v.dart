@@ -1,3 +1,5 @@
+import 'package:chef/helpers/helpers.dart';
+import 'package:chef/screens/forgot_password/forgot_password_screen_v.dart';
 import 'package:chef/screens/sign_in/sign_in_screen_vm.dart';
 import 'package:chef/services/device/device_service.dart';
 import 'package:chef/ui_kit/widgets/general_text_input.dart';
@@ -7,8 +9,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../../base/base_view.dart';
+import '../../constants/api.dart';
 import '../../constants/resources.dart';
 import '../../constants/strings.dart';
+import '../../setup.dart';
 import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/general_ui_kit.dart';
 import '../../ui_kit/helpers/dialog_helper.dart';
@@ -136,21 +140,40 @@ class SignInScreen extends BaseView<SignInScreenViewModel> {
                   const SizedBox(height: 10,),
                   Align(
                     alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: (){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SignUpScreen(false)),
-                        );
-                      },
-                      child: GeneralText(
-                        "Create New Account?",
-                        textAlign: TextAlign.center,
-                        style: appTheme.typographies.interFontFamily.headline7
-                            .copyWith(
-                            color: const Color(0xfffbeccb),
-                            fontSize: 14,),
-                      ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => SignUpScreen(false)),
+                            );
+                          },
+                          child: GeneralText(
+                            "Create New Account?",
+                            textAlign: TextAlign.center,
+                            style: appTheme.typographies.interFontFamily.headline7
+                                .copyWith(
+                                color: const Color(0xfffbeccb),
+                                fontSize: 14,),
+                          ),
+                        ),
+                        const SizedBox(height: 7,),
+                        GestureDetector(
+                          onTap: (){
+                            locateService<INavigationService>().navigateTo(route: ForgotPasswordRoute(baseUrl: Api.baseURL));
+                          },
+                          child: GeneralText(
+                            "Forgot Password?",
+                            textAlign: TextAlign.center,
+                            style: appTheme.typographies.interFontFamily.headline7
+                                .copyWith(
+                              color: const Color(0xfffbeccb),
+                              fontSize: 14,),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   const Spacer(),

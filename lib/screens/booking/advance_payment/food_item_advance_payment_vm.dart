@@ -99,7 +99,8 @@ class FoodItemAdvancePaymentViewModel
     CustomDialog.getDialog(
       ctx: context,
       title: 'Booking Confirmed',
-      description: 'Advance have been received by $brandName',
+      description: 'Advance have been received by ',
+      highlightedName: brandName,
       iconUrl: 'assets/images/tick_icon.png',
       onTap: () {
         _navigate.navigateTo(
@@ -133,7 +134,8 @@ class FoodItemAdvancePaymentViewModel
     CustomDialog.getDialog(
       ctx: context,
       title: 'Cash Received',
-      description: 'Full amount has been received by $brandName',
+      description: 'Full amount has been received by ',
+      highlightedName: brandName,
       iconUrl: 'assets/images/tick_icon.png',
       onTap: () {
         _navigate.navigateTo(

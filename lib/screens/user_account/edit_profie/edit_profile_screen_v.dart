@@ -22,7 +22,7 @@ class EditProfileScreen extends BaseView<EditProfileScreenViewModel> {
     Strings.labelPersonalDetails,
     Strings.labelProfile,
     Strings.labelReviews,
-    //Strings.updatePassword,
+    Strings.updatePassword,
   ];
 
   List<String> othersList = [

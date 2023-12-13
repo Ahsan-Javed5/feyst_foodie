@@ -362,6 +362,8 @@ abstract class Strings {
   static const productDetailButtonTitle = 'Request to book';
   static const productDetailExtraNoteValue =
       '20% Advance Payment will be required\nfor booking';
+  static const bistroApprovalRequired = 'Waiting for Approval from Bistro......';
+  static const noPaymentRequired = 'No payment required at this point';
 
   ///bottom bar
   static const homeTitle = 'HOME';
@@ -444,6 +446,7 @@ abstract class Strings {
   static const popularFoodDetailAppBarTitle = 'Sindhi Biryani';
   static const foodDetailPreferences = 'Preferences';
   static const foodDetailLocation = 'Location';
+  static const locationAfterOrderConfirm = 'Exact location will be shown after booking confirmation';
   static const locationOnOrderConfirmation = 'Location will be shown on Map here, when you confirm at least one order.';
   static const foodDetailPreferenceCouple = 'Couple';
   static const foodDetailPreferenceFamily = 'Family';

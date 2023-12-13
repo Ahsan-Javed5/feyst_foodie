@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/models/signup/profession_request.dart' as prorequest;
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../models/signup/profession_response.dart';
 import 'dart:developer' as developer;
@@ -84,6 +85,51 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   }
 
   bool isValidUrl(String url) => Uri.tryParse(url)?.hasAbsolutePath ?? false;
+
+
+
+  void updatePassword({
+    required String oldPassword,
+    required String newPassword,
+    required BuildContext context,
+  }) async {
+
+    try {
+      final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.updatePassword);
+
+      final response = await _network
+          .post(
+        path: url,
+        //data: updatedJson,
+        data: {
+          "t": {
+            "newPassword": newPassword,
+            "oldPassword": oldPassword
+          }
+        },
+        header: {
+          'Authorization': 'Bearer ${_appService.state.userInfo?.t.authToken}',
+          'Content-Type': 'application/json'
+        },
+        //   accessToken: false,
+      )
+          .whenComplete(() {});
+      if (response != null) {
+
+        Toaster.infoToast(context: context, message: 'Password Updated Successfully!');
+        Navigator.pop(context);
+
+      } else {
+
+      }
+    } catch (error) {
+      Toaster.successToast(context: context, message: error.toString());
+      if (kDebugMode) {
+        print(error.toString());
+      }
+    }
+  }
+
 
   void onFormValuesChange({
     String? email,
@@ -218,7 +264,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
           await _storage.writeString(key: 'profile_image', data: signupResponse.t.profileImageUrl ?? '');
           await _storage.writeString(key: 'auth_token' , data: signupResponse.t.authToken);
 
-          developer.log(' Sign up Response is ' + signupResponse.message);
+          //developer.log(' Sign up Response is ' + signupResponse.message);
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => SignUpQuestionireScreen(false,)),
