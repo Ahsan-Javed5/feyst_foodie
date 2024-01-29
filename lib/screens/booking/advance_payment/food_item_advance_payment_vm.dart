@@ -76,7 +76,8 @@ class FoodItemAdvancePaymentViewModel
         route: BottomBar(bottomBarType: bottom_bar.BottomBarType.home));
   }
 
-  Future<void> updateBookingStatus(context, brandName, {required int bookingId}) async {
+  Future<void> updateBookingStatus(context, brandName,
+      {required int bookingId}) async {
     final url =
         InfininURLHelpers.getRestApiURL(Api.baseURL + Api.experienceMenuById);
     //emit(const Loading());
@@ -89,13 +90,12 @@ class FoodItemAdvancePaymentViewModel
       path: url,
       data: bookingUpdateRequest,
       header: {
-        'Authorization':
-        'Bearer ${_storage.readString(key: 'auth_token')}',
+        'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
         'Content-Type': 'application/json'
       },
     );
     // CustomDialog.getDialog(ctx: context, title: 'Booking Confirmed', description: 'Advance have been received by Zee Lounge', iconUrl: 'assets/images/tick_icon.png');
-    Navigator.pop(context);
+    //Navigator.pop(context);
     CustomDialog.getDialog(
       ctx: context,
       title: 'Booking Confirmed',
@@ -112,7 +112,8 @@ class FoodItemAdvancePaymentViewModel
     //     route: BottomBar(bottomBarType: bottom_bar.BottomBarType.bookings));
   }
 
-  Future<void> completeBookingStatus(context, brandName, {required int bookingId}) async {
+  Future<void> completeBookingStatus(context, brandName,
+      {required int bookingId}) async {
     final url =
         InfininURLHelpers.getRestApiURL(Api.baseURL + Api.experienceMenuById);
     //emit(const Loading());
@@ -125,8 +126,7 @@ class FoodItemAdvancePaymentViewModel
       path: url,
       data: bookingUpdateRequest,
       header: {
-        'Authorization':
-        'Bearer ${_storage.readString(key: 'auth_token')}',
+        'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
         'Content-Type': 'application/json'
       },
     );

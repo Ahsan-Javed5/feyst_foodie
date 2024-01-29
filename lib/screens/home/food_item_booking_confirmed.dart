@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:chef/helpers/helpers.dart';
@@ -18,6 +19,8 @@ import '../booking/booking_list/booking_list_screen_vm.dart';
 import '../custom_form/widgets/exto_field_option.dart';
 
 import 'package:qr_flutter/qr_flutter.dart';
+
+import '../user_account/user_profile.dart';
 
 class FoodProductBookingConfirmedDetails extends StatefulWidget {
   const FoodProductBookingConfirmedDetails(
@@ -185,7 +188,10 @@ class _FoodProductBookingConfirmedDetailsState
                                     width: 5,
                                   ),
                                   GeneralText(
-                                    widget._advancePendingDetails.t.experience.averageRating?.toString() ?? 'no reviews',
+                                    widget._advancePendingDetails.t.experience
+                                            .averageRating
+                                            ?.toString() ??
+                                        'no reviews',
                                     style: appTheme
                                         .typographies.interFontFamily.headline6
                                         .copyWith(
@@ -323,9 +329,7 @@ class _FoodProductBookingConfirmedDetailsState
                                                   SizedBox(
                                                     width: 181,
                                                     height: 185,
-                                                    child:
-                                                        //Container(),
-                                                        QrImage(
+                                                    child: QrImageView(
                                                       data: widget
                                                           ._advancePendingDetails
                                                           .t
@@ -476,94 +480,96 @@ class _FoodProductBookingConfirmedDetailsState
         context: ctx,
         barrierColor: const Color(0xFF212129).withOpacity(0.1),
         builder: (BuildContext context) {
-          return BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-            child: AlertDialog(
-              backgroundColor: const Color(0xFF212129),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Image.asset(
-                    iconUrl,
-                    height: 50,
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  GeneralText(
-                    title,
-                    style: appTheme.typographies.interFontFamily.headline6
-                        .copyWith(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w300,
-                      color: titleColor ?? const Color(0xFF8ea659),
+          return SingleChildScrollView(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+              child: AlertDialog(
+                backgroundColor: const Color(0xFF212129),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(
+                      height: 15,
                     ),
-                  ),
-                  // Text(
-                  //   title,
-                  //   style: TextStyle(
-                  //       color: titleColor ?? const Color(0xFF8ea659),
-                  //       fontSize: 20,
-                  //       fontWeight: FontWeight.w500),
-                  // ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Text(description,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: descColor ?? Colors.white,
-                      )),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  RatingBar.builder(
-                    initialRating: 3,
-                    minRating: 1,
-                    direction: Axis.horizontal,
-                    allowHalfRating: false,
-                    unratedColor: Colors.amber.withAlpha(50),
-                    itemCount: 5,
-                    itemSize: 42.0,
-                    wrapAlignment: WrapAlignment.spaceEvenly,
-                    //itemPadding: const EdgeInsets.symmetric(horizontal: 2.5),
-                    itemBuilder: (context, _) => Icon(
-                      _selectedIcon ?? Icons.star,
-                      color: Colors.amber,
+                    Image.asset(
+                      iconUrl,
+                      height: 50,
                     ),
-                    onRatingUpdate: (rating) {
-                      setState(() {
-                        _rating = rating;
-                      });
-                    },
-                    //updateOnDrag: true,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  _buildTextField(),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  SizedBox(
-                    width: 110,
-                    height: 40,
-                    child: ElevatedButton(
-                      onPressed: onTap,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xffbb3127),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    GeneralText(
+                      title,
+                      style: appTheme.typographies.interFontFamily.headline6
+                          .copyWith(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w300,
+                        color: titleColor ?? const Color(0xFF8ea659),
                       ),
-                      child: const Text('Submit'),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                ],
+                    // Text(
+                    //   title,
+                    //   style: TextStyle(
+                    //       color: titleColor ?? const Color(0xFF8ea659),
+                    //       fontSize: 20,
+                    //       fontWeight: FontWeight.w500),
+                    // ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(description,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: descColor ?? Colors.white,
+                        )),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    RatingBar.builder(
+                      initialRating: 3,
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      allowHalfRating: false,
+                      unratedColor: Colors.amber.withAlpha(50),
+                      itemCount: 5,
+                      itemSize: 42.0,
+                      wrapAlignment: WrapAlignment.spaceEvenly,
+                      //itemPadding: const EdgeInsets.symmetric(horizontal: 2.5),
+                      itemBuilder: (context, _) => Icon(
+                        _selectedIcon ?? Icons.star,
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (rating) {
+                        setState(() {
+                          _rating = rating;
+                        });
+                      },
+                      //updateOnDrag: true,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    _buildTextField(),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    SizedBox(
+                      width: 110,
+                      height: 40,
+                      child: ElevatedButton(
+                        onPressed: onTap,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xffbb3127),
+                        ),
+                        child: const Text('Submit'),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
               ),
             ),
           );
@@ -748,10 +754,11 @@ class _FoodProductBookingConfirmedDetailsState
                                     .toString() +
                                 ' ' +
                                 InfininURLHelpers.months[widget
-                                        ._advancePendingDetails
-                                        .t
-                                        .scheduleScheduledDate
-                                        .month-1]
+                                            ._advancePendingDetails
+                                            .t
+                                            .scheduleScheduledDate
+                                            .month -
+                                        1]
                                     .toString()
                                     .toUpperCase(),
                             // Strings.productDetailSelectionDate,
@@ -996,47 +1003,54 @@ class _FoodProductBookingConfirmedDetailsState
                     ),
                   ],
                 ),
-                widget._advancePendingDetails.t.bookingStatus == Strings.billGenerated
+                widget._advancePendingDetails.t.bookingStatus ==
+                        Strings.billGenerated
                     ? Column(
-                  children: [
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Container(
-                      color: HexColor.fromHex("#ffffff").withOpacity(0.3),
-                      width: double.infinity,
-                      height: 1,
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GeneralText(
-                          'Amount Due',
-                          style: appTheme.typographies.interFontFamily.headline6
-                              .copyWith(
-                            fontSize: 18,
-                            color: HexColor.fromHex('#f1c452'),
+                        children: [
+                          const SizedBox(
+                            height: 15,
                           ),
-                        ),
-                        GeneralText(
-                          //     Strings.productDetailPriceTaxValue,
-                          "Rs " +
-                              (widget._advancePendingDetails.t.totalAmount-widget._advancePendingDetails.t.advancePayment)
-                                  .toStringAsFixed(0),
-                          style: appTheme.typographies.interFontFamily.headline6
-                              .copyWith(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: HexColor.fromHex('#f1c452'),
+                          Container(
+                            color: HexColor.fromHex("#ffffff").withOpacity(0.3),
+                            width: double.infinity,
+                            height: 1,
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ):const SizedBox(),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GeneralText(
+                                'Amount Due',
+                                style: appTheme
+                                    .typographies.interFontFamily.headline6
+                                    .copyWith(
+                                  fontSize: 18,
+                                  color: HexColor.fromHex('#f1c452'),
+                                ),
+                              ),
+                              GeneralText(
+                                //     Strings.productDetailPriceTaxValue,
+                                "Rs " +
+                                    (widget._advancePendingDetails.t
+                                                .totalAmount -
+                                            widget._advancePendingDetails.t
+                                                .advancePayment)
+                                        .toStringAsFixed(0),
+                                style: appTheme
+                                    .typographies.interFontFamily.headline6
+                                    .copyWith(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                  color: HexColor.fromHex('#f1c452'),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      )
+                    : const SizedBox(),
               ],
             ),
           )
@@ -1260,8 +1274,9 @@ class _FoodProductBookingConfirmedDetailsState
                   GestureDetector(
                     onTap: () {
                       // Navigator.of(context).push(MaterialPageRoute(
-                      //     builder: (context) =>
-                      //         UserProfile(chefData: widget._chefData,)));
+                      //     builder: (context) => UserProfile(
+                      //           chefData: widget._chefData,
+                      //         )));
                     },
                     child: Container(
                         width: 40,
@@ -1294,7 +1309,8 @@ class _FoodProductBookingConfirmedDetailsState
                           GeneralText(
                             // Strings.productDetailChefName,
                             widget._advancePendingDetails.t.brandName,
-                            style: appTheme.typographies.interFontFamily.headline6
+                            style: appTheme
+                                .typographies.interFontFamily.headline6
                                 .copyWith(
                               fontSize: 18,
                               color: HexColor.fromHex('#f1c452'),
@@ -1304,11 +1320,12 @@ class _FoodProductBookingConfirmedDetailsState
                       ),
                       InkWell(
                         onTap: () {
-                          navigateToGoogleMap(
-                              widget
-                                  ._advancePendingDetails.t.experience.latitude,
-                              widget._advancePendingDetails.t.experience
-                                  .longitude);
+                          navigateToMap(
+                            context,
+                            widget._advancePendingDetails.t.experience.latitude,
+                            widget
+                                ._advancePendingDetails.t.experience.longitude,
+                          );
                         },
                         child: Row(
                           //crossAxisAlignment: CrossAxisAlignment.start,
@@ -1316,24 +1333,25 @@ class _FoodProductBookingConfirmedDetailsState
                             SizedBox(
                                 //width: 10.8,
                                 child: Image.asset(
-                                    "assets/images/icons/location_pin.png", width: 14,)),
+                              "assets/images/icons/location_pin.png",
+                              width: 14,
+                            )),
                             const SizedBox(
                               width: 5,
                             ),
                             SizedBox(
                                 width: 190,
                                 child: GeneralText(
-                                  widget._advancePendingDetails.t.experience.address
-                                      +
+                                  widget._advancePendingDetails.t.experience
+                                          .address +
                                       ', ' +
-                                      (widget._advancePendingDetails.t.
-                                              experience.townName ??
+                                      (widget._advancePendingDetails.t
+                                              .experience.townName ??
                                           'null') +
                                       ', ' +
-                                      (widget._advancePendingDetails.t.experience
-                                              .cityName ??
-                                          'null'
-                                      ),
+                                      (widget._advancePendingDetails.t
+                                              .experience.cityName ??
+                                          'null'),
                                   maxLines: 3,
                                   style: appTheme
                                       .typographies.interFontFamily.headline6
@@ -1348,32 +1366,34 @@ class _FoodProductBookingConfirmedDetailsState
                       const SizedBox(height: 10),
                       Column(
                         children: [
-                          Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
-                            SizedBox(
-                                width: 14,
-                                height: 18.8,
-                                child: Image.asset("assets/images/mobile_icon.png")),
-                            const SizedBox(
-                              width: 13.5,
-                            ),
-                            GeneralText(
-                              // Strings.foodieInfoProfessionValue,
-                              widget._advancePendingDetails.t.chefMobileNo
-                                  .toString(),
-                              style: appTheme
-                                  .typographies.interFontFamily.headline6
-                                  .copyWith(
-                                fontSize: 14,
-                                color: HexColor.fromHex('#ffffff'),
-                              ),
-                            )
-                          ]),
+                          Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                SizedBox(
+                                    width: 14,
+                                    height: 18.8,
+                                    child: Image.asset(
+                                        "assets/images/mobile_icon.png")),
+                                const SizedBox(
+                                  width: 13.5,
+                                ),
+                                GeneralText(
+                                  // Strings.foodieInfoProfessionValue,
+                                  widget._advancePendingDetails.t.chefMobileNo
+                                      .toString(),
+                                  style: appTheme
+                                      .typographies.interFontFamily.headline6
+                                      .copyWith(
+                                    fontSize: 14,
+                                    color: HexColor.fromHex('#ffffff'),
+                                  ),
+                                )
+                              ]),
                         ],
                       ),
                     ],
                   )
                 ]),
-
                 const SizedBox(
                   height: 18.1,
                 ),
@@ -1638,93 +1658,93 @@ class _FoodProductBookingConfirmedDetailsState
 
   Widget showDetails(IAppThemeData appTheme) {
     return Column(
+      children: [
+        Container(
+          padding: const EdgeInsetsDirectional.only(start: 25, end: 25),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                padding: const EdgeInsetsDirectional.only(start: 25, end: 25),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          color: HexColor.fromHex('#f1c452'),
-                          width: 16,
-                          height: 1,
-                        ),
-                        const SizedBox(
-                          width: 7.2,
-                        ),
-                        GeneralText(
-                          Strings.productDetailAboutTitle,
-                          style: appTheme.typographies.interFontFamily.headline6
-                              .copyWith(
-                            fontSize: 20,
-                            color: HexColor.fromHex('#f1c452'),
-                          ),
-                        ),
-                      ],
+              Row(
+                children: [
+                  Container(
+                    color: HexColor.fromHex('#f1c452'),
+                    width: 16,
+                    height: 1,
+                  ),
+                  const SizedBox(
+                    width: 7.2,
+                  ),
+                  GeneralText(
+                    Strings.productDetailAboutTitle,
+                    style: appTheme.typographies.interFontFamily.headline6
+                        .copyWith(
+                      fontSize: 20,
+                      color: HexColor.fromHex('#f1c452'),
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 23),
-                      child: GeneralText(
-                        widget._advancePendingDetails.t.experience.description,
-                        maxLines: 4,
-                        style: appTheme.typographies.interFontFamily.headline6
-                            .copyWith(
-                                fontSize: 14,
-                                color: HexColor.fromHex('#ffffff'),
-                                fontWeight: FontWeight.w400),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 27,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          color: HexColor.fromHex('#f1c452'),
-                          width: 16,
-                          height: 1,
-                        ),
-                        const SizedBox(
-                          width: 7.2,
-                        ),
-                        GeneralText(
-                          Strings.productDetailWowFactorTitle,
-                          style: appTheme.typographies.interFontFamily.headline6
-                              .copyWith(
-                            fontSize: 20,
-                            color: HexColor.fromHex('#f1c452'),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 11.6,
-                    ),
-                    wowFactors(appTheme),
-                  ],
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 23),
+                child: GeneralText(
+                  widget._advancePendingDetails.t.experience.description,
+                  maxLines: 4,
+                  style: appTheme.typographies.interFontFamily.headline6
+                      .copyWith(
+                          fontSize: 14,
+                          color: HexColor.fromHex('#ffffff'),
+                          fontWeight: FontWeight.w400),
                 ),
               ),
               const SizedBox(
-                height: 16,
+                height: 27,
               ),
-              foodProductDetails(appTheme),
+              Row(
+                children: [
+                  Container(
+                    color: HexColor.fromHex('#f1c452'),
+                    width: 16,
+                    height: 1,
+                  ),
+                  const SizedBox(
+                    width: 7.2,
+                  ),
+                  GeneralText(
+                    Strings.productDetailWowFactorTitle,
+                    style: appTheme.typographies.interFontFamily.headline6
+                        .copyWith(
+                      fontSize: 20,
+                      color: HexColor.fromHex('#f1c452'),
+                    ),
+                  ),
+                ],
+              ),
               const SizedBox(
-                height: 28,
+                height: 11.6,
               ),
-              // productPriceInformation(appTheme),
-              productPriceInfo(
-                appTheme,
-              ),
-              const SizedBox(
-                height: 70,
-              ),
+              wowFactors(appTheme),
             ],
-          );
+          ),
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        foodProductDetails(appTheme),
+        const SizedBox(
+          height: 28,
+        ),
+        // productPriceInformation(appTheme),
+        productPriceInfo(
+          appTheme,
+        ),
+        const SizedBox(
+          height: 70,
+        ),
+      ],
+    );
   }
 
   List<ExtoFieldOption> listOfRadio = [
@@ -2014,12 +2034,27 @@ class _FoodProductBookingConfirmedDetailsState
     );
   }
 
-  static void navigateToGoogleMap(double lat, double lng) async {
-    var uri = Uri.parse("google.navigation:q=$lat,$lng&mode=d");
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
+  Future<void> navigateToMap(
+      BuildContext context, double lat, double lng) async {
+    String url = '';
+    String urlAppleMaps = '';
+    if (Platform.isAndroid) {
+      url = 'https://www.google.com/maps/search/?api=1&query=$lat,$lng';
+      if (await canLaunchUrl(Uri.parse(url))) {
+        await launchUrl(Uri.parse(url));
+      } else {
+        throw 'Could not launch $url';
+      }
     } else {
-      throw 'Could not launch ${uri.toString()}';
+      urlAppleMaps = 'https://maps.apple.com/?q=$lat,$lng';
+      url = 'comgooglemaps://?saddr=&daddr=$lat,$lng&directionsmode=driving';
+      if (await canLaunchUrl(Uri.parse(url))) {
+        await launchUrl(Uri.parse(url));
+      } else if (await canLaunchUrl(Uri.parse(urlAppleMaps))) {
+        await launchUrl(Uri.parse(urlAppleMaps));
+      } else {
+        throw 'Could not launch $url';
+      }
     }
   }
 

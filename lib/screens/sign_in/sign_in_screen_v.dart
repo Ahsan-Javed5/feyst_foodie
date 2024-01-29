@@ -32,191 +32,209 @@ class SignInScreen extends BaseView<SignInScreenViewModel> {
 
     return Scaffold(
       backgroundColor: appTheme.colors.primaryBackground,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Positioned(
-              top: 142,
-              left: 187,
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Image.asset(
-                  'assets/images/icons/food_product_ring.png',
-                  height: 300,
-                  color: const Color(0xfff1c452).withOpacity(0.1),
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Stack(
+            children: [
+              Positioned(
+                top: 142,
+                left: 187,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Image.asset(
+                    'assets/images/icons/food_product_ring.png',
+                    height: 300,
+                    color: const Color(0xfff1c452).withOpacity(0.1),
+                  ),
                 ),
               ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 41,
-                  ),
-                  Center(
-                    child: GeneralText(
-                      Strings.signInLabel,
+              Container(
+                height: 600,
+                //color: Colors.red,
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 41,
+                    ),
+                    Center(
+                      child: GeneralText(
+                        Strings.signInLabel,
+                        textAlign: TextAlign.center,
+                        style: appTheme.typographies.interFontFamily.headline4
+                            .copyWith(
+                                color: const Color(0xfff1c452),
+                                fontSize: 28,
+                                fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 127,
+                    ),
+                    GeneralText(
+                      Strings.signInMobileNumberLabel,
                       textAlign: TextAlign.center,
                       style: appTheme.typographies.interFontFamily.headline4
                           .copyWith(
-                              color: const Color(0xfff1c452),
-                              fontSize: 28,
-                              fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 127,
-                  ),
-                  GeneralText(
-                    Strings.signInMobileNumberLabel,
-                    textAlign: TextAlign.center,
-                    style: appTheme.typographies.interFontFamily.headline4
-                        .copyWith(
-                            color: const Color(0xfffbeccb),
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  GeneralTextInput(
-                      controller: _mobileNumberController,
-                      inputType: InputType.digit,
-                      backgroundColor: appTheme.colors.textFieldFilledColor,
-                      valueStyle: const TextStyle(color: Colors.white),
-                      inputBorder: appTheme.focusedBorder,
-                      prefixIcon: CountryCodePicker(
-                        onChanged: (value){
-                          viewModel.countryCode = value.dialCode!;
-                        },
-                        textStyle: const TextStyle(color: Colors.white),
-                        // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
-                        initialSelection: 'PK',
-                        //enabled: isProfileDetails ? false : true,
-                        favorite: const ['+92', 'PK'],
-                        // optional. Shows only country name and flag
-                        showCountryOnly: false,
-                        // optional. Shows only country name and flag when popup is closed.
-                        showOnlyCountryWhenClosed: false,
-                        // optional. aligns the flag and the Text left
-                        alignLeft: false,
-                        hideSearch: true,
-                      ),
-                      hint: '3xx xxx xxxx',
-                      hintStyle:
-                          const TextStyle(color: Colors.white, fontSize: 15),
-                      onChanged: (newValue) {
-                        if(newValue.length == 1 && newValue == '0'){
-                          _mobileNumberController.clear();
-                        }
-                      }),
-                  const SizedBox(height: 25,),
-                  GeneralText(
-                    "Password",
-                    textAlign: TextAlign.center,
-                    style: appTheme.typographies.interFontFamily.headline4
-                        .copyWith(
-                        color: const Color(0xfffbeccb),
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  GeneralTextInput(
-                      controller: _passwordController,
-                      inputType: InputType.password,
-                      backgroundColor: appTheme.colors.textFieldFilledColor,
-                      valueStyle: const TextStyle(color: Colors.white),
-                      inputBorder: appTheme.focusedBorder,
-                      hint: 'Enter Your Password',
-                      hintStyle:
-                      const TextStyle(color: Colors.white, fontSize: 15),
-                      onChanged: (newValue) {
-                      }),
-                  const SizedBox(height: 10,),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        GestureDetector(
-                          onTap: (){
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => SignUpScreen(false)),
-                            );
-                          },
-                          child: GeneralText(
-                            "Create New Account?",
-                            textAlign: TextAlign.center,
-                            style: appTheme.typographies.interFontFamily.headline7
-                                .copyWith(
-                                color: const Color(0xfffbeccb),
-                                fontSize: 14,),
-                          ),
-                        ),
-                        const SizedBox(height: 7,),
-                        GestureDetector(
-                          onTap: (){
-                            locateService<INavigationService>().navigateTo(route: ForgotPasswordRoute(baseUrl: Api.baseURL));
-                          },
-                          child: GeneralText(
-                            "Forgot Password?",
-                            textAlign: TextAlign.center,
-                            style: appTheme.typographies.interFontFamily.headline7
-                                .copyWith(
                               color: const Color(0xfffbeccb),
-                              fontSize: 14,),
-                          ),
-                        ),
-                      ],
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
                     ),
-                  ),
-                  const Spacer(),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SignUpScreen(false,)),
-                            );
-                          },
-                          child: SvgPicture.asset(
-                            Resources.getSignInLeftArrow,
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            viewModel.verifyUser(
-                              mobileNumber: _mobileNumberController.text
-                                  .toString()
-                                  .trim(),
-                              password: _passwordController.text.toString().trim(),
-                              context: context,
-                            );
-                          },
-                          child: SvgPicture.asset(
-                            Resources.getSignInRightArrow,
-                          ),
-                        )
-                      ],
+                    const SizedBox(
+                      height: 8,
                     ),
-                  )
-                ],
+                    GeneralTextInput(
+                        controller: _mobileNumberController,
+                        inputType: InputType.digit,
+                        backgroundColor: appTheme.colors.textFieldFilledColor,
+                        valueStyle: const TextStyle(color: Colors.white),
+                        inputBorder: appTheme.focusedBorder,
+                        prefixIcon: CountryCodePicker(
+                          onChanged: (value) {
+                            viewModel.countryCode = value.dialCode!;
+                          },
+                          textStyle: const TextStyle(color: Colors.white),
+                          // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
+                          initialSelection: 'PK',
+                          //enabled: isProfileDetails ? false : true,
+                          favorite: const ['+92', 'PK'],
+                          // optional. Shows only country name and flag
+                          showCountryOnly: false,
+                          // optional. Shows only country name and flag when popup is closed.
+                          showOnlyCountryWhenClosed: false,
+                          // optional. aligns the flag and the Text left
+                          alignLeft: false,
+                          hideSearch: true,
+                        ),
+                        hint: '3xx xxx xxxx',
+                        hintStyle:
+                            const TextStyle(color: Colors.white, fontSize: 15),
+                        onChanged: (newValue) {
+                          if (newValue.length == 1 && newValue == '0') {
+                            _mobileNumberController.clear();
+                          }
+                        }),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    GeneralText(
+                      "Password",
+                      textAlign: TextAlign.center,
+                      style: appTheme.typographies.interFontFamily.headline4
+                          .copyWith(
+                              color: const Color(0xfffbeccb),
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    GeneralTextInput(
+                        controller: _passwordController,
+                        inputType: InputType.password,
+                        backgroundColor: appTheme.colors.textFieldFilledColor,
+                        valueStyle: const TextStyle(color: Colors.white),
+                        inputBorder: appTheme.focusedBorder,
+                        hint: 'Enter Your Password',
+                        hintStyle:
+                            const TextStyle(color: Colors.white, fontSize: 15),
+                        onChanged: (newValue) {}),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SignUpScreen(false)),
+                              );
+                            },
+                            child: GeneralText(
+                              "Create New Account?",
+                              textAlign: TextAlign.center,
+                              style: appTheme
+                                  .typographies.interFontFamily.headline7
+                                  .copyWith(
+                                color: const Color(0xfffbeccb),
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 7,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              locateService<INavigationService>().navigateTo(
+                                  route: ForgotPasswordRoute(
+                                      baseUrl: Api.baseURL));
+                            },
+                            child: GeneralText(
+                              "Forgot Password?",
+                              textAlign: TextAlign.center,
+                              style: appTheme
+                                  .typographies.interFontFamily.headline7
+                                  .copyWith(
+                                color: const Color(0xfffbeccb),
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Spacer(),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SignUpScreen(
+                                          false,
+                                        )),
+                              );
+                            },
+                            child: SvgPicture.asset(
+                              Resources.getSignInLeftArrow,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              viewModel.verifyUser(
+                                mobileNumber: _mobileNumberController.text
+                                    .toString()
+                                    .trim(),
+                                password:
+                                    _passwordController.text.toString().trim(),
+                                context: context,
+                              );
+                            },
+                            child: SvgPicture.asset(
+                              Resources.getSignInRightArrow,
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
-
 }

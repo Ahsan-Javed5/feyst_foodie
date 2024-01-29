@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1096756273832-cp9dbu2i53r35n25n1bs6qp8a4lvpgpe.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1096756273832-cp9dbu2i53r35n25n1bs6qp8a4lvpgpe</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>1096756273832-5qa5atkj43qf4cnl7podtnnv7bgi3j4r.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDiSaoKZRZ7fdho4DK18thweMLl9TCQmS0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1096756273832</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.feyst.foodies.ios</string>
+	<key>PROJECT_ID</key>
+	<string>feyst-4bcd4</string>
+	<key>STORAGE_BUCKET</key>
+	<string>feyst-4bcd4.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1096756273832:ios:20b7031a5a7dfb535c189d</string>
+	<key>DATABASE_URL</key>
+	<string>https://feyst-4bcd4-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>

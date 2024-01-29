@@ -154,7 +154,6 @@ class _GeneralTextInputState extends State<GeneralTextInput> {
         readOnly: !widget._isEnable,
         focusNode: focusNode,
         keyboardType: widget._keyboardType,
-
         obscureText: _isPasswordHidden,
         controller: widget._controller,
         maxLines: widget._isMultiline ? 3 : 1,
@@ -166,24 +165,24 @@ class _GeneralTextInputState extends State<GeneralTextInput> {
         ],
         style: widget._valueStyle,
         decoration: InputDecoration(
-          fillColor: widget._backgroundColor ?? appTheme.colors.transparent,
-          filled: true,
-          errorText: errorMessage,
-          hintText: widget._hint,
-          hintStyle: widget._hintStyle,
-          labelText: widget._labelText,
-          labelStyle: widget._valueStyle,
-          floatingLabelStyle: widget._labelStyle,
-          border: widget._inputBorder ?? appTheme.inputBorder,
-          focusedBorder: widget._inputBorder ?? appTheme.inputBorder,
-          disabledBorder: widget._disabledBorder,
-          enabledBorder: widget._inputBorder ?? appTheme.inputBorder,
-          prefixIcon:
-              widget._prefixIcon,
-          //  suffixIcon: _buildSuffixIcon(appTheme),
-          contentPadding:
-        widget._contentPadding?? EdgeInsets.symmetric(vertical: 18,horizontal: 13)
-        ),
+            fillColor: widget._backgroundColor ?? appTheme.colors.transparent,
+            filled: true,
+            errorText: errorMessage,
+            hintText: widget._hint,
+            hintStyle: widget._hintStyle,
+            labelText: widget._labelText,
+            labelStyle: widget._valueStyle,
+            floatingLabelStyle: widget._labelStyle,
+            border: widget._inputBorder ?? appTheme.inputBorder,
+            focusedBorder: widget._inputBorder ?? appTheme.inputBorder,
+            disabledBorder: widget._disabledBorder,
+            enabledBorder: widget._inputBorder ?? appTheme.inputBorder,
+            prefixIcon: widget._prefixIcon,
+            suffixIcon: widget._inputType == InputType.password
+                ? _buildSuffixIcon(appTheme)
+                : null,
+            contentPadding: widget._contentPadding ??
+                const EdgeInsets.symmetric(vertical: 18, horizontal: 13)),
         validator: widget._validator,
         onChanged: _onChange,
         onEditingComplete: _onEditingComplete,
@@ -210,14 +209,15 @@ class _GeneralTextInputState extends State<GeneralTextInput> {
           ),
         );
       default:
-        return widget._onSuffixIconClick != null
-            ? InkWell(
-                onTap: () => widget._onSuffixIconClick!.call(),
-                child: Icon(
-                  widget._suffixIcon,
-                ),
-              )
-            : Icon(widget._suffixIcon);
+        return SizedBox();
+      // widget._onSuffixIconClick != null
+      //   ? InkWell(
+      //       onTap: () => widget._onSuffixIconClick!.call(),
+      //       child: Icon(
+      //         widget._suffixIcon,
+      //       ),
+      //     )
+      //   : Icon(widget._suffixIcon);
     }
   }
 

@@ -1,7 +1,9 @@
 import 'package:chef/helpers/helpers.dart';
+import 'package:chef/models/guest/guest_user_response.dart';
+import 'package:chef/setup.dart';
 import 'package:video_player/video_player.dart';
 
-import '../../firebase_messaging/notification_services.dart';
+import '../../models/signup/signup_response.dart';
 
 class GetStartedScreen extends StatefulWidget {
   const GetStartedScreen({Key? key}) : super(key: key);
@@ -19,10 +21,13 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
     buildSignature: 'Unknown',
   );
   late VideoPlayerController videoController;
+  final _network = locateService<INetworkService>();
+  final _storage = locateService<IStorageService>();
 
+  @override
   void initState() {
-    videoController = VideoPlayerController.asset(
-        'assets/videos/Clipped.m4v')
+    guestFoodie();
+    videoController = VideoPlayerController.asset('assets/videos/Clipped.m4v')
       ..initialize().then((_) {
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {});
@@ -77,7 +82,7 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                 Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: Text(
-                      ' Version 1.0.7',
+                      ' Version 1.0.3',
                       style: appTheme.typographies.interFontFamily.headline6,
                     )),
               ],
@@ -88,22 +93,52 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
     );
   }
 
+  void guestFoodie() async {
+    try {
+      final url =
+          InfininURLHelpers.getRestApiURL(Api.baseURL + Api.anonymousLogin);
+
+      final response = await _network.post(
+        path: url,
+        header: {
+          Api.headerAcceptKey: Api.headerAcceptTypeValue,
+          'Content-Type': 'application/json'
+        },
+      ).whenComplete(() {});
+
+      if (response != null) {
+        GuestUserResponse guestUserResponse =
+            guestUserResponseFromJson(response.body);
+
+        //Toaster.infoToast(context: context, message: guestUserResponseToJson(data).message);
+
+        await _storage.writeString(
+            key: 'guest_token',
+            data: guestUserResponse.t!.authToken.toString());
+        print('guest user token');
+        print(_storage.readString(key: 'guest_token'));
+
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //       builder: (context) => SignUpQuestionireScreen(
+        //         false,
+        //       )),
+        // );
+      } else {
+        Toaster.infoToast(
+            context: context,
+            message: 'Something is wrong please content vendor');
+      }
+    } catch (error) {
+      Toaster.errorToast(context: context, message: '$error');
+    }
+  }
+
   Widget _getStartedTitle({required IAppThemeData appTheme}) {
     return GeneralText(
       Strings.getStartedTitle,
       textAlign: TextAlign.center,
-      // style: appTheme.typographies.interFontFamily.headline4.copyWith(
-      //   color: Colors.white,
-      //   fontSize: 21,
-      //   shadows: <Shadow>[
-      //     Shadow(
-      //       offset: Offset(10.0, 5.0),
-      //       blurRadius: 10.0,
-      //       color: Colors.black.withOpacity(0.4),
-      //     ),
-      //   ],
-      // ),
-
       style: appTheme.typographies.interFontFamily.headline7.copyWith(
         height: 1.5,
         shadows: <Shadow>[
@@ -125,7 +160,6 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
       style: appTheme.typographies.interFontFamily.headline7.copyWith(
         color: Colors.white,
         height: 1.5,
-
         fontWeight: FontWeight.w500,
         fontSize: 16,
         shadows: <Shadow>[
@@ -155,13 +189,14 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
       title: Strings.getStartedButtonTitle.toUpperCase(),
       styleType: ButtonStyleType.fill,
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) =>
-          SignUpScreen(false),
-          //  HomeScreen(),
-          ),
-        );
+        locateService<INavigationService>().navigateTo(route: BottomBar());
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => BottomBar(),
+        //     //  HomeScreen(),
+        //   ),
+        // );
         //    viewModel.goToForgotPasswordScreen();
       },
     );

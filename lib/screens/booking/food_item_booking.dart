@@ -73,31 +73,31 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
         onWillPop: () => onWillPop(),
         child: Scaffold(
           backgroundColor: HexColor.fromHex("#212129"),
-          body: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: DeviceHelper.height * 0.065,
-                ),
-                Container(
-                  padding: EdgeInsets.only(
-                    left: DeviceHelper.height * 0.015,
-                    top: DeviceHelper.height * 0.0025,
-                    bottom: DeviceHelper.height * 0.025,
-                  ),
-                  child: GeneralNewAppBar(
-                    rightIcon: Resources.homeIconSvg,
-                    title: widget.isBookingScreen
-                        ? Strings.labelBookings
-                        : Strings.lableHistory,
-                    titleColor: Colors.white,
-                    callBack: (){
-                      _navigation.navigateTo(route:BottomBar(bottomBarType: bottom_bar.BottomBarType.home));
-                    },
-                  ),
-                ),
-                Expanded(child: bookingDetails(appTheme)),
-              ]),
+          body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            SizedBox(
+              height: DeviceHelper.height * 0.065,
+            ),
+            Container(
+              padding: EdgeInsets.only(
+                left: DeviceHelper.height * 0.015,
+                top: DeviceHelper.height * 0.0025,
+                bottom: DeviceHelper.height * 0.025,
+              ),
+              child: GeneralNewAppBar(
+                rightIcon: Resources.homeIconSvg,
+                title: widget.isBookingScreen
+                    ? Strings.labelBookings
+                    : Strings.lableHistory,
+                titleColor: Colors.white,
+                callBack: () {
+                  _navigation.navigateTo(
+                      route: BottomBar(
+                          bottomBarType: bottom_bar.BottomBarType.home));
+                },
+              ),
+            ),
+            Expanded(child: bookingDetails(appTheme)),
+          ]),
         ));
   }
 
@@ -124,275 +124,315 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
   }
 
   Widget bookingDetails(IAppThemeData appTheme) {
-    return bookingProgressStatus.isEmpty?  Center(child: GeneralText(
-      widget.isBookingScreen ? 'No Bookings Yet!' : 'No History Yet!',
-      maxLines: 2,
-      textAlign: TextAlign.center,
-      style: appTheme.typographies.interFontFamily.headline4.copyWith(
-          color: const Color(0xff8ea659),
-          fontSize: 27,
-          fontWeight: FontWeight.bold),
-    ),): Container(
-      margin: EdgeInsets.symmetric(horizontal: DeviceHelper.height * 0.025),
-      child: ListView.builder(
-          padding: EdgeInsets.zero,
-          shrinkWrap: true,
-          physics: const BouncingScrollPhysics(),
-          itemCount: bookingProgressStatus.length,
-          itemBuilder: (BuildContext context, int index) {
-            var item = bookingProgressStatus[index];
-            const noImage = Resources.bookingUserPNG;
-            final imageUrl = item.preferenceIconPath;
-            DateTime date = DateTime.parse(item.scheduleScheduledDate ?? '');
-            String formattedDate = "${date.day} ${getMonthName(date.month)}";
+    return bookingProgressStatus.isEmpty
+        ? Center(
+            child: GeneralText(
+              widget.isBookingScreen ? 'No Bookings Yet!' : 'No History Yet!',
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                  color: const Color(0xff8ea659),
+                  fontSize: 27,
+                  fontWeight: FontWeight.bold),
+            ),
+          )
+        : Container(
+            margin:
+                EdgeInsets.symmetric(horizontal: DeviceHelper.height * 0.025),
+            child: ListView.builder(
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
+                physics: const BouncingScrollPhysics(),
+                itemCount: bookingProgressStatus.length,
+                itemBuilder: (BuildContext context, int index) {
+                  var item = bookingProgressStatus[index];
+                  const noImage = Resources.bookingUserPNG;
+                  final imageUrl = item.preferenceIconPath;
+                  DateTime date =
+                      DateTime.parse(item.scheduleScheduledDate ?? '');
+                  String formattedDate =
+                      "${date.day} ${getMonthName(date.month)}";
 
-            String timeString = item.scheduleStartTime ?? '';
-            DateFormat inputFormat = DateFormat('HH:mm:ss');
-            DateTime dateTime = inputFormat.parse(timeString);
-            DateFormat outputFormat = DateFormat('hh a');
-            String formattedTime = outputFormat.format(dateTime);
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                GeneralText(
-                  item.scheduleScheduledDate.toString(),
-                  style: appTheme.typographies.interFontFamily.headline6
-                      .copyWith(
-                          fontSize: 12,
-                          color: HexColor.fromHex('#fee4a4'),
-                          fontWeight: FontWeight.w400),
-                ),
-                SizedBox(
-                  height: DeviceHelper.height * 0.015,
-                ),
-                Container(
-                  padding: EdgeInsets.only(left: DeviceHelper.width * 0.04, bottom: DeviceHelper.height * 0.05),
-                  margin: const EdgeInsets.only(bottom: 20),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(DeviceHelper.width * 0.05),
-                      color: HexColor.fromHex("#4b4b52")),
-                  child: InkWell(
-                    onTap: () {
-                      //if (index == 1) {
-                      if (item.bookingStatus.toString().toUpperCase() ==
-                          Strings.acceptData || item.bookingStatus.toString().toUpperCase() ==
-                          Strings.pendingValue || item.bookingStatus.toString().toUpperCase() == 'DECLINED' ||
-                          item.bookingStatus.toString().toUpperCase() == 'MISSED') {
-                        _navigation.navigateTo(
-                            route: nav.FoodItemAdvancePaymentRoute(
-                                bookingItem: item));
-                      } else {
-                        _navigation.navigateTo(
-                            route: nav.BookingInProcessRouteView(
-                                bookingItem: item));
-                      }
-                    },
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ///image, name, rating, price row
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  ClipOval(
-                                    child: item.chefProfileImageUrl != null ?
-                                    Image.network(
-                                      Api.baseURLForImages+item.chefProfileImageUrl.toString(),
-                                      width: DeviceHelper.width * 0.10,
-                                      height: DeviceHelper.width * 0.10,
-                                      fit: BoxFit.cover,
-                                    ) :
-                                    Image.asset(
-                                      noImage,
-                                      width: DeviceHelper.width * 0.10,
-                                      height: DeviceHelper.width * 0.10,
-                                      fit: BoxFit.cover,
+                  String timeString = item.scheduleStartTime ?? '';
+                  DateFormat inputFormat = DateFormat('HH:mm:ss');
+                  DateTime dateTime = inputFormat.parse(timeString);
+                  DateFormat outputFormat = DateFormat('hh a');
+                  String formattedTime = outputFormat.format(dateTime);
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      GeneralText(
+                        item.scheduleScheduledDate.toString(),
+                        style: appTheme.typographies.interFontFamily.headline6
+                            .copyWith(
+                                fontSize: 12,
+                                color: HexColor.fromHex('#fee4a4'),
+                                fontWeight: FontWeight.w400),
+                      ),
+                      SizedBox(
+                        height: DeviceHelper.height * 0.015,
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(
+                            left: DeviceHelper.width * 0.04,
+                            bottom: DeviceHelper.height * 0.05),
+                        margin: const EdgeInsets.only(bottom: 20),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                                DeviceHelper.width * 0.05),
+                            color: HexColor.fromHex("#4b4b52")),
+                        child: InkWell(
+                          onTap: () {
+                            //if (index == 1) {
+                            if (item.bookingStatus.toString().toUpperCase() ==
+                                    Strings.acceptData ||
+                                item.bookingStatus.toString().toUpperCase() ==
+                                    Strings.pendingValue ||
+                                item.bookingStatus.toString().toUpperCase() ==
+                                    'DECLINED' ||
+                                item.bookingStatus.toString().toUpperCase() ==
+                                    'MISSED') {
+                              _navigation.navigateTo(
+                                  route: nav.FoodItemAdvancePaymentRoute(
+                                      bookingItem: item));
+                            } else {
+                              _navigation.navigateTo(
+                                  route: nav.BookingInProcessRouteView(
+                                      bookingItem: item));
+                            }
+                          },
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ///image, name, rating, price row
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        ClipOval(
+                                          child: item.chefProfileImageUrl !=
+                                                  null
+                                              ? Image.network(
+                                                  Api.baseURLForImages +
+                                                      item.chefProfileImageUrl
+                                                          .toString(),
+                                                  width:
+                                                      DeviceHelper.width * 0.10,
+                                                  height:
+                                                      DeviceHelper.width * 0.10,
+                                                  fit: BoxFit.cover,
+                                                )
+                                              : Image.asset(
+                                                  noImage,
+                                                  width:
+                                                      DeviceHelper.width * 0.10,
+                                                  height:
+                                                      DeviceHelper.width * 0.10,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                        ),
+                                        SizedBox(
+                                          width: DeviceHelper.width * 0.02,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              //color: Colors.green,
+                                              width: DeviceHelper.width * 0.34,
+                                              child: GeneralText(
+                                                item.experienceName ?? "",
+                                                maxLines: 2,
+                                                style: appTheme.typographies
+                                                    .interFontFamily.headline6
+                                                    .copyWith(
+                                                        //overflow: TextOverflow.ellipsis,
+                                                        fontSize: 15,
+                                                        color: HexColor.fromHex(
+                                                            '#ffffff'),
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                              ),
+                                            ),
+                                            Row(
+                                              // mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                SizedBox(
+                                                  width: DeviceHelper.width *
+                                                      0.040,
+                                                  child: Image.asset(
+                                                      Resources.bookingStarPNG,
+                                                      fit: BoxFit.fill),
+                                                ),
+                                                SizedBox(
+                                                  width: DeviceHelper.width *
+                                                      0.015,
+                                                ),
+                                                GeneralText(
+                                                  item.experienceAverageRating
+                                                          ?.toString() ??
+                                                      'no reviews',
+                                                  style: appTheme.typographies
+                                                      .interFontFamily.headline6
+                                                      .copyWith(
+                                                          fontSize: 14,
+                                                          color:
+                                                              HexColor.fromHex(
+                                                                  '#b0c18b')),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: DeviceHelper.width * 0.02,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        //color: Colors.green,
-                                        width: DeviceHelper.width * 0.34,
-                                        child: GeneralText(
-                                          item.experienceName ?? "",
-                                          maxLines: 2,
-                                          style: appTheme.typographies
-                                              .interFontFamily.headline6
-                                              .copyWith(
-                                                  //overflow: TextOverflow.ellipsis,
-                                                  fontSize: 15,
-                                                  color:
-                                                      HexColor.fromHex('#ffffff'),
-                                                  fontWeight: FontWeight.bold),
+                                    Container(
+                                      alignment: Alignment.center,
+                                      padding: EdgeInsets.all(
+                                          DeviceHelper.height * 0.025),
+                                      decoration: BoxDecoration(
+                                        color: HexColor.fromHex("#bb3127"),
+                                        borderRadius: const BorderRadius.only(
+                                          bottomLeft: Radius.circular(50),
+                                          topRight: Radius.circular(10),
                                         ),
                                       ),
-                                      Row(
-                                        // mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          SizedBox(
-                                            width: DeviceHelper.width * 0.040,
-                                            child: Image.asset(
-                                                Resources.bookingStarPNG,
-                                                fit: BoxFit.fill),
-                                          ),
-                                          SizedBox(
-                                            width: DeviceHelper.width * 0.015,
-                                          ),
-                                          GeneralText(
-                                            item.experienceAverageRating?.toString() ?? 'no reviews',
-                                            style: appTheme.typographies
-                                                .interFontFamily.headline6
-                                                .copyWith(
-                                                    fontSize: 14,
-                                                    color: HexColor.fromHex(
-                                                        '#b0c18b')),
-                                          ),
-                                        ],
+                                      child: GeneralText(
+                                        Strings.rsLabel +
+                                            '' +
+                                            item.totalPrice.toString(),
+                                        style: appTheme.typographies
+                                            .interFontFamily.headline1
+                                            .copyWith(
+                                                fontSize: 18,
+                                                color:
+                                                    HexColor.fromHex('#ffffff'),
+                                                fontWeight: FontWeight.bold),
                                       ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                alignment: Alignment.center,
-                                padding: EdgeInsets.all(DeviceHelper.height * 0.025),
-                                decoration: BoxDecoration(
-                                  color: HexColor.fromHex("#bb3127"),
-                                  borderRadius: const BorderRadius.only(
-                                    bottomLeft: Radius.circular(50),
-                                    topRight: Radius.circular(10),
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                                child: GeneralText(
-                                  Strings.rsLabel+'' + item.totalPrice.toString(),
-                                  style: appTheme
-                                      .typographies.interFontFamily.headline1
-                                      .copyWith(
-                                          fontSize: 18,
-                                          color: HexColor.fromHex('#ffffff'),
-                                          fontWeight: FontWeight.bold),
+                                SizedBox(
+                                  height: DeviceHelper.height * 0.025,
                                 ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: DeviceHelper.height * 0.025,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.only(right: 22),
-                            child: Column(children: [
-                              ///brands name and persons row
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  GeneralText(
-                                    item.brandName ?? "",
-                                    style: appTheme
-                                        .typographies.interFontFamily.headline1
-                                        .copyWith(
-                                            fontSize: 16,
-                                            color: HexColor.fromHex('#909094'),
-                                            fontWeight: FontWeight.w600),
-                                  ),
-                                  item != null && item.persons != null
-                                      ? GeneralText(
-                                          item.persons! + Strings.personsLabel,
+                                Container(
+                                  padding: const EdgeInsets.only(right: 22),
+                                  child: Column(children: [
+                                    ///brands name and persons row
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        GeneralText(
+                                          item.brandName ?? "",
+                                          style: appTheme.typographies
+                                              .interFontFamily.headline1
+                                              .copyWith(
+                                                  fontSize: 16,
+                                                  color: HexColor.fromHex(
+                                                      '#909094'),
+                                                  fontWeight: FontWeight.w600),
+                                        ),
+                                        item != null && item.persons != null
+                                            ? GeneralText(
+                                                item.persons! +
+                                                    Strings.personsLabel,
+                                                style: appTheme.typographies
+                                                    .interFontFamily.headline1
+                                                    .copyWith(
+                                                        fontSize: 14,
+                                                        color: HexColor.fromHex(
+                                                            '#fbeccb'),
+                                                        fontWeight:
+                                                            FontWeight.w400),
+                                              )
+                                            : Container(),
+                                      ],
+                                    ),
+
+                                    ///date and preference row
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        GeneralText(
+                                          "${formattedDate ?? ""} @ ${formattedTime}",
                                           style: appTheme.typographies
                                               .interFontFamily.headline1
                                               .copyWith(
                                                   fontSize: 14,
                                                   color: HexColor.fromHex(
-                                                      '#fbeccb'),
+                                                      '#ffffff'),
                                                   fontWeight: FontWeight.w400),
-                                        )
-                                      : Container(),
-                                ],
-                              ),
+                                        ),
+                                        GeneralText(
+                                          item.preferenceName ?? "",
+                                          style: appTheme.typographies
+                                              .interFontFamily.headline1
+                                              .copyWith(
+                                                  fontSize: 14,
+                                                  color: HexColor.fromHex(
+                                                      '#fee4a4'),
+                                                  fontWeight: FontWeight.w600),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: DeviceHelper.height * 0.032,
+                                    ),
+                                    progressBar(
+                                        appTheme,
+                                        getBookingIconData(item.bookingStatus),
+                                        item.bookingStatus!),
+                                    SizedBox(
+                                      height: DeviceHelper.height * 0.0375,
+                                    ),
 
-                              ///date and preference row
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  GeneralText(
-                                    "${formattedDate ?? ""} @ ${formattedTime}",
-                                    style: appTheme
-                                        .typographies.interFontFamily.headline1
-                                        .copyWith(
-                                            fontSize: 14,
-                                            color: HexColor.fromHex('#ffffff'),
-                                            fontWeight: FontWeight.w400),
-                                  ),
-                                  GeneralText(
-                                    item.preferenceName ?? "",
-                                    style: appTheme
-                                        .typographies.interFontFamily.headline1
-                                        .copyWith(
-                                            fontSize: 14,
-                                            color: HexColor.fromHex('#fee4a4'),
-                                            fontWeight: FontWeight.w600),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: DeviceHelper.height * 0.032,
-                              ),
-                              progressBar(
-                                  appTheme,
-                                  getBookingIconData(item.bookingStatus),
-                                  item.bookingStatus!),
-                              SizedBox(
-                                height: DeviceHelper.height * 0.0375,
-                              ),
-
-                              ///booking status
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  GeneralText(
-                                    //getStatus(item.bookingStatus.toString()),
-                                      item.bookingStatus ?? "",
-                                    style: appTheme
-                                        .typographies.interFontFamily.headline1
-                                        .copyWith(
-                                            fontSize: 16,
-                                            color: HexColor.fromHex('#f1c452'),
-                                            fontWeight: FontWeight.w600),
-                                  ),
-                                ],
-                              ),
-                              item.bookingStatus?.toUpperCase() ==
-                                      Strings.acceptData
-                                  ? GeneralText(
-                                      "Please pay advance to confirm booking",
-                                      //  item.bookingStatus ?? "",
-                                      style: appTheme.typographies
-                                          .interFontFamily.headline1
-                                          .copyWith(
-                                        fontSize: 13,
-                                        color: HexColor.fromHex('#909094'),
-                                      ),
-                                    )
-                                  : Container(),
-                            ]),
-                          )
-                        ]),
-                  ),
-                ),
-              ],
-            );
-          }),
-    );
+                                    ///booking status
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        GeneralText(
+                                          //getStatus(item.bookingStatus.toString()),
+                                          item.bookingStatus ?? "",
+                                          style: appTheme.typographies
+                                              .interFontFamily.headline1
+                                              .copyWith(
+                                                  fontSize: 16,
+                                                  color: HexColor.fromHex(
+                                                      '#f1c452'),
+                                                  fontWeight: FontWeight.w600),
+                                        ),
+                                      ],
+                                    ),
+                                    item.bookingStatus?.toUpperCase() ==
+                                            Strings.acceptData
+                                        ? GeneralText(
+                                            "Please pay advance to confirm booking",
+                                            //  item.bookingStatus ?? "",
+                                            style: appTheme.typographies
+                                                .interFontFamily.headline1
+                                                .copyWith(
+                                              fontSize: 13,
+                                              color:
+                                                  HexColor.fromHex('#909094'),
+                                            ),
+                                          )
+                                        : Container(),
+                                  ]),
+                                )
+                              ]),
+                        ),
+                      ),
+                    ],
+                  );
+                }),
+          );
   }
 
   String getStatus(String status) {
@@ -770,8 +810,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
               color: HexColor.fromHex("#909094"), shape: BoxShape.circle),
         ),
       ]);
-    }
-    else if (bookingStatus.toUpperCase() == Strings.completeStatus) {
+    } else if (bookingStatus.toUpperCase() == Strings.completeStatus) {
       progressBar = Row(children: [
         Container(
           width: 12,
@@ -840,8 +879,8 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
           ),
         ),
       ]);
-    }
-    else if (bookingStatus.toUpperCase() == Strings.declined || bookingStatus.toUpperCase() == 'MISSED') {
+    } else if (bookingStatus.toUpperCase() == Strings.declined ||
+        bookingStatus.toUpperCase() == 'MISSED') {
       progressBar = Row(children: [
         Container(
           width: 12,
@@ -910,84 +949,11 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
           ),
         ),
       ]);
-    }
-    else {
+    } else {
       return Container();
     }
 
     return progressBar;
-  }
-
-  Future<dynamic> _showGeneralPopup(BuildContext context) async {
-    final appTheme = AppTheme.of(context).theme;
-
-    return DialogHelper.show(
-      context: context,
-      // dialogType: GeneralComponentStyle.success,
-      isDismissible: true,
-      barrierLabel: '',
-      // title: 'Verification\nCode',
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.info_outlined,
-              color: appTheme.colors.secondaryBackground,
-              size: 45,
-            ),
-            GeneralText(
-              Strings.generalPopupTitle,
-              maxLines: 2,
-              textAlign: TextAlign.center,
-              style: appTheme.typographies.interFontFamily.headline4.copyWith(
-                  color: appTheme.colors.secondaryBackground,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(
-              height: 19,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: GeneralText(
-                Strings.generalSubTitle,
-                textAlign: TextAlign.center,
-                maxLines: 2,
-                style: appTheme.typographies.interFontFamily.headline4.copyWith(
-                    color: const Color(0xfffee4a4),
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500),
-              ),
-            ),
-            const SizedBox(
-              height: 31,
-            ),
-            GeneralButton.button(
-              title: Strings.generalButtonTitle.toUpperCase(),
-              styleType: ButtonStyleType.fill,
-              onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => SignUpScreen()),
-                // );
-                //    viewModel.goToForgotPasswordScreen();
-              },
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-          ],
-        ),
-      ),
-      // body: GBottomSheet<String>(
-      //   bottomSheetTitle: Strings.chooseDateFormat,
-      //   list: ['7878,87,876'],
-      //   selectedItem: viewModel.getSelectedFormat(),
-      //   bottomSheetType: BottomSheetType.dateFormat,
-      // ),
-    );
   }
 
   int getBookingIconData(String? bookingStatus) {

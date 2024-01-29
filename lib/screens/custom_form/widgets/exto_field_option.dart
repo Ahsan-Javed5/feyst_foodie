@@ -16,7 +16,14 @@ class ExtoFieldOption<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return AbsorbPointer(
       absorbing: optionData.isDisable,
-      child: child ?? GeneralText(optionData.label),
+      child: child ??
+          GeneralText(
+            optionData.label,
+            style: const TextStyle(
+              fontSize: 15,
+              color: Color(0xff909094),
+            ),
+          ),
     );
   }
 }

@@ -1,23 +1,22 @@
 import 'dart:developer';
+import 'dart:ui';
 
 import 'package:chef/helpers/helpers.dart';
-import 'package:chef/screens/sign_up/pin_input_field.dart';
 import 'package:chef/screens/sign_up/sign_up_screen_vm.dart';
 import 'package:chef/screens/sign_up/verify_phone_number.dart';
+import 'package:chef/ui_kit/widgets/custom_radio.dart';
 import 'package:chef/ui_kit/widgets/general_new_appbar.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
-import 'package:flutter/foundation.dart';
+import 'package:chef/screens/bottom_bar/bottom_bar.dart' as bottom_bar;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import '../../models/signup/profession_response.dart';
+import '../../setup.dart';
 import '../../ui_kit/helpers/dialog_helper.dart';
 import '../../ui_kit/widgets/general_gender.dart';
-import '../forgot_password/reset_password.dart';
 import '../sign_in/sign_in_screen_v.dart';
-import 'get_started_screen_vm.dart';
 import 'package:chef/screens/sign_up/sign_up_screen_m.dart';
 
 import 'dart:developer' as developer;
@@ -37,7 +36,15 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
   Gender selectedGender = Gender.male;
 
   final genderList = <String>['Male', 'Female'];
-
+  final deleteReason = <String>[
+    'Concerned about my data.',
+    'Created a second account.',
+    'Too busy/too distracting.',
+    'Privacy concerns.',
+    'Can\'t find bistros.',
+    'Something else.',
+  ];
+  final ValueNotifier<int> groupValue = ValueNotifier<int>(0);
   late final ScrollController scrollController = ScrollController();
   bool isKeyboardVisible = false;
   TextEditingController otpController = TextEditingController();
@@ -156,7 +163,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
         SizedBox(
           height: viewModel.isProfileDetails! ? 30 : 41,
         ),
-        isProfileDetails!
+        isProfileDetails
             ? const GeneralNewAppBar(
                 //   callBack:(context)=> Navigator.pushReplacement(
                 //   context,
@@ -202,18 +209,20 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               const SizedBox(
                 height: 27,
               ),
-              isProfileDetails ? const SizedBox() : Column(
-                children: [
-                  displayPassword(appTheme),
-                  const SizedBox(
-                    height: 27,
-                  ),
-                  displayConfirmPassword(appTheme),
-                  const SizedBox(
-                    height: 27,
-                  ),
-                ],
-              ),
+              isProfileDetails
+                  ? const SizedBox()
+                  : Column(
+                      children: [
+                        displayPassword(appTheme),
+                        const SizedBox(
+                          height: 27,
+                        ),
+                        displayConfirmPassword(appTheme),
+                        const SizedBox(
+                          height: 27,
+                        ),
+                      ],
+                    ),
               displayAgeGender(
                 appTheme,
               ),
@@ -226,8 +235,16 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                       professionList,
                     )
                   : const CircularProgressIndicator(),
+              isProfileDetails == true
+                  ? Padding(
+                      padding: const EdgeInsets.only(
+                        top: 35,
+                      ),
+                      child: deleteButton(context),
+                    )
+                  : const SizedBox(),
               SizedBox(
-                height: isProfileDetails ? 75 : 140,
+                height: isProfileDetails ? 40 : 100,
               ),
               viewModel.isProfile.value == true
                   ? isProfileDetails
@@ -292,6 +309,540 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     );
   }
 
+  Widget deleteButton(context) {
+    return SizedBox(
+      width: 170,
+      child: OutlinedButton(
+          onPressed: () {
+            getDeleteConfirmationDialog(
+                ctx: context,
+                title: 'Delete Account',
+                description:
+                    'Deleting your FEYST account will permanently remove your personal details, profile, photos & history',
+                iconUrl: Resources.infoPNG,
+                titleColor: const Color(0xfff1c452),
+                onTap: () {});
+          },
+          style: OutlinedButton.styleFrom(
+            foregroundColor: Colors.red,
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 6,
+            ),
+            side: const BorderSide(
+              width: 1.0,
+              color: Color(0xffbb3127),
+            ),
+          ),
+          child: const Text(
+            'DELETE ACCOUNT',
+            style: TextStyle(
+              color: Color(0xffbb3127),
+              fontSize: 15,
+            ),
+          )),
+    );
+  }
+
+  getDeleteConfirmationDialog(
+      {BuildContext? ctx,
+      required String title,
+      required String description,
+      Color? titleColor,
+      Color? descColor,
+      String? highlightedName,
+      required String iconUrl,
+      required void Function()? onTap}) {
+    final appTheme = AppTheme.of(ctx!).theme;
+    return showDialog(
+        context: ctx,
+        barrierColor: const Color(0xFF212129).withOpacity(0.1),
+        builder: (BuildContext context) {
+          return BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+            child: AlertDialog(
+              backgroundColor: const Color(0xFF212129),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Image.asset(
+                    iconUrl,
+                    height: 50,
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  GeneralText(
+                    title,
+                    style: appTheme.typographies.interFontFamily.headline6
+                        .copyWith(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: titleColor ?? const Color(0xFF8ea659),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  highlightedName == null
+                      ? Text(description,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: descColor ?? Colors.white,
+                          ))
+                      : RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            text: description,
+                            style: TextStyle(
+                              color: descColor ?? Colors.white,
+                            ),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: highlightedName,
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Color(0xfff1c452),
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SizedBox(
+                        width: 105,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            getDeleteOptionsDialog(
+                                ctx: context,
+                                title: 'DELETE ACCOUNT',
+                                titleColor: const Color(0xfff1c452),
+                                description:
+                                    'We\'re sorry to see you go, We would like to know why you\'re deleting your account as we may able to help with common issues.');
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                          ),
+                          child: const Text('CONTINUE'),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      SizedBox(
+                        width: 105,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                          ),
+                          child: const Text('CANCEL'),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  getDeleteOptionsDialog({
+    BuildContext? ctx,
+    required String title,
+    required String description,
+    Color? titleColor,
+    Color? descColor,
+    String? highlightedName,
+  }) {
+    final appTheme = AppTheme.of(ctx!).theme;
+    return showDialog(
+        context: ctx,
+        barrierColor: const Color(0xFF212129).withOpacity(0.1),
+        builder: (BuildContext context) {
+          return BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+            child: AlertDialog(
+              backgroundColor: const Color(0xFF212129),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  GeneralText(
+                    title,
+                    style: appTheme.typographies.interFontFamily.headline6
+                        .copyWith(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: titleColor ?? const Color(0xFF8ea659),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  highlightedName == null
+                      ? Text(description,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: descColor ?? Colors.white,
+                          ))
+                      : RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            text: description,
+                            style: TextStyle(
+                              color: descColor ?? Colors.white,
+                            ),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: highlightedName,
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Color(0xfff1c452),
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  ValueListenableBuilder<int>(
+                    builder: (BuildContext context, int value, Widget? child) {
+                      // This builder will only get called when the _counter
+                      // is updated.
+                      return Column(
+                        children: [
+                          CustomRadio(
+                              value: 0,
+                              label: deleteReason[0],
+                              groupValue: groupValue,
+                              onChanged: (a) {
+                                groupValue.value = a;
+                              }),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          CustomRadio(
+                              value: 1,
+                              label: deleteReason[1],
+                              groupValue: groupValue,
+                              onChanged: (a) {
+                                groupValue.value = a;
+                              }),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          CustomRadio(
+                              value: 2,
+                              label: deleteReason[2],
+                              groupValue: groupValue,
+                              onChanged: (a) {
+                                groupValue.value = a;
+                              }),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          CustomRadio(
+                              value: 3,
+                              label: deleteReason[3],
+                              groupValue: groupValue,
+                              onChanged: (a) {
+                                groupValue.value = a;
+                              }),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          CustomRadio(
+                              value: 4,
+                              label: deleteReason[4],
+                              groupValue: groupValue,
+                              onChanged: (a) {
+                                groupValue.value = a;
+                              }),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          CustomRadio(
+                              value: 5,
+                              label: deleteReason[5],
+                              groupValue: groupValue,
+                              onChanged: (a) {
+                                groupValue.value = a;
+                              }),
+                        ],
+                      );
+                    },
+                    valueListenable: groupValue,
+                    // The child parameter is most helpful if the child is
+                    // expensive to build and does not depend on the value from
+                    // the notifier.
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    width: 105,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        getDeletePasswordDialog(
+                            ctx: context,
+                            title: 'DELETE ACCOUNT',
+                            description:
+                                'For your security, please re-enter your password to continue',
+                            iconUrl: Resources.infoPNG,
+                            onTap: () {});
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                      ),
+                      child: const Text('CONTINUE'),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  getDeletePasswordDialog(
+      {BuildContext? ctx,
+      required String title,
+      required String description,
+      Color? titleColor,
+      Color? descColor,
+      String? highlightedName,
+      required String iconUrl,
+      required void Function()? onTap}) {
+    final appTheme = AppTheme.of(ctx!).theme;
+    return showDialog(
+        context: ctx,
+        barrierColor: const Color(0xFF212129).withOpacity(0.1),
+        builder: (BuildContext context) {
+          return BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+            child: AlertDialog(
+              backgroundColor: const Color(0xFF212129),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Image.asset(
+                    iconUrl,
+                    height: 50,
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  GeneralText(
+                    title,
+                    style: appTheme.typographies.interFontFamily.headline6
+                        .copyWith(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: titleColor ?? const Color(0xFF8ea659),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  highlightedName == null
+                      ? Text(description,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: descColor ?? Colors.white,
+                          ))
+                      : RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            text: description,
+                            style: TextStyle(
+                              color: descColor ?? Colors.white,
+                            ),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: highlightedName,
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Color(0xfff1c452),
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  displayDeleteAccountPassword(appTheme),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  SizedBox(
+                    width: 105,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        getDeleteFinalSubmissionDialog(
+                            ctx: context,
+                            title: 'Delete Account',
+                            description:
+                                'Proceeding further is an irreversible action & will permanently delete your account.',
+                            iconUrl: Resources.infoPNG,
+                            onTap: () {});
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                      ),
+                      child: const Text('CONTINUE'),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  getDeleteFinalSubmissionDialog(
+      {BuildContext? ctx,
+      required String title,
+      required String description,
+      Color? titleColor,
+      Color? descColor,
+      String? highlightedName,
+      required String iconUrl,
+      required void Function()? onTap}) {
+    final appTheme = AppTheme.of(ctx!).theme;
+    return showDialog(
+        context: ctx,
+        barrierColor: const Color(0xFF212129).withOpacity(0.1),
+        builder: (BuildContext context) {
+          return BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+            child: AlertDialog(
+              backgroundColor: const Color(0xFF212129),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Image.asset(
+                    iconUrl,
+                    height: 50,
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  GeneralText(
+                    title,
+                    style: appTheme.typographies.interFontFamily.headline6
+                        .copyWith(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: titleColor ?? const Color(0xFF8ea659),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  highlightedName == null
+                      ? Text(description,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: descColor ?? Colors.white,
+                          ))
+                      : RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            text: description,
+                            style: TextStyle(
+                              color: descColor ?? Colors.white,
+                            ),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: highlightedName,
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Color(0xfff1c452),
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SizedBox(
+                        width: 105,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            viewModel.deleteAccount(context: context);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                          ),
+                          child: const Text('DELETE'),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      SizedBox(
+                        width: 105,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            //Navigator.pop(context);
+                            locateService<INavigationService>().navigateTo(
+                              route: BottomBar(
+                                  bottomBarType: bottom_bar.BottomBarType.home),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                          ),
+                          child: const Text('CANCEL'),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
   Widget displayFullName(
     IAppThemeData appTheme,
   ) {
@@ -344,8 +895,8 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
   }
 
   Widget displayPassword(
-      IAppThemeData appTheme,
-      ) {
+    IAppThemeData appTheme,
+  ) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -368,35 +919,56 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             isEnable: viewModel.isProfileDetails! ? false : true,
             disabledBorder: viewModel.isProfileDetails!
                 ? const OutlineInputBorder(
-                borderSide: BorderSide(width: 2, color: Colors.grey))
+                    borderSide: BorderSide(width: 2, color: Colors.grey))
                 : null,
             inputBorder: viewModel.isProfileDetails!
                 ? const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey, width: 2.0),
-              borderRadius: BorderRadius.all(Radius.circular(8.0)),
-            )
+                    borderSide: BorderSide(color: Colors.grey, width: 2.0),
+                    borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                  )
                 : appTheme.focusedBorder,
             valueStyle: const TextStyle(color: Colors.white),
             hint: 'Enter Password',
-            validator: (pass){
-              if(pass!.length < 6){
+            validator: (pass) {
+              if (pass!.length < 6) {
                 return 'Password must contain at least 6 characters';
               }
               return null;
             },
             hintStyle:
-            TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
+                TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
             // valueStyle: valueStyle,
-            onChanged: (value) {
+            onChanged: (value) {}),
+      ],
+    );
+  }
 
-            }),
+  Widget displayDeleteAccountPassword(
+    IAppThemeData appTheme,
+  ) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GeneralTextInput(
+            controller: viewModel.deleteAccountPasswordController,
+            inputType: InputType.password,
+            backgroundColor: appTheme.colors.textFieldFilledColor,
+            isEnable: true,
+            inputBorder: appTheme.focusedBorder,
+            valueStyle: const TextStyle(color: Colors.white),
+            hint: 'Enter Password',
+            hintStyle:
+                TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
+            // valueStyle: valueStyle,
+            onChanged: (value) {}),
       ],
     );
   }
 
   Widget displayConfirmPassword(
-      IAppThemeData appTheme,
-      ) {
+    IAppThemeData appTheme,
+  ) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -419,35 +991,31 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             isEnable: viewModel.isProfileDetails! ? false : true,
             disabledBorder: viewModel.isProfileDetails!
                 ? const OutlineInputBorder(
-                borderSide: BorderSide(width: 2, color: Colors.grey))
+                    borderSide: BorderSide(width: 2, color: Colors.grey))
                 : null,
             inputBorder: viewModel.isProfileDetails!
                 ? const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey, width: 2.0),
-              borderRadius: BorderRadius.all(Radius.circular(8.0)),
-            )
+                    borderSide: BorderSide(color: Colors.grey, width: 2.0),
+                    borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                  )
                 : appTheme.focusedBorder,
             valueStyle: const TextStyle(color: Colors.white),
             hint: 'Re enter Password',
-            validator: (pass){
-              if(pass!.length < 6){
+            validator: (pass) {
+              if (pass!.length < 6) {
                 return 'Password must contain at least 6 characters';
-              }else if(pass != viewModel.passwordController.text)
-                {
-                  return 'Password not same';
-                }
+              } else if (pass != viewModel.passwordController.text) {
+                return 'Password not same';
+              }
               return null;
             },
             hintStyle:
-            TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
+                TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
             // valueStyle: valueStyle,
-            onChanged: (value) {
-
-            }),
+            onChanged: (value) {}),
       ],
     );
   }
-
 
   Widget displayMobileNumber(
     IAppThemeData appTheme,
@@ -484,26 +1052,28 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             hint: '3xxxxxxxxx',
             hintStyle:
                 TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 16),
-            prefixIcon: isProfileDetails ? null : CountryCodePicker(
-              onChanged: (value){
-                viewModel.countryCode = value.dialCode!;
-              },
-              textStyle: const TextStyle(color: Colors.white),
-              // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
-              initialSelection: 'PK',
-              enabled: isProfileDetails ? false : true,
-              favorite: const ['+92', 'PK'],
-              // optional. Shows only country name and flag
-              showCountryOnly: false,
-              // optional. Shows only country name and flag when popup is closed.
-              showOnlyCountryWhenClosed: false,
-              // optional. aligns the flag and the Text left
-              alignLeft: false,
-              hideSearch: true,
-            ),
+            prefixIcon: isProfileDetails
+                ? null
+                : CountryCodePicker(
+                    onChanged: (value) {
+                      viewModel.countryCode = value.dialCode!;
+                    },
+                    textStyle: const TextStyle(color: Colors.white),
+                    // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
+                    initialSelection: 'PK',
+                    enabled: isProfileDetails ? false : true,
+                    favorite: const ['+92', 'PK'],
+                    // optional. Shows only country name and flag
+                    showCountryOnly: false,
+                    // optional. Shows only country name and flag when popup is closed.
+                    showOnlyCountryWhenClosed: false,
+                    // optional. aligns the flag and the Text left
+                    alignLeft: false,
+                    hideSearch: true,
+                  ),
             // valueStyle: valueStyle,
             onChanged: (newValue) {
-              if(newValue.length == 1 && newValue == '0'){
+              if (newValue.length == 1 && newValue == '0') {
                 viewModel.mobileNumberController.clear();
               }
               if (viewModel.checkAllInputAdded()) {
@@ -597,11 +1167,14 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               const SizedBox(
                 height: 8,
               ),
-              _genderWidget(appTheme, viewModel.isProfileDetails!
-                  ? (viewModel.genderController.text == 'Male'
-                  ? Gender.male
-                  : Gender.female)
-                  : Gender.male, Strings.signMaleLabel,
+              _genderWidget(
+                  appTheme,
+                  viewModel.isProfileDetails!
+                      ? (viewModel.genderController.text == 'Male'
+                          ? Gender.male
+                          : Gender.female)
+                      : Gender.male,
+                  Strings.signMaleLabel,
                   isProfileDetails),
               // Row(
               //   children: [
@@ -705,9 +1278,10 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                     return InkWell(
                       onTap: value == true
                           ? () async {
-                              var isUserExist = await viewModel.checkUserExist(context);
-                              if (isUserExist == null || isUserExist == false) {}
-                              else{
+                              var isUserExist =
+                                  await viewModel.checkUserExist(context);
+                              if (isUserExist == null || isUserExist == false) {
+                              } else {
                                 if (viewModel.verifyInput(
                                   name: viewModel.nameController.text,
                                   mobileNumber:
@@ -1106,7 +1680,8 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
         context: context,
         maxHeight: MediaQuery.of(context).size.height * 0.6,
         body: FirebasePhoneAuthHandler(
-          phoneNumber: viewModel.countryCode + viewModel.mobileNumberController.text,
+          phoneNumber:
+              viewModel.countryCode + viewModel.mobileNumberController.text,
           signOutOnSuccessfulVerification: false,
           linkWithExistingUser: false,
           autoRetrievalTimeOutDuration: const Duration(seconds: 60),
@@ -1145,7 +1720,6 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             // );
           },
           onLoginFailed: (authException, stackTrace) {
-
             FirebaseCrashlytics.instance.recordError(authException, stackTrace);
             if (authException.code.toString() == 'unknown' &&
                 viewModel.mobileNumberController.text[1] == '4') {
@@ -1172,18 +1746,18 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               print('onLoginFailed firebase function');
               switch (authException.code) {
                 case 'invalid-phone-number':
-                // invalid phone number
+                  // invalid phone number
                   return Toaster.infoToast(
                       context: context, message: 'Invalid phone number!');
                 case 'invalid-verification-code':
-                // invalid otp entered
+                  // invalid otp entered
                   return Toaster.infoToast(
                       context: context, message: 'The entered OTP is invalid!');
-              // handle other error codes
+                // handle other error codes
                 default:
                   Toaster.infoToast(
                       context: context, message: authException.code);
-              // handle error further if needed
+                // handle error further if needed
               }
             }
           },
@@ -1226,7 +1800,8 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
           GeneralText(
             Strings.verificationPopupSubtitle +
                 " " +
-                viewModel.countryCode+viewModel.mobileNumberController.text,
+                viewModel.countryCode +
+                viewModel.mobileNumberController.text,
             textAlign: TextAlign.center,
             maxLines: 3,
             style: appTheme.typographies.interFontFamily.headline4.copyWith(

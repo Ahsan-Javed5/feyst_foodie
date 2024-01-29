@@ -1,5 +1,6 @@
 import 'package:chef/models/answers_response.dart';
 import 'package:chef/screens/sign_up/questionire/sign_up_questionire_screen_vm.dart';
+import '../../../models/answers_response.dart' as answerResponse;
 import '/helpers/helpers.dart';
 import '/models/signup/questionire_response.dart' as questionnaireResp;
 import '/models/signup/sign_up_questionnaire_response_model.dart';
@@ -13,7 +14,9 @@ class QuestionView extends StatefulWidget {
     required this.answerIdsCuisineTaste,
     required this.answerIdsPerfectAmbience,
     required this.answerIdsUniqueFood,
-    required this.answerIdsYourInterests,  this.foodieAnswers, required this.isProfileUpdate,
+    required this.answerIdsYourInterests,
+    this.foodieAnswers,
+    required this.isProfileUpdate,
   }) : super(key: key);
 
   final IAppThemeData appTheme;
@@ -23,7 +26,7 @@ class QuestionView extends StatefulWidget {
   List<int> answerIdsPerfectAmbience;
   List<int> answerIdsCuisineTaste;
   List<int> answerIdsYourInterests;
-  AnswersResponse? foodieAnswers;
+  answerResponse.T? foodieAnswers;
   bool isProfileUpdate;
 
   @override
@@ -52,26 +55,27 @@ class _QuestionViewState extends State<QuestionView> {
         const SizedBox(
           height: 5,
         ),
-        widget.isProfileUpdate == true ? MultiChipView(
-          answerIdsInterests: widget.answerIdsYourInterests,
-          appTheme: widget.appTheme,
-          foodieAnswers: widget.foodieAnswers,
-          answerList: widget.questionObj.answers,
-          answerIdsUniqueFoodie: widget.answerIdsUniqueFood,
-          answerIdPerfectAmbience: widget.answerIdsPerfectAmbience,
-          answerIdsCuisineTaste: widget.answerIdsCuisineTaste,
-          isProfileUpdate: widget.isProfileUpdate,
-        ):
-        MultiChipView(
-          answerIdsInterests: widget.answerIdsYourInterests,
-          appTheme: widget.appTheme,
-          foodieAnswers: widget.foodieAnswers,
-          answerList: widget.questionObj.answers,
-          answerIdsUniqueFoodie: widget.answerIdsUniqueFood,
-          answerIdPerfectAmbience: widget.answerIdsPerfectAmbience,
-          answerIdsCuisineTaste: widget.answerIdsCuisineTaste,
-          isProfileUpdate: widget.isProfileUpdate,
-        ),
+        widget.isProfileUpdate == true
+            ? MultiChipView(
+                answerIdsInterests: widget.answerIdsYourInterests,
+                appTheme: widget.appTheme,
+                foodieAnswers: widget.foodieAnswers,
+                answerList: widget.questionObj.answers,
+                answerIdsUniqueFoodie: widget.answerIdsUniqueFood,
+                answerIdPerfectAmbience: widget.answerIdsPerfectAmbience,
+                answerIdsCuisineTaste: widget.answerIdsCuisineTaste,
+                isProfileUpdate: widget.isProfileUpdate,
+              )
+            : MultiChipView(
+                answerIdsInterests: widget.answerIdsYourInterests,
+                appTheme: widget.appTheme,
+                foodieAnswers: widget.foodieAnswers,
+                answerList: widget.questionObj.answers,
+                answerIdsUniqueFoodie: widget.answerIdsUniqueFood,
+                answerIdPerfectAmbience: widget.answerIdsPerfectAmbience,
+                answerIdsCuisineTaste: widget.answerIdsCuisineTaste,
+                isProfileUpdate: widget.isProfileUpdate,
+              ),
       ],
     );
   }
@@ -101,7 +105,9 @@ class MultiChipView extends StatefulWidget {
     required this.answerIdsInterests,
     required this.answerIdsUniqueFoodie,
     required this.answerIdPerfectAmbience,
-    required this.answerIdsCuisineTaste, required this.foodieAnswers, required this.isProfileUpdate,
+    required this.answerIdsCuisineTaste,
+    required this.foodieAnswers,
+    required this.isProfileUpdate,
   }) : super(key: key);
 
   final IAppThemeData appTheme;
@@ -110,7 +116,7 @@ class MultiChipView extends StatefulWidget {
   List<int> answerIdPerfectAmbience;
   List<int> answerIdsCuisineTaste;
   List<int> answerIdsInterests;
-  AnswersResponse? foodieAnswers;
+  answerResponse.T? foodieAnswers;
   bool isProfileUpdate;
 
   @override
@@ -119,40 +125,30 @@ class MultiChipView extends StatefulWidget {
 
 class _MultiChipViewState extends State<MultiChipView> {
   Map<String, bool> selectedData = {};
-  var questionnaireViewModel = locateService<SignUpQuestionnaireScreenViewModel>();
-
+  var questionnaireViewModel =
+      locateService<SignUpQuestionnaireScreenViewModel>();
 
   @override
   void initState() {
     // TODO: implement initState
-    if(widget.isProfileUpdate == true){
-      widget.foodieAnswers?.t?.forEach((element) {
-        setState(() {
-          element.answer?.forEach((answerElement) {
-            selectedData[answerElement.name.toString()] =
-            true;
-            if(answerElement.questionId == 1) {
-              ///unique food answers list
-              widget.answerIdsUniqueFoodie
-                  .add((answerElement.id)!.toInt());
-            }
-            else if(answerElement.questionId == 2) {
-              ///perfect ambience answers list
-              widget.answerIdPerfectAmbience
-                  .add((answerElement.id)!.toInt());
-            }
-            else if(answerElement.questionId== 12) {
-              ///cuisine food answers list
-              widget.answerIdsCuisineTaste
-                  .add((answerElement.id)!.toInt());
-            }
-            ///interest answers list
-            else if(answerElement.questionId == 13) {
-              widget.answerIdsInterests
-                  .add((answerElement.id)!.toInt());
-            }
-          });
-        });
+    if (widget.isProfileUpdate == true) {
+      widget.foodieAnswers?.answer?.forEach((answerElement) {
+        selectedData[answerElement.name.toString()] = true;
+        if (answerElement.questionId == 1) {
+          ///unique food answers list
+          widget.answerIdsUniqueFoodie.add((answerElement.id)!.toInt());
+        } else if (answerElement.questionId == 2) {
+          ///perfect ambience answers list
+          widget.answerIdPerfectAmbience.add((answerElement.id)!.toInt());
+        } else if (answerElement.questionId == 12) {
+          ///cuisine food answers list
+          widget.answerIdsCuisineTaste.add((answerElement.id)!.toInt());
+        }
+
+        ///interest answers list
+        else if (answerElement.questionId == 13) {
+          widget.answerIdsInterests.add((answerElement.id)!.toInt());
+        }
       });
     }
     super.initState();
@@ -195,41 +191,40 @@ class _MultiChipViewState extends State<MultiChipView> {
                     }
                   }
 
-                  if(widget.answerList[index].questionId == 1) {
-                  ///unique food answers list
-                  widget.answerIdsUniqueFoodie
-                      .contains(widget.answerList[index].id)
-                  ? widget.answerIdsUniqueFoodie
-                      .remove(widget.answerList[index].id)
-                      : widget.answerIdsUniqueFoodie
-                      .add((int.parse(widget.answerList[index].id.toString())));
+                  if (widget.answerList[index].questionId == 1) {
+                    ///unique food answers list
+                    widget.answerIdsUniqueFoodie
+                            .contains(widget.answerList[index].id)
+                        ? widget.answerIdsUniqueFoodie
+                            .remove(widget.answerList[index].id)
+                        : widget.answerIdsUniqueFoodie.add((int.parse(
+                            widget.answerList[index].id.toString())));
+                  } else if (widget.answerList[index].questionId == 2) {
+                    ///perfect ambience answers list
+                    widget.answerIdPerfectAmbience
+                            .contains(widget.answerList[index].id)
+                        ? widget.answerIdPerfectAmbience
+                            .remove(widget.answerList[index].id)
+                        : widget.answerIdPerfectAmbience.add((int.parse(
+                            widget.answerList[index].id.toString())));
+                  } else if (widget.answerList[index].questionId == 12) {
+                    ///cuisine food answers list
+                    widget.answerIdsCuisineTaste
+                            .contains(widget.answerList[index].id)
+                        ? widget.answerIdsCuisineTaste
+                            .remove(widget.answerList[index].id)
+                        : widget.answerIdsCuisineTaste
+                            .add((widget.answerList[index].id)!.toInt());
                   }
-                  else if(widget.answerList[index].questionId == 2) {
-                  ///perfect ambience answers list
-                  widget.answerIdPerfectAmbience
-                      .contains(widget.answerList[index].id)
-                  ? widget.answerIdPerfectAmbience
-                      .remove(widget.answerList[index].id)
-                      : widget.answerIdPerfectAmbience
-                      .add((int.parse(widget.answerList[index].id.toString())));
-                  }
-                  else if(widget.answerList[index].questionId == 12) {
-                  ///cuisine food answers list
-                  widget.answerIdsCuisineTaste
-                      .contains(widget.answerList[index].id)
-                  ? widget.answerIdsCuisineTaste
-                      .remove(widget.answerList[index].id)
-                      : widget.answerIdsCuisineTaste
-                      .add((widget.answerList[index].id)!.toInt());
-                  }
+
                   ///interest answers list
-                  else if(widget.answerList[index].questionId == 13) {
+                  else if (widget.answerList[index].questionId == 13) {
                     widget.answerIdsInterests
-                        .contains(widget.answerList[index].id)
+                            .contains(widget.answerList[index].id)
                         ? widget.answerIdsInterests
-                        .remove(widget.answerList[index].id)
+                            .remove(widget.answerList[index].id)
                         : widget.answerIdsInterests
-                        .add((widget.answerList[index].id)!.toInt());
+                            .add((widget.answerList[index].id)!.toInt());
                   }
                   //  _selectedInterests.value.addAll(selectedData);
                 });
@@ -240,8 +235,8 @@ class _MultiChipViewState extends State<MultiChipView> {
                     appTheme: widget.appTheme,
                     title: widget.answerList[index].name.toString(),
                     selected: selectedData.isNotEmpty &
-                                selectedData
-                                    .containsKey(widget.answerList[index].name)
+                            selectedData
+                                .containsKey(widget.answerList[index].name)
                         ? selectedData[widget.answerList[index].name]!
                         : false,
                   )));

@@ -79,22 +79,17 @@ class FoodProductExperienceDetailsScreenView
   }
 
   Widget getStartedButtonTitle({required BuildContext context}) {
+    final _navigation = locateService<INavigationService>();
+    final _storage = locateService<IStorageService>();
+
     return GeneralButton.button(
       width: 230,
       title: Strings.productDetailButtonTitle.toUpperCase(),
       styleType: ButtonStyleType.fill,
       onTap: () {
-        developer.log(' Ready to submit data ');
-        viewModel.submitBooking(context, _experienceData!);
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //       builder: (context) => FoodProductExperienceDetails(
-        //         experienceData: _experienceData,
-        //         selectedExperienceId: _selectedExperienceId,
-        //         foodMenuDetail: viewModel.foodMenuData,
-        //       )),
-        // );
+        _storage.readString(key: 'auth_token').isEmpty
+            ? _navigation.navigateTo(route: SignInRoute())
+            : viewModel.submitBooking(context, _experienceData!);
       },
     );
   }

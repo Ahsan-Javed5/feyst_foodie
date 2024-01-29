@@ -1,6 +1,5 @@
 import 'package:chef/screens/forgot_password/reset_password.dart';
 import 'package:country_code_picker/country_code_picker.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 import 'package:flutter/material.dart';
 
@@ -75,11 +74,12 @@ class ForgotPasswordScreen extends BaseView<ForgotPasswordScreenViewModel> {
                           child: GeneralText(
                             Strings.forgotPassword,
                             textAlign: TextAlign.center,
-                            style: appTheme.typographies.interFontFamily.headline4
+                            style: appTheme
+                                .typographies.interFontFamily.headline4
                                 .copyWith(
-                                color: const Color(0xfff1c452),
-                                fontSize: 28,
-                                fontWeight: FontWeight.w500),
+                                    color: const Color(0xfff1c452),
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.w500),
                           ),
                         ),
                         const SizedBox(
@@ -90,9 +90,9 @@ class ForgotPasswordScreen extends BaseView<ForgotPasswordScreenViewModel> {
                           textAlign: TextAlign.center,
                           style: appTheme.typographies.interFontFamily.headline4
                               .copyWith(
-                              color: const Color(0xfffbeccb),
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold),
+                                  color: const Color(0xfffbeccb),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(
                           height: 8,
@@ -100,11 +100,12 @@ class ForgotPasswordScreen extends BaseView<ForgotPasswordScreenViewModel> {
                         GeneralTextInput(
                             controller: viewModel.mobileNumberController,
                             inputType: InputType.digit,
-                            backgroundColor: appTheme.colors.textFieldFilledColor,
+                            backgroundColor:
+                                appTheme.colors.textFieldFilledColor,
                             valueStyle: const TextStyle(color: Colors.white),
                             inputBorder: appTheme.focusedBorder,
                             prefixIcon: CountryCodePicker(
-                              onChanged: (value){
+                              onChanged: (value) {
                                 viewModel.countryCode = value.dialCode!;
                               },
                               textStyle: const TextStyle(color: Colors.white),
@@ -121,14 +122,16 @@ class ForgotPasswordScreen extends BaseView<ForgotPasswordScreenViewModel> {
                               hideSearch: true,
                             ),
                             hint: '3xx xxx xxxx',
-                            hintStyle:
-                            const TextStyle(color: Colors.white, fontSize: 15),
+                            hintStyle: const TextStyle(
+                                color: Colors.white, fontSize: 15),
                             onChanged: (newValue) {
-                              if(newValue.length == 1 && newValue == '0'){
+                              if (newValue.length == 1 && newValue == '0') {
                                 viewModel.mobileNumberController.clear();
                               }
                             }),
-                        const SizedBox(height: 350,),
+                        const SizedBox(
+                          height: 300,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -142,16 +145,21 @@ class ForgotPasswordScreen extends BaseView<ForgotPasswordScreenViewModel> {
                             ),
                             InkWell(
                               onTap: () async {
-                                var isUserExist = await viewModel.checkUserExist(context);
-                                if (isUserExist == null || isUserExist == false) {
+                                var isUserExist =
+                                    await viewModel.checkUserExist(context);
+                                if (isUserExist == null ||
+                                    isUserExist == false) {
                                   displayVerificationDisplayBackup(context);
-                                }
-                                else{
-                                     Toaster.infoToast(context: context, message: 'User doesn\'t exist');
-                                     Navigator.push(
-                                       context,
-                                       MaterialPageRoute(builder: (context) => SignUpScreen(false)),
-                                     );
+                                } else {
+                                  Toaster.infoToast(
+                                      context: context,
+                                      message: 'User doesn\'t exist');
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            SignUpScreen(false)),
+                                  );
                                 }
                               },
                               child: SvgPicture.asset(
@@ -173,8 +181,8 @@ class ForgotPasswordScreen extends BaseView<ForgotPasswordScreenViewModel> {
   }
 
   void displayVerificationDisplayBackup(BuildContext context) {
-
-    verifyPhoneNumber(context, viewModel.countryCode + viewModel.mobileNumberController.text);
+    verifyPhoneNumber(
+        context, viewModel.countryCode + viewModel.mobileNumberController.text);
 
     DialogHelper.show(
         title: 'Verification code',
@@ -209,7 +217,8 @@ class ForgotPasswordScreen extends BaseView<ForgotPasswordScreenViewModel> {
           GeneralText(
             Strings.verificationPopupSubtitle +
                 " " +
-                viewModel.countryCode+viewModel.mobileNumberController.text,
+                viewModel.countryCode +
+                viewModel.mobileNumberController.text,
             textAlign: TextAlign.center,
             maxLines: 3,
             style: appTheme.typographies.interFontFamily.headline4.copyWith(
@@ -257,9 +266,7 @@ class ForgotPasswordScreen extends BaseView<ForgotPasswordScreenViewModel> {
               onCompleted: (value) {
                 enteredOtp = value;
               },
-              onSubmitted: (enteredOtp) async {
-
-              },
+              onSubmitted: (enteredOtp) async {},
               appContext: context,
             ),
           ),
@@ -268,43 +275,54 @@ class ForgotPasswordScreen extends BaseView<ForgotPasswordScreenViewModel> {
           ),
           ValueListenableBuilder(
             valueListenable: viewModel.isVerifyingOtp,
-            builder: (BuildContext context, bool verifying, Widget? child){
-              return verifying == true ? const CircularProgressIndicator() : GeneralButton.button(
-                title: Strings.verificationPopupButton.toUpperCase(),
-                styleType: ButtonStyleType.fill,
-                width: 170,
-                onTap: () async {
-                  viewModel.isVerifyingOtp.value = true;
-                  otpController.value;
-                  if (enteredOtp != '') {
-                    PhoneAuthCredential credential = PhoneAuthProvider.credential(
-                      verificationId: verificationId,
-                      smsCode: enteredOtp,
-                    );
-                    try {
-                      UserCredential userCredential = await _auth.signInWithCredential(credential);
-                      User? user = userCredential.user;
-                      String tokenId = '';
-                      tokenId = await user!.getIdToken();
-                      print('token id');
-                      viewModel.isVerifyingOtp.value = false;
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ResetPasswordScreen(tokenId: tokenId, phoneNumber: viewModel.mobileNumberController.text.trim(),),),
-                      );
-                      // Handle successful sign-in
-                    } catch (e) {
-                      // Handle sign-in errors
-                      print('Sign-in Error: ${e.toString()}');
-                    }
-                  } else {
-                    Toaster.infoToast(
-                        context: context, message: 'Please Enter OTP!');
-                  }
+            builder: (BuildContext context, bool verifying, Widget? child) {
+              return verifying == true
+                  ? const CircularProgressIndicator()
+                  : GeneralButton.button(
+                      title: Strings.verificationPopupButton.toUpperCase(),
+                      styleType: ButtonStyleType.fill,
+                      width: 170,
+                      onTap: () async {
+                        viewModel.isVerifyingOtp.value = true;
+                        otpController.value;
+                        if (enteredOtp != '') {
+                          PhoneAuthCredential credential =
+                              PhoneAuthProvider.credential(
+                            verificationId: verificationId,
+                            smsCode: enteredOtp,
+                          );
+                          try {
+                            UserCredential userCredential =
+                                await _auth.signInWithCredential(credential);
+                            User? user = userCredential.user;
+                            String tokenId = '';
+                            tokenId = await user!.getIdToken();
+                            print('token id');
+                            viewModel.isVerifyingOtp.value = false;
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ResetPasswordScreen(
+                                  tokenId: tokenId,
+                                  phoneNumber: viewModel
+                                      .mobileNumberController.text
+                                      .trim(),
+                                ),
+                              ),
+                            );
+                            // Handle successful sign-in
+                          } catch (e) {
+                            // Handle sign-in errors
+                            print('Sign-in Error: ${e.toString()}');
+                          }
+                        } else {
+                          Toaster.infoToast(
+                              context: context, message: 'Please Enter OTP!');
+                        }
 
-                  //  proceedVerification(context);
-                },
-              );
+                        //  proceedVerification(context);
+                      },
+                    );
             },
             // child: GeneralButton.button(
             //   title: Strings.verificationPopupButton.toUpperCase(),
@@ -370,14 +388,15 @@ class ForgotPasswordScreen extends BaseView<ForgotPasswordScreenViewModel> {
     );
   }
 
-
   Future<void> verifyPhoneNumber(context, String phoneNumber) async {
     await _auth.verifyPhoneNumber(
-      phoneNumber: viewModel.countryCode + viewModel.mobileNumberController.text,
+      phoneNumber:
+          viewModel.countryCode + viewModel.mobileNumberController.text,
       verificationCompleted: (PhoneAuthCredential credential) async {
         try {
           viewModel.isVerifyingOtp.value = true;
-          UserCredential userCredential = await _auth.signInWithCredential(credential);
+          UserCredential userCredential =
+              await _auth.signInWithCredential(credential);
           User? user = userCredential.user;
           String tokenId = '';
           tokenId = await user!.getIdToken();
@@ -387,7 +406,12 @@ class ForgotPasswordScreen extends BaseView<ForgotPasswordScreenViewModel> {
           viewModel.isVerifyingOtp.value = false;
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ResetPasswordScreen(tokenId: tokenId, phoneNumber: viewModel.mobileNumberController.text.trim(),),),
+            MaterialPageRoute(
+              builder: (context) => ResetPasswordScreen(
+                tokenId: tokenId,
+                phoneNumber: viewModel.mobileNumberController.text.trim(),
+              ),
+            ),
           );
           // Handle successful sign-in
         } catch (e) {
@@ -401,16 +425,21 @@ class ForgotPasswordScreen extends BaseView<ForgotPasswordScreenViewModel> {
         // Handle verification failure
         String? tokenId;
 
-        if(e.code.toString() == 'unknown' || viewModel.mobileNumberController.text[1] == '4'){
+        if (e.code.toString() == 'unknown' &&
+            viewModel.mobileNumberController.text[1] == '4') {
           Toaster.successToast(
               context: context, message: 'Verified Automatically!');
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ResetPasswordScreen(tokenId: tokenId, phoneNumber: viewModel.mobileNumberController.text.trim(),),),
+            MaterialPageRoute(
+              builder: (context) => ResetPasswordScreen(
+                tokenId: tokenId,
+                phoneNumber: viewModel.mobileNumberController.text.trim(),
+              ),
+            ),
           );
         }
         print('Verification Failed: ${e.message}');
-
       },
       codeSent: (String verificationId, int? resendToken) {
         // Save the verificationId received here for later use
@@ -422,7 +451,6 @@ class ForgotPasswordScreen extends BaseView<ForgotPasswordScreenViewModel> {
       },
     );
   }
-
 
   bool testDisMiss() {
     //developer.log(' Going to dismiss ');

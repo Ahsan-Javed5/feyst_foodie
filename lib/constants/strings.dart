@@ -302,6 +302,7 @@ abstract class Strings {
   static const letsStartScreenLabel5 =
       "Please be respectful to the chef and their staff, and follow any guidelines";
   static const letsStartScreenBtnLabel = "Let's Start";
+  static const login = 'login';
 
   static const noOfPersonsHint = '0';
   static const notesHint = 'Optional';
@@ -362,7 +363,8 @@ abstract class Strings {
   static const productDetailButtonTitle = 'Request to book';
   static const productDetailExtraNoteValue =
       '20% Advance Payment will be required\nfor booking';
-  static const bistroApprovalRequired = 'Waiting for Approval from Bistro......';
+  static const bistroApprovalRequired =
+      'Waiting for Approval from Bistro......';
   static const noPaymentRequired = 'No payment required at this point';
 
   ///bottom bar
@@ -427,7 +429,8 @@ abstract class Strings {
   static const generalPopupTitle = "We are sorry";
   static const generalSubTitle =
       "Your Experience has been canceled by our host";
-  static const experiencedCancelledByFoodie = "Your Experience has been Cancelled";
+  static const experiencedCancelledByFoodie =
+      "Your Experience has been Cancelled";
   static const generalButtonTitle = "okay";
   static const popularFoodDetailTitle = 'BBQ\nExperience';
   static const popularFoodDetailSubTitle = 'by Zee Lounge';
@@ -446,8 +449,10 @@ abstract class Strings {
   static const popularFoodDetailAppBarTitle = 'Sindhi Biryani';
   static const foodDetailPreferences = 'Preferences';
   static const foodDetailLocation = 'Location';
-  static const locationAfterOrderConfirm = 'Exact location will be shown after booking confirmation';
-  static const locationOnOrderConfirmation = 'Location will be shown on Map here, when you confirm at least one order.';
+  static const locationAfterOrderConfirm =
+      'Exact location will be shown after booking confirmation';
+  static const locationOnOrderConfirmation =
+      'Location will be shown on Map here, when you confirm at least one order.';
   static const foodDetailPreferenceCouple = 'Couple';
   static const foodDetailPreferenceFamily = 'Family';
   static const foodDetailPreferenceFnf = 'F&F';
@@ -470,7 +475,7 @@ abstract class Strings {
   static const billGeneratedValue = 'BILL GENERATED';
   static const completeStatus = 'COMPLETED';
 
-  static const inProgress= 'IN-PROGRESS';
+  static const inProgress = 'IN-PROGRESS';
   static const inProgressValue = 'IN PROGRESS';
   static const pendingValue = 'PENDING';
 

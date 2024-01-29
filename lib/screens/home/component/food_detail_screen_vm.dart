@@ -34,7 +34,8 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
   late FoodMenuModel foodMenuData;
   late String expId;
 
-  Future<void> getExperienceMenu({required String experienceId,required chefId}) async {
+  Future<void> getExperienceMenu(
+      {required String experienceId, required chefId}) async {
     final url =
         InfininURLHelpers.getRestApiURL(Api.baseURL + Api.experienceMenu);
     // emit(const Loading());
@@ -46,55 +47,56 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
       t: int.parse(experienceId),
     ).toJson();
 
-    final response = await _network.post(
-      path: url,
-      data: foodMenuRequest,
-      header: {
-        'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
-        'Content-Type': 'application/json'
-      }
-    );
+    final response =
+        await _network.post(path: url, data: foodMenuRequest, header: {
+      'Authorization': 'Bearer ${_storage.readString(key: 'guest_token')}',
+      'Content-Type': 'application/json'
+    });
 
     foodMenuData = foodMenuModelFromJson(response.body);
     //getSliderImages(experienceId: experienceId);
-    getScheduleData(experienceId: experienceId, foodMenuModel: foodMenuData,chefId: chefId);
+    getScheduleData(
+        experienceId: experienceId,
+        foodMenuModel: foodMenuData,
+        chefId: chefId);
     //  emit(Loaded(foodMenuData));
 
     // List<ProfessionData> data = currentProfessionData.t;
     // emit(Loaded(currentProfessionData));
   }
 
-  Future<void> getScheduleData({
-    required String experienceId,
-    required FoodMenuModel foodMenuModel,
-    required int chefId
-  }) async {
+  Future<void> getScheduleData(
+      {required String experienceId,
+      required FoodMenuModel foodMenuModel,
+      required int chefId}) async {
     final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.scheduleData);
 
     final scheduleRequest = menurequest.FoodMenuRequest(
       t: int.parse(experienceId),
     ).toJson();
 
-    final response = await _network.post(path: url, data: scheduleRequest, header: {
-      'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
+    final response =
+        await _network.post(path: url, data: scheduleRequest, header: {
+      'Authorization': 'Bearer ${_storage.readString(key: 'guest_token')}',
       'Content-Type': 'application/json'
     });
 
     final scheduleData = scheduleModelFromJson(response.body);
 
-    getChefData(foodMenuModel, scheduleData , chefId);
-
+    getChefData(foodMenuModel, scheduleData, chefId);
   }
 
-  Future<ChefDataResponse> getChefData(FoodMenuModel foodData, ScheduleModel scheduleData, chefId) async {
+  Future<ChefDataResponse> getChefData(
+      FoodMenuModel foodData, ScheduleModel scheduleData, chefId) async {
     final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.chefData);
 
     final scheduleRequest = menurequest.FoodMenuRequest(
       t: chefId,
     ).toJson();
 
-    final response = await _network.post(path: url, data: scheduleRequest, header: {
-      'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
+    final response =
+        await _network.post(path: url, data: scheduleRequest, header: {
+      'Authorization': 'Bearer ${_storage.readString(key: 'guest_token')}',
       'Content-Type': 'application/json'
     });
 
@@ -103,26 +105,18 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
     return chefData;
   }
 
-
   Future<SliderImagesResponse?> getSliderImages({required experienceId}) async {
-    final url =
-    InfininURLHelpers.getRestApiURL(Api.baseURL + Api.sliderImages);
+    final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.sliderImages);
 
     try {
-      final response = await _network.post(
-          path: url,
-          data: {
-            "t": {
-              "experienceId" : experienceId
-            }
-          },
-          header: {
-            'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
-            'Content-Type': 'application/json'
-          }
-      );
-    final sliderImages = sliderImagesFromJson(response.body);
-    // print(sliderImages);
+      final response = await _network.post(path: url, data: {
+        "t": {"experienceId": experienceId}
+      }, header: {
+        'Authorization': 'Bearer ${_storage.readString(key: 'guest_token')}',
+        'Content-Type': 'application/json'
+      });
+      final sliderImages = sliderImagesFromJson(response.body);
+      // print(sliderImages);
       return sliderImages;
     } catch (e) {
       print(e);
@@ -131,7 +125,6 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
   }
 
   void loading({required bool isBusy}) => emit(const Loading());
-
 
   String getValidUrlForImages(String imagePath) {
     String baseUrl = Api.baseURL;

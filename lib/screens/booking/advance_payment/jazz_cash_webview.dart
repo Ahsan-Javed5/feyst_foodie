@@ -48,12 +48,12 @@ class _JazzCashWebViewState extends State<JazzCashWebView> {
         top: 30,
       ),
       child: InAppWebView(
-        initialUrlRequest: widget.bookindData.t?.bookingStatus?.toUpperCase() ==
+        initialUrlRequest: widget.bookindData.t.bookingStatus.toUpperCase() ==
                 Strings.acceptData
             ? URLRequest(
                 url: Uri(
                   path:
-                      '${Api.baseURLForJazzCash}experience-booking/confirm-booking/${widget.bookindData.t?.id}',
+                      '${Api.baseURLForJazzCash}experience-booking/confirm-booking/${widget.bookindData.t.id}',
                   scheme: 'https',
                 ),
                 headers: header,
@@ -61,7 +61,7 @@ class _JazzCashWebViewState extends State<JazzCashWebView> {
             : URLRequest(
                 url: Uri(
                     path:
-                        '${Api.baseURLForJazzCash}experience-booking/complete-booking/${widget.bookindData.t?.id}',
+                        '${Api.baseURLForJazzCash}experience-booking/complete-booking/${widget.bookindData.t.id}',
                     scheme: 'https'),
                 headers: header,
               ),
@@ -69,22 +69,33 @@ class _JazzCashWebViewState extends State<JazzCashWebView> {
         //initialUrlRequest: URLRequest(url: Uri(path: 'www.google.com',),),
         initialOptions: InAppWebViewGroupOptions(
           crossPlatform: InAppWebViewOptions(
-              //  debuggingEnabled: true,
-              ),
+            useShouldOverrideUrlLoading: true,
+          ),
         ),
         onWebViewCreated: (InAppWebViewController controller) {
           webView = controller;
         },
-        onLoadStart: (InAppWebViewController controller, var url) {
+        shouldOverrideUrlLoading: (controller, navigationAction) async {
+          Uri url = navigationAction.request.url!;
           if (url.toString().contains('feyst://paymentredirect/status=')) {
             isLoading = true;
             var parts = url.toString().split('=');
             parts[1] == 'SUCCESS' ? success(context) : failed(context);
+            // and cancel the request
+            return NavigationActionPolicy.CANCEL;
           }
-          setState(() {
-            this.url = url;
-          });
+          return NavigationActionPolicy.ALLOW;
         },
+        // onLoadStart: (InAppWebViewController controller, var url) {
+        //   if (url.toString().contains('feyst://paymentredirect/status=')) {
+        //     isLoading = true;
+        //     var parts = url.toString().split('=');
+        //     parts[1] == 'SUCCESS' ? success(context) : failed(context);
+        //   }
+        //   setState(() {
+        //     this.url = url;
+        //   });
+        // },
         onLoadStop: (InAppWebViewController controller, var url) async {
           setState(() {
             this.url = url;
@@ -107,17 +118,18 @@ class _JazzCashWebViewState extends State<JazzCashWebView> {
   }
 
   success(context) async {
+    //Navigator.pop(context);
     print('jazzcash success function call');
     final _foodItemAdvance = locateService<FoodItemAdvancePaymentViewModel>();
-    if (widget.bookindData.t?.bookingStatus?.toUpperCase() ==
+    if (widget.bookindData.t.bookingStatus.toUpperCase() ==
         Strings.billGenerated) {
       await _foodItemAdvance.completeBookingStatus(
-          context, widget.bookindData.t?.brandName,
-          bookingId: int.parse(widget.bookindData.t!.id.toString()));
+          context, widget.bookindData.t.brandName,
+          bookingId: int.parse(widget.bookindData.t.id.toString()));
     } else {
       await _foodItemAdvance.updateBookingStatus(
-          context, widget.bookindData.t?.brandName,
-          bookingId: int.parse(widget.bookindData.t!.id.toString()));
+          context, widget.bookindData.t.brandName,
+          bookingId: int.parse(widget.bookindData.t.id.toString()));
     }
     isLoading = false;
   }

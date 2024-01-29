@@ -1,5 +1,4 @@
 import 'dart:convert';
-// import 'package:chef/models/general_model.dart';
 
 SignupResponse signupResponseFromJson(String str) =>
     SignupResponse.fromJson(json.decode(str));

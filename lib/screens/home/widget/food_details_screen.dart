@@ -14,6 +14,7 @@ import '../../../models/food_details_screen/slider_images_response.dart';
 import '../../../models/home/chef_data_response.dart';
 import '../../../models/home/home_response.dart' as home_data;
 import '../../food_product_experience_details/food_product_details_screen_v.dart';
+import '../../user_account/reviews.dart';
 import '/helpers/color_helper.dart';
 import '/helpers/order_helper.dart';
 import '/setup.dart';
@@ -130,8 +131,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     super.initState();
   }
 
-  getBack(){
-    if(widget.data!.priceTypeId == 2){
+  getBack() {
+    if (widget.data!.priceTypeId == 2) {
       widget.data!.price = 0;
     }
     Navigator.pop(context);
@@ -208,8 +209,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     final appTheme = AppTheme.of(context).theme;
     //SliderImagesResponse imagesData = getImagesList();
     return WillPopScope(
-      onWillPop: (){
-        if(widget.data!.priceTypeId == 2){
+      onWillPop: () {
+        if (widget.data!.priceTypeId == 2) {
           widget.data!.price = 0;
         }
         return Future(() => true);
@@ -239,8 +240,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                             options: CarouselOptions(
                               autoPlay: true,
                             ),
-                            items: (images.isEmpty ? foodDetailsBgImages : images)
-                                .map((i) {
+                            items:
+                                (images.isEmpty ? foodDetailsBgImages : images)
+                                    .map((i) {
                               return Builder(
                                 builder: (BuildContext context) {
                                   return Image.network(Api.baseURLForImages + i,
@@ -330,7 +332,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                             ),
                           ),
                         ),
-                        height: DeviceHelper.height * 0.15,
+                        height: DeviceHelper.height * 0.175,
                         padding: const EdgeInsetsDirectional.only(bottom: 0),
                         child: Padding(
                           padding: EdgeInsetsDirectional.only(
@@ -339,14 +341,86 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                             getFoodMainHeading(
                                 appTheme: appTheme, title: widget.data!.title),
                             SizedBox(
-                              height: DeviceHelper.height * 0.01,
+                              height: DeviceHelper.height * 0.005,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const SizedBox(),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ReviewsScreen(
+                                                fromFoodDetailScreen: true,
+                                                experienceId: widget.data?.id,
+                                              )),
+                                    );
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Image.asset(
+                                        Resources.bookingStarPNG,
+                                        height: 10,
+                                      ),
+                                      widget.data?.averageRating == null
+                                          ? GeneralText(
+                                              'no reviews',
+                                              style: appTheme.typographies
+                                                  .interFontFamily.headline6
+                                                  .copyWith(
+                                                      fontSize: 14,
+                                                      color: HexColor.fromHex(
+                                                          '#8ea659')),
+                                            )
+                                          : Text.rich(
+                                              TextSpan(
+                                                text:
+                                                    ' ${widget.data?.averageRating} ( ',
+                                                style: appTheme.typographies
+                                                    .interFontFamily.headline6
+                                                    .copyWith(
+                                                        fontSize: 14,
+                                                        color: HexColor.fromHex(
+                                                            '#8ea659')),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                    text:
+                                                        '${widget.data?.noOfRatings} reviews',
+                                                    style: appTheme
+                                                        .typographies
+                                                        .interFontFamily
+                                                        .headline6
+                                                        .copyWith(
+                                                            fontSize: 14,
+                                                            decoration:
+                                                                TextDecoration
+                                                                    .underline,
+                                                            color: HexColor
+                                                                .fromHex(
+                                                                    '#8ea659')),
+                                                  ),
+                                                  const TextSpan(
+                                                    text: ' )',
+                                                  ),
+                                                  // can add more TextSpans here...
+                                                ],
+                                              ),
+                                            ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(),
+                              ],
                             ),
                             Padding(
                               padding: EdgeInsetsDirectional.only(
                                   start: DeviceHelper.width * 0.10,
                                   end: DeviceHelper.width * 0.10),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   InkWell(
                                     child: Column(
@@ -392,10 +466,10 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                               .interFontFamily.headline6
                                               .copyWith(
                                                   fontSize: 14,
-                                                  fontWeight:
-                                                      selectedTab == TabBars.Menu
-                                                          ? FontWeight.bold
-                                                          : FontWeight.w400,
+                                                  fontWeight: selectedTab ==
+                                                          TabBars.Menu
+                                                      ? FontWeight.bold
+                                                      : FontWeight.w400,
                                                   color: HexColor.fromHex(
                                                       '#f1c452')),
                                         ),
@@ -455,6 +529,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                     //),
                   ]),
                 )),
+
             ///chef image
             Positioned.fill(
               top: DeviceHelper.height * 0.23,
@@ -517,23 +592,24 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   }
 
   void goToRequestToBookScreen() {
-    if (nOfPersons.text.isEmpty || int.parse(nOfPersons.text) <= 0 ||
+    if (nOfPersons.text.isEmpty ||
+        int.parse(nOfPersons.text) <= 0 ||
         int.parse(nOfPersons.text) > openCapacity) {
       Toaster.infoToast(
           context: context,
           message: 'Number of Persons must between 1 and $openCapacity');
-    }
-    else {
+    } else {
       if (widget.data!.priceTypeId == 2) {
         int a = 0;
         for (var element in bookingMenuDetails) {
-          if(element.quantity != 0){
+          if (element.quantity != 0) {
             a = 1;
           }
         }
-        if(a == 1){
+        if (a == 1) {
           bookingMenuDetails.removeWhere((element) => element.quantity == 0);
-          _appService.state.orderHelper?.bookingMenuDetails = bookingMenuDetails;
+          _appService.state.orderHelper?.bookingMenuDetails =
+              bookingMenuDetails;
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -545,13 +621,12 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               ),
             ),
           );
-        }
-        else{
+        } else {
           Toaster.errorToast(
               context: context,
               message: 'Please select at least one quantity in menu');
         }
-      }else{
+      } else {
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -722,8 +797,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                 appTheme: appTheme,
                                 foodItemPrice: menuItem.price.toString(),
                                 quantityIndex: k,
-                                menuItem : menuItem,
-                        )
+                                menuItem: menuItem,
+                              )
                             : Container(),
                       ],
                     ),
@@ -757,7 +832,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   Widget displayQuantityData(int price, int index, menu.T menuItem) {
     final appTheme = AppTheme.of(context).theme;
     for (var element in bookingMenuDetails) {
-      if(element.menuId == menuItem.id){
+      if (element.menuId == menuItem.id) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -773,7 +848,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                 SizedBox(
                   width: DeviceHelper.width * 0.02,
                 ),
-                Container(child: getFoodItemUsers(appTheme: appTheme, index: index, menuItem: menuItem)),
+                Container(
+                    child: getFoodItemUsers(
+                        appTheme: appTheme, index: index, menuItem: menuItem)),
               ],
             ),
             displayQuantityDetails(price, index, menuItem),
@@ -923,7 +1000,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       required int quantityIndex,
       required menu.T menuItem}) {
     for (var element in bookingMenuDetails) {
-      if(element.menuId == menuItem.id){
+      if (element.menuId == menuItem.id) {
         return GeneralText(
           //   Strings.appCurrency + "." + Strings.foodProductItemPrice,
           Strings.appCurrency + "." + foodItemPrice,
@@ -952,17 +1029,20 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     );
   }
 
-  Widget getFoodItemUsers({required IAppThemeData appTheme, required index, required menu.T menuItem}) {
+  Widget getFoodItemUsers(
+      {required IAppThemeData appTheme,
+      required index,
+      required menu.T menuItem}) {
     for (var element in bookingMenuDetails) {
-      if(element.menuId == menuItem.id){
+      if (element.menuId == menuItem.id) {
         return GeneralText(
-        Strings.foodProductItemUsers,
-        style: appTheme.typographies.interFontFamily.headline6.copyWith(
-          fontSize: 16,
-          color: element.quantity == 0
-              ? HexColor.fromHex('#909094')
-              : HexColor.fromHex('#ffffff'),
-        ),
+          Strings.foodProductItemUsers,
+          style: appTheme.typographies.interFontFamily.headline6.copyWith(
+            fontSize: 16,
+            color: element.quantity == 0
+                ? HexColor.fromHex('#909094')
+                : HexColor.fromHex('#ffffff'),
+          ),
         );
       }
     }
@@ -1001,7 +1081,6 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     return null;
   }
 
-
   Widget getFoodMainHeading({required IAppThemeData appTheme, required title}) {
     return GeneralText(title,
         textAlign: TextAlign.center,
@@ -1011,9 +1090,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   ///Schedule tab view
   Widget scheduleTabView(BuildContext context, IAppThemeData appTheme) {
-
-    widget.scheduleModel.t.daysGroups.sort((a,b) {
-    return a.scheduledDate.compareTo(b.scheduledDate);
+    widget.scheduleModel.t.daysGroups.sort((a, b) {
+      return a.scheduledDate.compareTo(b.scheduledDate);
     });
 
     return scheduleForm
@@ -1022,7 +1100,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
         ? Padding(
             padding: const EdgeInsetsDirectional.only(
               start: 15,
-              top: 30,
+              top: 50,
             ),
             child: Column(
               children: [
@@ -1354,7 +1432,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
         : Stack(
             children: [
               Padding(
-                padding: const EdgeInsetsDirectional.only(bottom: 50),
+                padding: const EdgeInsetsDirectional.only(bottom: 50, top: 30),
                 child: ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
@@ -1789,6 +1867,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
+        SizedBox(
+          height: DeviceHelper.height * 0.05,
+        ),
         Row(
           children: [
             Container(

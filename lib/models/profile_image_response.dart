@@ -6,7 +6,6 @@ ProfileImageResponse profileImageResponseFromJson(String str) =>
 String profileImageResponseToJson(ProfileImageResponse data) =>
     json.encode(data.toJson());
 
-
 class ProfileImageResponse {
   int? code;
   String? error;
@@ -40,7 +39,7 @@ class ProfileImageResponse {
 
 class T {
   String? age;
-  int? averageRating;
+  dynamic averageRating;
   String? deviceType;
   String? fcmToken;
   String? gender;
@@ -53,16 +52,16 @@ class T {
 
   T(
       {this.age,
-        this.averageRating,
-        this.deviceType,
-        this.fcmToken,
-        this.gender,
-        this.id,
-        this.mobileNo,
-        this.name,
-        this.professionalId,
-        this.profileImageUrl,
-        this.status});
+      this.averageRating,
+      this.deviceType,
+      this.fcmToken,
+      this.gender,
+      this.id,
+      this.mobileNo,
+      this.name,
+      this.professionalId,
+      this.profileImageUrl,
+      this.status});
 
   T.fromJson(Map<String, dynamic> json) {
     age = json['age'];

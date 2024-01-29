@@ -15,8 +15,10 @@ import '../widget/sign_up_questionnaire.dart';
 
 class SignUpQuestionireScreen
     extends BaseView<SignUpQuestionnaireScreenViewModel> {
-  SignUpQuestionireScreen(this.isProfileUpdate, {Key? key,})
-      : super(key: key);
+  SignUpQuestionireScreen(
+    this.isProfileUpdate, {
+    Key? key,
+  }) : super(key: key);
   final bool isProfileUpdate;
   @override
   Widget buildScreen(
@@ -25,7 +27,11 @@ class SignUpQuestionireScreen
     viewModel.isProfileUpdate = isProfileUpdate;
     return BlocBuilder<SignUpQuestionnaireScreenViewModel,
             SignUpQuestionnaireState>(
-        bloc: viewModel..getQuestionnaireData(isProfileUpdate , userId: '0',),
+        bloc: viewModel
+          ..getQuestionnaireData(
+            isProfileUpdate,
+            userId: '0',
+          ),
         builder: (context, state) {
           return Scaffold(
             backgroundColor: appTheme.colors.primaryBackground,
@@ -87,10 +93,10 @@ class SignUpQuestionireScreen
 
     if (pickedFile != null) {
       XFile? img = XFile(pickedFile.path);
-      var mb = ((await img.readAsBytes()).lengthInBytes / 1024 ) / 1024;
-      while(mb > 3){
+      var mb = ((await img.readAsBytes()).lengthInBytes / 1024) / 1024;
+      while (mb > 3) {
         img = await compressFile(file: img);
-        mb = ((await img?.readAsBytes())!.lengthInBytes / 1024 ) / 1024;
+        mb = ((await img?.readAsBytes())!.lengthInBytes / 1024) / 1024;
       }
       return img;
     } else {
@@ -176,7 +182,8 @@ class SignUpQuestionireScreen
                       //     ? () async {
                       viewModel.updateSelectedImage(selectedImage);
                       //viewModel.uploadImage(selectedImage, Api.baseURL);
-                      await viewModel.uploadFoodieImage(file: selectedImage, baseUrl: Api.baseURL);
+                      await viewModel.uploadFoodieImage(
+                          file: selectedImage, baseUrl: Api.baseURL);
                       // var mimeType = lookupMimeType(selectedImage!.path);
                       //  List<int> bytes = await selectedImage!.readAsBytes();
                       // String binaryString = bytes
@@ -225,27 +232,33 @@ class SignUpQuestionireScreen
                           ),
                           ValueListenableBuilder<XFile?>(
                             valueListenable: viewModel.selectedImageNotifier,
-                            builder: (BuildContext context, XFile? selectedImage,
-                                Widget? child) {
+                            builder: (BuildContext context,
+                                XFile? selectedImage, Widget? child) {
                               if (selectedImage != null) {
                                 return CircleAvatar(
                                   radius: 25,
-                                  backgroundImage: FileImage(File(selectedImage.path)),
+                                  backgroundImage:
+                                      FileImage(File(selectedImage.path)),
                                 );
                               } else {
-                                return locateService<IStorageService>().readString(key: 'profile_image') == '' ?
-                                Image.asset(
-                                  Resources.userProfileImageIcon,
-                                  // height: 47,
-                                  // fit: BoxFit.fill,
-                                ) :
-                                    CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                  Api.baseURLForImages+locateService<IStorageService>().readString(key: 'profile_image'),
-                                   // height: 47,
-                                   // fit: BoxFit.fill,
-                                  ),
-                                );
+                                return locateService<IStorageService>()
+                                            .readString(key: 'profile_image') ==
+                                        ''
+                                    ? Image.asset(
+                                        Resources.userProfileImageIcon,
+                                        // height: 47,
+                                        // fit: BoxFit.fill,
+                                      )
+                                    : CircleAvatar(
+                                        backgroundImage: NetworkImage(
+                                          Api.baseURLForImages +
+                                              locateService<IStorageService>()
+                                                  .readString(
+                                                      key: 'profile_image'),
+                                          // height: 47,
+                                          // fit: BoxFit.fill,
+                                        ),
+                                      );
                               }
                             },
                           )
@@ -277,26 +290,26 @@ class SignUpQuestionireScreen
           padding: const EdgeInsets.only(
             bottom: 20,
           ),
-          child: isProfileUpdate == true ? QuestionView(
-            appTheme: appTheme,
-            questionObj: item,
-            foodieAnswers: viewModel.foodieAnswers,
-            answerIdsCuisineTaste: viewModel.answerIdsCuisineTaste,
-            answerIdsPerfectAmbience: viewModel.answerIdPerfectAmbience,
-            answerIdsUniqueFood: viewModel.answerIdsUniqueFoodie,
-            answerIdsYourInterests: viewModel.answerIdInterest,
-            isProfileUpdate: isProfileUpdate,
-          ) :
-          QuestionView(
-            appTheme: appTheme,
-            questionObj: item,
-            answerIdsCuisineTaste: viewModel.answerIdsCuisineTaste,
-            answerIdsPerfectAmbience: viewModel.answerIdPerfectAmbience,
-            answerIdsUniqueFood: viewModel.answerIdsUniqueFoodie,
-            answerIdsYourInterests: viewModel.answerIdInterest,
-            isProfileUpdate: isProfileUpdate,
-          )
-          ,
+          child: isProfileUpdate == true
+              ? QuestionView(
+                  appTheme: appTheme,
+                  questionObj: item,
+                  foodieAnswers: viewModel.foodieAnswers.t![index],
+                  answerIdsCuisineTaste: viewModel.answerIdsCuisineTaste,
+                  answerIdsPerfectAmbience: viewModel.answerIdPerfectAmbience,
+                  answerIdsUniqueFood: viewModel.answerIdsUniqueFoodie,
+                  answerIdsYourInterests: viewModel.answerIdInterest,
+                  isProfileUpdate: isProfileUpdate,
+                )
+              : QuestionView(
+                  appTheme: appTheme,
+                  questionObj: item,
+                  answerIdsCuisineTaste: viewModel.answerIdsCuisineTaste,
+                  answerIdsPerfectAmbience: viewModel.answerIdPerfectAmbience,
+                  answerIdsUniqueFood: viewModel.answerIdsUniqueFoodie,
+                  answerIdsYourInterests: viewModel.answerIdInterest,
+                  isProfileUpdate: isProfileUpdate,
+                ),
         );
       },
     );

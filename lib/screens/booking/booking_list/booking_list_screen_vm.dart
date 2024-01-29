@@ -73,7 +73,7 @@ class BookingListScreenViewModel extends BaseViewModel<BookingListState> {
         'Content-Type': 'application/json'
       },
     );
-  print(response);
+    print(response);
     // var updatedBookingData = booking_udpate.bookingUpdateRequestFromJson(response.body);
     // if(response != null) {
     //   _navigate.navigateTo(

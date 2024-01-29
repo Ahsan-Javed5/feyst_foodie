@@ -11,6 +11,7 @@ import '../../ui_kit/widgets/general_new_appbar.dart';
 import 'dart:developer' as developer;
 
 import '../user_account/user_profile.dart';
+import 'advance_payment/jazz_cash_webview2.dart';
 import 'booking_confirmed/booking_in_process_screen_vm.dart';
 
 class FoodProductAdvancePendingDetails extends StatefulWidget {
@@ -36,10 +37,10 @@ class _FoodProductAdvancePendingDetailsState
   void initState() {
     loadMenu();
     loadWowFactor();
-    widget._advancePendingDetails.t.bookingStatus
-        .toString()
-        .toUpperCase() ==
-        Strings.acceptData ? getAdvancePaymentDialog() : null;
+    widget._advancePendingDetails.t.bookingStatus.toString().toUpperCase() ==
+            Strings.acceptData
+        ? getAdvancePaymentDialog()
+        : null;
     super.initState();
   }
 
@@ -75,15 +76,15 @@ class _FoodProductAdvancePendingDetailsState
     }
   }
 
-  getAdvancePaymentDialog(){
-    return Future.delayed(
-        const Duration(seconds: 1), (){
+  getAdvancePaymentDialog() {
+    return Future.delayed(const Duration(seconds: 1), () {
       return CustomDialog.getDialog(
         ctx: context,
         title: 'Advance Payment Due',
         //titleColor: Colors.white,
         //descColor: const Color(0xFFfee4a4),
-        description: 'Please proceed to advance payment for Booking Confirmation',
+        description:
+            'Please proceed to advance payment for Booking Confirmation',
         iconUrl: Resources.paymentIcon,
         onTap: () {
           setState(() {
@@ -91,8 +92,7 @@ class _FoodProductAdvancePendingDetailsState
           });
         },
       );
-    }
-    );
+    });
   }
 
   @override
@@ -188,7 +188,10 @@ class _FoodProductAdvancePendingDetailsState
                                 width: 5,
                               ),
                               GeneralText(
-                                widget._advancePendingDetails.t.experience.averageRating?.toString() ?? 'no reivews',
+                                widget._advancePendingDetails.t.experience
+                                        .averageRating
+                                        ?.toString() ??
+                                    'no reivews',
                                 style: appTheme
                                     .typographies.interFontFamily.headline6
                                     .copyWith(
@@ -341,8 +344,13 @@ class _FoodProductAdvancePendingDetailsState
                         height: 32.9,
                       ),
                       widget._advancePendingDetails.t.bookingStatus
-                          .toUpperCase() == 'MISSED' || widget._advancePendingDetails.t.bookingStatus
-                          .toUpperCase() == 'DECLINED' ? const SizedBox() : extraPaymentNotes(appTheme),
+                                      .toUpperCase() ==
+                                  'MISSED' ||
+                              widget._advancePendingDetails.t.bookingStatus
+                                      .toUpperCase() ==
+                                  'DECLINED'
+                          ? const SizedBox()
+                          : extraPaymentNotes(appTheme),
                       const SizedBox(
                         height: 70,
                       ),
@@ -744,10 +752,12 @@ class _FoodProductAdvancePendingDetailsState
                             Expanded(
                               child: GeneralText(
                                 // Strings.productDetailChefLocation,
-                                (widget._advancePendingDetails.t.experience.townName ??
+                                (widget._advancePendingDetails.t.experience
+                                            .townName ??
                                         'null') +
                                     ', ' +
-                                    (widget._advancePendingDetails.t.experience.cityName ??
+                                    (widget._advancePendingDetails.t.experience
+                                            .cityName ??
                                         'null'),
                                 style: appTheme
                                     .typographies.interFontFamily.headline6
@@ -947,48 +957,55 @@ class _FoodProductAdvancePendingDetailsState
                     ),
                   ],
                 ),
-                widget._advancePendingDetails.t.bookingStatus
-                    .toUpperCase() == 'MISSED' || widget._advancePendingDetails.t.bookingStatus
-                    .toUpperCase() == 'DECLINED' ? const SizedBox() : Column(
-                  children: [
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Container(
-                      color: HexColor.fromHex("#ffffff").withOpacity(0.3),
-                      width: double.infinity,
-                      height: 1,
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GeneralText(
-                          'Amount Due',
-                          style: appTheme.typographies.interFontFamily.headline6
-                              .copyWith(
-                            fontSize: 18,
-                            color: HexColor.fromHex('#f1c452'),
+                widget._advancePendingDetails.t.bookingStatus.toUpperCase() ==
+                            'MISSED' ||
+                        widget._advancePendingDetails.t.bookingStatus
+                                .toUpperCase() ==
+                            'DECLINED'
+                    ? const SizedBox()
+                    : Column(
+                        children: [
+                          const SizedBox(
+                            height: 15,
                           ),
-                        ),
-                        GeneralText(
-                          //     Strings.productDetailPriceTaxValue,
-                          "Rs " +
-                              (widget._advancePendingDetails.t.advancePayment)
-                                  .toStringAsFixed(0),
-                          style: appTheme.typographies.interFontFamily.headline6
-                              .copyWith(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: HexColor.fromHex('#f1c452'),
+                          Container(
+                            color: HexColor.fromHex("#ffffff").withOpacity(0.3),
+                            width: double.infinity,
+                            height: 1,
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GeneralText(
+                                'Amount Due',
+                                style: appTheme
+                                    .typographies.interFontFamily.headline6
+                                    .copyWith(
+                                  fontSize: 18,
+                                  color: HexColor.fromHex('#f1c452'),
+                                ),
+                              ),
+                              GeneralText(
+                                //     Strings.productDetailPriceTaxValue,
+                                "Rs " +
+                                    (widget._advancePendingDetails.t
+                                            .advancePayment)
+                                        .toStringAsFixed(0),
+                                style: appTheme
+                                    .typographies.interFontFamily.headline6
+                                    .copyWith(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                  color: HexColor.fromHex('#f1c452'),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
               ],
             ),
           ),
@@ -1033,9 +1050,11 @@ class _FoodProductAdvancePendingDetailsState
                 borderRadius: BorderRadius.circular(15)),
             child: GeneralText(
               widget._advancePendingDetails.t.bookingStatus
-                  .toString()
-                  .toUpperCase() ==
-                  Strings.acceptData ? Strings.productDetailExtraNoteValue : Strings.bistroApprovalRequired,
+                          .toString()
+                          .toUpperCase() ==
+                      Strings.acceptData
+                  ? Strings.productDetailExtraNoteValue
+                  : Strings.bistroApprovalRequired,
               style: appTheme.typographies.interFontFamily.headline6.copyWith(
                 fontSize: 14,
                 color: HexColor.fromHex('#ffffff'),
