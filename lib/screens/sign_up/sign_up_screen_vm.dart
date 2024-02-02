@@ -42,7 +42,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   TextController confirmPasswordController = TextController();
   TextController mobileNumberController = TextController();
   TextController ageController = TextController(text: "");
-  TextController genderController = TextController(text: 'male');
+  TextController genderController = TextController(text: "");
   TextController idController = TextController(text: "");
   String countryCode = '+92';
 
@@ -180,14 +180,10 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   bool _validateInput({
     required String name,
     required String mobileNumber,
-    required int age,
-    required String gender,
     required int professionId,
   }) =>
       name.trim().isNotEmpty &&
       mobileNumber.trim().isNotEmpty &&
-      age > 5 &&
-      gender.isNotEmpty &&
       professionId != 0;
 
   bool _validateUpdatedData({
@@ -242,8 +238,6 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     final isInputValid = _validateInput(
       name: name,
       mobileNumber: mobileNumber,
-      age: age,
-      gender: gender,
       professionId: professionId,
     );
     if (isInputValid) {
@@ -420,8 +414,6 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   bool verifyInput({
     required String name,
     required String mobileNumber,
-    required int age,
-    required String gender,
     required int professionId,
     required BuildContext context,
     required String baseUrl,
@@ -429,8 +421,6 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     final isInputValid = _validateInput(
       name: name,
       mobileNumber: mobileNumber,
-      age: age,
-      gender: gender,
       professionId: professionId,
     );
     if (!isInputValid) {
@@ -451,8 +441,6 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     final isInputValid = _validateInput(
       name: nameController.text,
       mobileNumber: mobileNumberController.text,
-      age: int.parse(age),
-      gender: genderController.text,
       professionId: professionID,
     );
 

@@ -261,7 +261,8 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
               : {"foodieId": _appService.state.userInfo?.t.id}
         },
         header: {
-          'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
+          'Authorization':
+              'Bearer ${_storage.readString(key: widget.fromFoodDetailScreen ? 'guest_token' : 'auth_token')}',
           'Content-Type': 'application/json'
         },
       );

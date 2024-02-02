@@ -9,6 +9,7 @@ import 'package:chef/ui_kit/widgets/general_new_appbar.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 import 'package:chef/screens/bottom_bar/bottom_bar.dart' as bottom_bar;
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -34,7 +35,8 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
   late List<DropdownMenuItem<String>> items = [];
 
   Gender selectedGender = Gender.male;
-
+  ValueNotifier<bool> selectedMale = ValueNotifier(false);
+  ValueNotifier<bool> selectedFemale = ValueNotifier(false);
   final genderList = <String>['Male', 'Female'];
   final deleteReason = <String>[
     'Concerned about my data.',
@@ -1096,17 +1098,31 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
-          flex: 1,
+          flex: 2,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              GeneralText(
-                Strings.signAgeLabel,
-                textAlign: TextAlign.center,
-                style: appTheme.typographies.interFontFamily.headline4.copyWith(
-                    color: const Color(0xfffbeccb),
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
+              Row(
+                children: [
+                  GeneralText(
+                    Strings.signAgeLabel,
+                    textAlign: TextAlign.center,
+                    style: appTheme.typographies.interFontFamily.headline4
+                        .copyWith(
+                            color: const Color(0xfffbeccb),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                  ),
+                  GeneralText(
+                    ' (Optional)',
+                    textAlign: TextAlign.center,
+                    style: appTheme.typographies.interFontFamily.headline4
+                        .copyWith(
+                            color: Colors.grey.withOpacity(0.5),
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
               const SizedBox(
                 height: 8,
@@ -1151,31 +1167,115 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
           ),
         ),
         Expanded(
-          flex: 2,
+          flex: 3,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              GeneralText(
-                Strings.signGenderLabel,
-                textAlign: TextAlign.center,
-                style: appTheme.typographies.interFontFamily.headline4.copyWith(
-                    color: const Color(0xfffbeccb),
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
+              Row(
+                children: [
+                  GeneralText(
+                    Strings.signGenderLabel,
+                    textAlign: TextAlign.center,
+                    style: appTheme.typographies.interFontFamily.headline4
+                        .copyWith(
+                            color: const Color(0xfffbeccb),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                  ),
+                  GeneralText(
+                    ' (Optional)',
+                    textAlign: TextAlign.center,
+                    style: appTheme.typographies.interFontFamily.headline4
+                        .copyWith(
+                            color: Colors.grey.withOpacity(0.5),
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
               const SizedBox(
                 height: 8,
               ),
-              _genderWidget(
-                  appTheme,
-                  viewModel.isProfileDetails!
-                      ? (viewModel.genderController.text == 'Male'
-                          ? Gender.male
-                          : Gender.female)
-                      : Gender.male,
-                  Strings.signMaleLabel,
-                  isProfileDetails),
+              Row(
+                children: [
+                  ValueListenableBuilder(
+                      valueListenable: selectedMale,
+                      builder: (context, value, child) {
+                        return SizedBox(
+                          width: 90,
+                          child: ListTileTheme(
+                            horizontalTitleGap: 0.0,
+                            contentPadding: EdgeInsets.zero,
+                            child: CheckboxListTile(
+                              side: const BorderSide(color: Color(0xfff1c452)),
+                              title: const Text(
+                                "Male",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              value: selectedMale.value,
+                              onChanged: (newValue) {
+                                if (selectedMale.value == true) {
+                                  selectedMale.value = false;
+                                  viewModel.genderController.text = '';
+                                } else {
+                                  selectedMale.value = true;
+                                  viewModel.genderController.text = 'Male';
+                                  selectedFemale.value = false;
+                                }
+                              },
+                              controlAffinity: ListTileControlAffinity
+                                  .leading, //  <-- leading Checkbox
+                            ),
+                          ),
+                        );
+                      }),
+                  ValueListenableBuilder(
+                      valueListenable: selectedFemale,
+                      builder: (context, value, child) {
+                        return SizedBox(
+                          width: 100,
+                          child: ListTileTheme(
+                            contentPadding: EdgeInsets.zero,
+                            horizontalTitleGap: 0.0,
+                            child: CheckboxListTile(
+                              side: const BorderSide(color: Color(0xfff1c452)),
+
+                              title: const Text(
+                                "Female",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              value: selectedFemale.value,
+                              onChanged: (newValue) {
+                                if (selectedFemale.value == true) {
+                                  selectedFemale.value = false;
+                                  viewModel.genderController.text = '';
+                                } else {
+                                  selectedFemale.value = true;
+                                  viewModel.genderController.text = 'Female';
+                                  selectedMale.value = false;
+                                }
+                              },
+                              controlAffinity: ListTileControlAffinity
+                                  .leading, //  <-- leading Checkbox
+                            ),
+                          ),
+                        );
+                      }),
+                ],
+              ),
+              // _genderWidget(
+              //     appTheme,
+              //     viewModel.isProfileDetails!
+              //         ? (viewModel.genderController.text == 'Male'
+              //             ? Gender.male
+              //             : Gender.female)
+              //         : Gender.male,
+              //     Strings.signMaleLabel,
+              //     isProfileDetails),
               // Row(
               //   children: [
               //     _genderWidget(appTheme, Gender.male, Strings.signMaleLabel),
@@ -1286,9 +1386,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                                   name: viewModel.nameController.text,
                                   mobileNumber:
                                       viewModel.mobileNumberController.text,
-                                  age: int.parse(viewModel.ageController.text),
                                   professionId: viewModel.professionID,
-                                  gender: viewModel.genderController.text,
                                   context: context,
                                   baseUrl: baseURLs[0],
                                 )) {
@@ -1375,33 +1473,36 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
         developer.log(' Here Gender clicked ' + '$value');
       },
     );
-    // return Expanded(
-    //   child: InkWell(
-    //     onTap: () {
-    //       changeGender(gender);
-    //     },
-    //     child: Container(
-    //         padding: const EdgeInsets.symmetric(vertical: 15),
-    //         child: GeneralText(
-    //           text,
-    //           textAlign: TextAlign.center,
-    //           style: appTheme.typographies.interFontFamily.headline2.copyWith(
-    //               color: selectedGender == gender ? Colors.black : Colors.white,
-    //               fontSize: 15,
-    //               fontWeight: FontWeight.bold),
-    //         ),
-    //         decoration: BoxDecoration(
-    //             border: Border.all(
-    //                 color: appTheme.colors
-    //                     .textFieldBorderColor // green as background color
-    //
-    //                 ),
-    //             borderRadius: BorderRadius.circular(10), // radius of 10
-    //             color: selectedGender == gender
-    //                 ? appTheme.colors.textFieldBorderColor
-    //                 : appTheme.colors.primaryBackground)),
-    //   ),
-    // );
+  }
+
+  Widget _genderCheckBox(
+      IAppThemeData appTheme, Gender gender, String text, isProfileDetails) {
+    return Row(
+      children: [
+        CheckboxListTile(
+          title: const Text("Male"),
+          value: true,
+          onChanged: (newValue) {
+            // setState(() {
+            //   checkedValue = newValue;
+            // });
+          },
+          controlAffinity:
+              ListTileControlAffinity.leading, //  <-- leading Checkbox
+        ),
+        CheckboxListTile(
+          title: const Text("Female"),
+          value: true,
+          onChanged: (newValue) {
+            // setState(() {
+            //   checkedValue = newValue;
+            // });
+          },
+          controlAffinity:
+              ListTileControlAffinity.leading, //  <-- leading Checkbox
+        ),
+      ],
+    );
   }
 
   Widget _getStartedTitle({required IAppThemeData appTheme}) {
@@ -1951,6 +2052,65 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
       scrollController.position.maxScrollExtent,
       duration: const Duration(milliseconds: 250),
       curve: Curves.easeIn,
+    );
+  }
+}
+
+class GetCheckValue extends StatefulWidget {
+  @override
+  GetCheckValueState createState() {
+    return new GetCheckValueState();
+  }
+}
+
+class GetCheckValueState extends State<GetCheckValue> {
+  bool _isChecked = true;
+  String _currText = '';
+
+  List<String> text = [
+    "Male",
+    "Female",
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Get check Value Example"),
+      ),
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: Center(
+              child: Text(_currText,
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  )),
+            ),
+          ),
+          Expanded(
+              child: Container(
+            height: 350.0,
+            child: Column(
+              children: text
+                  .map((t) => CheckboxListTile(
+                        title: Text(t),
+                        value: _isChecked,
+                        onChanged: (val) {
+                          setState(() {
+                            _isChecked = val!;
+                            if (val == true) {
+                              _currText = t;
+                            }
+                          });
+                        },
+                      ))
+                  .toList(),
+            ),
+          )),
+        ],
+      ),
     );
   }
 }

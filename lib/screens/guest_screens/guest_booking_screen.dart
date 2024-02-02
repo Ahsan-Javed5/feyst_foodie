@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../constants/resources.dart';
 import '../../constants/strings.dart';
@@ -70,12 +71,15 @@ class _GuestBookingScreenState extends State<GuestBookingScreen> {
               child: Column(
                 children: [
                   const SizedBox(
-                    height: 60,
+                    height: 150,
                   ),
-                  Image.asset(
-                    'assets/images/spoons.gif',
-                    height: 300,
-                    width: 300,
+                  SvgPicture.asset(
+                    widget.isBookingScreen
+                        ? 'assets/images/icons/smartphone.svg'
+                        : 'assets/images/icons/list.svg',
+                    fit: BoxFit.scaleDown,
+                    height: 200,
+                    width: 100,
                   ),
                   const SizedBox(
                     height: 30,

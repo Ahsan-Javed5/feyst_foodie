@@ -24,6 +24,7 @@ class SignInScreen extends BaseView<SignInScreenViewModel> {
   SignInScreen({Key? key}) : super(key: key);
   final TextController _mobileNumberController = TextController();
   final TextController _passwordController = TextController();
+  final _navigation = locateService<INavigationService>();
 
   @override
   Widget buildScreen(
@@ -49,7 +50,7 @@ class SignInScreen extends BaseView<SignInScreenViewModel> {
                 ),
               ),
               Container(
-                height: 600,
+                height: 750,
                 //color: Colors.red,
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Column(
@@ -191,7 +192,17 @@ class SignInScreen extends BaseView<SignInScreenViewModel> {
                         ],
                       ),
                     ),
-                    const Spacer(),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Center(
+                        child: _loginButtonTitle(
+                            appTheme: appTheme, context: context)),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Center(
+                        child: _exploreExperiencesButton(appTheme: appTheme)),
                     Expanded(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -233,6 +244,60 @@ class SignInScreen extends BaseView<SignInScreenViewModel> {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _loginButtonTitle(
+      {required IAppThemeData appTheme, required BuildContext context}) {
+    return GeneralButton.button(
+      width: 200,
+      title: Strings.login.toUpperCase(),
+      styleType: ButtonStyleType.fill,
+      onTap: () {
+        viewModel.verifyUser(
+          mobileNumber: _mobileNumberController.text.toString().trim(),
+          password: _passwordController.text.toString().trim(),
+          context: context,
+        );
+        //_navigation.navigateTo(route: SignInRoute());
+      },
+    );
+  }
+
+  Widget _exploreExperiencesButton({required IAppThemeData appTheme}) {
+    return InkWell(
+      onTap: () {
+        _navigation.navigateTo(route: BottomBar());
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: Colors.grey.withOpacity(0.5),
+          ),
+        ),
+        child: Column(
+          children: [
+            GeneralText(
+              'EXPLORE EXPERIENCES',
+              textAlign: TextAlign.center,
+              style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                  color: Colors.white,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w500),
+            ),
+            GeneralText(
+              'As Guest User',
+              textAlign: TextAlign.center,
+              style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                  color: Colors.grey,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500),
+            ),
+          ],
         ),
       ),
     );
