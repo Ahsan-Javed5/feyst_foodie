@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:chef/helpers/helpers.dart';
@@ -35,8 +36,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
   late List<DropdownMenuItem<String>> items = [];
 
   Gender selectedGender = Gender.male;
-  ValueNotifier<bool> selectedMale = ValueNotifier(false);
-  ValueNotifier<bool> selectedFemale = ValueNotifier(false);
+
   final genderList = <String>['Male', 'Female'];
   final deleteReason = <String>[
     'Concerned about my data.',
@@ -1200,7 +1200,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               Row(
                 children: [
                   ValueListenableBuilder(
-                      valueListenable: selectedMale,
+                      valueListenable: viewModel.selectedMale,
                       builder: (context, value, child) {
                         return SizedBox(
                           width: 90,
@@ -1208,7 +1208,12 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                             horizontalTitleGap: 0.0,
                             contentPadding: EdgeInsets.zero,
                             child: CheckboxListTile(
-                              side: const BorderSide(color: Color(0xfff1c452)),
+                              enabled:
+                                  viewModel.isProfileDetails! ? false : true,
+                              side: BorderSide(
+                                  color: viewModel.isProfileDetails!
+                                      ? Colors.grey
+                                      : const Color(0xfff1c452)),
                               title: const Text(
                                 "Male",
                                 style: TextStyle(
@@ -1216,15 +1221,15 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                                   fontSize: 16,
                                 ),
                               ),
-                              value: selectedMale.value,
+                              value: viewModel.selectedMale.value,
                               onChanged: (newValue) {
-                                if (selectedMale.value == true) {
-                                  selectedMale.value = false;
+                                if (viewModel.selectedMale.value == true) {
+                                  viewModel.selectedMale.value = false;
                                   viewModel.genderController.text = '';
                                 } else {
-                                  selectedMale.value = true;
+                                  viewModel.selectedMale.value = true;
                                   viewModel.genderController.text = 'Male';
-                                  selectedFemale.value = false;
+                                  viewModel.selectedFemale.value = false;
                                 }
                               },
                               controlAffinity: ListTileControlAffinity
@@ -1234,7 +1239,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                         );
                       }),
                   ValueListenableBuilder(
-                      valueListenable: selectedFemale,
+                      valueListenable: viewModel.selectedFemale,
                       builder: (context, value, child) {
                         return SizedBox(
                           width: 100,
@@ -1242,21 +1247,25 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                             contentPadding: EdgeInsets.zero,
                             horizontalTitleGap: 0.0,
                             child: CheckboxListTile(
-                              side: const BorderSide(color: Color(0xfff1c452)),
-
+                              side: BorderSide(
+                                  color: viewModel.isProfileDetails!
+                                      ? Colors.grey
+                                      : const Color(0xfff1c452)),
+                              enabled:
+                                  viewModel.isProfileDetails! ? false : true,
                               title: const Text(
                                 "Female",
                                 style: TextStyle(color: Colors.white),
                               ),
-                              value: selectedFemale.value,
+                              value: viewModel.selectedFemale.value,
                               onChanged: (newValue) {
-                                if (selectedFemale.value == true) {
-                                  selectedFemale.value = false;
+                                if (viewModel.selectedFemale.value == true) {
+                                  viewModel.selectedFemale.value = false;
                                   viewModel.genderController.text = '';
                                 } else {
-                                  selectedFemale.value = true;
+                                  viewModel.selectedFemale.value = true;
                                   viewModel.genderController.text = 'Female';
-                                  selectedMale.value = false;
+                                  viewModel.selectedMale.value = false;
                                 }
                               },
                               controlAffinity: ListTileControlAffinity
@@ -1798,7 +1807,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               viewModel.saveFoodie(
                 name: viewModel.nameController.text,
                 mobileNumber: viewModel.mobileNumberController.text,
-                age: int.parse(viewModel.ageController.text),
+                age: int.tryParse(viewModel.ageController.text),
                 password: viewModel.passwordController.text,
                 professionId: viewModel.professionID,
                 gender: viewModel.genderController.text,
@@ -1830,13 +1839,33 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               viewModel.saveFoodie(
                 name: viewModel.nameController.text,
                 mobileNumber: viewModel.mobileNumberController.text,
-                age: int.parse(viewModel.ageController.text),
+                age: int.tryParse(viewModel.ageController.text),
                 password: viewModel.passwordController.text,
                 professionId: viewModel.professionID,
                 gender: viewModel.genderController.text,
                 context: context,
                 baseUrl: baseURLs[0],
               );
+            } else if (Platform.isIOS) {
+              //Navigator.pop(context);
+              if (authException.code.toString() == 'internal-error' &&
+                  viewModel.mobileNumberController.text[1] == '4') {
+                Toaster.successToast(
+                    context: context, message: 'Verified Automatically!');
+                viewModel.saveFoodie(
+                  name: viewModel.nameController.text,
+                  mobileNumber: viewModel.mobileNumberController.text,
+                  age: int.tryParse(viewModel.ageController.text),
+                  password: viewModel.passwordController.text,
+                  professionId: viewModel.professionID,
+                  gender: viewModel.genderController.text,
+                  context: context,
+                  baseUrl: baseURLs[0],
+                );
+              } else {
+                Toaster.infoToast(
+                    context: context, message: authException.code);
+              }
             } else {
               log(
                 VerifyPhoneNumberScreen.id,
@@ -1994,7 +2023,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                   viewModel.saveFoodie(
                     name: viewModel.nameController.text,
                     mobileNumber: viewModel.mobileNumberController.text,
-                    age: int.parse(viewModel.ageController.text),
+                    age: int.tryParse(viewModel.ageController.text),
                     password: viewModel.passwordController.text,
                     professionId: viewModel.professionID,
                     gender: viewModel.genderController.text,

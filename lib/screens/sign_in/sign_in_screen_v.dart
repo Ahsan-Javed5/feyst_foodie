@@ -12,6 +12,7 @@ import '../../base/base_view.dart';
 import '../../constants/api.dart';
 import '../../constants/resources.dart';
 import '../../constants/strings.dart';
+import '../../models/guest/guest_user_response.dart';
 import '../../setup.dart';
 import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/general_ui_kit.dart';
@@ -202,7 +203,8 @@ class SignInScreen extends BaseView<SignInScreenViewModel> {
                       height: 10,
                     ),
                     Center(
-                        child: _exploreExperiencesButton(appTheme: appTheme)),
+                        child: _exploreExperiencesButton(
+                            appTheme: appTheme, context: context)),
                     Expanded(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -266,9 +268,55 @@ class SignInScreen extends BaseView<SignInScreenViewModel> {
     );
   }
 
-  Widget _exploreExperiencesButton({required IAppThemeData appTheme}) {
+  Future<void> guestFoodie(BuildContext context) async {
+    var _network = locateService<INetworkService>();
+    var _storage = locateService<IStorageService>();
+    try {
+      final url =
+          InfininURLHelpers.getRestApiURL(Api.baseURL + Api.anonymousLogin);
+
+      final response = await _network.post(
+        path: url,
+        header: {
+          Api.headerAcceptKey: Api.headerAcceptTypeValue,
+          'Content-Type': 'application/json'
+        },
+      ).whenComplete(() {});
+
+      if (response != null) {
+        GuestUserResponse guestUserResponse =
+            guestUserResponseFromJson(response.body);
+
+        //Toaster.infoToast(context: context, message: guestUserResponseToJson(data).message);
+
+        await _storage.writeString(
+            key: 'guest_token',
+            data: guestUserResponse.t!.authToken.toString());
+        print('guest user token');
+        print(_storage.readString(key: 'guest_token'));
+
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //       builder: (context) => SignUpQuestionireScreen(
+        //         false,
+        //       )),
+        // );
+      } else {
+        Toaster.infoToast(
+            context: context,
+            message: 'Something is wrong please content vendor');
+      }
+    } catch (error) {
+      Toaster.errorToast(context: context, message: '$error');
+    }
+  }
+
+  Widget _exploreExperiencesButton(
+      {required IAppThemeData appTheme, required BuildContext context}) {
     return InkWell(
-      onTap: () {
+      onTap: () async {
+        await guestFoodie(context);
         _navigation.navigateTo(route: BottomBar());
       },
       child: Container(

@@ -41,7 +41,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
 
   @override
   void initState() {
-    var list = widget.bookingListModel?.t;
+    var list = widget.bookingListModel?.t?.reversed;
     bookingProgressStatus.addAll(list!);
     bookingProgres.addAll([
       BookingProgress(

@@ -3,8 +3,6 @@ import 'package:chef/models/guest/guest_user_response.dart';
 import 'package:chef/setup.dart';
 import 'package:video_player/video_player.dart';
 
-import '../../models/signup/signup_response.dart';
-
 class GetStartedScreen extends StatefulWidget {
   const GetStartedScreen({Key? key}) : super(key: key);
 
@@ -82,7 +80,7 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                 Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: Text(
-                      ' Version 1.0.3',
+                      ' Version 1.0.9',
                       style: appTheme.typographies.interFontFamily.headline6,
                     )),
               ],

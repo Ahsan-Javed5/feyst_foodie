@@ -43,6 +43,8 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   TextController mobileNumberController = TextController();
   TextController ageController = TextController(text: "");
   TextController genderController = TextController(text: "");
+  ValueNotifier<bool> selectedMale = ValueNotifier(false);
+  ValueNotifier<bool> selectedFemale = ValueNotifier(false);
   TextController idController = TextController(text: "");
   String countryCode = '+92';
 
@@ -188,14 +190,9 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
 
   bool _validateUpdatedData({
     required String name,
-    required int age,
-    required String gender,
     required int professionId,
   }) =>
-      name.trim().isNotEmpty &&
-      age > 5 &&
-      gender.isNotEmpty &&
-      professionId != 0;
+      name.trim().isNotEmpty && professionId != 0;
 
   Future<void> _cacheData({
     required BuildContext context,
@@ -228,8 +225,8 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   void saveFoodie({
     required String name,
     required String mobileNumber,
-    required int age,
-    required String gender,
+    int? age,
+    String? gender,
     required String password,
     required int professionId,
     required BuildContext context,
@@ -246,8 +243,9 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
         final url =
             InfininURLHelpers.getRestApiURL(Api.baseURL + Api.foodieSignUp);
         signuprequest.T t = signuprequest.T(
-          age: age.toString(),
+          age: age?.toString() ?? "",
           name: name,
+          anonymous: false,
           deviceType: Platform.isAndroid ? 'ANDROID' : 'IOS',
           fcmToken: await FirebaseMessaging.instance.getToken(),
           gender: gender,
@@ -270,7 +268,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
         ).whenComplete(() {});
 
         if (response != null) {
-          developer.log(' Response of Signup body is ' + '${response.body}');
+          developer.log(' Response of Signup body is ' '${response.body}');
 
           SignupResponse signupResponse = signupResponseFromJson(response.body);
 
@@ -287,8 +285,6 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
               data: signupResponse.t.profileImageUrl ?? '');
           await _storage.writeString(
               key: 'auth_token', data: signupResponse.t.authToken);
-
-          //developer.log(' Sign up Response is ' + signupResponse.message);
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -300,23 +296,9 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
           Toaster.infoToast(
               context: context,
               message: 'Something is wrong please content vendor');
-          developer.log(' Response of Signup is null ' + '$response');
         }
-
-        //  loading(isBusy: false);
-        //   _navigation.replace(route: CustomerRoute());
       } catch (error) {
-        developer.log(' Error in ' + '${error}');
-
         Toaster.errorToast(context: context, message: '$error');
-        // emit(
-        //   // state.copyWith(
-        //   //   isBusy: false,
-        //   //   errorMessage: error.toString().contains(Api.unauthorizedRequest)
-        //   //       ? Strings.invalidUsernamePassword
-        //   //       : error.toString(),
-        //   // ),
-        // );
       }
     } else {
       Toaster.errorToast(
@@ -337,8 +319,6 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     isLoading.value = true;
     final isInputValid = _validateUpdatedData(
       name: name,
-      age: age,
-      gender: gender,
       professionId: professionId,
     );
 
@@ -454,6 +434,11 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     mobileNumberController.text = _appService.state.userInfo!.t.mobileNo;
     ageController.text = _appService.state.userInfo!.t.age;
     genderController.text = _appService.state.userInfo!.t.gender;
+    genderController.text.toLowerCase() == 'male'
+        ? selectedMale.value = true
+        : genderController.text.toLowerCase() == 'female'
+            ? selectedFemale.value = true
+            : selectedFemale.value = false;
     idController.text = _appService.state.userInfo!.t.id.toString();
     professionID = _appService.state.userInfo!.t.professionalId;
     print(professionID);

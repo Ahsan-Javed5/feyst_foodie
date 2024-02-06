@@ -1,4 +1,3 @@
-
 class SignupRequest {
   SignupRequest({
     required this.t,
@@ -23,6 +22,7 @@ class T {
     this.fcmToken,
     this.gender,
     this.mobileNo,
+    this.anonymous,
     this.password,
     this.name,
     this.professionalId,
@@ -33,6 +33,7 @@ class T {
   String? age;
   String? deviceType;
   String? fcmToken;
+  bool? anonymous;
   String? gender;
   String? mobileNo;
   String? password;
@@ -41,28 +42,30 @@ class T {
   String? profileImageUrl;
 
   factory T.fromJson(Map<String, dynamic> json) => T(
-    id: json["id"],
-    age: json["age"],
-    deviceType: json["deviceType"],
-    password: json["password"],
-    fcmToken: json["fcmToken"],
-    gender: json["gender"],
-    mobileNo: json["mobileNo"],
-    name: json["name"],
-    professionalId: json["professionalId"],
-    profileImageUrl: json["profileImageUrl"],
-  );
+        id: json["id"],
+        age: json["age"],
+        deviceType: json["deviceType"],
+        password: json["password"],
+        anonymous: json["anonymous"],
+        fcmToken: json["fcmToken"],
+        gender: json["gender"],
+        mobileNo: json["mobileNo"],
+        name: json["name"],
+        professionalId: json["professionalId"],
+        profileImageUrl: json["profileImageUrl"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "age": age,
-    "deviceType" : deviceType,
-    "fcmToken" : fcmToken,
-    "password" : password,
-    "gender": gender,
-    "mobileNo": mobileNo,
-    "name": name,
-    "professionalId": professionalId,
-    "profileImageUrl": profileImageUrl,
-  };
+        "id": id,
+        "age": age,
+        "deviceType": deviceType,
+        "anonymous": anonymous,
+        "fcmToken": fcmToken,
+        "password": password,
+        "gender": gender,
+        "mobileNo": mobileNo,
+        "name": name,
+        "professionalId": professionalId,
+        "profileImageUrl": profileImageUrl,
+      };
 }

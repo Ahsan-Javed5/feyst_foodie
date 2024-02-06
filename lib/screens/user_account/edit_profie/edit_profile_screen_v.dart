@@ -54,177 +54,180 @@ class EditProfileScreen extends BaseView<EditProfileScreenViewModel> {
       child: SafeArea(
         child: Scaffold(
           backgroundColor: HexColor.fromHex("#212129"),
-          body: Column(children: [
-            Container(
-              padding: const EdgeInsets.only(left: 12, top: 20, bottom: 20),
-              child: GeneralNewAppBar(
-                  rightIcon: Resources.homeIconSvg,
-                  title: Strings.labelProfile,
-                  titleColor: Colors.white,
-                  callBack: () {
-                    _navigation.navigateTo(
-                        route: BottomBar(
-                            bottomBarType: bottom_bar.BottomBarType.home));
-                  }),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
+          body: SingleChildScrollView(
+            child: Column(children: [
+              Container(
+                padding: const EdgeInsets.only(left: 12, top: 20, bottom: 20),
+                child: GeneralNewAppBar(
+                    rightIcon: Resources.homeIconSvg,
+                    title: Strings.labelProfile,
+                    titleColor: Colors.white,
+                    callBack: () {
+                      _navigation.navigateTo(
+                          route: BottomBar(
+                              bottomBarType: bottom_bar.BottomBarType.home));
+                    }),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
 
-            ///Account Options
-            _storage.readString(key: 'auth_token').isEmpty
-                ? const SizedBox()
-                : Column(
-                    children: [
-                      _Header(
-                        appTheme: appTheme,
-                        title: Strings.labelHeaderAccount,
-                      ),
-                      ListView.separated(
-                        itemCount: accountList.length,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 18.0, vertical: 12),
-                            child: InkWell(
-                              onTap: () async {
-                                if (accountList.elementAt(index) ==
-                                    Strings.labelPersonalDetails) {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => SignUpScreen(
-                                              true,
-                                            )),
-                                  );
-                                } else if (accountList.elementAt(index) ==
-                                    Strings.labelProfile) {
-                                  // await signUpQuestionnaireViewModel.getFoodieAnswers();
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            SignUpQuestionireScreen(true)),
-                                  );
-                                } else if (accountList.elementAt(index) ==
-                                    Strings.labelReviews) {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ReviewsScreen()),
-                                  );
-                                } else if (accountList.elementAt(index) ==
-                                    Strings.updatePassword) {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const UpdatePassword()),
-                                  );
-                                }
-                              },
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  GeneralText(
-                                    accountList.elementAt(index),
-                                    style: appTheme
-                                        .typographies.interFontFamily.headline6
-                                        .copyWith(
-                                            fontSize: 15,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w400),
-                                  ),
-                                  SvgPicture.asset(Resources.arrowProfileSVG),
-                                ],
+              ///Account Options
+              _storage.readString(key: 'auth_token').isEmpty
+                  ? const SizedBox()
+                  : Column(
+                      children: [
+                        _Header(
+                          appTheme: appTheme,
+                          title: Strings.labelHeaderAccount,
+                        ),
+                        ListView.separated(
+                          itemCount: accountList.length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 18.0, vertical: 12),
+                              child: InkWell(
+                                onTap: () async {
+                                  if (accountList.elementAt(index) ==
+                                      Strings.labelPersonalDetails) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => SignUpScreen(
+                                                true,
+                                              )),
+                                    );
+                                  } else if (accountList.elementAt(index) ==
+                                      Strings.labelProfile) {
+                                    // await signUpQuestionnaireViewModel.getFoodieAnswers();
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              SignUpQuestionireScreen(true)),
+                                    );
+                                  } else if (accountList.elementAt(index) ==
+                                      Strings.labelReviews) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ReviewsScreen()),
+                                    );
+                                  } else if (accountList.elementAt(index) ==
+                                      Strings.updatePassword) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const UpdatePassword()),
+                                    );
+                                  }
+                                },
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    GeneralText(
+                                      accountList.elementAt(index),
+                                      style: appTheme.typographies
+                                          .interFontFamily.headline6
+                                          .copyWith(
+                                              fontSize: 15,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w400),
+                                    ),
+                                    SvgPicture.asset(Resources.arrowProfileSVG),
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                        separatorBuilder: (BuildContext context, int index) {
-                          return Divider(
-                            color: const Color(0xfff1c452).withOpacity(0.3),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-            const SizedBox(
-              height: 7,
-            ),
-            _Header(
-              appTheme: appTheme,
-              title: Strings.labelHeaderOthers,
-            ),
-            ListView.separated(
-              itemCount: othersList.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return InkWell(
-                    onTap: () {
-                      if (othersList.elementAt(index) == Strings.labelLogOut) {
-                        developer.log(' Clicked on logout ');
-                        viewModel.logout(context);
-                      } else if (othersList.elementAt(index) ==
-                          Strings.labelPrivacyPolicy) {
-                        Future.delayed(const Duration(seconds: 3), () {});
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const PrivacyPolicy('privacy')),
-                        );
-                      } else if (othersList.elementAt(index) ==
-                          Strings.labelTermsCond) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const PrivacyPolicy('terms')),
-                        );
-                      }
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 18.0, vertical: 12),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GeneralText(
-                            othersList.elementAt(index),
-                            style: appTheme
-                                .typographies.interFontFamily.headline6
-                                .copyWith(
-                                    fontSize: 15,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w400),
-                          ),
-                          SvgPicture.asset(Resources.arrowProfileSVG),
-                        ],
-                      ),
-                    ));
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return Divider(
-                  color: const Color(0xfff1c452).withOpacity(0.3),
-                );
-              },
-            ),
-            Divider(
-              color: const Color(0xfff1c452).withOpacity(0.3),
-            ),
-            _storage.readString(key: 'auth_token').isEmpty
-                ? Padding(
-                    padding: const EdgeInsets.only(
-                      top: 25,
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return Divider(
+                              color: const Color(0xfff1c452).withOpacity(0.3),
+                            );
+                          },
+                        ),
+                      ],
                     ),
-                    child: _loginButtonTitle(appTheme: appTheme),
-                  )
-                : const SizedBox(),
-          ]),
+              const SizedBox(
+                height: 7,
+              ),
+              _Header(
+                appTheme: appTheme,
+                title: Strings.labelHeaderOthers,
+              ),
+              ListView.separated(
+                itemCount: othersList.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                      onTap: () {
+                        if (othersList.elementAt(index) ==
+                            Strings.labelLogOut) {
+                          developer.log(' Clicked on logout ');
+                          viewModel.logout(context);
+                        } else if (othersList.elementAt(index) ==
+                            Strings.labelPrivacyPolicy) {
+                          Future.delayed(const Duration(seconds: 3), () {});
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const PrivacyPolicy('privacy')),
+                          );
+                        } else if (othersList.elementAt(index) ==
+                            Strings.labelTermsCond) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const PrivacyPolicy('terms')),
+                          );
+                        }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 18.0, vertical: 12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GeneralText(
+                              othersList.elementAt(index),
+                              style: appTheme
+                                  .typographies.interFontFamily.headline6
+                                  .copyWith(
+                                      fontSize: 15,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w400),
+                            ),
+                            SvgPicture.asset(Resources.arrowProfileSVG),
+                          ],
+                        ),
+                      ));
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return Divider(
+                    color: const Color(0xfff1c452).withOpacity(0.3),
+                  );
+                },
+              ),
+              Divider(
+                color: const Color(0xfff1c452).withOpacity(0.3),
+              ),
+              _storage.readString(key: 'auth_token').isEmpty
+                  ? Padding(
+                      padding: const EdgeInsets.only(
+                        top: 25,
+                      ),
+                      child: _loginButtonTitle(appTheme: appTheme),
+                    )
+                  : const SizedBox(),
+            ]),
+          ),
         ),
       ),
     );
