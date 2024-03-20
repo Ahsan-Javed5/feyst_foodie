@@ -1,8 +1,10 @@
+import 'package:auto_route/annotations.dart';
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/models/guest/guest_user_response.dart';
 import 'package:chef/setup.dart';
 import 'package:video_player/video_player.dart';
 
+@RoutePage()
 class GetStartedScreen extends StatefulWidget {
   const GetStartedScreen({Key? key}) : super(key: key);
 
@@ -80,7 +82,7 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                 Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: Text(
-                      ' Version 1.0.9',
+                      Strings.appVersion,
                       style: appTheme.typographies.interFontFamily.headline6,
                     )),
               ],
@@ -126,7 +128,7 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
       } else {
         Toaster.infoToast(
             context: context,
-            message: 'Something is wrong please content vendor');
+            message: Strings.somethingWentWrong);
       }
     } catch (error) {
       Toaster.errorToast(context: context, message: '$error');
@@ -187,7 +189,7 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
       title: Strings.getStartedButtonTitle.toUpperCase(),
       styleType: ButtonStyleType.fill,
       onTap: () {
-        locateService<INavigationService>().navigateTo(route: BottomBar());
+        locateService<INavigationService>().navigateTo(route: BottomBarRoute());
         // Navigator.push(
         //   context,
         //   MaterialPageRoute(

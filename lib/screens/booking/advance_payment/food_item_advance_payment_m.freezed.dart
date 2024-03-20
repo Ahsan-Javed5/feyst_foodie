@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'food_item_advance_payment_m.dart';
 
@@ -12,7 +12,7 @@ part of 'food_item_advance_payment_m.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$FoodItemAdvancePaymentState {
@@ -25,8 +25,8 @@ mixin _$FoodItemAdvancePaymentState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(AdvancePendingResponse advancePendingResponse)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(AdvancePendingResponse advancePendingResponse)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -44,8 +44,8 @@ mixin _$FoodItemAdvancePaymentState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Loading value)? loading,
-    TResult Function(Loaded value)? loaded,
+    TResult? Function(Loading value)? loading,
+    TResult? Function(Loaded value)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -62,40 +62,42 @@ abstract class $FoodItemAdvancePaymentStateCopyWith<$Res> {
   factory $FoodItemAdvancePaymentStateCopyWith(
           FoodItemAdvancePaymentState value,
           $Res Function(FoodItemAdvancePaymentState) then) =
-      _$FoodItemAdvancePaymentStateCopyWithImpl<$Res>;
+      _$FoodItemAdvancePaymentStateCopyWithImpl<$Res,
+          FoodItemAdvancePaymentState>;
 }
 
 /// @nodoc
-class _$FoodItemAdvancePaymentStateCopyWithImpl<$Res>
+class _$FoodItemAdvancePaymentStateCopyWithImpl<$Res,
+        $Val extends FoodItemAdvancePaymentState>
     implements $FoodItemAdvancePaymentStateCopyWith<$Res> {
   _$FoodItemAdvancePaymentStateCopyWithImpl(this._value, this._then);
 
-  final FoodItemAdvancePaymentState _value;
   // ignore: unused_field
-  final $Res Function(FoodItemAdvancePaymentState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class _$$LoadingCopyWith<$Res> {
-  factory _$$LoadingCopyWith(_$Loading value, $Res Function(_$Loading) then) =
-      __$$LoadingCopyWithImpl<$Res>;
+abstract class _$$LoadingImplCopyWith<$Res> {
+  factory _$$LoadingImplCopyWith(
+          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
+      __$$LoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$LoadingCopyWithImpl<$Res>
-    extends _$FoodItemAdvancePaymentStateCopyWithImpl<$Res>
-    implements _$$LoadingCopyWith<$Res> {
-  __$$LoadingCopyWithImpl(_$Loading _value, $Res Function(_$Loading) _then)
-      : super(_value, (v) => _then(v as _$Loading));
-
-  @override
-  _$Loading get _value => super._value as _$Loading;
+class __$$LoadingImplCopyWithImpl<$Res>
+    extends _$FoodItemAdvancePaymentStateCopyWithImpl<$Res, _$LoadingImpl>
+    implements _$$LoadingImplCopyWith<$Res> {
+  __$$LoadingImplCopyWithImpl(
+      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$Loading implements Loading {
-  const _$Loading();
+class _$LoadingImpl implements Loading {
+  const _$LoadingImpl();
 
   @override
   String toString() {
@@ -103,9 +105,9 @@ class _$Loading implements Loading {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$Loading);
+        (other.runtimeType == runtimeType && other is _$LoadingImpl);
   }
 
   @override
@@ -124,8 +126,8 @@ class _$Loading implements Loading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(AdvancePendingResponse advancePendingResponse)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(AdvancePendingResponse advancePendingResponse)? loaded,
   }) {
     return loading?.call();
   }
@@ -155,8 +157,8 @@ class _$Loading implements Loading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Loading value)? loading,
-    TResult Function(Loaded value)? loaded,
+    TResult? Function(Loading value)? loading,
+    TResult? Function(Loaded value)? loaded,
   }) {
     return loading?.call(this);
   }
@@ -176,32 +178,33 @@ class _$Loading implements Loading {
 }
 
 abstract class Loading implements FoodItemAdvancePaymentState {
-  const factory Loading() = _$Loading;
+  const factory Loading() = _$LoadingImpl;
 }
 
 /// @nodoc
-abstract class _$$LoadedCopyWith<$Res> {
-  factory _$$LoadedCopyWith(_$Loaded value, $Res Function(_$Loaded) then) =
-      __$$LoadedCopyWithImpl<$Res>;
+abstract class _$$LoadedImplCopyWith<$Res> {
+  factory _$$LoadedImplCopyWith(
+          _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
+      __$$LoadedImplCopyWithImpl<$Res>;
+  @useResult
   $Res call({AdvancePendingResponse advancePendingResponse});
 }
 
 /// @nodoc
-class __$$LoadedCopyWithImpl<$Res>
-    extends _$FoodItemAdvancePaymentStateCopyWithImpl<$Res>
-    implements _$$LoadedCopyWith<$Res> {
-  __$$LoadedCopyWithImpl(_$Loaded _value, $Res Function(_$Loaded) _then)
-      : super(_value, (v) => _then(v as _$Loaded));
+class __$$LoadedImplCopyWithImpl<$Res>
+    extends _$FoodItemAdvancePaymentStateCopyWithImpl<$Res, _$LoadedImpl>
+    implements _$$LoadedImplCopyWith<$Res> {
+  __$$LoadedImplCopyWithImpl(
+      _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$Loaded get _value => super._value as _$Loaded;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? advancePendingResponse = freezed,
+    Object? advancePendingResponse = null,
   }) {
-    return _then(_$Loaded(
-      advancePendingResponse == freezed
+    return _then(_$LoadedImpl(
+      null == advancePendingResponse
           ? _value.advancePendingResponse
           : advancePendingResponse // ignore: cast_nullable_to_non_nullable
               as AdvancePendingResponse,
@@ -211,8 +214,8 @@ class __$$LoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$Loaded implements Loaded {
-  const _$Loaded(this.advancePendingResponse);
+class _$LoadedImpl implements Loaded {
+  const _$LoadedImpl(this.advancePendingResponse);
 
   @override
   final AdvancePendingResponse advancePendingResponse;
@@ -223,22 +226,22 @@ class _$Loaded implements Loaded {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$Loaded &&
-            const DeepCollectionEquality()
-                .equals(other.advancePendingResponse, advancePendingResponse));
+            other is _$LoadedImpl &&
+            (identical(other.advancePendingResponse, advancePendingResponse) ||
+                other.advancePendingResponse == advancePendingResponse));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(advancePendingResponse));
+  int get hashCode => Object.hash(runtimeType, advancePendingResponse);
 
   @JsonKey(ignore: true)
   @override
-  _$$LoadedCopyWith<_$Loaded> get copyWith =>
-      __$$LoadedCopyWithImpl<_$Loaded>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
+      __$$LoadedImplCopyWithImpl<_$LoadedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -253,8 +256,8 @@ class _$Loaded implements Loaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(AdvancePendingResponse advancePendingResponse)? loaded,
+    TResult? Function()? loading,
+    TResult? Function(AdvancePendingResponse advancePendingResponse)? loaded,
   }) {
     return loaded?.call(advancePendingResponse);
   }
@@ -284,8 +287,8 @@ class _$Loaded implements Loaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Loading value)? loading,
-    TResult Function(Loaded value)? loaded,
+    TResult? Function(Loading value)? loading,
+    TResult? Function(Loaded value)? loaded,
   }) {
     return loaded?.call(this);
   }
@@ -306,10 +309,10 @@ class _$Loaded implements Loaded {
 
 abstract class Loaded implements FoodItemAdvancePaymentState {
   const factory Loaded(final AdvancePendingResponse advancePendingResponse) =
-      _$Loaded;
+      _$LoadedImpl;
 
   AdvancePendingResponse get advancePendingResponse;
   @JsonKey(ignore: true)
-  _$$LoadedCopyWith<_$Loaded> get copyWith =>
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

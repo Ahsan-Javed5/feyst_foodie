@@ -64,7 +64,7 @@ class EditProfileScreen extends BaseView<EditProfileScreenViewModel> {
                     titleColor: Colors.white,
                     callBack: () {
                       _navigation.navigateTo(
-                          route: BottomBar(
+                          route: BottomBarRoute(
                               bottomBarType: bottom_bar.BottomBarType.home));
                     }),
               ),

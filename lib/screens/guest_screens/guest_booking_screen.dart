@@ -7,8 +7,8 @@ import '../../helpers/color_helper.dart';
 import '../../helpers/device_helper.dart';
 import 'package:chef/screens/bottom_bar/bottom_bar.dart' as bottom_bar;
 
+import '../../services/navigation/app_router.dart';
 import '../../services/navigation/navigation_service.dart';
-import '../../services/navigation/router.gr.dart';
 import '../../setup.dart';
 import '../../theme/app_theme_data/app_theme_data.dart';
 import '../../theme/app_theme_widget.dart';
@@ -61,7 +61,7 @@ class _GuestBookingScreenState extends State<GuestBookingScreen> {
                 titleColor: Colors.white,
                 callBack: () {
                   _navigation.navigateTo(
-                      route: BottomBar(
+                      route: BottomBarRoute(
                           bottomBarType: bottom_bar.BottomBarType.home));
                 },
               ),

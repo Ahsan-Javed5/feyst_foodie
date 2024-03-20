@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:auto_route/annotations.dart';
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/screens/bottom_bar/bottom_bar.dart' as bottom_bar;
 import 'package:chef/ui_kit/widgets/custom_dialog.dart';
@@ -22,8 +23,9 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 import '../user_account/user_profile.dart';
 
-class FoodProductBookingConfirmedDetails extends StatefulWidget {
-  const FoodProductBookingConfirmedDetails(
+@RoutePage()
+class FoodProductBookingConfirmedDetailsScreen extends StatefulWidget {
+  const FoodProductBookingConfirmedDetailsScreen(
       {Key? key,
       required AdvancePendingResponse advancePendingDetails,
       required ChefDataResponse chefData})
@@ -35,12 +37,12 @@ class FoodProductBookingConfirmedDetails extends StatefulWidget {
   final ChefDataResponse _chefData;
 
   @override
-  State<FoodProductBookingConfirmedDetails> createState() =>
-      _FoodProductBookingConfirmedDetailsState();
+  State<FoodProductBookingConfirmedDetailsScreen> createState() =>
+      _FoodProductBookingConfirmedDetailsScreenState();
 }
 
-class _FoodProductBookingConfirmedDetailsState
-    extends State<FoodProductBookingConfirmedDetails> {
+class _FoodProductBookingConfirmedDetailsScreenState
+    extends State<FoodProductBookingConfirmedDetailsScreen> {
   late double _rating;
   double _initialRating = 3;
   IconData? _selectedIcon;
@@ -259,7 +261,7 @@ class _FoodProductBookingConfirmedDetailsState
                                 rightIcon: Resources.homeIconSvg,
                                 callBack: () {
                                   _navigation.navigateTo(
-                                      route: BottomBar(
+                                      route: BottomBarRoute(
                                           bottomBarType: bottom_bar
                                               .BottomBarType.bookings));
                                 },
@@ -2008,7 +2010,7 @@ class _FoodProductBookingConfirmedDetailsState
                     message: 'Your Experience has been Cancelled');
                 Navigator.pop(context);
                 _navigate.navigateTo(
-                    route: BottomBar(
+                    route: BottomBarRoute(
                         bottomBarType: bottom_bar.BottomBarType.history));
 
                 ///Here need to call cancel api

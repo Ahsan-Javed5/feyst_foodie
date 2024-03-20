@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'edit_profile_screen_m.dart';
 
@@ -12,7 +12,7 @@ part of 'edit_profile_screen_m.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$EditProfileScreenState {
@@ -28,7 +28,7 @@ mixin _$EditProfileScreenState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String mobileNumber, bool isBusy, String errorMessage)?
+    TResult? Function(String mobileNumber, bool isBusy, String errorMessage)?
         initialized,
   }) =>
       throw _privateConstructorUsedError;
@@ -46,7 +46,7 @@ mixin _$EditProfileScreenState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Initialized value)? initialized,
+    TResult? Function(Initialized value)? initialized,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -65,79 +65,82 @@ mixin _$EditProfileScreenState {
 abstract class $EditProfileScreenStateCopyWith<$Res> {
   factory $EditProfileScreenStateCopyWith(EditProfileScreenState value,
           $Res Function(EditProfileScreenState) then) =
-      _$EditProfileScreenStateCopyWithImpl<$Res>;
+      _$EditProfileScreenStateCopyWithImpl<$Res, EditProfileScreenState>;
+  @useResult
   $Res call({String mobileNumber, bool isBusy, String errorMessage});
 }
 
 /// @nodoc
-class _$EditProfileScreenStateCopyWithImpl<$Res>
+class _$EditProfileScreenStateCopyWithImpl<$Res,
+        $Val extends EditProfileScreenState>
     implements $EditProfileScreenStateCopyWith<$Res> {
   _$EditProfileScreenStateCopyWithImpl(this._value, this._then);
 
-  final EditProfileScreenState _value;
   // ignore: unused_field
-  final $Res Function(EditProfileScreenState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? mobileNumber = freezed,
-    Object? isBusy = freezed,
-    Object? errorMessage = freezed,
+    Object? mobileNumber = null,
+    Object? isBusy = null,
+    Object? errorMessage = null,
   }) {
     return _then(_value.copyWith(
-      mobileNumber: mobileNumber == freezed
+      mobileNumber: null == mobileNumber
           ? _value.mobileNumber
           : mobileNumber // ignore: cast_nullable_to_non_nullable
               as String,
-      isBusy: isBusy == freezed
+      isBusy: null == isBusy
           ? _value.isBusy
           : isBusy // ignore: cast_nullable_to_non_nullable
               as bool,
-      errorMessage: errorMessage == freezed
+      errorMessage: null == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$InitializedCopyWith<$Res>
+abstract class _$$InitializedImplCopyWith<$Res>
     implements $EditProfileScreenStateCopyWith<$Res> {
-  factory _$$InitializedCopyWith(
-          _$Initialized value, $Res Function(_$Initialized) then) =
-      __$$InitializedCopyWithImpl<$Res>;
+  factory _$$InitializedImplCopyWith(
+          _$InitializedImpl value, $Res Function(_$InitializedImpl) then) =
+      __$$InitializedImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String mobileNumber, bool isBusy, String errorMessage});
 }
 
 /// @nodoc
-class __$$InitializedCopyWithImpl<$Res>
-    extends _$EditProfileScreenStateCopyWithImpl<$Res>
-    implements _$$InitializedCopyWith<$Res> {
-  __$$InitializedCopyWithImpl(
-      _$Initialized _value, $Res Function(_$Initialized) _then)
-      : super(_value, (v) => _then(v as _$Initialized));
+class __$$InitializedImplCopyWithImpl<$Res>
+    extends _$EditProfileScreenStateCopyWithImpl<$Res, _$InitializedImpl>
+    implements _$$InitializedImplCopyWith<$Res> {
+  __$$InitializedImplCopyWithImpl(
+      _$InitializedImpl _value, $Res Function(_$InitializedImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$Initialized get _value => super._value as _$Initialized;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? mobileNumber = freezed,
-    Object? isBusy = freezed,
-    Object? errorMessage = freezed,
+    Object? mobileNumber = null,
+    Object? isBusy = null,
+    Object? errorMessage = null,
   }) {
-    return _then(_$Initialized(
-      mobileNumber: mobileNumber == freezed
+    return _then(_$InitializedImpl(
+      mobileNumber: null == mobileNumber
           ? _value.mobileNumber
           : mobileNumber // ignore: cast_nullable_to_non_nullable
               as String,
-      isBusy: isBusy == freezed
+      isBusy: null == isBusy
           ? _value.isBusy
           : isBusy // ignore: cast_nullable_to_non_nullable
               as bool,
-      errorMessage: errorMessage == freezed
+      errorMessage: null == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
@@ -147,8 +150,8 @@ class __$$InitializedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$Initialized implements Initialized {
-  const _$Initialized(
+class _$InitializedImpl implements Initialized {
+  const _$InitializedImpl(
       {required this.mobileNumber,
       required this.isBusy,
       this.errorMessage = ''});
@@ -167,28 +170,26 @@ class _$Initialized implements Initialized {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$Initialized &&
-            const DeepCollectionEquality()
-                .equals(other.mobileNumber, mobileNumber) &&
-            const DeepCollectionEquality().equals(other.isBusy, isBusy) &&
-            const DeepCollectionEquality()
-                .equals(other.errorMessage, errorMessage));
+            other is _$InitializedImpl &&
+            (identical(other.mobileNumber, mobileNumber) ||
+                other.mobileNumber == mobileNumber) &&
+            (identical(other.isBusy, isBusy) || other.isBusy == isBusy) &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(mobileNumber),
-      const DeepCollectionEquality().hash(isBusy),
-      const DeepCollectionEquality().hash(errorMessage));
+  int get hashCode =>
+      Object.hash(runtimeType, mobileNumber, isBusy, errorMessage);
 
   @JsonKey(ignore: true)
   @override
-  _$$InitializedCopyWith<_$Initialized> get copyWith =>
-      __$$InitializedCopyWithImpl<_$Initialized>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$InitializedImplCopyWith<_$InitializedImpl> get copyWith =>
+      __$$InitializedImplCopyWithImpl<_$InitializedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -203,7 +204,7 @@ class _$Initialized implements Initialized {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String mobileNumber, bool isBusy, String errorMessage)?
+    TResult? Function(String mobileNumber, bool isBusy, String errorMessage)?
         initialized,
   }) {
     return initialized?.call(mobileNumber, isBusy, errorMessage);
@@ -233,7 +234,7 @@ class _$Initialized implements Initialized {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Initialized value)? initialized,
+    TResult? Function(Initialized value)? initialized,
   }) {
     return initialized?.call(this);
   }
@@ -255,7 +256,7 @@ abstract class Initialized implements EditProfileScreenState {
   const factory Initialized(
       {required final String mobileNumber,
       required final bool isBusy,
-      final String errorMessage}) = _$Initialized;
+      final String errorMessage}) = _$InitializedImpl;
 
   @override
   String get mobileNumber;
@@ -265,6 +266,6 @@ abstract class Initialized implements EditProfileScreenState {
   String get errorMessage;
   @override
   @JsonKey(ignore: true)
-  _$$InitializedCopyWith<_$Initialized> get copyWith =>
+  _$$InitializedImplCopyWith<_$InitializedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

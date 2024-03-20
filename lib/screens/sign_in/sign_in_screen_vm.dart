@@ -131,10 +131,9 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
         final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.loginAPI);
 
         DataRequest t = DataRequest(
-          mobileNo:  countryCode+mobileNumber,
-          fcmToken:   await FirebaseMessaging.instance.getToken(),
-          deviceType: Platform.isAndroid ? 'ANDROID' : 'IOS'
-        );
+            mobileNo: countryCode + mobileNumber,
+            fcmToken: await FirebaseMessaging.instance.getToken(),
+            deviceType: Platform.isAndroid ? 'ANDROID' : 'IOS');
 
         final loginCredentials = LoginRequest(
           t: t,
@@ -142,7 +141,7 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
 
         final _header = <String, String>{
           Api.headerAcceptKey: Api.headerAcceptTypeValue,
-          'Content-Type' : 'application/json'
+          'Content-Type': 'application/json'
         };
 
         final response = await _network.post(
@@ -151,7 +150,7 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
             "t": {
               "deviceType": Platform.isAndroid ? 'ANDROID' : 'IOS',
               "fcmToken": await FirebaseMessaging.instance.getToken(),
-              "mobileNumber": countryCode+mobileNumber,
+              "mobileNumber": countryCode + mobileNumber,
               "password": password
             }
           },
@@ -169,15 +168,21 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
             loginData: response.body,
             baseUrl: Api.baseURL,
           );
-          if(signupResponse.t.profileImageUrl != null){
-          await _storage.writeString(key: 'profile_image', data: signupResponse.t.profileImageUrl ?? '');}
+          if (signupResponse.t.profileImageUrl != null) {
+            await _storage.writeString(
+                key: 'profile_image',
+                data: signupResponse.t.profileImageUrl ?? '');
+          }
 
-          await _storage.writeString(key: 'auth_token' , data: signupResponse.t.authToken);
+          await _storage.writeString(
+              key: 'auth_token', data: signupResponse.t.authToken);
 
           developer.log(' Sign up Response is ' + signupResponse.message ?? '');
 
           //    Navigator.pushReplacementNamed(context, '/BottomBar');
-          _navigation.replace(route: BottomBar(bottomBarType: bottom_bar.BottomBarType.home));
+          _navigation.replace(
+              route:
+                  BottomBarRoute(bottomBarType: bottom_bar.BottomBarType.home));
           // Navigator.push(
           //   context,
           //   MaterialPageRoute(builder: (context) => const BottomBar()),

@@ -188,7 +188,8 @@ class _SignUpLetsStartScreenState extends State<SignUpLetsStartScreen> {
       onTap: () {
         developer.log(' here in lets start screen  Bar ');
         _navigationService.navigateTo(
-            route: BottomBar(bottomBarType: bottom_bar.BottomBarType.home));
+            route:
+                BottomBarRoute(bottomBarType: bottom_bar.BottomBarType.home));
         // _navigationService.replace(route: const BottomBar());
 
         // _navigation.replace(route: BottomBar());

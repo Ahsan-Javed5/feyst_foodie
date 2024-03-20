@@ -1,26 +1,12 @@
+import 'package:auto_route/annotations.dart';
 import 'package:chef/helpers/helpers.dart';
-import 'package:chef/screens/forgot_password/forgot_password_screen_v.dart';
 import 'package:chef/screens/sign_in/sign_in_screen_vm.dart';
-import 'package:chef/services/device/device_service.dart';
-import 'package:chef/ui_kit/widgets/general_text_input.dart';
 import 'package:country_code_picker/country_code_picker.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
 
-import '../../base/base_view.dart';
-import '../../constants/api.dart';
-import '../../constants/resources.dart';
-import '../../constants/strings.dart';
 import '../../models/guest/guest_user_response.dart';
 import '../../setup.dart';
-import '../../theme/app_theme_widget.dart';
-import '../../ui_kit/general_ui_kit.dart';
-import '../../ui_kit/helpers/dialog_helper.dart';
-import '../../ui_kit/widgets/general_bottom_sheet.dart';
-import '../../ui_kit/widgets/general_text.dart';
-import '../sign_up/sign_up_screen_v.dart';
 
+@RoutePage()
 class SignInScreen extends BaseView<SignInScreenViewModel> {
   SignInScreen({Key? key}) : super(key: key);
   final TextController _mobileNumberController = TextController();
@@ -122,7 +108,7 @@ class SignInScreen extends BaseView<SignInScreenViewModel> {
                       height: 25,
                     ),
                     GeneralText(
-                      "Password",
+                      Strings.password,
                       textAlign: TextAlign.center,
                       style: appTheme.typographies.interFontFamily.headline4
                           .copyWith(
@@ -139,7 +125,7 @@ class SignInScreen extends BaseView<SignInScreenViewModel> {
                         backgroundColor: appTheme.colors.textFieldFilledColor,
                         valueStyle: const TextStyle(color: Colors.white),
                         inputBorder: appTheme.focusedBorder,
-                        hint: 'Enter Your Password',
+                        hint: Strings.enterYourPassword,
                         hintStyle:
                             const TextStyle(color: Colors.white, fontSize: 15),
                         onChanged: (newValue) {}),
@@ -160,7 +146,7 @@ class SignInScreen extends BaseView<SignInScreenViewModel> {
                               );
                             },
                             child: GeneralText(
-                              "Create New Account?",
+                              Strings.createNewAccount,
                               textAlign: TextAlign.center,
                               style: appTheme
                                   .typographies.interFontFamily.headline7
@@ -180,7 +166,7 @@ class SignInScreen extends BaseView<SignInScreenViewModel> {
                                       baseUrl: Api.baseURL));
                             },
                             child: GeneralText(
-                              "Forgot Password?",
+                              Strings.forgotPassword,
                               textAlign: TextAlign.center,
                               style: appTheme
                                   .typographies.interFontFamily.headline7
@@ -305,7 +291,7 @@ class SignInScreen extends BaseView<SignInScreenViewModel> {
       } else {
         Toaster.infoToast(
             context: context,
-            message: 'Something is wrong please content vendor');
+            message: Strings.somethingWentWrong);
       }
     } catch (error) {
       Toaster.errorToast(context: context, message: '$error');
@@ -317,7 +303,7 @@ class SignInScreen extends BaseView<SignInScreenViewModel> {
     return InkWell(
       onTap: () async {
         await guestFoodie(context);
-        _navigation.navigateTo(route: BottomBar());
+        _navigation.navigateTo(route: BottomBarRoute());
       },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
@@ -330,7 +316,7 @@ class SignInScreen extends BaseView<SignInScreenViewModel> {
         child: Column(
           children: [
             GeneralText(
-              'EXPLORE EXPERIENCES',
+              Strings.exploreExperiences,
               textAlign: TextAlign.center,
               style: appTheme.typographies.interFontFamily.headline4.copyWith(
                   color: Colors.white,
@@ -338,7 +324,7 @@ class SignInScreen extends BaseView<SignInScreenViewModel> {
                   fontWeight: FontWeight.w500),
             ),
             GeneralText(
-              'As Guest User',
+              Strings.asGuestUser,
               textAlign: TextAlign.center,
               style: appTheme.typographies.interFontFamily.headline4.copyWith(
                   color: Colors.grey,

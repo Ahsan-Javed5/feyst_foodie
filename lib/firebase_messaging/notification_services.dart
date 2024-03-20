@@ -4,11 +4,10 @@ import 'package:chef/screens/bottom_bar/bottom_bar.dart' as bottom_bar;
 
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/models/booking/booking_list_response_model.dart';
-import '../../services/navigation/router.gr.dart' as nav;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:developer' as developer;
-
+import 'package:chef/services/navigation/app_router.dart' as nav;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import '../setup.dart';
@@ -41,7 +40,7 @@ class NotificationServices {
       BuildContext context, RemoteMessage message) async {
     var androidInitializationSettings =
         const AndroidInitializationSettings('@mipmap/ic_launcher');
-    var iosInitializationSettings = const IOSInitializationSettings();
+    var iosInitializationSettings = const DarwinInitializationSettings();
 
     var initializationSetting = InitializationSettings(
       android: androidInitializationSettings,
@@ -49,7 +48,7 @@ class NotificationServices {
     );
     await _flutterLocalNotificationsPlugin.initialize(
       initializationSetting,
-      onSelectNotification: (payload) {
+      onDidReceiveNotificationResponse: (payload) {
         handleMessage(context, message);
       },
     );
@@ -84,8 +83,8 @@ class NotificationServices {
               priority: Priority.high,
               ticker: 'ticker');
 
-      IOSNotificationDetails iosNotificationDetails =
-          const IOSNotificationDetails(
+      DarwinNotificationDetails iosNotificationDetails =
+          const DarwinNotificationDetails(
         presentAlert: true,
         presentBadge: true,
         presentSound: true,

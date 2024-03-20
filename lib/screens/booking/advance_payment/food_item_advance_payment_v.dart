@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/screens/booking/booking_list/booking_list_screen_m.dart';
 import 'package:chef/screens/booking/booking_list/booking_list_screen_vm.dart';
@@ -9,6 +10,7 @@ import '../../../setup.dart';
 import 'food_item_advance_payment_m.dart';
 import 'food_item_advance_payment_vm.dart';
 
+@RoutePage()
 class FoodItemAdvancePaymentScreen
     extends BaseView<FoodItemAdvancePaymentViewModel> {
   FoodItemAdvancePaymentScreen({required BookingItem bookingItem, Key? key})
@@ -44,7 +46,7 @@ class FoodItemAdvancePaymentScreen
     // return Container();
     final _navigate = locateService<INavigationService>();
     _navigate.navigateTo(
-        route: FoodProductAdvancePendingDetails(
+        route: FoodProductAdvancePendingDetailsRoute(
             advancePendingDetails: bookingListModel));
     return Container();
     //   return FoodProductAdvancePendingDetails(advancePendingDetails: );

@@ -1592,34 +1592,6 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   //   );
   // }
 
-  Future<void> selectStartDate(
-      BuildContext context, IAppThemeData appTheme) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-
-      builder: (context, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: ColorScheme.light(
-                primary: appTheme.colors.primaryBackground // <-- SEE HERE
-
-                ),
-            textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(
-                primary: Colors.red, // button text color
-              ),
-            ),
-          ),
-          child: child!,
-        );
-      },
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2015, 8),
-      //lastDate: DateTime(2101),
-      lastDate: DateTime.now(),
-    );
-  }
-
   Widget scheduleTabViewForm(BuildContext context, IAppThemeData appTheme) {
     return Padding(
       padding: const EdgeInsetsDirectional.only(start: 20),

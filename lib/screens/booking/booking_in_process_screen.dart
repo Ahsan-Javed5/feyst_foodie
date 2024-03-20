@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +13,9 @@ import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
 import '../booking/food_item_booking.dart';
 
-class FoodItemInProcessBooking extends StatefulWidget {
-  const FoodItemInProcessBooking({Key? key}) : super(key: key);
+@RoutePage()
+class FoodItemInProcessBookingScreen extends StatefulWidget {
+  const FoodItemInProcessBookingScreen({Key? key}) : super(key: key);
 
   // const FoodItemInProcessBooking(
   //     {Key? key, required AdvancePendingResponse advancePendingDetails})
@@ -23,11 +25,12 @@ class FoodItemInProcessBooking extends StatefulWidget {
   // final AdvancePendingResponse _advancePendingDetails;
 
   @override
-  State<FoodItemInProcessBooking> createState() =>
-      _FoodItemInProcessBookingState();
+  State<FoodItemInProcessBookingScreen> createState() =>
+      _FoodItemInProcessBookingScreenState();
 }
 
-class _FoodItemInProcessBookingState extends State<FoodItemInProcessBooking> {
+class _FoodItemInProcessBookingScreenState
+    extends State<FoodItemInProcessBookingScreen> {
   List<CustomModel> wowFactorsList = [];
   List<CustomModel> menuListItems = [];
   bool checkValue = false;
@@ -1064,8 +1067,12 @@ class _FoodItemInProcessBookingState extends State<FoodItemInProcessBooking> {
       title: Strings.bookingInProcessPayAdvance.toUpperCase(),
       styleType: ButtonStyleType.fill,
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const FoodItemBooking(isBookingScreen: true,)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const FoodItemBooking(
+                      isBookingScreen: true,
+                    )));
       },
     );
     // ExtoText(
@@ -1080,8 +1087,12 @@ class _FoodItemInProcessBookingState extends State<FoodItemInProcessBooking> {
       title: Strings.bookingInProcessPayCash.toUpperCase(),
       styleType: ButtonStyleType.fill,
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const FoodItemBooking(isBookingScreen: true,)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const FoodItemBooking(
+                      isBookingScreen: true,
+                    )));
       },
     );
     // ExtoText(

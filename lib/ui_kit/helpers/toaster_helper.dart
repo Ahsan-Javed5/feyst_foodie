@@ -51,37 +51,42 @@ class Toaster {
     );
     Future.delayed(
       Duration.zero,
-          () {
+      () {
         showFlash(
           context: context,
           duration: !isPositionFixed ? duration : null,
           builder: (
-              context,
-              controller,
-              ) {
-            return Flash.bar(
-              horizontalDismissDirection: dismissByHorizontalDrag
-                  ? HorizontalDismissDirection.horizontal
-                  : null,
-              behavior: isPositionFixed
-                  ? FlashBehavior.fixed
-                  : FlashBehavior.floating,
+            context,
+            controller,
+          ) {
+            return FlashBar(
+              // horizontalDismissDirection: dismissByHorizontalDrag
+              //     ? HorizontalDismissDirection.horizontal
+              //     : null,
+              // behavior: isPositionFixed
+              //     ? FlashBehavior.fixed
+              //     : FlashBehavior.floating,
               position: position ?? FlashPosition.bottom,
-              enableVerticalDrag: enableVerticalDismiss,
-              borderRadius: _appTheme.defaultBorderRadius,
-              backgroundColor: toastDecorationData.backgroundColor,
+              // enableVerticalDrag: enableVerticalDismiss,
+              // borderRadius: _appTheme.defaultBorderRadius,
+              //backgroundColor: toastDecorationData.primaryColor,
               controller: controller,
-              margin: const EdgeInsets.all(_toastMargin),
-              child: _buildToastContent(
-                appTheme: _appTheme,
-                controller: controller,
-                decorationData: toastDecorationData,
-                toastType: toastType,
-                message: message,
-                caption: caption,
-                hasDismissOption: hasDismissOption,
-                actions: actions,
+              //margin: const EdgeInsets.all(_toastMargin),
+              content: GeneralText(
+                message,
+                maxLines: 2,
               ),
+              // indicatorColor: Colors.red,
+              // child: _buildToastContent(
+              //   appTheme: _appTheme,
+              //   controller: controller,
+              //   decorationData: toastDecorationData,
+              //   toastType: toastType,
+              //   message: message,
+              //   caption: caption,
+              //   hasDismissOption: hasDismissOption,
+              //   actions: actions,
+              // ),
             );
           },
         );
@@ -118,8 +123,8 @@ class Toaster {
                       ),
                     TextSpan(
                       text: message,
-                      style: appTheme.typographies.interFontFamily.label1.copyWith(color: decorationData.captionColor),
-
+                      style: appTheme.typographies.interFontFamily.label1
+                          .copyWith(color: decorationData.captionColor),
                     )
                   ],
                 ),
@@ -142,10 +147,11 @@ class Toaster {
         shouldIconPulse: false,
         primaryAction: hasDismissOption
             ? _buildDismissOption(
-          controller: controller,
-          decorationData: decorationData,
-        )
+                controller: controller,
+                decorationData: decorationData,
+              )
             : null,
+        controller: controller,
       ),
     );
   }
@@ -341,12 +347,12 @@ class _ToastDecorationData {
 
   factory _ToastDecorationData.info(IColors colors) {
     return _ToastDecorationData(
-      icon: const Icon(
+      icon: Icon(
         Icons.arrow_forward_rounded,
-        color: Colors.white,
+        color: colors.primaryCaption,
       ),
       backgroundColor: colors.primaryBackground,
-      captionColor: Colors.white,
+      captionColor: colors.primaryCaption,
       primaryColor: colors.primaryDark,
       secondaryColor: colors.primaryLight,
     );

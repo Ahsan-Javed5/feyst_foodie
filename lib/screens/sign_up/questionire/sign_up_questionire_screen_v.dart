@@ -89,7 +89,9 @@ class SignUpQuestionireScreen
 
   Future<XFile?> getImageFromGallery() async {
     final picker = ImagePicker();
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    //final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       XFile? img = XFile(pickedFile.path);

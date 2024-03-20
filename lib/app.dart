@@ -43,7 +43,10 @@ class App extends StatelessWidget {
           child: MaterialApp.router(
             debugShowCheckedModeBanner: false,
             routerDelegate: _appRouter.delegate(initialRoutes: [
-              if (loginInfo.isEmpty) const GetStartedRoute() else BottomBar(),
+              if (loginInfo.isEmpty)
+                const GetStartedRoute()
+              else
+                BottomBarRoute(),
             ]),
             routeInformationParser: _appRouter.defaultRouteParser(),
           ),

@@ -73,7 +73,7 @@ class FoodItemAdvancePaymentViewModel
     confirmedBookingResponse = confirmedBookingResponseFromJson(response.body);
 
     _navigate.navigateTo(
-        route: BottomBar(bottomBarType: bottom_bar.BottomBarType.home));
+        route: BottomBarRoute(bottomBarType: bottom_bar.BottomBarType.home));
   }
 
   Future<void> updateBookingStatus(context, brandName,
@@ -104,7 +104,8 @@ class FoodItemAdvancePaymentViewModel
       iconUrl: 'assets/images/tick_icon.png',
       onTap: () {
         _navigate.navigateTo(
-            route: BottomBar(bottomBarType: bottom_bar.BottomBarType.bookings));
+            route: BottomBarRoute(
+                bottomBarType: bottom_bar.BottomBarType.bookings));
       },
     );
     // var updatedBookingData = booking_udpate.bookingUpdateRequestFromJson(response.body);
@@ -139,7 +140,8 @@ class FoodItemAdvancePaymentViewModel
       iconUrl: 'assets/images/tick_icon.png',
       onTap: () {
         _navigate.navigateTo(
-            route: BottomBar(bottomBarType: bottom_bar.BottomBarType.history));
+            route: BottomBarRoute(
+                bottomBarType: bottom_bar.BottomBarType.history));
       },
     );
 

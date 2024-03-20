@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:chef/screens/forgot_password/reset_password.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
@@ -18,6 +19,7 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import '../../ui_kit/helpers/dialog_helper.dart';
 import '../sign_up/sign_up_screen_v.dart';
 
+@RoutePage()
 class ForgotPasswordScreen extends BaseView<ForgotPasswordScreenViewModel> {
   ForgotPasswordScreen({
     required this.baseUrl,
@@ -295,8 +297,8 @@ class ForgotPasswordScreen extends BaseView<ForgotPasswordScreenViewModel> {
                             UserCredential userCredential =
                                 await _auth.signInWithCredential(credential);
                             User? user = userCredential.user;
-                            String tokenId = '';
-                            tokenId = await user!.getIdToken();
+                            String? tokenId = '';
+                            tokenId = await user?.getIdToken();
                             print('token id');
                             viewModel.isVerifyingOtp.value = false;
                             Navigator.push(
@@ -398,7 +400,7 @@ class ForgotPasswordScreen extends BaseView<ForgotPasswordScreenViewModel> {
           UserCredential userCredential =
               await _auth.signInWithCredential(credential);
           User? user = userCredential.user;
-          String tokenId = '';
+          String? tokenId = '';
           tokenId = await user!.getIdToken();
           print('token id');
           Toaster.successToast(

@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:chef/screens/booking/booking_list/booking_list_screen_v.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,23 +11,30 @@ import '../../ui_kit/widgets/general_text.dart';
 import '../home/home_screen_v.dart';
 import '../user_account/edit_profie/edit_profile_screen_v.dart';
 
-class BottomBar extends StatefulWidget {
-  BottomBar({Key? key, this.bottomBarType = BottomBarType.home}) : super(key: key);
+@RoutePage()
+class BottomBarScreen extends StatefulWidget {
+  BottomBarScreen({Key? key, this.bottomBarType = BottomBarType.home})
+      : super(key: key);
   BottomBarType bottomBarType;
   @override
-  State<BottomBar> createState() => _BottomBarState();
+  State<BottomBarScreen> createState() => _BottomBarScreenState();
 }
 
-class _BottomBarState extends State<BottomBar> with WidgetsBindingObserver {
+class _BottomBarScreenState extends State<BottomBarScreen>
+    with WidgetsBindingObserver {
   final GlobalKey<ScaffoldState>? drawerKey = GlobalKey();
- // BottomBarType selectedType = widget.bottomBarType;
+  // BottomBarType selectedType = widget.bottomBarType;
   List<Widget> screens = [
     HomeScreen(),
     // UserProfile(),
     // FoodItemBooking(),
-    BookingListScreen(isBookingScreen: true,),
+    BookingListScreen(
+      isBookingScreen: true,
+    ),
     // FoodDetailScreen(),
-    BookingListScreen(isBookingScreen: false,),
+    BookingListScreen(
+      isBookingScreen: false,
+    ),
     EditProfileScreen(),
   ];
   @override
@@ -41,7 +49,9 @@ class _BottomBarState extends State<BottomBar> with WidgetsBindingObserver {
       // color: Color(0xff212129),
       color: Colors.black,
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: DeviceHelper.width * 0.040,),
+      padding: EdgeInsets.symmetric(
+        horizontal: DeviceHelper.width * 0.040,
+      ),
       height: DeviceHelper.height * 0.08,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

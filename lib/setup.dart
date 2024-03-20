@@ -7,9 +7,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
+import 'services/navigation/app_router.dart' as nav;
 //import 'firebase_options.dart';
 import 'package:flutter/material.dart';
-import '../../services/navigation/router.gr.dart' as nav;
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -48,7 +48,7 @@ Future<dynamic> configureDependencies() async {
     return true;
   };
   await FirebaseAppCheck.instance.activate(
-    webRecaptchaSiteKey: 'recaptcha-v3-site-key',
+    //webRecaptchaSiteKey: 'recaptcha-v3-site-key',
     androidProvider: AndroidProvider.playIntegrity,
     appleProvider: AppleProvider.appAttest,
   );

@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/screens/booking/advance_payment/jazz_cash_webview.dart';
 import 'package:chef/setup.dart';
@@ -10,12 +11,9 @@ import '../../ui_kit/widgets/general_new_appbar.dart';
 
 import 'dart:developer' as developer;
 
-import '../user_account/user_profile.dart';
-import 'advance_payment/jazz_cash_webview2.dart';
-import 'booking_confirmed/booking_in_process_screen_vm.dart';
-
-class FoodProductAdvancePendingDetails extends StatefulWidget {
-  const FoodProductAdvancePendingDetails(
+@RoutePage()
+class FoodProductAdvancePendingDetailsScreen extends StatefulWidget {
+  const FoodProductAdvancePendingDetailsScreen(
       {Key? key, required AdvancePendingResponse advancePendingDetails})
       : _advancePendingDetails = advancePendingDetails,
         super(key: key);
@@ -23,12 +21,12 @@ class FoodProductAdvancePendingDetails extends StatefulWidget {
   final AdvancePendingResponse _advancePendingDetails;
 
   @override
-  State<FoodProductAdvancePendingDetails> createState() =>
-      _FoodProductAdvancePendingDetailsState();
+  State<FoodProductAdvancePendingDetailsScreen> createState() =>
+      _FoodProductAdvancePendingDetailsScreenState();
 }
 
-class _FoodProductAdvancePendingDetailsState
-    extends State<FoodProductAdvancePendingDetails> {
+class _FoodProductAdvancePendingDetailsScreenState
+    extends State<FoodProductAdvancePendingDetailsScreen> {
   List<CustomModel> wowFactorsList = [];
   List<CustomModel> menuListItems = [];
   bool checkValue = false;
@@ -233,7 +231,7 @@ class _FoodProductAdvancePendingDetailsState
                             rightIcon: Resources.homeIconSvg,
                             callBack: () {
                               locateService<INavigationService>().navigateTo(
-                                  route: BottomBar(
+                                  route: BottomBarRoute(
                                       bottomBarType:
                                           bottom_bar.BottomBarType.bookings));
                               Navigator.pop(context);

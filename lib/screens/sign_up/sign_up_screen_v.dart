@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:auto_route/annotations.dart';
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/screens/sign_up/sign_up_screen_vm.dart';
 import 'package:chef/screens/sign_up/verify_phone_number.dart';
@@ -23,6 +24,7 @@ import 'package:chef/screens/sign_up/sign_up_screen_m.dart';
 
 import 'dart:developer' as developer;
 
+@RoutePage()
 class SignUpScreen extends BaseView<SignUpScreenViewModel> {
   SignUpScreen(this.isProfileDetails, {Key? key}) : super(key: key);
   final bool isProfileDetails;
@@ -37,14 +39,14 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
 
   Gender selectedGender = Gender.male;
 
-  final genderList = <String>['Male', 'Female'];
+  final genderList = <String>[Strings.signMaleLabel, Strings.signFemaleLabel];
   final deleteReason = <String>[
-    'Concerned about my data.',
-    'Created a second account.',
-    'Too busy/too distracting.',
-    'Privacy concerns.',
-    'Can\'t find bistros.',
-    'Something else.',
+    Strings.accountDeleteReason1,
+    Strings.accountDeleteReason2,
+    Strings.accountDeleteReason3,
+    Strings.accountDeleteReason4,
+    Strings.accountDeleteReason5,
+    Strings.accountDeleteReason6,
   ];
   final ValueNotifier<int> groupValue = ValueNotifier<int>(0);
   late final ScrollController scrollController = ScrollController();
@@ -318,9 +320,9 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
           onPressed: () {
             getDeleteConfirmationDialog(
                 ctx: context,
-                title: 'Delete Account',
+                title: Strings.deleteAccountTitle,
                 description:
-                    'Deleting your FEYST account will permanently remove your personal details, profile, photos & history',
+                    Strings.deleteAccountWarningDescription,
                 iconUrl: Resources.infoPNG,
                 titleColor: const Color(0xfff1c452),
                 onTap: () {});
@@ -337,7 +339,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             ),
           ),
           child: const Text(
-            'DELETE ACCOUNT',
+            Strings.deleteAccountTitle,
             style: TextStyle(
               color: Color(0xffbb3127),
               fontSize: 15,
@@ -425,15 +427,15 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                           onPressed: () {
                             getDeleteOptionsDialog(
                                 ctx: context,
-                                title: 'DELETE ACCOUNT',
+                                title: Strings.deleteAccountTitle,
                                 titleColor: const Color(0xfff1c452),
                                 description:
-                                    'We\'re sorry to see you go, We would like to know why you\'re deleting your account as we may able to help with common issues.');
+                                    Strings.accountDeleteReasonDescription);
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.red,
                           ),
-                          child: const Text('CONTINUE'),
+                          child: const Text(Strings.filterContinueButtonText),
                         ),
                       ),
                       const SizedBox(
@@ -448,7 +450,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.red,
                           ),
-                          child: const Text('CANCEL'),
+                          child: Text(Strings.filterCancelButtonText.toUpperCase()),
                         ),
                       ),
                     ],
@@ -605,16 +607,16 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                       onPressed: () {
                         getDeletePasswordDialog(
                             ctx: context,
-                            title: 'DELETE ACCOUNT',
+                            title: Strings.deleteAccountTitle,
                             description:
-                                'For your security, please re-enter your password to continue',
+                                Strings.reEnterPasswordDescription,
                             iconUrl: Resources.infoPNG,
                             onTap: () {});
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.red,
                       ),
-                      child: const Text('CONTINUE'),
+                      child: GeneralText(Strings.filterContinueButtonText.toUpperCase()),
                     ),
                   ),
                   const SizedBox(
@@ -707,16 +709,16 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                       onPressed: () {
                         getDeleteFinalSubmissionDialog(
                             ctx: context,
-                            title: 'Delete Account',
+                            title: Strings.deleteAccountTitle,
                             description:
-                                'Proceeding further is an irreversible action & will permanently delete your account.',
+                                Strings.deleteAccountDescription,
                             iconUrl: Resources.infoPNG,
                             onTap: () {});
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.red,
                       ),
-                      child: const Text('CONTINUE'),
+                      child: Text(Strings.filterContinueButtonText.toUpperCase()),
                     ),
                   ),
                   const SizedBox(
@@ -811,7 +813,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.red,
                           ),
-                          child: const Text('DELETE'),
+                          child: Text(Strings.deleteButtonText.toUpperCase()),
                         ),
                       ),
                       const SizedBox(
@@ -823,14 +825,14 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                           onPressed: () {
                             //Navigator.pop(context);
                             locateService<INavigationService>().navigateTo(
-                              route: BottomBar(
+                              route: BottomBarRoute(
                                   bottomBarType: bottom_bar.BottomBarType.home),
                             );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.red,
                           ),
-                          child: const Text('CANCEL'),
+                          child: Text(Strings.filterCancelButtonText.toUpperCase()),
                         ),
                       ),
                     ],

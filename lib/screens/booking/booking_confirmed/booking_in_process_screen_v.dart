@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:chef/helpers/helpers.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '/models/booking/booking_list_response_model.dart';
@@ -5,6 +6,7 @@ import '/setup.dart';
 import 'booking_in_process_screen_m.dart';
 import 'booking_in_process_screen_vm.dart';
 
+@RoutePage()
 class BookingInProcessScreenView
     extends BaseView<BookingInProcessScreenViewModel> {
   BookingInProcessScreenView({required BookingItem bookingItem, Key? key})
@@ -46,8 +48,9 @@ class BookingInProcessScreenView
     //   return const FoodItemInProcessBooking();
     // }));
     _navigate.navigateTo(
-        route: FoodProductBookingConfirmedDetails(
-            advancePendingDetails: viewModel.advancePendingResponse, chefData: chefData));
+        route: FoodProductBookingConfirmedDetailsRoute(
+            advancePendingDetails: viewModel.advancePendingResponse,
+            chefData: chefData));
     return Container();
     //   return FoodProductAdvancePendingDetails(advancePendingDetails: );
   }

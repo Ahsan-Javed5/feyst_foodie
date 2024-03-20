@@ -59,15 +59,13 @@ class BookingInProcessScreenViewModel
     }
   }
 
-  Future<ChefDataResponse?> getChefData(AdvancePendingResponse advancePendingResponse) async {
+  Future<ChefDataResponse?> getChefData(
+      AdvancePendingResponse advancePendingResponse) async {
     final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.chefData);
 
-    final response = await _network.post(
-        path: url,
-        data: {
-          "t": int.parse(advancePendingResponse.t.chefId.toString())
-        },
-        header: {
+    final response = await _network.post(path: url, data: {
+      "t": int.parse(advancePendingResponse.t.chefId.toString())
+    }, header: {
       'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
       'Content-Type': 'application/json'
     });
@@ -77,7 +75,7 @@ class BookingInProcessScreenViewModel
         ? emit(Loaded(advancePendingResponse, chefData))
         : emit(const Loading());
     return null;
-   // emit(Loaded(foodData, scheduleData, chefData));
+    // emit(Loaded(foodData, scheduleData, chefData));
     //return chefData;
   }
 
@@ -103,9 +101,12 @@ class BookingInProcessScreenViewModel
     //     : emit(const Loading());
   }
 
-  Future<void> saveRating({required bookingId, required experienceId, required stars, required context}) async {
-    final url =
-    InfininURLHelpers.getRestApiURL(Api.baseURL + Api.saveRating);
+  Future<void> saveRating(
+      {required bookingId,
+      required experienceId,
+      required stars,
+      required context}) async {
+    final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.saveRating);
     final _appService = locateService<ApplicationService>();
     final _navigate = locateService<INavigationService>();
 
@@ -123,7 +124,6 @@ class BookingInProcessScreenViewModel
             "stars": stars
           }
         },
-
         header: {
           'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
           'Content-Type': 'application/json'
@@ -135,11 +135,12 @@ class BookingInProcessScreenViewModel
 
         RatingResponse ratingResponse = ratingResponseFromJson(response.body);
 
-        Toaster.successToast(context: context, message: ratingResponse.message.toString());
+        Toaster.successToast(
+            context: context, message: ratingResponse.message.toString());
 
         _navigate.navigateTo(
-            route: BottomBar(bottomBarType: bottom_bar.BottomBarType.history));
-
+            route: BottomBarRoute(
+                bottomBarType: bottom_bar.BottomBarType.history));
       } else {
         Toaster.infoToast(
             context: context,
@@ -150,5 +151,4 @@ class BookingInProcessScreenViewModel
       print(e);
     }
   }
-
 }

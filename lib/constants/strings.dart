@@ -10,6 +10,7 @@ abstract class Strings {
   static const countryCodeKey = 'countryCode';
   static const usCountryValue = 'US';
   static const inCountryValue = 'IN';
+  static const appVersion = ' Version 1.0.9';
 
   static const password = 'Password';
   static const emailAddress = 'Username or email';
@@ -89,6 +90,7 @@ abstract class Strings {
   static const no = 'No';
   static const yes = 'Yes';
   static const confirmationTitle = 'Confirmation';
+
   static const confirmMessage = 'Are you sure?';
   static const confirmCancelMessage = 'Are you sure you want to cancel?';
   static const exitApplication = 'Do you want to exit Exto?';
@@ -107,6 +109,8 @@ abstract class Strings {
   static const filterCancelButtonText = 'Cancel';
   static const filterAddRuleButtonText = 'Add Rule';
   static const filterRemoveRuleButtonText = 'Remove Rule';
+  static const filterContinueButtonText = 'CONTINUE';
+
 
   static const attachFrom = 'Attach from';
   static const gallery = 'Gallery';
@@ -184,6 +188,7 @@ abstract class Strings {
   //profile
   static const myAccount = 'My Account';
   static const general = 'General';
+  static const createNewAccount = "Create New Account?";
   static const usernameEmail = 'Username/Email';
   static const accountSettings = 'Account Settings';
   static const changePassword = 'Change Password';
@@ -480,4 +485,23 @@ abstract class Strings {
   static const pendingValue = 'PENDING';
 
   static const declined = 'DECLINED';
+  static const deleteAccountTitle = 'DELETE ACCOUNT';
+
+
+  static const enterYourPassword = 'Enter Your Password';
+  static const deleteAccountDescription = 'Proceeding further is an irreversible action & will permanently delete your account.';
+  static const reEnterPasswordDescription = 'For your security, please re-enter your password to continue';
+  static const accountDeleteReasonDescription = 'We\'re sorry to see you go, We would like to know why you\'re deleting your account as we may able to help with common issues.';
+  static const deleteAccountWarningDescription = 'Deleting your FEYST account will permanently remove your personal details, profile, photos & history';
+  static const accountDeleteReason1 = 'Concerned about my data.';
+  static const accountDeleteReason2 = 'Created a second account.';
+  static const accountDeleteReason3 = 'Too busy/too distracting.';
+  static const accountDeleteReason4 = 'Privacy concerns.';
+  static const accountDeleteReason5 = 'Can\'t find bistros.';
+  static const accountDeleteReason6 = 'Something else.';
+
+  static const exploreExperiences = 'EXPLORE EXPERIENCES';
+  static const asGuestUser = 'As Guest User';
+  ///Errors
+  static const somethingWentWrong = 'Something is wrong please content vendor';
 }
