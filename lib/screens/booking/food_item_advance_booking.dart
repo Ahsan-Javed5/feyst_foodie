@@ -78,11 +78,10 @@ class _FoodProductAdvancePendingDetailsScreenState
     return Future.delayed(const Duration(seconds: 1), () {
       return CustomDialog.getDialog(
         ctx: context,
-        title: 'Advance Payment Due',
+        title: Strings.advancePaymentDue,
         //titleColor: Colors.white,
         //descColor: const Color(0xFFfee4a4),
-        description:
-            'Please proceed to advance payment for Booking Confirmation',
+        description: Strings.proceedToAdvancePaymentDescription,
         iconUrl: Resources.paymentIcon,
         onTap: () {
           setState(() {
@@ -189,7 +188,7 @@ class _FoodProductAdvancePendingDetailsScreenState
                                 widget._advancePendingDetails.t.experience
                                         .averageRating
                                         ?.toString() ??
-                                    'no reivews',
+                                    Strings.noReviews,
                                 style: appTheme
                                     .typographies.interFontFamily.headline6
                                     .copyWith(
@@ -849,9 +848,7 @@ class _FoodProductAdvancePendingDetailsScreenState
                     children: [
                       GeneralText(
                         // Strings.productDetailPriceValue,
-                        'Rs. ' +
-                            (widget._advancePendingDetails.t.totalAmount)
-                                .toStringAsFixed(0),
+                        '${Strings.rupeesLabel} ${(widget._advancePendingDetails.t.totalAmount).toStringAsFixed(0)}',
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
                                 fontSize: 36,
@@ -859,7 +856,7 @@ class _FoodProductAdvancePendingDetailsScreenState
                                 fontWeight: FontWeight.w300),
                       ),
                       GeneralText(
-                        'Total Amount',
+                        Strings.totalAmount,
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
                           fontSize: 15,
@@ -891,8 +888,7 @@ class _FoodProductAdvancePendingDetailsScreenState
                     ),
                     GeneralText(
                       // Strings.productDetailPriceTaxValue,
-                      'Rs. ' +
-                          widget._advancePendingDetails.t.totalPrice.toString(),
+                      '${Strings.rupeesLabel} ${widget._advancePendingDetails.t.totalPrice}',
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -917,9 +913,7 @@ class _FoodProductAdvancePendingDetailsScreenState
                     ),
                     GeneralText(
                       // Strings.productDetailPriceTaxValue,
-                      'Rs. ' +
-                          (widget._advancePendingDetails.t.tax)
-                              .toStringAsFixed(0),
+                      '${Strings.rupeesLabel} ${(widget._advancePendingDetails.t.tax).toStringAsFixed(0)}',
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -944,9 +938,7 @@ class _FoodProductAdvancePendingDetailsScreenState
                     ),
                     GeneralText(
                       // Strings.productDetailAdvancePaymentValue,
-                      'Rs. ' +
-                          (widget._advancePendingDetails.t.advancePayment)
-                              .toStringAsFixed(0),
+                      '${Strings.rupeesLabel} ${(widget._advancePendingDetails.t.advancePayment).toStringAsFixed(0)}',
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -978,7 +970,7 @@ class _FoodProductAdvancePendingDetailsScreenState
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               GeneralText(
-                                'Amount Due',
+                                Strings.amountDue,
                                 style: appTheme
                                     .typographies.interFontFamily.headline6
                                     .copyWith(
@@ -988,10 +980,7 @@ class _FoodProductAdvancePendingDetailsScreenState
                               ),
                               GeneralText(
                                 //     Strings.productDetailPriceTaxValue,
-                                "Rs " +
-                                    (widget._advancePendingDetails.t
-                                            .advancePayment)
-                                        .toStringAsFixed(0),
+                                "${Strings.rupeesLabel} ${(widget._advancePendingDetails.t.advancePayment).toStringAsFixed(0)}",
                                 style: appTheme
                                     .typographies.interFontFamily.headline6
                                     .copyWith(

@@ -115,7 +115,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
       ).whenComplete(() {});
       if (response != null) {
         Toaster.infoToast(
-            context: context, message: 'Password Updated Successfully!');
+            context: context, message: Strings.passwordUpdatedMessage);
         Navigator.pop(context);
       } else {}
     } catch (error) {
@@ -150,7 +150,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
         //   accessToken: false,
       ).whenComplete(() {});
       if (response != null) {
-        Toaster.infoToast(context: context, message: 'Account Deleted!');
+        Toaster.infoToast(context: context, message: Strings.accountDeleted);
         logout(context);
       } else {}
     } catch (error) {
@@ -294,8 +294,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
           );
         } else {
           Toaster.infoToast(
-              context: context,
-              message: 'Something is wrong please content vendor');
+              context: context, message: Strings.somethingWentWrong);
         }
       } catch (error) {
         Toaster.errorToast(context: context, message: '$error');
@@ -374,8 +373,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
           Navigator.pop(context);
         } else {
           Toaster.infoToast(
-              context: context,
-              message: 'Something is wrong please content vendor');
+              context: context, message: Strings.somethingWentWrong);
           developer.log(' Response of Signup is null ' + '$response');
         }
       } catch (error) {
@@ -463,7 +461,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
           .whenComplete(() {});
 
       if (response.statusCode == 400) {
-        Toaster.errorToast(context: context, message: 'User Already Exists.');
+        Toaster.errorToast(context: context, message: Strings.userAlreadyExist);
         return false;
       } else {
         return true;

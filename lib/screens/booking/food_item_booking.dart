@@ -129,7 +129,9 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
     return bookingProgressStatus.isEmpty
         ? Center(
             child: GeneralText(
-              widget.isBookingScreen ? 'No Bookings Yet!' : 'No History Yet!',
+              widget.isBookingScreen
+                  ? Strings.noBookingsYet
+                  : Strings.noHistoryYet,
               maxLines: 2,
               textAlign: TextAlign.center,
               style: appTheme.typographies.interFontFamily.headline4.copyWith(
@@ -277,7 +279,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                                 GeneralText(
                                                   item.experienceAverageRating
                                                           ?.toString() ??
-                                                      'no reviews',
+                                                      Strings.noReviews,
                                                   style: appTheme.typographies
                                                       .interFontFamily.headline6
                                                       .copyWith(
@@ -415,7 +417,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                     item.bookingStatus?.toUpperCase() ==
                                             Strings.acceptData
                                         ? GeneralText(
-                                            "Please pay advance to confirm booking",
+                                            Strings.pleasePayAdvanceDescription,
                                             //  item.bookingStatus ?? "",
                                             style: appTheme.typographies
                                                 .interFontFamily.headline1
@@ -452,7 +454,7 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
       case Strings.completeStatus:
         return Strings.completeStatus;
       default:
-        return "CANCELLED";
+        return Strings.cancelled;
     }
   }
 

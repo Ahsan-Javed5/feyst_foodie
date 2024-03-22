@@ -126,7 +126,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     }
 
     loadWowFactor();
-    loadPerferences();
+    loadPreferences();
     _loadMapStyles();
     super.initState();
   }
@@ -144,7 +144,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   }
 
   void loadWowFactor() {
-    developer.log(' Wow factors are ' + '${widget.data?.experienceWowFactors}');
+    developer.log(' Wow factors are ' '${widget.data?.experienceWowFactors}');
     var experienceWowFactor = widget.data?.experienceWowFactors;
 
     for (int i = 0; i < experienceWowFactor!.length; i++) {
@@ -156,9 +156,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     }
   }
 
-  void loadPerferences() {
-    developer.log(' loadPerferences factors are ' +
-        '${widget.data?.experiencePreferences}');
+  void loadPreferences() {
     var experiencePreferences = widget.data?.experiencePreferences;
 
     for (int i = 0; i < experiencePreferences!.length; i++) {
@@ -366,7 +364,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                       ),
                                       widget.data?.averageRating == null
                                           ? GeneralText(
-                                              'no reviews',
+                                              Strings.noReviews,
                                               style: appTheme.typographies
                                                   .interFontFamily.headline6
                                                   .copyWith(
@@ -597,7 +595,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
         int.parse(nOfPersons.text) > openCapacity) {
       Toaster.infoToast(
           context: context,
-          message: 'Number of Persons must between 1 and $openCapacity');
+          message: '${Strings.noOfPersonsMust} $openCapacity');
     } else {
       if (widget.data!.priceTypeId == 2) {
         int a = 0;
@@ -623,8 +621,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           );
         } else {
           Toaster.errorToast(
-              context: context,
-              message: 'Please select at least one quantity in menu');
+              context: context, message: Strings.selectAtLeastOne);
         }
       } else {
         Navigator.push(
@@ -663,7 +660,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           child: Column(
             children: [
               GeneralText(
-                Strings.appCurrency + "." + " " + widget.data!.price.toString(),
+                "${Strings.appCurrency}. ${widget.data!.price}",
                 style: appTheme.typographies.interFontFamily.headline6.copyWith(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -1003,7 +1000,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       if (element.menuId == menuItem.id) {
         return GeneralText(
           //   Strings.appCurrency + "." + Strings.foodProductItemPrice,
-          Strings.appCurrency + "." + foodItemPrice,
+          "${Strings.appCurrency}.$foodItemPrice",
           style: appTheme.typographies.interFontFamily.headline6.copyWith(
             fontSize: 22,
             fontWeight: FontWeight.bold,
@@ -1051,7 +1048,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   Widget getFoodItemQuantityLabel({required IAppThemeData appTheme}) {
     return GeneralText(
-      Strings.foodProductItemQuantity + ":",
+      "${Strings.foodProductItemQuantity}:",
       style: appTheme.typographies.interFontFamily.headline6.copyWith(
         fontSize: 12,
         fontWeight: FontWeight.w500,
@@ -1068,7 +1065,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       if (element.menuId == menuItem.id) {
         return GeneralText(
           (element.quantity! <= 9 && element.quantity! > 0)
-              ? "0" + element.quantity.toString()
+              ? "0${element.quantity}"
               : element.quantity.toString(),
           style: appTheme.typographies.interFontFamily.headline6.copyWith(
               fontSize: 15,
@@ -1276,7 +1273,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                               child: GeneralDropdown(
                                                 selectedItemId: 1,
                                                 borderColor: Colors.transparent,
-                                                name: 'Select',
+                                                name: Strings.tableSelect,
                                                 style: appTheme.typographies
                                                     .interFontFamily.headline6
                                                     .copyWith(
@@ -1291,8 +1288,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                                   required dynamic value,
                                                 }) {
                                                   developer.log(
-                                                      ' Selected value from Drop Down is ' +
-                                                          '${value}');
+                                                      ' Selected value from Drop Down is '
+                                                      '$value');
                                                   _appService.state.orderHelper!
                                                       .selectedCategory = value;
                                                   widget.data
@@ -1327,7 +1324,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                             color: HexColor.fromHex('#ea7458'),
                                           ),
                                           const SizedBox(width: 4),
-                                          GeneralText('MAX LIMIT : ',
+                                          GeneralText(Strings.maxLimitLabel,
                                               style: appTheme.typographies
                                                   .interFontFamily.headline6
                                                   .copyWith(
@@ -1734,7 +1731,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                       ),*/
                                           GeneralDropdown(
                                         borderColor: Colors.transparent,
-                                        name: 'Select',
+                                        name: Strings.tableSelect,
                                         // margin: 22.0,
                                         items: items,
                                         onChange: ({

@@ -92,9 +92,9 @@ class FoodProductExperienceDetailsScreenView
         _storage.readString(key: 'auth_token').isEmpty
             ? loginDialog(
                 ctx: context,
-                title: 'Login/Signup',
+                title: Strings.loginSignup,
                 titleColor: const Color(0xfff1c452),
-                description: 'Please Login/Signup to book your food experience',
+                description: Strings.pleaseLoginDescription,
                 iconUrl: Resources.infoDeletePNG,
                 onTap: () {})
             : viewModel.submitBooking(context, _experienceData!);
@@ -186,7 +186,7 @@ class FoodProductExperienceDetailsScreenView
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.red,
                           ),
-                          child: const Text('LOGIN/SIGNUP'),
+                          child: Text(Strings.loginSignup.toUpperCase()),
                         ),
                       ),
                       const SizedBox(
@@ -201,7 +201,8 @@ class FoodProductExperienceDetailsScreenView
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.red,
                           ),
-                          child: const Text('CANCEL'),
+                          child: Text(
+                              Strings.filterCancelButtonText.toUpperCase()),
                         ),
                       ),
                     ],

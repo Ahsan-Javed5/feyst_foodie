@@ -525,14 +525,6 @@ class ChipsWidget extends StatelessWidget {
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
         width: widthContainer,
-        child: GeneralText(
-          title.capitalize(),
-          textAlign: TextAlign.center,
-          style: appTheme.typographies.interFontFamily.headline6.copyWith(
-              color: selected ? Colors.black : Colors.white,
-              fontSize: 13.5,
-              fontWeight: selected ? FontWeight.bold : FontWeight.w500),
-        ),
         decoration: BoxDecoration(
           border: Border.all(
             color: appTheme.colors.textFieldBorderColor,
@@ -544,48 +536,14 @@ class ChipsWidget extends StatelessWidget {
           color: selected
               ? appTheme.colors.textFieldBorderColor
               : Colors.transparent,
+        ),
+        child: GeneralText(
+          title.capitalize(),
+          textAlign: TextAlign.center,
+          style: appTheme.typographies.interFontFamily.headline6.copyWith(
+              color: selected ? Colors.black : Colors.white,
+              fontSize: 13.5,
+              fontWeight: selected ? FontWeight.bold : FontWeight.w500),
         ));
   }
 }
-
-// class ChipsWidget extends StatelessWidget {
-//   const ChipsWidget({
-//     Key? key,
-//     required this.appTheme,
-//     required this.title,
-//     this.selected = false,
-//     this.widthContainer = 160,
-//   }) : super(key: key);
-//
-//   final IAppThemeData appTheme;
-//   final String title;
-//   final bool selected;
-//   final double widthContainer;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-//         width: widthContainer,
-//         child: GeneralText(
-//           title.capitalize(),
-//           textAlign: TextAlign.center,
-//           style: appTheme.typographies.interFontFamily.headline6.copyWith(
-//               color: selected ? Colors.black : Colors.white,
-//               fontSize: 15,
-//               fontWeight: selected ? FontWeight.bold : FontWeight.w500),
-//         ),
-//         decoration: BoxDecoration(
-//           border: Border.all(
-//             color: appTheme.colors.textFieldBorderColor,
-//             width: 2.5,
-//           ),
-//           borderRadius: BorderRadius.circular(
-//             30,
-//           ),
-//           color: selected
-//               ? appTheme.colors.textFieldBorderColor
-//               : Colors.transparent,
-//         ));
-//   }
-// }

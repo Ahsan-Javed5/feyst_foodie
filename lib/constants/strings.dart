@@ -27,6 +27,7 @@ abstract class Strings {
   static const sendResetLink = 'Send link';
   static const returnTo = 'Return to ';
   static const sentSuccessfully = 'Link sent successfully';
+  static const passwordUpdatedMessage = 'Password Updated Successfully!';
   static const checkInstruction =
       'Please check your email and follow the instructions to reset your password.';
 
@@ -111,7 +112,6 @@ abstract class Strings {
   static const filterRemoveRuleButtonText = 'Remove Rule';
   static const filterContinueButtonText = 'CONTINUE';
 
-
   static const attachFrom = 'Attach from';
   static const gallery = 'Gallery';
   static const camera = 'Camera';
@@ -167,6 +167,7 @@ abstract class Strings {
   static const workflowSuccessMessage = 'Successfully Done';
   static const searchHintText = 'Search..';
   static const saveAsDraft = 'Save as Draft';
+  static const save = 'SAVE';
 
   // Workspace & Projects
   static const workspaceCaption =
@@ -207,10 +208,12 @@ abstract class Strings {
   static const currentPassword = 'Current Password';
   static const currentPasswordHint = 'Enter Current Password';
   static const newPassword = 'New Password';
-  static const newPasswordHint = 'Generate new password';
+  static const newPasswordHint = 'Enter new password';
   static const confirmPassword = 'Repeat Password';
+  static const confirmNewPassword = 'Confirm New Password';
   static const confirmPasswordHint = 'Confirm Password';
   static const passwordMismatch = 'Password do not match';
+  static const reEnterNewPassword = 'Re enter New Password';
 
   // Account settings screen
   static const theme = 'Theme';
@@ -236,7 +239,7 @@ abstract class Strings {
   static const tableDigit = 'NUMBER';
   static const tableDate = 'DATE';
   static const tableCheckBox = 'CHECKBOX';
-  static const tableSelect = 'SELECT';
+  static const tableSelect = 'Select';
 
   //Reference Table ID Constants.
   static const referenceIDSubmitLabel = 'label';
@@ -393,6 +396,8 @@ abstract class Strings {
   static const labelProfile = 'Profile';
   static const labelReviews = 'Reviews';
   static const updatePassword = 'Update Password';
+  static const oldPassword = 'Old Password';
+  static const enterOldPassword = 'Enter Old Password';
   static const labelPrivacyPolicy = 'Privacy Policy';
   static const labelTermsCond = 'Terms & Conditions';
   static const labelLogOut = 'Logout';
@@ -479,6 +484,7 @@ abstract class Strings {
   static const billGenerated = 'BILL-GENERATED';
   static const billGeneratedValue = 'BILL GENERATED';
   static const completeStatus = 'COMPLETED';
+  static const cancelled = 'CANCELLED';
 
   static const inProgress = 'IN-PROGRESS';
   static const inProgressValue = 'IN PROGRESS';
@@ -487,12 +493,15 @@ abstract class Strings {
   static const declined = 'DECLINED';
   static const deleteAccountTitle = 'DELETE ACCOUNT';
 
-
   static const enterYourPassword = 'Enter Your Password';
-  static const deleteAccountDescription = 'Proceeding further is an irreversible action & will permanently delete your account.';
-  static const reEnterPasswordDescription = 'For your security, please re-enter your password to continue';
-  static const accountDeleteReasonDescription = 'We\'re sorry to see you go, We would like to know why you\'re deleting your account as we may able to help with common issues.';
-  static const deleteAccountWarningDescription = 'Deleting your FEYST account will permanently remove your personal details, profile, photos & history';
+  static const deleteAccountDescription =
+      'Proceeding further is an irreversible action & will permanently delete your account.';
+  static const reEnterPasswordDescription =
+      'For your security, please re-enter your password to continue';
+  static const accountDeleteReasonDescription =
+      'We\'re sorry to see you go, We would like to know why you\'re deleting your account as we may able to help with common issues.';
+  static const deleteAccountWarningDescription =
+      'Deleting your FEYST account will permanently remove your personal details, profile, photos & history';
   static const accountDeleteReason1 = 'Concerned about my data.';
   static const accountDeleteReason2 = 'Created a second account.';
   static const accountDeleteReason3 = 'Too busy/too distracting.';
@@ -502,6 +511,50 @@ abstract class Strings {
 
   static const exploreExperiences = 'EXPLORE EXPERIENCES';
   static const asGuestUser = 'As Guest User';
+  static const noReviews = 'no reviews';
+  static const maxLimitLabel = 'MAX LIMIT : ';
+  static const loginSignup = 'Login/Signup';
+  static const pleaseLoginDescription =
+      'Please Login/Signup to book your food experience';
+  static const noBookingsYet = 'No Bookings Yet!';
+  static const noHistoryYet = 'No History Yet!';
+  static const noReviesYet = 'No Reviews Yet!';
+  static const pleasePayAdvanceDescription =
+      "Please pay advance to confirm booking";
+  static const advancePaymentDue = 'Advance Payment Due';
+  static const proceedToAdvancePaymentDescription =
+      'Please proceed to advance payment for Booking Confirmation';
+  static const totalAmount = 'Total Amount';
+  static const rupeesLabel = 'Rs.';
+  static const amountDue = 'Amount Due';
+  static const rateYourExperience = 'Rate Your Experience';
+  static const bookingCompleted = 'Booking Completed!';
+  static const kindlyReviewYourExperienceWith =
+      'Kindly review your experience with';
+  static const writeSomething = 'Write Something';
+  static const payDigital = 'PAY DIGITAL';
+  static const payCash = 'PAY CASH';
+  static const pleaseWait = 'Please Wait';
+  static const waitBistroApprovalDescription =
+      'Awaiting bistro approval of cash received';
+
+  static const accountDeleted = 'Account Deleted!';
+  static const welcomeBack = 'Welcome back';
+  static const pleaseEnterRegisteredNumber =
+      'Please enter registered number or SignUp';
+  static const cashReceived = 'Cash Received';
+  static const fullAmountReceivedBy = 'Full amount has been received by ';
+  static const advanceReceivedBy = 'Advance have been received by ';
+
   ///Errors
   static const somethingWentWrong = 'Something is wrong please content vendor';
+  static const noOfPersonsMust = 'Number of Persons must between 1 and';
+  static const selectAtLeastOne = 'Please select at least one quantity in menu';
+  static const yourExperienceCancelled = 'Your Experience has been Cancelled';
+  static const couldNotLaunch = 'Could not launch';
+  static const passwordLengthError =
+      'Password must contain at least 6 characters';
+  static const userAlreadyExist = 'User Already Exists.';
+  static const notFoundFoodie = 'Not found foodie';
+  static const fillAllFields = 'Please fill all the fields';
 }

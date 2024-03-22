@@ -30,14 +30,15 @@ class _UpdatePasswordState extends State<UpdatePassword> {
             children: [
               Container(
                 padding: const EdgeInsets.only(left: 12, top: 20, bottom: 20),
-                child: GeneralNewAppBar(
+                child: const GeneralNewAppBar(
                   rightIcon: Resources.homeIconSvg,
-                  title: 'Update Password',
+                  title: Strings.updatePassword,
                   titleColor: Colors.white,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                 child: Column(
                   children: [
                     const SizedBox(
@@ -67,14 +68,14 @@ class _UpdatePasswordState extends State<UpdatePassword> {
   }
 
   Widget displayOldPassword(
-      IAppThemeData appTheme,
-      ) {
+    IAppThemeData appTheme,
+  ) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GeneralText(
-          'Old Password',
+          Strings.oldPassword,
           textAlign: TextAlign.center,
           style: appTheme.typographies.interFontFamily.headline4.copyWith(
               color: const Color(0xfffbeccb),
@@ -95,15 +96,15 @@ class _UpdatePasswordState extends State<UpdatePassword> {
             //     : null,
             inputBorder: appTheme.focusedBorder,
             valueStyle: const TextStyle(color: Colors.white),
-            hint: 'Enter Old Password',
+            hint: Strings.enterOldPassword,
             validator: (pass) {
               if (pass!.length < 6) {
-                return 'Password must contain at least 6 characters';
+                return Strings.passwordLengthError;
               }
               return null;
             },
             hintStyle:
-            TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
+                TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
             // valueStyle: valueStyle,
             onChanged: (value) {}),
       ],
@@ -111,14 +112,14 @@ class _UpdatePasswordState extends State<UpdatePassword> {
   }
 
   Widget displayPassword(
-      IAppThemeData appTheme,
-      ) {
+    IAppThemeData appTheme,
+  ) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GeneralText(
-          'New Password',
+          Strings.newPassword,
           textAlign: TextAlign.center,
           style: appTheme.typographies.interFontFamily.headline4.copyWith(
               color: const Color(0xfffbeccb),
@@ -139,15 +140,15 @@ class _UpdatePasswordState extends State<UpdatePassword> {
             //     : null,
             inputBorder: appTheme.focusedBorder,
             valueStyle: const TextStyle(color: Colors.white),
-            hint: 'Enter New Password',
+            hint: Strings.newPasswordHint,
             validator: (pass) {
               if (pass!.length < 6) {
-                return 'Password must contain at least 6 characters';
+                return Strings.passwordLengthError;
               }
               return null;
             },
             hintStyle:
-            TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
+                TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
             // valueStyle: valueStyle,
             onChanged: (value) {}),
       ],
@@ -155,14 +156,14 @@ class _UpdatePasswordState extends State<UpdatePassword> {
   }
 
   Widget displayConfirmPassword(
-      IAppThemeData appTheme,
-      ) {
+    IAppThemeData appTheme,
+  ) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GeneralText(
-          'Confirm New Password',
+          Strings.confirmNewPassword,
           textAlign: TextAlign.center,
           style: appTheme.typographies.interFontFamily.headline4.copyWith(
               color: const Color(0xfffbeccb),
@@ -183,14 +184,13 @@ class _UpdatePasswordState extends State<UpdatePassword> {
             //     : null,
             inputBorder: appTheme.focusedBorder,
             valueStyle: const TextStyle(color: Colors.white),
-            hint: 'Re enter New Password',
+            hint: Strings.reEnterNewPassword,
             validator: (pass) {
               if (pass!.length < 6) {
-                return 'Password must contain at least 6 characters';
+                return Strings.passwordLengthError;
               } else if (pass != newPasswordController.text) {
-                return 'Password not same';
-              }
-              else{
+                return Strings.passwordMismatch;
+              } else {
                 if (oldPasswordController.text.isNotEmpty) {
                   setState(() {
                     isEnable = true;
@@ -200,7 +200,7 @@ class _UpdatePasswordState extends State<UpdatePassword> {
               return null;
             },
             hintStyle:
-            TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
+                TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
             // valueStyle: valueStyle,
             onChanged: (value) {}),
       ],
@@ -209,23 +209,26 @@ class _UpdatePasswordState extends State<UpdatePassword> {
 
   Widget _saveButtonTitle({required IAppThemeData appTheme}) {
     return Center(
-      child: isLoading ? const CircularProgressIndicator():GeneralButton.button(
-        width: 180,
-        title: 'SAVE',
-        styleType: ButtonStyleType.fill,
-        isEnable: isEnable,
-        onTap: () async {
-          setState(() {
-            isLoading = true;
-          });
-          final _signUpScreenViewModel = locateService<SignUpScreenViewModel>();
-          _signUpScreenViewModel.updatePassword(
-            oldPassword: oldPasswordController.text.trim(),
-            newPassword: newPasswordController.text.trim(),
-            context: context,
-          );
-        },
-      ),
+      child: isLoading
+          ? const CircularProgressIndicator()
+          : GeneralButton.button(
+              width: 180,
+              title: Strings.save,
+              styleType: ButtonStyleType.fill,
+              isEnable: isEnable,
+              onTap: () async {
+                setState(() {
+                  isLoading = true;
+                });
+                final signUpScreenViewModel =
+                    locateService<SignUpScreenViewModel>();
+                signUpScreenViewModel.updatePassword(
+                  oldPassword: oldPasswordController.text.trim(),
+                  newPassword: newPasswordController.text.trim(),
+                  context: context,
+                );
+              },
+            ),
     );
   }
 }

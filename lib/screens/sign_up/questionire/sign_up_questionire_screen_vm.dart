@@ -175,8 +175,7 @@ class SignUpQuestionnaireScreenViewModel
           questionId: 13));
       completion!();
     } else {
-      Toaster.errorToast(
-          context: context, message: 'Please fill all the fields');
+      Toaster.errorToast(context: context, message: Strings.fillAllFields);
     }
   }
 
@@ -210,7 +209,7 @@ class SignUpQuestionnaireScreenViewModel
           message: foodieQuestionAnswerResponse.message.toString());
       completion!();
     } else {
-      Toaster.infoToast(context: context, message: 'Error in calling the Api');
+      Toaster.infoToast(context: context, message: Strings.somethingWentWrong);
     }
   }
 

@@ -58,7 +58,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                             top: MediaQuery.of(context).size.height * 0.35),
                         child: Center(
                           child: GeneralText(
-                            'No Reviews Yet!',
+                            Strings.noReviesYet,
                             maxLines: 2,
                             textAlign: TextAlign.center,
                             style: appTheme
@@ -155,7 +155,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                                                           0xfff1c452),
                                                     ),
                                                     padding: const EdgeInsets
-                                                            .symmetric(
+                                                        .symmetric(
                                                         horizontal: 7,
                                                         vertical: 3),
                                                     child: Row(

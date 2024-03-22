@@ -161,7 +161,7 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
 
           SignupResponse signupResponse = signupResponseFromJson(response.body);
           print(signupResponse);
-          Toaster.infoToast(context: context, message: 'Welcome back');
+          Toaster.infoToast(context: context, message: Strings.welcomeBack);
 
           await _cacheData(
             context: context,
@@ -190,9 +190,8 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
         } else {
           Toaster.infoToast(
               context: context,
-              message: 'Not found foodie [ ' +
-                  mobileNumber +
-                  '], Please enter registered number or SignUp');
+              message:
+                  '${Strings.notFoundFoodie} [$mobileNumber], ${Strings.pleaseEnterRegisteredNumber}');
         }
 
         //  loading(isBusy: false);

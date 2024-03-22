@@ -98,8 +98,8 @@ class FoodItemAdvancePaymentViewModel
     //Navigator.pop(context);
     CustomDialog.getDialog(
       ctx: context,
-      title: 'Booking Confirmed',
-      description: 'Advance have been received by ',
+      title: Strings.foodItemBookingConfirmedStatus,
+      description: Strings.advanceReceivedBy,
       highlightedName: brandName,
       iconUrl: 'assets/images/tick_icon.png',
       onTap: () {
@@ -134,8 +134,8 @@ class FoodItemAdvancePaymentViewModel
     Navigator.pop(context);
     CustomDialog.getDialog(
       ctx: context,
-      title: 'Cash Received',
-      description: 'Full amount has been received by ',
+      title: Strings.cashReceived,
+      description: Strings.fullAmountReceivedBy,
       highlightedName: brandName,
       iconUrl: 'assets/images/tick_icon.png',
       onTap: () {

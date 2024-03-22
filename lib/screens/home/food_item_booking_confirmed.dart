@@ -193,7 +193,7 @@ class _FoodProductBookingConfirmedDetailsScreenState
                                     widget._advancePendingDetails.t.experience
                                             .averageRating
                                             ?.toString() ??
-                                        'no reviews',
+                                        Strings.noReviews,
                                     style: appTheme
                                         .typographies.interFontFamily.headline6
                                         .copyWith(
@@ -426,7 +426,7 @@ class _FoodProductBookingConfirmedDetailsScreenState
                                   backgroundColor: const Color(0xFFbb3127),
                                 ),
                                 child: const Text(
-                                  'Rate Your Experience',
+                                  Strings.rateYourExperience,
                                   style: TextStyle(
                                     fontSize: 17,
                                     fontWeight: FontWeight.w400,
@@ -435,11 +435,11 @@ class _FoodProductBookingConfirmedDetailsScreenState
                                 onPressed: () {
                                   getDialog(
                                     ctx: context,
-                                    title: 'Booking Completed!',
+                                    title: Strings.bookingCompleted,
                                     //titleColor: Colors.white,
                                     //descColor: const Color(0xFFfee4a4),
                                     description:
-                                        'Kindly review your experience with ${widget._advancePendingDetails.t.brandName}',
+                                        '${Strings.kindlyReviewYourExperienceWith} ${widget._advancePendingDetails.t.brandName}',
                                     iconUrl: 'assets/images/tick_icon.png',
                                     onTap: () async {
                                       var item =
@@ -564,7 +564,7 @@ class _FoodProductBookingConfirmedDetailsScreenState
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xffbb3127),
                         ),
-                        child: const Text('Submit'),
+                        child: const Text(Strings.submit),
                       ),
                     ),
                     const SizedBox(
@@ -601,7 +601,7 @@ class _FoodProductBookingConfirmedDetailsScreenState
         decoration: InputDecoration(
             border: InputBorder.none,
             filled: true,
-            hintText: 'Write Something',
+            hintText: Strings.writeSomething,
             hintStyle: TextStyle(
               color: Colors.white.withOpacity(0.3),
             )),
@@ -875,9 +875,7 @@ class _FoodProductBookingConfirmedDetailsScreenState
                     children: [
                       GeneralText(
                         // Strings.productDetailPriceValue,
-                        'Rs. ' +
-                            (widget._advancePendingDetails.t.totalAmount)
-                                .toStringAsFixed(0),
+                        '${Strings.rupeesLabel} ${(widget._advancePendingDetails.t.totalAmount).toStringAsFixed(0)}',
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
                                 fontSize: 36,
@@ -885,7 +883,7 @@ class _FoodProductBookingConfirmedDetailsScreenState
                                 fontWeight: FontWeight.w300),
                       ),
                       GeneralText(
-                        'Total Amount',
+                        Strings.totalAmount,
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
                           fontSize: 15,
@@ -917,8 +915,7 @@ class _FoodProductBookingConfirmedDetailsScreenState
                     ),
                     GeneralText(
                       // Strings.productDetailPriceTaxValue,
-                      'Rs. ' +
-                          widget._advancePendingDetails.t.totalPrice.toString(),
+                      '${Strings.rupeesLabel} ${widget._advancePendingDetails.t.totalPrice}',
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -943,9 +940,7 @@ class _FoodProductBookingConfirmedDetailsScreenState
                     ),
                     GeneralText(
                       // Strings.productDetailPriceTaxValue,
-                      'Rs. ' +
-                          (widget._advancePendingDetails.t.tax)
-                              .toStringAsFixed(0),
+                      '${Strings.rupeesLabel} ${(widget._advancePendingDetails.t.tax).toStringAsFixed(0)}',
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -989,9 +984,7 @@ class _FoodProductBookingConfirmedDetailsScreenState
                     ),
                     GeneralText(
                       // Strings.productDetailAdvancePaymentValue,
-                      'Rs. ' +
-                          (widget._advancePendingDetails.t.advancePayment)
-                              .toStringAsFixed(0),
+                      '${Strings.rupeesLabel} ${(widget._advancePendingDetails.t.advancePayment).toStringAsFixed(0)}',
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -1024,7 +1017,7 @@ class _FoodProductBookingConfirmedDetailsScreenState
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               GeneralText(
-                                'Amount Due',
+                                Strings.amountDue,
                                 style: appTheme
                                     .typographies.interFontFamily.headline6
                                     .copyWith(
@@ -1034,12 +1027,7 @@ class _FoodProductBookingConfirmedDetailsScreenState
                               ),
                               GeneralText(
                                 //     Strings.productDetailPriceTaxValue,
-                                "Rs " +
-                                    (widget._advancePendingDetails.t
-                                                .totalAmount -
-                                            widget._advancePendingDetails.t
-                                                .advancePayment)
-                                        .toStringAsFixed(0),
+                                "${Strings.rupeesLabel} ${(widget._advancePendingDetails.t.totalAmount - widget._advancePendingDetails.t.advancePayment).toStringAsFixed(0)}",
                                 style: appTheme
                                     .typographies.interFontFamily.headline6
                                     .copyWith(
@@ -1620,7 +1608,7 @@ class _FoodProductBookingConfirmedDetailsScreenState
       child: Row(
         children: [
           GeneralButton.button(
-            title: 'PAY DIGITAL',
+            title: Strings.payDigital,
             styleType: ButtonStyleType.fill,
             onTap: () {
               Navigator.push(
@@ -1634,15 +1622,15 @@ class _FoodProductBookingConfirmedDetailsScreenState
           ),
           const SizedBox(width: 10),
           GeneralButton.button(
-            title: 'PAY CASH',
+            title: Strings.payCash,
             styleType: ButtonStyleType.fill,
             onTap: () {
               CustomDialog.getDialog(
                 ctx: context,
-                title: 'Please Wait',
+                title: Strings.pleaseWait,
                 //titleColor: Colors.white,
                 //descColor: const Color(0xFFfee4a4),
-                description: 'Awaiting bistro approval of cash received',
+                description: Strings.waitBistroApprovalDescription,
                 iconUrl: Resources.cashWaitingIcon,
                 onTap: () {
                   setState(() {
@@ -2006,8 +1994,7 @@ class _FoodProductBookingConfirmedDetailsScreenState
                 bookingsListViewModel.cancelBooking(
                     bookingId: widget._advancePendingDetails.t.id);
                 Toaster.infoToast(
-                    context: context,
-                    message: 'Your Experience has been Cancelled');
+                    context: context, message: Strings.yourExperienceCancelled);
                 Navigator.pop(context);
                 _navigate.navigateTo(
                     route: BottomBarRoute(
@@ -2045,7 +2032,7 @@ class _FoodProductBookingConfirmedDetailsScreenState
       if (await canLaunchUrl(Uri.parse(url))) {
         await launchUrl(Uri.parse(url));
       } else {
-        throw 'Could not launch $url';
+        throw '${Strings.couldNotLaunch} $url';
       }
     } else {
       urlAppleMaps = 'https://maps.apple.com/?q=$lat,$lng';
@@ -2055,7 +2042,7 @@ class _FoodProductBookingConfirmedDetailsScreenState
       } else if (await canLaunchUrl(Uri.parse(urlAppleMaps))) {
         await launchUrl(Uri.parse(urlAppleMaps));
       } else {
-        throw 'Could not launch $url';
+        throw '${Strings.couldNotLaunch} $url';
       }
     }
   }
