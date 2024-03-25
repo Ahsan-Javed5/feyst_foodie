@@ -1,6 +1,8 @@
 abstract class Resources {
   static const exto = 'assets/images/exto.svg';
 
+  static const homeFeystLogo = 'assets/images/old_logo.png';
+  static const homeCurl = 'assets/images/home_circle_curl.png';
   static const chefLogo = 'assets/images/chef_logo.svg';
   static const getRightArrow = 'assets/images/icons/arrow_right.svg';
   static const getSignInLeftArrow =

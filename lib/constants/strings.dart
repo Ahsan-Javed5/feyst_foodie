@@ -377,9 +377,10 @@ abstract class Strings {
 
   ///bottom bar
   static const homeTitle = 'HOME';
-  static const bookingTitle = 'BOOKINGS';
-  static const profileTitle = 'PROFILE'; //
-  static const historyTitle = 'HISTORY';
+  static const discover = 'Discover';
+  static const bookingTitle = 'Booking';
+  static const profileTitle = 'Profile'; //
+  static const historyTitle = 'History';
 
   ///home screen
   static const labelExplore = 'Explore';

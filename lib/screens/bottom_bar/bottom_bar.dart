@@ -41,22 +41,26 @@ class _BottomBarScreenState extends State<BottomBarScreen>
   Widget build(BuildContext context) {
     return Scaffold(
         body: screens[widget.bottomBarType.index],
+        backgroundColor: const Color(0xff212129),
         bottomNavigationBar: _bottomNavigationContainer(context));
   }
 
   Widget _bottomNavigationContainer(BuildContext context) {
     return Container(
       // color: Color(0xff212129),
-      color: Colors.black,
       width: double.infinity,
       padding: EdgeInsets.symmetric(
-        horizontal: DeviceHelper.width * 0.040,
+        horizontal: DeviceHelper.width * 0.06,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.black,
+        borderRadius: BorderRadius.circular(40),
       ),
       height: DeviceHelper.height * 0.08,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _itemBar(context, Resources.homeIconSvg, Strings.homeTitle,
+          _itemBar(context, Resources.homeIconSvg, Strings.discover,
               BottomBarType.home),
           // SizedBox(
           //   width: DynamicSize.exactWidth(37, context),
@@ -93,6 +97,9 @@ class _BottomBarScreenState extends State<BottomBarScreen>
           SvgPicture.asset(
             imagePath,
             height: DeviceHelper.height * 0.025,
+            color: widget.bottomBarType == type
+                ? const Color(0xfff1c452)
+                : Colors.white,
           ),
           SizedBox(
             height: DeviceHelper.height * 0.005,
@@ -102,25 +109,30 @@ class _BottomBarScreenState extends State<BottomBarScreen>
             style: appTheme.typographies.interFontFamily.headline2.copyWith(
               fontSize: 12,
               fontWeight: FontWeight.w500,
-              color: Colors.white,
+              color: widget.bottomBarType == type
+                  ? const Color(0xfff1c452)
+                  : Colors.white,
             ),
           ),
           SizedBox(
-            height: DeviceHelper.height * 0.010,
+            height: DeviceHelper.height * 0.005,
           ),
           AnimatedContainer(
               duration: const Duration(milliseconds: 400),
               curve: Curves.easeInToLinear,
-              height: DeviceHelper.height * 0.005,
-              width: DeviceHelper.width * 0.050,
+              height: DeviceHelper.height * 0.01,
+              width: DeviceHelper.height * 0.01,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50), // radius of 10
+                  shape: BoxShape.circle, // radius of 10
                   color: widget.bottomBarType == type
-                      ? const Color(0xffb0c18b)
+                      ? const Color(0xfff1c452)
                       : Colors.transparent
 
                   // green as background color
                   )),
+          SizedBox(
+            height: DeviceHelper.height * 0.005,
+          ),
         ],
       ),
     );
