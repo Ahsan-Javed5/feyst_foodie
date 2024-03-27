@@ -89,6 +89,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
+  int _current = 0;
+  final CarouselController _sliderController = CarouselController();
 
   bool isButtonEnable = true;
 
@@ -205,7 +207,6 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context).theme;
-    //SliderImagesResponse imagesData = getImagesList();
     return WillPopScope(
       onWillPop: () {
         if (widget.data!.priceTypeId == 2) {
@@ -217,371 +218,664 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
         backgroundColor: HexColor.fromHex('#212129'),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: experienceNextButton(),
-        body: Stack(
-          fit: StackFit.expand,
-          children: [
-            Column(
-              children: [
-                FutureBuilder<SliderImagesResponse?>(
-                    future: foodDetailsViewModel.getSliderImages(
-                        experienceId: widget.data!.id),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        var imagesList = snapshot.data?.t;
-                        List images = [];
-                        for (var item in imagesList!) {
-                          images.add(item.mediaUrl);
-                        }
-                        return SizedBox(
-                          height: 220,
-                          child: CarouselSlider(
-                            options: CarouselOptions(
-                              autoPlay: true,
-                            ),
-                            items:
-                                (images.isEmpty ? foodDetailsBgImages : images)
-                                    .map((i) {
-                              return Builder(
-                                builder: (BuildContext context) {
-                                  return Image.network(Api.baseURLForImages + i,
-                                      fit: BoxFit.fill);
-                                },
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Stack(
+                //fit: StackFit.expand,
+                children: [
+                  Column(
+                    children: [
+                      FutureBuilder<SliderImagesResponse?>(
+                          future: foodDetailsViewModel.getSliderImages(
+                              experienceId: widget.data!.id),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              var imagesList = snapshot.data?.t;
+                              List images = [];
+                              for (var item in imagesList!) {
+                                images.add(item.mediaUrl);
+                              }
+                              images = images + images;
+                              return Column(
+                                children: [
+                                  CarouselSlider(
+                                    options: CarouselOptions(
+                                      height: DeviceHelper.height * 0.50,
+                                      autoPlay: true,
+                                    ),
+                                    items: (images.isEmpty
+                                            ? foodDetailsBgImages
+                                            : images)
+                                        .map((i) {
+                                      return Builder(
+                                        builder: (BuildContext context) {
+                                          return Image.network(
+                                              Api.baseURLForImages + i,
+                                              fit: BoxFit.fitHeight);
+                                        },
+                                      );
+                                    }).toList(),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children:
+                                        images.asMap().entries.map((entry) {
+                                      return GestureDetector(
+                                        onTap: () => _sliderController
+                                            .animateToPage(entry.key),
+                                        child: Container(
+                                          width: 12.0,
+                                          height: 12.0,
+                                          margin: const EdgeInsets.symmetric(
+                                              vertical: 8.0, horizontal: 4.0),
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: (Theme.of(context)
+                                                          .brightness ==
+                                                      Brightness.dark
+                                                  ? Colors.white
+                                                  : Colors.black)),
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ],
                               );
-                            }).toList(),
-                          ),
-                        );
-                      } else {
-                        return Container(
-                          margin: const EdgeInsets.only(bottom: 90, top: 100),
-                          child: const CircularProgressIndicator(),
-                        );
-                      }
-                    }),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Container(
-                      padding: EdgeInsetsDirectional.only(
-                        start: DeviceHelper.width * 0.10,
-                        top: DeviceHelper.height * 0.07,
-                      ),
-                      color: HexColor.fromHex('#212129'),
-                      child: Column(
-                        children: [
-                          if (selectedTab != TabBars.Schedule)
-                            SizedBox(
-                              height: DeviceHelper.height * 0.10,
-                            ),
-                          if (selectedTab == TabBars.Schedule)
-                            SizedBox(
-                              height: DeviceHelper.height * 0.05,
-                            ),
-                          if (selectedTab == TabBars.Menu)
-                            SizedBox(
-                              height: DeviceHelper.height * 0.01,
-                            ),
-                          if (selectedTab == TabBars.Details)
-                            detailsTabViewForm(context, appTheme),
-                          if (selectedTab == TabBars.Menu)
-                            menuTabView(context, appTheme),
-                          if (selectedTab == TabBars.Schedule)
-                            scheduleTabView(context, appTheme)
-                        ],
-                      ),
-                    ),
+                            } else {
+                              return Container(
+                                margin:
+                                    const EdgeInsets.only(bottom: 90, top: 100),
+                                child: const CircularProgressIndicator(),
+                              );
+                            }
+                          }),
+                      // Expanded(
+                      //   child: SingleChildScrollView(
+                      //     child: Container(
+                      //       padding: EdgeInsetsDirectional.only(
+                      //         start: DeviceHelper.width * 0.10,
+                      //         top: DeviceHelper.height * 0.07,
+                      //       ),
+                      //       color: HexColor.fromHex('#212129'),
+                      //       child: Column(
+                      //         children: [
+                      //           if (selectedTab != TabBars.Schedule)
+                      //             SizedBox(
+                      //               height: DeviceHelper.height * 0.10,
+                      //             ),
+                      //           if (selectedTab == TabBars.Schedule)
+                      //             SizedBox(
+                      //               height: DeviceHelper.height * 0.05,
+                      //             ),
+                      //           if (selectedTab == TabBars.Menu)
+                      //             SizedBox(
+                      //               height: DeviceHelper.height * 0.01,
+                      //             ),
+                      //           if (selectedTab == TabBars.Details)
+                      //             detailsTabViewForm(context, appTheme),
+                      //           if (selectedTab == TabBars.Menu)
+                      //             menuTabView(context, appTheme),
+                      //           if (selectedTab == TabBars.Schedule)
+                      //             scheduleTabView(context, appTheme)
+                      //         ],
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                    ],
                   ),
+
+                  ///appbar
+                  Positioned.fill(
+                    top: DeviceHelper.height * 0.10,
+                    left: DeviceHelper.width * 0.05,
+                    child: Align(
+                        alignment: Alignment.topLeft,
+                        child: GeneralNewAppBar(
+                          callBack: () {
+                            setState(() {
+                              selectedTab == TabBars.Details
+                                  ? getBack()
+                                  : (selectedTab == TabBars.Menu
+                                      ? setTab(TabBars.Details)
+                                      : scheduleForm
+                                          ? scheduleForm = false
+                                          : setTab(TabBars.Menu));
+                            });
+                          },
+                        )),
+                  ),
+
+                  ///title section
+                  // Positioned(
+                  //     top: DeviceHelper.height * 0.27,
+                  //     width: MediaQuery.of(context).size.width,
+                  //     child: Padding(
+                  //       padding: EdgeInsetsDirectional.only(
+                  //           start: DeviceHelper.width * 0.07),
+                  //       child: Column(children: [
+                  //         Container(
+                  //             decoration: BoxDecoration(
+                  //               color: HexColor.fromHex("#4b4b52"),
+                  //               borderRadius: BorderRadius.only(
+                  //                 topLeft: Radius.circular(
+                  //                   DeviceHelper.height * 0.03,
+                  //                 ),
+                  //                 bottomLeft: Radius.circular(
+                  //                   DeviceHelper.height * 0.03,
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //             height: DeviceHelper.height * 0.175,
+                  //             padding: const EdgeInsetsDirectional.only(bottom: 0),
+                  //             child: Padding(
+                  //               padding: EdgeInsetsDirectional.only(
+                  //                   top: DeviceHelper.height * 0.025),
+                  //               child: Column(children: [
+                  //                 getFoodMainHeading(
+                  //                     appTheme: appTheme, title: widget.data!.title),
+                  //                 SizedBox(
+                  //                   height: DeviceHelper.height * 0.005,
+                  //                 ),
+                  //                 Row(
+                  //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //                   children: [
+                  //                     const SizedBox(),
+                  //                     InkWell(
+                  //                       onTap: () {
+                  //                         Navigator.push(
+                  //                           context,
+                  //                           MaterialPageRoute(
+                  //                               builder: (context) => ReviewsScreen(
+                  //                                     fromFoodDetailScreen: true,
+                  //                                     experienceId: widget.data?.id,
+                  //                                   )),
+                  //                         );
+                  //                       },
+                  //                       child: Row(
+                  //                         children: [
+                  //                           Image.asset(
+                  //                             Resources.bookingStarPNG,
+                  //                             height: 10,
+                  //                           ),
+                  //                           widget.data?.averageRating == null
+                  //                               ? GeneralText(
+                  //                                   Strings.noReviews,
+                  //                                   style: appTheme.typographies
+                  //                                       .interFontFamily.headline6
+                  //                                       .copyWith(
+                  //                                           fontSize: 14,
+                  //                                           color: HexColor.fromHex(
+                  //                                               '#8ea659')),
+                  //                                 )
+                  //                               : Text.rich(
+                  //                                   TextSpan(
+                  //                                     text:
+                  //                                         ' ${widget.data?.averageRating} ( ',
+                  //                                     style: appTheme.typographies
+                  //                                         .interFontFamily.headline6
+                  //                                         .copyWith(
+                  //                                             fontSize: 14,
+                  //                                             color: HexColor.fromHex(
+                  //                                                 '#8ea659')),
+                  //                                     children: <TextSpan>[
+                  //                                       TextSpan(
+                  //                                         text:
+                  //                                             '${widget.data?.noOfRatings} reviews',
+                  //                                         style: appTheme
+                  //                                             .typographies
+                  //                                             .interFontFamily
+                  //                                             .headline6
+                  //                                             .copyWith(
+                  //                                                 fontSize: 14,
+                  //                                                 decoration:
+                  //                                                     TextDecoration
+                  //                                                         .underline,
+                  //                                                 color: HexColor
+                  //                                                     .fromHex(
+                  //                                                         '#8ea659')),
+                  //                                       ),
+                  //                                       const TextSpan(
+                  //                                         text: ' )',
+                  //                                       ),
+                  //                                       // can add more TextSpans here...
+                  //                                     ],
+                  //                                   ),
+                  //                                 ),
+                  //                         ],
+                  //                       ),
+                  //                     ),
+                  //                     const SizedBox(),
+                  //                   ],
+                  //                 ),
+                  //                 Padding(
+                  //                   padding: EdgeInsetsDirectional.only(
+                  //                       start: DeviceHelper.width * 0.10,
+                  //                       end: DeviceHelper.width * 0.10),
+                  //                   child: Row(
+                  //                     mainAxisAlignment:
+                  //                         MainAxisAlignment.spaceBetween,
+                  //                     children: [
+                  //                       InkWell(
+                  //                         child: Column(
+                  //                           children: [
+                  //                             GeneralText(
+                  //                               Strings.foodItemDetails,
+                  //                               style: appTheme.typographies
+                  //                                   .interFontFamily.headline6
+                  //                                   .copyWith(
+                  //                                       fontSize: 14,
+                  //                                       fontWeight: selectedTab ==
+                  //                                               TabBars.Details
+                  //                                           ? FontWeight.bold
+                  //                                           : FontWeight.w400,
+                  //                                       color: HexColor.fromHex(
+                  //                                           '#f1c452')),
+                  //                             ),
+                  //                             Container(
+                  //                               height: DeviceHelper.height * 0.012,
+                  //                               width: DeviceHelper.height * 0.012,
+                  //                               decoration: BoxDecoration(
+                  //                                   color: selectedTab ==
+                  //                                           TabBars.Details
+                  //                                       ? HexColor.fromHex('#f1c452')
+                  //                                       : Colors.transparent,
+                  //                                   shape: BoxShape.circle),
+                  //                             ),
+                  //                           ],
+                  //                         ),
+                  //                         onTap: () {
+                  //                           updateTabView(TabBars.Details);
+                  //                         },
+                  //                       ),
+                  //                       InkWell(
+                  //                         onTap: () {
+                  //                           updateTabView(TabBars.Menu);
+                  //                         },
+                  //                         child: Column(
+                  //                           children: [
+                  //                             GeneralText(
+                  //                               Strings.foodItemMenu,
+                  //                               style: appTheme.typographies
+                  //                                   .interFontFamily.headline6
+                  //                                   .copyWith(
+                  //                                       fontSize: 14,
+                  //                                       fontWeight: selectedTab ==
+                  //                                               TabBars.Menu
+                  //                                           ? FontWeight.bold
+                  //                                           : FontWeight.w400,
+                  //                                       color: HexColor.fromHex(
+                  //                                           '#f1c452')),
+                  //                             ),
+                  //                             Container(
+                  //                               height: DeviceHelper.height * 0.012,
+                  //                               width: DeviceHelper.height * 0.012,
+                  //                               decoration: BoxDecoration(
+                  //                                   color: selectedTab == TabBars.Menu
+                  //                                       ? HexColor.fromHex('#f1c452')
+                  //                                       : Colors.transparent,
+                  //                                   shape: BoxShape.circle),
+                  //                             )
+                  //                           ],
+                  //                         ),
+                  //                       ),
+                  //                       InkWell(
+                  //                         onTap: () {
+                  //                           updateTabView(TabBars.Schedule);
+                  //                         },
+                  //                         child: Column(
+                  //                           children: [
+                  //                             GeneralText(
+                  //                               Strings.foodItemSchedule,
+                  //                               style: appTheme.typographies
+                  //                                   .interFontFamily.headline6
+                  //                                   .copyWith(
+                  //                                       fontSize: 14,
+                  //                                       fontWeight: selectedTab ==
+                  //                                               TabBars.Schedule
+                  //                                           ? FontWeight.bold
+                  //                                           : FontWeight.w400,
+                  //                                       color: HexColor.fromHex(
+                  //                                           '#f1c452')),
+                  //                             ),
+                  //                             Container(
+                  //                               height: DeviceHelper.height * 0.012,
+                  //                               width: DeviceHelper.height * 0.012,
+                  //                               decoration: BoxDecoration(
+                  //                                   color: selectedTab ==
+                  //                                           TabBars.Schedule
+                  //                                       ? HexColor.fromHex('#f1c452')
+                  //                                       : Colors.transparent,
+                  //                                   shape: BoxShape.circle),
+                  //                             ),
+                  //                           ],
+                  //                         ),
+                  //                       ),
+                  //                     ],
+                  //                   ),
+                  //                 ),
+                  //               ]),
+                  //             )),
+                  //         if (selectedTab == TabBars.Menu ||
+                  //             selectedTab == TabBars.Details) ...[
+                  //           displayPriceOption(),
+                  //         ]
+                  //         //),
+                  //       ]),
+                  //     )),
+
+                  ///chef image
+                  // Positioned.fill(
+                  //   top: DeviceHelper.height * 0.23,
+                  //   right: DeviceHelper.width * 0.02,
+                  //   child: Align(
+                  //     alignment: Alignment.topRight,
+                  //     child: GestureDetector(
+                  //       child: CircleAvatar(
+                  //         backgroundColor: Colors.white,
+                  //         radius: DeviceHelper.width * 0.09,
+                  //         child: CircleAvatar(
+                  //           radius: DeviceHelper.width * 0.085,
+                  //           backgroundImage: NetworkImage(Api.baseURLForImages +
+                  //               widget.chefData.t!.profileImageUrl.toString()),
+                  //         ),
+                  //       ),
+                  //       onTap: () async {
+                  //         Navigator.of(context).push(MaterialPageRoute(
+                  //             builder: (context) =>
+                  //                 UserProfile(chefData: widget.chefData)));
+                  //       },
+                  //     ),
+                  //   ),
+                  // ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 15,
                 ),
-              ],
-            ),
-            Positioned.fill(
-              top: DeviceHelper.height * 0.10,
-              left: DeviceHelper.width * 0.05,
-              child: Align(
-                  alignment: Alignment.topLeft,
-                  child: GeneralNewAppBar(
-                    callBack: () {
-                      setState(() {
-                        selectedTab == TabBars.Details
-                            ? getBack()
-                            : (selectedTab == TabBars.Menu
-                                ? setTab(TabBars.Details)
-                                : scheduleForm
-                                    ? scheduleForm = false
-                                    : setTab(TabBars.Menu));
-                      });
-                    },
-                  )),
-            ),
-            Positioned(
-                top: DeviceHelper.height * 0.27,
-                width: MediaQuery.of(context).size.width,
-                child: Padding(
-                  padding: EdgeInsetsDirectional.only(
-                      start: DeviceHelper.width * 0.07),
-                  child: Column(children: [
-                    Container(
-                        decoration: BoxDecoration(
-                          color: HexColor.fromHex("#4b4b52"),
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(
-                              DeviceHelper.height * 0.03,
-                            ),
-                            bottomLeft: Radius.circular(
-                              DeviceHelper.height * 0.03,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          flex: 4,
+                          child: GeneralText(
+                            widget.data!.title ??
+                                '', // Strings.labelSeaFood2Experience,
+                            style: appTheme
+                                .typographies.interFontFamily.headline2
+                                .copyWith(
+                              fontSize: 21,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
                             ),
                           ),
                         ),
-                        height: DeviceHelper.height * 0.175,
-                        padding: const EdgeInsetsDirectional.only(bottom: 0),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.only(
-                              top: DeviceHelper.height * 0.025),
-                          child: Column(children: [
-                            getFoodMainHeading(
-                                appTheme: appTheme, title: widget.data!.title),
-                            SizedBox(
-                              height: DeviceHelper.height * 0.005,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const SizedBox(),
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ReviewsScreen(
-                                                fromFoodDetailScreen: true,
-                                                experienceId: widget.data?.id,
-                                              )),
-                                    );
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Image.asset(
-                                        Resources.bookingStarPNG,
-                                        height: 10,
-                                      ),
-                                      widget.data?.averageRating == null
-                                          ? GeneralText(
-                                              Strings.noReviews,
-                                              style: appTheme.typographies
-                                                  .interFontFamily.headline6
-                                                  .copyWith(
-                                                      fontSize: 14,
-                                                      color: HexColor.fromHex(
-                                                          '#8ea659')),
-                                            )
-                                          : Text.rich(
-                                              TextSpan(
-                                                text:
-                                                    ' ${widget.data?.averageRating} ( ',
-                                                style: appTheme.typographies
-                                                    .interFontFamily.headline6
-                                                    .copyWith(
-                                                        fontSize: 14,
-                                                        color: HexColor.fromHex(
-                                                            '#8ea659')),
-                                                children: <TextSpan>[
-                                                  TextSpan(
-                                                    text:
-                                                        '${widget.data?.noOfRatings} reviews',
-                                                    style: appTheme
-                                                        .typographies
-                                                        .interFontFamily
-                                                        .headline6
-                                                        .copyWith(
-                                                            fontSize: 14,
-                                                            decoration:
-                                                                TextDecoration
-                                                                    .underline,
-                                                            color: HexColor
-                                                                .fromHex(
-                                                                    '#8ea659')),
-                                                  ),
-                                                  const TextSpan(
-                                                    text: ' )',
-                                                  ),
-                                                  // can add more TextSpans here...
-                                                ],
-                                              ),
-                                            ),
-                                    ],
-                                  ),
+                        Expanded(
+                          flex: 1,
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/images/star.svg',
+                                height: 13,
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              GeneralText(
+                                widget.data!.averageRating?.toString() ??
+                                    '4.8', // Strings.labelSeaFood2Experience,
+                                style: appTheme
+                                    .typographies.interFontFamily.headline2
+                                    .copyWith(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: const Color(0xfffbeccb),
                                 ),
-                                const SizedBox(),
-                              ],
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.only(
-                                  start: DeviceHelper.width * 0.10,
-                                  end: DeviceHelper.width * 0.10),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  InkWell(
-                                    child: Column(
-                                      children: [
-                                        GeneralText(
-                                          Strings.foodItemDetails,
-                                          style: appTheme.typographies
-                                              .interFontFamily.headline6
-                                              .copyWith(
-                                                  fontSize: 14,
-                                                  fontWeight: selectedTab ==
-                                                          TabBars.Details
-                                                      ? FontWeight.bold
-                                                      : FontWeight.w400,
-                                                  color: HexColor.fromHex(
-                                                      '#f1c452')),
-                                        ),
-                                        Container(
-                                          height: DeviceHelper.height * 0.012,
-                                          width: DeviceHelper.height * 0.012,
-                                          decoration: BoxDecoration(
-                                              color: selectedTab ==
-                                                      TabBars.Details
-                                                  ? HexColor.fromHex('#f1c452')
-                                                  : Colors.transparent,
-                                              shape: BoxShape.circle),
-                                        ),
-                                      ],
-                                    ),
-                                    onTap: () {
-                                      updateTabView(TabBars.Details);
-                                    },
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      updateTabView(TabBars.Menu);
-                                    },
-                                    child: Column(
-                                      children: [
-                                        GeneralText(
-                                          Strings.foodItemMenu,
-                                          style: appTheme.typographies
-                                              .interFontFamily.headline6
-                                              .copyWith(
-                                                  fontSize: 14,
-                                                  fontWeight: selectedTab ==
-                                                          TabBars.Menu
-                                                      ? FontWeight.bold
-                                                      : FontWeight.w400,
-                                                  color: HexColor.fromHex(
-                                                      '#f1c452')),
-                                        ),
-                                        Container(
-                                          height: DeviceHelper.height * 0.012,
-                                          width: DeviceHelper.height * 0.012,
-                                          decoration: BoxDecoration(
-                                              color: selectedTab == TabBars.Menu
-                                                  ? HexColor.fromHex('#f1c452')
-                                                  : Colors.transparent,
-                                              shape: BoxShape.circle),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      updateTabView(TabBars.Schedule);
-                                    },
-                                    child: Column(
-                                      children: [
-                                        GeneralText(
-                                          Strings.foodItemSchedule,
-                                          style: appTheme.typographies
-                                              .interFontFamily.headline6
-                                              .copyWith(
-                                                  fontSize: 14,
-                                                  fontWeight: selectedTab ==
-                                                          TabBars.Schedule
-                                                      ? FontWeight.bold
-                                                      : FontWeight.w400,
-                                                  color: HexColor.fromHex(
-                                                      '#f1c452')),
-                                        ),
-                                        Container(
-                                          height: DeviceHelper.height * 0.012,
-                                          width: DeviceHelper.height * 0.012,
-                                          decoration: BoxDecoration(
-                                              color: selectedTab ==
-                                                      TabBars.Schedule
-                                                  ? HexColor.fromHex('#f1c452')
-                                                  : Colors.transparent,
-                                              shape: BoxShape.circle),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    //SizedBox(height: DeviceHelper.height * 0.01),
+                    GeneralText(
+                      "${Strings.byText} ${widget.data!.chefBrandName}", // Strings.labelSeaFood2Experience,
+                      style: appTheme.typographies.interFontFamily.headline2
+                          .copyWith(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xff909094),
+                      ),
+                    ),
+                    GeneralText(
+                      '${widget.data!.townName}, ${widget.data!.cityName}', // Strings.labelSeaFood2Experience,
+                      style: appTheme.typographies.interFontFamily.headline6
+                          .copyWith(
+                        fontSize: 13,
+                        //fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(height: DeviceHelper.height * 0.02),
+                    Divider(
+                      color: Colors.white.withOpacity(0.1),
+                    ),
+                    SizedBox(height: DeviceHelper.height * 0.01),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            GeneralText(
+                              Strings
+                                  .hostedBy, // Strings.labelSeaFood2Experience,
+                              style: appTheme
+                                  .typographies.interFontFamily.headline2
+                                  .copyWith(
+                                fontSize: 17,
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xffeee0c1),
                               ),
                             ),
-                          ]),
-                        )),
-                    if (selectedTab == TabBars.Menu ||
-                        selectedTab == TabBars.Details) ...[
-                      displayPriceOption(),
-                    ]
-                    //),
-                  ]),
-                )),
-
-            ///chef image
-            Positioned.fill(
-              top: DeviceHelper.height * 0.23,
-              right: DeviceHelper.width * 0.02,
-              child: Align(
-                alignment: Alignment.topRight,
-                child: GestureDetector(
-                  child: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: DeviceHelper.width * 0.09,
-                    child: CircleAvatar(
-                      radius: DeviceHelper.width * 0.085,
-                      backgroundImage: NetworkImage(Api.baseURLForImages +
-                          widget.chefData.t!.profileImageUrl.toString()),
+                            GeneralText(
+                              '${widget.data!.chefName}', // Strings.labelSeaFood2Experience,
+                              style: appTheme
+                                  .typographies.interFontFamily.headline6
+                                  .copyWith(
+                                fontSize: 13,
+                                //fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                        GestureDetector(
+                          child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            radius: DeviceHelper.width * 0.07,
+                            child: CircleAvatar(
+                              radius: DeviceHelper.width * 0.07,
+                              backgroundImage: NetworkImage(
+                                  Api.baseURLForImages +
+                                      widget.chefData.t!.profileImageUrl
+                                          .toString()),
+                            ),
+                          ),
+                          onTap: () async {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    UserProfile(chefData: widget.chefData)));
+                          },
+                        ),
+                      ],
                     ),
-                  ),
-                  onTap: () async {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>
-                            UserProfile(chefData: widget.chefData)));
-                  },
+                    SizedBox(height: DeviceHelper.height * 0.01),
+                    Divider(
+                      color: Colors.white.withOpacity(0.1),
+                    ),
+                    SizedBox(height: DeviceHelper.height * 0.01),
+                    GeneralText(
+                      Strings
+                          .productDetailWowFactorTitle, // Strings.labelSeaFood2Experience,
+                      style: appTheme.typographies.interFontFamily.headline2
+                          .copyWith(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xffeee0c1),
+                      ),
+                    ),
+                    SizedBox(height: DeviceHelper.height * 0.02),
+                    wowFactors(appTheme, wowFactorsList),
+                    SizedBox(height: DeviceHelper.height * 0.01),
+                    Divider(
+                      color: Colors.white.withOpacity(0.1),
+                    ),
+                    SizedBox(height: DeviceHelper.height * 0.01),
+                    GeneralText(
+                      Strings
+                          .foodDetailPreferences, // Strings.labelSeaFood2Experience,
+                      style: appTheme.typographies.interFontFamily.headline2
+                          .copyWith(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xffeee0c1),
+                      ),
+                    ),
+                    SizedBox(height: DeviceHelper.height * 0.02),
+                    wowFactors(appTheme, preferencesList),
+                    SizedBox(height: DeviceHelper.height * 0.01),
+                    Divider(
+                      color: Colors.white.withOpacity(0.1),
+                    ),
+                    SizedBox(height: DeviceHelper.height * 0.03),
+                    GeneralText(
+                      Strings
+                          .foodDetailLocation, // Strings.labelSeaFood2Experience,
+                      style: appTheme.typographies.interFontFamily.headline2
+                          .copyWith(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xffeee0c1),
+                      ),
+                    ),
+                    SizedBox(height: DeviceHelper.height * 0.03),
+                    Container(
+                      height: DeviceHelper.height * 0.60,
+                      width: MediaQuery.of(context).size.width,
+                      transform: Matrix4.translationValues(0, 0, 0.0),
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: appTheme.colors.primary,
+                            blurRadius: 400.0,
+                            spreadRadius: 0,
+                          ),
+                        ],
+                      ),
+                      child: GoogleMap(
+                        mapType: MapType.normal,
+                        zoomControlsEnabled: false,
+                        zoomGesturesEnabled: false,
+                        scrollGesturesEnabled: false,
+                        rotateGesturesEnabled: false,
+                        compassEnabled: false,
+                        mapToolbarEnabled: false,
+                        initialCameraPosition: CameraPosition(
+                          target: LatLng(
+                            widget.data!.latitude ?? 0.0,
+                            widget.data!.longitude ?? 0.0,
+                          ),
+                          zoom: 14.4746,
+                        ),
+                        markers: <Marker>{
+                          Marker(
+                              markerId: const MarkerId('SomeId'),
+                              position: LatLng(
+                                widget.data!.latitude ?? 0.0,
+                                widget.data!.longitude ?? 0.0,
+                              ),
+                              infoWindow: const InfoWindow(title: '')),
+                        },
+                        onMapCreated: (GoogleMapController controller) {
+                          _controller.complete(controller);
+                          controller.setMapStyle(darkMapStyle);
+                        },
+                      ),
+                    ),
+                    SizedBox(height: DeviceHelper.height * 0.10),
+                  ],
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget experienceNextButton() {
-    return GeneralButton.button(
-      width: DeviceHelper.width * 0.37,
-      title: Strings.nextButtonTitle.toUpperCase(),
-      //isEnable: (!scheduleForm && selectedTime == "") ? true : false,
-      styleType: ButtonStyleType.fill,
-      onTap: () {
-        setState(() {
-          if (!scheduleForm &&
-              selectedTime == "" &&
-              selectedTab == TabBars.Schedule) {
-            Toaster.infoToast(
-                context: context, message: 'Please Select Schedule Slot!');
-          } else {
-            selectedTab == TabBars.Details
-                ? setTab(TabBars.Menu)
-                : (selectedTab == TabBars.Menu
-                    ? setTab(TabBars.Schedule)
-                    : scheduleForm
-                        ? goToRequestToBookScreen()
-                        : setScheduleFormValue());
-          }
-        });
-      },
+    return Container(
+      height: DeviceHelper.height * 0.10,
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      decoration: BoxDecoration(
+        color: Colors.black.withOpacity(0.8),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Row(
+            children: [
+              GeneralText(
+                'SAR. 350', // Strings.labelSeaFood2Experience,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xfff1c452),
+                ),
+              ),
+              GeneralText(
+                " /Person", // Strings.labelSeaFood2Experience,
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xff909094),
+                ),
+              ),
+            ],
+          ),
+          GeneralButton.button(
+            width: DeviceHelper.width * 0.37,
+            title: Strings.bookButtonTitle,
+            //isEnable: (!scheduleForm && selectedTime == "") ? true : false,
+            styleType: ButtonStyleType.fill,
+            onTap: () {
+              setState(() {
+                if (!scheduleForm &&
+                    selectedTime == "" &&
+                    selectedTab == TabBars.Schedule) {
+                  Toaster.infoToast(
+                      context: context,
+                      message: 'Please Select Schedule Slot!');
+                } else {
+                  selectedTab == TabBars.Details
+                      ? setTab(TabBars.Menu)
+                      : (selectedTab == TabBars.Menu
+                          ? setTab(TabBars.Schedule)
+                          : scheduleForm
+                              ? goToRequestToBookScreen()
+                              : setScheduleFormValue());
+                }
+              });
+            },
+          ),
+        ],
+      ),
     );
   }
 
@@ -2019,55 +2313,51 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   }
 
   Widget wowFactors(IAppThemeData appTheme, List<CustomModel> items) {
-    return Wrap(
-      children: [
-        for (int i = 0; i < items.length; i++)
-          Container(
-            //color: Colors.red,
-            width: MediaQuery.of(context).size.width * 0.22,
-            padding: const EdgeInsets.only(bottom: 7.7),
-            child: Column(
-              children: [
-                Container(
-                  width: DeviceHelper.width * 0.17,
-                  padding: const EdgeInsetsDirectional.all(10),
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(
-                          'assets/images/icons/food_item_circle.png'),
-                      fit: BoxFit.contain,
-                    ),
-                    shape: BoxShape.circle,
+    return SizedBox(
+      height: DeviceHelper.height * 0.13,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: [
+          for (int i = 0; i < items.length; i++)
+            Container(
+              width: DeviceHelper.width * 0.22,
+              padding: const EdgeInsets.only(
+                left: 7,
+                top: 7,
+              ),
+              margin: const EdgeInsets.only(
+                right: 10,
+              ),
+              decoration: BoxDecoration(
+                color: HexColor.fromHex('#34343e'),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SvgPicture.network(
+                    items[i].name != null
+                        ? Api.baseURLForImages + items[i].name.toString()
+                        : '',
+                    fit: BoxFit.cover,
+                    width: 35,
+                    color: const Color(0xfff1c452),
                   ),
-                  child: Container(
-                    height: DeviceHelper.height * 0.08,
-                    padding: const EdgeInsetsDirectional.all(12),
-                    decoration: BoxDecoration(
-                      color: HexColor.fromHex("#f1c452"),
-                      shape: BoxShape.circle,
-                    ),
-                    child: SvgPicture.network(
-                      items[i].name != null
-                          ? Api.baseURLForImages + items[i].name.toString()
-                          : '',
-                      fit: BoxFit.cover,
+                  SizedBox(height: DeviceHelper.height * 0.02),
+                  GeneralText(
+                    items[i].icon ?? "",
+                    textAlign: TextAlign.left,
+                    maxLines: 2,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: HexColor.fromHex('#d9d9d9'),
                     ),
                   ),
-                ),
-                GeneralText(
-                  items[i].icon ?? "",
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  style:
-                      appTheme.typographies.interFontFamily.headline6.copyWith(
-                    fontSize: 12,
-                    color: HexColor.fromHex('#ffffff'),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-      ],
+        ],
+      ),
     );
   }
 

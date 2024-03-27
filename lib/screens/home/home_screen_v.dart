@@ -124,23 +124,10 @@ class HomeScreen extends BaseView<HomeScreenViewModel> {
                   ],
                 ),
               ),
-              SizedBox(
-                //height: DeviceHelper.height * 0.30,
-                //height: 250,
-                //width: double.infinity,
-                // child: SvgPicture.asset(
-                //   height: 100,
-                //   Resources.homeCurl,
-                //   fit: BoxFit.cover,
-                // ),
-                child: Container(
-                  width: 130,
-                  height: 130,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
-                  ),
-                ),
+              Image.asset(
+                width: DeviceHelper.width * 0.35,
+                Resources.homeCurl,
+                fit: BoxFit.cover,
               )
             ],
           ),

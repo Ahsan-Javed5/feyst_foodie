@@ -297,6 +297,7 @@ abstract class Strings {
   static const foodDetailAboutTitle = 'Experience';
 
   static const nextButtonTitle = "NEXT";
+  static const bookButtonTitle = "Book";
 
   static const letsStartScreenLabel = "Last but not the least!";
   static const letsStartScreenLabel1 =
@@ -334,6 +335,7 @@ abstract class Strings {
   static const productDetailTitle = 'BBQ \nExperience';
   static const productDetailSubTitle = 'by Zee Lounge';
   static const byText = 'by';
+  static const hostedBy = 'Hosted By';
   static const productDetailReview = '4.2';
   static const productDetailAboutTitle = 'About Experience';
   static const productDetailAboutSubTitle =
