@@ -283,21 +283,25 @@ abstract class Strings {
   static const foodItemMenu = "Menu";
   static const foodItemDetails = "Details";
   static const foodItemSchedule = "Schedule";
+  static const foodItemNextAvailable = 'Next available';
   static const foodDetailHeading = "Appetizer";
   static const foodProductTitle = "Sindhi Biryani";
   static const foodProductSubTitle = "Biryani";
   static const appCurrency = "Rs";
+  static const sarCurrency = "SAR";
   static const foodProductItemPrice = "280";
   static const perPerson = 'Per Person';
   static const foodProductItemDescription =
       "A spiced mix of meat and rice, traditionally cooked over an open fire.";
 
   static const foodProductItemUsers = "2";
+  static const servings = 'servings';
   static const foodProductItemQuantity = "Quantity";
   static const foodDetailAboutTitle = 'Experience';
 
   static const nextButtonTitle = "NEXT";
   static const bookButtonTitle = "Book";
+  static const moreOptionButtonTitle = "More Options";
 
   static const letsStartScreenLabel = "Last but not the least!";
   static const letsStartScreenLabel1 =
@@ -548,6 +552,8 @@ abstract class Strings {
   static const cashReceived = 'Cash Received';
   static const fullAmountReceivedBy = 'Full amount has been received by ';
   static const advanceReceivedBy = 'Advance have been received by ';
+  static const chooseButtonTitle = 'Choose';
+  static const anotherTimeText = 'Looking for another day or time ?';
 
   ///Errors
   static const somethingWentWrong = 'Something is wrong please content vendor';

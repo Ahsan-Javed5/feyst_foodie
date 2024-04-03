@@ -84,6 +84,8 @@ dependencies:
   fl_webview: ^1.1.2
   webview_flutter_wkwebview: ^3.9.4
   flutter_launcher_icons: ^0.13.1
+  flutter_carousel_media_slider: ^0.0.2
+  chewie: ^1.8.0
 
 
 dev_dependencies:
@@ -111,8 +113,7 @@ flutter:
     - assets/images/icons/
     - assets/json/
     - assets/videos/
-    - assets/privacy.html
-    - assets/terms.html
+    - assets/html/
   fonts:
     - family: Roboto
       fonts:

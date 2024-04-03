@@ -1,12 +1,18 @@
 import 'dart:async';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:chef/helpers/device_helper.dart';
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/screens/home/schedule_model.dart';
 import 'package:chef/screens/user_account/user_profile.dart';
+import 'package:chewie/chewie.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_carousel_media_slider/carousel_media.dart';
+import 'package:flutter_carousel_media_slider/flutter_carousel_media_slider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:video_player/video_player.dart';
 
 import '../../../constants/temporary_data.dart';
 import '../../../models/booking/booking_request.dart';
@@ -48,6 +54,39 @@ class FoodDetailScreen extends StatefulWidget {
 }
 
 class _FoodDetailScreenState extends State<FoodDetailScreen> {
+  late VideoPlayerController _videoPlayerController1;
+  late VideoPlayerController _videoPlayerController2;
+  late ChewieController _chewieController;
+  late ChewieController _chewieController2;
+  List<CarouselMedia> media = [
+    CarouselMedia(
+      mediaName: 'Image 1',
+      mediaUrl:
+          'https://images.pexels.com/photos/1172253/pexels-photo-1172253.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+      mediaType: CarouselMediaType.image,
+      carouselImageSource: CarouselImageSource.network,
+    ),
+    CarouselMedia(
+      mediaName: 'Video 1',
+      mediaUrl: 'https://www.youtube.com/watch?v=snYu2JUqSWs',
+      mediaType: CarouselMediaType.video,
+      carouselImageSource: CarouselImageSource.network,
+    ),
+    CarouselMedia(
+      mediaName: 'Image 2',
+      mediaUrl:
+          'https://media.istockphoto.com/photos/mountain-landscape-picture-id517188688?k=20&m=517188688&s=612x612&w=0&h=i38qBm2P-6V4vZVEaMy_TaTEaoCMkYhvLCysE7yJQ5Q=',
+      mediaType: CarouselMediaType.image,
+      carouselImageSource: CarouselImageSource.network,
+    ),
+    // CarouselMedia(
+    //   mediaName: 'Image 5',
+    //   mediaUrl:
+    //       'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4',
+    //   mediaType: CarouselMediaType.video,
+    //   carouselImageSource: CarouselImageSource.network,
+    // )
+  ];
   List<BookingDetails> bookingMenuDetails = [];
   String selectedDate = "";
   String selectedDay = "";
@@ -85,6 +124,16 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     'Dec'
   ];
 
+  List weekDays = [
+    'Mon',
+    'Tue',
+    'Wed',
+    'Thur',
+    'Fri',
+    'Sat',
+    'Sun',
+  ];
+
   var darkMapStyle;
 
   final Completer<GoogleMapController> _controller =
@@ -96,6 +145,33 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   @override
   void initState() {
+    _videoPlayerController1 = VideoPlayerController.network(
+        'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4');
+    _videoPlayerController2 = VideoPlayerController.network(
+        'https://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4');
+
+    _chewieController = ChewieController(
+      videoPlayerController: _videoPlayerController1,
+      aspectRatio: 4 / 3,
+      autoPlay: true,
+      showControls: true,
+      hideControlsTimer: ChewieController.defaultHideControlsTimer,
+      showOptions: true,
+      autoInitialize: true,
+      draggableProgressBar: false,
+      showControlsOnInitialize: false,
+      allowFullScreen: false,
+      allowMuting: true,
+      looping: true,
+    );
+
+    _chewieController2 = ChewieController(
+      videoPlayerController: _videoPlayerController2,
+      //aspectRatio: 4 / 3,
+      autoPlay: true,
+      looping: true,
+    );
+
     developer.log(' Price Id is }');
     headers = widget.foodMenuDetail.t
         .map((element) => element.mealName)
@@ -217,7 +293,10 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       child: Scaffold(
         backgroundColor: HexColor.fromHex('#212129'),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: experienceNextButton(),
+        floatingActionButton:
+            selectedTab == TabBars.Details || selectedTab == TabBars.Menu
+                ? experienceNextButton()
+                : const SizedBox(),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -239,24 +318,52 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                               images = images + images;
                               return Column(
                                 children: [
+                                  // CarouselSlider(
+                                  //   options: CarouselOptions(
+                                  //     height: DeviceHelper.height * 0.50,
+                                  //     autoPlay: true,
+                                  //   ),
+                                  //   items: (images.isEmpty
+                                  //           ? foodDetailsBgImages
+                                  //           : images)
+                                  //       .map((i) {
+                                  //     return Builder(
+                                  //       builder: (BuildContext context) {
+                                  //         return Image.network(
+                                  //             Api.baseURLForImages + i,
+                                  //             fit: BoxFit.fitHeight);
+                                  //       },
+                                  //     );
+                                  //   }).toList(),
+                                  // ),
                                   CarouselSlider(
+                                    items: [
+                                      Chewie(
+                                        controller: _chewieController,
+                                      ),
+                                      Chewie(
+                                        controller: _chewieController2,
+                                      )
+                                    ],
                                     options: CarouselOptions(
-                                      height: DeviceHelper.height * 0.50,
-                                      autoPlay: true,
-                                    ),
-                                    items: (images.isEmpty
-                                            ? foodDetailsBgImages
-                                            : images)
-                                        .map((i) {
-                                      return Builder(
-                                        builder: (BuildContext context) {
-                                          return Image.network(
-                                              Api.baseURLForImages + i,
-                                              fit: BoxFit.fitHeight);
-                                        },
-                                      );
-                                    }).toList(),
+                                        height: DeviceHelper.height * 0.50,
+                                        autoPlay: false,
+                                        onPageChanged: (index, reason) {
+                                          _chewieController.seekTo(
+                                              const Duration(seconds: 0));
+                                          _chewieController.pause();
+                                        }),
                                   ),
+                                  // FlutterCarouselMediaSlider(
+                                  //   height: DeviceHelper.height * 0.50,
+                                  //   carouselMediaList: media,
+                                  //   // placeholder: const Center(
+                                  //   //   child: Text('Loading...'),
+                                  //   // ),
+                                  //   onPageChanged: (index) {
+                                  //     debugPrint('Page Changed: $index');
+                                  //   },
+                                  // ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children:
@@ -327,24 +434,21 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                   ),
 
                   ///appbar
-                  Positioned.fill(
-                    top: DeviceHelper.height * 0.10,
-                    left: DeviceHelper.width * 0.05,
-                    child: Align(
-                        alignment: Alignment.topLeft,
-                        child: GeneralNewAppBar(
-                          callBack: () {
-                            setState(() {
-                              selectedTab == TabBars.Details
-                                  ? getBack()
-                                  : (selectedTab == TabBars.Menu
-                                      ? setTab(TabBars.Details)
-                                      : scheduleForm
-                                          ? scheduleForm = false
-                                          : setTab(TabBars.Menu));
-                            });
-                          },
-                        )),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20, top: 40),
+                    child: GeneralNewAppBar(
+                      callBack: () {
+                        setState(() {
+                          selectedTab == TabBars.Details
+                              ? getBack()
+                              : (selectedTab == TabBars.Menu
+                                  ? setTab(TabBars.Details)
+                                  : scheduleForm
+                                      ? scheduleForm = false
+                                      : setTab(TabBars.Menu));
+                        });
+                      },
+                    ),
                   ),
 
                   ///title section
@@ -661,154 +765,30 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                         color: Colors.white,
                       ),
                     ),
-                    SizedBox(height: DeviceHelper.height * 0.02),
-                    Divider(
-                      color: Colors.white.withOpacity(0.1),
-                    ),
-                    SizedBox(height: DeviceHelper.height * 0.01),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            GeneralText(
-                              Strings
-                                  .hostedBy, // Strings.labelSeaFood2Experience,
-                              style: appTheme
-                                  .typographies.interFontFamily.headline2
-                                  .copyWith(
-                                fontSize: 17,
-                                fontWeight: FontWeight.w600,
-                                color: const Color(0xffeee0c1),
-                              ),
+                    getDivider(),
+                    selectedTab == TabBars.Menu ||
+                            selectedTab == TabBars.Schedule
+                        ? GeneralText(
+                            selectedTab == TabBars.Menu
+                                ? Strings.foodItemMenu
+                                : selectedTab == TabBars.Schedule
+                                    ? Strings.foodItemNextAvailable
+                                    : '', // Strings.labelSeaFood2Experience,
+                            style: appTheme
+                                .typographies.interFontFamily.headline2
+                                .copyWith(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w600,
+                              color: const Color(0xffeee0c1),
                             ),
-                            GeneralText(
-                              '${widget.data!.chefName}', // Strings.labelSeaFood2Experience,
-                              style: appTheme
-                                  .typographies.interFontFamily.headline6
-                                  .copyWith(
-                                fontSize: 13,
-                                //fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                        GestureDetector(
-                          child: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: DeviceHelper.width * 0.07,
-                            child: CircleAvatar(
-                              radius: DeviceHelper.width * 0.07,
-                              backgroundImage: NetworkImage(
-                                  Api.baseURLForImages +
-                                      widget.chefData.t!.profileImageUrl
-                                          .toString()),
-                            ),
-                          ),
-                          onTap: () async {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>
-                                    UserProfile(chefData: widget.chefData)));
-                          },
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: DeviceHelper.height * 0.01),
-                    Divider(
-                      color: Colors.white.withOpacity(0.1),
-                    ),
-                    SizedBox(height: DeviceHelper.height * 0.01),
-                    GeneralText(
-                      Strings
-                          .productDetailWowFactorTitle, // Strings.labelSeaFood2Experience,
-                      style: appTheme.typographies.interFontFamily.headline2
-                          .copyWith(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w600,
-                        color: const Color(0xffeee0c1),
-                      ),
-                    ),
-                    SizedBox(height: DeviceHelper.height * 0.02),
-                    wowFactors(appTheme, wowFactorsList),
-                    SizedBox(height: DeviceHelper.height * 0.01),
-                    Divider(
-                      color: Colors.white.withOpacity(0.1),
-                    ),
-                    SizedBox(height: DeviceHelper.height * 0.01),
-                    GeneralText(
-                      Strings
-                          .foodDetailPreferences, // Strings.labelSeaFood2Experience,
-                      style: appTheme.typographies.interFontFamily.headline2
-                          .copyWith(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w600,
-                        color: const Color(0xffeee0c1),
-                      ),
-                    ),
-                    SizedBox(height: DeviceHelper.height * 0.02),
-                    wowFactors(appTheme, preferencesList),
-                    SizedBox(height: DeviceHelper.height * 0.01),
-                    Divider(
-                      color: Colors.white.withOpacity(0.1),
-                    ),
-                    SizedBox(height: DeviceHelper.height * 0.03),
-                    GeneralText(
-                      Strings
-                          .foodDetailLocation, // Strings.labelSeaFood2Experience,
-                      style: appTheme.typographies.interFontFamily.headline2
-                          .copyWith(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w600,
-                        color: const Color(0xffeee0c1),
-                      ),
-                    ),
-                    SizedBox(height: DeviceHelper.height * 0.03),
-                    Container(
-                      height: DeviceHelper.height * 0.60,
-                      width: MediaQuery.of(context).size.width,
-                      transform: Matrix4.translationValues(0, 0, 0.0),
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: appTheme.colors.primary,
-                            blurRadius: 400.0,
-                            spreadRadius: 0,
-                          ),
-                        ],
-                      ),
-                      child: GoogleMap(
-                        mapType: MapType.normal,
-                        zoomControlsEnabled: false,
-                        zoomGesturesEnabled: false,
-                        scrollGesturesEnabled: false,
-                        rotateGesturesEnabled: false,
-                        compassEnabled: false,
-                        mapToolbarEnabled: false,
-                        initialCameraPosition: CameraPosition(
-                          target: LatLng(
-                            widget.data!.latitude ?? 0.0,
-                            widget.data!.longitude ?? 0.0,
-                          ),
-                          zoom: 14.4746,
-                        ),
-                        markers: <Marker>{
-                          Marker(
-                              markerId: const MarkerId('SomeId'),
-                              position: LatLng(
-                                widget.data!.latitude ?? 0.0,
-                                widget.data!.longitude ?? 0.0,
-                              ),
-                              infoWindow: const InfoWindow(title: '')),
-                        },
-                        onMapCreated: (GoogleMapController controller) {
-                          _controller.complete(controller);
-                          controller.setMapStyle(darkMapStyle);
-                        },
-                      ),
-                    ),
-                    SizedBox(height: DeviceHelper.height * 0.10),
+                          )
+                        : const SizedBox(),
+                    if (selectedTab == TabBars.Details)
+                      experienceDetailView(context, appTheme),
+                    if (selectedTab == TabBars.Menu)
+                      experienceMenuView(context, appTheme),
+                    if (selectedTab == TabBars.Schedule)
+                      experienceScheduleView(context, appTheme)
                   ],
                 ),
               ),
@@ -850,8 +830,11 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             ],
           ),
           GeneralButton.button(
-            width: DeviceHelper.width * 0.37,
-            title: Strings.bookButtonTitle,
+            title: selectedTab == TabBars.Details
+                ? Strings.foodItemMenu
+                : selectedTab == TabBars.Menu
+                    ? Strings.foodItemSchedule
+                    : '',
             //isEnable: (!scheduleForm && selectedTime == "") ? true : false,
             styleType: ButtonStyleType.fill,
             onTap: () {
@@ -881,6 +864,15 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   void setTab(var a) {
     selectedTab = a;
+  }
+
+  Widget getDivider() {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: DeviceHelper.height * 0.01),
+      child: Divider(
+        color: Colors.white.withOpacity(0.1),
+      ),
+    );
   }
 
   void goToRequestToBookScreen() {
@@ -1039,84 +1031,133 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
         ));
   }
 
+  Widget experienceMenuView(BuildContext context, IAppThemeData appTheme) {
+    return Padding(
+        padding: const EdgeInsets.only(bottom: 150),
+        child: ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: headers.length,
+          itemBuilder: (BuildContext context, int index) {
+            // bookingMenuDetails.add(BookingDetails(menuId: widget.foodMenuDetail.t[0].id, quantity: 0));
+            List<menu.T> filteredList = widget.foodMenuDetail.t
+                .where((element) => element.mealName == headers[index])
+                .toList();
+            return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  ///Meal Name Title Row
+                  // Row(
+                  //   children: [
+                  //     Container(
+                  //       color: HexColor.fromHex('#f1c452'),
+                  //       width: 16,
+                  //       height: 1,
+                  //     ),
+                  //     SizedBox(
+                  //       width: DeviceHelper.width * 0.05,
+                  //     ),
+                  //     getFoodItemHeading(
+                  //         appTheme: appTheme, mealTitle: headers[index]),
+                  //   ],
+                  // ),
+                  // SizedBox(height: DeviceHelper.height * 0.03),
+                  Column(
+                    children: [
+                      for (int k = 0; k < filteredList.length; k++)
+                        getMenuItem(
+                            filteredList, k, appTheme, index, filteredList[k]),
+                    ],
+                  ),
+                ]);
+          },
+        ));
+  }
+
   getMenuItem(List filteredList, int k, IAppThemeData appTheme, int index,
       menu.T menuItem) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              flex: 2,
-              child: Container(
-                padding: const EdgeInsetsDirectional.all(16),
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image:
-                        AssetImage('assets/images/icons/food_item_circle.png'),
-                    fit: BoxFit.fill,
-                  ),
-                  shape: BoxShape.circle,
-                ),
-                child: CircleAvatar(
-                  radius: DeviceHelper.height * 0.05,
-                  backgroundImage: NetworkImage(
-                    Api.baseURLForImages + menuItem.pictureUrl,
-                  ),
-                ),
+    return Container(
+      decoration: BoxDecoration(
+          color: const Color(0xff34343e),
+          borderRadius: BorderRadius.circular(
+            15,
+          )),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(15),
+              topRight: Radius.circular(15),
+              bottomRight: Radius.circular(
+                10,
               ),
             ),
-            SizedBox(
-              width: DeviceHelper.width * 0.04,
+            child: Image.network(
+              Api.baseURLForImages + menuItem.pictureUrl,
+              height: DeviceHelper.height * 0.20,
+              width: DeviceHelper.width,
+              fit: BoxFit.cover,
             ),
-            Expanded(
-              flex: 4,
-              child: Padding(
-                padding: const EdgeInsetsDirectional.only(top: 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        getFoodItemTitle(
-                            appTheme: appTheme, foodItemTitle: menuItem.dish),
-                        widget.data!.priceTypeId == 2
-                            ? getFoodItemAmount(
-                                appTheme: appTheme,
-                                foodItemPrice: menuItem.price.toString(),
-                                quantityIndex: k,
-                                menuItem: menuItem,
-                              )
-                            : Container(),
-                      ],
-                    ),
-                    getFoodItemSubTitle(
-                        appTheme: appTheme, subTitle: menuItem.baseDishName),
-                    getFoodItemDescription(
-                        appTheme: appTheme,
-                        foodItemDescription: menuItem.description),
-                  ],
-                ),
-              ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: DeviceHelper.height * 0.02,
+              horizontal: DeviceHelper.width * 0.05,
             ),
-          ],
-        ),
-        widget.data!.priceTypeId == 2
-            ? displayQuantityData(filteredList[k].price, k, menuItem)
-            : Container(),
-        SizedBox(
-          height: DeviceHelper.height * 0.03,
-        ),
-        filteredList.length - 2 == k
-            ? Divider(
-                color: HexColor.fromHex('#f1c452'),
-                thickness: 1,
-              )
-            : const SizedBox(),
-      ],
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                getFoodItemTitle(
+                    appTheme: appTheme, foodItemTitle: menuItem.dish),
+                // getFoodItemSubTitle(
+                //     appTheme: appTheme, subTitle: menuItem.baseDishName),
+                getFoodItemDescription(
+                    appTheme: appTheme,
+                    foodItemDescription: menuItem.description),
+              ],
+            ),
+          ),
+          widget.data!.priceTypeId == 2
+              ? Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: DeviceHelper.width * 0.05,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                            Resources.userIconMenu,
+                            height: DeviceHelper.height * 0.02,
+                            color: HexColor.fromHex('#d9d9d9'),
+                          ),
+                          SizedBox(
+                            width: DeviceHelper.width * 0.02,
+                          ),
+                          Container(
+                              child: getFoodItemUsers(
+                                  appTheme: appTheme,
+                                  index: index,
+                                  menuItem: menuItem)),
+                        ],
+                      ),
+                      SizedBox(
+                        height: DeviceHelper.height * 0.01,
+                      ),
+                      displayQuantityData(filteredList[k].price, k, menuItem),
+                    ],
+                  ),
+                )
+              : Container(),
+          SizedBox(
+            height: DeviceHelper.height * 0.03,
+          ),
+        ],
+      ),
     );
   }
 
@@ -1127,23 +1168,14 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                SvgPicture.asset(
-                  Resources.userIconMenu,
-                  height: DeviceHelper.height * 0.02,
-                  color: element.quantity == 0
-                      ? HexColor.fromHex('#909094')
-                      : HexColor.fromHex('#ffffff'),
-                ),
-                SizedBox(
-                  width: DeviceHelper.width * 0.02,
-                ),
-                Container(
-                    child: getFoodItemUsers(
-                        appTheme: appTheme, index: index, menuItem: menuItem)),
-              ],
-            ),
+            widget.data!.priceTypeId == 2
+                ? getFoodItemAmount(
+                    appTheme: appTheme,
+                    foodItemPrice: menuItem.price.toString(),
+                    quantityIndex: index,
+                    menuItem: menuItem,
+                  )
+                : Container(),
             displayQuantityDetails(price, index, menuItem),
           ],
         );
@@ -1263,16 +1295,14 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   Widget getFoodItemTitle(
       {required IAppThemeData appTheme, required String foodItemTitle}) {
-    return SizedBox(
-      //color: Colors.red,
-      width: DeviceHelper.width * 0.25,
-      child: GeneralText(
-        //  Strings.foodProductTitle,
-        foodItemTitle,
-        maxLines: 2,
-        style: appTheme.typographies.interFontFamily.headline6
-            .copyWith(fontSize: 15, color: HexColor.fromHex('#f7dc99')),
-      ),
+    return GeneralText(
+      //  Strings.foodProductTitle,
+      foodItemTitle,
+      maxLines: 2,
+      style: appTheme.typographies.interFontFamily.headline6.copyWith(
+          fontSize: 18,
+          fontWeight: FontWeight.w700,
+          color: HexColor.fromHex('#f1c452')),
     );
   }
 
@@ -1294,13 +1324,15 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       if (element.menuId == menuItem.id) {
         return GeneralText(
           //   Strings.appCurrency + "." + Strings.foodProductItemPrice,
-          "${Strings.appCurrency}.$foodItemPrice",
+          "${Strings.sarCurrency}. $foodItemPrice",
           style: appTheme.typographies.interFontFamily.headline6.copyWith(
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-            color: element.quantity == 0
-                ? HexColor.fromHex('#909094')
-                : HexColor.fromHex('#f1c452'),
+            fontSize: 19,
+            fontWeight: FontWeight.w700,
+            color:
+                // element.quantity == 0
+                //     ? HexColor.fromHex('#909094')
+                //     :
+                HexColor.fromHex('#f1c452'),
           ),
         );
       }
@@ -1311,12 +1343,11 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   Widget getFoodItemDescription(
       {required IAppThemeData appTheme, required String foodItemDescription}) {
     return GeneralText(
-      // Strings.foodProductItemDescription,
       foodItemDescription,
       maxLines: 3,
       textAlign: TextAlign.start,
       style: appTheme.typographies.interFontFamily.headline6
-          .copyWith(fontSize: 14, color: HexColor.fromHex('#ffffff')),
+          .copyWith(fontSize: 14, color: HexColor.fromHex('#909094')),
     );
   }
 
@@ -1324,19 +1355,13 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       {required IAppThemeData appTheme,
       required index,
       required menu.T menuItem}) {
-    for (var element in bookingMenuDetails) {
-      if (element.menuId == menuItem.id) {
-        return GeneralText(
-          Strings.foodProductItemUsers,
-          style: appTheme.typographies.interFontFamily.headline6.copyWith(
-            fontSize: 16,
-            color: element.quantity == 0
-                ? HexColor.fromHex('#909094')
-                : HexColor.fromHex('#ffffff'),
-          ),
-        );
-      }
-    }
+    return GeneralText(
+      '${Strings.foodProductItemUsers} ${Strings.servings}',
+      style: appTheme.typographies.interFontFamily.headline6.copyWith(
+        fontSize: 14,
+        color: HexColor.fromHex('#d9d9d9'),
+      ),
+    );
     return const GeneralText('');
   }
 
@@ -1737,7 +1762,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                           InkWell(
                             onTap: () {
                               _appService.state.orderHelper!.daysGroup =
-                                  widget.scheduleModel.t.daysGroups![index];
+                                  widget.scheduleModel.t.daysGroups[index];
                               selectedDay = InfininURLHelpers.dayOfMonth(
                                   item.scheduledDate);
                               selectedMonth =
@@ -1825,9 +1850,433 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           );
   }
 
+  Widget experienceScheduleView(BuildContext context, IAppThemeData appTheme) {
+    widget.scheduleModel.t.daysGroups.sort((a, b) {
+      return a.scheduledDate.compareTo(b.scheduledDate);
+    });
+
+    //return SizedBox();
+    //scheduleForm
+
+    ///for notes page code see this padding widget
+    // ? Padding(
+    //     padding: const EdgeInsetsDirectional.only(
+    //       start: 15,
+    //       top: 50,
+    //     ),
+    //     child: Column(
+    //       children: [
+    //         Row(
+    //           crossAxisAlignment: CrossAxisAlignment.start,
+    //           children: [
+    //             Column(
+    //                 crossAxisAlignment: CrossAxisAlignment.center,
+    //                 children: [
+    //                   // GeneralRichText(title: 'Oct\n 13'),
+    //                   GeneralText(
+    //                     selectedMonth,
+    //                     // style: appTheme
+    //                     //     .typographies.interFontFamily.headline6
+    //                     //     .copyWith(
+    //                     //         color: HexColor.fromHex('#f1c452'),
+    //                     //         fontSize: 14,
+    //                     //         //  height: 0,
+    //                     //         fontWeight: FontWeight.w800),
+    //                     style:
+    //                         appTheme.typographies.interFontFamily.label11,
+    //                   ),
+    //                   GeneralText(
+    //                     selectedDate,
+    //                     // style: appTheme
+    //                     //     .typographies.interFontFamily.headline6
+    //                     //     .copyWith(
+    //                     //         color: HexColor.fromHex('#909094'),
+    //                     //         fontSize: 40,
+    //                     //         fontWeight: FontWeight.w500),
+    //
+    //                     style:
+    //                         appTheme.typographies.interFontFamily.label12,
+    //                   )
+    //                 ]),
+    //
+    //             ///space between date and other details
+    //             SizedBox(
+    //               width: DeviceHelper.width * 0.07,
+    //             ),
+    //             Expanded(
+    //               child: Column(
+    //                 children: [
+    //                   /// time and day container
+    //                   Container(
+    //                       width: double.infinity,
+    //                       padding: const EdgeInsetsDirectional.only(
+    //                           start: 14, top: 15, bottom: 15, end: 25),
+    //                       decoration: BoxDecoration(
+    //                           color: HexColor.fromHex('#2b2b33'),
+    //                           borderRadius: const BorderRadius.only(
+    //                               topLeft: Radius.circular(20),
+    //                               bottomLeft: Radius.circular(20))),
+    //                       child: Row(
+    //                         mainAxisAlignment:
+    //                             MainAxisAlignment.spaceBetween,
+    //                         children: [
+    //                           GeneralText(selectedTime,
+    //                               style: appTheme.typographies
+    //                                   .interFontFamily.headline6
+    //                                   .copyWith(
+    //                                       color:
+    //                                           HexColor.fromHex('#b0c18b'),
+    //                                       fontSize: 36,
+    //                                       fontWeight: FontWeight.normal)),
+    //                           GeneralText(selectedDay,
+    //
+    //                               // GeneralText(item.scheduledDate,
+    //                               style: appTheme.typographies
+    //                                   .interFontFamily.headline6
+    //                                   .copyWith(
+    //                                       color:
+    //                                           HexColor.fromHex('#909094'),
+    //                                       fontSize: 36,
+    //                                       fontWeight: FontWeight.normal)),
+    //                         ],
+    //                       )),
+    //                   SizedBox(
+    //                     height: DeviceHelper.height * 0.02,
+    //                   ),
+    //                   Container(
+    //                       width: double.infinity,
+    //                       padding: const EdgeInsetsDirectional.only(
+    //                           start: 14, top: 15, bottom: 15, end: 15),
+    //                       decoration: BoxDecoration(
+    //                           color: HexColor.fromHex('#2b2b33'),
+    //                           borderRadius: const BorderRadius.only(
+    //                               topLeft: Radius.circular(20),
+    //                               bottomLeft: Radius.circular(20))),
+    //                       child: Wrap(
+    //                         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //                         children: [
+    //                           Column(
+    //                             crossAxisAlignment:
+    //                                 CrossAxisAlignment.start,
+    //                             children: [
+    //                               GeneralText(Strings.noOfPersonsLabel,
+    //                                   style: appTheme.typographies
+    //                                       .interFontFamily.headline6
+    //                                       .copyWith(
+    //                                           color: HexColor.fromHex(
+    //                                               '#fee4a4'),
+    //                                           fontSize: 14,
+    //                                           fontWeight: FontWeight.w700)),
+    //                               SizedBox(
+    //                                 height: DeviceHelper.height * 0.01,
+    //                               ),
+    //
+    //                               ///no of persons and preference
+    //                               Row(
+    //                                 children: [
+    //                                   ///persons text-field
+    //                                   Container(
+    //                                     width: DeviceHelper.width * 0.16,
+    //                                     height: DeviceHelper.height * 0.065,
+    //                                     decoration: BoxDecoration(
+    //                                         color:
+    //                                             HexColor.fromHex('#2b2b33'),
+    //                                         border: Border.all(
+    //                                             color: HexColor.fromHex(
+    //                                                 '#f1c452')),
+    //                                         borderRadius:
+    //                                             BorderRadius.circular(10)),
+    //                                     // padding: EdgeInsetsDirectional.only(
+    //                                     //     top: 8, bottom: 8, start: 16, end: 16),
+    //                                     margin: const EdgeInsetsDirectional
+    //                                         .only(bottom: 8),
+    //                                     child: noOfPersonsField(
+    //                                       appTheme: appTheme,
+    //                                       valueStyle: appTheme.typographies
+    //                                           .interFontFamily.body1
+    //                                           .copyWith(
+    //                                         color: Colors.white,
+    //                                         fontSize: 14,
+    //                                         fontWeight: FontWeight.w400,
+    //                                       ),
+    //                                       hintStyle: appTheme.typographies
+    //                                           .interFontFamily.body1
+    //                                           .copyWith(
+    //                                         color: Colors.white,
+    //                                         fontSize: 14,
+    //                                         fontWeight: FontWeight.w400,
+    //                                       ),
+    //                                     ),
+    //                                   ),
+    //                                   SizedBox(
+    //                                     width: DeviceHelper.width * 0.05,
+    //                                   ),
+    //
+    //                                   ///preference dropdown
+    //                                   Container(
+    //                                     width: DeviceHelper.width * 0.33,
+    //                                     height: DeviceHelper.height * 0.07,
+    //                                     alignment: Alignment.center,
+    //                                     decoration: BoxDecoration(
+    //                                         //color: Colors.red,
+    //                                         color:
+    //                                             HexColor.fromHex('#2b2b33'),
+    //                                         border: Border.all(
+    //                                             color: HexColor.fromHex(
+    //                                                 '#f1c452')),
+    //                                         borderRadius:
+    //                                             BorderRadius.circular(10)),
+    //                                     margin: const EdgeInsetsDirectional
+    //                                         .only(bottom: 6),
+    //                                     // padding: const EdgeInsetsDirectional
+    //                                     //         .only(
+    //                                     //     top: 8,
+    //                                     //     bottom: 8,
+    //                                     //     start: 0,
+    //                                     //     end: 0),
+    //                                     child: Center(
+    //                                       child: GeneralDropdown(
+    //                                         selectedItemId: 1,
+    //                                         borderColor: Colors.transparent,
+    //                                         name: Strings.tableSelect,
+    //                                         style: appTheme.typographies
+    //                                             .interFontFamily.headline6
+    //                                             .copyWith(
+    //                                                 color: Colors.white,
+    //                                                 fontSize: 15,
+    //                                                 fontWeight:
+    //                                                     FontWeight.w400),
+    //                                         // margin: 22.0,
+    //                                         items: items,
+    //                                         onChange: ({
+    //                                           required String key,
+    //                                           required dynamic value,
+    //                                         }) {
+    //                                           developer.log(
+    //                                               ' Selected value from Drop Down is '
+    //                                               '$value');
+    //                                           _appService.state.orderHelper!
+    //                                               .selectedCategory = value;
+    //                                           widget.data
+    //                                               ?.experiencePreferences
+    //                                               ?.forEach((element) {
+    //                                             if (element
+    //                                                     .preferenceName ==
+    //                                                 value) {
+    //                                               _appService
+    //                                                       .state
+    //                                                       .orderHelper
+    //                                                       ?.selectedPreferenceId =
+    //                                                   int.parse(element
+    //                                                       .preferenceId
+    //                                                       .toString());
+    //                                             }
+    //                                           });
+    //                                         },
+    //                                       ),
+    //                                     ),
+    //                                   ),
+    //                                 ],
+    //                               ),
+    //                               const SizedBox(
+    //                                 height: 3,
+    //                               ),
+    //                               Row(
+    //                                 children: [
+    //                                   SvgPicture.asset(
+    //                                     Resources.peopleIconSvg,
+    //                                     height: 12.5,
+    //                                     color: HexColor.fromHex('#ea7458'),
+    //                                   ),
+    //                                   const SizedBox(width: 4),
+    //                                   GeneralText(Strings.maxLimitLabel,
+    //                                       style: appTheme.typographies
+    //                                           .interFontFamily.headline6
+    //                                           .copyWith(
+    //                                               color: HexColor.fromHex(
+    //                                                   '#ea7458'),
+    //                                               fontSize: 14)),
+    //                                   GeneralText(openCapacity.toString(),
+    //                                       style: appTheme.typographies
+    //                                           .interFontFamily.headline6
+    //                                           .copyWith(
+    //                                               color: HexColor.fromHex(
+    //                                                   '#ea7458'),
+    //                                               fontWeight:
+    //                                                   FontWeight.bold,
+    //                                               fontSize: 14)),
+    //                                 ],
+    //                               ),
+    //                             ],
+    //                           ),
+    //                         ],
+    //                       )),
+    //                   const SizedBox(
+    //                     height: 14,
+    //                   ),
+    //                   Container(
+    //                       width: double.infinity,
+    //                       padding: const EdgeInsetsDirectional.only(
+    //                           start: 14, top: 15, bottom: 15, end: 25),
+    //                       decoration: BoxDecoration(
+    //                           color: HexColor.fromHex('#2b2b33'),
+    //                           borderRadius: const BorderRadius.only(
+    //                               topLeft: Radius.circular(20),
+    //                               bottomLeft: Radius.circular(20))),
+    //                       child: Wrap(
+    //                         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //                         children: [
+    //                           Column(
+    //                             crossAxisAlignment:
+    //                                 CrossAxisAlignment.start,
+    //                             children: [
+    //                               GeneralText(Strings.notesLabel,
+    //                                   style: appTheme.typographies
+    //                                       .interFontFamily.headline6
+    //                                       .copyWith(
+    //                                           color: HexColor.fromHex(
+    //                                               '#fee4a4'),
+    //                                           fontSize: 14,
+    //                                           fontWeight: FontWeight.w700)),
+    //                               const SizedBox(
+    //                                 height: 9,
+    //                               ),
+    //                               Container(
+    //                                 // width: 61,
+    //                                 decoration: BoxDecoration(
+    //                                     color: HexColor.fromHex('#2b2b33'),
+    //                                     border: Border.all(
+    //                                         color: HexColor.fromHex(
+    //                                             '#f1c452')),
+    //                                     borderRadius:
+    //                                         BorderRadius.circular(10)),
+    //                                 // padding: EdgeInsetsDirectional.only(
+    //                                 //     top: 8, bottom: 8, start: 16, end: 16),
+    //                                 margin:
+    //                                     const EdgeInsetsDirectional.only(
+    //                                         bottom: 8),
+    //                                 child: notesField(
+    //                                   appTheme: appTheme,
+    //                                   valueStyle: appTheme.typographies
+    //                                       .interFontFamily.body1
+    //                                       .copyWith(
+    //                                     color: Colors.white,
+    //                                     fontSize: 14,
+    //                                     fontWeight: FontWeight.w400,
+    //                                   ),
+    //                                   hintStyle: appTheme.typographies
+    //                                       .interFontFamily.body1
+    //                                       .copyWith(
+    //                                     color:
+    //                                         Colors.white.withOpacity(0.4),
+    //                                     fontSize: 14,
+    //                                     fontWeight: FontWeight.w400,
+    //                                   ),
+    //                                 ),
+    //                               ),
+    //                             ],
+    //                           ),
+    //                         ],
+    //                       )),
+    //                 ],
+    //               ),
+    //             )
+    //           ],
+    //         ),
+    //         const SizedBox(
+    //           height: 160,
+    //         ),
+    //       ],
+    //     ),
+    //   )
+
+    ///for select time slot see this stack widget
+    // :
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: widget.scheduleModel.t.daysGroups.length ?? 0,
+            itemBuilder: (BuildContext context, int index) {
+              var item = widget.scheduleModel.t.daysGroups[index];
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      _appService.state.orderHelper!.daysGroup =
+                          widget.scheduleModel.t.daysGroups[index];
+                      selectedDay =
+                          InfininURLHelpers.dayOfMonth(item.scheduledDate);
+                      selectedMonth = months[item.scheduledDate.month - 1];
+                      selectedDate = item.scheduledDate.day.toString();
+                    },
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        displayScheduleTime(
+                          item.hours,
+                          item.scheduledDate,
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: DeviceHelper.height * 0.05,
+                  ),
+                ],
+              );
+            }),
+        GeneralText(
+          Strings.anotherTimeText, // Strings.labelSeaFood2Experience,
+          style: appTheme.typographies.interFontFamily.headline2.copyWith(
+            fontSize: 17,
+            fontWeight: FontWeight.w600,
+            color: const Color(0xffeee0c1),
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        SizedBox(
+          width: DeviceHelper.width * 0.40,
+          child: ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+                //borderRadius: BorderRadius.zero, //Rectangular border
+              ),
+              padding: const EdgeInsets.symmetric(
+                vertical: 6,
+              ),
+            ),
+            child: const GeneralText(
+              Strings.moreOptionButtonTitle,
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 50,
+        ),
+      ],
+    );
+  }
+
   String getMonth(DateTime _date) {
     //var dateData = DateFormat('EEEE').format(_date);
     selectedMonth = months[_date.month - 1];
+    return selectedMonth;
+  }
+
+  String getWeekDay(DateTime _date) {
+    selectedMonth = weekDays[_date.weekday - 1];
     return selectedMonth;
   }
 
@@ -1836,30 +2285,72 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     return Expanded(
       child: Container(
           width: double.infinity,
-          padding: const EdgeInsets.only(left: 8, top: 10, bottom: 10),
+          padding: const EdgeInsets.only(left: 12, top: 15, bottom: 12),
           decoration: BoxDecoration(
               color: HexColor.fromHex('#2b2b33'),
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  bottomLeft: Radius.circular(20))),
-          child: Wrap(
-            spacing: 10,
-            direction: Axis.horizontal,
+              borderRadius: BorderRadius.circular(10)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              for (var i in _hours) //displayTimeData(i),
-                timeSelectorBox(
-                  appTheme,
-                  i.startTime.toString(),
-                  i,
-                  scheduledDate,
-                  showSelectedTime: _appService.state.orderHelper!.scheduleId ==
-                          i.scheduleId.toString()
-                      ? true
-                      : false,
-                ),
-              // const SizedBox(
-              //   width: 7,
-              // ),
+              GeneralText(
+                  '${InfininURLHelpers.dayOfMonth(scheduledDate)}, ${getMonth(scheduledDate)} ${scheduledDate.day}',
+                  style: appTheme.typographies.interFontFamily.headline6
+                      .copyWith(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700)),
+              timeSelectorBox(
+                appTheme,
+                _hours[0].startTime.toString(),
+                _hours[0],
+                scheduledDate,
+                showSelectedTime: _appService.state.orderHelper!.scheduleId ==
+                        _hours[0].scheduleId.toString()
+                    ? true
+                    : false,
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              const Row(
+                children: [
+                  GeneralText(
+                    'SAR. 350', // Strings.labelSeaFood2Experience,
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xfff1c452),
+                    ),
+                  ),
+                  GeneralText(
+                    " /Person", // Strings.labelSeaFood2Experience,
+                    style: TextStyle(
+                      fontSize: 13,
+                      //fontWeight: FontWeight.w500,
+                      color: Color(0xff909094),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              GeneralButton.button(
+                title: Strings.chooseButtonTitle,
+                styleType: ButtonStyleType.fill,
+                onTap: () {
+                  // locateService<INavigationService>()
+                  //     .navigateTo(route: BottomBarRoute());
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => BottomBar(),
+                  //     //  HomeScreen(),
+                  //   ),
+                  // );
+                  //    viewModel.goToForgotPasswordScreen();
+                },
+              )
             ],
           )),
     );
@@ -2312,6 +2803,153 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     );
   }
 
+  Widget experienceDetailView(BuildContext context, IAppThemeData appTheme) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                GeneralText(
+                  Strings.hostedBy, // Strings.labelSeaFood2Experience,
+                  style:
+                      appTheme.typographies.interFontFamily.headline2.copyWith(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
+                    color: const Color(0xffeee0c1),
+                  ),
+                ),
+                GeneralText(
+                  '${widget.data!.chefName}', // Strings.labelSeaFood2Experience,
+                  style:
+                      appTheme.typographies.interFontFamily.headline6.copyWith(
+                    fontSize: 13,
+                    //fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+            GestureDetector(
+              child: CircleAvatar(
+                backgroundColor: Colors.white,
+                radius: DeviceHelper.width * 0.07,
+                child: CircleAvatar(
+                  radius: DeviceHelper.width * 0.07,
+                  backgroundImage: NetworkImage(Api.baseURLForImages +
+                      widget.chefData.t!.profileImageUrl.toString()),
+                ),
+              ),
+              onTap: () async {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>
+                        UserProfile(chefData: widget.chefData)));
+              },
+            ),
+          ],
+        ),
+        getDivider(),
+        GeneralText(
+          Strings.foodDetailAboutTitle, // Strings.labelSeaFood2Experience,
+          style: appTheme.typographies.interFontFamily.headline2.copyWith(
+            fontSize: 17,
+            fontWeight: FontWeight.w600,
+            color: const Color(0xffeee0c1),
+          ),
+        ),
+        SizedBox(height: DeviceHelper.height * 0.01),
+        GeneralText(
+          "${widget.data?.description}", // Strings.labelSeaFood2Experience,
+          style: appTheme.typographies.interFontFamily.headline2.copyWith(
+            fontSize: 13,
+            fontWeight: FontWeight.w500,
+            color: const Color(0xff909094),
+          ),
+        ),
+        getDivider(),
+        GeneralText(
+          Strings
+              .productDetailWowFactorTitle, // Strings.labelSeaFood2Experience,
+          style: appTheme.typographies.interFontFamily.headline2.copyWith(
+            fontSize: 17,
+            fontWeight: FontWeight.w600,
+            color: const Color(0xffeee0c1),
+          ),
+        ),
+        SizedBox(height: DeviceHelper.height * 0.02),
+        wowFactors(appTheme, wowFactorsList),
+        getDivider(),
+        GeneralText(
+          Strings.foodDetailPreferences, // Strings.labelSeaFood2Experience,
+          style: appTheme.typographies.interFontFamily.headline2.copyWith(
+            fontSize: 17,
+            fontWeight: FontWeight.w600,
+            color: const Color(0xffeee0c1),
+          ),
+        ),
+        SizedBox(height: DeviceHelper.height * 0.02),
+        wowFactors(appTheme, preferencesList),
+        getDivider(),
+        GeneralText(
+          Strings.foodDetailLocation, // Strings.labelSeaFood2Experience,
+          style: appTheme.typographies.interFontFamily.headline2.copyWith(
+            fontSize: 17,
+            fontWeight: FontWeight.w600,
+            color: const Color(0xffeee0c1),
+          ),
+        ),
+        SizedBox(height: DeviceHelper.height * 0.03),
+        Container(
+          height: DeviceHelper.height * 0.60,
+          width: MediaQuery.of(context).size.width,
+          transform: Matrix4.translationValues(0, 0, 0.0),
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: appTheme.colors.primary,
+                blurRadius: 400.0,
+                spreadRadius: 0,
+              ),
+            ],
+          ),
+          child: GoogleMap(
+            mapType: MapType.normal,
+            zoomControlsEnabled: false,
+            zoomGesturesEnabled: false,
+            scrollGesturesEnabled: false,
+            rotateGesturesEnabled: false,
+            compassEnabled: false,
+            mapToolbarEnabled: false,
+            initialCameraPosition: CameraPosition(
+              target: LatLng(
+                widget.data!.latitude ?? 0.0,
+                widget.data!.longitude ?? 0.0,
+              ),
+              zoom: 14.4746,
+            ),
+            markers: <Marker>{
+              Marker(
+                  markerId: const MarkerId('SomeId'),
+                  position: LatLng(
+                    widget.data!.latitude ?? 0.0,
+                    widget.data!.longitude ?? 0.0,
+                  ),
+                  infoWindow: const InfoWindow(title: '')),
+            },
+            onMapCreated: (GoogleMapController controller) {
+              _controller.complete(controller);
+              controller.setMapStyle(darkMapStyle);
+            },
+          ),
+        ),
+        SizedBox(height: DeviceHelper.height * 0.10),
+      ],
+    );
+  }
+
   Widget wowFactors(IAppThemeData appTheme, List<CustomModel> items) {
     return SizedBox(
       height: DeviceHelper.height * 0.13,
@@ -2361,71 +2999,12 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     );
   }
 
-  Widget timeSelectorBoxtest(IAppThemeData appTheme, String displayTime,
-      {bool showSelectedTime = false}) {
-    //  developer.log('Time Display is ' +
-    //      DateFormat.jm().format(
-    //        DateFormat("hh:mm:ss").parse(displayTime),
-    //      ));
-    //  var _formatedTime =
-    //      DateFormat.jm().format(DateFormat("hh:mm:ss").parse(displayTime));
-    // // var _finalDate =
-    //  var data = _formatedTime.split(':');
-    //  var finalDate = '';
-    //  finalDate = data[0];
-    //  finalDate = finalDate + data[1].replaceAll('00', '');
-    var finalDate = '';
-    finalDate = InfininURLHelpers.getAmPm(displayTime);
-
-    return InkWell(
-        onTap: () {
-          developer.log(' Clicked on final date is ' + '${finalDate}');
-          // selectedTime = finalDate;
-          // developer.log(' Schedule Id selected is ' + '${_hour.scheduleId}');
-          // final _appService = locateService<ApplicationService>();
-          // OrderHelper orderHelper = OrderHelper();
-          // orderHelper.scheduleId = _hour.scheduleId.toString();
-          // orderHelper.selectedExperienceDetail = widget.data;
-          // orderHelper.hourSelected = _hour;
-          // _appService.updateOrderHelper(orderHelper);
-          //  _appService.updateScheduleId(scheduleId)
-          setState(() {});
-        },
-        child: Container(
-          child: GeneralText(finalDate,
-              style: appTheme.typographies.interFontFamily.headline6.copyWith(
-                  color: showSelectedTime
-                      ? HexColor.fromHex('#212129')
-                      : HexColor.fromHex('#f1c452'),
-                  fontSize: 14)),
-          decoration: BoxDecoration(
-              border: Border.all(color: HexColor.fromHex('#f1c452')),
-              color: showSelectedTime
-                  ? HexColor.fromHex('#f1c452')
-                  : HexColor.fromHex('#2b2b33'),
-              borderRadius: BorderRadius.circular(10)),
-          padding: const EdgeInsetsDirectional.only(
-              top: 8, bottom: 8, start: 16, end: 16),
-          margin: const EdgeInsetsDirectional.only(bottom: 8),
-        ));
-  }
-
   Widget timeSelectorBox(IAppThemeData appTheme, String displayTime, Hour _hour,
       DateTime scheduledDate,
       {bool showSelectedTime = false}) {
-    //  developer.log('Time Display is ' +
-    //      DateFormat.jm().format(
-    //        DateFormat("hh:mm:ss").parse(displayTime),
-    //      ));
-    //  var _formatedTime =
-    //      DateFormat.jm().format(DateFormat("hh:mm:ss").parse(displayTime));
-    // // var _finalDate =
-    //  var data = _formatedTime.split(':');
-    //  var finalDate = '';
-    //  finalDate = data[0];
-    //  finalDate = finalDate + data[1].replaceAll('00', '');
     var finalDate = '';
-    finalDate = InfininURLHelpers.getAmPm(displayTime);
+    //finalDate = InfininURLHelpers.getAmPm(displayTime);
+    finalDate = DateFormat.jm().format(scheduledDate);
 
     return InkWell(
         onTap: () {
@@ -2458,49 +3037,13 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           });
         },
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              child: GeneralText(finalDate,
-                  style: appTheme.typographies.interFontFamily.headline6
-                      .copyWith(
-                          color: showSelectedTime
-                              ? HexColor.fromHex('#212129')
-                              : HexColor.fromHex('#f1c452'),
-                          fontSize: 14)),
-              decoration: BoxDecoration(
-                  border: Border.all(color: HexColor.fromHex('#f1c452')),
-                  color: showSelectedTime
-                      ? HexColor.fromHex('#f1c452')
-                      : HexColor.fromHex('#2b2b33'),
-                  borderRadius: BorderRadius.circular(10)),
-              padding: const EdgeInsetsDirectional.only(
-                  top: 8, bottom: 8, start: 16, end: 16),
-              margin: const EdgeInsetsDirectional.only(bottom: 2),
-            ),
-            SizedBox(
-              width: DeviceHelper.width * 0.12,
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    Resources.peopleIconSvg,
-                    height: 12,
-                    color: HexColor.fromHex(
-                        showSelectedTime ? '#fbeccb' : '#909094'),
-                  ),
-                  SizedBox(
-                    width: DeviceHelper.width * 0.02,
-                  ),
-                  GeneralText(_hour.openCapacity.toString(),
-                      style: appTheme.typographies.interFontFamily.headline6
-                          .copyWith(
-                              color: HexColor.fromHex(
-                                  showSelectedTime ? '#fbeccb' : '#909094'),
-                              fontSize: 14,
-                              fontWeight: showSelectedTime
-                                  ? FontWeight.w700
-                                  : FontWeight.normal)),
-                ],
-              ),
+              margin: const EdgeInsets.symmetric(vertical: 5),
+              child: GeneralText('$finalDate - $finalDate',
+                  style: appTheme.typographies.interFontFamily.body1
+                      .copyWith(color: Colors.white, fontSize: 16)),
             ),
           ],
         ));
@@ -2525,7 +3068,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       onChanged: (newValue) {
         if (newValue.isNotEmpty) {
           setState(() {
-            developer.log(' New Value of Persons ' + '${newValue}');
+            developer.log(' New Value of Persons $newValue');
 
             nOfPersons.text = newValue;
             _appService.state.orderHelper!.numberOfPerson =

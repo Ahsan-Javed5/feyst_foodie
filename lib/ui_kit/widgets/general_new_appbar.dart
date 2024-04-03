@@ -14,7 +14,7 @@ class GeneralNewAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context).theme;
-    final _navigationService = locateService<INavigationService>();
+    final navigationService = locateService<INavigationService>();
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -54,7 +54,7 @@ class GeneralNewAppBar extends StatelessWidget {
         if (rightIcon != null) ...[
           const Spacer(),
           InkWell(
-            onTap: () => _navigationService.navigateTo(
+            onTap: () => navigationService.navigateTo(
               route:
                   BottomBarRoute(bottomBarType: bottom_bar.BottomBarType.home),
             ),
