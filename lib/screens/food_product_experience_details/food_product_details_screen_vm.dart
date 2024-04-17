@@ -5,7 +5,8 @@ import 'package:chef/models/booking/booking_request.dart' as booking;
 import 'package:chef/models/home/home_response.dart' as home_data;
 import '../../helpers/order_helper.dart';
 import '../../models/booking/booking_response.dart';
-import '../../models/food_details_screen/food_details_screen_by_id_request.dart' as foodRequest;
+import '../../models/food_details_screen/food_details_screen_by_id_request.dart'
+    as foodRequest;
 import '../../setup.dart';
 import '../bottom_bar/bottom_bar.dart' as bottom_bar;
 import 'food_product_details_screen_m.dart';
@@ -76,42 +77,42 @@ class FoodProductExperienceDetailsViewModel
     emit(const Loading());
 
     try {
-      final bookingRequest = orderHelper.selectedExperienceDetail.priceTypeId == 2 ? booking.BookingRequest(
-        t: booking.T(
-          comments: orderHelper.noteAdded,
-          experienceId: orderHelper.selectedExperienceDetail.id!.toInt(),
-          foodieId: (_appService.state.userInfo!.t.id),
-          bookingDetails: orderHelper.bookingMenuDetails,
-          totalPrice: orderHelper.selectedExperienceDetail.price!.toInt(),
-          scheduleId: int.parse(orderHelper.scheduleId),
-          persons: orderHelper.numberOfPerson.toString(),
-         //  preferenceId: 1
-          preferenceId: orderHelper.selectedPreferenceId
-        ),
-      ).toJson()
-      :
-      booking.BookingRequest(
-        t: booking.T(
-            comments: orderHelper.noteAdded,
-            experienceId: orderHelper.selectedExperienceDetail.id!.toInt(),
-            foodieId: (_appService.state.userInfo!.t.id),
-            //bookingDetails: orderHelper.bookingMenuDetails,
-            totalPrice: orderHelper.selectedExperienceDetail.price!.toInt(),
-            scheduleId: int.parse(orderHelper.scheduleId),
-            persons: orderHelper.numberOfPerson.toString(),
-            //  preferenceId: 1
-            preferenceId: orderHelper.selectedPreferenceId
-        ),
-      ).toJson();
+      final bookingRequest =
+          orderHelper.selectedExperienceDetail.priceTypeId == 2
+              ? booking.BookingRequest(
+                  t: booking.T(
+                      comments: orderHelper.noteAdded,
+                      experienceId:
+                          orderHelper.selectedExperienceDetail.id!.toInt(),
+                      foodieId: (_appService.state.userInfo!.t.id),
+                      bookingDetails: orderHelper.bookingMenuDetails,
+                      totalPrice:
+                          orderHelper.selectedExperienceDetail.price!.toInt(),
+                      scheduleId: int.parse(orderHelper.scheduleId),
+                      persons: orderHelper.numberOfPerson.toString(),
+                      //  preferenceId: 1
+                      preferenceId: orderHelper.selectedPreferenceId),
+                ).toJson()
+              : booking.BookingRequest(
+                  t: booking.T(
+                      comments: orderHelper.noteAdded,
+                      experienceId:
+                          orderHelper.selectedExperienceDetail.id!.toInt(),
+                      foodieId: (_appService.state.userInfo!.t.id),
+                      //bookingDetails: orderHelper.bookingMenuDetails,
+                      totalPrice:
+                          orderHelper.selectedExperienceDetail.price!.toInt(),
+                      scheduleId: int.parse(orderHelper.scheduleId),
+                      persons: orderHelper.numberOfPerson.toString(),
+                      //  preferenceId: 1
+                      preferenceId: orderHelper.selectedPreferenceId),
+                ).toJson();
 
-      final response = await _network.post(
-        path: url,
-        data: bookingRequest,
-        header: {
-          'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
-          'Content-Type': 'application/json'
-        }
-      );
+      final response =
+          await _network.post(path: url, data: bookingRequest, header: {
+        'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
+        'Content-Type': 'application/json'
+      });
 
       bookingResponse = bookingResponseFromJson(response.body);
       Toaster.infoToast(context: context, message: bookingResponse.message);
@@ -119,8 +120,11 @@ class FoodProductExperienceDetailsViewModel
       if (bookingResponse.code == 200) {
         emit(const Loaded());
 
-        _navigation.navigateTo(route: BottomBar(bottomBarType: bottom_bar.BottomBarType.bookings));
-        print('booking id:' + bookingResponse.t.id.toString());        // Navigator.push(
+        _navigation.navigateTo(
+            route: BottomBarRoute(
+                bottomBarType: bottom_bar.BottomBarType.bookings));
+        print(
+            'booking id:' + bookingResponse.t.id.toString()); // Navigator.push(
         //   context,
         //   // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
         //   MaterialPageRoute(builder: (context) => const BottomBar()),

@@ -12,10 +12,10 @@ import 'helpers/notification_service.dart';
 InAppLocalhostServer localhostServer = InAppLocalhostServer();
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   await configureDependencies();
- //await NotificationService().init();
+  //await NotificationService().init();
   await localhostServer.start();
   runApp(locateService<App>());
 }
-
-

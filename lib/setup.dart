@@ -1,10 +1,15 @@
 import 'dart:io';
 import 'package:chef/firebase_messaging/notification_services.dart';
 import 'package:chef/services/renderer/field_renderer.dart';
+import 'package:chef/ui_kit/widgets/custom_dialog.dart';
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
+import 'services/navigation/app_router.dart' as nav;
+//import 'firebase_options.dart';
 import 'package:flutter/material.dart';
-import '../../services/navigation/router.gr.dart' as nav;
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,6 +20,7 @@ import 'package:chef/theme/theme.dart';
 import 'package:chef/setup.config.dart';
 import 'dart:developer' as developer;
 
+import 'constants/resources.dart';
 import 'models/booking/booking_list_response_model.dart';
 
 final getIt = GetIt.instance;
@@ -25,27 +31,47 @@ final getIt = GetIt.instance;
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  developer.log(
-      message.notification?.title.toString() ?? 'notification with no title');
-  developer.log(message.data.toString());
   NotificationServices().showNotification(message);
 }
 
 int notificationCounter = 0;
 
 Future<dynamic> configureDependencies() async {
-  WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = DevHttpOverrides(); // to ignore ssl certification
-  await Firebase.initializeApp();
+  //await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  FlutterError.onError = (errorDetails) {
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  };
+  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
+  await FirebaseAppCheck.instance.activate(
+    //webRecaptchaSiteKey: 'recaptcha-v3-site-key',
+    androidProvider: AndroidProvider.playIntegrity,
+    appleProvider: AppleProvider.appAttest,
+  );
   await FirebaseMessaging.instance.getInitialMessage();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    NotificationServices().showNotification(message);
+    CustomDialog.getDialog(
+      ctx: locateService<INavigationService>().navigatorKey.currentContext,
+      title: message.data['title']?.toString() ?? 'title is null',
+      //titleColor: Colors.white,
+      //descColor: const Color(0xFFfee4a4),
+      description: message.data['body']?.toString() ?? 'body is null',
+      iconUrl: Resources.cashWaitingIcon,
+      onTap: () {
+        locateService<INavigationService>().pop();
+      },
+    );
+  });
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
-    print('helloooo');
-    print("onMessageOpenedApp: $message");
     BookingItem item = BookingItem(id: int.parse(message.data['bookingId']));
-    locateService<INavigationService>().navigateTo(
-        route: nav.FoodItemAdvancePaymentRoute(
-            bookingItem: item));
+    locateService<INavigationService>()
+        .navigateTo(route: nav.FoodItemAdvancePaymentRoute(bookingItem: item));
   });
   // requestPermission();
   return $initGetIt(getIt);

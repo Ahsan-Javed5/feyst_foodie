@@ -5,7 +5,6 @@ ReviewResponse reviewResponseFromJson(String str) =>
 
 String reviewResponseToJson(ReviewResponse data) => json.encode(data.toJson());
 
-
 class ReviewResponse {
   int? code;
   String? error;
@@ -50,6 +49,7 @@ class T {
   String? experienceImage;
   String? experienceTitle;
   int? foodieId;
+  String? foodieName;
   int? id;
   String? lastUpdated;
   String? stars;
@@ -57,17 +57,18 @@ class T {
 
   T(
       {this.chefBrandName,
-        this.chefId,
-        this.comments,
-        this.dateCreated,
-        this.experienceBookingId,
-        this.experienceImage,
-        this.experienceTitle,
-        this.foodieId,
-        this.id,
-        this.lastUpdated,
-        this.stars,
-        this.status});
+      this.chefId,
+      this.comments,
+      this.dateCreated,
+      this.experienceBookingId,
+      this.experienceImage,
+      this.experienceTitle,
+      this.foodieId,
+      this.foodieName,
+      this.id,
+      this.lastUpdated,
+      this.stars,
+      this.status});
 
   T.fromJson(Map<String, dynamic> json) {
     chefBrandName = json['chefBrandName'];
@@ -78,6 +79,7 @@ class T {
     experienceImage = json['experienceImage'];
     experienceTitle = json['experienceTitle'];
     foodieId = json['foodieId'];
+    foodieName = json['foodieName'];
     id = json['id'];
     lastUpdated = json['lastUpdated'];
     stars = json['stars'];
@@ -94,6 +96,7 @@ class T {
     data['experienceImage'] = this.experienceImage;
     data['experienceTitle'] = this.experienceTitle;
     data['foodieId'] = this.foodieId;
+    data['foodieName'] = this.foodieName;
     data['id'] = this.id;
     data['lastUpdated'] = this.lastUpdated;
     data['stars'] = this.stars;
@@ -101,6 +104,3 @@ class T {
     return data;
   }
 }
-
-
-

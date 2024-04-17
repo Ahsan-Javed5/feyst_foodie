@@ -1,12 +1,9 @@
-
-
 import 'dart:convert';
 
 HomeResponse homeResponseFromJson(String str) =>
     HomeResponse.fromJson(json.decode(str));
 
 String homeResponseToJson(HomeResponse data) => json.encode(data.toJson());
-
 
 class HomeResponse {
   int? code;
@@ -21,7 +18,7 @@ class HomeResponse {
     code = json['code'];
     error = json['error'];
     message = json['message'];
-    t =  T.fromJson(json['t']);
+    t = T.fromJson(json['t']);
     userId = json['userId'];
   }
 
@@ -62,8 +59,7 @@ class T {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (allExperience != null) {
-      data['allExperience'] =
-          allExperience!.map((v) => v.toJson()).toList();
+      data['allExperience'] = allExperience!.map((v) => v.toJson()).toList();
     }
     if (popularExperiences != null) {
       data['popularExperiences'] =
@@ -97,6 +93,7 @@ class Experiences {
   int? preferenceId;
   int? price;
   int? priceTypeId;
+  int? noOfRatings;
   String? subHostMobileNo;
   String? subHostName;
   String? title;
@@ -106,34 +103,35 @@ class Experiences {
 
   Experiences(
       {this.chefAddress,
-        this.chefBrandName,
-        this.chefId,
-        this.address,
-        this.averageRating,
-        this.isHomeAddress,
-        this.chefName,
-        this.cityId,
-        this.cityName,
-        this.description,
-        this.experienceMedia,
-        this.experiencePreferences,
-        this.experienceWowFactors,
-        this.id,
-        this.latitude,
-        this.locationId,
-        this.longitude,
-        this.personMaxLimit,
-        this.persons,
-        this.placeId,
-        this.preferenceId,
-        this.price,
-        this.priceTypeId,
-        this.subHostMobileNo,
-        this.subHostName,
-        this.title,
-        this.townId,
-        this.townName,
-        this.wowFactorId});
+      this.chefBrandName,
+      this.chefId,
+      this.address,
+      this.averageRating,
+      this.isHomeAddress,
+      this.noOfRatings,
+      this.chefName,
+      this.cityId,
+      this.cityName,
+      this.description,
+      this.experienceMedia,
+      this.experiencePreferences,
+      this.experienceWowFactors,
+      this.id,
+      this.latitude,
+      this.locationId,
+      this.longitude,
+      this.personMaxLimit,
+      this.persons,
+      this.placeId,
+      this.preferenceId,
+      this.price,
+      this.priceTypeId,
+      this.subHostMobileNo,
+      this.subHostName,
+      this.title,
+      this.townId,
+      this.townName,
+      this.wowFactorId});
 
   Experiences.fromJson(Map<String, dynamic> json) {
     chefAddress = json['chefAddress'];
@@ -144,6 +142,7 @@ class Experiences {
     averageRating = json['averageRating'];
     chefName = json['chefName'];
     cityId = json['cityId'];
+    noOfRatings = json['noOfRatings'];
     cityName = json['cityName'];
     description = json['description'];
     if (json['experienceMedia'] != null) {
@@ -191,6 +190,7 @@ class Experiences {
     data['isHomeAddress'] = isHomeAddress;
     data['averageRating'] = averageRating;
     data['chefName'] = chefName;
+    data['noOfRatings'] = noOfRatings;
     data['cityId'] = cityId;
     data['cityName'] = cityName;
     data['description'] = description;
@@ -261,11 +261,11 @@ class ExperiencePreferences {
 
   ExperiencePreferences(
       {this.experienceId,
-        this.id,
-        this.preferenceDescription,
-        this.preferenceIconPath,
-        this.preferenceId,
-        this.preferenceName});
+      this.id,
+      this.preferenceDescription,
+      this.preferenceIconPath,
+      this.preferenceId,
+      this.preferenceName});
 
   ExperiencePreferences.fromJson(Map<String, dynamic> json) {
     experienceId = json['experienceId'];
@@ -298,11 +298,11 @@ class ExperienceWowFactors {
 
   ExperienceWowFactors(
       {this.experienceId,
-        this.id,
-        this.wowFactorDescription,
-        this.wowFactorIconPath,
-        this.wowFactorId,
-        this.wowFactorName});
+      this.id,
+      this.wowFactorDescription,
+      this.wowFactorIconPath,
+      this.wowFactorId,
+      this.wowFactorName});
 
   ExperienceWowFactors.fromJson(Map<String, dynamic> json) {
     experienceId = json['experienceId'];

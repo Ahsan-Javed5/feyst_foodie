@@ -30,20 +30,22 @@ abstract class Api {
   static const apiVersion2 = 'node/api/v2';
   static const client = 'client/';
   static const rest = 'rest/';
- // static const baseURL = 'http://18.202.117.137:8080/feyst-service/';
+  // static const baseURL = 'http://18.202.117.137:8080/feyst-service/';
   ///DEV BASEURL
-  //static const baseURL = 'https://dev.feyst.services/feyst-service/';
-  //static const baseURLForJazzCash = 'dev.feyst.services/feyst-service/';
-  //static const baseURLForImages = 'http://18.202.117.137/feyst-media'; //for dev
+  // static const baseURL = 'https://dev.feyst.services/feyst-service/';
+  // static const baseURLForJazzCash = 'dev.feyst.services/feyst-service/';
+  // static const baseURLForImages = 'http://18.202.117.137/feyst-media'; //for dev
   ///STAGING BASEURL
-    //static const baseURL = 'https://stag.feyst.services:443/feyst-service/';
-   //static const baseURLForJazzCash = 'stag.feyst.services/feyst-service/';
-    //static const baseURLForImages = 'http://34.249.62.92/feyst-media/'; //for staging environment
+  static const baseURL = 'https://stag.feyst.services:443/feyst-service/';
+  static const baseURLForJazzCash = 'stag.feyst.services/feyst-service/';
+  static const baseURLForImages =
+      'http://34.249.62.92/feyst-media/'; //for staging environment
 
   ///LIVE BASEURL
-  static const baseURL = 'https://live.feyst.services:443/feyst-service/';
-  static const baseURLForJazzCash = 'live.feyst.services/feyst-service/';
-  static const baseURLForImages = 'http://79.125.69.174:90/feyst-media/'; //for live environment
+  // static const baseURL = 'https://live.feyst.services:443/feyst-service/';
+  // static const baseURLForJazzCash = 'live.feyst.services/feyst-service/';
+  // static const baseURLForImages =
+  //     'http://79.125.69.174:90/feyst-media/'; //for live environment
 
   static const preferenceAPI = 'preference/list';
   static const devBaseURL = 'https://abc2.com/';
@@ -87,9 +89,12 @@ abstract class Api {
   static const foodieSignUp = 'foodie/save';
   static const foodieProfileUpdate = 'foodie/update';
   static const loginAPI = 'foodie/login';
-
+  static const checkUserExist = 'foodie/check-mobile-number';
+  static const updatePassword = 'foodie/update-password';
+  static const resetPassword = 'foodie/reset-password';
+  static const deleteAccount = 'foodie/delete-account';
   static const moduleSubMenuList = '$apiVersion2/menu/project/';
-
+  static const anonymousLogin = 'foodie/anonymous-login';
   static const subMenuList = '$apiVersion/module';
 
   // workflow endpoints

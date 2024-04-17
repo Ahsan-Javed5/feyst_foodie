@@ -2,7 +2,6 @@ import 'package:chef/constants/api.dart';
 import 'package:chef/models/home/chef_data_response.dart';
 import 'package:chef/models/home/home_response.dart' as home_data;
 import 'package:chef/screens/home/food_details_menu_model.dart';
-import 'package:chef/screens/home/home_screen_v.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants/resources.dart';
@@ -15,29 +14,15 @@ import '../../../services/application_state.dart';
 import '../../../setup.dart';
 import '../../../theme/app_theme_data/app_theme_data.dart';
 import '../../../theme/app_theme_widget.dart';
-import '../../../ui_kit/widgets/general_button.dart';
 import '../../../ui_kit/widgets/general_new_appbar.dart';
 import '../../../ui_kit/widgets/general_text.dart';
 import '../../bottom_bar/bottom_bar.dart';
-import '../../../models/home/experience_list_response.dart' as experience_data;
 
 import 'dart:developer' as developer;
 
 class FoodProductDetailsSummary extends StatefulWidget {
-  //const FoodProductExperienceDetails({Key? key}) : super(key: key);
-  // const FoodProductExperienceDetails({
-  //   required String selectedExperienceId,
-  //   required experience_data.T experienceData,
-  //   required FoodMenuModel foodMenuModel,
-  //   Key? key,
-  // });
-
   const FoodProductDetailsSummary({
     Key? key,
-    // required String selectedExperienceId,
-    // required experience_data.T experienceData,
-    // required FoodMenuModel foodMenuModel,
-
     required this.experienceData,
     required this.foodMenuDetail,
     required this.selectedExperienceId,
@@ -71,265 +56,262 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
 
   void loadMenuSelected() {
     for (var i = 0; i < widget.foodMenuDetail.t.length; i++) {
-      developer.log(
-          ' Widget  Food Menu Detail ' + widget.foodMenuDetail.t[i].dish);
-      menuListItems.add(CustomModel(name: widget.foodMenuDetail.t[i].dish, price: widget.foodMenuDetail.t[i].price, id: widget.foodMenuDetail.t[i].id));
+      developer
+          .log(' Widget  Food Menu Detail ' + widget.foodMenuDetail.t[i].dish);
+      menuListItems.add(CustomModel(
+          name: widget.foodMenuDetail.t[i].dish,
+          price: widget.foodMenuDetail.t[i].price,
+          id: widget.foodMenuDetail.t[i].id));
     }
   }
 
   void loadWowFactors() {
     for (int i = 0;
-    i < widget.experienceData!.experienceWowFactors!.length;
-    i++) {
+        i < widget.experienceData!.experienceWowFactors!.length;
+        i++) {
       wowFactorsList.add(CustomModel(
           name: widget.experienceData!.experienceWowFactors![i]
               .wowFactorName, //   Strings.productDetailWowFactorGarden,
           icon: "assets/images/icons/garden.png"));
     }
-
-    // wowFactorsList.addAll([
-    //   CustomModel(
-    //       name: Strings.productDetailWowFactorGarden,
-    //       icon: "assets/images/icons/garden.png"),
-    //   CustomModel(
-    //       name: Strings.productDetailWowFactorFireworks,
-    //       icon: "assets/images/icons/fireworks.png"),
-    //   CustomModel(
-    //       name: Strings.productDetailWowFactorPetFriendly,
-    //       icon: "assets/images/icons/pet_friendly.png"),
-    //   CustomModel(
-    //       name: Strings.productDetailWowFactorWifi,
-    //       icon: "assets/images/icons/wifi_2.png"),
-    //   CustomModel(
-    //       name: Strings.productDetailWowFactorMusic,
-    //       icon: "assets/images/icons/music.png"),
-    //   CustomModel(
-    //       name: Strings.productDetailWowFactorParking,
-    //       icon: "assets/images/icons/parking.png")
-    // ]);
   }
 
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context).theme;
-    return isLoading ? const CircularProgressIndicator() : Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: SingleChildScrollView(
-        child: Container(
-            color: HexColor.fromHex("#212129"),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 18,
-                ),
-                ///top container which have image, title, home icon etc
-                Container(
-                  height: 217,
-                  padding: const EdgeInsets.only(left: 33, bottom: 17),
-                  decoration: BoxDecoration(
-                    color: HexColor.fromHex("#4b4b52"),
-                    borderRadius: const BorderRadius.only(
-                        bottomRight: Radius.circular(50),
-                        bottomLeft: Radius.circular(50)),
-                  ),
-                  child: Stack(
-                    clipBehavior: Clip.none,
+    return isLoading
+        ? const CircularProgressIndicator()
+        : Scaffold(
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+            body: SingleChildScrollView(
+              child: Container(
+                  color: HexColor.fromHex("#212129"),
+                  child: Column(
                     children: [
-                      ///experience image
-                      Positioned(
-                        right: -40,
-                        top: -20,
-                        child: Container(
-                          width: 200,
-                          padding: const EdgeInsetsDirectional.all(20),
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(
-                                  'assets/images/icons/food_product_ring.png'),
-                              fit: BoxFit.fill,
+                      const SizedBox(
+                        height: 18,
+                      ),
+
+                      ///top container which have image, title, home icon etc
+                      Container(
+                        height: 217,
+                        padding: const EdgeInsets.only(left: 33, bottom: 17),
+                        decoration: BoxDecoration(
+                          color: HexColor.fromHex("#4b4b52"),
+                          borderRadius: const BorderRadius.only(
+                              bottomRight: Radius.circular(50),
+                              bottomLeft: Radius.circular(50)),
+                        ),
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            ///experience image
+                            Positioned(
+                              right: -40,
+                              top: -20,
+                              child: Container(
+                                width: 200,
+                                padding: const EdgeInsetsDirectional.all(20),
+                                decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                        'assets/images/icons/food_product_ring.png'),
+                                    fit: BoxFit.fill,
+                                  ),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Image.asset(
+                                  'assets/images/icons/food_product_experience.png',
+                                ),
+                              ),
                             ),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Image.asset(
-                            'assets/images/icons/food_product_experience.png',
-                          ),
+
+                            ///experience title, name and rating column
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  GeneralText(
+                                    widget.experienceData!.title!,
+                                    style: appTheme
+                                        .typographies.interFontFamily.headline6
+                                        .copyWith(
+                                      fontSize: 22,
+                                      color: HexColor.fromHex('#f1c452'),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  GeneralText(
+                                    widget.experienceData!.chefBrandName!,
+                                    style: appTheme
+                                        .typographies.interFontFamily.headline6
+                                        .copyWith(
+                                      fontSize: 14,
+                                      color: HexColor.fromHex('#909094'),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 5.8,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        width: 13.9,
+                                        child: Image.asset(
+                                            'assets/images/icons/star.png',
+                                            fit: BoxFit.fill),
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      GeneralText(
+                                        widget.experienceData?.averageRating
+                                                ?.toString() ??
+                                            'no reviews',
+                                        style: appTheme.typographies
+                                            .interFontFamily.headline6
+                                            .copyWith(
+                                                fontSize: 12,
+                                                color: HexColor.fromHex(
+                                                    '#8ea659')),
+                                      ),
+                                    ],
+                                  ),
+                                ]),
+
+                            ///home icon
+                            Positioned.fill(
+                              top: 40,
+                              child: Align(
+                                  alignment: Alignment.topLeft,
+                                  child: InkWell(
+                                      onTap: () {
+                                        // Navigator.popUntil(
+                                        //     context, (route) => HomeScreen());
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  BottomBarScreen(
+                                                    bottomBarType:
+                                                        BottomBarType.home,
+                                                  )),
+                                        );
+                                      },
+                                      child: const GeneralNewAppBar(
+                                        rightIcon: Resources.homeIconSvg,
+                                      ))),
+                            ),
+                          ],
                         ),
                       ),
-                      ///experience title, name and rating column
-                      Column(
+                      const SizedBox(
+                        height: 33.9,
+                      ),
+                      Container(
+                        padding: const EdgeInsetsDirectional.only(
+                            start: 25, end: 25),
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            GeneralText(
-                              widget.experienceData!.title!,
-                              style: appTheme
-                                  .typographies.interFontFamily.headline6
-                                  .copyWith(
-                                fontSize: 22,
-                                color: HexColor.fromHex('#f1c452'),
-                              ),
+                            Row(
+                              children: [
+                                Container(
+                                  color: HexColor.fromHex('#f1c452'),
+                                  width: 16,
+                                  height: 1,
+                                ),
+                                const SizedBox(
+                                  width: 2,
+                                ),
+                                GeneralText(
+                                  Strings.productDetailAboutTitle,
+                                  style: appTheme
+                                      .typographies.interFontFamily.headline6
+                                      .copyWith(
+                                    fontSize: 20,
+                                    color: HexColor.fromHex('#f1c452'),
+                                  ),
+                                ),
+                              ],
                             ),
                             const SizedBox(
                               height: 5,
                             ),
-                            GeneralText(
-                              widget.experienceData!.chefBrandName!,
-                              style: appTheme
-                                  .typographies.interFontFamily.headline6
-                                  .copyWith(
-                                fontSize: 14,
-                                color: HexColor.fromHex('#909094'),
+
+                            ///experience description
+                            Padding(
+                              padding: const EdgeInsets.only(left: 23),
+                              child: GeneralText(
+                                // Strings.productDetailAboutSubTitle,
+                                widget.experienceData!.description!,
+                                maxLines: 4,
+                                style: appTheme
+                                    .typographies.interFontFamily.headline6
+                                    .copyWith(
+                                        fontSize: 14,
+                                        color: HexColor.fromHex('#ffffff'),
+                                        fontWeight: FontWeight.w400),
                               ),
                             ),
                             const SizedBox(
-                              height: 5.8,
+                              height: 27,
                             ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Container(
-                                  width: 13.9,
-                                  child: Image.asset(
-                                      'assets/images/icons/star.png',
-                                      fit: BoxFit.fill),
+                                  color: HexColor.fromHex('#f1c452'),
+                                  width: 16,
+                                  height: 1,
                                 ),
                                 const SizedBox(
-                                  width: 5,
+                                  width: 2,
                                 ),
                                 GeneralText(
-                                  widget.experienceData?.averageRating.toString() ?? '0.0',
+                                  Strings.productDetailWowFactorTitle,
                                   style: appTheme
                                       .typographies.interFontFamily.headline6
                                       .copyWith(
-                                      fontSize: 12,
-                                      color: HexColor.fromHex('#8ea659')),
+                                    fontSize: 20,
+                                    color: HexColor.fromHex('#f1c452'),
+                                  ),
                                 ),
                               ],
                             ),
-                          ]),
-                      ///home icon
-                      Positioned.fill(
-                        top: 40,
-                        child: Align(
-                            alignment: Alignment.topLeft,
-                            child: InkWell(
-                                onTap: () {
-                                  // Navigator.popUntil(
-                                  //     context, (route) => HomeScreen());
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                        BottomBar(bottomBarType: BottomBarType.home,)),
-                                  );
-                                },
-                                child: const GeneralNewAppBar(
-                                  rightIcon: Resources.homeIconSvg,
-                                ))),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 33.9,
-                ),
-                Container(
-                  padding: const EdgeInsetsDirectional.only(start: 25, end: 25),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            color: HexColor.fromHex('#f1c452'),
-                            width: 16,
-                            height: 1,
-                          ),
-                          const SizedBox(
-                            width: 2,
-                          ),
-                          GeneralText(
-                            Strings.productDetailAboutTitle,
-                            style: appTheme
-                                .typographies.interFontFamily.headline6
-                                .copyWith(
-                              fontSize: 20,
-                              color: HexColor.fromHex('#f1c452'),
+                            const SizedBox(
+                              height: 11.6,
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      ///experience description
-                      Padding(
-                        padding: const EdgeInsets.only(left: 23),
-                        child: GeneralText(
-                          // Strings.productDetailAboutSubTitle,
-                          widget.experienceData!.description!,
-                          maxLines: 4,
-                          style: appTheme.typographies.interFontFamily.headline6
-                              .copyWith(
-                              fontSize: 14,
-                              color: HexColor.fromHex('#ffffff'),
-                              fontWeight: FontWeight.w400),
+                            wowFactors(appTheme),
+                          ],
                         ),
                       ),
                       const SizedBox(
-                        height: 27,
+                        height: 16,
                       ),
-                      Row(
-                        children: [
-                          Container(
-                            color: HexColor.fromHex('#f1c452'),
-                            width: 16,
-                            height: 1,
-                          ),
-                          const SizedBox(
-                            width: 2,
-                          ),
-                          GeneralText(
-                            Strings.productDetailWowFactorTitle,
-                            style: appTheme
-                                .typographies.interFontFamily.headline6
-                                .copyWith(
-                              fontSize: 20,
-                              color: HexColor.fromHex('#f1c452'),
-                            ),
-                          ),
-                        ],
-                      ),
+                      foodProductDetails(appTheme),
                       const SizedBox(
-                        height: 11.6,
+                        height: 28,
                       ),
-                      wowFactors(appTheme),
+                      chefInformation(appTheme),
+                      const SizedBox(
+                        height: 45.9,
+                      ),
+                      productPriceInformation(appTheme),
+                      const SizedBox(
+                        height: 28,
+                      ),
+                      extraPaymentNotes(appTheme),
+                      const SizedBox(
+                        height: 209.1,
+                      ),
                     ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                foodProductDetails(appTheme),
-                const SizedBox(
-                  height: 28,
-                ),
-                chefInformation(appTheme),
-                const SizedBox(
-                  height: 45.9,
-                ),
-                productPriceInformation(appTheme),
-                const SizedBox(
-                  height: 28,
-                ),
-                extraPaymentNotes(appTheme),
-                const SizedBox(
-                  height: 209.1,
-                ),
-              ],
-            )),
-      ),
-    );
+                  )),
+            ),
+          );
   }
 
   Widget wowFactors(IAppThemeData appTheme) {
@@ -390,28 +372,26 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
   }
 
   Widget foodProductDetails(IAppThemeData appTheme) {
-   OrderHelper orderHelper = (widget.appService.state.orderHelper)!;
-    developer.log(' Schedule Id selected in Summary Page ' +
-        orderHelper.scheduleId);
+    OrderHelper orderHelper = (widget.appService.state.orderHelper)!;
+    developer
+        .log(' Schedule Id selected in Summary Page ' + orderHelper.scheduleId);
 
-    var _date = InfininURLHelpers.dayOfMonth(
-        orderHelper.daysGroup.scheduledDate);
+    var _date =
+        InfininURLHelpers.dayOfMonth(orderHelper.daysGroup.scheduledDate);
     var dayOfMonth = orderHelper.daysGroup.scheduledDate.day;
-    var _month = InfininURLHelpers.months[
-    orderHelper.daysGroup.scheduledDate.month - 1];
+    var _month =
+        InfininURLHelpers.months[orderHelper.daysGroup.scheduledDate.month - 1];
     var _hourSelected = orderHelper.hourSelected.startTime;
 
     var _productDetailSelectionDate = _date.toUpperCase() +
         ',  ' +
-        (dayOfMonth.toString())+
+        (dayOfMonth.toString()) +
         "   " +
         _month.toString().toUpperCase();
-    var _productDetailSelectionTime = InfininURLHelpers.getAmPm(
-        orderHelper.hourSelected.startTime);
-    var _productDetailSelectionType =
-        orderHelper.selectedCategory;
-    var _numberOfPerson =
-        orderHelper.numberOfPerson ?? 4.toString();
+    var _productDetailSelectionTime =
+        InfininURLHelpers.getAmPm(orderHelper.hourSelected.startTime);
+    var _productDetailSelectionType = orderHelper.selectedCategory;
+    var _numberOfPerson = orderHelper.numberOfPerson ?? 4.toString();
     return Padding(
       padding: const EdgeInsetsDirectional.only(start: 25, end: 25),
       child: Container(
@@ -484,9 +464,9 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                             style: appTheme
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
-                                fontSize: 12,
-                                color: HexColor.fromHex('#909094'),
-                                fontWeight: FontWeight.w400),
+                                    fontSize: 12,
+                                    color: HexColor.fromHex('#909094'),
+                                    fontWeight: FontWeight.w400),
                           ),
                         ],
                       ),
@@ -499,7 +479,9 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
               const SizedBox(
                 height: 29,
               ),
-              widget.experienceData?.priceTypeId == 2 ? perItemProductMenuDetails(appTheme) : productMenuDetails(appTheme),
+              widget.experienceData?.priceTypeId == 2
+                  ? perItemProductMenuDetails(appTheme)
+                  : productMenuDetails(appTheme),
             ],
           )),
     );
@@ -572,24 +554,27 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        widget.experienceData!.priceTypeId != 1 ? GeneralText(
-                          Strings.productDetailSelectionMenuQuantity,
-                          style: appTheme.typographies.interFontFamily.headline2
-                              .copyWith(
-                            fontSize: 16,
-                            color: HexColor.fromHex('#f89f84'),
-                          ),
-                        ):const SizedBox(),
                         widget.experienceData!.priceTypeId != 1
                             ? GeneralText(
-                          menuListItems[index].price.toString(),
-                          style: appTheme
-                              .typographies.interFontFamily.headline2
-                              .copyWith(
-                            fontSize: 16,
-                            color: HexColor.fromHex('#909094'),
-                          ),
-                        )
+                                Strings.productDetailSelectionMenuQuantity,
+                                style: appTheme
+                                    .typographies.interFontFamily.headline2
+                                    .copyWith(
+                                  fontSize: 16,
+                                  color: HexColor.fromHex('#f89f84'),
+                                ),
+                              )
+                            : const SizedBox(),
+                        widget.experienceData!.priceTypeId != 1
+                            ? GeneralText(
+                                menuListItems[index].price.toString(),
+                                style: appTheme
+                                    .typographies.interFontFamily.headline2
+                                    .copyWith(
+                                  fontSize: 16,
+                                  color: HexColor.fromHex('#909094'),
+                                ),
+                              )
                             : Container(),
                       ],
                     ),
@@ -600,9 +585,9 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                       menuListItems[index].name ?? "",
                       style: appTheme.typographies.interFontFamily.headline2
                           .copyWith(
-                          fontSize: 14,
-                          color: HexColor.fromHex('#ffffff'),
-                          fontWeight: FontWeight.w400),
+                              fontSize: 14,
+                              color: HexColor.fromHex('#ffffff'),
+                              fontWeight: FontWeight.w400),
                       maxLines: 3,
                     ),
                   ],
@@ -615,8 +600,10 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
   }
 
   Widget perItemProductMenuDetails(IAppThemeData appTheme) {
-
-    List<BookingDetails> bookingDetails = locateService<ApplicationService>().state.orderHelper!.bookingMenuDetails;
+    List<BookingDetails> bookingDetails = locateService<ApplicationService>()
+        .state
+        .orderHelper!
+        .bookingMenuDetails;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -631,61 +618,66 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
         const SizedBox(
           height: 7,
         ),
-
         Wrap(
           runAlignment: WrapAlignment.start,
           children: [
             for (var menuItem in menuListItems)
-              for(var bookingMenuItem in bookingDetails)
-                bookingMenuItem.menuId == menuItem.id ?
-                  Container(
-                width: 140,
-                padding: const EdgeInsetsDirectional.only(
-                    top: 10, bottom: 10, start: 14, end: 14),
-                margin: const EdgeInsets.only(right: 5, bottom: 7),
-                decoration: BoxDecoration(
-                    color: HexColor.fromHex("#212129"),
-                    borderRadius: BorderRadius.circular(11)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GeneralText(
-                          bookingMenuItem.quantity.toString() + 'x',
-                          style: appTheme.typographies.interFontFamily.headline2
-                              .copyWith(
-                            fontSize: 16,
-                            color: HexColor.fromHex('#f89f84'),
-                          ),
+              for (var bookingMenuItem in bookingDetails)
+                bookingMenuItem.menuId == menuItem.id
+                    ? Container(
+                        width: 140,
+                        padding: const EdgeInsetsDirectional.only(
+                            top: 10, bottom: 10, start: 14, end: 14),
+                        margin: const EdgeInsets.only(right: 5, bottom: 7),
+                        decoration: BoxDecoration(
+                            color: HexColor.fromHex("#212129"),
+                            borderRadius: BorderRadius.circular(11)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                GeneralText(
+                                  bookingMenuItem.quantity.toString() + 'x',
+                                  style: appTheme
+                                      .typographies.interFontFamily.headline2
+                                      .copyWith(
+                                    fontSize: 16,
+                                    color: HexColor.fromHex('#f89f84'),
+                                  ),
+                                ),
+                                GeneralText(
+                                  (menuItem.price! *
+                                          int.parse(bookingMenuItem.quantity
+                                              .toString()))
+                                      .toString(),
+                                  style: appTheme
+                                      .typographies.interFontFamily.headline2
+                                      .copyWith(
+                                    fontSize: 16,
+                                    color: HexColor.fromHex('#909094'),
+                                  ),
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            GeneralText(
+                              menuItem.name ?? "",
+                              style: appTheme
+                                  .typographies.interFontFamily.headline2
+                                  .copyWith(
+                                      fontSize: 14,
+                                      color: HexColor.fromHex('#ffffff'),
+                                      fontWeight: FontWeight.w400),
+                              maxLines: 3,
+                            ),
+                          ],
                         ),
-                        GeneralText(
-                          (menuItem.price! * int.parse(bookingMenuItem.quantity.toString())).toString(),
-                          style: appTheme
-                              .typographies.interFontFamily.headline2
-                              .copyWith(
-                            fontSize: 16,
-                            color: HexColor.fromHex('#909094'),
-                          ),
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    GeneralText(
-                      menuItem.name ?? "",
-                      style: appTheme.typographies.interFontFamily.headline2
-                          .copyWith(
-                          fontSize: 14,
-                          color: HexColor.fromHex('#ffffff'),
-                          fontWeight: FontWeight.w400),
-                      maxLines: 3,
-                    ),
-                  ],
-                ),
-              ) : const SizedBox(),
+                      )
+                    : const SizedBox(),
           ],
         )
       ],
@@ -738,8 +730,9 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                           shape: BoxShape.circle),
                       child: CircleAvatar(
                         radius: 27,
-                        backgroundImage: NetworkImage(Api.baseURLForImages+widget.chefData.t!.profileImageUrl.toString()),
-                          )),
+                        backgroundImage: NetworkImage(Api.baseURLForImages +
+                            widget.chefData.t!.profileImageUrl.toString()),
+                      )),
                   const SizedBox(
                     width: 11.5,
                   ),
@@ -765,14 +758,18 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                             width: 5,
                           ),
                           GeneralText(
-                          (widget.experienceData?.townName.toString() ?? 'null') + ', '+ (widget.experienceData?.cityName.toString() ?? 'null'),
+                            (widget.experienceData?.townName.toString() ??
+                                    'null') +
+                                ', ' +
+                                (widget.experienceData?.cityName.toString() ??
+                                    'null'),
                             //Strings.productDetailChefLocation,
                             style: appTheme
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
-                                fontSize: 14,
-                                color: HexColor.fromHex('#ffffff'),
-                                decoration: TextDecoration.underline),
+                                    fontSize: 14,
+                                    color: HexColor.fromHex('#ffffff'),
+                                    decoration: TextDecoration.underline),
                           ),
                         ],
                       )
@@ -793,7 +790,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                 GeneralText(
                   Strings.productDetailChefSubHost,
                   style:
-                  appTheme.typographies.interFontFamily.headline6.copyWith(
+                      appTheme.typographies.interFontFamily.headline6.copyWith(
                     fontSize: 14,
                     color: HexColor.fromHex('#909094'),
                   ),
@@ -802,10 +799,10 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                   height: 1.7,
                 ),
                 GeneralText(
-                  widget.experienceData
-                      !.subHostName!, //    Strings.productDetailChefSubHostName,
+                  widget.experienceData!
+                      .subHostName!, //    Strings.productDetailChefSubHostName,
                   style:
-                  appTheme.typographies.interFontFamily.headline6.copyWith(
+                      appTheme.typographies.interFontFamily.headline6.copyWith(
                     fontSize: 18,
                     color: HexColor.fromHex('#f1c452'),
                   ),
@@ -819,7 +816,10 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
   }
 
   Widget productPriceInformation(IAppThemeData appTheme) {
-    num price = widget.experienceData!.priceTypeId == 1 ? widget.experienceData!.price! * widget.appService.state.orderHelper.numberOfPerson : widget.experienceData!.price!;
+    num price = widget.experienceData!.priceTypeId == 1
+        ? widget.experienceData!.price! *
+            widget.appService.state.orderHelper.numberOfPerson
+        : widget.experienceData!.price!;
     return Container(
       padding: const EdgeInsetsDirectional.only(start: 25, end: 25),
       child: Column(
@@ -863,9 +863,9 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                         'Rs. ' + (price + price * 0.17).toStringAsFixed(0),
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
-                            fontSize: 36,
-                            color: HexColor.fromHex('#f89f84'),
-                            fontWeight: FontWeight.w300),
+                                fontSize: 36,
+                                color: HexColor.fromHex('#f89f84'),
+                                fontWeight: FontWeight.w300),
                       ),
                       GeneralText(
                         'Total Amount',
@@ -925,7 +925,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                     ),
                     GeneralText(
                       // Strings.productDetailPriceTaxValue,
-                      'Rs. ' + (price  * 0.17).toStringAsFixed(0),
+                      'Rs. ' + (price * 0.17).toStringAsFixed(0),
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -950,7 +950,8 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                     ),
                     GeneralText(
                       // Strings.productDetailAdvancePaymentValue,
-                      'Rs. ' + ((price + price * 0.17) * 0.20).toStringAsFixed(0),
+                      'Rs. ' +
+                          ((price + price * 0.17) * 0.20).toStringAsFixed(0),
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -1002,7 +1003,7 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
                 color: HexColor.fromHex("#bb3127"),
                 borderRadius: BorderRadius.circular(15)),
             child: GeneralText(
-              Strings.productDetailExtraNoteValue,
+              Strings.noPaymentRequired,
               style: appTheme.typographies.interFontFamily.headline6.copyWith(
                 fontSize: 14,
                 color: HexColor.fromHex('#ffffff'),
@@ -1013,24 +1014,6 @@ class _FoodProductDetailsSummaryState extends State<FoodProductDetailsSummary> {
         ],
       ),
     );
-  }
-
-  Widget getStartedButtonTitle({required IAppThemeData appTheme}) {
-    return GeneralButton.button(
-      title: Strings.productDetailButtonTitle.toUpperCase(),
-      styleType: ButtonStyleType.fill,
-      onTap: () {
-        //viewModel.
-        Navigator.push(
-            context,
-            //HomeScreen()
-            MaterialPageRoute(builder: (context) => BottomBar()));
-      },
-    );
-    // ExtoText(
-    //   Strings.getStartedButtonTitle,
-    //   style: appTheme.typographies.interFontFamily.headline2,
-    // );
   }
 }
 

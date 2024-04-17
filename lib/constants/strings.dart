@@ -10,6 +10,7 @@ abstract class Strings {
   static const countryCodeKey = 'countryCode';
   static const usCountryValue = 'US';
   static const inCountryValue = 'IN';
+  static const appVersion = ' Version 1.0.9';
 
   static const password = 'Password';
   static const emailAddress = 'Username or email';
@@ -26,6 +27,7 @@ abstract class Strings {
   static const sendResetLink = 'Send link';
   static const returnTo = 'Return to ';
   static const sentSuccessfully = 'Link sent successfully';
+  static const passwordUpdatedMessage = 'Password Updated Successfully!';
   static const checkInstruction =
       'Please check your email and follow the instructions to reset your password.';
 
@@ -51,7 +53,7 @@ abstract class Strings {
       'This user has no permission to do any action';
   static const requiredFields = 'Please enter valid mobile number';
 
-  static const signUpFields = 'All fields are required';
+  static const signUpFields = 'Enter required fields';
   static const invalidUrl = 'Invalid URL';
   static const qrNotScanned = 'No QR Code scanned.';
 
@@ -89,6 +91,7 @@ abstract class Strings {
   static const no = 'No';
   static const yes = 'Yes';
   static const confirmationTitle = 'Confirmation';
+
   static const confirmMessage = 'Are you sure?';
   static const confirmCancelMessage = 'Are you sure you want to cancel?';
   static const exitApplication = 'Do you want to exit Exto?';
@@ -107,6 +110,7 @@ abstract class Strings {
   static const filterCancelButtonText = 'Cancel';
   static const filterAddRuleButtonText = 'Add Rule';
   static const filterRemoveRuleButtonText = 'Remove Rule';
+  static const filterContinueButtonText = 'CONTINUE';
 
   static const attachFrom = 'Attach from';
   static const gallery = 'Gallery';
@@ -163,6 +167,7 @@ abstract class Strings {
   static const workflowSuccessMessage = 'Successfully Done';
   static const searchHintText = 'Search..';
   static const saveAsDraft = 'Save as Draft';
+  static const save = 'SAVE';
 
   // Workspace & Projects
   static const workspaceCaption =
@@ -184,6 +189,7 @@ abstract class Strings {
   //profile
   static const myAccount = 'My Account';
   static const general = 'General';
+  static const createNewAccount = "Create New Account?";
   static const usernameEmail = 'Username/Email';
   static const accountSettings = 'Account Settings';
   static const changePassword = 'Change Password';
@@ -202,10 +208,12 @@ abstract class Strings {
   static const currentPassword = 'Current Password';
   static const currentPasswordHint = 'Enter Current Password';
   static const newPassword = 'New Password';
-  static const newPasswordHint = 'Generate new password';
+  static const newPasswordHint = 'Enter new password';
   static const confirmPassword = 'Repeat Password';
+  static const confirmNewPassword = 'Confirm New Password';
   static const confirmPasswordHint = 'Confirm Password';
   static const passwordMismatch = 'Password do not match';
+  static const reEnterNewPassword = 'Re enter New Password';
 
   // Account settings screen
   static const theme = 'Theme';
@@ -231,7 +239,7 @@ abstract class Strings {
   static const tableDigit = 'NUMBER';
   static const tableDate = 'DATE';
   static const tableCheckBox = 'CHECKBOX';
-  static const tableSelect = 'SELECT';
+  static const tableSelect = 'Select';
 
   //Reference Table ID Constants.
   static const referenceIDSubmitLabel = 'label';
@@ -275,20 +283,25 @@ abstract class Strings {
   static const foodItemMenu = "Menu";
   static const foodItemDetails = "Details";
   static const foodItemSchedule = "Schedule";
+  static const foodItemNextAvailable = 'Next available';
   static const foodDetailHeading = "Appetizer";
   static const foodProductTitle = "Sindhi Biryani";
   static const foodProductSubTitle = "Biryani";
   static const appCurrency = "Rs";
+  static const sarCurrency = "SAR";
   static const foodProductItemPrice = "280";
   static const perPerson = 'Per Person';
   static const foodProductItemDescription =
       "A spiced mix of meat and rice, traditionally cooked over an open fire.";
 
   static const foodProductItemUsers = "2";
+  static const servings = 'servings';
   static const foodProductItemQuantity = "Quantity";
   static const foodDetailAboutTitle = 'Experience';
 
   static const nextButtonTitle = "NEXT";
+  static const bookButtonTitle = "Book";
+  static const moreOptionButtonTitle = "More Options";
 
   static const letsStartScreenLabel = "Last but not the least!";
   static const letsStartScreenLabel1 =
@@ -302,6 +315,7 @@ abstract class Strings {
   static const letsStartScreenLabel5 =
       "Please be respectful to the chef and their staff, and follow any guidelines";
   static const letsStartScreenBtnLabel = "Let's Start";
+  static const login = 'login';
 
   static const noOfPersonsHint = '0';
   static const notesHint = 'Optional';
@@ -325,6 +339,7 @@ abstract class Strings {
   static const productDetailTitle = 'BBQ \nExperience';
   static const productDetailSubTitle = 'by Zee Lounge';
   static const byText = 'by';
+  static const hostedBy = 'Hosted By';
   static const productDetailReview = '4.2';
   static const productDetailAboutTitle = 'About Experience';
   static const productDetailAboutSubTitle =
@@ -362,12 +377,16 @@ abstract class Strings {
   static const productDetailButtonTitle = 'Request to book';
   static const productDetailExtraNoteValue =
       '20% Advance Payment will be required\nfor booking';
+  static const bistroApprovalRequired =
+      'Waiting for Approval from Bistro......';
+  static const noPaymentRequired = 'No payment required at this point';
 
   ///bottom bar
   static const homeTitle = 'HOME';
-  static const bookingTitle = 'BOOKINGS';
-  static const profileTitle = 'PROFILE'; //
-  static const historyTitle = 'HISTORY';
+  static const discover = 'Discover';
+  static const bookingTitle = 'Booking';
+  static const profileTitle = 'Profile'; //
+  static const historyTitle = 'History';
 
   ///home screen
   static const labelExplore = 'Explore';
@@ -383,6 +402,9 @@ abstract class Strings {
   static const labelPersonalDetails = 'Personal Details';
   static const labelProfile = 'Profile';
   static const labelReviews = 'Reviews';
+  static const updatePassword = 'Update Password';
+  static const oldPassword = 'Old Password';
+  static const enterOldPassword = 'Enter Old Password';
   static const labelPrivacyPolicy = 'Privacy Policy';
   static const labelTermsCond = 'Terms & Conditions';
   static const labelLogOut = 'Logout';
@@ -424,7 +446,8 @@ abstract class Strings {
   static const generalPopupTitle = "We are sorry";
   static const generalSubTitle =
       "Your Experience has been canceled by our host";
-  static const experiencedCancelledByFoodie = "Your Experience has been Cancelled";
+  static const experiencedCancelledByFoodie =
+      "Your Experience has been Cancelled";
   static const generalButtonTitle = "okay";
   static const popularFoodDetailTitle = 'BBQ\nExperience';
   static const popularFoodDetailSubTitle = 'by Zee Lounge';
@@ -443,7 +466,10 @@ abstract class Strings {
   static const popularFoodDetailAppBarTitle = 'Sindhi Biryani';
   static const foodDetailPreferences = 'Preferences';
   static const foodDetailLocation = 'Location';
-  static const locationOnOrderConfirmation = 'Location will be shown on Map here, when you confirm at least one order.';
+  static const locationAfterOrderConfirm =
+      'Exact location will be shown after booking confirmation';
+  static const locationOnOrderConfirmation =
+      'Location will be shown on Map here, when you confirm at least one order.';
   static const foodDetailPreferenceCouple = 'Couple';
   static const foodDetailPreferenceFamily = 'Family';
   static const foodDetailPreferenceFnf = 'F&F';
@@ -465,10 +491,79 @@ abstract class Strings {
   static const billGenerated = 'BILL-GENERATED';
   static const billGeneratedValue = 'BILL GENERATED';
   static const completeStatus = 'COMPLETED';
+  static const cancelled = 'CANCELLED';
 
-  static const inProgress= 'IN-PROGRESS';
+  static const inProgress = 'IN-PROGRESS';
   static const inProgressValue = 'IN PROGRESS';
   static const pendingValue = 'PENDING';
 
   static const declined = 'DECLINED';
+  static const deleteAccountTitle = 'DELETE ACCOUNT';
+
+  static const enterYourPassword = 'Enter Your Password';
+  static const deleteAccountDescription =
+      'Proceeding further is an irreversible action & will permanently delete your account.';
+  static const reEnterPasswordDescription =
+      'For your security, please re-enter your password to continue';
+  static const accountDeleteReasonDescription =
+      'We\'re sorry to see you go, We would like to know why you\'re deleting your account as we may able to help with common issues.';
+  static const deleteAccountWarningDescription =
+      'Deleting your FEYST account will permanently remove your personal details, profile, photos & history';
+  static const accountDeleteReason1 = 'Concerned about my data.';
+  static const accountDeleteReason2 = 'Created a second account.';
+  static const accountDeleteReason3 = 'Too busy/too distracting.';
+  static const accountDeleteReason4 = 'Privacy concerns.';
+  static const accountDeleteReason5 = 'Can\'t find bistros.';
+  static const accountDeleteReason6 = 'Something else.';
+
+  static const exploreExperiences = 'EXPLORE EXPERIENCES';
+  static const asGuestUser = 'As Guest User';
+  static const noReviews = 'no reviews';
+  static const maxLimitLabel = 'MAX LIMIT : ';
+  static const loginSignup = 'Login/Signup';
+  static const pleaseLoginDescription =
+      'Please Login/Signup to book your food experience';
+  static const noBookingsYet = 'No Bookings Yet!';
+  static const noHistoryYet = 'No History Yet!';
+  static const noReviesYet = 'No Reviews Yet!';
+  static const pleasePayAdvanceDescription =
+      "Please pay advance to confirm booking";
+  static const advancePaymentDue = 'Advance Payment Due';
+  static const proceedToAdvancePaymentDescription =
+      'Please proceed to advance payment for Booking Confirmation';
+  static const totalAmount = 'Total Amount';
+  static const rupeesLabel = 'Rs.';
+  static const amountDue = 'Amount Due';
+  static const rateYourExperience = 'Rate Your Experience';
+  static const bookingCompleted = 'Booking Completed!';
+  static const kindlyReviewYourExperienceWith =
+      'Kindly review your experience with';
+  static const writeSomething = 'Write Something';
+  static const payDigital = 'PAY DIGITAL';
+  static const payCash = 'PAY CASH';
+  static const pleaseWait = 'Please Wait';
+  static const waitBistroApprovalDescription =
+      'Awaiting bistro approval of cash received';
+
+  static const accountDeleted = 'Account Deleted!';
+  static const welcomeBack = 'Welcome back';
+  static const pleaseEnterRegisteredNumber =
+      'Please enter registered number or SignUp';
+  static const cashReceived = 'Cash Received';
+  static const fullAmountReceivedBy = 'Full amount has been received by ';
+  static const advanceReceivedBy = 'Advance have been received by ';
+  static const chooseButtonTitle = 'Choose';
+  static const anotherTimeText = 'Looking for another day or time ?';
+
+  ///Errors
+  static const somethingWentWrong = 'Something is wrong please content vendor';
+  static const noOfPersonsMust = 'Number of Persons must between 1 and';
+  static const selectAtLeastOne = 'Please select at least one quantity in menu';
+  static const yourExperienceCancelled = 'Your Experience has been Cancelled';
+  static const couldNotLaunch = 'Could not launch';
+  static const passwordLengthError =
+      'Password must contain at least 6 characters';
+  static const userAlreadyExist = 'User Already Exists.';
+  static const notFoundFoodie = 'Not found foodie';
+  static const fillAllFields = 'Please fill all the fields';
 }

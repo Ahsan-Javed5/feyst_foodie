@@ -15,8 +15,10 @@ import '../widget/sign_up_questionnaire.dart';
 
 class SignUpQuestionireScreen
     extends BaseView<SignUpQuestionnaireScreenViewModel> {
-  SignUpQuestionireScreen(this.isProfileUpdate, {Key? key,})
-      : super(key: key);
+  SignUpQuestionireScreen(
+    this.isProfileUpdate, {
+    Key? key,
+  }) : super(key: key);
   final bool isProfileUpdate;
   @override
   Widget buildScreen(
@@ -25,7 +27,11 @@ class SignUpQuestionireScreen
     viewModel.isProfileUpdate = isProfileUpdate;
     return BlocBuilder<SignUpQuestionnaireScreenViewModel,
             SignUpQuestionnaireState>(
-        bloc: viewModel..getQuestionnaireData(isProfileUpdate , userId: '0',),
+        bloc: viewModel
+          ..getQuestionnaireData(
+            isProfileUpdate,
+            userId: '0',
+          ),
         builder: (context, state) {
           return Scaffold(
             backgroundColor: appTheme.colors.primaryBackground,
@@ -83,14 +89,16 @@ class SignUpQuestionireScreen
 
   Future<XFile?> getImageFromGallery() async {
     final picker = ImagePicker();
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    //final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       XFile? img = XFile(pickedFile.path);
-      var mb = ((await img.readAsBytes()).lengthInBytes / 1024 ) / 1024;
-      while(mb > 3){
+      var mb = ((await img.readAsBytes()).lengthInBytes / 1024) / 1024;
+      while (mb > 3) {
         img = await compressFile(file: img);
-        mb = ((await img?.readAsBytes())!.lengthInBytes / 1024 ) / 1024;
+        mb = ((await img?.readAsBytes())!.lengthInBytes / 1024) / 1024;
       }
       return img;
     } else {
@@ -176,7 +184,8 @@ class SignUpQuestionireScreen
                       //     ? () async {
                       viewModel.updateSelectedImage(selectedImage);
                       //viewModel.uploadImage(selectedImage, Api.baseURL);
-                      await viewModel.uploadFoodieImage(file: selectedImage, baseUrl: Api.baseURL);
+                      await viewModel.uploadFoodieImage(
+                          file: selectedImage, baseUrl: Api.baseURL);
                       // var mimeType = lookupMimeType(selectedImage!.path);
                       //  List<int> bytes = await selectedImage!.readAsBytes();
                       // String binaryString = bytes
@@ -225,27 +234,33 @@ class SignUpQuestionireScreen
                           ),
                           ValueListenableBuilder<XFile?>(
                             valueListenable: viewModel.selectedImageNotifier,
-                            builder: (BuildContext context, XFile? selectedImage,
-                                Widget? child) {
+                            builder: (BuildContext context,
+                                XFile? selectedImage, Widget? child) {
                               if (selectedImage != null) {
                                 return CircleAvatar(
                                   radius: 25,
-                                  backgroundImage: FileImage(File(selectedImage.path)),
+                                  backgroundImage:
+                                      FileImage(File(selectedImage.path)),
                                 );
                               } else {
-                                return locateService<IStorageService>().readString(key: 'profile_image') == '' ?
-                                Image.asset(
-                                  Resources.userProfileImageIcon,
-                                  // height: 47,
-                                  // fit: BoxFit.fill,
-                                ) :
-                                    CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                  Api.baseURLForImages+locateService<IStorageService>().readString(key: 'profile_image'),
-                                   // height: 47,
-                                   // fit: BoxFit.fill,
-                                  ),
-                                );
+                                return locateService<IStorageService>()
+                                            .readString(key: 'profile_image') ==
+                                        ''
+                                    ? Image.asset(
+                                        Resources.userProfileImageIcon,
+                                        // height: 47,
+                                        // fit: BoxFit.fill,
+                                      )
+                                    : CircleAvatar(
+                                        backgroundImage: NetworkImage(
+                                          Api.baseURLForImages +
+                                              locateService<IStorageService>()
+                                                  .readString(
+                                                      key: 'profile_image'),
+                                          // height: 47,
+                                          // fit: BoxFit.fill,
+                                        ),
+                                      );
                               }
                             },
                           )
@@ -277,26 +292,26 @@ class SignUpQuestionireScreen
           padding: const EdgeInsets.only(
             bottom: 20,
           ),
-          child: isProfileUpdate == true ? QuestionView(
-            appTheme: appTheme,
-            questionObj: item,
-            foodieAnswers: viewModel.foodieAnswers,
-            answerIdsCuisineTaste: viewModel.answerIdsCuisineTaste,
-            answerIdsPerfectAmbience: viewModel.answerIdPerfectAmbience,
-            answerIdsUniqueFood: viewModel.answerIdsUniqueFoodie,
-            answerIdsYourInterests: viewModel.answerIdInterest,
-            isProfileUpdate: isProfileUpdate,
-          ) :
-          QuestionView(
-            appTheme: appTheme,
-            questionObj: item,
-            answerIdsCuisineTaste: viewModel.answerIdsCuisineTaste,
-            answerIdsPerfectAmbience: viewModel.answerIdPerfectAmbience,
-            answerIdsUniqueFood: viewModel.answerIdsUniqueFoodie,
-            answerIdsYourInterests: viewModel.answerIdInterest,
-            isProfileUpdate: isProfileUpdate,
-          )
-          ,
+          child: isProfileUpdate == true
+              ? QuestionView(
+                  appTheme: appTheme,
+                  questionObj: item,
+                  foodieAnswers: viewModel.foodieAnswers.t![index],
+                  answerIdsCuisineTaste: viewModel.answerIdsCuisineTaste,
+                  answerIdsPerfectAmbience: viewModel.answerIdPerfectAmbience,
+                  answerIdsUniqueFood: viewModel.answerIdsUniqueFoodie,
+                  answerIdsYourInterests: viewModel.answerIdInterest,
+                  isProfileUpdate: isProfileUpdate,
+                )
+              : QuestionView(
+                  appTheme: appTheme,
+                  questionObj: item,
+                  answerIdsCuisineTaste: viewModel.answerIdsCuisineTaste,
+                  answerIdsPerfectAmbience: viewModel.answerIdPerfectAmbience,
+                  answerIdsUniqueFood: viewModel.answerIdsUniqueFoodie,
+                  answerIdsYourInterests: viewModel.answerIdInterest,
+                  isProfileUpdate: isProfileUpdate,
+                ),
         );
       },
     );
@@ -510,14 +525,6 @@ class ChipsWidget extends StatelessWidget {
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
         width: widthContainer,
-        child: GeneralText(
-          title.capitalize(),
-          textAlign: TextAlign.center,
-          style: appTheme.typographies.interFontFamily.headline6.copyWith(
-              color: selected ? Colors.black : Colors.white,
-              fontSize: 13.5,
-              fontWeight: selected ? FontWeight.bold : FontWeight.w500),
-        ),
         decoration: BoxDecoration(
           border: Border.all(
             color: appTheme.colors.textFieldBorderColor,
@@ -529,48 +536,14 @@ class ChipsWidget extends StatelessWidget {
           color: selected
               ? appTheme.colors.textFieldBorderColor
               : Colors.transparent,
+        ),
+        child: GeneralText(
+          title.capitalize(),
+          textAlign: TextAlign.center,
+          style: appTheme.typographies.interFontFamily.headline6.copyWith(
+              color: selected ? Colors.black : Colors.white,
+              fontSize: 13.5,
+              fontWeight: selected ? FontWeight.bold : FontWeight.w500),
         ));
   }
 }
-
-// class ChipsWidget extends StatelessWidget {
-//   const ChipsWidget({
-//     Key? key,
-//     required this.appTheme,
-//     required this.title,
-//     this.selected = false,
-//     this.widthContainer = 160,
-//   }) : super(key: key);
-//
-//   final IAppThemeData appTheme;
-//   final String title;
-//   final bool selected;
-//   final double widthContainer;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-//         width: widthContainer,
-//         child: GeneralText(
-//           title.capitalize(),
-//           textAlign: TextAlign.center,
-//           style: appTheme.typographies.interFontFamily.headline6.copyWith(
-//               color: selected ? Colors.black : Colors.white,
-//               fontSize: 15,
-//               fontWeight: selected ? FontWeight.bold : FontWeight.w500),
-//         ),
-//         decoration: BoxDecoration(
-//           border: Border.all(
-//             color: appTheme.colors.textFieldBorderColor,
-//             width: 2.5,
-//           ),
-//           borderRadius: BorderRadius.circular(
-//             30,
-//           ),
-//           color: selected
-//               ? appTheme.colors.textFieldBorderColor
-//               : Colors.transparent,
-//         ));
-//   }
-// }

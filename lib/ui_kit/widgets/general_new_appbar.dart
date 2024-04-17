@@ -7,13 +7,14 @@ class GeneralNewAppBar extends StatelessWidget {
   final Color? titleColor;
   final String? rightIcon;
   final Function()? callBack;
-  const GeneralNewAppBar({Key? key, this.title, this.titleColor, this.rightIcon, this.callBack})
+  const GeneralNewAppBar(
+      {Key? key, this.title, this.titleColor, this.rightIcon, this.callBack})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context).theme;
-    final _navigationService = locateService<INavigationService>();
+    final navigationService = locateService<INavigationService>();
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -23,20 +24,23 @@ class GeneralNewAppBar extends StatelessWidget {
         ),
         // Image.asset(Resources.appBackIcon,height: 35,),
         InkWell(
-            onTap: callBack ?? (){Navigator.pop(context);},
-            //     () {
-            //    //Navigator.pop(context);
-            //   //_navigationService.navigateTo(route:BottomBar());
-            //
-            //   // _navigationService.replace(context);
-            //
-            //   // _navigationService.replace(route: BottomBar());
-            //   //    Navigator.p
-            // },
-            child: SvgPicture.asset(
-              Resources.appBackIconSVG,
-              height: DeviceHelper.height * 0.0425,
-            ),
+          onTap: callBack ??
+              () {
+                Navigator.pop(context);
+              },
+          //     () {
+          //    //Navigator.pop(context);
+          //   //_navigationService.navigateTo(route:BottomBar());
+          //
+          //   // _navigationService.replace(context);
+          //
+          //   // _navigationService.replace(route: BottomBar());
+          //   //    Navigator.p
+          // },
+          child: SvgPicture.asset(
+            Resources.appBackIconSVG,
+            height: DeviceHelper.height * 0.0425,
+          ),
         ),
         if (title != null) ...[
           const Spacer(),
@@ -48,9 +52,12 @@ class GeneralNewAppBar extends StatelessWidget {
           ),
         ],
         if (rightIcon != null) ...[
-          Spacer(),
+          const Spacer(),
           InkWell(
-            onTap: ()=> _navigationService.navigateTo(route: BottomBar(bottomBarType: bottom_bar.BottomBarType.home),),
+            onTap: () => navigationService.navigateTo(
+              route:
+                  BottomBarRoute(bottomBarType: bottom_bar.BottomBarType.home),
+            ),
             child: SvgPicture.asset(
               rightIcon!,
               height: DeviceHelper.height * 0.0345,

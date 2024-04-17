@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/screens/booking/advance_payment/jazz_cash_webview.dart';
 import 'package:chef/setup.dart';
@@ -5,15 +6,14 @@ import 'package:chef/screens/bottom_bar/bottom_bar.dart' as bottom_bar;
 import '../../helpers/color_helper.dart';
 import '../../helpers/function_helper.dart';
 import '../../models/booking/advance_pending_response.dart';
+import '../../ui_kit/widgets/custom_dialog.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
 
 import 'dart:developer' as developer;
 
-import '../user_account/user_profile.dart';
-import 'booking_confirmed/booking_in_process_screen_vm.dart';
-
-class FoodProductAdvancePendingDetails extends StatefulWidget {
-  const FoodProductAdvancePendingDetails(
+@RoutePage()
+class FoodProductAdvancePendingDetailsScreen extends StatefulWidget {
+  const FoodProductAdvancePendingDetailsScreen(
       {Key? key, required AdvancePendingResponse advancePendingDetails})
       : _advancePendingDetails = advancePendingDetails,
         super(key: key);
@@ -21,22 +21,24 @@ class FoodProductAdvancePendingDetails extends StatefulWidget {
   final AdvancePendingResponse _advancePendingDetails;
 
   @override
-  State<FoodProductAdvancePendingDetails> createState() =>
-      _FoodProductAdvancePendingDetailsState();
+  State<FoodProductAdvancePendingDetailsScreen> createState() =>
+      _FoodProductAdvancePendingDetailsScreenState();
 }
 
-class _FoodProductAdvancePendingDetailsState
-    extends State<FoodProductAdvancePendingDetails> {
+class _FoodProductAdvancePendingDetailsScreenState
+    extends State<FoodProductAdvancePendingDetailsScreen> {
   List<CustomModel> wowFactorsList = [];
   List<CustomModel> menuListItems = [];
   bool checkValue = false;
 
   @override
   void initState() {
-    developer.log(' Booking bookingStatus here is ' +
-        widget._advancePendingDetails.t.bookingStatus);
     loadMenu();
     loadWowFactor();
+    widget._advancePendingDetails.t.bookingStatus.toString().toUpperCase() ==
+            Strings.acceptData
+        ? getAdvancePaymentDialog()
+        : null;
     super.initState();
   }
 
@@ -70,6 +72,24 @@ class _FoodProductAdvancePendingDetailsState
         ),
       );
     }
+  }
+
+  getAdvancePaymentDialog() {
+    return Future.delayed(const Duration(seconds: 1), () {
+      return CustomDialog.getDialog(
+        ctx: context,
+        title: Strings.advancePaymentDue,
+        //titleColor: Colors.white,
+        //descColor: const Color(0xFFfee4a4),
+        description: Strings.proceedToAdvancePaymentDescription,
+        iconUrl: Resources.paymentIcon,
+        onTap: () {
+          setState(() {
+            Navigator.pop(context);
+          });
+        },
+      );
+    });
   }
 
   @override
@@ -165,7 +185,10 @@ class _FoodProductAdvancePendingDetailsState
                                 width: 5,
                               ),
                               GeneralText(
-                                widget._advancePendingDetails.t.experience.averageRating.toString(),
+                                widget._advancePendingDetails.t.experience
+                                        .averageRating
+                                        ?.toString() ??
+                                    Strings.noReviews,
                                 style: appTheme
                                     .typographies.interFontFamily.headline6
                                     .copyWith(
@@ -207,7 +230,7 @@ class _FoodProductAdvancePendingDetailsState
                             rightIcon: Resources.homeIconSvg,
                             callBack: () {
                               locateService<INavigationService>().navigateTo(
-                                  route: BottomBar(
+                                  route: BottomBarRoute(
                                       bottomBarType:
                                           bottom_bar.BottomBarType.bookings));
                               Navigator.pop(context);
@@ -318,8 +341,13 @@ class _FoodProductAdvancePendingDetailsState
                         height: 32.9,
                       ),
                       widget._advancePendingDetails.t.bookingStatus
-                          .toUpperCase() == 'MISSED' || widget._advancePendingDetails.t.bookingStatus
-                          .toUpperCase() == 'DECLINED' ? const SizedBox() : extraPaymentNotes(appTheme),
+                                      .toUpperCase() ==
+                                  'MISSED' ||
+                              widget._advancePendingDetails.t.bookingStatus
+                                      .toUpperCase() ==
+                                  'DECLINED'
+                          ? const SizedBox()
+                          : extraPaymentNotes(appTheme),
                       const SizedBox(
                         height: 70,
                       ),
@@ -721,10 +749,12 @@ class _FoodProductAdvancePendingDetailsState
                             Expanded(
                               child: GeneralText(
                                 // Strings.productDetailChefLocation,
-                                (widget._advancePendingDetails.t.experience.townName ??
+                                (widget._advancePendingDetails.t.experience
+                                            .townName ??
                                         'null') +
                                     ', ' +
-                                    (widget._advancePendingDetails.t.experience.cityName ??
+                                    (widget._advancePendingDetails.t.experience
+                                            .cityName ??
                                         'null'),
                                 style: appTheme
                                     .typographies.interFontFamily.headline6
@@ -818,9 +848,7 @@ class _FoodProductAdvancePendingDetailsState
                     children: [
                       GeneralText(
                         // Strings.productDetailPriceValue,
-                        'Rs. ' +
-                            (widget._advancePendingDetails.t.totalAmount)
-                                .toStringAsFixed(0),
+                        '${Strings.rupeesLabel} ${(widget._advancePendingDetails.t.totalAmount).toStringAsFixed(0)}',
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
                                 fontSize: 36,
@@ -828,7 +856,7 @@ class _FoodProductAdvancePendingDetailsState
                                 fontWeight: FontWeight.w300),
                       ),
                       GeneralText(
-                        'Total Amount',
+                        Strings.totalAmount,
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
                           fontSize: 15,
@@ -860,8 +888,7 @@ class _FoodProductAdvancePendingDetailsState
                     ),
                     GeneralText(
                       // Strings.productDetailPriceTaxValue,
-                      'Rs. ' +
-                          widget._advancePendingDetails.t.totalPrice.toString(),
+                      '${Strings.rupeesLabel} ${widget._advancePendingDetails.t.totalPrice}',
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -886,9 +913,7 @@ class _FoodProductAdvancePendingDetailsState
                     ),
                     GeneralText(
                       // Strings.productDetailPriceTaxValue,
-                      'Rs. ' +
-                          (widget._advancePendingDetails.t.tax)
-                              .toStringAsFixed(0),
+                      '${Strings.rupeesLabel} ${(widget._advancePendingDetails.t.tax).toStringAsFixed(0)}',
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -913,9 +938,7 @@ class _FoodProductAdvancePendingDetailsState
                     ),
                     GeneralText(
                       // Strings.productDetailAdvancePaymentValue,
-                      'Rs. ' +
-                          (widget._advancePendingDetails.t.advancePayment)
-                              .toStringAsFixed(0),
+                      '${Strings.rupeesLabel} ${(widget._advancePendingDetails.t.advancePayment).toStringAsFixed(0)}',
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -923,10 +946,56 @@ class _FoodProductAdvancePendingDetailsState
                       ),
                     ),
                   ],
-                )
+                ),
+                widget._advancePendingDetails.t.bookingStatus.toUpperCase() ==
+                            'MISSED' ||
+                        widget._advancePendingDetails.t.bookingStatus
+                                .toUpperCase() ==
+                            'DECLINED'
+                    ? const SizedBox()
+                    : Column(
+                        children: [
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Container(
+                            color: HexColor.fromHex("#ffffff").withOpacity(0.3),
+                            width: double.infinity,
+                            height: 1,
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GeneralText(
+                                Strings.amountDue,
+                                style: appTheme
+                                    .typographies.interFontFamily.headline6
+                                    .copyWith(
+                                  fontSize: 18,
+                                  color: HexColor.fromHex('#f1c452'),
+                                ),
+                              ),
+                              GeneralText(
+                                //     Strings.productDetailPriceTaxValue,
+                                "${Strings.rupeesLabel} ${(widget._advancePendingDetails.t.advancePayment).toStringAsFixed(0)}",
+                                style: appTheme
+                                    .typographies.interFontFamily.headline6
+                                    .copyWith(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                  color: HexColor.fromHex('#f1c452'),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
@@ -967,7 +1036,12 @@ class _FoodProductAdvancePendingDetailsState
                 color: HexColor.fromHex("#bb3127"),
                 borderRadius: BorderRadius.circular(15)),
             child: GeneralText(
-              Strings.productDetailExtraNoteValue,
+              widget._advancePendingDetails.t.bookingStatus
+                          .toString()
+                          .toUpperCase() ==
+                      Strings.acceptData
+                  ? Strings.productDetailExtraNoteValue
+                  : Strings.bistroApprovalRequired,
               style: appTheme.typographies.interFontFamily.headline6.copyWith(
                 fontSize: 14,
                 color: HexColor.fromHex('#ffffff'),
@@ -1072,18 +1146,8 @@ class _FoodProductAdvancePendingDetailsState
               builder: (context) =>
                   JazzCashWebView(bookindData: widget._advancePendingDetails)),
         );
-        // final _foodItemAdvance =
-        //     locateService<FoodItemAdvancePaymentViewModel>();
-        // _foodItemAdvance.updateBookingStatus(bookingId: widget._advancePendingDetails.t.id);
-        // .requestConfirmBooking(widget._advancePendingDetails.t.id);
-        // Navigator.push(context,
-        //     MaterialPageRoute(builder: (context) => FoodItemBooking()));
       },
     );
-    // ExtoText(
-    //   Strings.getStartedButtonTitle,
-    //   style: appTheme.typographies.interFontFamily.headline2,
-    // );
   }
 }
 

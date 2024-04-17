@@ -4,19 +4,18 @@ import 'package:chef/screens/bottom_bar/bottom_bar.dart' as bottom_bar;
 
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/models/booking/booking_list_response_model.dart';
-import '../../services/navigation/router.gr.dart' as nav;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:developer' as developer;
-
+import 'package:chef/services/navigation/app_router.dart' as nav;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import '../setup.dart';
 
 class NotificationServices {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
-  final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-
+  final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
   void requestNotificationPermission() async {
     NotificationSettings settings = await messaging.requestPermission(
@@ -37,17 +36,19 @@ class NotificationServices {
     }
   }
 
-  void initLocalNotifications(BuildContext context, RemoteMessage message) async {
-    var androidInitializationSettings = const AndroidInitializationSettings('@drawable/ic_launcher');
-    var iosInitializationSettings = const IOSInitializationSettings();
+  void initLocalNotifications(
+      BuildContext context, RemoteMessage message) async {
+    var androidInitializationSettings =
+        const AndroidInitializationSettings('@mipmap/ic_launcher');
+    var iosInitializationSettings = const DarwinInitializationSettings();
 
     var initializationSetting = InitializationSettings(
-        android: androidInitializationSettings,
-        iOS: iosInitializationSettings,
+      android: androidInitializationSettings,
+      iOS: iosInitializationSettings,
     );
     await _flutterLocalNotificationsPlugin.initialize(
       initializationSetting,
-      onSelectNotification: (payload) {
+      onDidReceiveNotificationResponse: (payload) {
         handleMessage(context, message);
       },
     );
@@ -55,58 +56,53 @@ class NotificationServices {
 
   void fireBaseInit(BuildContext context) {
     FirebaseMessaging.onMessage.listen((message) {
-      if (kDebugMode){
-
-      }
-      if(Platform.isAndroid ){
+      if (kDebugMode) {}
+      if (Platform.isAndroid) {
+        initLocalNotifications(context, message);
+        showNotification(message);
+      } else {
         initLocalNotifications(context, message);
         showNotification(message);
       }
-      else{
-        showNotification(message);
-      }
-
-
     });
   }
 
   Future<void> showNotification(RemoteMessage message) async {
     try {
       AndroidNotificationChannel channel = AndroidNotificationChannel(
-          Random.secure().nextInt(100000).toString(),
-          'High Importance Notifications',
-          importance: Importance.high,
+        Random.secure().nextInt(100000).toString(),
+        'High Importance Notifications',
+        importance: Importance.high,
       );
 
-      AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
-              channel.id.toString(),
-              channel.name.toString(),
+      AndroidNotificationDetails androidNotificationDetails =
+          AndroidNotificationDetails(
+              channel.id.toString(), channel.name.toString(),
               channelDescription: 'your channel description',
               importance: Importance.high,
               priority: Priority.high,
               ticker: 'ticker');
 
-      IOSNotificationDetails iosNotificationDetails =  const IOSNotificationDetails(
+      DarwinNotificationDetails iosNotificationDetails =
+          const DarwinNotificationDetails(
         presentAlert: true,
         presentBadge: true,
         presentSound: true,
       );
 
       NotificationDetails notificationDetails = NotificationDetails(
-          android: androidNotificationDetails,
-          iOS: iosNotificationDetails,
+        android: androidNotificationDetails,
+        iOS: iosNotificationDetails,
       );
-       print('before notification show function');
-        _flutterLocalNotificationsPlugin.show(
-            0,
-            message.data['title'].toString() ?? 'title is null',
-            message.data['body'].toString() ?? 'body is null',
-            notificationDetails);
-        print('after notification show function');
+      _flutterLocalNotificationsPlugin.show(
+          22,
+          message.data['title']?.toString() ?? 'title is null',
+          message.data['body']?.toString() ?? 'body is null',
+          notificationDetails);
+      print('notification function called');
     } catch (e) {
       print(e);
     }
-
   }
 
   Future<String> getDeviceToken() async {
@@ -115,13 +111,11 @@ class NotificationServices {
     return token!;
   }
 
-
-
-  Future<void> setupInteractMessage(BuildContext context) async{
-
+  Future<void> setupInteractMessage(BuildContext context) async {
     // when app is terminated
-    RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
-    if (initialMessage != null){
+    RemoteMessage? initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
+    if (initialMessage != null) {
       handleMessage(context, initialMessage);
     }
     // when app is in the background
@@ -130,17 +124,15 @@ class NotificationServices {
     });
   }
 
-  void handleMessage(BuildContext context, RemoteMessage message){
-   BookingItem item = BookingItem(id: int.parse(message.data['bookingId']));
+  void handleMessage(BuildContext context, RemoteMessage message) {
+    BookingItem item = BookingItem(id: int.parse(message.data['bookingId']));
     //locateService<INavigationService>().navigateTo(route:BottomBar(bottomBarType: bottom_bar.BottomBarType.bookings));
-    if(message.data['scenario'] == 'BOOKING_ACCEPTED'){
+    if (message.data['scenario'] == 'BOOKING_ACCEPTED') {
       locateService<INavigationService>().navigateTo(
-          route: nav.FoodItemAdvancePaymentRoute(
-              bookingItem: item));
-    }else {
-      locateService<INavigationService>().navigateTo(
-          route: nav.BookingInProcessRouteView(
-              bookingItem: item));
+          route: nav.FoodItemAdvancePaymentRoute(bookingItem: item));
+    } else {
+      locateService<INavigationService>()
+          .navigateTo(route: nav.BookingInProcessRouteView(bookingItem: item));
     }
     //   CustomDialog.getDialog(
     //     ctx: context,
@@ -160,7 +152,5 @@ class NotificationServices {
     //       MaterialPageRoute(builder: (context)=>HomeScreen())
     //   );
     // }
-
   }
-
 }

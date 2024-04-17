@@ -1,6 +1,8 @@
 abstract class Resources {
   static const exto = 'assets/images/exto.svg';
 
+  static const homeFeystLogo = 'assets/images/old_logo.png';
+  static const homeCurl = 'assets/images/home_circle_curl.png';
   static const chefLogo = 'assets/images/chef_logo.svg';
   static const getRightArrow = 'assets/images/icons/arrow_right.svg';
   static const getSignInLeftArrow =
@@ -15,7 +17,6 @@ abstract class Resources {
       'assets/images/icons/lets_start_screen_bg.png';
   static const getSignUpLetsStartScreenTickPng =
       'assets/images/icons/check.png';
-
 
   ///bottom bar
   static const homeIconSvg = 'assets/images/icons/home.svg';
@@ -62,6 +63,7 @@ abstract class Resources {
   static const timeLapsePNG = 'assets/images/icons/timelapse.png';
   static const reviewCheckPNG = 'assets/images/icons/review_check.png';
   static const infoPNG = 'assets/images/icons/info.png';
+  static const infoDeletePNG = 'assets/images/icons/info_delete.png';
   static const completedPNG = 'assets/images/icons/payment_1.png';
   static const declinedPNG = 'assets/images/icons/declined.png';
   static const bookingCheckboxPNG = 'assets/images/icons/booking_checkbox.png';
@@ -69,5 +71,6 @@ abstract class Resources {
   ///food details screen
   static const String foodDetailsBg = 'assets/images/icons/food_detail_bg.png';
 
-static const String cashWaitingIcon = 'assets/images/icons/cash_waiting.png';
+  static const String cashWaitingIcon = 'assets/images/icons/cash_waiting.png';
+  static const String paymentIcon = 'assets/images/icons/payment_icon.png';
 }

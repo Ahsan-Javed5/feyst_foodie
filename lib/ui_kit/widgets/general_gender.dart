@@ -25,7 +25,7 @@ class GeneralGender extends StatefulWidget {
         _icon = icon,
         _onTap = onTap,
         _items = items,
-  _isProfileDetails = isProfileDetails,
+        _isProfileDetails = isProfileDetails,
         super(key: key);
   final String _text;
   final Gender _gender;
@@ -45,7 +45,7 @@ class _GeneralGenderState extends State<GeneralGender> {
   @override
   void initState() {
     selectedValue = widget._gender == Gender.male ? 'Male' : 'Female';
-    developer.log(' Selected Value is ' + selectedValue);
+    // developer.log(' Selected Value is ' + selectedValue);
     super.initState();
   }
 
@@ -86,16 +86,19 @@ class _GeneralGenderState extends State<GeneralGender> {
                               vertical: 15, horizontal: 3),
                           decoration: BoxDecoration(
                               border: Border.all(
-                                  color: widget._isProfileDetails ? Colors.grey : appTheme.colors
-                                      .textFieldBorderColor // green as background color
+                                  color: widget._isProfileDetails
+                                      ? Colors.grey
+                                      : appTheme.colors
+                                          .textFieldBorderColor // green as background color
                                   ),
                               borderRadius:
                                   BorderRadius.circular(8), // radius of 10
 
                               color: widget._items[index] == selectedValue
-                                  ? (widget._isProfileDetails ? Colors.grey : appTheme.colors.textFieldBorderColor)
-                                  : appTheme.colors.primaryBackground
-                          ),
+                                  ? (widget._isProfileDetails
+                                      ? Colors.grey
+                                      : appTheme.colors.textFieldBorderColor)
+                                  : appTheme.colors.primaryBackground),
                           child: GeneralText(
                             item,
                             textAlign: TextAlign.center,

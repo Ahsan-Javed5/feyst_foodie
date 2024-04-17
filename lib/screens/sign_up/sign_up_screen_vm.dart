@@ -3,16 +3,20 @@ import 'dart:io';
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/models/signup/profession_request.dart' as prorequest;
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../models/signup/profession_response.dart';
 import 'dart:developer' as developer;
 
 import '../../models/signup/signup_request.dart' as signuprequest;
 import '../../models/signup/sign_up_update_request.dart';
-import '../../models/signup/sign_up_update_request.dart' as signup_update_request;
+import '../../models/signup/sign_up_update_request.dart'
+    as signup_update_request;
 import '../../models/signup/signup_request.dart';
 import '../../models/signup/signup_response.dart';
 import 'package:chef/screens/sign_up/sign_up_screen_m.dart';
+
+import '../../setup.dart';
 
 @injectable
 class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
@@ -32,12 +36,15 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   final IStorageService _storage;
   final ApplicationService _appService;
 
-   TextController nameController = TextController();
+  TextController nameController = TextController();
   TextController passwordController = TextController();
+  TextController deleteAccountPasswordController = TextController();
   TextController confirmPasswordController = TextController();
   TextController mobileNumberController = TextController();
-   TextController ageController = TextController(text: "");
-   TextController genderController = TextController(text: 'male');
+  TextController ageController = TextController(text: "");
+  TextController genderController = TextController(text: "");
+  ValueNotifier<bool> selectedMale = ValueNotifier(false);
+  ValueNotifier<bool> selectedFemale = ValueNotifier(false);
   TextController idController = TextController(text: "");
   String countryCode = '+92';
 
@@ -52,7 +59,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   //bool isLoading = false;
 
   void changeButton(bool? value) {
-    buttonEnabled.value =  value??!buttonEnabled.value;
+    buttonEnabled.value = value ?? !buttonEnabled.value;
   }
 
   Future<void> loadProfessions({
@@ -85,13 +92,83 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
 
   bool isValidUrl(String url) => Uri.tryParse(url)?.hasAbsolutePath ?? false;
 
+  void updatePassword({
+    required String oldPassword,
+    required String newPassword,
+    required BuildContext context,
+  }) async {
+    try {
+      final url =
+          InfininURLHelpers.getRestApiURL(Api.baseURL + Api.updatePassword);
+
+      final response = await _network.post(
+        path: url,
+        //data: updatedJson,
+        data: {
+          "t": {"newPassword": newPassword, "oldPassword": oldPassword}
+        },
+        header: {
+          'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
+          'Content-Type': 'application/json'
+        },
+        //   accessToken: false,
+      ).whenComplete(() {});
+      if (response != null) {
+        Toaster.infoToast(
+            context: context, message: Strings.passwordUpdatedMessage);
+        Navigator.pop(context);
+      } else {}
+    } catch (error) {
+      Toaster.successToast(context: context, message: error.toString());
+      if (kDebugMode) {
+        print(error.toString());
+      }
+    }
+  }
+
+  void deleteAccount({
+    required BuildContext context,
+  }) async {
+    try {
+      final url =
+          InfininURLHelpers.getRestApiURL(Api.baseURL + Api.deleteAccount);
+
+      final response = await _network.post(
+        path: url,
+        //data: updatedJson,
+        data: {
+          "t": {
+            "mobileNo":
+                locateService<ApplicationService>().state.userInfo?.t.mobileNo,
+            "password": deleteAccountPasswordController.text.trim()
+          }
+        },
+        header: {
+          'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
+          'Content-Type': 'application/json'
+        },
+        //   accessToken: false,
+      ).whenComplete(() {});
+      if (response != null) {
+        Toaster.infoToast(context: context, message: Strings.accountDeleted);
+        logout(context);
+      } else {}
+    } catch (error) {
+      Toaster.successToast(context: context, message: error.toString());
+      if (kDebugMode) {
+        print(error.toString());
+      }
+    }
+  }
+
+  void logout(BuildContext context) => _appService.logout(context: context);
+
   void onFormValuesChange({
     String? email,
   }) {
-    emit(
-    state
-    );
+    emit(state);
   }
+
   String updateUrl(String url) {
     if (!url.endsWith('/')) {
       url += '/';
@@ -105,26 +182,17 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   bool _validateInput({
     required String name,
     required String mobileNumber,
-    required int age,
-    required String gender,
     required int professionId,
   }) =>
       name.trim().isNotEmpty &&
       mobileNumber.trim().isNotEmpty &&
-      age > 5 &&
-      gender.isNotEmpty &&
       professionId != 0;
 
   bool _validateUpdatedData({
     required String name,
-    required int age,
-    required String gender,
     required int professionId,
   }) =>
-      name.trim().isNotEmpty &&
-          age > 5 &&
-          gender.isNotEmpty &&
-          professionId != 0;
+      name.trim().isNotEmpty && professionId != 0;
 
   Future<void> _cacheData({
     required BuildContext context,
@@ -157,8 +225,8 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   void saveFoodie({
     required String name,
     required String mobileNumber,
-    required int age,
-    required String gender,
+    int? age,
+    String? gender,
     required String password,
     required int professionId,
     required BuildContext context,
@@ -167,8 +235,6 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     final isInputValid = _validateInput(
       name: name,
       mobileNumber: mobileNumber,
-      age: age,
-      gender: gender,
       professionId: professionId,
     );
     if (isInputValid) {
@@ -177,10 +243,11 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
         final url =
             InfininURLHelpers.getRestApiURL(Api.baseURL + Api.foodieSignUp);
         signuprequest.T t = signuprequest.T(
-          age: age.toString(),
+          age: age?.toString() ?? "",
           name: name,
+          anonymous: false,
           deviceType: Platform.isAndroid ? 'ANDROID' : 'IOS',
-          fcmToken:   await FirebaseMessaging.instance.getToken(),
+          fcmToken: await FirebaseMessaging.instance.getToken(),
           gender: gender,
           password: password,
           mobileNo: countryCode + mobileNumber,
@@ -191,19 +258,17 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
         final signUpCredentials = SignupRequest(
           t: t,
         ).toJson();
-        final response = await _network
-            .post(
-              path: url,
-              data: signUpCredentials,
-              header: {
-                Api.headerAcceptKey: Api.headerAcceptTypeValue,
-                'Content-Type' : 'application/json'
-              },
-            )
-            .whenComplete(() {});
+        final response = await _network.post(
+          path: url,
+          data: signUpCredentials,
+          header: {
+            Api.headerAcceptKey: Api.headerAcceptTypeValue,
+            'Content-Type': 'application/json'
+          },
+        ).whenComplete(() {});
 
         if (response != null) {
-          developer.log(' Response of Signup body is ' + '${response.body}');
+          developer.log(' Response of Signup body is ' '${response.body}');
 
           SignupResponse signupResponse = signupResponseFromJson(response.body);
 
@@ -215,35 +280,24 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
             baseUrl: baseUrl,
           );
 
-          await _storage.writeString(key: 'profile_image', data: signupResponse.t.profileImageUrl ?? '');
-          await _storage.writeString(key: 'auth_token' , data: signupResponse.t.authToken);
-
-          developer.log(' Sign up Response is ' + signupResponse.message);
+          await _storage.writeString(
+              key: 'profile_image',
+              data: signupResponse.t.profileImageUrl ?? '');
+          await _storage.writeString(
+              key: 'auth_token', data: signupResponse.t.authToken);
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => SignUpQuestionireScreen(false,)),
+            MaterialPageRoute(
+                builder: (context) => SignUpQuestionireScreen(
+                      false,
+                    )),
           );
         } else {
           Toaster.infoToast(
-              context: context,
-              message: 'Something is wrong please content vendor');
-          developer.log(' Response of Signup is null ' + '$response');
+              context: context, message: Strings.somethingWentWrong);
         }
-
-        //  loading(isBusy: false);
-        //   _navigation.replace(route: CustomerRoute());
       } catch (error) {
-        developer.log(' Error in ' + '${error}');
-
         Toaster.errorToast(context: context, message: '$error');
-        // emit(
-        //   // state.copyWith(
-        //   //   isBusy: false,
-        //   //   errorMessage: error.toString().contains(Api.unauthorizedRequest)
-        //   //       ? Strings.invalidUsernamePassword
-        //   //       : error.toString(),
-        //   // ),
-        // );
       }
     } else {
       Toaster.errorToast(
@@ -264,8 +318,6 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     isLoading.value = true;
     final isInputValid = _validateUpdatedData(
       name: name,
-      age: age,
-      gender: gender,
       professionId: professionId,
     );
 
@@ -274,8 +326,8 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
       //emit(const Loading());
       emit(Loaded(_professionData));
       try {
-        final url =
-        InfininURLHelpers.getRestApiURL(Api.baseURL + Api.foodieProfileUpdate);
+        final url = InfininURLHelpers.getRestApiURL(
+            Api.baseURL + Api.foodieProfileUpdate);
         signup_update_request.T t = signup_update_request.T(
           age: age.toString(),
           name: name,
@@ -293,11 +345,11 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
         };
         final response = await _network
             .post(
-          path: url,
-          data: signUpCredentials,
-          header: _header,
-          //   accessToken: false,
-        )
+              path: url,
+              data: signUpCredentials,
+              header: _header,
+              //   accessToken: false,
+            )
             .whenComplete(() {});
 
         if (response != null) {
@@ -313,17 +365,17 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
             baseUrl: baseUrl,
           );
           //_appService.state.userInfo!.t.authToken = 'ghgfrdesaa';
-        _appService.state.userInfo!.t.authToken = _storage.readString(key: 'auth_token');
+          _appService.state.userInfo!.t.authToken =
+              _storage.readString(key: 'auth_token');
 
-          developer.log(' Sign up update Response is ' + signupResponse.message);
+          developer
+              .log(' Sign up update Response is ' + signupResponse.message);
           Navigator.pop(context);
         } else {
           Toaster.infoToast(
-              context: context,
-              message: 'Something is wrong please content vendor');
+              context: context, message: Strings.somethingWentWrong);
           developer.log(' Response of Signup is null ' + '$response');
         }
-
       } catch (error) {
         developer.log(' Error in ' + '${error}');
         Toaster.errorToast(context: context, message: '$error');
@@ -340,8 +392,6 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   bool verifyInput({
     required String name,
     required String mobileNumber,
-    required int age,
-    required String gender,
     required int professionId,
     required BuildContext context,
     required String baseUrl,
@@ -349,8 +399,6 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     final isInputValid = _validateInput(
       name: name,
       mobileNumber: mobileNumber,
-      age: age,
-      gender: gender,
       professionId: professionId,
     );
     if (!isInputValid) {
@@ -365,14 +413,12 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
 
   bool checkAllInputAdded() {
     var age = ageController.text;
-    if(age.isEmpty){
-      age="0";
+    if (age.isEmpty) {
+      age = "0";
     }
     final isInputValid = _validateInput(
       name: nameController.text,
       mobileNumber: mobileNumberController.text,
-      age: int.parse(age),
-      gender: genderController.text,
       professionId: professionID,
     );
 
@@ -386,9 +432,44 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     mobileNumberController.text = _appService.state.userInfo!.t.mobileNo;
     ageController.text = _appService.state.userInfo!.t.age;
     genderController.text = _appService.state.userInfo!.t.gender;
+    genderController.text.toLowerCase() == 'male'
+        ? selectedMale.value = true
+        : genderController.text.toLowerCase() == 'female'
+            ? selectedFemale.value = true
+            : selectedFemale.value = false;
     idController.text = _appService.state.userInfo!.t.id.toString();
     professionID = _appService.state.userInfo!.t.professionalId;
     print(professionID);
+  }
+
+  Future<bool?> checkUserExist(context) async {
+    try {
+      final url =
+          InfininURLHelpers.getRestApiURL(Api.baseURL + Api.checkUserExist);
+
+      final _header = <String, String>{
+        'Authorization': 'Bearer ${_storage.readString(key: 'auth_token')}',
+        'Content-Type': 'application/json'
+      };
+      final response = await _network
+          .post(
+            path: url,
+            data: {"t": countryCode + mobileNumberController.text},
+            header: _header,
+            //   accessToken: false,
+          )
+          .whenComplete(() {});
+
+      if (response.statusCode == 400) {
+        Toaster.errorToast(context: context, message: Strings.userAlreadyExist);
+        return false;
+      } else {
+        return true;
+      }
+    } catch (error) {
+      Toaster.errorToast(context: context, message: '$error');
+    }
+    return null;
   }
 
   // Future registerUser(String mobile, BuildContext context) async {

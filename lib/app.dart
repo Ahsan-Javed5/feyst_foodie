@@ -31,22 +31,23 @@ class App extends StatelessWidget {
         statusBarIconBrightness: _appThemeData.darkBrightness,
       ),
     );
-    final loginInfo = locateService<IStorageService>().readString(key: PreferencesKeys.sLoginData);
-    if(loginInfo.isNotEmpty){
+    final loginInfo = locateService<IStorageService>()
+        .readString(key: PreferencesKeys.sLoginData);
+    if (loginInfo.isNotEmpty) {
       locateService<ApplicationService>().loadPrefData();
     }
     //bool firstLogin = locateService<ApplicationService>().loadPrefData().toString().isEmpty;
-
     return AppTheme(
         appThemeData: _appThemeData,
         child: FirebasePhoneAuthProvider(
           child: MaterialApp.router(
             debugShowCheckedModeBanner: false,
-            routerDelegate: _appRouter.delegate(
-                initialRoutes: [
-                  if (loginInfo.isEmpty) const GetStartedRoute() else BottomBar(),
-                ]
-            ),
+            routerDelegate: _appRouter.delegate(initialRoutes: [
+              if (loginInfo.isEmpty)
+                const GetStartedRoute()
+              else
+                BottomBarRoute(),
+            ]),
             routeInformationParser: _appRouter.defaultRouteParser(),
           ),
         ));

@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "1096756273832",
+    "firebase_url": "https://feyst-4bcd4-default-rtdb.firebaseio.com",
     "project_id": "feyst-4bcd4",
     "storage_bucket": "feyst-4bcd4.appspot.com"
   },
@@ -14,19 +15,14 @@
       },
       "oauth_client": [
         {
-          "client_id": "1096756273832-avj7u8dbcsd08ubdsb9ojvjecs8inl08.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.feyst.chef",
-            "certificate_hash": "a81c8d7db3e5e24534cafbfef3168bbb4427f699"
-          }
-        },
-        {
-          "client_id": "1096756273832-lqsccomvqv8lmt9ih6o940uur53vq9o2.apps.googleusercontent.com",
+          "client_id": "1096756273832-47a6pjhm8ppqlr7auhacc22age88mobg.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
+        {
+          "current_key": "AIzaSyCSBvgdZQHeJX_f5tejxmtpztqal0w6eHQ"
+        },
         {
           "current_key": "AIzaSyBFIbCytMuhsfLpuxVEkQQXeOIClneFMHA"
         }
@@ -35,14 +31,14 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1096756273832-lqsccomvqv8lmt9ih6o940uur53vq9o2.apps.googleusercontent.com",
+              "client_id": "1096756273832-47a6pjhm8ppqlr7auhacc22age88mobg.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "1096756273832-2ehvj9t6amjpe0jn403tf1hus83dtgk9.apps.googleusercontent.com",
+              "client_id": "1096756273832-cp9dbu2i53r35n25n1bs6qp8a4lvpgpe.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.feyst.foodie"
+                "bundle_id": "com.feyst.foodies.ios"
               }
             }
           ]
@@ -51,26 +47,45 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1096756273832:android:b1a11a03b713f7b85c189d",
+        "mobilesdk_app_id": "1:1096756273832:android:b02773e7052e93425c189d",
         "android_client_info": {
-          "package_name": "com.feyst.foodie"
+          "package_name": "com.feyst.foodies"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1096756273832-tm0q4pc9gh1iodokpl0dv2usco3bv65i.apps.googleusercontent.com",
+          "client_id": "1096756273832-5qa5atkj43qf4cnl7podtnnv7bgi3j4r.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.feyst.foodie",
+            "package_name": "com.feyst.foodies",
+            "certificate_hash": "e7d1d1c8b5828efcc93562292a655ab8b17c9791"
+          }
+        },
+        {
+          "client_id": "1096756273832-bca7k88vg8kgkrgtcm8gvc2hj959hf4u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.feyst.foodies",
+            "certificate_hash": "b076e312084159997993ce23f90e1115aad73c6f"
+          }
+        },
+        {
+          "client_id": "1096756273832-g38e142edl5l6nkjgjkgkr0hn541hap6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.feyst.foodies",
             "certificate_hash": "1ce149e5bdf4bbb4ca65f587cbc305fad6c74aed"
           }
         },
         {
-          "client_id": "1096756273832-lqsccomvqv8lmt9ih6o940uur53vq9o2.apps.googleusercontent.com",
+          "client_id": "1096756273832-47a6pjhm8ppqlr7auhacc22age88mobg.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
+        {
+          "current_key": "AIzaSyCSBvgdZQHeJX_f5tejxmtpztqal0w6eHQ"
+        },
         {
           "current_key": "AIzaSyBFIbCytMuhsfLpuxVEkQQXeOIClneFMHA"
         }
@@ -79,14 +94,14 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1096756273832-lqsccomvqv8lmt9ih6o940uur53vq9o2.apps.googleusercontent.com",
+              "client_id": "1096756273832-47a6pjhm8ppqlr7auhacc22age88mobg.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "1096756273832-2ehvj9t6amjpe0jn403tf1hus83dtgk9.apps.googleusercontent.com",
+              "client_id": "1096756273832-cp9dbu2i53r35n25n1bs6qp8a4lvpgpe.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.feyst.foodie"
+                "bundle_id": "com.feyst.foodies.ios"
               }
             }
           ]

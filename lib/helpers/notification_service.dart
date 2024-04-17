@@ -14,7 +14,7 @@
 //
 //   Future<void> init() async {
 //     final AndroidInitializationSettings initializationSettingsAndroid =
-//     AndroidInitializationSettings('@minmap/logo.png');
+//     AndroidInitializationSettings('@minmap/LaunchImage.png');
 //
 //     final IOSInitializationSettings initializationSettingsIOS =
 //     IOSInitializationSettings(

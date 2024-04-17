@@ -1,7 +1,10 @@
+import 'dart:ui';
+
 import 'package:chef/models/home/chef_data_response.dart';
 import 'package:chef/models/home/home_response.dart' as home_data;
 import 'package:chef/screens/food_product_experience_details/widget/food_product_details_summary.dart';
 import 'package:chef/screens/home/food_details_menu_model.dart';
+import 'package:chef/ui_kit/widgets/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import '../../constants/strings.dart';
 import '../../helpers/color_helper.dart';
@@ -79,23 +82,138 @@ class FoodProductExperienceDetailsScreenView
   }
 
   Widget getStartedButtonTitle({required BuildContext context}) {
+    final _storage = locateService<IStorageService>();
+
     return GeneralButton.button(
       width: 230,
       title: Strings.productDetailButtonTitle.toUpperCase(),
       styleType: ButtonStyleType.fill,
       onTap: () {
-        developer.log(' Ready to submit data ');
-        viewModel.submitBooking(context, _experienceData!);
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //       builder: (context) => FoodProductExperienceDetails(
-        //         experienceData: _experienceData,
-        //         selectedExperienceId: _selectedExperienceId,
-        //         foodMenuDetail: viewModel.foodMenuData,
-        //       )),
-        // );
+        _storage.readString(key: 'auth_token').isEmpty
+            ? loginDialog(
+                ctx: context,
+                title: Strings.loginSignup,
+                titleColor: const Color(0xfff1c452),
+                description: Strings.pleaseLoginDescription,
+                iconUrl: Resources.infoDeletePNG,
+                onTap: () {})
+            : viewModel.submitBooking(context, _experienceData!);
       },
     );
+  }
+
+  loginDialog(
+      {BuildContext? ctx,
+      required String title,
+      required String description,
+      Color? titleColor,
+      Color? descColor,
+      String? highlightedName,
+      required String iconUrl,
+      required void Function()? onTap}) {
+    final appTheme = AppTheme.of(ctx!).theme;
+    final _navigation = locateService<INavigationService>();
+
+    return showDialog(
+        context: ctx,
+        barrierColor: const Color(0xFF212129).withOpacity(0.1),
+        builder: (BuildContext context) {
+          return BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+            child: AlertDialog(
+              backgroundColor: const Color(0xFF212129),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Image.asset(
+                    iconUrl,
+                    height: 50,
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  GeneralText(
+                    title,
+                    style: appTheme.typographies.interFontFamily.headline6
+                        .copyWith(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: titleColor ?? const Color(0xFF8ea659),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  highlightedName == null
+                      ? Text(description,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: descColor ?? Colors.white,
+                          ))
+                      : RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            text: description,
+                            style: TextStyle(
+                              color: descColor ?? Colors.white,
+                            ),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: highlightedName,
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Color(0xfff1c452),
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SizedBox(
+                        width: 135,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            _navigation.navigateTo(route: SignInRoute());
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                          ),
+                          child: Text(Strings.loginSignup.toUpperCase()),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      SizedBox(
+                        width: 110,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                          ),
+                          child: Text(
+                              Strings.filterCancelButtonText.toUpperCase()),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 }

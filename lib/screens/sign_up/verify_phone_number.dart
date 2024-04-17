@@ -2,6 +2,7 @@ import 'package:chef/screens/sign_up/pin_input_field.dart';
 import 'package:chef/screens/sign_up/sign_up_screen_v.dart';
 import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 // import 'package:phone_auth_handler_demo/screens/home_screen.dart';
 // import 'package:phone_auth_handler_demo/utils/helpers.dart';
 // import 'package:phone_auth_handler_demo/widgets/custom_loader.dart';
@@ -109,7 +110,7 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
             error: authException,
             stackTrace: stackTrace,
           );
-
+          FirebaseCrashlytics.instance.recordError(authException, stackTrace);
           switch (authException.code) {
             case 'invalid-phone-number':
               // invalid phone number
@@ -136,7 +137,7 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
             error: error,
             stackTrace: stackTrace,
           );
-
+          FirebaseCrashlytics.instance.recordError(error, stackTrace);
           // showSnackBar('An error occurred!');
           Toaster.infoToast(context: context, message: 'An error occurred!');
         },

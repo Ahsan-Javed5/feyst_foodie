@@ -158,7 +158,7 @@ class ProfileInformationScreen
             color: appTheme.colors.primary.withOpacity(_textOpacity),
           ),
           style: ElevatedButton.styleFrom(
-            primary: appTheme.colors.tertiaryBackground,
+            backgroundColor: appTheme.colors.tertiaryBackground,
             elevation: _zeroValue,
           ),
           isBusy: false,
