@@ -11,11 +11,9 @@ import 'food_item_advance_payment_m.dart';
 import 'food_item_advance_payment_vm.dart';
 
 @RoutePage()
-class FoodItemAdvancePaymentScreen
-    extends BaseView<FoodItemAdvancePaymentViewModel> {
-  FoodItemAdvancePaymentScreen({required BookingItem bookingItem, Key? key})
-      : _bookingItem = bookingItem,
-        super(key: key);
+class BookingItemScreen extends BaseView<BookingItemScreenViewModel> {
+  BookingItemScreen({required BookingItem bookingItem, super.key})
+      : _bookingItem = bookingItem;
 
   final BookingItem _bookingItem;
 
@@ -24,8 +22,7 @@ class FoodItemAdvancePaymentScreen
       {required BuildContext context, required ScreenSizeData screenSizeData}) {
     final appTheme = AppTheme.of(context).theme;
 
-    return BlocBuilder<FoodItemAdvancePaymentViewModel,
-            FoodItemAdvancePaymentState>(
+    return BlocBuilder<BookingItemScreenViewModel, BookingItemScreenState>(
         bloc: viewModel..getBookingDetails((_bookingItem.id)!),
         builder: (context, state) {
           return Scaffold(

@@ -143,8 +143,8 @@ Future<_i1.GetIt> $initGetIt(
             storage: gh<_i10.IStorageService>(),
             appService: gh<_i10.ApplicationService>(),
           ));
-  gh.factory<_i26.FoodItemAdvancePaymentViewModel>(() =>
-      _i26.FoodItemAdvancePaymentViewModel(
+  gh.factory<_i26.BookingItemScreenViewModel>(() =>
+      _i26.BookingItemScreenViewModel(
           network: gh<_i10.INetworkService<dynamic>>()));
   gh.factory<_i27.FoodProductExperienceDetailsViewModel>(
       () => _i27.FoodProductExperienceDetailsViewModel(

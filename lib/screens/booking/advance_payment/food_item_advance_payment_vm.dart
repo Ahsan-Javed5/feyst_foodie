@@ -20,9 +20,8 @@ import 'food_item_advance_payment_m.dart';
 import 'dart:developer' as developer;
 
 @injectable
-class FoodItemAdvancePaymentViewModel
-    extends BaseViewModel<FoodItemAdvancePaymentState> {
-  FoodItemAdvancePaymentViewModel({
+class BookingItemScreenViewModel extends BaseViewModel<BookingItemScreenState> {
+  BookingItemScreenViewModel({
     required INetworkService network,
   })  : _network = network,
         super(const Loading());

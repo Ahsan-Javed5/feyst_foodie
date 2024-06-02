@@ -7,9 +7,9 @@ import '../../../models/booking/advance_pending_response.dart';
 part 'food_item_advance_payment_m.freezed.dart';
 
 @freezed
-class FoodItemAdvancePaymentState extends BaseState
+class BookingItemScreenState extends BaseState
     with _$FoodItemAdvancePaymentState {
-  const factory FoodItemAdvancePaymentState.loading() = Loading;
-  const factory FoodItemAdvancePaymentState.loaded(
+  const factory BookingItemScreenState.loading() = Loading;
+  const factory BookingItemScreenState.loaded(
       AdvancePendingResponse advancePendingResponse) = Loaded;
 }

@@ -40,7 +40,7 @@ abstract class _$AppRouter extends RootStackRouter {
       final args = routeData.argsAs<FoodItemAdvancePaymentRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: FoodItemAdvancePaymentScreen(
+        child: BookingItemScreen(
           bookingItem: args.bookingItem,
           key: args.key,
         ),
@@ -57,7 +57,7 @@ abstract class _$AppRouter extends RootStackRouter {
           routeData.argsAs<FoodProductAdvancePendingDetailsRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: FoodProductAdvancePendingDetailsScreen(
+        child: BookingItemDetailsScreen(
           key: args.key,
           advancePendingDetails: args.advancePendingDetails,
         ),
@@ -190,7 +190,7 @@ class BottomBarRouteArgs {
 }
 
 /// generated route for
-/// [FoodItemAdvancePaymentScreen]
+/// [BookingItemScreen]
 class FoodItemAdvancePaymentRoute
     extends PageRouteInfo<FoodItemAdvancePaymentRouteArgs> {
   FoodItemAdvancePaymentRoute({
@@ -243,7 +243,7 @@ class FoodItemInProcessBookingRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [FoodProductAdvancePendingDetailsScreen]
+/// [BookingItemDetailsScreen]
 class FoodProductAdvancePendingDetailsRoute
     extends PageRouteInfo<FoodProductAdvancePendingDetailsRouteArgs> {
   FoodProductAdvancePendingDetailsRoute({

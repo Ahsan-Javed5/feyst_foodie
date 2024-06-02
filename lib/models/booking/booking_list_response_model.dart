@@ -3,8 +3,8 @@ import 'dart:convert';
 BookingListModel bookingListModelFromJson(String str) =>
     BookingListModel.fromJson(json.decode(str));
 
-String bookingListModelToJson(BookingListModel data) => json.encode(data.toJson());
-
+String bookingListModelToJson(BookingListModel data) =>
+    json.encode(data.toJson());
 
 class BookingListModel {
   List<BookingItem>? t;
@@ -30,13 +30,13 @@ class BookingListModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.t != null) {
-      data['t'] = this.t!.map((v) => v.toJson()).toList();
+    if (t != null) {
+      data['t'] = t!.map((v) => v.toJson()).toList();
     }
-    data['userId'] = this.userId;
-    data['message'] = this.message;
-    data['error'] = this.error;
-    data['code'] = this.code;
+    data['userId'] = userId;
+    data['message'] = message;
+    data['error'] = error;
+    data['code'] = code;
     return data;
   }
 }
@@ -67,27 +67,27 @@ class BookingItem {
 
   BookingItem(
       {this.id,
-        this.experienceId,
-        this.foodieId,
-        this.comments,
-        this.totalPrice,
-        this.chefProfileImageUrl,
-        this.verificationCode,
-        this.priceTypeId,
-        this.bookingStatus,
-        this.experienceAverageRating,
-        this.scheduleId,
-        this.scheduleScheduledDate,
-        this.scheduleStartTime,
-        this.scheduleDayOfMonth,
-        this.persons,
-        this.preferenceId,
-        this.preferenceName,
-        this.preferenceDescription,
-        this.preferenceIconPath,
-        this.experienceName,
-        this.chefId,
-        this.brandName});
+      this.experienceId,
+      this.foodieId,
+      this.comments,
+      this.totalPrice,
+      this.chefProfileImageUrl,
+      this.verificationCode,
+      this.priceTypeId,
+      this.bookingStatus,
+      this.experienceAverageRating,
+      this.scheduleId,
+      this.scheduleScheduledDate,
+      this.scheduleStartTime,
+      this.scheduleDayOfMonth,
+      this.persons,
+      this.preferenceId,
+      this.preferenceName,
+      this.preferenceDescription,
+      this.preferenceIconPath,
+      this.experienceName,
+      this.chefId,
+      this.brandName});
 
   BookingItem.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -115,29 +115,29 @@ class BookingItem {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['experienceId'] = this.experienceId;
-    data['foodieId'] = this.foodieId;
-    data['comments'] = this.comments;
-    data['totalPrice'] = this.totalPrice;
-    data['experienceAverageRating'] = this.experienceAverageRating;
-    data['verificationCode'] = this.verificationCode;
-    data['chefProfileImageUrl'] = this.chefProfileImageUrl;
-    data['priceTypeId'] = this.priceTypeId;
-    data['bookingStatus'] = this.bookingStatus;
-    data['scheduleId'] = this.scheduleId;
-    data['scheduleScheduledDate'] = this.scheduleScheduledDate;
-    data['scheduleStartTime'] = this.scheduleStartTime;
-    data['scheduleDayOfMonth'] = this.scheduleDayOfMonth;
-    data['persons'] = this.persons;
-    data['preferenceId'] = this.preferenceId;
-    data['preferenceName'] = this.preferenceName;
-    data['preferenceDescription'] = this.preferenceDescription;
-    data['preferenceIconPath'] = this.preferenceIconPath;
-    data['experienceName'] = this.experienceName;
-    data['chefId'] = this.chefId;
-    data['brandName'] = this.brandName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['experienceId'] = experienceId;
+    data['foodieId'] = foodieId;
+    data['comments'] = comments;
+    data['totalPrice'] = totalPrice;
+    data['experienceAverageRating'] = experienceAverageRating;
+    data['verificationCode'] = verificationCode;
+    data['chefProfileImageUrl'] = chefProfileImageUrl;
+    data['priceTypeId'] = priceTypeId;
+    data['bookingStatus'] = bookingStatus;
+    data['scheduleId'] = scheduleId;
+    data['scheduleScheduledDate'] = scheduleScheduledDate;
+    data['scheduleStartTime'] = scheduleStartTime;
+    data['scheduleDayOfMonth'] = scheduleDayOfMonth;
+    data['persons'] = persons;
+    data['preferenceId'] = preferenceId;
+    data['preferenceName'] = preferenceName;
+    data['preferenceDescription'] = preferenceDescription;
+    data['preferenceIconPath'] = preferenceIconPath;
+    data['experienceName'] = experienceName;
+    data['chefId'] = chefId;
+    data['brandName'] = brandName;
     return data;
   }
 }

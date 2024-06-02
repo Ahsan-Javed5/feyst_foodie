@@ -120,7 +120,7 @@ class _JazzCashWebViewState extends State<JazzCashWebView> {
   success(context) async {
     //Navigator.pop(context);
     print('jazzcash success function call');
-    final _foodItemAdvance = locateService<FoodItemAdvancePaymentViewModel>();
+    final _foodItemAdvance = locateService<BookingItemScreenViewModel>();
     if (widget.bookindData.t.bookingStatus.toUpperCase() ==
         Strings.billGenerated) {
       await _foodItemAdvance.completeBookingStatus(

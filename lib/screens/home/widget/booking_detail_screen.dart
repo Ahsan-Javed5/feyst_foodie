@@ -1,25 +1,13 @@
 import 'dart:ui';
-
 import 'package:chef/helpers/function_helper.dart';
 import 'package:chef/helpers/helpers.dart';
-import 'package:chef/screens/bottom_bar/bottom_bar.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import '../../../constants/strings.dart';
-import '../../../helpers/order_helper.dart';
-import '../../../models/booking/booking_list_response_model.dart';
-import '../../../models/home/home_response.dart' as home_data;
+import '/models/booking/booking_list_response_model.dart';
+import '/helpers/color_helper.dart';
+import '/setup.dart';
+import '/ui_kit/widgets/general_new_appbar.dart';
 
-import '../../../helpers/color_helper.dart';
-import '../../../setup.dart';
-import '../../../theme/app_theme_widget.dart';
-import '../../../ui_kit/widgets/general_new_appbar.dart';
-import '../../../ui_kit/widgets/general_text.dart';
-import '../../food_product_experience_details/food_product_details_screen_vm.dart';
-import '../schedule_model.dart';
-
-class ConfirmAndPayScreen extends StatefulWidget {
-  const ConfirmAndPayScreen({
+class BookingDetailScreen extends StatefulWidget {
+  const BookingDetailScreen({
     super.key,
     required this.bookingItem,
   });
@@ -27,10 +15,10 @@ class ConfirmAndPayScreen extends StatefulWidget {
   final BookingItem bookingItem;
 
   @override
-  State<ConfirmAndPayScreen> createState() => _ConfirmAndPayScreenState();
+  State<BookingDetailScreen> createState() => _BookingDetailScreenState();
 }
 
-class _ConfirmAndPayScreenState extends State<ConfirmAndPayScreen> {
+class _BookingDetailScreenState extends State<BookingDetailScreen> {
   final TextController nOfPersons = TextController();
   final _appService = locateService<ApplicationService>();
   final items = <String>[];
@@ -68,7 +56,7 @@ class _ConfirmAndPayScreenState extends State<ConfirmAndPayScreen> {
                 child: const GeneralNewAppBar(
                   rightIcon: '',
                   titleColor: Colors.white,
-                  title: 'Confirm & Pay',
+                  title: 'Bookings',
                 ),
               ),
               FunctionHelper().getDivider(),
@@ -189,142 +177,30 @@ class _ConfirmAndPayScreenState extends State<ConfirmAndPayScreen> {
               const SizedBox(
                 height: 15,
               ),
-              GeneralText('Sat, Mar 16',
-                  style: appTheme.typographies.interFontFamily.headline6
-                      .copyWith(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w700)),
-              GeneralText('07:00 PM - 09:00 PM',
-                  style: appTheme.typographies.interFontFamily.body1
-                      .copyWith(color: Colors.white, fontSize: 16)),
-              FunctionHelper().getDivider(),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 15),
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                    color: const Color(0xff34343e),
-                    borderRadius: BorderRadius.circular(15)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    GeneralText(
-                      'Guests', // Strings.labelSeaFood2Experience,
-                      style: appTheme.typographies.interFontFamily.headline6
-                          .copyWith(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: const Color(0xffeee0c1),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-
-                    ///no of persons and preference
-                    Row(
-                      children: [
-                        ///persons text-field
-                        Container(
-                          width: DeviceHelper.width * 0.16,
-                          height: DeviceHelper.height * 0.065,
-                          decoration: BoxDecoration(
-                              color: HexColor.fromHex('#2b2b33'),
-                              border: Border.all(
-                                  color: HexColor.fromHex('#f1c452')),
-                              borderRadius: BorderRadius.circular(10)),
-                          // padding: EdgeInsetsDirectional.only(
-                          //     top: 8, bottom: 8, start: 16, end: 16),
-                          margin: const EdgeInsetsDirectional.only(bottom: 8),
-                          child: noOfPersonsField(
-                            appTheme: appTheme,
-                            valueStyle: appTheme
-                                .typographies.interFontFamily.body1
-                                .copyWith(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                            ),
-                            hintStyle: appTheme
-                                .typographies.interFontFamily.body1
-                                .copyWith(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: DeviceHelper.width * 0.05,
-                        ),
-
-                        ///preference dropdown
-                        Container(
-                          width: DeviceHelper.width * 0.55,
-                          height: DeviceHelper.height * 0.07,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              //color: Colors.red,
-                              color: HexColor.fromHex('#2b2b33'),
-                              border: Border.all(
-                                  color: HexColor.fromHex('#f1c452')),
-                              borderRadius: BorderRadius.circular(10)),
-                          margin: const EdgeInsetsDirectional.only(bottom: 6),
-                          // padding: const EdgeInsetsDirectional
-                          //         .only(
-                          //     top: 8,
-                          //     bottom: 8,
-                          //     start: 0,
-                          //     end: 0),
-                          child: Center(
-                            child: GeneralDropdown(
-                              selectedItemId: 1,
-                              borderColor: Colors.transparent,
-                              name: Strings.tableSelect,
-                              style: appTheme
-                                  .typographies.interFontFamily.headline6
-                                  .copyWith(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400),
-                              // margin: 22.0,
-                              items: items,
-                              onChange: ({
-                                required String key,
-                                required dynamic value,
-                              }) {
-                                // _appService.state.orderHelper!
-                                //     .selectedCategory = value;
-                                // widget.data?.experiencePreferences
-                                //     ?.forEach((element) {
-                                //   if (element.preferenceName == value) {
-                                //     _appService.state.orderHelper
-                                //         ?.selectedPreferenceId =
-                                //         int.parse(
-                                //             element.preferenceId.toString());
-                                //   }
-                                // });
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    GeneralText(
-                      'Optional Notes', // Strings.labelSeaFood2Experience,
-                      style: appTheme.typographies.interFontFamily.headline6
-                          .copyWith(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: const Color(0xffeee0c1),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              getBookingPart(
+                  appTheme: appTheme,
+                  title: 'Sat, Mar 16',
+                  description: '07:00 PM - 09:00 PM'),
+              getBookingPart(
+                  appTheme: appTheme,
+                  title: 'Guests',
+                  description:
+                      '${widget.bookingItem.persons!} | ${widget.bookingItem.preferenceName}'),
+              widget.bookingItem.comments != ''
+                  ? getBookingPart(
+                      appTheme: appTheme,
+                      title: 'Optional Notes',
+                      description: '${widget.bookingItem.comments}')
+                  : const SizedBox(),
+              getBookingPart(
+                  appTheme: appTheme,
+                  title: 'Experience',
+                  description:
+                      'The sizzle and taste of authentic BBQ flavors in a cozy bistro setting. Savor slow-cooked meats, homemade sauces, and sides made with fresh ingredients.'),
+              getBookingPart(
+                  appTheme: appTheme,
+                  title: 'Hosted By',
+                  description: '${widget.bookingItem.brandName}'),
               const SizedBox(
                 height: 20,
               ),
@@ -349,6 +225,27 @@ class _ConfirmAndPayScreenState extends State<ConfirmAndPayScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget getBookingPart({
+    required appTheme,
+    String? title,
+    String? description,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GeneralText(title ?? '',
+            style: appTheme.typographies.interFontFamily.headline6.copyWith(
+                color: Colors.white,
+                fontSize: 15.0,
+                fontWeight: FontWeight.w700)),
+        GeneralText(description ?? '',
+            maxLines: 5,
+            style: const TextStyle(color: Color(0xff909094), fontSize: 16.0)),
+        FunctionHelper().getDivider(),
+      ],
     );
   }
 

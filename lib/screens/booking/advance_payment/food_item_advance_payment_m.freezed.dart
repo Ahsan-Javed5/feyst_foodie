@@ -59,16 +59,14 @@ mixin _$FoodItemAdvancePaymentState {
 
 /// @nodoc
 abstract class $FoodItemAdvancePaymentStateCopyWith<$Res> {
-  factory $FoodItemAdvancePaymentStateCopyWith(
-          FoodItemAdvancePaymentState value,
-          $Res Function(FoodItemAdvancePaymentState) then) =
-      _$FoodItemAdvancePaymentStateCopyWithImpl<$Res,
-          FoodItemAdvancePaymentState>;
+  factory $FoodItemAdvancePaymentStateCopyWith(BookingItemScreenState value,
+          $Res Function(BookingItemScreenState) then) =
+      _$FoodItemAdvancePaymentStateCopyWithImpl<$Res, BookingItemScreenState>;
 }
 
 /// @nodoc
 class _$FoodItemAdvancePaymentStateCopyWithImpl<$Res,
-        $Val extends FoodItemAdvancePaymentState>
+        $Val extends BookingItemScreenState>
     implements $FoodItemAdvancePaymentStateCopyWith<$Res> {
   _$FoodItemAdvancePaymentStateCopyWithImpl(this._value, this._then);
 
@@ -177,7 +175,7 @@ class _$LoadingImpl implements Loading {
   }
 }
 
-abstract class Loading implements FoodItemAdvancePaymentState {
+abstract class Loading implements BookingItemScreenState {
   const factory Loading() = _$LoadingImpl;
 }
 
@@ -307,7 +305,7 @@ class _$LoadedImpl implements Loaded {
   }
 }
 
-abstract class Loaded implements FoodItemAdvancePaymentState {
+abstract class Loaded implements BookingItemScreenState {
   const factory Loaded(final AdvancePendingResponse advancePendingResponse) =
       _$LoadedImpl;
 

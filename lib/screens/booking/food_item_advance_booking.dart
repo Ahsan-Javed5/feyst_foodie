@@ -12,8 +12,8 @@ import '../../ui_kit/widgets/general_new_appbar.dart';
 import 'dart:developer' as developer;
 
 @RoutePage()
-class FoodProductAdvancePendingDetailsScreen extends StatefulWidget {
-  const FoodProductAdvancePendingDetailsScreen(
+class BookingItemDetailsScreen extends StatefulWidget {
+  const BookingItemDetailsScreen(
       {Key? key, required AdvancePendingResponse advancePendingDetails})
       : _advancePendingDetails = advancePendingDetails,
         super(key: key);
@@ -21,12 +21,11 @@ class FoodProductAdvancePendingDetailsScreen extends StatefulWidget {
   final AdvancePendingResponse _advancePendingDetails;
 
   @override
-  State<FoodProductAdvancePendingDetailsScreen> createState() =>
-      _FoodProductAdvancePendingDetailsScreenState();
+  State<BookingItemDetailsScreen> createState() =>
+      _BookingItemDetailsScreenState();
 }
 
-class _FoodProductAdvancePendingDetailsScreenState
-    extends State<FoodProductAdvancePendingDetailsScreen> {
+class _BookingItemDetailsScreenState extends State<BookingItemDetailsScreen> {
   List<CustomModel> wowFactorsList = [];
   List<CustomModel> menuListItems = [];
   bool checkValue = false;
