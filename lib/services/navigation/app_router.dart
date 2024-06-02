@@ -5,10 +5,10 @@ import '../../helpers/helpers.dart';
 import '../../models/booking/advance_pending_response.dart';
 import '../../models/booking/booking_list_response_model.dart';
 import '../../models/home/chef_data_response.dart';
-import '../../screens/booking/advance_payment/food_item_advance_payment_v.dart';
+import '../../screens/booking/advance_payment/booking_item_screen_v.dart';
 import '../../screens/booking/booking_confirmed/booking_in_process_screen_v.dart';
 import '../../screens/booking/booking_in_process_screen.dart';
-import '../../screens/booking/food_item_advance_booking.dart';
+import '../../screens/booking/booking_item_detail_screen.dart';
 import '../../screens/bottom_bar/bottom_bar.dart';
 import '../../screens/forgot_password/forgot_password_screen_v.dart';
 import '../../screens/home/food_item_booking_confirmed.dart';
@@ -26,10 +26,9 @@ abstract class Routes {
   static const home = '/home';
   static const profile = '/profile';
   static const dashboard = '/dashboard';
-  static const foodProductAdvancePendingDetails =
-      '/foodProductAdvancePendingDetails/:advancePendingDetails';
-  static const foodItemAdvancePaymentScreen =
-      '/foodItemAdvancePaymentScreen/:bookingItem';
+  static const bookingItemDetailsScreen =
+      '/bookingItemDetailsScreen/:advancePendingDetails';
+  static const bookingItemScreen = '/bookingItemScreen/:bookingItem';
 
   static const foodInProcessScreen = '/foodInProcessScreen/:bookedItem';
 
@@ -73,13 +72,13 @@ class AppRouter extends _$AppRouter {
           path: Routes.login,
         ),
         AutoRoute(
-          page: FoodProductAdvancePendingDetailsRoute.page,
-          path: Routes.foodProductAdvancePendingDetails,
+          page: BookingItemDetailsRoute.page,
+          path: Routes.bookingItemDetailsScreen,
         ),
 
         AutoRoute(
-          page: FoodItemAdvancePaymentRoute.page,
-          path: Routes.foodItemAdvancePaymentScreen,
+          page: BookingItemRoute.page,
+          path: Routes.bookingItemScreen,
         ),
         AutoRoute(
           page: BookingInProcessRouteView.page,

@@ -1314,6 +1314,17 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     );
   }
 
+  Widget getFoodItemDescription(
+      {required IAppThemeData appTheme, required String foodItemDescription}) {
+    return GeneralText(
+      foodItemDescription,
+      maxLines: 3,
+      textAlign: TextAlign.start,
+      style: appTheme.typographies.interFontFamily.headline6
+          .copyWith(fontSize: 14, color: HexColor.fromHex('#909094')),
+    );
+  }
+
   Widget getFoodItemSubTitle(
       {required IAppThemeData appTheme, required subTitle}) {
     return GeneralText(
@@ -1346,17 +1357,6 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       }
     }
     return const SizedBox();
-  }
-
-  Widget getFoodItemDescription(
-      {required IAppThemeData appTheme, required String foodItemDescription}) {
-    return GeneralText(
-      foodItemDescription,
-      maxLines: 3,
-      textAlign: TextAlign.start,
-      style: appTheme.typographies.interFontFamily.headline6
-          .copyWith(fontSize: 14, color: HexColor.fromHex('#909094')),
-    );
   }
 
   Widget getFoodItemUsers(

@@ -7,8 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../models/booking/booking_list_response_model.dart';
 import '../../../setup.dart';
-import 'food_item_advance_payment_m.dart';
-import 'food_item_advance_payment_vm.dart';
+import 'booking_item_screen_m.dart';
+import 'booking_item_screen_vm.dart';
 
 @RoutePage()
 class BookingItemScreen extends BaseView<BookingItemScreenViewModel> {
@@ -41,10 +41,10 @@ class BookingItemScreen extends BaseView<BookingItemScreenViewModel> {
   Widget displayLoaded(bookingListModel) {
     // return Container();
     // return Container();
-    final _navigate = locateService<INavigationService>();
-    _navigate.navigateTo(
-        route: FoodProductAdvancePendingDetailsRoute(
-            advancePendingDetails: bookingListModel));
+    final navigate = locateService<INavigationService>();
+    navigate.navigateTo(
+        route:
+            BookingItemDetailsRoute(advancePendingDetails: bookingListModel));
     return Container();
     //   return FoodProductAdvancePendingDetails(advancePendingDetails: );
   }

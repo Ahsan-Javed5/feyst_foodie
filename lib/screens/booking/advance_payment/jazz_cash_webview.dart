@@ -8,7 +8,7 @@ import '../../../services/application_state.dart';
 import '../../../services/storage/storage_service.dart';
 import '../../../setup.dart';
 import '../../../ui_kit/widgets/custom_dialog.dart';
-import 'food_item_advance_payment_vm.dart';
+import 'booking_item_screen_vm.dart';
 
 class JazzCashWebView extends StatefulWidget {
   const JazzCashWebView({Key? key, required this.bookindData})

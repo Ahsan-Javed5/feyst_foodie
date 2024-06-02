@@ -18,23 +18,22 @@ import 'base/screen_layout_base/screen_layout_base_vm.dart' as _i30;
 import 'helpers/helpers.dart' as _i10;
 import 'helpers/workspace_helper.dart' as _i15;
 import 'screens/account_settings/account_settings_screen_vm.dart' as _i18;
-import 'screens/booking/advance_payment/food_item_advance_payment_vm.dart'
-    as _i26;
+import 'screens/booking/advance_payment/booking_item_screen_vm.dart' as _i22;
 import 'screens/booking/booking_confirmed/booking_in_process_screen_vm.dart'
     as _i21;
-import 'screens/booking/booking_list/booking_list_screen_vm.dart' as _i22;
-import 'screens/change_password/change_password_screen_vm.dart' as _i23;
+import 'screens/booking/booking_list/booking_list_screen_vm.dart' as _i23;
+import 'screens/change_password/change_password_screen_vm.dart' as _i24;
 import 'screens/food_product_experience_details/food_product_details_screen_vm.dart'
     as _i27;
 import 'screens/forgot_password/forgot_password_screen_vm.dart' as _i28;
-import 'screens/home/component/food_detail_screen_vm.dart' as _i25;
+import 'screens/home/component/food_detail_screen_vm.dart' as _i26;
 import 'screens/home/home_screen_vm.dart' as _i29;
 import 'screens/sign_in/sign_in_screen_vm.dart' as _i9;
 import 'screens/sign_up/get_started_screen_vm.dart' as _i13;
 import 'screens/sign_up/questionire/sign_up_questionire_screen_vm.dart' as _i11;
 import 'screens/sign_up/sign_up_screen_vm.dart' as _i12;
 import 'screens/splash/splash_screen_vm.dart' as _i14;
-import 'screens/user_account/edit_profie/edit_profile_screen_vm.dart' as _i24;
+import 'screens/user_account/edit_profie/edit_profile_screen_vm.dart' as _i25;
 import 'screens/username_profile/profile_information_screen_vm.dart' as _i8;
 import 'services/application_state.dart' as _i17;
 import 'services/navigation/app_router.dart' as _i3;
@@ -123,29 +122,29 @@ Future<_i1.GetIt> $initGetIt(
   gh.factory<_i21.BookingInProcessScreenViewModel>(() =>
       _i21.BookingInProcessScreenViewModel(
           network: gh<_i10.INetworkService<dynamic>>()));
-  gh.factory<_i22.BookingListScreenViewModel>(() =>
-      _i22.BookingListScreenViewModel(
+  gh.factory<_i22.BookingItemScreenViewModel>(() =>
+      _i22.BookingItemScreenViewModel(
           network: gh<_i10.INetworkService<dynamic>>()));
-  gh.factory<_i23.ChangePasswordScreenViewModel>(() =>
-      _i23.ChangePasswordScreenViewModel(
+  gh.factory<_i23.BookingListScreenViewModel>(() =>
+      _i23.BookingListScreenViewModel(
+          network: gh<_i10.INetworkService<dynamic>>()));
+  gh.factory<_i24.ChangePasswordScreenViewModel>(() =>
+      _i24.ChangePasswordScreenViewModel(
           navigation: gh<_i4.INavigationService<dynamic>>()));
-  gh.factory<_i24.EditProfileScreenViewModel>(
-      () => _i24.EditProfileScreenViewModel(
+  gh.factory<_i25.EditProfileScreenViewModel>(
+      () => _i25.EditProfileScreenViewModel(
             navigation: gh<_i10.INavigationService<dynamic>>(),
             network: gh<_i10.INetworkService<dynamic>>(),
             storage: gh<_i10.IStorageService>(),
             appService: gh<_i10.ApplicationService>(),
           ));
-  gh.factory<_i25.FoodDetailScreenViewModel>(
-      () => _i25.FoodDetailScreenViewModel(
+  gh.factory<_i26.FoodDetailScreenViewModel>(
+      () => _i26.FoodDetailScreenViewModel(
             navigation: gh<_i10.INavigationService<dynamic>>(),
             network: gh<_i10.INetworkService<dynamic>>(),
             storage: gh<_i10.IStorageService>(),
             appService: gh<_i10.ApplicationService>(),
           ));
-  gh.factory<_i26.BookingItemScreenViewModel>(() =>
-      _i26.BookingItemScreenViewModel(
-          network: gh<_i10.INetworkService<dynamic>>()));
   gh.factory<_i27.FoodProductExperienceDetailsViewModel>(
       () => _i27.FoodProductExperienceDetailsViewModel(
             navigation: gh<_i10.INavigationService<dynamic>>(),

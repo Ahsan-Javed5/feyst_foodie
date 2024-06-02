@@ -25,6 +25,26 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
+    BookingItemDetailsRoute.name: (routeData) {
+      final args = routeData.argsAs<BookingItemDetailsRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: BookingItemDetailsScreen(
+          key: args.key,
+          advancePendingDetails: args.advancePendingDetails,
+        ),
+      );
+    },
+    BookingItemRoute.name: (routeData) {
+      final args = routeData.argsAs<BookingItemRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: BookingItemScreen(
+          bookingItem: args.bookingItem,
+          key: args.key,
+        ),
+      );
+    },
     BottomBarRoute.name: (routeData) {
       final args = routeData.argsAs<BottomBarRouteArgs>(
           orElse: () => const BottomBarRouteArgs());
@@ -36,31 +56,10 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
-    FoodItemAdvancePaymentRoute.name: (routeData) {
-      final args = routeData.argsAs<FoodItemAdvancePaymentRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: BookingItemScreen(
-          bookingItem: args.bookingItem,
-          key: args.key,
-        ),
-      );
-    },
     FoodItemInProcessBookingRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const FoodItemInProcessBookingScreen(),
-      );
-    },
-    FoodProductAdvancePendingDetailsRoute.name: (routeData) {
-      final args =
-          routeData.argsAs<FoodProductAdvancePendingDetailsRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: BookingItemDetailsScreen(
-          key: args.key,
-          advancePendingDetails: args.advancePendingDetails,
-        ),
       );
     },
     FoodProductBookingConfirmedDetailsRoute.name: (routeData) {
@@ -152,6 +151,83 @@ class BookingInProcessRouteViewArgs {
 }
 
 /// generated route for
+/// [BookingItemDetailsScreen]
+class BookingItemDetailsRoute
+    extends PageRouteInfo<BookingItemDetailsRouteArgs> {
+  BookingItemDetailsRoute({
+    Key? key,
+    required AdvancePendingResponse advancePendingDetails,
+    List<PageRouteInfo>? children,
+  }) : super(
+          BookingItemDetailsRoute.name,
+          args: BookingItemDetailsRouteArgs(
+            key: key,
+            advancePendingDetails: advancePendingDetails,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'BookingItemDetailsRoute';
+
+  static const PageInfo<BookingItemDetailsRouteArgs> page =
+      PageInfo<BookingItemDetailsRouteArgs>(name);
+}
+
+class BookingItemDetailsRouteArgs {
+  const BookingItemDetailsRouteArgs({
+    this.key,
+    required this.advancePendingDetails,
+  });
+
+  final Key? key;
+
+  final AdvancePendingResponse advancePendingDetails;
+
+  @override
+  String toString() {
+    return 'BookingItemDetailsRouteArgs{key: $key, advancePendingDetails: $advancePendingDetails}';
+  }
+}
+
+/// generated route for
+/// [BookingItemScreen]
+class BookingItemRoute extends PageRouteInfo<BookingItemRouteArgs> {
+  BookingItemRoute({
+    required BookingItem bookingItem,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          BookingItemRoute.name,
+          args: BookingItemRouteArgs(
+            bookingItem: bookingItem,
+            key: key,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'BookingItemRoute';
+
+  static const PageInfo<BookingItemRouteArgs> page =
+      PageInfo<BookingItemRouteArgs>(name);
+}
+
+class BookingItemRouteArgs {
+  const BookingItemRouteArgs({
+    required this.bookingItem,
+    this.key,
+  });
+
+  final BookingItem bookingItem;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'BookingItemRouteArgs{bookingItem: $bookingItem, key: $key}';
+  }
+}
+
+/// generated route for
 /// [BottomBarScreen]
 class BottomBarRoute extends PageRouteInfo<BottomBarRouteArgs> {
   BottomBarRoute({
@@ -190,45 +266,6 @@ class BottomBarRouteArgs {
 }
 
 /// generated route for
-/// [BookingItemScreen]
-class FoodItemAdvancePaymentRoute
-    extends PageRouteInfo<FoodItemAdvancePaymentRouteArgs> {
-  FoodItemAdvancePaymentRoute({
-    required BookingItem bookingItem,
-    Key? key,
-    List<PageRouteInfo>? children,
-  }) : super(
-          FoodItemAdvancePaymentRoute.name,
-          args: FoodItemAdvancePaymentRouteArgs(
-            bookingItem: bookingItem,
-            key: key,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'FoodItemAdvancePaymentRoute';
-
-  static const PageInfo<FoodItemAdvancePaymentRouteArgs> page =
-      PageInfo<FoodItemAdvancePaymentRouteArgs>(name);
-}
-
-class FoodItemAdvancePaymentRouteArgs {
-  const FoodItemAdvancePaymentRouteArgs({
-    required this.bookingItem,
-    this.key,
-  });
-
-  final BookingItem bookingItem;
-
-  final Key? key;
-
-  @override
-  String toString() {
-    return 'FoodItemAdvancePaymentRouteArgs{bookingItem: $bookingItem, key: $key}';
-  }
-}
-
-/// generated route for
 /// [FoodItemInProcessBookingScreen]
 class FoodItemInProcessBookingRoute extends PageRouteInfo<void> {
   const FoodItemInProcessBookingRoute({List<PageRouteInfo>? children})
@@ -240,45 +277,6 @@ class FoodItemInProcessBookingRoute extends PageRouteInfo<void> {
   static const String name = 'FoodItemInProcessBookingRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [BookingItemDetailsScreen]
-class FoodProductAdvancePendingDetailsRoute
-    extends PageRouteInfo<FoodProductAdvancePendingDetailsRouteArgs> {
-  FoodProductAdvancePendingDetailsRoute({
-    Key? key,
-    required AdvancePendingResponse advancePendingDetails,
-    List<PageRouteInfo>? children,
-  }) : super(
-          FoodProductAdvancePendingDetailsRoute.name,
-          args: FoodProductAdvancePendingDetailsRouteArgs(
-            key: key,
-            advancePendingDetails: advancePendingDetails,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'FoodProductAdvancePendingDetailsRoute';
-
-  static const PageInfo<FoodProductAdvancePendingDetailsRouteArgs> page =
-      PageInfo<FoodProductAdvancePendingDetailsRouteArgs>(name);
-}
-
-class FoodProductAdvancePendingDetailsRouteArgs {
-  const FoodProductAdvancePendingDetailsRouteArgs({
-    this.key,
-    required this.advancePendingDetails,
-  });
-
-  final Key? key;
-
-  final AdvancePendingResponse advancePendingDetails;
-
-  @override
-  String toString() {
-    return 'FoodProductAdvancePendingDetailsRouteArgs{key: $key, advancePendingDetails: $advancePendingDetails}';
-  }
 }
 
 /// generated route for

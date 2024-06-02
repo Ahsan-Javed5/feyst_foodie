@@ -128,8 +128,8 @@ class NotificationServices {
     BookingItem item = BookingItem(id: int.parse(message.data['bookingId']));
     //locateService<INavigationService>().navigateTo(route:BottomBar(bottomBarType: bottom_bar.BottomBarType.bookings));
     if (message.data['scenario'] == 'BOOKING_ACCEPTED') {
-      locateService<INavigationService>().navigateTo(
-          route: nav.FoodItemAdvancePaymentRoute(bookingItem: item));
+      locateService<INavigationService>()
+          .navigateTo(route: nav.BookingItemRoute(bookingItem: item));
     } else {
       locateService<INavigationService>()
           .navigateTo(route: nav.BookingInProcessRouteView(bookingItem: item));

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'food_item_advance_payment_m.dart';
+part of 'booking_item_screen_m.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$FoodItemAdvancePaymentState {
+mixin _$BookingItemScreenState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
@@ -58,17 +58,17 @@ mixin _$FoodItemAdvancePaymentState {
 }
 
 /// @nodoc
-abstract class $FoodItemAdvancePaymentStateCopyWith<$Res> {
-  factory $FoodItemAdvancePaymentStateCopyWith(BookingItemScreenState value,
+abstract class $BookingItemScreenStateCopyWith<$Res> {
+  factory $BookingItemScreenStateCopyWith(BookingItemScreenState value,
           $Res Function(BookingItemScreenState) then) =
-      _$FoodItemAdvancePaymentStateCopyWithImpl<$Res, BookingItemScreenState>;
+      _$BookingItemScreenStateCopyWithImpl<$Res, BookingItemScreenState>;
 }
 
 /// @nodoc
-class _$FoodItemAdvancePaymentStateCopyWithImpl<$Res,
+class _$BookingItemScreenStateCopyWithImpl<$Res,
         $Val extends BookingItemScreenState>
-    implements $FoodItemAdvancePaymentStateCopyWith<$Res> {
-  _$FoodItemAdvancePaymentStateCopyWithImpl(this._value, this._then);
+    implements $BookingItemScreenStateCopyWith<$Res> {
+  _$BookingItemScreenStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -85,7 +85,7 @@ abstract class _$$LoadingImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$FoodItemAdvancePaymentStateCopyWithImpl<$Res, _$LoadingImpl>
+    extends _$BookingItemScreenStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
       _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
@@ -99,7 +99,7 @@ class _$LoadingImpl implements Loading {
 
   @override
   String toString() {
-    return 'FoodItemAdvancePaymentState.loading()';
+    return 'BookingItemScreenState.loading()';
   }
 
   @override
@@ -190,7 +190,7 @@ abstract class _$$LoadedImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$LoadedImplCopyWithImpl<$Res>
-    extends _$FoodItemAdvancePaymentStateCopyWithImpl<$Res, _$LoadedImpl>
+    extends _$BookingItemScreenStateCopyWithImpl<$Res, _$LoadedImpl>
     implements _$$LoadedImplCopyWith<$Res> {
   __$$LoadedImplCopyWithImpl(
       _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
@@ -220,7 +220,7 @@ class _$LoadedImpl implements Loaded {
 
   @override
   String toString() {
-    return 'FoodItemAdvancePaymentState.loaded(advancePendingResponse: $advancePendingResponse)';
+    return 'BookingItemScreenState.loaded(advancePendingResponse: $advancePendingResponse)';
   }
 
   @override

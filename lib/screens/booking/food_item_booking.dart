@@ -195,29 +195,28 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                 'Bearer ${storage.readString(key: 'auth_token')}');
 
                             //if (index == 1) {
-                            if (item.bookingStatus.toString().toUpperCase() ==
-                                    Strings.acceptData ||
-                                item.bookingStatus.toString().toUpperCase() ==
-                                    Strings.pendingValue ||
-                                item.bookingStatus.toString().toUpperCase() ==
-                                    'DECLINED' ||
-                                item.bookingStatus.toString().toUpperCase() ==
-                                    'MISSED') {
-                              // _navigation.navigateTo(
-                              //     route: nav.FoodItemAdvancePaymentRoute(
-                              //         bookingItem: item));
-                              // _navigation.navigateTo(
-                              //     route: nav.FoodItemAdvancePaymentRoute(
-                              //         bookingItem: item));
+                            // if (item.bookingStatus.toString().toUpperCase() ==
+                            //         Strings.acceptData ||
+                            //     item.bookingStatus.toString().toUpperCase() ==
+                            //         Strings.pendingValue ||
+                            //     item.bookingStatus.toString().toUpperCase() ==
+                            //         'DECLINED' ||
+                            //     item.bookingStatus.toString().toUpperCase() ==
+                            //         'MISSED') {
+                            // _navigation.navigateTo(
+                            //     route: nav.FoodItemAdvancePaymentRoute(
+                            //         bookingItem: item));
+                            _navigation.navigateTo(
+                                route: nav.BookingItemRoute(bookingItem: item));
 
-                              // Navigator.of(context).push(MaterialPageRoute(
-                              //     builder: (context) =>
-                              //         BookingDetailScreen(bookingItem: item)));
-                            } else {
-                              _navigation.navigateTo(
-                                  route: nav.BookingInProcessRouteView(
-                                      bookingItem: item));
-                            }
+                            // Navigator.of(context).push(MaterialPageRoute(
+                            //     builder: (context) =>
+                            //         BookingDetailScreen(bookingItem: item)));
+                            // } else {
+                            //   _navigation.navigateTo(
+                            //       route: nav.BookingInProcessRouteView(
+                            //           bookingItem: item));
+                            // }
                           },
                           child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
