@@ -367,9 +367,10 @@ abstract class Strings {
   static const productDetailChefSubHost = 'SUB HOST';
   static const productDetailChefSubHostName = 'Zoya Faraz';
   static const productDetailPriceLabel = 'Price';
+  static const priceDetails = 'Price Details';
   static const productDetailPriceValue = 'Rs.5,000';
   static const productDetailPriceTotal = 'Total Price';
-  static const productDetailPriceTax = 'Tax (17%)';
+  static const productDetailPriceTax = 'Tax';
   static const productDetailPriceTaxValue = 'Rs.255';
   static const productDetailAdvancePayment = 'Advance Payment';
   static const productDetailAdvancePaymentValue = 'Rs.1,000';
@@ -532,7 +533,7 @@ abstract class Strings {
   static const proceedToAdvancePaymentDescription =
       'Please proceed to advance payment for Booking Confirmation';
   static const totalAmount = 'Total Amount';
-  static const rupeesLabel = 'Rs.';
+  static const rupeesLabel = 'SAR.';
   static const amountDue = 'Amount Due';
   static const rateYourExperience = 'Rate Your Experience';
   static const bookingCompleted = 'Booking Completed!';

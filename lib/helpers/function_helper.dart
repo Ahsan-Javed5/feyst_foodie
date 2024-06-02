@@ -1,3 +1,5 @@
+import 'helpers.dart';
+
 class FunctionHelper {
   String getMonthAbbreviation(int month) {
     switch (month) {
@@ -49,5 +51,14 @@ class FunctionHelper {
       default:
         return '';
     }
+  }
+
+  Widget getDivider() {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: DeviceHelper.height * 0.01),
+      child: Divider(
+        color: Colors.white.withOpacity(0.1),
+      ),
+    );
   }
 }

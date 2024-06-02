@@ -4,6 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:chef/helpers/device_helper.dart';
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/screens/home/schedule_model.dart';
+import 'package:chef/screens/home/widget/order_detail_screen.dart';
 import 'package:chef/screens/user_account/user_profile.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
@@ -162,8 +163,16 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       showControlsOnInitialize: false,
       allowFullScreen: false,
       allowMuting: true,
-      looping: true,
+      looping: false,
     );
+
+    _chewieController.videoPlayerController.addListener(() {
+      if (_chewieController.videoPlayerController.value.position ==
+          _chewieController.videoPlayerController.value.duration) {
+        _sliderController.nextPage();
+        print('video Ended');
+      }
+    });
 
     _chewieController2 = ChewieController(
       videoPlayerController: _videoPlayerController2,
@@ -337,17 +346,16 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                   //   }).toList(),
                                   // ),
                                   CarouselSlider(
+                                    carouselController: _sliderController,
                                     items: [
                                       Chewie(
                                         controller: _chewieController,
                                       ),
-                                      Chewie(
-                                        controller: _chewieController2,
-                                      )
+                                      Image.asset(foodDetailsBgImages[0]),
                                     ],
                                     options: CarouselOptions(
                                         height: DeviceHelper.height * 0.50,
-                                        autoPlay: false,
+                                        autoPlay: true,
                                         onPageChanged: (index, reason) {
                                           _chewieController.seekTo(
                                               const Duration(seconds: 0));
@@ -2339,6 +2347,31 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                 title: Strings.chooseButtonTitle,
                 styleType: ButtonStyleType.fill,
                 onTap: () {
+                  //_videoPlayerController1.dispose();
+                  //_chewieController.dispose();
+                  if (widget.data!.priceTypeId == 2) {
+                    int a = 0;
+                    for (var element in bookingMenuDetails) {
+                      if (element.quantity != 0) {
+                        a = 1;
+                      }
+                    }
+                    if (a == 1) {
+                      bookingMenuDetails
+                          .removeWhere((element) => element.quantity == 0);
+                      _appService.state.orderHelper?.bookingMenuDetails =
+                          bookingMenuDetails;
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => OrderDetailScreen(
+                                data: widget.data,
+                                scheduleModel: widget.scheduleModel,
+                              )));
+                    } else {
+                      Toaster.errorToast(
+                          context: context, message: Strings.selectAtLeastOne);
+                    }
+                  }
+
                   // locateService<INavigationService>()
                   //     .navigateTo(route: BottomBarRoute());
                   // Navigator.push(

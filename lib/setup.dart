@@ -52,27 +52,27 @@ Future<dynamic> configureDependencies() async {
     androidProvider: AndroidProvider.playIntegrity,
     appleProvider: AppleProvider.appAttest,
   );
-  await FirebaseMessaging.instance.getInitialMessage();
+  //await FirebaseMessaging.instance.getInitialMessage();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    NotificationServices().showNotification(message);
-    CustomDialog.getDialog(
-      ctx: locateService<INavigationService>().navigatorKey.currentContext,
-      title: message.data['title']?.toString() ?? 'title is null',
-      //titleColor: Colors.white,
-      //descColor: const Color(0xFFfee4a4),
-      description: message.data['body']?.toString() ?? 'body is null',
-      iconUrl: Resources.cashWaitingIcon,
-      onTap: () {
-        locateService<INavigationService>().pop();
-      },
-    );
-  });
-  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
-    BookingItem item = BookingItem(id: int.parse(message.data['bookingId']));
-    locateService<INavigationService>()
-        .navigateTo(route: nav.FoodItemAdvancePaymentRoute(bookingItem: item));
-  });
+  // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  //   NotificationServices().showNotification(message);
+  //   CustomDialog.getDialog(
+  //     ctx: locateService<INavigationService>().navigatorKey.currentContext,
+  //     title: message.data['title']?.toString() ?? 'title is null',
+  //     //titleColor: Colors.white,
+  //     //descColor: const Color(0xFFfee4a4),
+  //     description: message.data['body']?.toString() ?? 'body is null',
+  //     iconUrl: Resources.cashWaitingIcon,
+  //     onTap: () {
+  //       locateService<INavigationService>().pop();
+  //     },
+  //   );
+  // });
+  // FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
+  //   BookingItem item = BookingItem(id: int.parse(message.data['bookingId']));
+  //   locateService<INavigationService>()
+  //       .navigateTo(route: nav.FoodItemAdvancePaymentRoute(bookingItem: item));
+  // });
   // requestPermission();
   return $initGetIt(getIt);
 }

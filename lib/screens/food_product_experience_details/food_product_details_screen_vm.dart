@@ -102,7 +102,7 @@ class FoodProductExperienceDetailsViewModel
                       //bookingDetails: orderHelper.bookingMenuDetails,
                       totalPrice:
                           orderHelper.selectedExperienceDetail.price!.toInt(),
-                      scheduleId: int.parse(orderHelper.scheduleId),
+                      scheduleId: int.parse('1'),
                       persons: orderHelper.numberOfPerson.toString(),
                       //  preferenceId: 1
                       preferenceId: orderHelper.selectedPreferenceId),

@@ -42,7 +42,7 @@ class FoodDetailScreenViewModel extends BaseViewModel<FoodDetailScreenState> {
     expId = experienceId;
     emit(const Loading());
 
-    developer.log(' Experience Id to fetch menu is ' + '${experienceId}');
+    developer.log(' Experience Id to fetch menu is $experienceId');
     final foodMenuRequest = menurequest.FoodMenuRequest(
       t: int.parse(experienceId),
     ).toJson();

@@ -1,5 +1,7 @@
 import 'package:chef/constants/api.dart';
+import 'package:chef/helpers/helpers.dart';
 import 'package:chef/models/booking/booking_list_response_model.dart';
+import 'package:chef/screens/home/widget/confirm_and_pay_screen.dart';
 import 'package:chef/theme/app_theme_data/app_theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -187,6 +189,11 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                             color: HexColor.fromHex("#4b4b52")),
                         child: InkWell(
                           onTap: () {
+                            final storage = locateService<IStorageService>();
+                            debugPrint('Booking ID: ${item.id}');
+                            debugPrint(
+                                'Bearer ${storage.readString(key: 'auth_token')}');
+
                             //if (index == 1) {
                             if (item.bookingStatus.toString().toUpperCase() ==
                                     Strings.acceptData ||
@@ -196,9 +203,13 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
                                     'DECLINED' ||
                                 item.bookingStatus.toString().toUpperCase() ==
                                     'MISSED') {
-                              _navigation.navigateTo(
-                                  route: nav.FoodItemAdvancePaymentRoute(
-                                      bookingItem: item));
+                              // _navigation.navigateTo(
+                              //     route: nav.FoodItemAdvancePaymentRoute(
+                              //         bookingItem: item));
+
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      ConfirmAndPayScreen(bookingItem: item)));
                             } else {
                               _navigation.navigateTo(
                                   route: nav.BookingInProcessRouteView(
