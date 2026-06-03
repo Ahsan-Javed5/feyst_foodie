@@ -1,16 +1,20 @@
-# chef_app_new
+🍽️ FEYST - Food Delivery & Home Bistro App
+FEYST is a unique mobile application that connects food lovers with passionate local chefs (Home Bistros) offering immersive dining experiences, unique tastes, and cultural social engagements.
 
-A new Flutter application.
+This app was developed by me during my tenure at the company and showcases high-quality mobile engineering with a focus on seamless user experience.
 
-## Getting Started
+🚀 Key Features
+Curated Home Bistros: Explore unique culinary experiences hosted by local expert chefs.
 
-This project is a starting point for a Flutter application.
+Social Engagement: Discover hidden local talents and build community connections through shared food culture.
 
-A few resources to get you started if this is your first Flutter project:
+Taste Matching & Variety: Access a diverse range of high-quality, homemade dishes tailored to different preferences.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Eco-Friendly Vision: Built around the concept of clean energy utilization in everyday cooking.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+🛠️ Tech Stack & Highlights
+Clean Architecture: Maintained high coding standards for scalability and performance.
+
+State Management & UI: Designed a responsive, modern, and user-friendly interface.
+
+Note: This repository contains the source code for the FEYST application. You can view the live app on the Google Play Store.
